@@ -93,4 +93,4 @@ pret discord and pret in general for their original disassembly work on Red / Bl
 
 Vortyne - Obvious reasons
 
-metalflygon08 - providing sprite and entertain me with his application of this concept as evolution of Mr. Mime: Mime Sr.
+metalflygon08 - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime: Mime Sr.
