@@ -47,6 +47,24 @@ This is a purist's enhancement of Pokemon Red/Blue/Green. The goal is to enhance
 
 Pictured: GB Monochrome, Original GBC color, SGB Colors, Alternate SGB Colors, GBC Colors (can choose between the 4 color options on GBC in-game)
 
+## Fork changes
+
+- The front sprite of Mr. Mime was replaced by Fake Beta Mr. Mime that was [debunked by Dr. Lava](https://twitter.com/DrLavaYT/status/1284462794532773888?s=20), sprite included with other some accurate recreations of real Beta Pokémon of Gen I by unknown artist.
+- The back sprite of Mr. Mime was replaced by a custom one made and provided by **metalflygon08**. I only changed the light reflection in the back because the original felt flat for my tastes in a sphere head.
+- There is no original red back sprite yet (I'm working on it!), **to match the new front sprite you must activate SW97 back sprites** or it will use the original Mr. Mime of Pokémon Red. I don't know reason to play this without SW97 sprites anyways.
+- Why I do this small change? Because I have despised Mr. Mime original design all my life. It never was a solid playable Pokémon neither due to its ridiculous HP and Defense values. On PureRGB it was overhauled and improved with an amazing Psychic/Ghost dual type making it an unique choice for your team, but his appearance was still annoying me. Plus I always wanted to first contact Github with a simple task and navigate through his interface aside from build something considering the time I spend following projects here. You should play original PureRGB unless you hate Mr. Mime as much as I do.
+
+![fakemime](/screenshots/fakemime.png?raw=true) ![fakemimedex](/screenshots/fakemimedex.png?raw=true)  ![fakemimeb](/screenshots/fakemimeb.png?raw=true)
+
+Pictured: Front Sprite, Pokedex Data, Back Sprite.
+
+## Additional data
+
+If someone is interested or want to use this sprite for his own projects, feel free to take a bite. You have the version of **metalflygon08** who provided the back sprite but made some changes from the original fake design or the one I made using the previous one as base, where I reverted to the original art and extended the footprint one pixel long to match my perception of its foot anatomy.
+
+![FakeMimebymetalflygon08](/screenshots/FakeMimebymetalflygon08.png?raw=true) ![FakeMimebyViWalls](/screenshots/FakeMimebyViWalls.png?raw=true)
+
+
 ## Contact the creator
 
 [discord]: https://discord.gg/d5dubZ3
@@ -69,3 +87,7 @@ LJSTAR - Most of the work creating the type icons used in the movedex
 Mord - Most of the work creating LT.Surge and Erika overworld sprites
 
 pret discord and pret in general for their original disassembly work on Red / Blue
+
+Vortyne - Obvious reasons
+
+metalflygon08 - providing sprite and entertain me with his application of this concept as evolution of Mr. Mime: Mime Sr.
