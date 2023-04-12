@@ -60,10 +60,13 @@ Pictured: Front Sprite, Pokedex Data, Back Sprite.
 
 ## Additional data
 
-If someone is interested or want to use this sprite for his own projects, feel free to take a bite. You have the version of **metalflygon08** who provided the back sprite but made some changes from the original fake design or the one I made using the previous one as base, where I reverted to the original art and extended the footprint one pixel long to match my perception of its foot anatomy.
+**One Picture Worth Ten Thousand Words**
+
+![RedBlueBetaPokemon](/screenshots/RedBlueBetaPokemon.png?raw=true)
+
+If someone is interested or want to use this sprite for his own projects, feel free to take a bite. You have the version of **metalflygon08** who provided the back sprite but made some changes from original fake design OR the one I made using the previous one as base, where I reverted those minor changes loyal to original art and extended the footprint one pixel long, matching my perception of its foot anatomy.
 
 ![FakeMimebymetalflygon08](/screenshots/FakeMimebymetalflygon08.png?raw=true) ![FakeMimebyViWalls](/screenshots/FakeMimebyViWalls.png?raw=true)
-
 
 ## Contact the creator
 
