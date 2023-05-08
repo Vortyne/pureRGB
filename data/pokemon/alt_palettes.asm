@@ -124,7 +124,7 @@ AltMonsterPalettes: ; pokemon have alternate palettes depending on where you enc
 	db PAL_BLUEMON    ; SEAKING
 	db PAL_PURPLEMON    ; STARYU
 	db PAL_BLUEMON ; STARMIE
-	db PAL_CYANMON   ; MR_MIME
+	db PAL_PURPLEMON   ; MR_MIME
 	db PAL_REDMON  ; SCYTHER
 	db PAL_0F    ; JYNX
 	db PAL_WHITEMON ; ELECTABUZZ
