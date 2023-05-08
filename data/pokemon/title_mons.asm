@@ -4,7 +4,7 @@ IF DEF(_RED)
 	db STARTER1
 	db STARTER2
 	db STARTER3
-	db WEEDLE
+	db MR_MIME
 	db NIDORAN_M
 	db ARCANINE
 	db PIKACHU
@@ -31,7 +31,7 @@ IF DEF(_BLUE)
 	db SNORLAX
 	db TANGELA
 	db SLOWPOKE
-	db VENONAT
+	db MR_MIME
 	db PORYGON
 	db GENGAR
 	db RAICHU
@@ -45,7 +45,7 @@ IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: the pokemon that appear on the start s
 	db GRIMER
 	db KINGLER
 	db ZUBAT
-	db CATERPIE
+	db MR_MIME
 	db EEVEE
 	db VOLTORB
 	db STARYU
