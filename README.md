@@ -53,9 +53,9 @@ Pictured: GB Monochrome, Original GBC color, SGB Colors, Alternate SGB Colors, G
 - The back sprite of Mr. Mime was replaced by a custom one provided by **metalflygon08** for SW97. I only changed the light reflection in the back because the original felt flat for my tastes in a sphere head. The one in Gen I style it's made by me but based in the SW97/Gen II previously provided to match the same design.
 - Why I do this small change? Because I have despised Mr. Mime original design all my life. It never was a solid playable Pokémon neither due to its ridiculous HP and Defense values. On PureRGB it was overhauled and improved with an amazing Psychic/Ghost dual type making it an unique choice for your team, but his appearance was still annoying me. Plus I always wanted to first contact Github with a simple task and navigate through his interface aside from build something considering the time I spend following projects here. You should play original PureRGB unless you hate Mr. Mime as much as I do.
 
-![fakemime](/screenshots/fakemime.png?raw=true) ![fakemimedex](/screenshots/fakemimedex.png?raw=true) ![fakemimeb](/screenshots/fakemimebgen1.png?raw=true) ![fakemimeb](/screenshots/fakemimeb.png?raw=true)
+![fakemime](/screenshots/FakemimetitleRed.png?raw=true) ![fakemime](/screenshots/fakemime.png?raw=true) ![fakemimedex](/screenshots/fakemimedex.png?raw=true) ![fakemimeb](/screenshots/fakemimebgen1.png?raw=true) ![fakemimeb](/screenshots/fakemimeb.png?raw=true)
 
-Pictured: Front Sprite, Pokedex Data, Back Sprite Gen I, Back Sprite SW97.
+Pictured: Title Screem (Red OG) Front Sprite (SGB), Pokedex Data (Red OG), Back Sprite Gen I (SGB), Back Sprite SW97 (Red OG).
 
 ## Additional data
 
