@@ -62,7 +62,7 @@ Pictured: Title Screen (Red OG) Front Sprite (SGB), Pokedex Data (SGB), Back Spr
   > Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided and a contribution of **[Gamez n' Gainz](https://www.deviantart.com/steppoblazer)**
   > Squirtle (SW97) and Wartortle (SW97) ones are mine.
 
-![SSquad](/screenshots/ssquad.png?raw=true)
+![SSquad](/screenshots/ssquad.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
 
 ## Additional data
 
@@ -73,8 +73,6 @@ Pictured: Title Screen (Red OG) Front Sprite (SGB), Pokedex Data (SGB), Back Spr
 If someone is interested or want to use these sprites for his own projects it's ok. You have the version of **metalflygon08** who provided the back sprite but made some changes from original fake design OR the one I made using the previous one as base, where I reverted those minor changes loyal to original art and extended the footprint one pixel long, matching my perception of its foot anatomy.
 
 ![FakeMimebymetalflygon08](/screenshots/FakeMimebymetalflygon08.png?raw=true) ![FakeMimebyViWalls](/screenshots/FakeMimebyViWalls.png?raw=true) ![FakeMimeSprite](/gfx/pokemon/front/mr.mime.png?raw=true) ![FakeMimeBackSpriteGenI](/gfx/pokemon/back/mr.mimeb.png?raw=true) ![FakeMimeBackSpriteSW97](/gfx/pokemon/back_sw/mr.mimeb.png?raw=true)
-
-![SSquadSprite](/gfx/pokemon/front/squirtle.png?raw=true) ![WSquadSprite](/gfx/pokemon/front/wartortle.png?raw=true) ![BSquadSprite](/gfx/pokemon/front/blastoise.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
 
 ## Contact the creator
 
