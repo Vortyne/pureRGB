@@ -55,7 +55,7 @@ Pictured: GB Monochrome, Original GBC color, SGB Colors, Alternate SGB Colors, G
 
 ![fakemime](/screenshots/FakemimetitleRed.png?raw=true) ![fakemime](/screenshots/fakemime.png?raw=true) ![fakemimedex](/screenshots/fakemimedex.png?raw=true) ![fakemimeb](/screenshots/fakemimebgen1.png?raw=true) ![fakemimeb](/screenshots/fakemimeb.png?raw=true)
 
-Pictured: Title Screem (Red OG) Front Sprite (SGB), Pokedex Data (SGB), Back Sprite Gen I (SGB), Back Sprite SW97 (Red OG).
+Pictured: Title Screen (Red OG) Front Sprite (SGB), Pokedex Data (SGB), Back Sprite Gen I (SGB), Back Sprite SW97 (Red OG).
 
 ## Additional data
 
