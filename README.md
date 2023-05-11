@@ -63,7 +63,7 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 - The front sprites of Squirtle evolution line were upgraded to Squirtle Squad.
 - Also the back sprites of Squirtle evolution line were upgraded in the process to match the front ones:
-    - Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided and a contribution of **[Gamez n' Gainz](https://www.deviantart.com/steppoblazer)**.
+    - Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided as a contribution by **[Gamez n' Gainz](https://www.deviantart.com/steppoblazer)**.
 
 ![SSquad](/screenshots/ssquad.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
 
