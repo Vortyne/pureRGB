@@ -98,4 +98,8 @@ Vortyne - Obvious reasons
 
 metalflygon08 - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime: Mime Sr.
 
+pokeglitch - creating pret_manager and making easier build to test changes.
+
 Gamez n' Gainz - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
+
+Zumi - share some knowledge about coding plus helping to prevent ROM bank overflow.
