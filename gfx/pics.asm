@@ -558,8 +558,6 @@ FlareonPicBack::      INCBIN "gfx/pokemon/back/flareonb.pic"
 JolteonPicBack::      INCBIN "gfx/pokemon/back/jolteonb.pic"
 VaporeonPicBack::     INCBIN "gfx/pokemon/back/vaporeonb.pic"
 MachopPicBack::       INCBIN "gfx/pokemon/back/machopb.pic"
-ZubatPicBack::        INCBIN "gfx/pokemon/back/zubatb.pic"
-EkansPicBack::        INCBIN "gfx/pokemon/back/ekansb.pic"
 
 SECTION "Pics 10", ROMX, BANK[PICS_10]
 
@@ -582,6 +580,8 @@ VileplumePicBack::     INCBIN "gfx/pokemon/back/vileplumeb.pic"
 BellsproutPicBack::    INCBIN "gfx/pokemon/back/bellsproutb.pic"
 WeepinbellPicBack::    INCBIN "gfx/pokemon/back/weepinbellb.pic"
 ArmoredMewtwoBack::    INCBIN "gfx/pokemon/back/armored_mewtwob.pic"
+ZubatPicBack::        INCBIN "gfx/pokemon/back/zubatb.pic"
+EkansPicBack::        INCBIN "gfx/pokemon/back/ekansb.pic"
 
 CharmeleonPicFront::   INCBIN "gfx/pokemon/front/charmeleon.pic"
 CharmeleonPicBackSW::  INCBIN "gfx/pokemon/back_sw/charmeleonb.pic"
