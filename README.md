@@ -1,16 +1,10 @@
-# Pokémon PureRGB (PureRed, PureGreen, PureBlue)
-
-A purist's enhancement of Pokémon Red, Green, and Blue based on the pokered disassembly.
-
-To download the latest version of this romhack, [**go here**](https://github.com/Vortyne/pureRGB/releases/latest)
+# Pokémon PureRGB-FakeMime
 
 To see the full list of features, bugfixes, and everything else, see [**FEATURES.md**](FEATURES.md)
 
 If you want info on the game while playing it (learnsets, for example), see [**The Wiki**](https://github.com/Vortyne/pureRGB/wiki)
 
-If you experience a bug or have an issue while playing, report it [**Here**](https://github.com/Vortyne/pureRGB/issues/new?assignees=&labels=&template=blank_issue.md)
-
-This is a purist's enhancement of Pokemon Red/Blue/Green. The goal is to enhance the original games for excellent replayability without bringing in mechanics, moves, sprites, visuals, type matchups, or pokemon that were introduced in later games. 
+This is an enhancement of Pokemon Red/Blue/Green. The goal is to enhance the original games for excellent replayability without bringing in mechanics, moves, sprites, visuals, type matchups, or pokemon that were introduced in later games. 
 - It makes the bulk of the 151 original pokemon all more obtainable and usable in the early game, with better movesets and more balanced stats. 
 - Many moves in the game were rebalanced or modified. When I say "rebalanced", I mean "the useless things were made more useful!" 
 - There are more bug, poison, and ghost type moves available. The focus is on getting a useful set of moves available for every single pokemon in the game. 
@@ -63,7 +57,7 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 - The front sprites of Squirtle evolution line were upgraded to Squirtle Squad.
 - Also the back sprites of Squirtle evolution line were upgraded in the process to match the front ones:
-    - Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided as a contribution by **[Gamez n' Gainz](https://www.deviantart.com/steppoblazer)**.
+    - Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided as a contribution by **[Blazer](https://www.deviantart.com/steppoblazer)**.
 
 ![SSquadFrontRB](/gfx/pokemon/front/squirtle.png?raw=true) ![SSquadFrontRG](/gfx/pokemon/front_alt/squirtle.png?raw=true) ![WSquadFrontRB](/gfx/pokemon/front/wartortle.png?raw=true) ![BSquadFrontRB](/gfx/pokemon/front/blastoise.png?raw=true) ![BSquadFrontRG](/gfx/pokemon/front_alt/blastoise.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
 
@@ -73,14 +67,9 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 ![RedBlueBetaPokemon](/screenshots/RedBlueBetaPokemon.png?raw=true)
 
-## Contact the creator
-
-[discord]: https://discord.gg/d5dubZ3
-- **Discord:** [pret][discord] - user Vortiene
-
-If you'd like to make your own romhack based on this one, fork the repository and see [**INSTALL.md**](INSTALL.md).
-
 ## Credits
+
+Vortyne - Obvious reasons
 
 Jojobear13 - Tons of code snippets and help via the shinpokered romhack codebase, direct support regarding the pokemon yellow gbc enhancements porting
 
@@ -94,12 +83,10 @@ Mord - Most of the work creating LT.Surge and Erika overworld sprites
 
 pret discord and pret in general for their original disassembly work on Red / Blue
 
-Vortyne - Obvious reasons
-
-metalflygon08 - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime: Mime Sr.
+metalflygon08 - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime line: Mime Sr.
 
 pokeglitch - creating pret_manager and making easier build to test changes.
 
-Gamez n' Gainz - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
+Blazer - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
 
 Zumi - share some knowledge about coding plus helping to prevent ROM bank overflow.
