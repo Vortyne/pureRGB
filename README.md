@@ -60,6 +60,8 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 ![SSquadFrontRB](/gfx/pokemon/front/squirtle.png?raw=true) ![SSquadFrontRG](/gfx/pokemon/front_alt/squirtle.png?raw=true) ![WSquadFrontRB](/gfx/pokemon/front/wartortle.png?raw=true) ![BSquadFrontRB](/gfx/pokemon/front/blastoise.png?raw=true) ![BSquadFrontRG](/gfx/pokemon/front_alt/blastoise.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
 
+- Changed entire Title screen Pokémon list. Now each game will have three starters, the first one depending on which game you're playing as it always was plus his evos (Charmander evolution line for Red, Bulbasaur evolution line for Green and Squirtle evolution line for Blue). Then FakeMime sprite and a list of different Pokémon I really like to play distributed per game to make each rom Title screen more unique.
+
 - Some sprites were changed to suit my taste: Gastly uses RG sprite, Golbat default sprite uses RB one and the alternative SW97, Gengar default sprite uses RG one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
 
 ## Additional data
