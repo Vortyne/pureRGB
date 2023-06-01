@@ -44,10 +44,10 @@ FrontSpriteOptions3Text:
 	next " TENTACRUEL: RB RG"
 	next " GRAVELER:   RB RG"
 	next " CLOYSTER:   RB RG"
-	next " GENGAR:     RB Y"
+	next " GENGAR:     RG SW"
 	next " ONIX:       RB RG"
 	next " VOLTORB:    RB RG"
-	next " EXEGGCUTE:  RB Y@"
+	next " EXEGGCUTE:  RB RG@"
 
 DrawFrontSpriteOptions3Menu:
 	hlcoord 0, 0
