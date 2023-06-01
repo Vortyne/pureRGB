@@ -42,7 +42,7 @@ FrontSpriteOptions2Data:
 FrontSpriteOptions2Text:
 	db   "SPRITES→FRONT 2"
 	next " NIDORINO:   RB RG"
-	next " GOLBAT:     Y  RB"
+	next " GOLBAT:     RB SW"
 	next " MANKEY:     RB RG"
 	next " ARCANINE:   RB RG"
 	next " ABRA:       RB RG"
