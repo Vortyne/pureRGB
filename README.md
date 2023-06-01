@@ -56,10 +56,11 @@ If someone is interested or want to use these sprites for his own projects it's 
 ![FakeMimebymetalflygon08](/screenshots/FakeMimebymetalflygon08.png?raw=true) ![FakeMimebyViWalls](/screenshots/FakeMimebyViWalls.png?raw=true) ![FakeMimeSprite](/gfx/pokemon/front/mr.mime.png?raw=true) ![FakeMimeBackSpriteGenI](/gfx/pokemon/back/mr.mimeb.png?raw=true) ![FakeMimeBackSpriteSW97](/gfx/pokemon/back_sw/mr.mimeb.png?raw=true)
 
 - The front sprites of Squirtle evolution line were upgraded to Squirtle Squad.
-- Also the back sprites of Squirtle evolution line were upgraded in the process to match the front ones:
-    - Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided as a contribution by **[Blazer](https://www.deviantart.com/steppoblazer)**.
+- Also the back sprites of Squirtle evolution line were upgraded in the process to match the front ones. Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided as a contribution by **[Blazer](https://www.deviantart.com/steppoblazer)**.
 
 ![SSquadFrontRB](/gfx/pokemon/front/squirtle.png?raw=true) ![SSquadFrontRG](/gfx/pokemon/front_alt/squirtle.png?raw=true) ![WSquadFrontRB](/gfx/pokemon/front/wartortle.png?raw=true) ![BSquadFrontRB](/gfx/pokemon/front/blastoise.png?raw=true) ![BSquadFrontRG](/gfx/pokemon/front_alt/blastoise.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
+
+- Some sprites were changed to suit my taste: Gastly uses RG sprite, Golbat default sprite uses RB one and the alternative SW97, Gengar default sprite uses RG one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
 
 ## Additional data
 
