@@ -51,10 +51,12 @@ MainMenu:
 	call PlaceString
 .next2
 	;PureRGBnote: ADDED: print the romhack version
-	coord hl, $00, $11
+	coord hl, $00, $10
 	ld de, VersionText
 	call PlaceString
-
+	coord hl, 0, $11
+	ld de, VersionText2
+	call PlaceString
 	ld hl, wd730
 	res 6, [hl]
 	call UpdateSprites
@@ -380,6 +382,11 @@ IF DEF(_GREEN)
 ENDC
 db " v"
 INCLUDE "version_number.asm"
+db "@"
+
+VersionText2:
+db "+FakeMime v"
+INCLUDE "version_number.viwalls.asm"
 db "@"
 
 DisplayContinueGameInfo:
