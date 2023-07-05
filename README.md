@@ -2,7 +2,7 @@
 
 To see the full list of features, bugfixes, and everything else, see [**FEATURES.md**](FEATURES.md)
 
-If you want info on the game while playing it (learnsets, for example), see [**The Wiki**](https://github.com/Vortyne/pureRGB/wiki)
+If you want info on the game while playing it (learnsets, for example), see [**The Wiki**](https://github.com/ViWalls/pureRGB-FakeMime/wiki)
 
 This is an enhancement of Pokemon Red/Blue/Green. The goal is to enhance the original games for excellent replayability without bringing in mechanics, moves, sprites, visuals, type matchups, or pokemon that were introduced in later games. 
 - It makes the bulk of the 151 original pokemon all more obtainable and usable in the early game, with better movesets and more balanced stats. 
@@ -10,13 +10,13 @@ This is an enhancement of Pokemon Red/Blue/Green. The goal is to enhance the ori
 - There are more bug, poison, and ghost type moves available. The focus is on getting a useful set of moves available for every single pokemon in the game. 
 - Front sprites were updated to be just about the best set of sprites from Red/Green/Blue/Spaceworld 1997 overall.
 - All 151 pokemon are obtainable in all versions of this hack. 
-- [Many small quality-of-life tweaks and bugfixes](https://github.com/Vortyne/pureRGB/blob/master/FEATURES.md#quality-of-life-enhancements) were made. 
+- [Many small quality-of-life tweaks and bugfixes](https://github.com/ViWalls/pureRGB-FakeMime/blob/master/FEATURES.md#quality-of-life-enhancements) were made. 
 - Game bugs that can be used to your own advantage (like the leech seed/toxic bug, the hyper beam no recharge on faint bug, etc.) are unchanged, because they are quirks of the battle engine that you can use as your own tool. 
 - Mew is under the truck as expected!
 - Missingno and the item duplication glitch are intact - but won't corrupt your save anymore!
 - An entirely new mode for the pokedex called the MOVEDEX was added. It shows data about moves you have seen in detail. You unlock the MOVEDEX in viridian city.
 - There are multiple secret areas to be found after becoming CHAMP. Bills Garden, Team Rocket / Mewtwo lore, and more...
-- [Many options to enhance the game visually and mechanically were added.](https://github.com/Vortyne/pureRGB/blob/master/FEATURES.md#new-options-in-the-options-menu) **(You must turn them on via the options in-game!)** Including:
+- [Many options to enhance the game visually and mechanically were added.](https://github.com/ViWalls/pureRGB-FakeMime/blob/master/FEATURES.md#new-options-in-the-options-menu) **(You must turn them on via the options in-game!)** Including:
   - Switchable color palettes (Choose between original colors, Super Gameboy Colors, or Pokemon Yellow Colors in-game whenever you like! Works on GBC and Super Gameboy. Yes, this romhack has GBC support!)
   - Optional Spaceworld 1997 Back Sprites
   - Optional enhanced menu sprites/overworld icons
