@@ -62,7 +62,7 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 - Changed entire Title screen Pokémon list. Now each game will have three starters, the first one depending on which game you're playing as it always was plus his evos (Charmander evolution line for Red, Bulbasaur evolution line for Green and Squirtle evolution line for Blue). Then FakeMime sprite and a list of different Pokémon I really like to play distributed per game to make each rom Title screen more unique.
 
-- Some sprites were changed to suit my taste: Gastly uses RG sprite, Golbat default sprite uses RB one and the alternative SW97, Gengar default sprite uses RG one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
+- Some sprites were changed to suit my taste: Gastly uses RG sprite, Gengar default sprite uses RG one and the alternative SW97, Golbat default sprite uses RB one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
 
 ## Additional data
 
@@ -92,4 +92,6 @@ pokeglitch - creating pret_manager and making easier build to test changes.
 
 Blazer - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
 
-Zumi - share some knowledge about coding plus helping to prevent ROM bank overflow.
+ZoomTen - share some knowledge about coding plus helping to prevent ROM bank overflow amongst other things.
+
+Plague von Karma & Martha, the Programmer Girl - inspiration plus a shitload of things related to Kanto Expansion Pak development through extremely well explained commits and insane Gen I research.
