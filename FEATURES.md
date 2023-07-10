@@ -340,10 +340,15 @@ The fourth page contains Sprite-related options.
   - BONEMERANG - 55 base power, hits twice, 90 accuracy, 30% chance of lowering opponent's speed.
   - SUPER FANG - now deals a set 2/3 the opponent's HP instead of 1/2. Useful for catching rare pokemon!
   - TELEPORT - actually does something in trainer battles now! The user will switch out, and heal 25% health by doing so. Still works the same as it used to when wild pokemon use it.
+  - CRABHAMMER - now it's a Physical signature move exclusive of Krabby and Kingler learnsets. Only Mew and Missigno. can learn it using TM.
+  - NIGHT SHADE - improved in PureRGB but now is also a Special move.
 - There are many more tweaks to moves. Check your MOVEDEX in game to see what a move you just saw's effects were, or see the wiki for a link to the complete move list. Be sure to try almost every move and don't write them off. Except for splash. It still does nothing as usual.
 
 ## Pokemon type changes
 These changes were all made to make the pokemon more fun to use / more unique from similar pokemon / less bad
+- Venusaur is Grass/Dragon
+- Blastoise is Water/Dragon
+- Charizard is Fire/Dragon
 - Ninetales is Fire/Ghost
 - Golduck is Water/Psychic
 - Seadra is Water/Dragon
@@ -353,13 +358,14 @@ These changes were all made to make the pokemon more fun to use / more unique fr
 - Doduo/Dodrio are Flying/Ground
 - Voltorb/Electrode are Electric/Fire
 - Fearow is Flying/Fighting
-- Kingler is Water/Ground
+- Krabby and Kingler are Water/Normal
 - Pinsir is Bug/Fighting
 - Victreebel is Grass/Dragon
 - Sandshrew and Sandslash are Ground/Normal (stronger slash damage!)
 - Ponyta and Rapidash are now Fire/Normal 
 - Goldeen and Seaking are now Water/Normal
 - Mr Mime is Psychic/Ghost
+- Gastly, Haunter and Gengar are Ghost/Normal
 - Electabuzz is Electric/Fighting
 - Marowak is Ground/Ghost
 
@@ -396,7 +402,6 @@ The version-specific visuals of japanese pokemon green were added into PureGreen
 
 ## Things that Will Remain Unchanged
 - I will not make the game use Gen 2 colors/tilesets/music/sprites/etc.
-- I will not implement the physical/special split. I balanced the game around there not being one.
 - I will not split the SPECIAL stat into SPECIAL DEFENSE and SPECIAL ATTACK. I balanced the game around the combined special stat.
 - I will not add dark, steel, or fairy type. 
 - I will not mess with the type matchup chart outside of the tweakable options already provided.
