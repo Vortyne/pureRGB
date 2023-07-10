@@ -32,14 +32,6 @@ This is an enhancement of Pokemon Red/Blue/Green. The goal is to enhance the ori
   - An NPC who can permanently remove CUT trees.
   - An NPC who can revive fossils for you in SAFFRON CITY so you can get fossil pokemon a bit earlier.
   - An NPC who will give you LAPRAS a bit earlier in the game.
-  
-![blue gb](/screenshots/blue_title_gb_no_color.png?raw=true) ![blue gbc default](/screenshots/blue_title_default_gbc_color.png?raw=true) ![blue sgb colors](/screenshots/blue_title_sgb_colors_on_gbc.png?raw=true) ![blue sgb2 colors](/screenshots/blue_title_sgb2_colors_on_gbc.png?raw=true) ![blue gbc colors](/screenshots/blue_title_gbc_colors_on_gbc.png?raw=true) 
-
-![red gb](/screenshots/red_title_gb_no_color.png?raw=true) ![red gbc default](/screenshots/red_title_default_gbc_color.png?raw=true)  ![red sgb colors](/screenshots/red_title_sgb_colors_on_gbc.png?raw=true) ![red sgb2 colors](/screenshots/red_title_sgb2_colors_on_gbc.png?raw=true) ![red gbc colors](/screenshots/red_title_gbc_colors_on_gbc.png?raw=true)
-
-![green gb](/screenshots/green_title_gb_no_color.png?raw=true) ![green gbc default](/screenshots/green_title_default_gbc_color.png?raw=true)  ![green sgb colors](/screenshots/green_title_sgb_colors_on_gbc.png?raw=true) ![green sgb2 colors](/screenshots/green_title_sgb2_colors_on_gbc.png?raw=true) ![green gbc colors](/screenshots/green_title_gbc_colors_on_gbc.png?raw=true)
-
-Pictured: GB Monochrome, Original GBC color, SGB Colors, Alternate SGB Colors, GBC Colors (can choose between the 4 color options on GBC in-game)
 
 ## Fork changes
 
@@ -72,26 +64,26 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 ## Credits
 
-Vortyne - Obvious reasons
+**Vortyne** - Obvious reasons
 
-Jojobear13 - Tons of code snippets and help via the shinpokered romhack codebase, direct support regarding the pokemon yellow gbc enhancements porting
+**Jojobear13** - Tons of code snippets and help via the shinpokered romhack codebase, direct support regarding the pokemon yellow gbc enhancements porting
 
-Danny-E 33 - Larger back sprites code snippets, EXP Bar code snippets, various support regarding game audio and questions about rgbasm/gbz80 answered
+**Danny-E 33** - Larger back sprites code snippets, EXP Bar code snippets, various support regarding game audio and questions about rgbasm/gbz80 answered
 
-Mechanicalpen - enhanced menu icons code
+**Mechanicalpen** - enhanced menu icons code
 
-LJSTAR - Most of the work creating the type icons used in the movedex
+**LJSTAR** - Most of the work creating the type icons used in the movedex
 
-Mord - Most of the work creating LT.Surge and Erika overworld sprites
+**Mord** - Most of the work creating LT.Surge and Erika overworld sprites
 
-pret discord and pret in general for their original disassembly work on Red / Blue
+**pret discord** and **pret** in general for their original disassembly work on Red / Blue
 
-metalflygon08 - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime line: Mime Sr.
+**metalflygon08** - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime line: Mime Sr.
 
-pokeglitch - creating pret_manager and making easier build to test changes.
+**pokeglitch** - creating pret_manager and making easier build to test changes.
 
-Blazer - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
+**Blazer** - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
 
-ZoomTen - share some knowledge about coding plus helping to prevent ROM bank overflow amongst other things.
+**ZoomTen** - share some knowledge about coding plus helping to prevent ROM bank overflow amongst other things. Also tons of support.
 
-Plague von Karma & Martha, the Programmer Girl - inspiration plus a shitload of things related to Kanto Expansion Pak development through extremely well explained commits and insane Gen I research.
+**Plague von Karma** & **Martha, the Programmer Girl** - inspiration plus a shitload of things related to Kanto Expansion Pak development through extremely well explained commits and insane Gen I research.
