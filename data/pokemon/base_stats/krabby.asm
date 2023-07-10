@@ -3,7 +3,7 @@
 	db  30, 105,  90,  50,  25
 	;   hp  atk  def  spd  spc
 
-	db WATER, WATER ; type
+	db WATER, NORMAL ; type
 	db 225 ; catch rate
 	db 115 ; base exp
 
@@ -28,7 +28,6 @@
 	BARRIER,\
 	EARTHQUAKE,\
 	CRABHAMMER,\
-	DIG,\
 	SWORDS_DANCE,\
 	BIDE,\
 	AGILITY,\

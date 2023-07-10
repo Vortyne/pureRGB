@@ -423,7 +423,7 @@ GengarEvosMoves:
 	db 24, MEGA_DRAIN
 	db 29, BARRAGE
 	db 33, DREAM_EATER
-	db 41, SLAM ; FILTHY SLAM
+	db 41, WRAP
 	db 46, ICE_PUNCH
 	db 57, LOVELY_KISS
 	db 0
@@ -591,7 +591,7 @@ GastlyEvosMoves:
 	db 24, MEGA_DRAIN
 	db 29, BARRAGE
 	db 33, DREAM_EATER
-	db 41, SLAM ; FILTHY SLAM
+	db 41, WRAP
 	db 57, LOVELY_KISS
 	db 0
 
@@ -638,6 +638,8 @@ BlastoiseEvosMoves:
 	db 34, COUNTER ; DRAIN PUNCH
 	db 39, SKULL_BASH
 	db 45, HYDRO_PUMP
+	db 49, DRAGON_RAGE
+	db 54, EGG_BOMB
 	db 0
 
 PinsirEvosMoves:
@@ -1308,16 +1310,16 @@ KrabbyEvosMoves:
 	db EV_LEVEL, 29, KINGLER
 	db 0
 ; Learnset
-	db 14, FURY_SWIPES ; DUST CLAW
-	db 17, KARATE_CHOP
-	db 19, VICEGRIP
+	db 14, KARATE_CHOP
+	db 17, VICEGRIP
+	db 19, STOMP
 	db 22, GUILLOTINE
 	db 26, AGILITY
 	db 30, SLASH
 	db 35, SLAM ; FILTHY SLAM
-	db 39, FURY_ATTACK
-	db 44, EARTHQUAKE
-	db 50, SPIKE_CANNON
+	db 39, BODY_SLAM
+	db 44, CRABHAMMER
+	db 50, HYPER_BEAM
 	db 0
 
 MissingNo4FEvosMoves:
@@ -2096,16 +2098,16 @@ KinglerEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 14, FURY_SWIPES ; DUST CLAW
+	db 14, KARATE_CHOP
 	db 17, VICEGRIP
-	db 19, KARATE_CHOP
+	db 19, STOMP
 	db 22, GUILLOTINE
 	db 26, AGILITY
 	db 30, SLASH
 	db 35, SLAM ; FILTHY SLAM
-	db 39, FURY_ATTACK
-	db 44, EARTHQUAKE
-	db 51, SPIKE_CANNON
+	db 39, BODY_SLAM
+	db 44, CRABHAMMER
+	db 51, HYPER_BEAM
 	db 0
 
 CloysterEvosMoves:
@@ -2230,7 +2232,7 @@ HaunterEvosMoves:
 	db 24, MEGA_DRAIN
 	db 29, BARRAGE
 	db 33, DREAM_EATER
-	db 41, SLAM ; FILTHY SLAM
+	db 41, WRAP
 	db 46, ICE_PUNCH
 	db 57, LOVELY_KISS
 	db 0
@@ -2335,7 +2337,9 @@ VenusaurEvosMoves:
 	db 30, RAZOR_LEAF
 	db 36, SLEEP_POWDER
 	db 40, GROWTH
+	db 46, DRAGON_RAGE
 	db 50, SOLARBEAM
+	db 56, EGG_BOMB
 	db 0
 
 TentacruelEvosMoves:
@@ -2683,8 +2687,10 @@ CharizardEvosMoves:
 	db 24, RAGE
 	db 28, TAKE_DOWN ; HEAT_RUSH
 	db 31, SLASH
+	db 36, DRAGON_RAGE
 	db 41, FLAMETHROWER
 	db 48, FIRE_SPIN
+	db 54, EGG_BOMB
 	db 0
 
 MissingNoB5EvosMoves:

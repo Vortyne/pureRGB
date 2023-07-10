@@ -3,7 +3,7 @@
 	db  60,  65,  60, 110, 130
 	;   hp  atk  def  spd  spc
 
-	db GHOST, POISON ; type
+	db GHOST, NORMAL ; type
 	db 45 ; catch rate
 	db 190 ; base exp
 
@@ -31,11 +31,9 @@
 	KINESIS,\ ; FIREWALL
 	BIDE,\
 	BARRAGE,\
-	SLAM,\ ; FILTHY SLAM
 	KARATE_CHOP,\
 	LOVELY_KISS,\
 	PSYBEAM,\
-	SLUDGE,\
 	GLARE,\
 	SUBSTITUTE,\
 	CUT,\
