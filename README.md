@@ -56,6 +56,16 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 - Some sprites were changed to suit my taste: Gastly uses RG sprite, Gengar default sprite uses RG one and the alternative SW97, Golbat default sprite uses RB one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
 
+- Muk Special Stat raised to 100 in order to match GSC version. Now it's more bulky and hard to deal, speciall with Trainer EXP activated.
+
+- All three starters final evo were revamped to dual Dragon type in addition to their main types: Now Venusaur it's Grass/Dragon, Blastoise Water/Dragon and Charizard Fire/Dragon to make them more unique and valuable. Dragon Rage and Egg Bomb are Dragon moves in PureRGB so both were added to their learnsets following level up format of similar learnsets.
+
+- Krabby and Kingler are now Water/Normal types. Crabhammer it's their signature, exclusive move and Ground moves prior to PureRGB were replaced by Normal ones following vanilla criteria. Is still weak to Electric moves but it has now different strategies and powerful Normal STAB moves.
+
+- Added a splash of Physical Special Split for Crabhammer (now a Physical Water move) and Night Shade (now a Special Ghost type move already revamped in PureRGB, even more useful on this fork).
+
+- Gastly, Haunter and Gengar are now Ghost/Normal types. The only poison move he can learn aside from Toxic, Filthy Slam, was replaced by Wrap to gain trapping strategies. Is still fragile but not as it was due to original Poison dual type.
+
 ## Additional data
 
 **One Picture Worth Ten Thousand Words**
