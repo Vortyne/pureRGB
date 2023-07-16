@@ -6,7 +6,7 @@ magick vulpix.png ninetales.png jigglypuff.png wigglytuff.png zubat.png golbat.p
 magick mankey.png primeape.png growlithe.png arcanine.png poliwag.png poliwhirl.png poliwrath.png abra.png kadabra.png alakazam.png machop.png machoke.png machamp.png bellsprout.png weepinbell.png victreebel.png tentacool.png tentacruel.png +append ../row4.png
 magick geodude.png graveler.png golem.png ponyta.png rapidash.png slowpoke.png slowbro.png magnemite.png magneton.png farfetchd.png doduo.png dodrio.png seel.png dewgong.png grimer.png muk.png shellder.png cloyster.png +append ../row5.png
 magick gastly.png haunter.png gengar.png onix.png drowzee.png hypno.png krabby.png kingler.png voltorb.png electrode.png exeggcute.png exeggutor.png cubone.png marowak.png hitmonlee.png hitmonchan.png lickitung.png +append ../row6.png
-magick koffing.png weezing.png rhyhorn.png rhydon.png chansey.png tangela.png kangaskhan.png horsea.png seadra.png goldeen.png seaking.png staryu.png starmie.png mr.mime.png scyther.png jynx.png electabuzz.png +append ../row7.png
+magick koffing.png weezing.png rhyhorn.png rhydon.png chansey.png tangela.png kangaskhan.png horsea.png seadra.png goldeen.png seaking.png staryu.png starmie.png mr.mime.png scyther.png jynx.png electabuzz.png  +append ../row7.png
 magick magmar.png pinsir.png tauros.png magikarp.png gyarados.png lapras.png ditto.png eevee.png vaporeon.png jolteon.png flareon.png porygon.png omanyte.png omastar.png kabuto.png kabutops.png aerodactyl.png +append ../row8.png
 magick snorlax.png articuno.png zapdos.png moltres.png dratini.png dragonair.png dragonite.png mewtwo.png mew.png +append ../row9.png
 cd ..
