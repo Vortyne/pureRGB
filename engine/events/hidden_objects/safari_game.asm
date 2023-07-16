@@ -76,7 +76,7 @@ SafariZoneGameOver:
 	ldh [hWarpDestinationMap], a
 	ld a, $3
 	ld [wDestinationWarpID], a
-	ld a, $5
+	ld a, SCRIPT_SAFARIZONEGATE_LEAVING_SAFARI
 	ld [wSafariZoneGateCurScript], a
 	SetEvent EVENT_SAFARI_GAME_OVER
 	ld a, 1
@@ -121,7 +121,7 @@ ClearSafariFlags::
 	ld [wNumSafariBalls], a
 	ld [wSafariSteps], a
 	ld [wSafariZoneGameOver], a 
-	ld [wSafariZoneGateCurScript], a 
+	ld [wSafariZoneGateCurScript], a ; SCRIPT_SAFARIZONEGATE_DEFAULT
 	ret
 
 TimesUpText:
