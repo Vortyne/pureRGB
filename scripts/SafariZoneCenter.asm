@@ -10,10 +10,11 @@ SafariZoneCenter_Script:
 	ret
 
 SafariZoneCenter_ScriptPointers:
-	dw CheckFightingMapTrainers
-	dw DisplayEnemyTrainerTextAndStartBattle
-	dw EndTrainerBattle
-	dw RangerPostBattleCenter
+	def_script_pointers
+	dw_const CheckFightingMapTrainers,              SCRIPT_SAFARIZONECENTER_DEFAULT
+	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SAFARIZONECENTER_START_BATTLE
+	dw_const EndTrainerBattle,                      SCRIPT_SAFARIZONECENTER_END_BATTLE
+	dw_const RangerPostBattleCenter,                SCRIPT_SAFARIZONECENTER_RANGER_POST_BATTLE
 
 SafariZoneCenter_TextPointers:
 	def_text_pointers
@@ -22,7 +23,7 @@ SafariZoneCenter_TextPointers:
 	dw_const SafariZoneCenterTrainerText1,        TEXT_SAFARIZONECENTER_ENGINEER
 	dw_const SafariZoneCenterTrainerText2,        TEXT_SAFARIZONECENTER_JUGGLER
 	dw_const SafariZoneCenterTrainerText3,        TEXT_SAFARIZONECENTER_POKEMANIAC
-	dw_const PickUpItemText,                      TEXT_SAFARIZONECENTER_NUGGET
+	dw_const PickUpItemText,                      TEXT_SAFARIZONECENTER_ITEM1
 	dw_const SafariZoneCenterRestHouseSignText,   TEXT_SAFARIZONECENTER_REST_HOUSE_SIGN
 	dw_const SafariZoneCenterTrainerTipsSignText, TEXT_SAFARIZONECENTER_TRAINER_TIPS_SIGN
 
@@ -82,7 +83,7 @@ SafariZoneCenterRangerText0:
 	text_asm
 	ld hl, SafariZoneCenterRangerHeader
 	call TalkToTrainer
-	ld a, 3
+	ld a, SCRIPT_SAFARIZONECENTER_RANGER_POST_BATTLE
 	ld [wCurMapScript], a 
 	rst TextScriptEnd
 

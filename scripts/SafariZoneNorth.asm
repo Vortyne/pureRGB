@@ -10,10 +10,11 @@ SafariZoneNorth_Script:
 	ret
 
 SafariZoneNorth_ScriptPointers:
-	dw CheckFightingMapTrainers
-	dw DisplayEnemyTrainerTextAndStartBattle
-	dw EndTrainerBattle
-	dw RangerPostBattleNorth
+	def_script_pointers
+	dw_const CheckFightingMapTrainers,              SCRIPT_SAFARIZONENORTH_DEFAULT
+	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SAFARIZONENORTH_START_BATTLE
+	dw_const EndTrainerBattle,                      SCRIPT_SAFARIZONENORTH_END_BATTLE
+	dw_const RangerPostBattleNorth,                 SCRIPT_SAFARIZONENORTH_RANGER_POST_BATTLE
 
 SafariZoneNorth_TextPointers:
 	def_text_pointers
@@ -23,8 +24,8 @@ SafariZoneNorth_TextPointers:
 	dw_const SafariZoneNorthTrainerText2,      TEXT_SAFARIZONENORTH_SUPER_NERD
 	dw_const SafariZoneNorthTrainerText3,      TEXT_SAFARIZONENORTH_ENGINEER
 	dw_const SafariZoneNorthTrainerText4,      TEXT_SAFARIZONENORTH_POKEMANIAC
-	dw_const PickUpItemText,                   TEXT_SAFARIZONENORTH_PROTEIN
-	dw_const PickUpItemText,                   TEXT_SAFARIZONENORTH_TM_SKULL_BASH
+	dw_const PickUpItemText,                   TEXT_SAFARIZONENORTH_ITEM1
+	dw_const PickUpItemText,                   TEXT_SAFARIZONENORTH_ITEM2
 	dw_const SafariZoneNorthRestHouseSignText, TEXT_SAFARIZONENORTH_REST_HOUSE_SIGN
 	dw_const SafariZoneNorthTrainerTips1Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_1
 	dw_const SafariZoneNorthSignText,          TEXT_SAFARIZONENORTH_SIGN
@@ -75,7 +76,7 @@ SafariZoneNorthRangerText0:
 	text_asm
 	ld hl, SafariZoneNorthRangerHeader
 	call TalkToTrainer
-	ld a, 3
+	ld a, SCRIPT_SAFARIZONENORTH_RANGER_POST_BATTLE
 	ld [wCurMapScript], a 
 	rst TextScriptEnd
 

@@ -10,10 +10,11 @@ SafariZoneEast_Script:
 	ret
 
 SafariZoneEast_ScriptPointers:
-	dw CheckFightingMapTrainers
-	dw DisplayEnemyTrainerTextAndStartBattle
-	dw EndTrainerBattle
-	dw RangerPostBattleEast
+	def_script_pointers
+	dw_const CheckFightingMapTrainers,              SCRIPT_SAFARIZONEEAST_DEFAULT
+	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SAFARIZONEEAST_START_BATTLE
+	dw_const EndTrainerBattle,                      SCRIPT_SAFARIZONEEAST_END_BATTLE
+	dw_const RangerPostBattleEast,                  SCRIPT_SAFARIZONEEAST_RANGER_POST_BATTLE
 
 SafariZoneEast_TextPointers:
 	def_text_pointers
@@ -22,10 +23,10 @@ SafariZoneEast_TextPointers:
 	dw_const SafariZoneEastTrainerText1,      TEXT_SAFARIZONEEAST_ROCKER
 	dw_const SafariZoneEastTrainerText2,      TEXT_SAFARIZONEEAST_COOLTRAINER_M
 	dw_const SafariZoneEastTrainerText3,      TEXT_SAFARIZONEEAST_ENGINEER
-	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_FULL_RESTORE
-	dw_const PickUp5ItemText,                 TEXT_SAFARIZONEEAST_MAX_RESTORE
-	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_CARBOS
-	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_TM_EGG_BOMB
+	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM1
+	dw_const PickUp5ItemText,                 TEXT_SAFARIZONEEAST_ITEM2
+	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM3
+	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM4
 	dw_const SafariZoneEastRestHouseSignText, TEXT_SAFARIZONEEAST_REST_HOUSE_SIGN
 	dw_const SafariZoneEastTrainerTipsText,   TEXT_SAFARIZONEEAST_TRAINER_TIPS
 	dw_const SafariZoneEastSignText,          TEXT_SAFARIZONEEAST_SIGN
@@ -79,7 +80,7 @@ SafariZoneEastRangerText0:
 	text_asm
 	ld hl, SafariZoneEastRangerHeader
 	call TalkToTrainer
-	ld a, 3
+	ld a, SCRIPT_SAFARIZONEEAST_RANGER_POST_BATTLE
 	ld [wCurMapScript], a 
 	rst TextScriptEnd
 
