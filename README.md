@@ -48,23 +48,20 @@ If someone is interested or want to use these sprites for his own projects it's 
 ![FakeMimebymetalflygon08](/screenshots/FakeMimebymetalflygon08.png?raw=true) ![FakeMimebyViWalls](/screenshots/FakeMimebyViWalls.png?raw=true) ![FakeMimeSprite](/gfx/pokemon/front/mr.mime.png?raw=true) ![FakeMimeBackSpriteGenI](/gfx/pokemon/back/mr.mimeb.png?raw=true) ![FakeMimeBackSpriteSW97](/gfx/pokemon/back_sw/mr.mimeb.png?raw=true)
 
 - The front sprites of Squirtle evolution line were upgraded to Squirtle Squad.
-- Also the back sprites of Squirtle evolution line were upgraded in the process to match the front ones. Squirtle (Gen I), Wartortle (Gen I), Blastoise (Gen I) & Blastoise (SW97) are provided as a contribution by **[Blazer](https://www.deviantart.com/steppoblazer)**.
+- Also the back sprites of Squirtle evolution line were upgraded in the process to match the front ones. Squirtle (Gen I), Wartortle (Gen I) & Blastoise (SW97) are provided as a contribution by **[Blazer](https://www.deviantart.com/steppoblazer)**.
 
 ![SSquadFrontRB](/gfx/pokemon/front/squirtle.png?raw=true) ![SSquadFrontRG](/gfx/pokemon/front_alt/squirtle.png?raw=true) ![WSquadFrontRB](/gfx/pokemon/front/wartortle.png?raw=true) ![BSquadFrontRB](/gfx/pokemon/front/blastoise.png?raw=true) ![BSquadFrontRG](/gfx/pokemon/front_alt/blastoise.png?raw=true) ![SSquadBackSpriteGenI](/gfx/pokemon/back/squirtleb.png?raw=true) ![WSquadBackSpriteGenI](/gfx/pokemon/back/wartortleb.png?raw=true) ![BSquadBackSpriteGenI](/gfx/pokemon/back/blastoiseb.png?raw=true) ![SSquadBackSpriteSW97](/gfx/pokemon/back_sw/squirtleb.png?raw=true) ![WSquadBackSpriteSW97](/gfx/pokemon/back_sw/wartortleb.png?raw=true) ![BSquadBackSpriteSW97](/gfx/pokemon/back_sw/blastoiseb.png?raw=true)
 
 - Changed entire Title screen Pokémon list. Now each game will have three starters, the first one depending on which game you're playing as it always was plus his evos (Charmander evolution line for Red, Bulbasaur evolution line for Green and Squirtle evolution line for Blue). Then FakeMime sprite and a list of different Pokémon I really like to play distributed per game to make each rom Title screen more unique.
-
 - Some sprites were changed to suit my taste: Gastly uses RG sprite, Gengar default sprite uses RG one and the alternative SW97, Golbat default sprite uses RB one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
-
-- Muk Special Stat raised to 100 in order to match GSC version. Now it's more bulky and hard to deal, speciall with Trainer EXP activated.
-
+- Grimer Base Special was raised to 50 and Muk Base Special to 95. Now Muk it's more bulky and hard to deal with, specially with Trainer EXP activated.
 - All three starters final evo were revamped to dual Dragon type in addition to their main types: Now Venusaur it's Grass/Dragon, Blastoise Water/Dragon and Charizard Fire/Dragon to make them more unique and valuable. Dragon Rage and Egg Bomb are Dragon moves in PureRGB so both were added to their learnsets following level up format of similar learnsets.
-
 - Krabby and Kingler are now Water/Normal types. Crabhammer it's their signature, exclusive move and Ground moves prior to PureRGB were replaced by Normal ones following vanilla criteria. Is still weak to Electric moves but it has now different strategies and powerful Normal STAB moves.
-
 - Added a splash of Physical Special Split for Crabhammer (now a Physical Water move) and Night Shade (now a Special Ghost type move already revamped in PureRGB, even more useful on this fork).
-
 - Gastly, Haunter and Gengar are now Ghost/Normal types. The only poison move he can learn aside from Toxic, Filthy Slam, was replaced by Wrap to gain trapping strategies. Is still fragile but not as it was due to original Poison dual type.
+- Poliwrath was revamped: HP, Attack and Defense base values were increased to 100. Also front and back sprite (Gen I) were replaced using **Helix Chamber** reconstructions based on Nyosuka Poliwrath Prototype from Green Beta (thanks to **catstorm26** & **RacieBeep**). SW97 back sprite was made by me using Poliwrath's one as base with some tweaks and modifications to maintain accuracy and loyalty to design.
+
+![NyosukaFrontRB](/gfx/pokemon/front/poliwrath.png?raw=true) ![NyosukaBackSpriteGenI](/gfx/pokemon/back/poliwrathb.png?raw=true) ![NyosukaBackSpriteSW97](/gfx/pokemon/back_sw/poliwrathb.png?raw=true)
 
 ## Additional data
 
@@ -74,26 +71,26 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 ## Credits
 
-**Vortyne** - Obvious reasons
+**Vortyne** - Obvious reasons. No master, no fork.
 
-**Jojobear13** - Tons of code snippets and help via the shinpokered romhack codebase, direct support regarding the pokemon yellow gbc enhancements porting
+**Jojobear13** - Tons of code snippets and help via the shinpokered romhack codebase, direct support regarding the pokemon yellow gbc enhancements porting.
 
-**Danny-E 33** - Larger back sprites code snippets, EXP Bar code snippets, various support regarding game audio and questions about rgbasm/gbz80 answered
+**Danny-E 33** - Larger back sprites code snippets, EXP Bar code snippets, various support regarding game audio and questions about rgbasm/gbz80 answered.
 
-**Mechanicalpen** - enhanced menu icons code
+**Mechanicalpen** - enhanced menu icons code.
 
-**LJSTAR** - Most of the work creating the type icons used in the movedex
+**LJSTAR** - Most of the work creating the type icons used in the movedex.
 
-**Mord** - Most of the work creating LT.Surge and Erika overworld sprites
+**Mord** - Most of the work creating LT.Surge and Erika overworld sprites.
 
-**pret discord** and **pret** in general for their original disassembly work on Red / Blue
+**pret discord** and **pret** in general for their original disassembly work on Red / Blue.
 
-**metalflygon08** - providing back sprite and entertain me with his application of this concept as evolution of Mr. Mime line: Mime Sr.
+**ZoomTen** - share some knowledge about coding plus helping to prevent ROM bank overflow amongst other things like resolve conflicts to track PureRGB updates. Also priceless support that made FakeMime a thing.
+
+**metalflygon08** - providing SW97 back sprite of fake Mr. Mime.
 
 **pokeglitch** - creating pret_manager and making easier build to test changes.
 
 **Blazer** - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
 
-**ZoomTen** - share some knowledge about coding plus helping to prevent ROM bank overflow amongst other things. Also tons of support.
-
-**Plague von Karma** & **Martha, the Programmer Girl** - inspiration plus a shitload of things related to Kanto Expansion Pak development through extremely well explained commits and insane Gen I research.
+**Plague von Karma** & **Martha, the Programmer Girl** - inspiration plus a shitload of things related to Kanto Expansion Pak development.

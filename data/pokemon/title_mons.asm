@@ -29,9 +29,9 @@ IF DEF(_BLUE)
 	db SLOWBRO
 	db KRABBY
 	db KINGLER
-	db ABRA
-	db KADABRA
-	db ALAKAZAM
+	db POLIWAG
+	db POLIWHIRL
+	db POLIWRATH
 	db VAPOREON
 	db ARTICUNO
 	db MEWTWO
@@ -47,9 +47,9 @@ IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: the pokemon that appear on the start s
 	db EXEGGUTOR
 	db GRIMER
 	db MUK
-	db MEOWTH
-	db PERSIAN
-	db PORYGON
+	db ABRA
+	db KADABRA
+	db ALAKAZAM
 	db EEVEE
 	db CHANSEY
 	db SNORLAX

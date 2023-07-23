@@ -1,6 +1,6 @@
 	db DEX_MUK ; pokedex id
 
-	db 135, 105,  75,  50, 100
+	db 135, 105,  75,  50,  95
 	;   hp  atk  def  spd  spc
 
 	db POISON, POISON ; type

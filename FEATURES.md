@@ -347,27 +347,27 @@ The fourth page contains Sprite-related options.
 ## Pokemon type changes
 These changes were all made to make the pokemon more fun to use / more unique from similar pokemon / less bad
 - Venusaur is Grass/Dragon
-- Blastoise is Water/Dragon
 - Charizard is Fire/Dragon
+- Blastoise is Water/Dragon
+- Butterfree is Bug/Psychic
+- Fearow is Flying/Fighting
+- Sandshrew and Sandslash are Ground/Normal
 - Ninetales is Fire/Ghost
 - Golduck is Water/Psychic
-- Seadra is Water/Dragon
-- Magmar is Fire/Psychic
-- Kabuto/Kabutops are Rock/Bug
-- Butterfree is Bug/Psychic
-- Doduo/Dodrio are Flying/Ground
-- Voltorb/Electrode are Electric/Fire
-- Fearow is Flying/Fighting
-- Krabby and Kingler are Water/Normal
-- Pinsir is Bug/Fighting
 - Victreebel is Grass/Dragon
-- Sandshrew and Sandslash are Ground/Normal (stronger slash damage!)
-- Ponyta and Rapidash are now Fire/Normal 
-- Goldeen and Seaking are now Water/Normal
-- Mr Mime is Psychic/Ghost
+- Ponyta and Rapidash are now Fire/Normal
+- Doduo/Dodrio are Flying/Ground
 - Gastly, Haunter and Gengar are Ghost/Normal
-- Electabuzz is Electric/Fighting
+- Krabby and Kingler are Water/Normal
+- Voltorb/Electrode are Electric/Fire
 - Marowak is Ground/Ghost
+- Seadra is Water/Dragon
+- Goldeen and Seaking are now Water/Normal
+- Mr Mime is Psychic/Ghost (a.k.a. FakeMime)
+- Electabuzz is Electric/Fighting
+- Magmar is Fire/Psychic
+- Pinsir is Bug/Fighting
+- Kabuto/Kabutops are Rock/Bug
 
 ## Trainer AI changes
 - AI won't spam agility or amnesia repeatedly just because your pokemon is weak to psychic moves. The subroutine for selecting super effective moves ignores moves that do no damage now.
