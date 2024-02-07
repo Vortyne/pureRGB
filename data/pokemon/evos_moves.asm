@@ -542,10 +542,12 @@ GyaradosEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 20, BITE
+	db 20, FURY_ATTACK
 	db 25, DRAGON_RAGE
 	db 32, BODY_SLAM
+	db 38, RAZOR_WIND ; ROOST
 	db 41, HYDRO_PUMP
+	db 48, WHIRLWIND
 	db 52, HYPER_BEAM
 	db 0
 
@@ -638,8 +640,7 @@ BlastoiseEvosMoves:
 	db 34, COUNTER ; DRAIN PUNCH
 	db 39, SKULL_BASH
 	db 45, HYDRO_PUMP
-	db 49, DRAGON_RAGE
-	db 54, EGG_BOMB
+	db 49, EXPLOSION
 	db 0
 
 PinsirEvosMoves:
@@ -892,7 +893,8 @@ ArbokEvosMoves:
 	db 36, LEECH_LIFE
 	db 43, SUPER_FANG
 	db 50, SKULL_BASH
-	db 54, HAZE
+	db 54, EGG_BOMB
+	db 60, HAZE
 	db 0
 
 ParasectEvosMoves:
@@ -1483,6 +1485,7 @@ HorseaEvosMoves:
 	db 39, DOUBLE_TEAM
 	db 44, DRAGON_RAGE
 	db 49, HYDRO_PUMP
+	db 54, EGG_BOMB
 	db 0
 
 SeadraEvosMoves:
@@ -1499,6 +1502,7 @@ SeadraEvosMoves:
 	db 39, DOUBLE_TEAM
 	db 44, DRAGON_RAGE
 	db 49, HYDRO_PUMP
+	db 54, EGG_BOMB
 	db 0
 
 MissingNo5EEvosMoves:
@@ -2337,9 +2341,8 @@ VenusaurEvosMoves:
 	db 30, RAZOR_LEAF
 	db 36, SLEEP_POWDER
 	db 40, GROWTH
-	db 46, DRAGON_RAGE
+	db 46, EARTHQUAKE
 	db 50, SOLARBEAM
-	db 56, EGG_BOMB
 	db 0
 
 TentacruelEvosMoves:
@@ -2780,7 +2783,7 @@ BellsproutEvosMoves:
 	db 29, SLAM ; FILTHY SLAM
 	db 35, RAZOR_LEAF
 	db 42, VICEGRIP
-	db 48, EGG_BOMB
+	db 48, SLUDGE
 	db 54, SELFDESTRUCT
 	db 58, GROWTH
 	db 0
@@ -2798,7 +2801,7 @@ WeepinbellEvosMoves:
 	db 29, SLAM ; FILTHY SLAM
 	db 35, RAZOR_LEAF
 	db 42, VICEGRIP
-	db 48, EGG_BOMB
+	db 48, SLUDGE
 	db 54, SELFDESTRUCT
 	db 58, GROWTH
 	db 0
@@ -2815,7 +2818,7 @@ VictreebelEvosMoves:
 	db 29, SLAM ; FILTHY SLAM
 	db 35, RAZOR_LEAF
 	db 42, VICEGRIP
-	db 48, EGG_BOMB
+	db 48, SLUDGE
 	db 54, SELFDESTRUCT
 	db 58, GROWTH
 	db 0

@@ -3,7 +3,7 @@
 	db  79,  83, 100,  78,  85
 	;   hp  atk  def  spd  spc
 
-	db WATER, DRAGON ; type
+	db WATER, ROCK ; type
 	db 45 ; catch rate
 	db 210 ; base exp
 
@@ -30,7 +30,6 @@
 	ROLLING_KICK,\
 	BARRIER,\
 	EARTHQUAKE,\
-	DRAGON_RAGE,\
 	DIG,\
 	SWORDS_DANCE,\
 	REFLECT,\
@@ -39,6 +38,7 @@
 	SLAM,\ ; FILTHY SLAM
 	KARATE_CHOP,\
 	LIGHT_SCREEN,\
+	ROCK_SLIDE,\
 	GLARE,\
 	SUBSTITUTE,\
 	CUT,\

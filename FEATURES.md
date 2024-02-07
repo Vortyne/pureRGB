@@ -346,23 +346,23 @@ The fourth page contains Sprite-related options.
 
 ## Pokemon type changes
 These changes were all made to make the pokemon more fun to use / more unique from similar pokemon / less bad
-- Venusaur is Grass/Dragon
+- Venusaur is Grass/Ground
 - Charizard is Fire/Dragon
-- Blastoise is Water/Dragon
+- Blastoise is Water/Rock
 - Butterfree is Bug/Psychic
 - Fearow is Flying/Fighting
-- Sandshrew and Sandslash are Ground/Normal
+- Arbok is Poison/Dragon
+- Sandshrew/Sandslash are Ground/Normal
 - Ninetales is Fire/Ghost
 - Golduck is Water/Psychic
-- Victreebel is Grass/Dragon
-- Ponyta and Rapidash are now Fire/Normal
+- Ponyta/Rapidash are Fire/Normal
 - Doduo/Dodrio are Flying/Ground
-- Gastly, Haunter and Gengar are Ghost/Normal
-- Krabby and Kingler are Water/Normal
+- Gastly/Haunter/Gengar are Ghost/Normal
+- Krabby/Kingler are Water/Normal
 - Voltorb/Electrode are Electric/Fire
 - Marowak is Ground/Ghost
 - Seadra is Water/Dragon
-- Goldeen and Seaking are now Water/Normal
+- Goldeen/Seaking are Water/Normal
 - Mr Mime is Psychic/Ghost (a.k.a. FakeMime)
 - Electabuzz is Electric/Fighting
 - Magmar is Fire/Psychic

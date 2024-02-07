@@ -35,7 +35,7 @@ This is an enhancement of Pokemon Red/Blue/Green. The goal is to enhance the ori
 
 ## Fork changes
 
-- The front sprite of Mr. Mime was replaced by Fake Beta Mr. Mime that was [debunked by Dr. Lava](https://twitter.com/DrLavaYT/status/1284462794532773888?s=20), sprite included with other some accurate recreations of real Beta Pokémon of Gen I by unknown artist.
+- The front sprite of Mr. Mime was replaced by Fake Beta Mr. Mime that was [debunked by Dr. Lava](https://twitter.com/DrLavaYT/status/1284462794532773888?s=20), sprite included with [other accurate recreations of real Beta Pokémon of Gen I by unknown artist](https://github.com/ViWalls/pureRGB-FakeMime/blob/master/screenshots/RedBlueBetaPokemon.png).
 - The back sprite of Mr. Mime was replaced by a custom one provided by **metalflygon08** for SW97. I only changed the light reflection in the back because the original felt flat for my tastes in a sphere head. The one in Gen I style it's made by me but based in the SW97/Gen II previously provided to match the same design.
 - Why I do this small change? Because I have despised Mr. Mime original design all my life. It never was a solid playable Pokémon neither due to its ridiculous HP and Defense values. On PureRGB it was overhauled and improved with an amazing Psychic/Ghost dual type making it an unique choice for your team, but his appearance was still annoying me. Plus I always wanted to first contact Github with a simple task and navigate through his interface aside from build something considering the time I spend following projects here. You should play original PureRGB unless you hate Mr. Mime as much as I do.
 
@@ -43,7 +43,7 @@ This is an enhancement of Pokemon Red/Blue/Green. The goal is to enhance the ori
 
 Pictured: Title Screen (Red OG) Front Sprite (SGB), Pokedex Data (SGB), Back Sprite Gen I (SGB), Back Sprite SW97 (Red OG).
 
-If someone is interested or want to use these sprites for his own projects it's ok. You have the version of **metalflygon08** who provided the back sprite but made some changes from original fake design OR the one I made using the previous one as base, where I reverted those minor changes loyal to original art and extended the footprint one pixel long, matching my perception of its foot anatomy.
+If someone is interested or want to use these sprites for his own projects it's fine. You have the version of **metalflygon08** who provided the back sprite but made some changes from original fake design OR the one I made using the previous one as base, where I reverted those minor changes loyal to original art and extended the footprint one pixel long, matching my perception of its foot anatomy.
 
 ![FakeMimebymetalflygon08](/screenshots/FakeMimebymetalflygon08.png?raw=true) ![FakeMimebyViWalls](/screenshots/FakeMimebyViWalls.png?raw=true) ![FakeMimeSprite](/gfx/pokemon/front/mr.mime.png?raw=true) ![FakeMimeBackSpriteGenI](/gfx/pokemon/back/mr.mimeb.png?raw=true) ![FakeMimeBackSpriteSW97](/gfx/pokemon/back_sw/mr.mimeb.png?raw=true)
 
@@ -55,19 +55,21 @@ If someone is interested or want to use these sprites for his own projects it's 
 - Changed entire Title screen Pokémon list. Now each game will have three starters, the first one depending on which game you're playing as it always was plus his evos (Bulbasaur evolution line for Green, Charmander evolution line for Red and Squirtle evolution line for Blue). Then FakeMime sprite and a list of different Pokémon I really like to play distributed per game to make each rom Title screen more unique.
 - Some sprites were changed to suit my taste: Gastly uses RG sprite, Gengar default sprite uses RG one and the alternative SW97, Golbat default sprite uses RB one and the alternative SW97, Exeggcute alternative sprite uses RG one & Exeggutor default sprite uses RG one and the alternative SW97. The front sprites options pages were updated to follow the new format and avoid confusion, so it's pretty clear.
 - Grimer Base Special was raised to 50 and Muk Base Special to 95. Now Muk it's more bulky and hard to deal with, specially with Trainer EXP activated.
-- All three starters final evo were revamped to dual Dragon type in addition to their main types: Now Venusaur it's Grass/Dragon, Charizard Fire/Dragon and Blastoise Water/Dragon to make them more unique and valuable. Dragon Rage and Egg Bomb are Dragon moves in PureRGB so both were added to their learnsets following level up format of similar learnsets.
-- Krabby and Kingler are now Water/Normal types. Crabhammer it's their signature, exclusive move and Ground moves prior to PureRGB were replaced by Normal ones following vanilla criteria. Is still weak to Electric moves but it has now different strategies and powerful Normal STAB moves.
+- All three starters final evo were revamped in addition to their main types: Now Venusaur it's Grass/Ground, Charizard Fire/Dragon and Blastoise Water/Rock to make them more unique. Also the learnsets were slightly tweaked to match the new dual typings: Venusaur learns Earthquake by level up, Charizard gets Dragon Rage (level up/TM) and Egg Bomb (level up), finally Blastoise gets Explosion by level up plus Rock Slide using a TM. Those moves were revamped in PureRGB so they will get STAB thanks to new types.
+- Krabby/Kingler are now Water/Normal types. Crabhammer it's their signature, exclusive move and Ground moves prior to PureRGB were replaced by Normal ones following vanilla criteria. Is still weak to Electric moves but it has now different strategies and powerful Normal STAB moves.
 - Added a splash of Physical Special Split for Crabhammer (now a Physical Water move) and Night Shade (now a Special Ghost type move already revamped in PureRGB, even more useful on this fork).
-- Gastly, Haunter and Gengar are now Ghost/Normal types. The only poison move he can learn aside from Toxic, Filthy Slam, was replaced by Wrap to gain trapping strategies. Is still fragile but not as it was due to original Poison dual type.
+- Gastly/Haunter/Gengar are now Ghost/Normal types. The only poison move he can learn aside from Toxic, Filthy Slam, was replaced with Wrap to gain trapping strategies. Is still fragile but not as it was due to original Poison dual type.
 - Poliwrath was revamped: HP, Attack and Defense base values were increased to 100. Also front and back sprite (Gen I) were replaced using **Helix Chamber** reconstructions based on Nyosuka Poliwrath Prototype from Green Beta (thanks to **catstorm26** & **RacieBeep**). SW97 back sprite was made by me using Poliwrath's one as base with some tweaks and modifications to maintain accuracy and loyalty to design.
 
 ![NyosukaFrontRB](/gfx/pokemon/front/poliwrath.png?raw=true) ![NyosukaBackSpriteGenI](/gfx/pokemon/back/poliwrathb.png?raw=true) ![NyosukaBackSpriteSW97](/gfx/pokemon/back_sw/poliwrathb.png?raw=true)
 
-## Additional data
-
-**One Picture Worth Ten Thousand Words**
-
-![RedBlueBetaPokemon](/screenshots/RedBlueBetaPokemon.png?raw=true)
+- Gyarados Bite was replaced with Fury Attack, added Roost and Whirlwind to its learnset. Added Roost and Fly to TM/HM learnset.
+- Arbok was revamped to dual Poison/Dragon type: Attack base increased to 105 and Special base to 95, plus Egg Bomb was added to its learnset. It can learn Dragon Rage using a TM.
+- Armored Mewtwo base stats reverted to vanilla Mewtwo base stats. Now both are identical and it's only a visual sprite change but still worth the effort.
+- Victreebel was reverted to vanilla Grass/Poison type. Egg Bomb was removed from Bellsprout/Weepinbell/Victreebel learnset and replaced with Sludge, also Dragon Rage was removed from Victreebel TM learnset.
+- Horsea/Seadra now learn Egg Bomb at level 54.
+- Pinsir now uses Tricules sprites from SW97. In addition the alternate sprite you can toggle in options was updated using **SourApple** desing for Gold & Silver 97: Reforged, with some modifications in shading to match the style of the original front in demo. The Gen I style back sprite was made by **Albatross** and used in Kanto Expansion Pak. The reason behind this choice it's I wanted to have Tricules here, but Pinsir was revamped in PureRGB with an interesting dual typing and it was difficult to find the perfect spot for it. Also I wanted to maintain the original 151 number and improve the existing ones instead of going crazy.
+- Lickitung base stats were improved: 110 HP, 85 Attack, 95 Defense, 50 Speed and 80 Special (based on Lickilicky from Kanto Expansion Pak). Because I'm not a huge fan of Lickitung design I replaced all the sprites with Lickilicky ones: the front sprite and Gen I style back sprite were made by **Albatross** (both used in Kanto Expansion Pak). Finally the Gen II style back sprite for SW97 mode was made by **Blue Emerald**.
 
 ## Credits
 
@@ -85,6 +87,8 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 **pret discord** and **pret** in general for their original disassembly work on Red / Blue.
 
+**Smogon University** - the cornerstone of competitive pkmn.
+
 **ZoomTen** - share some knowledge about coding plus helping to prevent ROM bank overflow amongst other things like resolve conflicts to track PureRGB updates. Also priceless support that made FakeMime a thing.
 
 **metalflygon08** - providing SW97 back sprite of fake Mr. Mime.
@@ -93,4 +97,12 @@ If someone is interested or want to use these sprites for his own projects it's 
 
 **Blazer** - providing back sprites for Squirtle Squad and encourage me to finish Squirtle Squad.
 
-**Plague von Karma** & **Martha, the Programmer Girl** - inspiration plus a shitload of things related to Kanto Expansion Pak development.
+**Plague von Karma** & **Martha, the Programmer Girl** - inspiration, a shitload of things related to Kanto Expansion Pak development and valuable feedback to enhance certain pkmn.
+
+**Lilyhollow** - some reference following Violet Version Showdown mod. Even if I'm not following the same criteria and changes, I think it's a great point to start cultivating ideas for revamping trashy pkmn.
+
+**Albatross** - Gen I style Tricules back sprite and Lickilicky front sprite.
+
+**SourApple** - Gen II style Tricules alternative front sprite.
+
+**Blue Emerald** - Gen II style Lickilicky back sprite.

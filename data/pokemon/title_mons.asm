@@ -1,28 +1,26 @@
 TitleMons:
 ; mons on the title screen are randomly chosen from here
 IF DEF(_RED)
-	db STARTER1
-	db STARTER2
-	db STARTER3
 	db MR_MIME
+	db STARTER1
 	db CHARMELEON
 	db CHARIZARD
 	db NIDORAN_M
 	db NIDORINO
 	db NIDOKING
 	db TAUROS
+	db SNORLAX
 	db GASTLY
 	db HAUNTER
 	db GENGAR
+	db PINSIR
 	db JOLTEON
 	db ZAPDOS
 	db MEW
 ENDC
 IF DEF(_BLUE)
-	db STARTER2
-	db STARTER1
-	db STARTER3
 	db MR_MIME
+	db STARTER2
 	db WARTORTLE
 	db BLASTOISE
 	db SLOWPOKE
@@ -32,15 +30,15 @@ IF DEF(_BLUE)
 	db POLIWAG
 	db POLIWHIRL
 	db POLIWRATH
+	db MAGIKARP
+	db GYARADOS
 	db VAPOREON
 	db ARTICUNO
 	db MEWTWO
 ENDC
 IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: the pokemon that appear on the start screen on green version.
-	db STARTER3
-	db STARTER1
-	db STARTER2
 	db MR_MIME
+	db STARTER3
 	db IVYSAUR
 	db VENUSAUR
 	db EXEGGCUTE
@@ -50,6 +48,10 @@ IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: the pokemon that appear on the start s
 	db ABRA
 	db KADABRA
 	db ALAKAZAM
+	db EKANS
+	db ARBOK
+	db LICKITUNG
+	db CHANSEY
 	db EEVEE
 	db CHANSEY
 	db SNORLAX

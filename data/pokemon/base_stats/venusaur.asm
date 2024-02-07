@@ -3,7 +3,7 @@
 	db  80,  82,  83,  80, 100
 	;   hp  atk  def  spd  spc
 
-	db GRASS, DRAGON ; type
+	db GRASS, GROUND ; type
 	db 45 ; catch rate
 	db 208 ; base exp
 
@@ -27,7 +27,6 @@
 	BARRIER, \
 	RAZOR_LEAF,\
 	SOLARBEAM,\
-	DRAGON_RAGE,\
 	EARTHQUAKE,\
 	DIG,\
 	MEGA_DRAIN,\

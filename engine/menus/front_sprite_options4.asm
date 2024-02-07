@@ -44,7 +44,7 @@ FrontSpriteOptions4Text:
 	next " EXEGGUTOR:  RG SW"
 	next " KOFFING:    RG RB"
 	next " STARMIE:    RB RG"
-	next " PINSIR:     RB RG"
+	next " PINSIR:     SW DX"
 	next " ELECTABUZZ: RB RG"
 	next " ZAPDOS:     RB RG"
 	next " MEWTWO:     RB RG@"

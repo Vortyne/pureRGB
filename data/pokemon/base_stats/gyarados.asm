@@ -15,6 +15,7 @@
 
 	; tm/hm learnset
 	tmhm \
+	RAZOR_WIND,\ ; ROOST
 	TOXIC,\
 	BODY_SLAM,\
 	DOUBLE_EDGE,\
@@ -36,6 +37,7 @@
 	SLAM,\ ; FILTHY SLAM
 	GLARE,\
 	SUBSTITUTE,\
+	FLY,\
 	SURF,\
 	STRENGTH,\
 	FLASH
