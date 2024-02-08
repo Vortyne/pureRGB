@@ -121,13 +121,13 @@ DisplayTitleScreen:
 	call EnableLCD
 
 IF DEF(_RED)
-	ld a, STARTER1 ; which Pokemon to show first on the title screen
+	ld a, MR_MIME ; which Pokemon to show first on the title screen
 ENDC
 IF DEF(_BLUE)
-	ld a, STARTER2 ; which Pokemon to show first on the title screen
+	ld a, MR_MIME ; which Pokemon to show first on the title screen
 ENDC
 IF DEF(_GREEN)
-	ld a, STARTER3 ; PureRGBnote: GREENBUILD: which Pokemon to show first on the title screen 
+	ld a, MR_MIME ; PureRGBnote: GREENBUILD: which Pokemon to show first on the title screen 
 ENDC
 	ld [wTitleMonSpecies], a
 	call LoadTitleMonSprite
