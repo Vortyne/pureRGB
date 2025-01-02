@@ -11,7 +11,7 @@
 	dw PidgeotPicFront, PidgeotPicBackSW
 
 	db TACKLE, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
-	db GROWTH_MEDIUM_SLOW ; growth rate
+	db GROWTH_SLOW ; growth rate
 
 	tmhm \
 	RAZOR_WIND,\ ; ROOST
