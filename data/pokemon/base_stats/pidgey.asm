@@ -1,6 +1,6 @@
 	db DEX_PIDGEY ; pokedex id
 
-	db  40,  45,  40,  66,  45
+	db  40,  45,  40,  66,  35
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, FLYING ; type
