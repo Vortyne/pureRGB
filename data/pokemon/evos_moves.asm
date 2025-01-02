@@ -744,7 +744,7 @@ PidgeyEvosMoves:
 	db 6, SAND_ATTACK
 	db 12, QUICK_ATTACK
 	db 19, WING_ATTACK
-	db 26, RAZOR_WIND ; ROOST
+	db 26, SONICBOOM
 	db 28, SHARPEN
 	db 32, FURY_ATTACK
 	db 35, GLARE
@@ -2133,7 +2133,7 @@ PidgeottoEvosMoves:
 	db 6, SAND_ATTACK
 	db 12, QUICK_ATTACK
 	db 19, WING_ATTACK
-	db 26, RAZOR_WIND ; ROOST
+	db 26, SONICBOOM
 	db 29, SHARPEN
 	db 32, FURY_ATTACK
 	db 35, GLARE
@@ -2151,7 +2151,7 @@ PidgeotEvosMoves:
 	db 6, SAND_ATTACK
 	db 12, QUICK_ATTACK
 	db 19, WING_ATTACK
-	db 26, RAZOR_WIND ; ROOST
+	db 26, SONICBOOM
 	db 29, SHARPEN
 	db 32, FURY_ATTACK
 	db 35, GLARE
@@ -2310,7 +2310,7 @@ RattataEvosMoves:
 	db 26, RAGE
 	db 31, SKULL_BASH
 	db 34, SUPER_FANG
-	db 40, MEGA_PUNCH
+	db 40, MEGA_KICK
 	db 0
 
 RaticateEvosMoves:
@@ -2325,7 +2325,7 @@ RaticateEvosMoves:
 	db 27, RAGE
 	db 31, SKULL_BASH
 	db 37, SUPER_FANG
-	db 44, MEGA_PUNCH
+	db 44, MEGA_KICK
 	db 0
 
 NidorinoEvosMoves:
