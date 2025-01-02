@@ -1,6 +1,6 @@
 	db DEX_PIDGEOTTO ; pokedex id
 
-	db  63,  60,  55,  71,  50
+	db  63,  60,  55,  81,  60
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, FLYING ; type
@@ -28,6 +28,7 @@
 	AGILITY,\
 	BARRAGE,\
 	SLAM,\ ; FILTHY SLAM
+	MEDITATE,\
 	SKY_ATTACK,\
 	LIGHT_SCREEN,\
 	GLARE,\
