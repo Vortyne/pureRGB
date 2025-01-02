@@ -737,7 +737,7 @@ FearowEvosMoves:
 
 PidgeyEvosMoves:
 ; Evolutions
-	db EVOLVE_LEVEL, 18, PIDGEOTTO
+	db EVOLVE_LEVEL, 25, PIDGEOTTO
 	db 0
 ; Learnset
 	db 5, GUST
@@ -2126,7 +2126,7 @@ AlakazamEvosMoves:
 
 PidgeottoEvosMoves:
 ; Evolutions
-	db EVOLVE_LEVEL, 36, PIDGEOT
+	db EVOLVE_LEVEL, 45, PIDGEOT
 	db 0
 ; Learnset
 	db 5, GUST
