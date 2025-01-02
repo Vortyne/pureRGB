@@ -2303,14 +2303,14 @@ RattataEvosMoves:
 ; Learnset
 	db 7, QUICK_ATTACK
 	db 12, DOUBLE_TEAM
-	db 14, BITE
+	db 14, FURY_SWIPES ; DUST CLAW
 	db 17, HYPER_FANG
-	db 21, DOUBLE_KICK
+	db 21, DIG
 	db 23, FOCUS_ENERGY
-	db 26, RAGE
+	db 26, WITHDRAW
 	db 31, SKULL_BASH
 	db 34, SUPER_FANG
-	db 40, MEGA_KICK
+	db 40, FISSURE
 	db 0
 
 RaticateEvosMoves:
@@ -2318,14 +2318,14 @@ RaticateEvosMoves:
 	db 0
 ; Learnset
 	db 12, DOUBLE_TEAM
-	db 14, BITE
+	db 14, FURY_SWIPES ; DUST CLAW
 	db 17, HYPER_FANG
-	db 20, DOUBLE_KICK
+	db 20, DIG
 	db 24, FOCUS_ENERGY
-	db 27, RAGE
+	db 27, WITHDRAW
 	db 31, SKULL_BASH
 	db 37, SUPER_FANG
-	db 44, MEGA_KICK
+	db 44, FISSURE
 	db 0
 
 NidorinoEvosMoves:
