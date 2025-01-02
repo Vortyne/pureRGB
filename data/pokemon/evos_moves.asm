@@ -710,10 +710,10 @@ OnixEvosMoves:
 ; Learnset
 	db 15, BIND
 	db 17, ROAR
-	db 22, LIGHT_SCREEN
+	db 22, DEFENSE_CURL
 	db 25, RAGE
-	db 29, CLAMP
-	db 31, MIRROR_MOVE
+	db 29, CONSTRICT
+	db 31, DIG
 	db 33, AMNESIA
 	db 39, TAKE_DOWN ; HEAT RUSH
 	db 45, WITHDRAW
@@ -2302,7 +2302,7 @@ RattataEvosMoves:
 	db 0
 ; Learnset
 	db 7, QUICK_ATTACK
-	db 12, SHARPEN
+	db 12, DOUBLE_TEAM
 	db 14, BITE
 	db 17, HYPER_FANG
 	db 21, DOUBLE_KICK
@@ -2317,7 +2317,7 @@ RaticateEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 12, SHARPEN
+	db 12, DOUBLE_TEAM
 	db 14, BITE
 	db 17, HYPER_FANG
 	db 20, DOUBLE_KICK
@@ -2616,10 +2616,11 @@ HardenedOnixEvosMoves:
 	db 15, BIND
 	db 17, ROAR
 	db 19, SCREECH
-	db 22, LIGHT_SCREEN
+	db 22, DEFENSE_CURL
 	db 25, RAGE
 	db 27, ROCK_SLIDE
-	db 29, CLAMP
+	db 29, CONSTRICT
+	db 31, DIG
 	db 33, AMNESIA
 	db 37, TAKE_DOWN ; HEAT RUSH
 	db 39, EARTHQUAKE
