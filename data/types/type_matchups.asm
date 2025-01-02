@@ -107,6 +107,7 @@ TypeEffects:
 	db BONEMERANG_TYPE,   POISON,       SUPER_EFFECTIVE
 	db WATER,        MAGMA,         NO_EFFECT
 	db FIRE,         MAGMA,         NO_EFFECT
-	db ICE,	NORMAL,		NOT_VERY_EFFECTIVE
+	db ICE,	         NORMAL,	NOT_VERY_EFFECTIVE
+	db DRAGON,       FIGHTING, 	NOT_VERY_EFFECTIVE
 	db -1 ; end
 
