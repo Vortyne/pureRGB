@@ -1,6 +1,6 @@
 	db DEX_PIDGEY ; pokedex id
 
-	db  40,  45,  40,  56,  35
+	db  40,  45,  40,  66,  45
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, FLYING ; type
@@ -28,6 +28,7 @@
 	AGILITY,\
 	BARRAGE,\
 	SLAM,\ ; FILTHY SLAM
+	MEDITATE,\
 	SKY_ATTACK,\
 	LIGHT_SCREEN,\
 	GLARE,\
