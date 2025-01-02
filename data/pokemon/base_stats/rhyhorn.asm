@@ -1,6 +1,6 @@
 	db DEX_RHYHORN ; pokedex id
 
-	db  80,  85,  95,  25,  60
+	db  80,  85,  95,  25,  50
 	;   hp  atk  def  spd  spc
 
 	db GROUND, ROCK ; type
