@@ -1,6 +1,6 @@
 	db DEX_RATICATE ; pokedex id
 
-	db  65,  101,  60,  97,  50
+	db  65,  101,  60,  97,  80
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, NORMAL ; type
@@ -44,6 +44,7 @@
 	GLARE,\
 	SUBSTITUTE,\
 	CUT,\
+	SURF,\
 	STRENGTH,\
 	FLASH
 	; end
