@@ -1,6 +1,6 @@
 	db DEX_PIDGEOTTO ; pokedex id
 
-	db  63,  60,  55,  81,  80
+	db  63,  71,  55,  91,  70
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, FLYING ; type
@@ -11,7 +11,7 @@
 	dw PidgeottoPicFront, PidgeottoPicBackSW
 
 	db TACKLE, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
-	db GROWTH_MEDIUM_SLOW ; growth rate
+	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
 	tmhm \
