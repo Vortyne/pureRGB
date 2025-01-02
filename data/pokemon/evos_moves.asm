@@ -1158,7 +1158,7 @@ DragoniteEvosMoves:
 	db 29, BODY_SLAM
 	db 33, MIST
 	db 38, DRAGON_RAGE
-	db 46, WHIRLWIND
+	db 46, SKY_ATTACK
 	db 47, SHARPEN
 	db 52, HYPER_BEAM
 	db 0
