@@ -30,7 +30,7 @@ Moves:
 	move CUT,          NO_ADDITIONAL_EFFECT,        90, BUG,          100, 30
 	move GUST,         NO_ADDITIONAL_EFFECT,        40, FLYING,       100, 35
 	move WING_ATTACK,  NO_ADDITIONAL_EFFECT,        60, FLYING,       100, 35 ; priority move
-	move WHIRLWIND,    CONFUSION_BIG_SIDE_EFFECT,  110, FLYING,        85, 10
+	move WHIRLWIND,    CONFUSION_BIG_SIDE_EFFECT,  110, FLYING,       100, 10
 	move FLY,          FLY_EFFECT,                  90, FLYING,       100, 15
 	move BIND,         TRAPPING_EFFECT,             25, ROCK,          85, 15
 	move SLAM,         NO_ADDITIONAL_EFFECT,        80, POISON,       100, 20 ; -> FILTHY SLAM
