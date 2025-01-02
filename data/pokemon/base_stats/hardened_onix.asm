@@ -1,7 +1,7 @@
 ; PureRGBnote: ADDED: powered up version of onix with better stats and less weaknesses.
 	db DEX_ONIX ; pokedex id
 
-	db  80,  95, 180,  95,  75
+	db  80,  95, 180,  80,  90
 	;   hp  atk  def  spd  spc
 
 	db CRYSTAL, GROUND ; type
