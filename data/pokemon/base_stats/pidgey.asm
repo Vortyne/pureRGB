@@ -1,6 +1,6 @@
 	db DEX_PIDGEY ; pokedex id
 
-	db  40,  45,  40,  66,  65
+	db  40,  55,  40,  66,  49
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, FLYING ; type
@@ -11,7 +11,7 @@
 	dw PidgeyPicFront, PidgeyPicBackSW
 
 	db TACKLE, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
-	db GROWTH_MEDIUM_SLOW ; growth rate
+	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
 	tmhm \
