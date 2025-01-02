@@ -2431,14 +2431,14 @@ CharmanderEvosMoves:
 ; Learnset
 	db 7, LEER
 	db 9, EMBER
-	db 12, FURY_SWIPES ; DUST CLAW
+	db 12, ROAR
 	db 15, SMOKESCREEN
-	db 18, KINESIS ; FIREWALL
+	db 18, TAKE_DOWN ; HEAT RUSH
 	db 23, RAGE
-	db 26, TAKE_DOWN ; HEAT RUSH
+	db 26, DRAGON_RAGE
 	db 30, SLASH
 	db 38, FLAMETHROWER
-	db 46, FIRE_SPIN
+	db 46, HYPER_BEAM
 	db 0
 
 SquirtleEvosMoves:
@@ -2464,14 +2464,14 @@ CharmeleonEvosMoves:
 ; Learnset
 	db 7, LEER
 	db 9, EMBER
-	db 13, FURY_SWIPES ; DUST CLAW
+	db 13, ROAR
 	db 15, SMOKESCREEN
-	db 19, KINESIS ; FIREWALL
+	db 19, TAKE_DOWN ; HEAT RUSH
 	db 24, RAGE
-	db 28, TAKE_DOWN ; HEAT RUSH
+	db 28, DRAGON_RAGE
 	db 31, SLASH
 	db 39, FLAMETHROWER
-	db 46, FIRE_SPIN
+	db 46, HYPER_BEAM
 	db 0
 
 WartortleEvosMoves:
@@ -2496,14 +2496,14 @@ CharizardEvosMoves:
 ; Learnset
 	db 7, LEER
 	db 9, EMBER
-	db 13, FURY_SWIPES ; DUST CLAW
+	db 13, ROAR
 	db 15, SMOKESCREEN
-	db 19, KINESIS ; FIREWALL
+	db 19, TAKE_DOWN ; HEAT_RUSH
 	db 24, RAGE
-	db 28, TAKE_DOWN ; HEAT_RUSH
+	db 28, DRAGON_RAGE
 	db 31, SLASH
 	db 41, FLAMETHROWER
-	db 48, FIRE_SPIN
+	db 48, HYPER_BEAM
 	db 0
 
 OddishEvosMoves:
