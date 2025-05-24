@@ -74,6 +74,7 @@ RemappableMoves::
 	db EXPLOSION, -1, -2, 2
 	db SELFDESTRUCT, -1, -2, 2
 	db KINESIS, -1, -2, 3 ; FIREWALL
+	db SLAM, -1, -2, 4 ; FILTHY_SLAM
 	db POISON_STING, BEEDRILL, 45, 0
 	db TWINEEDLE, BEEDRILL, 65, 0 
 	db ACID, ARBOK, 100, 0
@@ -97,8 +98,10 @@ ModifierFuncs:
 	dw SingModifier
 	dw ExplosionSelfdestructModifier
 	dw FirewallModifier
+	dw FilthySlamModifier
 
 CheckIfAsleep::
+GetOpponentStatus::
 	ldh a, [hWhoseTurn]
 	and a
 	ld bc, wEnemyMonStatus
@@ -254,4 +257,12 @@ GetRemappedMoveAndPowerFromPokemon::
 	inc hl
 	inc hl
 	ld e, [hl] ; move remapped power
+	ret
+
+FilthySlamModifier::
+	call GetOpponentStatus
+	ld a, [bc]
+	bit PSN, a
+	ret z
+	ld [hl], 130 ; increase filthy slam power to 130 if opponent poisoned
 	ret

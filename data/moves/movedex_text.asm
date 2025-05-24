@@ -217,9 +217,12 @@ _BindDexEntry::
 _SlamDexEntry::
 	text "Slams the foe"
 	next "with a dirty tail"
-	next "leg, arm, etc.@"
+	next "leg, arm, etc."
 
-	text_jump _GenericNoAdditionalEffectText
+	bage "Power increases to"
+	next "130 if opponent is"
+	next "currently poisoned"
+	dex
 
 
 _VineWhipDexEntry::
