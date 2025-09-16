@@ -544,15 +544,14 @@ _BillsGardenDadText::
 
 _BillsGardenDadText2::
 	text "MOM: Oh honey!"
-	para "This so nice!"
+	para "This is so nice!"
 	para "We're all back"
 	line "Together!"
 	prompt
 
 _BillsGardenDadText3::
-	text "Why don't you"
-	line "you come tell"
-	cont "us about your"
+	text "Why don't you tell"
+	line "us about your"
 	cont "#MON journey?"
 
 	para "Sit down with"
