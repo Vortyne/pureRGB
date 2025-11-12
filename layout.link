@@ -216,6 +216,8 @@ ROMX $38
 	"Pics 11"
 ROMX $39
 	"Text 13"
+ROMX $3A
+	"newCode2"
 WRAM0
 	"Audio RAM"
 	org $c100

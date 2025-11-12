@@ -6,7 +6,7 @@ BillsHousePC:
 	CheckEvent EVENT_LEFT_BILLS_HOUSE_AFTER_HELPING
 	jr nz, .displayBillsHousePokemonList
 	CheckEventReuseA EVENT_USED_CELL_SEPARATOR_ON_BILL
-	jr nz, .displayBillsHouseMonitorText
+	jr nz, .displayBillsHousePokemonList
 	CheckEventReuseA EVENT_BILL_SAID_USE_CELL_SEPARATOR
 	jr nz, .doCellSeparator
 .displayBillsHouseMonitorText
@@ -110,6 +110,18 @@ BillsHousePokemonList::
 	jr nz, .cancel
 .displayPokedex
 	call DisplayPokedex
+	; dex number still stored in wPokedexNum
+	callfar IsPokemonLearnsetUnlockedDirect
+	jr nz, .noFurtherText
+	callfar SetPokemonLearnsetUnlocked
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .noFurtherText
+	ld hl, BillsHousePokemonInfo
+	rst _PrintText
+	; wNameBuffer still contains pokemon name
+	callfar LearnsetUnlockedScript
+	call DisplayTextPromptButton
+.noFurtherText
 	call LoadScreenTilesFromBuffer2
 	jr .billsPokemonLoop
 .cancel
@@ -120,6 +132,10 @@ BillsHousePokemonList::
 
 BillsHousePokemonListText1:
 	text_far _BillsHousePokemonListText1
+	text_end
+
+BillsHousePokemonInfo::
+	text_far _BillsHousePCInfo
 	text_end
 
 BillsMonListText:

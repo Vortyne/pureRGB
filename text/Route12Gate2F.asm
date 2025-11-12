@@ -9,9 +9,8 @@ _Route12Gate2FBrunetteGirlYouCanHaveThisText::
 	prompt
 
 _Route12Gate2FBrunetteGirlTM39ExplanationText::
-	text "<TM>39 is a move"
-	line "called"
-	cont "FILTHY SLAM."
+	text "<TM>39 is"
+	line "FILTHY SLAM."
 
 	para "It's a strong"
 	line "POISON type move."
@@ -19,6 +18,17 @@ _Route12Gate2FBrunetteGirlTM39ExplanationText::
 	line "you can't afford"
 	cont "to lose."
 	done
+
+_ArbokLearnset::
+	text "What #MON"
+	line "did I have?"
+	para "Ah<...>my lovely"
+	line "@"
+	text_ram wNameBuffer
+	text "<...>"
+	para "I'll miss you"
+	line "QUEENIE<...>"
+	prompt
 
 _Route12Gate2FBrunetteGirlTM39NoRoomText::
 	text "You don't have"

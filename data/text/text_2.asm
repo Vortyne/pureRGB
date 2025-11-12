@@ -417,7 +417,7 @@ _BillsHousePokemonListText1::
 
 _BillsHousePokemonListText2::
 	text "Which #MON do"
-	line "you want to see?"
+	line "you want info on?"
 	done
 
 _EmailHereText::
@@ -1539,9 +1539,8 @@ _WithdrawHowManyText::
 	done
 
 _WithdrewItemText::
-	text "Withdrew"
-	line "@"
-	text_ram wNameBuffer
+	text "Withdrew @"
+	text_ram_line wNameBuffer
 	text "."
 	prompt
 

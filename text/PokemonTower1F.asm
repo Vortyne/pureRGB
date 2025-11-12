@@ -24,6 +24,16 @@ _PokemonTower1FGirlText::
 	line "Why did you die?"
 	done
 
+_PokemonTower1FGirl2Text::
+	text "Sniff<...>"
+	para "What's that?"
+	para "You want to hear"
+	line "about my darling"
+	cont "@"
+	text_ram wNameBuffer
+	text "?"
+	prompt
+
 _PokemonTower1FChannelerText::
 	text "I am a CHANNELER!"
 	line "There are spirits"

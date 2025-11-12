@@ -510,4 +510,8 @@ MtMoonB2FRocket4EndBattleText:
 
 MtMoonB2FRocket4AfterBattleText:
 	text_far _MtMoonB2FRocket4AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_RATICATE, ROCKET
+	ld de, MtMoonB2fRocket4AfterBattleLearnsetText
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain

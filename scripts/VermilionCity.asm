@@ -250,6 +250,8 @@ VermilionCityGambler2Text:
 VermilionCityMachopText:
 	text_far _VermilionCityMachopText
 	text_asm
+	ld c, DEX_MACHOP - 1
+	callfar SetMonSeen
 	ld a, MACHOP
 	call PlayCry
 	ld hl, .StompingTheLandFlatText

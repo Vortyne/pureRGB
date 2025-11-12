@@ -80,7 +80,7 @@ YoungsterData:
 ; Mt. Moon 1F
 	db 10, DIGLETT, SPEAROW, ZUBAT, 0 
 ; Route 24
-	db 16, MANKEY, DODUO, KRABBY, 0 
+	db 16, MACHOP, DODUO, KRABBY, 0 
 ; Route 25
 	db 17, DIGLETT, SPEAROW, 0
 	db 17, GROWLITHE, SLOWPOKE, 0 ; PureRGBnote: level 17 slowpoke ensures mew glitch still works
@@ -265,8 +265,8 @@ HikerData:
 	db 10, GEODUDE, SHELLDER, ONIX, 0 
 ; Route 25
 	db 16, SPEAROW, GEODUDE, CHARMANDER, 0 
-	db 16, GEODUDE, CUBONE, MACHOP, PSYDUCK, 0 
-	db 17, RHYHORN, 0 
+	db 16, GEODUDE, CUBONE, PSYDUCK, 0 
+	db 17, RHYHORN, MANKEY, 0
 ; Route 9
 	db 25, GRAVELER, ONIX, 0
 	db 24, GEODUDE, DODUO, RHYHORN, 0
@@ -330,8 +330,8 @@ EngineerData:
 ; Safari Zone Center
 	db 47, MAGNETON, SANDSLASH, 0 ; NEWx
 ; Route 11
-	db 21, PORYGON, 0
 	db 18, MAGNEMITE, DODUO, MAGNETON, 0
+	db 21, PORYGON, 0
 ; Safari Zone East
 	db 45, PORYGON, JOLTEON, ALAKAZAM, 0 ; NEWx
 ; Safari Zone North
@@ -346,7 +346,7 @@ FisherData:
 	db 27, GOLDEEN, POLIWAG, TANGELA, 0
 	db 27, TENTACOOL, TAUROS, 0 
 	db 29, SEADRA, 0
-	db 26, POLIWAG, SHELLDER, SEAKING, SCYTHER, 0 
+	db 26, POLIWAG, HORSEA, SEAKING, SCYTHER, 0 
 ; Route 21
 	db 49, SEADRA, VICTREEBEL, FEAROW, SEAKING, 0
 	db 53, MAROWAK, CLOYSTER, 0
@@ -489,7 +489,7 @@ TamerData:
 ; Route 5
 	db 17, DITTO, SEEL, DRATINI, 0 ; NEWx
 ; Route 12
-	db 28, HORSEA, NIDORINO, 0 ; NEWx
+	db 28, SHELLDER, NIDORINO, 0 ; NEWx
 ; Route 18
 	db 42, KINGLER, SNORLAX, 0 ; NEWx
 

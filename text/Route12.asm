@@ -32,6 +32,20 @@ _Route12Fisher1AfterBattleText::
 	line "snagged!"
 	done
 
+_LearnsetGoldeen::
+	text "I usually have"
+	line "@"
+	text_ram wNameBuffer
+	text " use"
+	cont "SUPERSONIC to"
+	cont "unsnag it."
+	para "Gotta love"
+	line "@"
+	text_ram wNameBuffer
+	text "!"
+	para "@"
+	text_end
+
 _Route12Fisher2BattleText::
 	text "Be patient!"
 	line "Fishing is a"
@@ -48,6 +62,19 @@ _Route12Fisher2AfterBattleText::
 	line "I could catch"
 	cont "better #MON!"
 	done
+
+_LearnsetTentacool::
+	text "Not just a bunch"
+	line "of @"
+	text_ram wNameBuffer
+	text "!"
+	para "<...>"
+	para "Well actually,"
+	line "I think TENTACOOL"
+	cont "is kind of rad."
+	para "Do you agree?"
+	para "@"
+	text_end
 
 _Route12CooltrainerMBattleText::
 	text "Have you found a"
@@ -95,6 +122,21 @@ _Route12Fisher3AfterBattleText::
 	line "#MON, but I'm"
 	cont "good at fishing!"
 	done
+
+_SeadraLearnset::
+	text "It's not every day"
+	line "you meet someone"
+	cont "who can catch a"
+	cont "@"
+	text_ram wNameBuffer
+	text "!"
+	para "They live pretty"
+	line "deep underwater!"
+	para "So elusive!"
+	para "So!" 
+	line "#MON KID,"
+	para "@"
+	text_end
 
 _Route12Fisher4BattleText::
 	text "I'd rather be"
@@ -148,6 +190,18 @@ _Route12AfterBattleText8::
 	para "Can FISHERs do"
 	line "such a thing?"
 	done
+
+_ShellderLearnset::
+	text "I heard SHELLDER"
+	line "evolves into a"
+	cont "#MON with"
+	cont "monstrously good"
+	cont "stats!"
+	para "That's why I"
+	line "got one!"
+	para "@"
+	text_end
+
 
 _Route12BattleText9::
 	text "Some #MON"

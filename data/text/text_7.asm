@@ -148,7 +148,7 @@ _AfterTrade2Text::
 	text " you"
 	line "traded to me"
 
-	para "went and evolved!"
+	para "went and evolved!" ; TODO: fix after text
 	done
 
 _WannaTrade3Text::

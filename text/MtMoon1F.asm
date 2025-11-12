@@ -116,4 +116,8 @@ _MtMoon1FYoungster3AfterBattleText::
 _MtMoon1FBewareZubatSign::
 	text "Beware! ZUBAT is"
 	line "a blood sucker!"
+	para "The sign has lots"
+	line "of info about"
+	cont "ZUBAT's physiology"
+	cont "and ecology."
 	done

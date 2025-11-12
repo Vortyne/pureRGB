@@ -4,6 +4,10 @@ CeruleanBadgeHouse_Script:
 CeruleanBadgeHouse_TextPointers:
 	def_text_pointers
 	dw_const CeruleanBadgeHouseMiddleAgedManText, TEXT_CERULEANBADGEHOUSE_MIDDLE_AGED_MAN
+	dw_const CeruleanBadgeHouseLeftPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_LEFT
+	dw_const CeruleanBadgeHouseCenterLeftPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_CENTER_LEFT
+	dw_const CeruleanBadgeHouseCenterRightPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_CENTER_RIGHT
+	dw_const CeruleanBadgeHouseRightPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_RIGHT
 	dw_const CeruleanBadgeHouseGarbageText, TEXT_CERULEANBADGEHOUSE_GARBAGE
 
 CeruleanBadgeHouseMiddleAgedManText:
@@ -126,4 +130,20 @@ CeruleanBadgeHouseEarthBadgeText:
 CeruleanBadgeHouseGarbageText:
 	text_far _GarbageCrumpledUpPaper
 	text_far _CeruleanBadgeHouseGarbageText
+	text_end
+
+CeruleanBadgeHouseLeftPaperText:
+	text_far _CeruleanBadgeHouseLeftPaperText
+	text_end
+
+CeruleanBadgeHouseCenterLeftPaperText:
+	text_far _CeruleanBadgeHouseCenterLeftPaperText
+	text_end
+
+CeruleanBadgeHouseCenterRightPaperText:
+	text_far _CeruleanBadgeHouseCenterRightPaperText
+	text_end
+
+CeruleanBadgeHouseRightPaperText:
+	text_far _CeruleanBadgeHouseRightPaperText
 	text_end

@@ -11,6 +11,9 @@ CeladonChiefHouse_Object:
 	warp_event  3,  7, LAST_MAP, 12
 
 	def_bg_events
+	bg_event 2, 1, TEXT_CELADONCHIEFHOUSE_BOOKCASE_LEFT
+	bg_event 3, 1, TEXT_CELADONCHIEFHOUSE_PLAQUE
+	bg_event 5, 1, TEXT_CELADONCHIEFHOUSE_BOOKCASE_RIGHT
 
 	def_object_events
 	object_event  4,  2, SPRITE_GRAMPS, STAY, DOWN, TEXT_CELADONCHIEFHOUSE_CHIEF

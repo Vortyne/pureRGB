@@ -227,7 +227,7 @@ _DarkChannelerCatacombsIntroText::
 _TorchedOnFire::
 	text "@"
 	text_ram wEnemyMonNick
-	text ""
+	text_start
 	line "is consumed by"
 	cont "scorching flames!"
 	prompt

@@ -22,7 +22,9 @@ ViridianNicknameHouseSpearowText:
 	rst _PrintText
 	ld a, SPEAROW
 	call PlayCry
-	call WaitForSoundToFinish
+.done
+	ld c, DEX_SPEAROW - 1
+	callfar SetMonSeen
 	rst TextScriptEnd
 
 .Text:
@@ -31,4 +33,5 @@ ViridianNicknameHouseSpearowText:
 
 ViridianNicknameHouseSpearySignText:
 	text_far _ViridianNicknameHouseSpearySignText
-	text_end
+	text_asm
+	jr ViridianNicknameHouseSpearowText.done

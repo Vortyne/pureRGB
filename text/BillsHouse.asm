@@ -98,3 +98,11 @@ _BillsHouseGardenInfo::
 	para "Just use the"
 	line "doors over there."
 	done
+
+_BillsHousePCInfo::
+	text "The screen is"
+	line "listing tons of"
+	cont "info on @"
+	text_ram wNameBuffer
+	text "!"
+	prompt

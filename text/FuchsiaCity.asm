@@ -143,3 +143,13 @@ _FuchsiaCityFossilFanText2::
 _FuchsiaCityFossilFanText3::
 	text "There it is!"
 	done
+
+_FuchsiaCitySoMuchInfo::
+	text "So much info"
+	line "about @"
+	text_ram wNameBuffer
+	text "!"
+	para "Its ecology,"
+	line "physiology,"
+	cont "anatomy<...>"
+	done

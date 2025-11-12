@@ -15,6 +15,18 @@ _Route10SuperNerd1AfterBattleText::
 	line "#MON at home!"
 	done
 
+_ElectabuzzLearnsetText::
+	text "I caught this rare"
+	line "@"
+	text_ram wNameBuffer
+	text " at the"
+	cont "POWER PLANT."
+	para "I read a lot about"
+	line "it and decided"
+	cont "I had to get one!"
+	para "@"
+	text_end
+
 _Route10Hiker1BattleText::
 	text "Ha-hahah-ah-ha!"
 	done

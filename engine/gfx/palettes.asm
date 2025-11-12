@@ -202,7 +202,18 @@ SetPal_TitleScreen:
 ; used mostly for menus and the Oak intro
 SetPal_Generic:
 	ld hl, PalPacket_Generic
+	ld de, wPalPacket
+	ld bc, $10
+	rst _CopyData
+	ld hl, wPalPacket
 	ld de, BlkPacket_WholeScreen
+	ld a, [wGenericPaletteOverride]
+	and a
+	jr z, .noSpecialPal
+	ld [wPalPacket + 1], a
+.noSpecialPal
+	xor a
+	ld [wGenericPaletteOverride], a
 	ret
 
 SetPal_NidorinoIntro:

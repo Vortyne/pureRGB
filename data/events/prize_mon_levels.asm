@@ -7,3 +7,4 @@ PrizeMonLevelDictionary:
 	db DRATINI,   18
 	db DITTO,  25
 	db PORYGON,  20
+	db $FF

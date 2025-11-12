@@ -24,9 +24,21 @@ TreeDeleterSnorlaxText:
 	call DisplayTextPromptButton
 	ld hl, .couchPotato
 	rst _PrintText
+	call CheckAllTreesDeleted
+	jr nz, .done
+	call DisplayTextPromptButton
+	ld de, TreeDeleterName
+	call CopyTrainerName
+	ld hl, .thatsMy
+	rst _PrintText
+	jp TreeDeleterText.snorlaxText
+.done
 	rst TextScriptEnd
 .couchPotato
 	text_far _FuchsiaTreeDeleterSnorlax2
+	text_end
+.thatsMy
+	text_far _FuchsiaTreeDeleterSnorlax3
 	text_end
 
 CheckAllTreesDeleted:
@@ -39,13 +51,16 @@ TreeDeleterText:
 	text_asm
 	call CheckAllTreesDeleted
 	jr z, .finalText
+	ld de, TreeDeleterName
+	call CopyTrainerName
 	ld hl, FuchsiaTreeDeleterHouseText1
 	rst _PrintText
 	xor a
 	ld [wCurrentMenuItem], a
 .listLoop
 	call CheckAllTreesDeleted
-	jr z, .noMoreTreesToDelete
+	ld hl, FuchsiaTreeDeleterFinalText
+	jr z, .doneList
 	ld hl, FuchsiaTreeDeleterHouseText2
 	rst _PrintText
 	ld a, MONEY_BOX
@@ -54,7 +69,8 @@ TreeDeleterText:
 	ld hl, TreeDeleterOptions
 	ld b, A_BUTTON | B_BUTTON
 	call DisplayMultiChoiceTextBoxNoMenuReset
-	jr nz, .goodbye
+	ld hl, FuchsiaTreeDeleterDoneText
+	jr nz, .doneList
 	ld hl, TextPointers_TreeDelete
 	ld a, [wCurrentMenuItem]
 	push af
@@ -63,25 +79,27 @@ TreeDeleterText:
 	pop af
 	ld [wCurrentMenuItem], a
 	jr .listLoop
-.goodbye
+.doneList
 	xor a
 	ld [wListScrollOffset], a
-	ld hl, FuchsiaTreeDeleterDoneText
-	rst _PrintText
-	rst TextScriptEnd
-.noMoreTreesToDelete
-	xor a
-	ld [wListScrollOffset], a
-	ld hl, FuchsiaTreeDeleterFinalText
 	rst _PrintText
 	rst TextScriptEnd
 .finalText
-	ld hl, FuchsiaTreeDeleterFinalTextPrompt
+	ld hl, FuchsiaTreeDeleterFinalText
 	rst _PrintText
+	call DisplayTextPromptButton
+.snorlaxText
 	ld hl, FuchsiaTreeDeleterFinalText2
 	rst _PrintText
-	rst TextScriptEnd
+	ld de, TreeDeleterName
+	call CopyTrainerName
+	lb hl, DEX_SNORLAX, $FF
+	ld de, TextNothing
+	ld bc, LearnsetRecountedFondMemories
+	predef_jump LearnsetTrainerScriptMain
 
+TreeDeleterName:
+	db "TREE DELETER@"
 
 FuchsiaTreeDeleterDoneText:
 	text_far _FuchsiaTreeDeleterDoneText
@@ -93,11 +111,6 @@ FuchsiaTreeDeleterFinalText:
 
 FuchsiaTreeDeleterFinalText2:
 	text_far _FuchsiaTreeDeleterFinalText2
-	text_end
-
-FuchsiaTreeDeleterFinalTextPrompt:
-	text_far _FuchsiaTreeDeleterFinalText
-	text_promptbutton
 	text_end
 
 TextPointers_TreeDelete:

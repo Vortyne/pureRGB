@@ -74,6 +74,16 @@ _Route17Biker5AfterBattleText::
 	cont "POWER PLANT."
 	done
 
+_LearnsetElectrode::
+	text "It wasn't easy"
+	line "to catch one"
+	cont "before it used"
+	cont "EXPLOSION."
+	para "I had to use a"
+	line "HYPER BALL!"
+	para "@"
+	text_end
+
 _Route17Biker6BattleText::
 	text "My #MON won't"
 	line "evolve! Why?"

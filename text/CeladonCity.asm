@@ -7,6 +7,38 @@ _CeladonCityLittleGirlText::
 	cont "when it's angry!"
 	done
 
+_CeladonCityLittleGirlText2::
+	text "Want to see?"
+	done
+
+_CeladonCityLittleGirlText3::
+	text "Haha, it is pretty"
+	line "cool after all!"
+	done
+
+_KoffingLearnsetText::
+	text "Watch this!"
+	para "Go, KOFFING!@"
+	text_asm
+	ld a, [wPlayerDirection]
+	cp PLAYER_DIR_RIGHT
+	lb hl, 1, 1
+	jr z, .continue
+	cp PLAYER_DIR_UP
+	lb hl, -1, -1
+	jr z, .continue
+	cp PLAYER_DIR_DOWN
+	lb hl, -1, 1
+	jr z, .continue
+	lb hl, -2, 0
+.continue
+	ld de, vNPCSprites tile $78
+	lb bc, CELADONCITY_ANIMATION_PROXY, KOFFING
+	predef MakePokemonAppearInOverworld
+	ld a, KOFFING
+	call PlayCry
+	rst TextScriptEnd
+
 _CeladonCityGramps1Text::
 	text "Heheh! This GYM"
 	line "is great! It's"
@@ -89,6 +121,17 @@ _CeladonCityFisherText::
 	line "POLIWHIRL when I"
 	cont "used WATER STONE!"
 	done
+
+_CeladonCityFisher2Text::
+	text "Want to see some"
+	line "of its moves?"
+	done
+
+_PoliwrathLearnsetText::
+	text "Ready, @"
+	text_ram wNameBuffer
+	text "?"
+	prompt
 
 _CeladonCityPoliwrathText::
 	text "POLIWRATH: Ribi"

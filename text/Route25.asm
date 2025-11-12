@@ -150,6 +150,19 @@ _Route25Hiker3AfterBattleText::
 	cont "CERULEAN CITY."
 	done
 
+_MankeyLearnsetText::
+	text "@"
+	text_ram wNameBuffer
+	text " and I hike"
+	line "it every day!"
+	para "@"
+	text_ram wNameBuffer
+	text " is always"
+	line "brimming with"
+	cont "energy!"
+	para "@"
+	text_end
+
 _Route25BillSignText::
 	text "SEA COTTAGE"
 	line "BILL lives here!"

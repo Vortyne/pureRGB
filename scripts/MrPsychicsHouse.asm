@@ -4,26 +4,22 @@ MrPsychicsHouse_Script:
 MrPsychicsHouse_TextPointers:
 	def_text_pointers
 	dw_const MrPsychicsHouseMrPsychicText, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
+	dw_const MrPsychicsHouseTableBook, TEXT_MRPSYCHICSHOUSE_TABLE_BOOK
 
 MrPsychicsHouseMrPsychicText:
 	text_asm
 	CheckEvent EVENT_GOT_TM29
-	jr nz, .got_item
+	ld hl, .TM29ExplanationText
+	jr nz, .printDone
 	ld hl, .YouWantedThisText
 	rst _PrintText
 	lb bc, TM_SAFFRON_CITY_MR_PSYCHIC, 1
 	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedTM29Text
-	rst _PrintText
-	SetEvent EVENT_GOT_TM29
-	jr .done
-.bag_full
 	ld hl, .TM29NoRoomText
-	rst _PrintText
-	jr .done
-.got_item
-	ld hl, .TM29ExplanationText
+	jr nc, .printDone
+	SetEvent EVENT_GOT_TM29
+	ld hl, .ReceivedTM29Text
+.printDone
 	rst _PrintText
 .done
 	rst TextScriptEnd
@@ -44,3 +40,15 @@ MrPsychicsHouseMrPsychicText:
 .TM29NoRoomText:
 	text_far _MrPsychicsHouseMrPsychicTM29NoRoomText
 	text_end
+
+MrPsychicsHouseTableBook:
+	text_far _MrPsychicsHouseBookText
+	text_far _FlippedToARandomPage
+	text_far _MrPsychicsHouseBookText2
+	text_asm
+	CheckEvent FLAG_ALAKAZAM_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_KADABRA
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd

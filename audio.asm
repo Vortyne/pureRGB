@@ -482,4 +482,4 @@ INCLUDE "audio/sfx/diamond_mine_sfx.asm"
 INCLUDE "audio/sfx/volcano_sfx.asm"
 INCLUDE "audio/sfx/unused_fanfare.asm"
 INCLUDE "audio/sfx/static_encounter_sfx.asm"
-
+INCLUDE "audio/sfx/learnset_fanfare.asm"

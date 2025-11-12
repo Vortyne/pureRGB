@@ -1391,6 +1391,8 @@ VolcanoFloor4TileBlockReplacements:
 
 CinnabarVolcanoHungryGravelerText:
 	text_asm
+	ld c, DEX_GRAVELER - 1
+	callfar SetMonSeen
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	jr z, .skipSpriteChange
@@ -1424,11 +1426,17 @@ CinnabarVolcanoHungryGravelerText:
   	ld [wWhichEmotionBubble], a
 	callfar EmotionBubble
 	CheckAndSetEvent EVENT_GAVE_GRAVELER_ROCK_SALTS
-	jr z, .noCry
+	ld hl, .munching
+	jr z, .done
+	push hl
 	ld a, GRAVELER
 	call PlayCry
-.noCry
-	ld hl, .munching
+	pop hl
+	rst _PrintText
+	lb hl, DEX_GRAVELER, $FF
+	ld de, TextNothing
+	ld bc, LearnsetNaturalHabitat
+	predef_jump LearnsetTrainerScriptMain
 .done
 	rst _PrintText
 .noRockSalts
@@ -1445,6 +1453,8 @@ CinnabarVolcanoHungryGravelerText:
 
 CinnabarVolcanoSickRhydonText:
 	text_asm
+	ld c, DEX_RHYDON - 1
+	callfar SetMonSeen
 	CheckEvent EVENT_GAVE_RHYDON_LIMESTONE
 	jp nz, .already
 	ld hl, .itsSickRhydon
@@ -1500,6 +1510,11 @@ CinnabarVolcanoSickRhydonText:
 	ld a, RHYDON
 	call PlayCry
 	ld hl, .resting
+	rst _PrintText
+	lb hl, DEX_RHYDON, $FF
+	ld de, TextNothing
+	ld bc, LearnsetNaturalHabitat
+	predef_jump LearnsetTrainerScriptMain
 .done
 	rst _PrintText
 .noLimestone

@@ -22,6 +22,21 @@ FightingDojo_ScriptPointers:
 	dw_const FightingDojoKarateMasterPostBattleScript, SCRIPT_FIGHTINGDOJO_KARATE_MASTER_POST_BATTLE
 
 FightingDojoDefaultScript:
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	jr z, .skipOnLoadCode
+	CheckEvent EVENT_DEFEATED_FIGHTING_DOJO
+	jr z, .skipOnLoadCode
+	; if the player beat everyone and got their gift, hide both pokeballs the next time they load the map
+	; allows talking to both scrolls
+	ld a, HS_FIGHTING_DOJO_GIFT_1
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_FIGHTING_DOJO_GIFT_2
+	ld [wMissableObjectIndex], a
+	predef HideObject
+.skipOnLoadCode
 	CheckEvent EVENT_DEFEATED_FIGHTING_DOJO
 	ret nz
 	call CheckFightingMapTrainers
@@ -88,6 +103,14 @@ FightingDojo_TextPointers:
 	dw_const FightingDojoBlackbelt4Text,                            TEXT_FIGHTINGDOJO_BLACKBELT4
 	dw_const FightingDojoHitmonleePokeBallText,                     TEXT_FIGHTINGDOJO_HITMONLEE_POKE_BALL
 	dw_const FightingDojoHitmonchanPokeBallText,                    TEXT_FIGHTINGDOJO_HITMONCHAN_POKE_BALL
+	dw_const FightingDojoText,                                      TEXT_FIGHTINGDOJO_STATUE1
+	dw_const FightingDojoText,                                      TEXT_FIGHTINGDOJO_STATUE2
+	dw_const FightingDojoEnemiesScrollText,                         TEXT_FIGHTINGDOJO_ENEMIES_SCROLL
+	dw_const FightingDojoHitmonleeScrollText,                       TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL
+	dw_const FightingDojoHitmonchanScrollText,                      TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL
+	dw_const FightingDojoGoesAroundScrollText,                      TEXT_FIGHTINGDOJO_GOES_AROUND_SCROLL
+	dw_const FightingDojoHitmonleeScrollText,                       TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL2
+	dw_const FightingDojoHitmonchanScrollText,                      TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL2
 	dw_const FightingDojoKarateMasterText.IWillGiveYouAPokemonText, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
 
 FightingDojoTrainerHeaders:
@@ -105,9 +128,15 @@ FightingDojoTrainerHeader3:
 FightingDojoKarateMasterText:
 	text_asm
 	CheckEvent EVENT_DEFEATED_FIGHTING_DOJO
-	jp nz, .defeated_dojo
+	ld hl, .StayAndTrainWithUsText
+	jr nz, .printDone
 	CheckEventReuseA EVENT_BEAT_KARATE_MASTER
-	jp nz, .defeated_master
+	ld hl, .IWillGiveYouAPokemonText
+	jr nz, .printDone
+	CheckBothEventsSet EVENT_BEAT_FIGHTING_DOJO_TRAINER_0, EVENT_BEAT_FIGHTING_DOJO_TRAINER_1
+	jr nz, .defeatOthersFirst
+	CheckBothEventsSet EVENT_BEAT_FIGHTING_DOJO_TRAINER_2, EVENT_BEAT_FIGHTING_DOJO_TRAINER_3
+	jr nz, .defeatOthersFirst
 	ld hl, .Text
 	rst _PrintText
 	ld hl, wStatusFlags3
@@ -123,15 +152,24 @@ FightingDojoKarateMasterText:
 	ld a, SCRIPT_FIGHTINGDOJO_KARATE_MASTER_POST_BATTLE
 	ld [wFightingDojoCurScript], a
 	ld [wCurMapScript], a
-	jr .end
-.defeated_dojo
-	ld hl, .StayAndTrainWithUsText
+	rst TextScriptEnd
+.defeatOthersFirst
+	ld hl, .defeatOthers
 	rst _PrintText
-	jr .end
-.defeated_master
-	ld hl, .IWillGiveYouAPokemonText
+	ld a, [wYCoord]
+	cp 3
+	jr nz, .noDownWalk
+	ld a, D_DOWN
+	ld hl, wSimulatedJoypadStatesEnd
+	ld [hli], a
+	ld [hl], -1
+	ld a, 1
+	ld [wSimulatedJoypadStatesIndex], a
+	call StartSimulatingJoypadStates
+.noDownWalk
+	rst TextScriptEnd
+.printDone
 	rst _PrintText
-.end
 	rst TextScriptEnd
 
 .Text:
@@ -148,6 +186,10 @@ FightingDojoKarateMasterText:
 
 .StayAndTrainWithUsText:
 	text_far _FightingDojoKarateMasterStayAndTrainWithUsText
+	text_end
+
+.defeatOthers
+	text_far _FightingDojoKarateMasterOthersText
 	text_end
 
 FightingDojoBlackbelt1Text:
@@ -184,7 +226,10 @@ FightingDojoBlackbelt2EndBattleText:
 
 FightingDojoBlackbelt2AfterBattleText:
 	text_far _FightingDojoBlackbelt2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MACHOKE, BLACKBELT
+	ld de, MachokeLearnsetText2
+	predef_jump LearnsetTrainerScript
 
 FightingDojoBlackbelt3Text:
 	text_asm
@@ -202,7 +247,10 @@ FightingDojoBlackbelt3EndBattleText:
 
 FightingDojoBlackbelt3AfterBattleText:
 	text_far _FightingDojoBlackbelt3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_PRIMEAPE, BLACKBELT
+	ld de, PrimeapeLearnsetText
+	predef_jump LearnsetTrainerScript
 
 FightingDojoBlackbelt4Text:
 	text_asm
@@ -292,4 +340,36 @@ FightingDojoHitmonchanPokeBallText:
 
 FightingDojoBetterNotGetGreedyText:
 	text_far _FightingDojoBetterNotGetGreedyText
+	text_end
+
+FightingDojoText::
+	text_far _FightingDojoText
+	text_end
+
+FightingDojoEnemiesScrollText:
+	text_far _EnemiesOnEverySideText
+	text_end
+
+FightingDojoHitmonleeScrollText::
+	text_far _FightingDojoHitmonleeScrollText
+	text_asm
+	CheckEvent FLAG_HITMONLEE_LEARNSET
+	jr nz, .done
+	ld d, DEX_HITMONLEE
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
+
+FightingDojoHitmonchanScrollText::
+	text_far _FightingDojoHitmonchanScrollText
+	text_asm
+	CheckEvent FLAG_HITMONCHAN_LEARNSET
+	jr nz, .done
+	ld d, DEX_HITMONCHAN
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
+
+FightingDojoGoesAroundScrollText::
+	text_far _WhatGoesAroundComesAroundText
 	text_end

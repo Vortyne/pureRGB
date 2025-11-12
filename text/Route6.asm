@@ -41,6 +41,16 @@ _Route6Youngster1AfterBattleText::
 	cont "VIRIDIAN FOREST."
 	done
 
+_Route6VenonatLearnsetText::
+	text "@"
+	text_ram wNameBuffer
+	text " started"
+	line "showing up there"
+	cont "recently!"
+	para "I've been reading"
+	line "books about them!"
+	prompt
+
 _Route6CooltrainerM2BattleText::
 	text "Huh? You want"
 	line "to talk to me?"
@@ -89,6 +99,13 @@ _Route6Youngster2AfterBattleText::
 	line "weak? Or, am I"
 	cont "just bad?"
 	done
+
+_Route6ButterfreeLearnsetText::
+	text "I try so hard to"
+	line "train @"
+	text_ram wNameBuffer
+	text "!"
+	prompt
 
 _Route6BattleText7::
 	text "Huh! The guard"

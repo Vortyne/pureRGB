@@ -2,7 +2,6 @@
 
 HiddenObjectMaps:
 	db REDS_HOUSE_2F
-	db BLUES_HOUSE
 	db OAKS_LAB
 	db VIRIDIAN_POKECENTER
 	db VIRIDIAN_MART
@@ -67,7 +66,6 @@ HiddenObjectMaps:
 	db ROUTE_15_GATE_2F
 	db MR_FUJIS_HOUSE
 	db CELADON_MANSION_ROOF_HOUSE
-	db FIGHTING_DOJO
 	db ROUTE_10
 	db INDIGO_PLATEAU_LOBBY
 	db CINNABAR_LAB_FOSSIL_ROOM
@@ -108,7 +106,6 @@ HiddenObjectMaps:
 HiddenObjectPointers:
 ; each of these pointers is for the corresponding map in HiddenObjectMaps
 	dw RedsHouse2FHiddenObjects
-	dw BluesHouseHiddenObjects
 	dw OaksLabHiddenObjects
 	dw ViridianPokecenterHiddenObjects
 	dw ViridianMartHiddenObjects
@@ -173,7 +170,6 @@ HiddenObjectPointers:
 	dw Route15GateUpstairsHiddenObjects
 	dw LavenderHouse1HiddenObjects
 	dw CeladonMansion5HiddenObjects
-	dw FightingDojoHiddenObjects
 	dw Route10HiddenObjects
 	dw IndigoPlateauLobbyHiddenObjects
 	dw CinnabarLab4HiddenObjects
@@ -242,12 +238,6 @@ ColosseumHiddenObjects:
 RedsHouse2FHiddenObjects:
 	hidden_object  0,  1, SPRITE_FACING_UP, OpenRedsPC
 	hidden_object  3,  5, ANY_FACING, PrintRedSNESText
-	db -1 ; end
-
-BluesHouseHiddenObjects:
-	hidden_object  0,  1, SPRITE_FACING_UP, PrintBookcaseText
-	hidden_object  1,  1, SPRITE_FACING_UP, PrintBookcaseText
-	hidden_object  7,  1, SPRITE_FACING_UP, PrintBookcaseText
 	db -1 ; end
 
 OaksLabHiddenObjects:
@@ -634,13 +624,6 @@ CeladonMansion5HiddenObjects:
 	hidden_text_predef  3,  0, LinkCableHelp, PrintBlackboardLinkCableText
 	hidden_text_predef  4,  0, LinkCableHelp, PrintBlackboardLinkCableText
 	hidden_text_predef  3,  4, TMNotebook, PrintNotebookText
-	db -1 ; end
-
-FightingDojoHiddenObjects:
-	hidden_object  3,  9, SPRITE_FACING_UP, PrintFightingDojoText
-	hidden_object  6,  9, SPRITE_FACING_UP, PrintFightingDojoText
-	hidden_object  4,  0, SPRITE_FACING_UP, PrintFightingDojoText2
-	hidden_object  5,  0, SPRITE_FACING_UP, PrintFightingDojoText3
 	db -1 ; end
 
 IndigoPlateauLobbyHiddenObjects:

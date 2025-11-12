@@ -99,4 +99,7 @@ UndergroundPathNorthSouthEndBattleText3:
 
 UndergroundPathNorthSouthAfterBattleText3:
 	text_far _UndergroundPathNorthSouthAfterBattleText3
-	text_end
+	text_asm
+	lb hl, DEX_KRABBY, COOL_KID
+	ld de, LearnsetKrabbyKid
+	predef_jump LearnsetTrainerScript

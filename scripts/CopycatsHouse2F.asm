@@ -71,7 +71,33 @@ CopycatsHouse2FCopycatText:
 
 CopycatsHouse2FDoduoText:
 	text_far _CopycatsHouse2FDoduoText
+	text_asm
+	ld a, DODUO
+	call PlayCry
+	ld c, DEX_DODUO - 1
+	callfar SetMonSeen
+	call DisplayTextPromptButton
+	ld hl, .mirrorMirror
+	rst _PrintText
+	CheckEvent FLAG_DODRIO_FAMILY_LEARNSET
+	jr nz, .done
+	ld a, COPYCATSHOUSE2F_COPYCAT
+	call SetSpriteFacingDown
+	ld de, CopycatName
+	call CopyTrainerName
+	lb hl, DEX_DODUO, $FF
+	ld de, DoduoLearnsetText
+	ld bc, LearnsetPlayedAroundWith
+	predef_jump LearnsetTrainerScriptMain
+.done
+	rst TextScriptEnd
+.mirrorMirror
+	text_far _CopycatsHouse2FDoduoText2
 	text_end
+
+CopycatName:
+	db "COPYCAT@"
+
 
 CopycatsHouse2FRareDollText:
 	text_far _CopycatsHouse2FRareDollText
@@ -82,20 +108,5 @@ CopycatsHouse2FSNESText:
 	text_end
 
 CopycatsHouse2FPCText:
-	text_asm
-	ld a, [wSpritePlayerStateData1FacingDirection]
-	cp SPRITE_FACING_UP
-	ld hl, .CantSeeText
-	jr nz, .notUp
-	ld hl, .MySecretsText
-.notUp
-	rst _PrintText
-	rst TextScriptEnd
-
-.MySecretsText:
 	text_far _CopycatsHouse2FPCMySecretsText
-	text_end
-
-.CantSeeText:
-	text_far _CopycatsHouse2FPCCantSeeText
 	text_end

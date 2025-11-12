@@ -92,6 +92,25 @@ HandlePokedexSideMenu:
 	inc a
 	ld [wPokedexNum], a
 	push af
+	;;;; draw side menu items
+	hlcoord 16, 8
+	ld de, PokedexDataText
+	call PlaceString
+	call IsPokemonLearnsetUnlocked
+	hlcoord 16, 10
+	ld a, 3
+	jr z, .noLearnset
+	ld de, PokedexMoveText
+	call PlaceString
+	ld hl, wPokedexDataFlags
+	set 4, [hl]
+	hlcoord 16, 12
+	ld a, 4
+.noLearnset
+	ld [wMaxMenuItem], a
+	ld de, PokedexMenuItemsText
+	call PlaceString
+	;;;;
 	ld a, [wDexMaxSeenMon]
 	push af ; this doesn't need to be preserved
 	ld hl, wPokedexSeen
@@ -100,17 +119,16 @@ HandlePokedexSideMenu:
 	jr z, .exitSideMenu
 	call PokedexToIndex
 	ld hl, wTopMenuItemY
-	ld a, 10
+	ld a, 8
 	ld [hli], a ; top menu item Y
 	ld a, 15
 	ld [hli], a ; top menu item X
 	xor a
 	ld [hli], a ; current menu item ID
 	inc hl
-	ld a, 3
-	ld [hli], a ; max menu item ID
-	;ld a, A_BUTTON | B_BUTTON not needed since A_BUTTON | B_BUTTON = 3 and 3 is already in the 'a' register
-	ld [hli], a ; menu watched keys (A button and B button)
+	inc hl
+	ld a, A_BUTTON | B_BUTTON
+	ld [hli], a ; menu watched keys
 	xor a
 	ld [hli], a ; old menu item ID
 	ld [wMenuWatchMovingOutOfBounds], a
@@ -122,6 +140,12 @@ HandlePokedexSideMenu:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr z, .choseData
+	ld hl, wPokedexDataFlags
+	bit 4, [hl]
+	jr z, .noLearnset2
+	dec a
+	jr z, .choseMove
+.noLearnset2
 	dec a
 	jr z, .choseCry
 	dec a
@@ -129,6 +153,8 @@ HandlePokedexSideMenu:
 .choseQuit
 	ld b, 1
 .exitSideMenu
+	ld hl, wPokedexDataFlags
+	res 4, [hl]
 	pop af
 	ld [wDexMaxSeenMon], a
 	pop af
@@ -149,9 +175,9 @@ HandlePokedexSideMenu:
 
 .buttonBPressed
 	push bc
-	hlcoord 15, 10
+	hlcoord 15, 8
 	ld de, 20
-	lb bc, " ", 7
+	lb bc, " ", 9
 	call DrawTileLine ; cover up the menu cursor in the side menu
 	pop bc
 	jr .exitSideMenu
@@ -188,47 +214,37 @@ HandlePokedexSideMenu:
 	pop bc
 	ret
 
+.choseMove
+	push bc
+	ld a, SFX_PRESS_AB
+	rst _PlaySound
+	call ShowMonLearnsetMenu
+	pop bc
+	call ClearScreen
+	jr .exitSideMenu
+
 ; handles the list of pokemon on the left of the pokedex screen
 ; sets carry flag if player presses A, unsets carry flag if player presses B
 HandlePokedexListMenu:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
+	ld de, 1
 ;;;;;;;;;;; PureRGBnote: ADDED: If we got the town map, draw the "SELECT: MAP" prompt at the very bottom
 	CheckEvent EVENT_GOT_TOWN_MAP
 	jr z, .movedexPrompt
 	hlcoord 1, 17
-	ld a, $C0 ; tile in VRAM that this prompt starts at, it's 5 tiles horizontally across
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hl], a
+	lb bc, $C0, 5
+	call DrawTileLineIncrement
 .movedexPrompt
-	hlcoord 7, 17
 	CheckEvent EVENT_GOT_MOVEDEX
 	jr z, .noSelectPrompt
-	ld a, $C5
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hli], a
-	inc a
-	ld [hl], a
+	hlcoord 7, 17
+	lb bc, $C5, 7
+	call DrawTileLineIncrement
 .noSelectPrompt
 ;;;;;;;;;;;
 ; draw the horizontal line separating the seen and owned amounts from the menu
-	hlcoord 15, 8
+	hlcoord 15, 6
 	ld a, "─"
 	ld [hli], a
 	ld [hli], a
@@ -245,28 +261,37 @@ HandlePokedexListMenu:
 	ld b, wPokedexSeenEnd - wPokedexSeen
 	call CountSetBits
 	ld de, wNumSetBits
-	hlcoord 16, 3
+	hlcoord 16, 2
 	lb bc, 1, 3
 	call PrintNumber ; print number of seen pokemon
 	ld hl, wPokedexOwned
 	ld b, wPokedexOwnedEnd - wPokedexOwned
 	call CountSetBits
 	ld de, wNumSetBits
-	hlcoord 16, 6
+	hlcoord 16, 5
 	lb bc, 1, 3
 	call PrintNumber ; print number of owned pokemon
-	hlcoord 16, 2
+	hlcoord 16, 1
 	ld de, PokedexSeenText
 	call PlaceString
-	hlcoord 16, 5
+	hlcoord 16, 4
 	ld de, PokedexOwnText
 	call PlaceString
 	hlcoord 1, 1
 	ld de, PokedexContentsText
 	call PlaceString
+	hlcoord 16, 8
+	ld de, PokedexDataText
+	call PlaceString
 	hlcoord 16, 10
 	ld de, PokedexMenuItemsText
 	call PlaceString
+	hlcoord 16, 16
+	ld a, " "
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
 
 ; find the lowest pokedex number among the pokemon the player has seen
 	ld hl, wPokedexSeen
@@ -348,15 +373,23 @@ HandlePokedexListMenu:
 	ld a, $72 ; pokeball tile
 .writeTile
 	ld [hl], a ; put a pokeball next to pokemon that the player has owned
+	dec hl
+	ld [hl], " " ; default to no learnset unlocked
+	inc hl
 	push hl
 	ld hl, wPokedexSeen
 	call IsPokemonBitSet
-	jr nz, .getPokemonName ; if the player has seen the pokemon
-	ld de, .dashedLine ; print a dashed line in place of the name if the player hasn't seen the pokemon
+	jr nz, .checkPokemonLearnsetUnlockedThenGetName ; if the player has seen the pokemon
+	ld de, PokedexDashedLine ; print a dashed line in place of the name if the player hasn't seen the pokemon
 	jr .skipGettingName
-.dashedLine ; for unseen pokemon in the list
-	db "----------@"
-.getPokemonName
+.checkPokemonLearnsetUnlockedThenGetName
+	call IsPokemonLearnsetUnlocked
+	jr z, .skipLearnsetIcon
+	pop hl
+	push hl
+	dec hl
+	ld [hl], $CC ; mark learnset unlocked if flag set and pokemon is seen
+.skipLearnsetIcon
 	call PokedexToIndex
 	call GetMonName
 .skipGettingName
@@ -473,6 +506,8 @@ HandlePokedexListMenu:
 	and a
 	ret
 ;;;;;;;;;;
+PokedexDashedLine: ; for unseen pokemon in the list
+	db "----------@"
 
 DrawPokedexVerticalLine:
 	ld c, 9 ; height of line
@@ -495,9 +530,15 @@ PokedexOwnText:
 PokedexContentsText:
 	db "CONTENTS@"
 
+
+PokedexDataText:
+	db  "DATA@"
+
+PokedexMoveText:
+	db  "MOVE@"
+
 PokedexMenuItemsText:
-	db   "DATA"
-	next "CRY"
+	db   "CRY "
 	next "AREA"
 	next "QUIT@"
 
@@ -526,7 +567,7 @@ ShowPokedexDataInternal:
 	; load pokedex data page UI tiles (left + right arrows)
 	ld de, PokedexDataUI
 	lb bc, BANK(PokedexDataUI), 2
-	ld hl, vChars1 tile $4C
+	ld hl, vChars1 tile $4D
 	call CopyVideoDataDouble
 
 	ld a, B_BUTTON
@@ -557,10 +598,7 @@ ShowPokedexData:
 
 ; function to display pokedex data from inside the pokedex
 ShowPokedexDataCommon:
-	ld hl, wStatusFlags2
-	set BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $33 ; 3/7 volume
-	ldh [rNR50], a
+	call HalfVolume
 	call GBPalWhiteOut ; zero all palettes
 	call ClearScreen
 	ld hl, wPokedexDataFlags
@@ -660,7 +698,7 @@ ShowNextPokemonData:
 	ld b, a
 	ld a, [wPokedexNum]
 	cp b
-	ld a, $CC ; < prompt
+	ld a, $CD ; < prompt
 	jr nz, .loadLeftPrompt
 	ld a, $6f ; border tile instead
 .loadLeftPrompt
@@ -671,7 +709,7 @@ ShowNextPokemonData:
 	ld b, a
 	ld a, [wPokedexNum]
 	cp b
-	ld a, $CD ; > prompt
+	ld a, $CE ; > prompt
 	jr nz, .loadRightPrompt
 	ld a, $6f ; border tile instead
 .loadRightPrompt
@@ -962,11 +1000,7 @@ ShowNextPokemonData:
 	call RunDefaultPaletteCommand
 	call LoadTextBoxTilePatterns
 	call GBPalNormal
-	ld hl, wStatusFlags2
-	res BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $77 ; max volume
-	ldh [rNR50], a
-	ret
+	jp MaxVolume
 .switchMonSprite
 	ld a, [wPokedexNum]
 	push af

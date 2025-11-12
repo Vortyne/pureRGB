@@ -97,7 +97,10 @@ Route6Youngster1EndBattleText:
 
 Route6Youngster1AfterBattleText:
 	text_far _Route6Youngster1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_VENONAT, BUG_CATCHER
+	ld de, Route6VenonatLearnsetText
+	predef_jump LearnsetTrainerScript
 
 Route6CooltrainerM2Text:
 	text_asm
@@ -151,7 +154,10 @@ Route6Youngster2EndBattleText:
 
 Route6Youngster2AfterBattleText:
 	text_far _Route6Youngster2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_BUTTERFREE, BUG_CATCHER
+	ld de, Route6ButterfreeLearnsetText
+	predef_jump LearnsetTrainerScript
 
 Route6Text7:
 	text_asm

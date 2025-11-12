@@ -57,3 +57,13 @@ _UndergroundPathNorthSouthAfterBattleText3::
 	para "Are you in or are"
 	line "you out?"
 	done
+
+_LearnsetKrabbyKid::
+	text "My @"
+	text_ram wNameBuffer
+	text " always"
+	line "likes a good"
+	cont "scrap!"
+	para "What a great"
+	line "little guy!"
+	prompt

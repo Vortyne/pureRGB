@@ -68,6 +68,22 @@ _IsEvolvingText::
 	line "is evolving!"
 	done
 
+_YoureAnExpertText::
+	text "You're an expert"
+	line "with @"
+	text_ram wNameBuffer
+	text "!@"
+	sound_get_item_2
+	text_promptbutton
+	text_end
+
+_LearnsetUnlockedText::
+	text "@"
+	text_ram wNameBuffer
+	text "'s learn-"
+	line "set was recorded!"
+	done
+
 _FellAsleepText::
 	text "<TARGET>"
 	line "fell asleep!"
@@ -111,7 +127,7 @@ _MonsStatsRoseText::
 	text_end
 
 _GreatlyRoseText::
-	text "<SCROLL>greatly@"
+	text "<SCROLL>greatly@" ; TODO: Parameterize?
 	text_end
 
 _RoseText::
@@ -184,9 +200,8 @@ _BecameConfusedText::
 
 _MimicLearnedMoveText::
 	text "<USER>"
-	line "learned"
-	cont "@"
-	text_ram wNameBuffer
+	line "learned @"
+	text_ram_cont wNameBuffer
 	text "!"
 	prompt
 

@@ -230,3 +230,9 @@ DisplayRepelWoreOffText::
 DisplayTextPromptButton::
 	ld hl, TextScriptPromptButton
 	jp TextCommandProcessor
+
+; Clears the box dialog prints in
+ClearTextBox::
+	hlcoord 1, 13
+	lb bc, 4, 18
+	jp ClearScreenArea

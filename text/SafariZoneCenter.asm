@@ -92,6 +92,15 @@ _SafariZoneCenterJugglerAfterBattleText::
 	cont "TAUROS."
 	done
 
+_TaurosLearnsetText::
+	text "“The Matador” will"
+	line "now tell you a"
+	cont "famous folk tale"
+	cont "about @"
+	text_ram wNameBuffer
+	text "<...>"
+	prompt
+
 _SafariZoneCenterManiacText::
 	text "Let me introduce"
 	line "you to Team"

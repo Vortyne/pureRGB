@@ -30,6 +30,19 @@ _CinnabarGymBlainePostBattleAdviceText::
 	line "water #MON!"
 	done
 
+_CinnabarGymBlaineMoltres::
+	text "It can't be<...>"
+	para "You caught the"
+	line "flaming bird"
+	cont "#MON, MOLTRES!"
+	para "A MOLTRES saved"
+	line "my life!"
+	para "It guided me out"
+	line "of a mountain"
+	cont "range when I lost"
+	cont "my way!"
+	done
+
 _CinnabarGymBlaineVolcanoBadgeInfoText::
 	text "Hah!"
 

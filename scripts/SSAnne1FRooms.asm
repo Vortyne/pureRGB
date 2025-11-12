@@ -80,7 +80,11 @@ SSAnne1FRoomsGentleman1EndBattleText:
 
 SSAnne1FRoomsGentleman1AfterBattleText:
 	text_far _SSAnne1FRoomsGentleman1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_GROWLITHE, GENTLEMAN
+	ld de, LearnsetGrowlithe
+	ld bc, LearnsetFadeOutInfirmary
+	predef_jump LearnsetTrainerScriptMain
 
 SSAnne1FRoomsGentleman2BattleText:
 	text_far _SSAnne1FRoomsGentleman2BattleText

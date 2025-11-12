@@ -30,6 +30,16 @@ _Route18CooltrainerM2AfterBattleText::
 	cont "weekends!"
 	done
 
+_Route18AerodactylLearnsetText::
+	text "Bet you didn't"
+	line "expect me to have"
+	cont "an @"
+	text_ram wNameBuffer
+	text "!"
+	para "I revived it from"
+	line "OLD AMBER!"
+	prompt
+
 _Route18CooltrainerM3BattleText::
 	text "This is my turf!"
 	line "Get out of here!"

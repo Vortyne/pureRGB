@@ -29,6 +29,16 @@ _Route11Gambler2AfterBattleText::
 	cont "world of #MON!"
 	done
 
+_LearnsetBellsprout::
+	text "You've got to be"
+	line "flexible, like my"
+	cont "@"
+	text_ram wNameBuffer
+	text "!"
+	para "Move, sway, and"
+	line "adapt!"
+	prompt
+
 _Route11Youngster1BattleText::
 	text "Let's go, but"
 	line "don't cheat!"
@@ -59,6 +69,18 @@ _Route11SuperNerd1AfterBattleText::
 	text "Spread the word"
 	line "to save energy!"
 	done
+
+_LearnsetMagneton::
+	text "@"
+	text_ram wNameBuffer
+	text " gather"
+	line "in places that"
+	cont "overuse energy."
+	para "They can cause"
+	line "big blackouts!"
+	para "@"
+	text_end
+
 
 _Route11Youngster2BattleText::
 	text "I just became a"
@@ -127,7 +149,28 @@ _Route11Youngster3AfterBattleText::
 	line "you can get it."
 	done
 
+_LearnsetStaryu::
+	text "But I've already"
+	line "got this @"
+	text_ram wNameBuffer
+	text "!"
+	para "It has such a"
+	line "peculiar shape."
+	para "Reminds me of"
+	line "outer space!"
+	para "@"
+	text_end
+
 _Route11SuperNerd2BattleText::
 	text "Watch out for"
 	line "live wires!"
 	done
+
+_LearnsetVulpixLuckyNumber::
+	text "Six is my lucky"
+	line "number!"
+	para "That's why I"
+	line "raised a @"
+	text_ram wNameBuffer
+	text "!"
+	prompt

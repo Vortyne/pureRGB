@@ -769,6 +769,25 @@ SecretLabComputer2Text:
 	text_end
 SecretLabComputer3Text:
 	text_far _SecretLabComputer3Text
+	text_asm
+	ld d, MEWTWO
+	callfar IsMonInParty
+	jr c, .haveMewtwo
+	ld d, ARMORED_MEWTWO
+	callfar IsMonInParty
+	jr nc, .done
+.haveMewtwo
+	CheckEvent FLAG_MEWTWO_LEARNSET
+	jr nz, .done
+	call DisplayTextPromptButton
+	ld hl, .moreInfo
+	rst _PrintText
+	ld d, DEX_MEWTWO
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
+.moreInfo
+	text_far _SecretLabComputer3BText
 	text_end
 SecretLabComputer4Text:
 	text_far _SecretLabComputer4Text

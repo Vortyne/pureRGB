@@ -85,7 +85,7 @@ _PocketAbraFlavorText4::
 
 _PocketAbraFlavorText5::
 	text_ram wPocketAbraNick
-	text " "
+	text_start
 	line "focused with"
 	cont "all its might!"
 	prompt

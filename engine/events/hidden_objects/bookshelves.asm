@@ -6,19 +6,15 @@ PrintBookshelfText::
 	; player is facing up
 ;;;;;;;;;; PureRGBnote: ADDED: some houses have unique text for bookcases instead of "crammed full of books!"
 	ld a, [wCurMap]
-	cp TYPE_GUYS_HOUSE
-	jr z, .noMatch
-	cp VERMILION_GYM
-	jr z, .noMatch
-	cp SS_ANNE_CAPTAINS_ROOM
-	jr z, .noMatch
-	cp FUCHSIA_GOOD_ROD_HOUSE
-	jr z, .noMatch
 	cp CELADON_MANSION_2F
 	jr nz, .notCeladonHouses
 	callfar CeladonHouse2FBookCaseCheck
 	jr nc, .noMatch
 .notCeladonHouses
+	ld hl, NoBookCaseTextMaps
+	ld de, 1
+	call IsInArray
+	jr c, .noMatch
 ;;;;;;;;;;
 	ld a, [wCurMapTileset]
 	ld b, a
@@ -51,5 +47,15 @@ PrintBookshelfText::
 	ld a, $ff
 	ldh [hInteractedWithBookshelf], a
 	farjp PrintCardKeyText
+
+NoBookCaseTextMaps:
+	db TYPE_GUYS_HOUSE
+	db VERMILION_GYM
+	db FUCHSIA_GOOD_ROD_HOUSE
+	db SS_ANNE_CAPTAINS_ROOM
+	db CERULEAN_ROCKET_HOUSE_1F
+	db CELADON_MANSION_1F
+	db CELADON_CHIEF_HOUSE
+	db -1
 
 INCLUDE "data/tilesets/bookshelf_tile_ids.asm"

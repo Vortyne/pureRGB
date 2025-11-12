@@ -88,6 +88,32 @@ _Route14CooltrainerM5AfterBattleText::
 	cont "birds of prey."
 	done
 
+_LegendaryBirdLearnsetAn::
+	text "WHAT?!?"
+	para "You caught an"
+	line "@"
+	text_ram wNameBuffer
+	text "?!"
+	prompt
+
+_LegendaryBirdLearnsetA::
+	text "WHAT?!?"
+	para "You caught a"
+	line "@"
+	text_ram wNameBuffer
+	text "?!"
+	prompt
+
+_LegendaryBirdLearnset::
+	text "You're a legend!"
+	para "That's one of the"
+	line "legendary birds!"
+	para "Can I see it?!"
+	para "I'll tell you"
+	line "everything I know"
+	cont "about it!"
+	done
+
 _Route14CooltrainerM6BattleText::
 	text "I'm not into it,"
 	line "but OK! Let's go!"

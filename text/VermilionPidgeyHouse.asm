@@ -5,9 +5,23 @@ _VermilionPidgeyHouseYoungsterText::
 	cont "in the north!"
 	done
 
+_VermilionPidgeyHouseYoungsterLearnset::
+	text "@"
+	text_ram wNameBuffer
+	text " is actually"
+	line "a very capable"
+	cont "letter deliverer!"
+	para "Amazing sense of"
+	line "direction!"
+	para "So useful."
+	para "Interested in"
+	line "hearing more?"
+	para "Have a seat!"
+	prompt
+
 _VermilionPidgeyHousePidgeyText::
-	text "PIDGEY: Kurukkoo!@"
-	text_end
+	text "PIDGEY: Kurukkoo!"
+	done
 
 _VermilionPidgeyHouseLetterText::
 	text "Dear PIPPI, I hope"

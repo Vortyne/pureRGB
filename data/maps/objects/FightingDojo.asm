@@ -11,10 +11,22 @@ FightingDojo_Object:
 	db $3 ; border block
 
 	def_warp_events
-	warp_event  4, 11, LAST_MAP, 2
-	warp_event  5, 11, LAST_MAP, 2
+	warp_event  4, 11, SAFFRON_CITY, 2
+	warp_event  5, 11, SAFFRON_CITY, 2
+	warp_event  4, 0, FIGHTING_DOJO, 5
+	warp_event  5, 0, FIGHTING_DOJO, 6
+	warp_event 18, 11, FIGHTING_DOJO, 3
+	warp_event 19, 11, FIGHTING_DOJO, 4
 
 	def_bg_events
+	bg_event  3,  9, TEXT_FIGHTINGDOJO_STATUE1
+	bg_event  6,  9, TEXT_FIGHTINGDOJO_STATUE2
+	bg_event  1,  0, TEXT_FIGHTINGDOJO_ENEMIES_SCROLL 
+	bg_event  4,  0, TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL
+	bg_event  5,  0, TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL
+	bg_event  8,  0, TEXT_FIGHTINGDOJO_GOES_AROUND_SCROLL 
+	bg_event 16,  4, TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL2
+	bg_event 21,  4, TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL2
 
 	def_object_events
 	object_event  5,  3, SPRITE_HIKER, STAY, DOWN, TEXT_FIGHTINGDOJO_KARATE_MASTER, OPP_BLACKBELT, 1

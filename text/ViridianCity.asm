@@ -88,6 +88,18 @@ _ViridianCityFisherTM42ExplanationText::
 	cont "<...>Snore<...>"
 	done
 
+_ViridianCityFisherGastlyLearnset::
+	text "Hmm?"
+	para "Describe the dream"
+	line "I had in detail?"
+	para "It was about"
+	line "a giant @"
+	text_ram wNameBuffer
+	text "."
+	para "Here goes<...>"
+	prompt
+
+
 _ViridianCityFisherTM42NoRoomText::
 	text "You have too much"
 	line "stuff already."

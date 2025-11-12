@@ -73,14 +73,18 @@ SaffronCitySilphWorkerFText:
 
 SaffronCityGentlemanText:
 	text_far _SaffronCityGentlemanText
-	text_end
+	text_asm
+.done
+	ld c, DEX_PIDGEOT - 1
+	callfar SetMonSeen
+	rst TextScriptEnd
 
 SaffronCityPidgeotText:
 	text_far _SaffronCityPidgeotText
 	text_asm
 	ld a, PIDGEOT
 	call PlayCry
-	rst TextScriptEnd
+	jr SaffronCityGentlemanText.done
 
 SaffronCityRockerText:
 	text_far _SaffronCityRockerText

@@ -405,23 +405,24 @@ CeruleanCityGuardText:
 
 CeruleanCityCooltrainerF1Text:
 	text_asm
+	ld c, DEX_SLOWBRO - 1
+	callfar SetMonSeen
 	ldh a, [hRandomAdd]
 	cp 180 ; 76/256 chance of 1st dialogue
 	jr c, .notFirstText
 	ld hl, .SlowbroUseSonicboomText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notFirstText
 	cp 100 ; 80/256 chance of 2nd dialogue
 	jr c, .notSecondText
 	ld hl, .SlowbroPunchText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notSecondText
 	; 100/256 chance of 3rd dialogue
 	ld hl, .SlowbroWithdrawText
 	rst _PrintText
-.end
 	rst TextScriptEnd
 
 .SlowbroUseSonicboomText:
@@ -438,29 +439,30 @@ CeruleanCityCooltrainerF1Text:
 
 CeruleanCitySlowbroText:
 	text_asm
+	ld c, DEX_SLOWBRO - 1
+	callfar SetMonSeen
 	ldh a, [hRandomAdd]
 	cp 180 ; 76/256 chance of 1st dialogue
 	jr c, .notFirstText
 	ld hl, .TookASnoozeText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notFirstText
 	cp 120 ; 60/256 chance of 2nd dialogue
 	jr c, .notSecondText
 	ld hl, .IsLoafingAroundText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notSecondText
 	cp 60 ; 60/256 chance of 3rd dialogue
 	jr c, .notThirdText
 	ld hl, .TurnedAwayText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notThirdText
 	; 60/256 chance of 4th dialogue
 	ld hl, .IgnoredOrdersText
 	rst _PrintText
-.end
 	rst TextScriptEnd
 
 .TookASnoozeText:

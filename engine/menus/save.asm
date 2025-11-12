@@ -157,9 +157,7 @@ SaveSAV:
 	ret nz
 .save
 	call SaveSAVtoSRAM
-	hlcoord 1, 13
-	lb bc, 4, 18
-	call ClearScreenArea
+	call ClearTextBox
 	hlcoord 1, 14
 	ld hl, GameSavedText
 	rst _PrintText

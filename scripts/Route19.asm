@@ -133,7 +133,10 @@ Route19CooltrainerM2EndBattleText:
 
 Route19CooltrainerM2AfterBattleText:
 	text_far _Route19CooltrainerM2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_PINSIR, SWIMMER
+	ld de, LearnsetCool
+	predef_jump LearnsetTrainerScript
 
 Route19Swimmer1BattleText:
 	text_far _Route19Swimmer1BattleText

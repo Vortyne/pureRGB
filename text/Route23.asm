@@ -25,8 +25,8 @@ _Route23OhThatIsTheBadgeText::
 	para "Oh! That is the"
 	line "@"
 	text_ram wNameBuffer
-	text "!@"
-	text_end
+	text "!"
+	done
 
 _Route23GoRightAheadText::
 	text_start

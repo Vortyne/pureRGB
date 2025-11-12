@@ -325,9 +325,8 @@ _MagmarFight::
 
 _VolcanoBattleBurnText::
 	text "The volcano's"
-	line "too hot for"
-	cont "@"
-	text_ram wBattleMonNick
+	line "too hot for @"
+	text_ram_cont wBattleMonNick
 	text "!"
 	prompt
 

@@ -12,9 +12,14 @@ LavenderCuboneHouse_TextPointers:
 LavenderCuboneHouseCuboneText:
 	text_far _LavenderCuboneHouseCuboneText
 	text_asm
+	call LavenderCuboneSetMonSeen
 	ld a, CUBONE
 	call PlayCry
 	rst TextScriptEnd
+
+LavenderCuboneSetMonSeen:
+	ld c, DEX_CUBONE - 1
+	jpfar SetMonSeen
 
 LavenderCuboneHouseBrunetteGirlText:
 	text_asm
@@ -22,12 +27,25 @@ LavenderCuboneHouseBrunetteGirlText:
 	jr nz, .rescued_mr_fuji
 	ld hl, .PoorCubonesMotherText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .rescued_mr_fuji
 	ld hl, .TheGhostIsGoneText
 	rst _PrintText
-.done
+	CheckEvent EVENT_BEAT_THE_MAW
+	jr z, .continue
+	; if the player beat THE MAW, cubone is gone, and you will need one in your party for the learnset
+	ld d, CUBONE
+	callfar IsMonInParty
+	jr c, .continue
 	rst TextScriptEnd
+.continue
+	ld de, LadyName
+	call CopyTrainerName
+	call LavenderCuboneSetMonSeen
+	lb hl, DEX_CUBONE, $FF
+	ld de, LavenderCuboneLearnset
+	ld bc, LearnsetPlayedAroundWith
+	predef_jump LearnsetTrainerScriptMain
 
 .PoorCubonesMotherText:
 	text_far _LavenderCuboneHouseBrunetteGirlPoorCubonesMotherText
@@ -36,6 +54,9 @@ LavenderCuboneHouseBrunetteGirlText:
 .TheGhostIsGoneText:
 	text_far _LavenderCuboneHouseBrunetteGirlGhostIsGoneText
 	text_end
+
+LadyName:
+	db "KIND GIRL@"
 
 LightChannelerText:
 	text_asm

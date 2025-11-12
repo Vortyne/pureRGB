@@ -90,6 +90,16 @@ _Museum1FScientist2GetTheOldAmberCheckText::
 	line "AMBER checked!"
 	done
 
+_Museum1FScientist2GetTheOldAmberRevivedText::
+	text "WOW!"
+	para "You revived the"
+	line "AMBER into a live"
+	cont "AERODACTYL?!"
+	para "I'm gonna go brag"
+	line "to my colleagues"
+	cont "now!"
+	done
+
 _Museum1FScientist2YouDontHaveSpaceText::
 	text "You don't have"
 	line "space for this!"

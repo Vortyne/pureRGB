@@ -189,3 +189,12 @@ _MtMoonB2FRocket4AfterBattleText::
 	line "here long before"
 	cont "people came."
 	done
+
+_MtMoonB2fRocket4AfterBattleLearnsetText::
+	text "So kid, how'd you"
+	line "like my @"
+	text_ram wNameBuffer
+	text "?"
+	para "Pretty scary, huh?"
+	para "@"
+	text_end

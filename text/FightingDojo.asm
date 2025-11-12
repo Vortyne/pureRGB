@@ -75,6 +75,16 @@ _FightingDojoBlackbelt2AfterBattleText::
 	line "pro fighter!"
 	done
 
+_MachokeLearnsetText2::
+	text "He beat my @"
+	text_ram wNameBuffer
+	text_start
+	line "at grappling!"
+	para "I still can't"
+	line "believe that!"
+	para "@"
+	text_end
+
 _FightingDojoBlackbelt3BattleText::
 	text "Nothing tough"
 	line "frightens me!"
@@ -93,6 +103,20 @@ _FightingDojoBlackbelt3AfterBattleText::
 	line "that frightens us"
 	cont "is psychic power!"
 	done
+
+_PrimeapeLearnsetText::
+	text "Even my @"
+	text_ram wNameBuffer
+	text_start
+	line "doesn't like it."
+	para "I'm going to train"
+	line "it further so it"
+	cont "learns SONICBOOM!"
+	para "Then it'll be able"
+	line "to deal with"
+	cont "PSYCHIC #MON."
+	para "@"
+	text_end
 
 _FightingDojoBlackbelt4BattleText::
 	text "Hoohah!"
@@ -128,4 +152,34 @@ _FightingDojoHitmonchanPokeBallText::
 _FightingDojoBetterNotGetGreedyText::
 	text "Better not get"
 	line "greedy<...>"
+	done
+
+_FightingDojoKarateMasterOthersText::
+	text "Defeat the others"
+	line "if you wish to"
+	cont "challenge me!"
+	done
+
+_FightingDojoHitmonleeScrollText::
+	text "DO NOT FEAR HE"
+	line "WHO PRACTICES"
+	cont "10000 KICKS ONCE."
+	para "FEAR HE WHO"
+	line "PRACTICES 1 KICK"
+	cont "10000 TIMES."
+	para "It's a scroll"
+	line "with ancient"
+	cont "knowledge about"
+	cont "kick techniques."
+	done
+
+_FightingDojoHitmonchanScrollText::
+	text "ROLL WITH THE"
+	line "PUNCHES"
+	para "CAN'T HIT WHAT"
+	line "YOU CAN'T SEE"
+	para "It's a scroll"
+	line "with ancient"
+	cont "knowledge about"
+	cont "punch techniques."
 	done

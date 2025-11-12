@@ -249,7 +249,10 @@ Route13CooltrainerM3EndBattleText:
 
 Route13CooltrainerM3AfterBattleText:
 	text_far _Route13CooltrainerM3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_FEAROW, BIRD_KEEPER
+	ld de, FearowLearnset
+	predef_jump LearnsetTrainerScript
 
 Route13TrainerTips1Text:
 	text_far _Route13TrainerTips1Text

@@ -1,16 +1,6 @@
 PokemonFanClub_Script:
 	jp EnableAutoTextBoxDrawing
 
-PokemonFanClub_CheckBikeInBag:
-; check if any bike paraphernalia in bag
-	CheckEvent EVENT_GOT_BIKE_VOUCHER
-	ret nz
-	ld b, BICYCLE
-	call IsItemInBag
-	ret nz
-	ld b, BIKE_VOUCHER
-	jp IsItemInBag
-
 PokemonFanClub_TextPointers:
 	def_text_pointers
 	dw_const PokemonFanClubPikachuFanText,   TEXT_POKEMONFANCLUB_PIKACHU_FAN
@@ -24,6 +14,24 @@ PokemonFanClub_TextPointers:
 
 PokemonFanClubPikachuFanText:
 	text_asm
+	ld c, DEX_PIKACHU - 1
+	callfar SetMonSeen
+	ld d, PIKACHU
+	callfar IsMonInParty
+	jr nc, .no
+	ld hl, .yoursText
+	rst _PrintText
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .done
+	CheckEvent FLAG_RAICHU_FAMILY_LEARNSET
+	jr nz, .done
+	ld de, FanName
+	call CopyTrainerName
+	lb hl, DEX_PIKACHU, $FF
+	ld de, LearnsetCuteTalk
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
+.no
 	CheckEvent EVENT_PIKACHU_FAN_BOAST
 	jr nz, .mineisbetter
 	ld hl, .NormalText
@@ -45,8 +53,33 @@ PokemonFanClubPikachuFanText:
 	text_far _PokemonFanClubPikachuFanBetterText
 	text_end
 
+.yoursText:
+	text_far _PokemonFanClubPikachuFanYoursText
+	text_end
+
+FanName:
+	db "SUPERFAN@"
+
 PokemonFanClubSeelFanText:
 	text_asm
+	ld c, DEX_SEEL - 1
+	callfar SetMonSeen
+	ld d, SEEL
+	callfar IsMonInParty
+	jr nc, .no
+	ld hl, .yoursText
+	rst _PrintText
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .done
+	CheckEvent FLAG_DEWGONG_FAMILY_LEARNSET
+	jr nz, .done
+	ld de, FanName
+	call CopyTrainerName
+	lb hl, DEX_SEEL, $FF ; TODO: fix
+	ld de, LearnsetBeautyTalk
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
+.no
 	CheckEvent EVENT_SEEL_FAN_BOAST
 	jr nz, .mineisbetter
 	ld hl, .NormalText
@@ -68,13 +101,18 @@ PokemonFanClubSeelFanText:
 	text_far _PokemonFanClubSeelFanBetterText
 	text_end
 
+.yoursText:
+	text_far _PokemonFanClubSeelFanYoursText
+	text_end
+
 PokemonFanClubPikachuText:
 	text_asm
 	ld hl, .Text
 	rst _PrintText
 	ld a, PIKACHU
 	call PlayCry
-	call WaitForSoundToFinish
+	ld c, DEX_PIKACHU - 1
+	callfar SetMonSeen
 	rst TextScriptEnd
 
 .Text
@@ -87,7 +125,8 @@ PokemonFanClubSeelText:
 	rst _PrintText
 	ld a, SEEL
 	call PlayCry
-	call WaitForSoundToFinish
+	ld c, DEX_SEEL - 1
+	callfar SetMonSeen
 	rst TextScriptEnd
 
 .Text:
@@ -96,38 +135,54 @@ PokemonFanClubSeelText:
 
 PokemonFanClubChairmanText:
 	text_asm
-	call PokemonFanClub_CheckBikeInBag
-	jr nz, .nothingleft
+	CheckEvent EVENT_GOT_BIKE_VOUCHER
+	jr nz, .gotBikeVoucherAlready
 	ld hl, .IntroText
 	rst _PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .nothanks
-
+	call .yesNoChoice
+	jr nz, .printText
 	; tell the story
 	ld hl, .StoryText
 	rst _PrintText
 	lb bc, BIKE_VOUCHER, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .BagFullText
+	jr nc, .printText
 	ld hl, .BikeVoucherText
 	rst _PrintText
 	SetEvent EVENT_GOT_BIKE_VOUCHER
-	jr .done
-.bag_full
-	ld hl, .BagFullText
+	rst TextScriptEnd
+.gotBikeVoucherAlready
+	CheckEvent FLAG_RAPIDASH_FAMILY_LEARNSET
+	jr nz, .final
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .final
+	ld hl, .moreAboutRapidash
 	rst _PrintText
-	jr .done
-.nothanks
-	ld hl, .NoStoryText
+	call .yesNoChoice
+	jr nz, .printText
+	ld c, DEX_RAPIDASH - 1
+	callfar SetMonSeen
+	ld hl, .longOne
 	rst _PrintText
-	jr .done
-.nothingleft
+	ld de, ChairName
+	call CopyTrainerName
+	lb hl, DEX_RAPIDASH, $FF
+	ld de, TextNothing
+	ld bc, LearnsetFadeOutInStory
+	predef_jump LearnsetTrainerScriptMain
+.final
 	ld hl, .FinalText
+.printText
 	rst _PrintText
 .done
 	rst TextScriptEnd
+.yesNoChoice
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, .NoStoryText
+	ret
 
 .IntroText:
 	text_far _PokemonFanClubChairmanIntroText
@@ -154,6 +209,17 @@ PokemonFanClubChairmanText:
 .BagFullText:
 	text_far _PokemonFanClubBagFullText
 	text_end
+
+.moreAboutRapidash
+	text_far _PokemonFanClubChairMoreText
+	text_end
+
+.longOne
+	text_far _PokemonFanClubChairLongOne
+	text_end
+
+ChairName::
+	db "CLUB CHAIR@"
 
 PokemonFanClubReceptionistText:
 	text_far _PokemonFanClubReceptionistText

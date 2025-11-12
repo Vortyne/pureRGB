@@ -37,10 +37,29 @@ _Route3Youngster2EndBattleText::
 	prompt
 
 _Route3Youngster2AfterBattleText::
-	text "Are you storing"
-	line "your #MON on"
-	cont "<PC>? Each BOX can"
-	cont "hold 20 #MON!"
+	text "I always wear"
+	line "shorts, even in"
+	cont "winter!"
+	done
+
+_Route3Youngster2AfterBattleText2::
+	text "Do you like"
+	line "shorts?"
+	done
+
+_Route3Youngster2AfterBattleText3Yes::
+	text "Awesome!"
+	done
+
+_Route3Youngster2AfterBattleText3Yes2::
+	text "Here's some info"
+	line "about RATTATA-"
+	para "from shorts fan"
+	line "to shorts fan!"
+	prompt
+
+_Route3Youngster2AfterBattleText3No::
+	text "Lame!"
 	done
 
 _Route3CooltrainerF1BattleText::
@@ -104,9 +123,10 @@ _Route3Youngster4EndBattleText::
 	prompt
 
 _Route3Youngster4AfterBattleText::
-	text "I always wear"
-	line "shorts, even in"
-	cont "winter!"
+	text "Are you storing"
+	line "your #MON on"
+	cont "<PC>? Each BOX can"
+	cont "hold 20 #MON!"
 	done
 
 _Route3Youngster5BattleText::
@@ -138,6 +158,17 @@ _Route3CooltrainerF3AfterBattleText::
 	text "ROUTE 4 is at the"
 	line "foot of MT.MOON."
 	done
+
+_Route3CooltrainerF3AfterBattleText2::
+	text "But @"
+	text_ram wNameBuffer
+	text_start
+	line "and I met here"
+	cont "on ROUTE 3!"
+	para "What a sweet"
+	line "memory."
+	para "@"
+	text_end
 
 _Route3SignText::
 	text "ROUTE 3"

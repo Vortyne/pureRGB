@@ -12,4 +12,15 @@ ViridianForestSouthGateGirlText:
 
 ViridianForestSouthGateLittleGirlText:
 	text_far _ViridianForestSouthGateLittleGirlText
+	text_asm
+	ld d, RATTATA
+	callfar IsMonInParty
+	jr nc, .done
+	call DisplayTextPromptButton
+	ld hl, .rightOn
+	rst _PrintText
+.done
+	rst TextScriptEnd
+.rightOn
+	text_far _ViridianForestSouthGateLittleGirl2Text
 	text_end

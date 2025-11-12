@@ -82,6 +82,8 @@ SSAnneB1FRoomsFisherText:
 SSAnneB1FRoomsMachokeText:
 	text_far _SSAnneB1FRoomsMachokeText
 	text_asm
+	ld c, DEX_MACHOKE - 1
+	callfar SetMonSeen
 	ld a, MACHOKE
 	call PlayCry
 	rst TextScriptEnd
@@ -160,4 +162,12 @@ SSAnneB1FRoomsFisherAfterBattleText:
 
 SSAnneB1FRoomsSuperNerdText:
 	text_far _SSAnneB1FRoomsSuperNerdText
-	text_end
+	text_asm
+	ld a, SSANNEB1FROOMS_MACHOKE
+	call SetSpriteFacingDown
+	ld c, DEX_MACHOKE - 1
+	callfar SetMonSeen
+	lb hl, DEX_MACHOKE, SAILOR
+	ld de, LearnsetTough
+	ld bc, LearnsetShowedCoolMoves
+	predef_jump LearnsetTrainerScriptMain

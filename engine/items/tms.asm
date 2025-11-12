@@ -3,6 +3,7 @@ CanLearnTM:
 	ld a, [wCurPartySpecies]
 	ld [wCurSpecies], a
 	call GetMonHeader
+CanLearnTMBody:
 	ld hl, wMonHLearnset
 	push hl
 	ld a, [wMoveNum]

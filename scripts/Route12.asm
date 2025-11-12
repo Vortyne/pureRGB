@@ -310,7 +310,10 @@ Route12Fisher1EndBattleText:
 
 Route12Fisher1AfterBattleText:
 	text_far _Route12Fisher1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_GOLDEEN, FISHER
+	ld de, LearnsetGoldeen
+	predef_jump LearnsetTrainerScript
 
 Route12Fisher2Text:
 	text_asm
@@ -328,7 +331,10 @@ Route12Fisher2EndBattleText:
 
 Route12Fisher2AfterBattleText:
 	text_far _Route12Fisher2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_TENTACOOL, FISHER
+	ld de, TentacoolLearnset
+	predef_jump LearnsetTrainerScript
 
 Route12CooltrainerMText:
 	text_asm
@@ -382,7 +388,10 @@ Route12Fisher3EndBattleText:
 
 Route12Fisher3AfterBattleText:
 	text_far _Route12Fisher3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_SEADRA, FISHER
+	ld de, SeadraLearnset
+	predef_jump LearnsetTrainerScript
 
 Route12Fisher4Text:
 	text_asm
@@ -436,7 +445,10 @@ Route12EndBattleText8:
 
 Route12AfterBattleText8:
 	text_far _Route12AfterBattleText8
-	text_end
+	text_asm
+	lb hl, DEX_SHELLDER, TAMER
+	ld de, ShellderLearnset
+	predef_jump LearnsetTrainerScript
 
 Route12Text10:
 	text_asm

@@ -85,19 +85,10 @@ DisplayNamingScreen:
 	ld a, [wNamingScreenType]
 	cp NAME_MON_SCREEN
 	jr nz, .dontLowerVolume
-  	ld a, [wStatusFlags2]
-  	set BIT_NO_AUDIO_FADE_OUT, a
-  	ld [wStatusFlags2], a
-	ld a, $33 ; 3/7 volume
-	ldh [rNR50], a
+	call HalfVolume
 .dontLowerVolume
 	call DisplayNamingScreenWrap
-	ld a, $77 ; max volume
-	ldh [rNR50], a
-  	ld a, [wStatusFlags2]
-  	res BIT_NO_AUDIO_FADE_OUT, a
-  	ld [wStatusFlags2], a
-	ret
+	jp MaxVolume
 
 DisplayNamingScreenWrap:
 	push hl

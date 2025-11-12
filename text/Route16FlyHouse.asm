@@ -30,3 +30,16 @@ _Route16FlyHouseBrunetteGirlHM02NoRoomText::
 _Route16FlyHouseFearowText::
 	text "FEAROW: Kyueen!"
 	done
+
+_Route16FlyHouseFearow2Text::
+	text "@"
+	text_ram wTrainerName
+	text ": That's"
+	line "my FEAROW, POLLY."
+	para "She FLYs me around"
+	line "everywhere for"
+	cont "maximum privacy!"
+	para "Such a beautiful"
+	line "affectionate"
+	cont "birdy!"
+	done

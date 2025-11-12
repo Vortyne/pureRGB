@@ -8,6 +8,7 @@
 	const_export CELADONCITY_POLIWRATH
 	const_export CELADONCITY_ROCKET1
 	const_export CELADONCITY_ROCKET2
+	const_export CELADONCITY_ANIMATION_PROXY
 
 CeladonCity_Object:
 	db $f ; border block
@@ -50,6 +51,7 @@ CeladonCity_Object:
 	object_event 30, 12, SPRITE_FIGHTING, STAY, RIGHT, TEXT_CELADONCITY_POLIWRATH ; person
 	object_event 32, 29, SPRITE_ROCKET, WALK, LEFT_RIGHT, TEXT_CELADONCITY_ROCKET1 ; person
 	object_event 42, 14, SPRITE_ROCKET, WALK, LEFT_RIGHT, TEXT_CELADONCITY_ROCKET2 ; person
+	object_event 55, 34, SPRITE_POKE_BALL, STAY, NONE, TEXT_CELADONCITY_ANIMATION_PROXY ; person
 
 	def_warps_to CELADON_CITY
 	

@@ -158,6 +158,19 @@ _Route13CooltrainerM3AfterBattleText::
 	cont "FEAROW<...>"
 	done
 
+_FearowLearnset::
+	text "Ah, to be a bird"
+	line "in the sky!"
+	para "I'll just have to"
+	line "settle for riding"
+	cont "FEAROW instead!"
+	para "The views from"
+	line "up there are so"
+	cont "stupendous!"
+	para "Makes me proud to"
+	line "be a BIRD KEEPER!"
+	prompt
+
 _Route13TrainerTips1Text::
 	text "<TIPS>"
 

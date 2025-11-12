@@ -1,7 +1,9 @@
 _FuchsiaTreeDeleterText1::
-	text "Huh? <...>Oh, Yes,"
-	line "I'm the TREE"
-	cont "DELETER."
+	text "Huh? <...>Oh, Yes<...>"
+	para "I'm the"
+	line "@"
+	text_ram wTrainerName
+	text "."
 
 	para "Did you expect"
 	line "someone else?"
@@ -123,3 +125,12 @@ _FuchsiaTreeDeleterSnorlax2::
 	text "What a couch"
 	line "potato!"
 	done
+
+_FuchsiaTreeDeleterSnorlax3::
+	text "@"
+	text_ram wTrainerName
+	text ":"
+	line "That's my SNORLAX."
+	para "Its name is"
+	line "SNOOZER."
+	prompt

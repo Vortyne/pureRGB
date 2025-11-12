@@ -31,9 +31,35 @@ _MrFujisHousePsyduckText::
 	text "PSYDUCK: Gwappa!@"
 	text_end
 
+_MrFujisHousePsyduck2Text::
+	text "GIRL: Our PSYDUCK"
+	line "is named DUCKET."
+	para "It's a bit dopey."
+	para "It fell into a"
+	line "well."
+	para "We got it out"
+	line "with a bucket!"
+	para "I'm keeping an eye"
+	line "on it so it stays"
+	cont "out of trouble!"
+	done
+
 _MrFujisHouseNidorinoText::
-	text "NIDORINO: Gaoo!@"
-	text_end
+	text "NIDORINO: Gaoo!"
+	done
+
+_MrFujisHouseNidorino2Text::
+	text "That's our"
+	line "NIDORINO."
+	para "His name is SPIKE."
+	para "We rescued him!"
+	para "He had a leg"
+	line "injury from a big"
+	cont "rock slide on"
+	cont "ROUTE 10."
+	para "Now he's strong"
+	line "and healthy!"
+	done
 
 _MrFujisHouseMrFujiIThinkThisMayHelpYourQuestText::
 	text "MR.FUJI: <PLAYER>."

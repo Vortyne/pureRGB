@@ -420,6 +420,13 @@ DiamondMineProspectorText:
 	call UpdateSprites
 	call Delay3
 	call GBFadeInFromWhite
+	CheckAndSetEvent FLAG_ONIX_LEARNSET
+	jr nz, .alreadyUnlocked
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .alreadyUnlocked
+	callfar LearnsetUnlockedScript
+	call DisplayTextPromptButton
+.alreadyUnlocked
 	SetEvent EVENT_DIAMOND_MINE_FINAL_STEP
 	call DiamondMineCheckPlayBoomboxMusic ; reset music
 	; load sprite movement to get down there and talk to the guy again

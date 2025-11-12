@@ -81,8 +81,13 @@ CinnabarLabFossilRoomScientist1Text:
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
+	ld a, [wFossilMon]
+	cp AERODACTYL
+	jr nz, .notAerodactyl
+	SetEvent EVENT_CINNABAR_LAB_REVIVED_AERODACTYL
+.notAerodactyl
 	ResetEvents EVENT_GAVE_FOSSIL_TO_LAB, EVENT_LAB_STILL_REVIVING_FOSSIL, EVENT_LAB_HANDING_OVER_FOSSIL_MON
-	jr .done
+	rst TextScriptEnd
 
 .Text:
 	text_far _CinnabarLabFossilRoomScientist1Text
@@ -240,10 +245,7 @@ ShowBeforeAfterImages:
 	call GBPalWhiteOut ; zero all palettes
 	call ClearScreen
 	call UpdateSprites
-	ld hl, wStatusFlags2
-	set BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $33 ; 3/7 volume
-	ldh [rNR50], a
+	call HalfVolume
 	
 	ld b, SET_PAL_BEFORE_AFTER
 	call RunPaletteCommand
@@ -274,12 +276,7 @@ ShowBeforeAfterImages:
 	and A_BUTTON | B_BUTTON
 	jr z, .waitForButtonPress
 
-	ld hl, wStatusFlags2
-	res BIT_NO_AUDIO_FADE_OUT, [hl]
- 	ld a, $77
- 	ldh [rNR50], a ; full volume
-	
-	ret
+	jp MaxVolume
 
 BeforeString:
 	db "BEFORE@"

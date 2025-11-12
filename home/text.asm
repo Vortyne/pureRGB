@@ -127,6 +127,16 @@ TextShortcutCommandJumpTable:
 	dbw "<user>",    UserChar
 	dbw "the",       TheChar
 	dbw "you",       YouChar
+	dbw "ing",       IngChar
+	dbw "or",        OrChar
+	dbw "is",        IsChar
+	; " the "
+	; " to "
+	; "here"
+	; " a "
+	; "his"
+	; "that"
+	; "for"
 	db -1
 
 LineChar::
@@ -152,24 +162,6 @@ MACRO print_name
 	ld de, \1
 	jr PlaceCommandCharacter
 ENDM
-
-PrintPlayerName:: print_name wPlayerName
-PrintRivalName::  print_name wRivalName
-
-TrainerChar:: print_name TrainerCharText
-TMChar::      print_name TMCharText
-PCChar::      print_name PCCharText
-RocketChar::  print_name RocketCharText
-PlacePOKe::   print_name PlacePOKeText
-PlacePKMN::   print_name PlacePKMNText
-TeamChar::    print_name TeamCharText
-ThreeDotsChar:: print_name ThreeDotsText
-TrainerTipsChar:: print_name TrainerTipsText
-PokemonChar:: print_name PlaceMonText
-OpponentChar:: print_name OpponentText
-UserChar:: print_name UserText
-TheChar:: print_name TheText
-YouChar:: print_name YouText
 	
 
 PlaceMoveTargetsName::
@@ -204,6 +196,27 @@ PlaceCommandCharacter::
 	inc de
 	jp PlaceNextChar
 
+PrintPlayerName:: print_name wPlayerName
+PrintRivalName::  print_name wRivalName
+
+TrainerChar:: print_name TrainerCharText
+TMChar::      print_name TMCharText
+PCChar::      print_name PCCharText
+RocketChar::  print_name RocketCharText
+PlacePOKe::   print_name PlacePOKeText
+PlacePKMN::   print_name PlacePKMNText
+TeamChar::    print_name TeamCharText
+ThreeDotsChar:: print_name ThreeDotsText
+TrainerTipsChar:: print_name TrainerTipsText
+PokemonChar:: print_name PlaceMonText
+OpponentChar:: print_name OpponentText
+UserChar:: print_name UserText
+TheChar:: print_name TheText
+YouChar:: print_name YouText
+IngChar:: print_name IngText
+OrChar:: print_name OrText
+IsChar:: print_name IsText
+
 
 TrainerCharText:: db "TRAINER@"
 TMCharText::      db "TM@"
@@ -216,6 +229,9 @@ UserText::        db "user@"
 OpponentText::    db "opponent@"
 TheText::         db "t","he@" ; have to separate with a comma to avoid it entering the same macro again
 YouText::         db "y","ou@" ; have to separate with a comma to avoid it entering the same macro again
+IngText::         db "i","ng@" ; have to separate with a comma to avoid it entering the same macro again
+OrText::          db "o","r@" ; have to separate with a comma to avoid it entering the same macro again
+IsText::          db "i","s@" ; have to separate with a comma to avoid it entering the same macro again
 
 ContText::
 	push de
@@ -263,9 +279,7 @@ Paragraph::
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	call ManualTextScroll
-	hlcoord 1, 13
-	lb bc, 4, 18
-	call ClearScreenArea
+	call ClearTextBox
 	ld c, 20
 	rst _DelayFrames
 	pop de
@@ -452,6 +466,38 @@ TextCommand_RAM::
 	pop hl
 	jr NextTextCommand
 
+TextCommand_RAM_CHECK_CONT::
+	pop hl
+	push hl
+	push de
+	decoord 17, 16
+	call DoesTextPtrHLFitOnBCCoordLine
+	jr nc, .yes
+	ld a, "▼"
+	ldcoord_a 18, 16
+	call Delay3
+	call ManualTextScroll
+	ld a, " "
+	ldcoord_a 18, 16
+	call ScrollTextUpOneLine
+	call ScrollTextUpOneLine
+	bccoord 1, 16
+.yes
+	pop de
+	jr TextCommand_RAM
+
+TextCommand_RAM_CHECK_LINE::
+	pop hl
+	push hl
+	push de
+	decoord 19, 14
+	call DoesTextPtrHLFitOnBCCoordLine
+	pop de
+	jr nc, .fits
+	bccoord 1, 16
+.fits
+	jr TextCommand_RAM
+
 TextCommand_BCD::
 ; write bcd from address, typically ram
 	pop hl
@@ -468,7 +514,7 @@ TextCommand_BCD::
 	ld b, h
 	ld c, l
 	pop hl
-	jr NextTextCommand
+	jp NextTextCommand
 
 ; PureRGBnote: ADDED: jump to a different address in the same text bank so we can reuse text
 TextCommand_JUMP::
@@ -680,6 +726,34 @@ TextCommand_FAR::
 	call SetCurBank
 	jp NextTextCommand
 
+; Checks if variable wram text pointer in hl fits on the same line as the current text printing coordinate bc
+; with line endpoint coords de
+; sets carry if it does not fit
+DoesTextPtrHLFitOnBCCoordLine:
+	push bc
+	hl_deref
+	ld b, -1
+.loopCount
+	inc b
+	ld a, [hli]
+	cp "@"
+	jr nz, .loopCount
+	ld h, 0
+	ld l, b
+	pop bc
+	push bc
+	add hl, bc
+	ld a, l
+	cp e
+	jr nc, .nope
+	pop bc
+	and a
+	ret
+.nope
+	pop bc
+	scf
+	ret
+
 TextCommandJumpTable::
 ; entries correspond to TX_* constants (see macros/scripts/text.asm)
 	dw TextCommand_START         ; TX_START
@@ -702,4 +776,6 @@ ENDC
 	dw TextCommand_WAIT_BUTTON   ; TX_WAIT_BUTTON
 	dw TextCommand_JUMP          ; TX_JUMP
 	dw TextCommand_CALL          ; TX_CALL
+	dw TextCommand_RAM_CHECK_CONT   ; TX_RAM_CONT
+	dw TextCommand_RAM_CHECK_LINE   ; TX_RAM_LINE
 	; greater TX_* constants are handled directly by NextTextCommand

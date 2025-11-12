@@ -20,4 +20,20 @@ CopycatsHouse1FChanseyText:
 	text_asm
 	ld a, CHANSEY
 	call PlayCry
+	ld c, DEX_CHANSEY - 1
+	callfar SetMonSeen
+	CheckEvent FLAG_CHANSEY_LEARNSET
+	jr nz, .done
+	ld de, ParentsName
+	call CopyTrainerName
+	ld a, COPYCATSHOUSE1F_MIDDLE_AGED_WOMAN
+	call SetSpriteFacingDown
+	lb hl, DEX_CHANSEY, $FF
+	ld de, ChanseyLearnsetText
+	ld bc, LearnsetRecountedFondMemories
+	predef_jump LearnsetTrainerScriptMain
+.done
 	rst TextScriptEnd
+
+ParentsName:
+	db "PARENTS@"

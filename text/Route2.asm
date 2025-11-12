@@ -29,6 +29,25 @@ _Route2AfterBattleText1::
 	line "exciting!"
 	done
 
+_Route2AfterBattle1Learnset::
+	text "What do you"
+	line "think?"
+	para "Who'd be better at"
+	line "braving a storm?"
+	para "SCYTHER or PINSIR?"
+	prompt
+
+_Route2AfterBattle2Learnset::
+	text "Everybody loves"
+	line "@"
+	text_ram wNameBuffer
+	text "!"
+	para "Come on! Lets"
+	line "hang out."
+	para "I'll tell you"
+	line "more about it."
+	prompt
+
 _Route2BattleText2::
 	text "Amazing how"
 	line "DIGLETT'S CAVE"
@@ -50,6 +69,10 @@ _Route2AfterBattleText2::
 	cont "everywhere I go?"
 	done
 
+_TextNothing::
+	text ""
+	done
+	
 _Route2BattleText3::
 	text "Don't trod on"
 	line "the flowers!"
@@ -67,3 +90,12 @@ _Route2AfterBattleText3::
 	line "quiet spot to"
 	cont "relax."
 	done
+
+_Route2AfterBattle3Learnset::
+	text "@"
+	text_ram wNameBuffer
+	text " likes"
+	line "to doze among"
+	cont "the flowers."
+	para "@"
+	text_end

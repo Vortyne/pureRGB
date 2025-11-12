@@ -66,6 +66,7 @@ PokemonMansion2F_TextPointers:
 	dw_const PickUpItemText,                TEXT_POKEMONMANSION2F_ITEM1
 	dw_const PokemonMansion2FDiary1Text,    TEXT_POKEMONMANSION2F_DIARY1
 	dw_const PokemonMansion2FDiary2Text,    TEXT_POKEMONMANSION2F_DIARY2
+	dw_const PokemonMansion2FDiary3Text,    TEXT_POKEMONMANSION2F_DIARY3
 	dw_const PokemonMansion2FSwitchText,    TEXT_POKEMONMANSION2F_SWITCH
 
 Mansion2TrainerHeaders:
@@ -179,6 +180,24 @@ PokemonMansion2FDiary1Text:
 PokemonMansion2FDiary2Text:
 	text_far _PokemonMansion2FDiary2Text
 	text_end
+
+PokemonMansion2FDiary3Text:
+	text_far _PokemonMansion2FDiary3Text
+	text_asm
+	; check if player has seen MEW
+	ld c, DEX_MEW - 1
+	ld hl, wPokedexSeen
+	ld b, FLAG_TEST
+	predef FlagActionPredef
+	ld a, c
+	and a
+	jr z, .done
+	CheckEvent FLAG_MEW_LEARNSET
+	jr nz, .done
+	ld d, DEX_MEW
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
 
 PokemonMansion2FSwitchText:
 	text_asm

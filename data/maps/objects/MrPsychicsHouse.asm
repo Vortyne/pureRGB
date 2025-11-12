@@ -12,5 +12,6 @@ MrPsychicsHouse_Object:
 
 	def_object_events
 	object_event  5,  3, SPRITE_FISHING_GURU, STAY, LEFT, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
+	object_event  4,  3, SPRITE_POKEDEX, STAY, NONE, TEXT_MRPSYCHICSHOUSE_TABLE_BOOK
 
 	def_warps_to MR_PSYCHICS_HOUSE

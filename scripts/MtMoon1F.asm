@@ -176,4 +176,10 @@ MtMoon1FYoungster3AfterBattleText:
 
 MtMoon1FBewareZubatSign:
 	text_far _MtMoon1FBewareZubatSign
-	text_end
+	text_asm
+	CheckEvent FLAG_GOLBAT_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_ZUBAT
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd

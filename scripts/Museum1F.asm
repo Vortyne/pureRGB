@@ -1,8 +1,5 @@
 Museum1F_Script:
-	ld a, 1 << BIT_NO_AUTO_TEXT_BOX
-	ld [wAutoTextBoxDrawingControl], a
-	xor a
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call EnableAutoTextBoxDrawing
 	ld hl, Museum1F_ScriptPointers
 	ld a, [wMuseum1FCurScript]
 	jp CallFunctionInTable
@@ -175,12 +172,6 @@ Museum1FScientist1Text:
 	text_end
 
 Museum1FGamblerText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
 	text_far _Museum1FGamblerText
 	text_end
 
@@ -192,17 +183,26 @@ Museum1FScientist2Text:
 	rst _PrintText
 	lb bc, OLD_AMBER, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .YouDontHaveSpaceText
+	jr nc, .done
 	SetEvent EVENT_GOT_OLD_AMBER
 	ld a, HS_OLD_AMBER
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	ld hl, .ReceivedOldAmberText
 	jr .done
-.bag_full
-	ld hl, .YouDontHaveSpaceText
-	jr .done
+.checked
+	ld hl, .amberHasBeenChecked
+	rst _PrintText
+	lb hl, DEX_AERODACTYL, SCIENTIST
+	ld de, TextNothing
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
 .got_item
+	CheckEvent EVENT_RECEIVED_AERODACTYL_FROM_SUPER_NERD
+	jr nz, .checked
+	CheckEvent EVENT_CINNABAR_LAB_REVIVED_AERODACTYL
+	jr nz, .checked
 	ld hl, .GetTheOldAmberCheckText
 .done
 	rst _PrintText
@@ -225,22 +225,14 @@ Museum1FScientist2Text:
 	text_far _Museum1FScientist2YouDontHaveSpaceText
 	text_end
 
-Museum1FScientist3Text:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
+.amberHasBeenChecked
+	text_far _Museum1FScientist2GetTheOldAmberRevivedText
+	text_end
 
-.Text:
+Museum1FScientist3Text:
 	text_far _Museum1FScientist3Text
 	text_end
 
 Museum1FOldAmberText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
 	text_far _Museum1FOldAmberText
 	text_end

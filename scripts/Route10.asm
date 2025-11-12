@@ -64,7 +64,10 @@ Route10SuperNerd1EndBattleText:
 
 Route10SuperNerd1AfterBattleText:
 	text_far _Route10SuperNerd1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_ELECTABUZZ, POKEMANIAC
+	ld de, ElectabuzzLearnsetText
+	predef_jump LearnsetTrainerScript
 
 Route10Hiker1Text:
 	text_asm

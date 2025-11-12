@@ -87,6 +87,51 @@ Route2EndBattleText1:
 
 Route2AfterBattleText1:
 	text_far _Route2AfterBattleText1
+	text_asm
+	CheckEvent EVENT_GOT_LEARNSET_FROM_STORM_KID
+	jr nz, .done
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .done
+	CheckBothEventsSet FLAG_PINSIR_LEARNSET, FLAG_SCYTHER_LEARNSET
+	jr z, .done
+	call DisplayTextPromptButton
+	CheckEventHL FLAG_SCYTHER_LEARNSET
+	ld a, PINSIR
+	jr nz, .useMon
+	CheckEventReuseHL FLAG_PINSIR_LEARNSET
+	ld a, SCYTHER
+	jr nz, .useMon
+	; player hasn't gotten either mon's learnset, ask which they'd prefer
+	ld hl, Route2StormKidLearnset1
+	rst _PrintText
+	call SaveScreenTilesToBuffer2
+	ld hl, ScytherPinsirMenu
+	ld b, A_BUTTON
+	call DisplayMultiChoiceTextBox
+	call LoadScreenTilesFromBuffer2
+	ld a, [wCurrentMenuItem]
+	and a
+	ld a, SCYTHER
+	jr z, .useMon
+	ld a, PINSIR
+.useMon
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	predef IndexToPokedex
+	callfar SetPokemonLearnsetUnlocked
+	ld hl, Route2AfterBattle2Learnset
+	rst _PrintText
+	SetEvent EVENT_GOT_LEARNSET_FROM_STORM_KID
+	jpfar LearnsetFadeOutInPkmnCenter
+.done
+	rst TextScriptEnd
+
+Route2StormKidLearnset1::
+	text_far _Route2AfterBattle1Learnset
+	text_end
+
+Route2AfterBattle2Learnset::
+	text_far _Route2AfterBattle2Learnset
 	text_end
 
 Route2JrTrainerMText:
@@ -105,7 +150,10 @@ Route2EndBattleText2:
 
 Route2AfterBattleText2:
 	text_far _Route2AfterBattleText2
-	text_end
+	text_asm
+	lb hl, DEX_DIGLETT, JR_TRAINER_M
+	ld de, LearnsetAppreciator
+	predef_jump LearnsetTrainerScript
 
 Route2JrTrainerFText:
 	text_asm
@@ -123,7 +171,10 @@ Route2EndBattleText3:
 
 Route2AfterBattleText3:
 	text_far _Route2AfterBattleText3
-	text_end
+	text_asm
+	lb hl, DEX_BULBASAUR, JR_TRAINER_F
+	ld de, Route2AfterBattle3Learnset
+	predef_jump LearnsetTrainerScript
 
 Route2SignText:
 	text_far _Route2SignText

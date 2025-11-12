@@ -137,7 +137,14 @@ ProspectorsHouseBookcaseText1:
 	text_far _ProspectorsHouseBookcase1Text
 	text_far _FlippedToARandomPage
 	text_far _ProspectorsHouseBookcase1Text2
-	text_end
+	text_asm
+	CheckEvent FLAG_DUGTRIO_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_DIGLETT
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
+
 ProspectorsHouseBookcaseText2:
 	text_far _ProspectorsHouseBookcase2Text
 	text_end
@@ -145,4 +152,10 @@ ProspectorsHouseBookcaseText3:
 	text_far _ProspectorsHouseBookcase3Text
 	text_far _FlippedToARandomPage
 	text_far _ProspectorsHouseBookcase3Text2
-	text_end
+	text_asm
+	CheckEvent FLAG_MAGMAR_LEARNSET
+	jr nz, .done
+	ld d, DEX_MAGMAR
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd

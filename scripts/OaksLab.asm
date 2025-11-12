@@ -834,8 +834,7 @@ OaksLabShowPokeBallPokemonScript:
 	ld [hl], SPRITE_FACING_RIGHT
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
-	; TODO: inline StarterDex, it's only used here ever
-	predef StarterDex
+	callfar StarterDex
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	call ReloadMapData

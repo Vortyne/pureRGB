@@ -708,6 +708,7 @@ GrowlitheEvosMoves:
 	db 52, BONEMERANG
 	db 0
 
+HardenedOnixEvosMoves:
 OnixEvosMoves:
 ; Evolutions
 	db 0
@@ -716,10 +717,12 @@ OnixEvosMoves:
 	db 17, ROAR
 	db 22, LIGHT_SCREEN
 	db 25, RAGE
+	db 27, ROCK_SLIDE
 	db 29, CLAMP
-	db 31, MIRROR_MOVE
 	db 33, AMNESIA
-	db 39, TAKE_DOWN ; HEAT RUSH
+	db 37, TAKE_DOWN ; HEAT RUSH
+	db 39, EARTHQUAKE
+	db 42, SPIKE_CANNON
 	db 45, WITHDRAW
 	db 52, SELFDESTRUCT
 	db 0
@@ -2613,21 +2616,3 @@ VictreebelEvosMoves:
 	db 58, GROWTH
 	db 0
 
-HardenedOnixEvosMoves:
-; Evolutions
-	db 0
-; Learnset
-	db 15, BIND
-	db 17, ROAR
-	db 19, SCREECH
-	db 22, LIGHT_SCREEN
-	db 25, RAGE
-	db 27, ROCK_SLIDE
-	db 29, CLAMP
-	db 33, AMNESIA
-	db 37, TAKE_DOWN ; HEAT RUSH
-	db 39, EARTHQUAKE
-	db 42, SPIKE_CANNON
-	db 45, WITHDRAW
-	db 52, SELFDESTRUCT
-	db 0

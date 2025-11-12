@@ -12,8 +12,19 @@ _Route9CooltrainerF1EndBattleText::
 _Route9CooltrainerF1AfterBattleText::
 	text "You need light to"
 	line "get through that"
-	cont "dark tunnel ahead."
+	cont "tunnel ahead."
+	para "It's too dark"
+	line "otherwise."
 	done
+
+_LearnsetGloom::
+	text "My @"
+	text_ram wNameBuffer
+	text " can use"
+	line "FLASH to get rid"
+	cont "of the darkness!"
+	para "@"
+	text_end
 
 _Route9CooltrainerM1BattleText::
 	text "Who's that walking"
@@ -29,6 +40,17 @@ _Route9CooltrainerM1EndBattleText::
 _Route9CooltrainerM1AfterBattleText::
 	text "Keep walking!"
 	done
+
+_RhyhornLearnset::
+	text "Yeah!"
+	para "Saw you eyeing my"
+	line "rough-and-tumble"
+	cont "@"
+	text_ram wNameBuffer
+	text "!"
+	para "You know it's"
+	line "drop dead cool!"
+	prompt
 
 _Route9CooltrainerM2BattleText::
 	text "I'm taking ROCK"
@@ -82,6 +104,15 @@ _Route9Hiker1AfterBattleText::
 	cont "there, eh?"
 	done
 
+_LearnsetSandslash::
+	text "Love my @"
+	text_ram wNameBuffer
+	text "."
+	para "He's a trooper, eh?"
+	para "My anchor, eh?"
+	para "I could go on!"
+	prompt
+
 _Route9Hiker2BattleText::
 	text "Hahaha!"
 	line "Aren't you a"
@@ -97,6 +128,18 @@ _Route9Hiker2AfterBattleText::
 	text "Hahaha! Kids"
 	line "should be tough!"
 	done
+
+
+_GeodudeLearnset::
+	text "Resilient and"
+	line "hardy, like my"
+	cont "@"
+	text_ram wNameBuffer
+	text "!"
+	para "Talk about a"
+	line "classic HIKER"
+	cont "#MON choice!"
+	prompt
 
 _Route9Youngster1BattleText::
 	text "I got up early"

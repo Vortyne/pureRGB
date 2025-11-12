@@ -132,7 +132,12 @@ Route8SuperNerd2EndBattleText:
 
 Route8SuperNerd2AfterBattleText:
 	text_far _Route8SuperNerd2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MUK, SUPER_NERD
+	ld de, MukLearnset
+	ld bc, LearnsetMukFade
+	predef_jump LearnsetTrainerScriptMain
+
 
 Route8CooltrainerF1Text:
 	text_asm
@@ -150,7 +155,10 @@ Route8CooltrainerF1EndBattleText:
 
 Route8CooltrainerF1AfterBattleText:
 	text_far _Route8CooltrainerF1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_NIDORINA, LASS
+	ld de, LearnsetNidorina
+	predef_jump LearnsetTrainerScript
 
 Route8SuperNerd3Text:
 	text_asm
@@ -186,7 +194,10 @@ Route8CooltrainerF2EndBattleText:
 
 Route8CooltrainerF2AfterBattleText:
 	text_far _Route8CooltrainerF2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MEOWTH, LASS
+	ld de, MeowthLearnset
+	predef_jump LearnsetTrainerScript
 
 Route8CooltrainerF3Text:
 	text_asm
@@ -240,7 +251,10 @@ Route8CooltrainerF4EndBattleText:
 
 Route8CooltrainerF4AfterBattleText:
 	text_far _Route8CooltrainerF4AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_CLEFABLE, LASS
+	ld de, ClefableLearnset
+	predef_jump LearnsetTrainerScript
 
 Route8UndergroundSignText:
 	text_far _Route8UndergroundSignText

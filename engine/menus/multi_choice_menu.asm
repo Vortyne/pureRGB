@@ -492,3 +492,8 @@ SaveFileUpdaterMenu::
 	dw TwoOptionMenu
 	db "Before v2.6.0"
 	next "Original Game@"
+
+ScytherPinsirMenu::
+	dw TwoOptionMenu
+	db "SCYTHER"
+	next "PINSIR@"

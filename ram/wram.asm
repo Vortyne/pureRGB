@@ -348,7 +348,8 @@ wMenuWrappingEnabled:: db
 ; Releasing either button will reset this counter.
 wDirectionChangeModeCounter:: db
 
-	ds 1 ; Unused lone byte
+; PureRGBnote: when running the generic palette setting function, we can force it to use a different palette by loading one here
+wGenericPaletteOverride:: db
 
 wMissableObjectIndex:: db
 
@@ -899,6 +900,7 @@ wTempSCX::
 wWhichTrade::
 wDexMaxSeenMove::
 wDexMaxSeenMon::
+wDexLearnsetListCount::
 wPPRestoreItem::
 wWereAnyMonsAsleep::
 wNumShakes::
@@ -1762,6 +1764,7 @@ wMoveNum:: db
 ; PureRGBnote: MOVED: itemlist is a temp list for indicating what items appear in a mart, the size was expanded to allow for bigger mart stocks.
 ; we reuse wMovesString for this expanded list since wMovesString is only used in battle.
 wItemList:: 
+wLearnsetList::
 wMovesString:: ds 56
 
 wUnusedCurMapTilesetCopy:: db
@@ -1882,6 +1885,8 @@ wBattleFunctionalFlags:: db
 ;;;;; bit 0 -> How we're displaying pokedex data. 0 = internal (from the pokedex), 1 = external (from dialog)
 ;;;;; bit 1 -> Which sprite is currently displayed on a pokedex data page. 0 = front sprite, 1 = back sprite 
 ;;;;; bit 2 -> used to indicate whether we're in the pokedex data page or not
+;;;;; bit 3 -> How we're displaying movedex data. 0 = internal (from the movedex), 1 = external (from learnset page)
+;;;;; bit 4 -> does the currently chosen pokedex pokemon have its learnset unlocked
 wPokedexDataFlags:: 
 ;;;;; PureRGBnote: CHANGED: this property is also used in the "AREA" option in the pokedex for indicating which states are available for a pokemon
 ;;;;; bit 0 -> pokemon has old rod locations
@@ -1903,7 +1908,9 @@ wStepCounter:: db
 ; after a battle, you have at least 3 steps before a random battle can occur
 wNumberOfNoRandomBattleStepsLeft:: db
 
+wLearnsetIndex::
 wPrize1:: db
+wLearnsetPage::
 wPrize2:: db
 wPrize3:: db
 
@@ -2539,8 +2546,15 @@ wSecondLockTrashCanIndex:: db
 
 	ds 2 ; unused save file 2 bytes
 
+UNION
 wEventFlags:: flag_array NUM_EVENTS
-DEF wLearnsetFlags EQU wEventFlags + LEARNSET_FLAGS_START / 8
+NEXTU
+	
+	ds LEARNSET_FLAGS_START / 8
+
+wLearnsetFlags:: ds 11 ; learnset flags are in unused space in the middle of the event constants, 82 flags, one for each pokemon evolution family
+wLearnsetFlagsEnd::
+ENDU
 
 
 UNION

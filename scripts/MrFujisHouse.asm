@@ -65,16 +65,50 @@ MrFujisHousePsyduckText:
 	text_far _MrFujisHousePsyduckText
 	text_asm
 	ld a, PSYDUCK
-	jr MrFujisHousePlayCryDone
+	call PlayCry
+	ld c, DEX_PSYDUCK - 1
+	callfar SetMonSeen
+	call DisplayTextPromptButton
+	ld hl, .thatsDucket
+	rst _PrintText
+	ld de, RescuerName
+	call CopyTrainerName
+	lb hl, DEX_PSYDUCK, $FF
+	ld de, TextNothing
+	ld bc, LearnsetPlayedAroundWith
+	predef_jump LearnsetTrainerScriptMain
+.thatsDucket
+	text_far _MrFujisHousePsyduck2Text
+	text_end
 
 MrFujisHouseNidorinoText:
 	text_far _MrFujisHouseNidorinoText
 	text_asm
 	ld a, NIDORINO
-	; fall through
-MrFujisHousePlayCryDone:
 	call PlayCry
-	rst TextScriptEnd
+	ld c, DEX_NIDORINO - 1
+	callfar SetMonSeen
+	call DisplayTextPromptButton
+	ld a, MRFUJISHOUSE_LITTLE_GIRL
+	call SetSpriteFacingLeft
+	ld a, MRFUJISHOUSE_SUPER_NERD
+	call SetSpriteFacingLeft
+	ld a, PLAYER_DIR_RIGHT
+	ld [wPlayerMovingDirection], a
+	ld hl, .thatsSpike
+	rst _PrintText
+	ld de, RescuerName
+	call CopyTrainerName
+	lb hl, DEX_NIDORINO, $FF
+	ld de, TextNothing
+	ld bc, LearnsetShowedCoolMoves
+	predef_jump LearnsetTrainerScriptMain
+.thatsSpike
+	text_far _MrFujisHouseNidorino2Text
+	text_end
+
+RescuerName::
+	db "RESCUERs@"
 
 MrFujisHouseMrFujiText:
 	text_asm

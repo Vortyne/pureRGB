@@ -3,6 +3,9 @@
 ; Control characters (see home/text.asm)
 
 	charmap "<NULL>",    $00
+	charmap "is",        $3E ; PureRGBnote: ADDED: single byte version of is
+	charmap "or",        $3F ; PureRGBnote: ADDED: single byte version of or
+	charmap "ing",       $40 ; PureRGBnote: ADDED: single byte version of ing
 	charmap "the",       $41 ; PureRGBnote: ADDED: single byte version of the
 	charmap "you",       $42 ; PureRGBnote: ADDED: single byte version of you
 	charmap "<opponent>",$43 ; PureRGBnote: ADDED: single byte version of opponent

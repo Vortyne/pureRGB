@@ -19,16 +19,22 @@ Route12Gate2FBrunetteGirlText:
 	ld hl, .ReceivedTM39Text
 	rst _PrintText
 	SetEvent EVENT_GOT_TM39
-	jr .done
+	rst TextScriptEnd
 .bag_full
 	ld hl, .TM39NoRoomText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .got_item
 	ld hl, .TM39ExplanationText
 	rst _PrintText
-.done
-	rst TextScriptEnd
+	ld de, .mourningGirl
+	call CopyTrainerName
+	ld c, DEX_ARBOK - 1
+	callfar SetMonSeen
+	lb hl, DEX_ARBOK, $FF
+	ld de, ArbokLearnset
+	ld bc, LearnsetRecountedFondMemories
+	predef_jump LearnsetTrainerScriptMain
 
 .YouCanHaveThisText:
 	text_far _Route12Gate2FBrunetteGirlYouCanHaveThisText
@@ -46,6 +52,9 @@ Route12Gate2FBrunetteGirlText:
 .TM39NoRoomText:
 	text_far _Route12Gate2FBrunetteGirlTM39NoRoomText
 	text_end
+
+.mourningGirl
+	db "SAD GIRL@"
 
 Route12Gate2FLeftBinocularsText:
 	text_asm

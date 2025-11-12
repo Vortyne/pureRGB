@@ -124,13 +124,18 @@ ErikSarasHouseNoteText:
 	ld hl, .home
 .printDone
 	rst _PrintText
+.done
 	rst TextScriptEnd
 .notHome
 	text_far _ErikSarasHouseNoteNotHomeText
 	text_end
 .home
 	text_far _ErikSarasHouseNoteHomeText
-	text_end
+	text_asm
+	CheckEvent FLAG_DRAGONITE_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_DRATINI
+	jpfar KeepReadingBookLearnset
 
 ErikSarasHousePhoneText:
 	text_far _ErikSarasHousePhoneText
@@ -200,8 +205,22 @@ ErikSarasHouseRightShelfText:
 	text_far _ErikSarasHouseRightBookText
 	text_far _FlippedToARandomPage
 	text_far _ErikSarasHouseRightBookText2
-	text_end
-
+	text_asm
+	; book will teach you about the pokemon you got the fossil for
+	CheckEvent EVENT_GOT_HELIX_FOSSIL
+	jr nz, .omanyte
+	CheckEvent FLAG_KABUTOPS_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_KABUTO
+	jr z, .read
+.omanyte
+	CheckEvent FLAG_OMASTAR_FAMILY_LEARNSET
+	ld d, DEX_OMANYTE
+	jr nz, .done
+.read
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
 
 ErikSarasHouseOpenBookText: 
 	text_asm
@@ -543,4 +562,10 @@ ErikSarasHouseAfterEventText:
 
 ErikSarasHouseSecondNoteText:
 	text_far _ErikSarasHouseSecondNoteText
-	text_end
+	text_asm
+	CheckEvent FLAG_DRAGONITE_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_DRAGONAIR
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd

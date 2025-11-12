@@ -24,6 +24,16 @@ _LavenderCuboneHouseBrunetteGirlGhostIsGoneText::
 	cont "restless soul!"
 	done
 
+_LavenderCuboneLearnset::
+	text "You were the one"
+	line "who did it??"
+	para "Thank you!"
+	para "Maybe CUBONE"
+	line "will get some"
+	cont "peace of mind."
+	para "The poor thing!"
+	prompt
+
 _LightChannelerGreeting::
 	text "I'm the LIGHT"
 	line "CHANNELER."

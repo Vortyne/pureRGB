@@ -134,7 +134,10 @@ Route9CooltrainerF1EndBattleText:
 
 Route9CooltrainerF1AfterBattleText:
 	text_far _Route9CooltrainerF1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_GLOOM, JR_TRAINER_F
+	ld de, LearnsetGloom
+	predef_jump LearnsetTrainerScript
 
 Route9CooltrainerM1BattleText:
 	text_far _Route9CooltrainerM1BattleText
@@ -146,7 +149,10 @@ Route9CooltrainerM1EndBattleText:
 
 Route9CooltrainerM1AfterBattleText:
 	text_far _Route9CooltrainerM1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_RHYHORN, JR_TRAINER_M
+	ld de, RhyhornLearnset
+	predef_jump LearnsetTrainerScript
 
 Route9CooltrainerM2BattleText:
 	text_far _Route9CooltrainerM2BattleText
@@ -182,7 +188,10 @@ Route9Hiker1EndBattleText:
 
 Route9Hiker1AfterBattleText:
 	text_far _Route9Hiker1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_SANDSLASH, HIKER
+	ld de, LearnsetSandslash
+	predef_jump LearnsetTrainerScript
 
 Route9Hiker2BattleText:
 	text_far _Route9Hiker2BattleText
@@ -194,7 +203,10 @@ Route9Hiker2EndBattleText:
 
 Route9Hiker2AfterBattleText:
 	text_far _Route9Hiker2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_GEODUDE, HIKER
+	ld de, GeodudeLearnset
+	predef_jump LearnsetTrainerScript
 
 Route9Youngster1BattleText:
 	text_far _Route9Youngster1BattleText
@@ -230,7 +242,10 @@ Route9Youngster2EndBattleText:
 
 Route9Youngster2AfterBattleText:
 	text_far _Route9Youngster2AfterBattleText
-	text_end
+	text_asm	
+	lb hl, DEX_BEEDRILL, BUG_CATCHER
+	ld de, LearnsetBoring
+	predef_jump LearnsetTrainerScript
 
 Route9SignText:
 	text_far _Route9SignText

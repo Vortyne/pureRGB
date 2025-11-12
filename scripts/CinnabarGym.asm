@@ -202,6 +202,16 @@ CinnabarGymBlaineText:
 	call DisableWaitingAfterTextDisplay
 	rst TextScriptEnd
 .afterBeat
+	ld d, MOLTRES
+	callfar IsMonInParty
+	jr nc, .noMoltres
+	ld hl, .moltresText
+	rst _PrintText
+	lb hl, DEX_MOLTRES, BLAINE
+	ld de, TextNothing
+	ld bc, LearnsetFadeOutInBlaineStory
+	predef_jump LearnsetTrainerScriptMain
+.noMoltres
 	ld hl, .PostBattleAdviceText
 	rst _PrintText
 	rst TextScriptEnd
@@ -228,6 +238,11 @@ CinnabarGymBlaineText:
 .PostBattleAdviceText:
 	text_far _CinnabarGymBlainePostBattleAdviceText
 	text_end
+
+.moltresText
+	text_far _CinnabarGymBlaineMoltres
+	text_end
+
 
 CinnabarGymBlaineVolcanoBadgeInfoText:
 	text_far _CinnabarGymBlaineVolcanoBadgeInfoText

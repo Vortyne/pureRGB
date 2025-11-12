@@ -141,17 +141,17 @@ TypeGuysHouseRightTallBookcaseText:
 	text_asm 
 	call CheckLightsTurnedOn
 	ld hl, TypeGuysHouseTooDarkText
-	jr z, .done
+	jr z, .print
 	ld hl, .rightTallBookcase
-.done
+.print
 	rst _PrintText
+.done
 	rst TextScriptEnd
 .rightTallBookcase
 	text_far _TypeGuysHouseRightTallBookcaseText
 	text_far _FlippedToARandomPage
 	text_far _TypeGuysHouseRightTallBookcaseText2
 	text_end
-
 
 TypeGuysHouseLeftTallBookcaseText:
 	text_asm 
@@ -166,7 +166,11 @@ TypeGuysHouseLeftTallBookcaseText:
 	text_far _TypeGuysHouseLeftTallBookcaseText
 	text_far _FlippedToARandomPage
 	text_far _TypeGuysHouseLeftTallBookcaseText2
-	text_end
+	text_asm
+	CheckEvent FLAG_GOLEM_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_GEODUDE
+	jpfar KeepReadingBookLearnset
 
 
 

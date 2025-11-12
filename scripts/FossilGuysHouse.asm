@@ -235,6 +235,8 @@ FossilGuyGoToCinnabarText:
 
 FossilGuysHouseCatText:
 	text_asm
+	ld c, DEX_MEOWTH - 1
+	callfar SetMonSeen
 	CheckEvent EVENT_MET_FOSSIL_GUYS_CAT
 	jr nz, .metCatAlready
 	SetEvent EVENT_MET_FOSSIL_GUYS_CAT

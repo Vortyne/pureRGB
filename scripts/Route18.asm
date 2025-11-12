@@ -73,7 +73,10 @@ Route18CooltrainerM2EndBattleText:
 
 Route18CooltrainerM2AfterBattleText:
 	text_far _Route18CooltrainerM2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_AERODACTYL, BIRD_KEEPER
+	ld de, Route18AerodactylLearnsetText
+	predef_jump LearnsetTrainerScript
 
 Route18CooltrainerM3Text:
 	text_asm

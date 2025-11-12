@@ -84,6 +84,36 @@ Route3Youngster2EndBattleText:
 
 Route3Youngster2AfterBattleText:
 	text_far _Route3Youngster2AfterBattleText
+	text_asm
+	call DisplayTextPromptButton
+	ld hl, ShortsYoungsterAfterQuestion
+	rst _PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .continue
+	ld hl, ShortsYoungsterAfterQuestionNo
+	rst _PrintText
+	rst TextScriptEnd
+.continue
+	ld hl, ShortsYoungsterAfterQuestionYes
+	rst _PrintText
+	lb hl, DEX_RATTATA, YOUNGSTER
+	ld de, Route3RattataLearnsetText
+	predef_jump LearnsetTrainerScript
+.done
+	rst TextScriptEnd
+
+ShortsYoungsterAfterQuestion::
+	text_far _Route3Youngster2AfterBattleText2
+	text_end
+
+ShortsYoungsterAfterQuestionYes::
+	text_far _Route3Youngster2AfterBattleText3Yes
+	text_end
+
+ShortsYoungsterAfterQuestionNo::
+	text_far _Route3Youngster2AfterBattleText3No
 	text_end
 
 Route3CooltrainerF1Text:
@@ -192,7 +222,10 @@ Route3CooltrainerF3EndBattleText:
 
 Route3CooltrainerF3AfterBattleText:
 	text_far _Route3CooltrainerF3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_JIGGLYPUFF, LASS
+	ld de, Route3CooltrainerF3AfterBattleText2
+	predef_jump LearnsetTrainerScript
 
 Route3SignText:
 	text_far _Route3SignText

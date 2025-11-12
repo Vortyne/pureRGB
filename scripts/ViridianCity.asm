@@ -248,16 +248,22 @@ ViridianCityFisherText:
 	ld hl, .ReceivedTM42Text
 	rst _PrintText
 	SetEvent EVENT_GOT_TM42
-	jr .done
+	rst TextScriptEnd
 .bag_full
 	ld hl, .TM42NoRoomText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .got_item
 	ld hl, .TM42ExplanationText
 	rst _PrintText
-.done
-	rst TextScriptEnd
+	ld c, DEX_GASTLY - 1
+	callfar SetMonSeen
+	ld de, SleeperName
+	call CopyTrainerName
+	lb hl, DEX_GASTLY, $FF
+	ld de, GastlyLearnset
+	ld bc, LearnsetFadeOutInDream
+	predef_jump LearnsetTrainerScriptMain
 
 .YouCanHaveThisText:
 	text_far ViridianCityFisherYouCanHaveThisText
@@ -275,6 +281,9 @@ ViridianCityFisherText:
 .TM42NoRoomText:
 	text_far _ViridianCityFisherTM42NoRoomText
 	text_end
+
+SleeperName:
+	db "SLEEPY GUY@"
 
 ViridianCityOldManText:
 	text_asm

@@ -19,12 +19,12 @@ PredefPointers::
 	add_predef EmotionBubbleQuick
 	add_predef HealParty
 	add_predef MoveAnimation
-	add_predef DivideBCDPredef
-	add_predef DivideBCDPredef2
+	add_predef LearnsetTrainerScript
+	add_predef LearnsetTrainerScriptMain
 	add_predef AddBCDPredef
 	add_predef SubBCDPredef
 	add_predef DivideBCDPredef3
-	add_predef DivideBCDPredef4
+	add_predef MakePokemonAppearInOverworld
 	add_predef CopyMenuSpritesVideoDataFar
 	add_predef FlagActionPredef
 	add_predef HideObject
@@ -80,7 +80,7 @@ PredefPointers::
 	add_predef CanLearnTM
 	add_predef TMToMove
 	add_predef _RunPaletteCommand
-	add_predef StarterDex ; TODO: is this necessary to be a predef, it's barely used
+	add_predef MakePokemonDisappearInOverworld
 	add_predef _AddPartyMon
 	add_predef UpdateHPBar2
 	add_predef DrawEnemyHUDAndHPBar

@@ -33,6 +33,7 @@ CeladonCity_TextPointers:
 	dw_const CeladonCityPoliwrathText,         TEXT_CELADONCITY_POLIWRATH
 	dw_const CeladonCityRocket1Text,           TEXT_CELADONCITY_ROCKET1
 	dw_const CeladonCityRocket2Text,           TEXT_CELADONCITY_ROCKET2
+	dw_const DoRet,                            TEXT_CELADONCITY_ANIMATION_PROXY
 	dw_const CeladonCityTrainerTips1Text,      TEXT_CELADONCITY_TRAINER_TIPS1
 	dw_const CeladonCitySignText,              TEXT_CELADONCITY_SIGN
 	dw_const PokeCenterSignText,               TEXT_CELADONCITY_POKECENTER_SIGN
@@ -46,6 +47,66 @@ CeladonCity_TextPointers:
 
 CeladonCityLittleGirlText:
 	text_far _CeladonCityLittleGirlText
+	text_asm
+	CheckEvent FLAG_WEEZING_FAMILY_LEARNSET
+	jr nz, .done
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .done
+	call DisplayTextPromptButton
+	ld hl, .wantToSee
+	rst _PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .no
+	ld hl, .prettyCool
+	rst _PrintText
+	ld a, [wPlayerDirection]
+	cp PLAYER_DIR_RIGHT
+	ld a, CELADONCITY_LITTLE_GIRL
+	jr z, .down
+	call SetSpriteFacingLeft
+	jr .continue
+.down
+	call SetSpriteFacingDown
+.continue
+	ld de, .littleGirlName
+	call CopyTrainerName
+	lb hl, DEX_KOFFING, $FF
+	ld de, KoffingLearnsetText
+	ld bc, LearnsetShowedCoolMoves
+	predef LearnsetTrainerScriptMain
+	call WaitForSoundToFinish
+	ld c, 20
+	rst _DelayFrames
+	lb hl, 55, 34
+	ld de, vNPCSprites tile $78
+	ld c, CELADONCITY_ANIMATION_PROXY
+	predef MakePokemonDisappearInOverworld
+	call UpdateSprites
+	; reload the pokeball sprite we replaced with koffing
+	ld hl, vNPCSprites tile $78
+	ld de, PokeBallSprite
+	lb bc, BANK(PokeBallSprite), 4
+	call CopyVideoData
+	rst TextScriptEnd
+.no
+	ld hl, CeladonSuitYourself
+	rst _PrintText
+.done
+	rst TextScriptEnd
+.wantToSee
+	text_far _CeladonCityLittleGirlText2
+	text_end
+.prettyCool
+	text_far _CeladonCityLittleGirlText3
+	text_end
+.littleGirlName
+	db "LITTLE GIRL@"
+
+
+CeladonSuitYourself::
+	text_far _GenericSuitYourselfText
 	text_end
 
 CeladonCityGramps1Text:
@@ -102,14 +163,87 @@ CeladonCityGramps3Text:
 
 CeladonCityFisherText:
 	text_far _CeladonCityFisherText
+	text_asm
+	ld a, DEX_POLIWRATH - 1
+	callfar SetMonSeen
+	CheckEvent FLAG_POLIWRATH_FAMILY_LEARNSET
+	jr nz, .done
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .done
+	call DisplayTextPromptButton
+	ld hl, .seeMoves
+	rst _PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, CeladonSuitYourself
+	jr nz, .printDone
+	ld a, CELADONCITY_POLIWRATH
+	call SetSpriteFacingDown
+	ld hl, .letsDoThis
+	rst _PrintText
+.doneLoop
+	ld de, .bigGuyName
+	call CopyTrainerName
+	lb hl, DEX_POLIWRATH, $FF
+	ld de, PoliwrathLearnsetText
+	ld bc, LearnsetShowedCoolMoves
+	predef_jump LearnsetTrainerScriptMain
+.printDone
+	rst _PrintText
+.done
+	rst TextScriptEnd
+.seeMoves
+	text_far _CeladonCityFisher2Text
 	text_end
+.letsDoThis
+	text_far _LetsDoThis
+	text_end
+.bigGuyName
+	db "BIG GUY@"
+
+PoliwrathAnimation::
+	ld a, POLIWRATH
+	call PlayCry
+	ld b, 6
+.loop
+	push bc
+	ld hl, vNPCSprites tile $18
+	ld de, FightingSprite tile 12
+	lb bc, BANK(FightingSprite), 12
+	call CopyVideoData
+	ld c, 3
+	rst _DelayFrames
+	ld hl, vNPCSprites tile $18
+	ld de, FightingSprite
+	lb bc, BANK(FightingSprite), 12
+	call CopyVideoData
+	pop bc
+	dec b
+	jr nz, .loop
+	rst TextScriptEnd
 
 CeladonCityPoliwrathText:
 	text_far _CeladonCityPoliwrathText
 	text_asm
+	ld c, DEX_POLIWRATH - 1
+	callfar SetMonSeen
 	ld a, POLIWRATH
 	call PlayCry
 	rst TextScriptEnd
+
+; d = which sprite
+;FarToggleSpriteImageIndex::
+;	ld a, d
+;ToggleSpriteImageIndex:
+;	ldh [hSpriteIndex], a
+;	ld a, SPRITESTATEDATA1_IMAGEINDEX
+;	ldh [hSpriteDataOffset], a
+;	call GetPointerWithinSpriteStateData1
+;	ld a, [hl]
+;	xor 1
+;	ld [hl], a
+;	ret
 
 CeladonCityRocket1Text:
 	text_far _CeladonCityRocket1Text

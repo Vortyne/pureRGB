@@ -63,12 +63,24 @@ _CopycatsHouse2FCopycatTM31NoRoomText::
 
 _CopycatsHouse2FDoduoText::
 	text "DODUO: Giiih!"
+	done
 
-	para "MIRROR MIRROR ON"
+_CopycatsHouse2FDoduoText2::
+	text "MIRROR MIRROR ON"
 	line "THE WALL, WHO IS"
 	cont "THE FAIREST ONE"
 	cont "OF ALL?"
 	done
+
+_DoduoLearnsetText::
+	text "@"
+	text_ram wTrainerName
+	text ": That's"
+	line "KIWI, my DODUO."
+	para "I like how its"
+	line "heads copy"
+	cont "each other!"
+	prompt
 
 _CopycatsHouse2FRareDollText::
 	text "This is a rare"

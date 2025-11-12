@@ -151,7 +151,11 @@ SafariZoneCenterTrainerEndBattleText2:
 
 SafariZoneCenterTrainerAfterBattleText2:
 	text_far _SafariZoneCenterJugglerAfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_TAUROS, JUGGLER
+	ld de, TaurosLearnsetText
+	ld bc, LearnsetFadeOutInStory
+	predef_jump LearnsetTrainerScriptMain
 
 SafariZoneCenterTrainerText3:
 	text_asm

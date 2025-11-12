@@ -69,7 +69,10 @@ Route5EndBattleText2:
 
 Route5AfterBattleText2:
 	text_far _Route5AfterBattleText2
-	text_end
+	text_asm
+	lb hl, DEX_CHARMELEON, ROOKIE
+	ld de, Route5CharmeleonLearnset
+	predef_jump LearnsetTrainerScript
 
 Route5Rookie3Text:
 	text_asm
@@ -87,7 +90,11 @@ Route5EndBattleText3:
 
 Route5AfterBattleText3:
 	text_far _Route5AfterBattleText3
-	text_end
+	text_asm
+	lb hl, DEX_SQUIRTLE, ROOKIE
+	ld de, Route5SquirtleLearnset
+	predef_jump LearnsetTrainerScript
+
 
 Route5TamerText:
 	text_asm

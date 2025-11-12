@@ -188,6 +188,10 @@ SilphCo11F_ScriptPointers:
 SilphCo11FDefaultScript:
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	ret nz
+IF DEF(_DEBUG)
+	call DebugPressedOrHeldB
+	jp nz, CheckFightingMapTrainers
+ENDC
 	ld hl, .PlayerCoordsArray
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
@@ -422,18 +426,34 @@ SilphCo11FPorygonText:
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
 	ld hl, .WrongSideText
-	jr nz, .done
+	jr nz, .printDone
 	ld hl, .Text
 	rst _PrintText
 	ld a, PORYGON
 	call DisplayPokedex
-	rst TextScriptEnd
-.done
+	; dex number still stored in wPokedexNum
+	callfar IsPokemonLearnsetUnlockedDirect
+	jr nz, .done
+	callfar SetPokemonLearnsetUnlocked
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .done
+	xor a
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	ld hl, .infoOn
 	rst _PrintText
+	; wNameBuffer still contains pokemon name
+	callfar LearnsetUnlockedScript
+	rst TextScriptEnd
+.printDone
+	rst _PrintText
+.done
 	rst TextScriptEnd
 .Text:
 	text_far _SilphCo11FPorygonText
 	text_end
 .WrongSideText
 	text_far _RedsHouse1FTVWrongSideText
+	text_end
+.infoOn
+	text_far _BillsHousePCInfo
 	text_end

@@ -3,6 +3,8 @@ MACRO add_tx_pre
 	dw \1
 ENDM
 
+; TODO: clean up / convert these to map events where necessary
+
 TextPredefs::
 	add_tx_pre CardKeySuccessText                   ; 01
 	add_tx_pre CardKeyFailText                      ; 02
@@ -33,7 +35,6 @@ TextPredefs::
 	add_tx_pre CeruleanRocketHouseHiddenTexts       ; 1B
 	add_tx_pre ViridianSchoolB1FBookcasesTexts      ; 1C 
 	add_tx_pre UnusedBenchGuyText3                  ; 1D XXX unused
-	add_tx_pre UnusedPredefText                     ; 1E XXX unused
 	add_tx_pre PokemonCenterPCText                  ; 1F
 	add_tx_pre ViridianSchoolNotebook               ; 20
 	add_tx_pre ViridianSchoolBlackboard             ; 21
@@ -57,9 +58,6 @@ TextPredefs::
 	add_tx_pre GameCornerCoinCaseText               ; 33
 	add_tx_pre LinkCableHelp                        ; 34
 	add_tx_pre TMNotebook                           ; 35
-	add_tx_pre FightingDojoText                     ; 36
-	add_tx_pre EnemiesOnEverySideText               ; 37
-	add_tx_pre WhatGoesAroundComesAroundText        ; 38
 	add_tx_pre NewBicycleText                       ; 39
 	add_tx_pre IndigoPlateauStatues                 ; 3A
 	add_tx_pre VermilionGymTrashSuccessText1        ; 3B
@@ -67,6 +65,5 @@ TextPredefs::
 	add_tx_pre VermilionGymTrashSuccessText3        ; 3D
 	add_tx_pre VermilionGymTrashFailText            ; 3E
 	add_tx_pre TownMapText                          ; 3F
-	add_tx_pre BookOrSculptureText                  ; 40
 	add_tx_pre ElevatorText                         ; 41
 	add_tx_pre PokemonStuffText                     ; 42

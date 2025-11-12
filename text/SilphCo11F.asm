@@ -130,6 +130,6 @@ _SilphCo11FRocket2AfterBattleText::
 	done
 
 _SilphCo11FPorygonText::
-	text "The monitor has"
+	text "The monitor has a"
 	line "#MON on it!"
 	prompt

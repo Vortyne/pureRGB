@@ -1,6 +1,8 @@
 ; PureRGBnote: ADDED: Entirely new menu for listing the moves a player has witnessed. This functionality is obtained in viridian city schoolhouse.
 
 ShowMovedexMenu:
+	ld hl, wPokedexDataFlags
+	res 3, [hl]
 	call GBPalWhiteOut
 	call ClearScreen
 	call UpdateSprites
@@ -181,10 +183,8 @@ HandleMovedexListMenu:
 	ld hl, wMovedexSeen
 	call IsMoveBitSet
 	jr nz, .getMoveName ; if the player has seen the move
-	ld de, .dashedLine ; print a dashed line in place of the name if the player hasn't seen the move
+	ld de, MoveDashedLine ; print a dashed line in place of the name if the player hasn't seen the move
 	jr .skipGettingName
-.dashedLine ; for unseen moves in the list
-	db "-----------@"
 .getMoveName
 	call GetMoveName
 .skipGettingName
@@ -328,16 +328,12 @@ ShowMoveData:
 	ld [wMovedexMoveID], a
 	ld [wStoredMovedexListIndex], a
 	CheckFlag FLAG_MOVEDEX_SORTING_MODE
-	jr z, .dontConvertValue
-	call MoveConvertIndexToAlphabetical
-.dontConvertValue
+	call nz, MoveConvertIndexToAlphabetical
 	ld hl, wMovedexSeen
 	call IsMoveBitSet
 	ret z
-	ld hl, wStatusFlags2
-	set BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $33 ; 3/7 volume
-	ldh [rNR50], a
+ShowMoveDataExternal:
+	call HalfVolume
 	call ClearScreen
 	ldh a, [hTileAnimations]
 	push af
@@ -516,6 +512,9 @@ ShowNextMoveData:
 	; start by storing the buttons we will track while displaying the description
 	ld a, B_BUTTON
 	ld b, a
+	ld a, [wPokedexDataFlags]
+	bit 3, a
+	jr nz, .noLeft ; no left or right function from external movedex data view
 	ld a, [wStoredMovedexListIndex]
 	ld c, a
 	ld a, [wDexMaxSeenMove]
@@ -584,12 +583,8 @@ ShowNextMoveData:
 	call GBPalWhiteOut
 	call ClearScreen
 	call RunDefaultPaletteCommand
-	call LoadTextBoxTilePatterns
 	call GBPalNormal
-	ld hl, wStatusFlags2
-	res BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $77 ; max volume
-	ldh [rNR50], a
+	call MaxVolume
 	ld a, 1 ; 1 = indicate we have shown the data page and need to reload more stuff to go back
 	and a
 	ret
@@ -671,6 +666,9 @@ DrawBottomDataBorder: ; can change if there's no previous or next move
 	ld de, 1
 	lb bc, $6f, 12
 	call DrawTileLine ; draw bottom border
+	ld a, [wPokedexDataFlags]
+	bit 3, a
+	jr nz, .noPrev ; if bit 3 is set we won't have next or previous
 
 	ld a, [wStoredMovedexListIndex]
 	ld b, a
@@ -703,6 +701,9 @@ DrawBottomDataBorder: ; can change if there's no previous or next move
 	lb bc, 1, 3
 	call ClearScreenArea ; remove line above it
 .nextButton
+	ld a, [wPokedexDataFlags]
+	bit 3, a
+	jr nz, .noNext ; if bit 3 is set we won't have next or previous
 	pop bc
 	ld a, [wDexMaxSeenMove]
 	cp b
@@ -1043,3 +1044,6 @@ MoveQuestionMarkPowerText:
 MovedexTitleDividerLine:
 	db $68, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6A
 	db "@"
+
+MoveDashedLine:
+	db "-----------@"

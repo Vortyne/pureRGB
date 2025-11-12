@@ -9,11 +9,24 @@ VermilionPidgeyHouse_TextPointers:
 
 VermilionPidgeyHouseYoungsterText:
 	text_far _VermilionPidgeyHouseYoungsterText
-	text_end
+	text_asm
+	ld c, DEX_PIDGEY - 1
+	callfar SetMonSeen
+	ld de, YoungsterName
+	call CopyTrainerName
+	lb hl, DEX_PIDGEY, $FF
+	ld de, VermilionPidgeyHouseYoungsterLearnset
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
+
+YoungsterName:
+	db "PEN PAL@"
 
 VermilionPidgeyHousePidgeyText:
 	text_far _VermilionPidgeyHousePidgeyText
 	text_asm
+	ld c, DEX_PIDGEY - 1
+	callfar SetMonSeen
 	ld a, PIDGEY
 	call PlayCry
 	call WaitForSoundToFinish

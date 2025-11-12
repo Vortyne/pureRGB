@@ -93,6 +93,7 @@ INCLUDE "engine/battle/wild_encounters.asm"
 ; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
+INCLUDE "engine/pokemon/read_tm_learnsets.asm"
 
 
 SECTION "Battle Engine 2", ROMX
@@ -212,9 +213,10 @@ INCLUDE "engine/menus/pokedex.asm"
 INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
-;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex
+;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex and learnsets
 INCLUDE "engine/menus/movedex.asm"
 INCLUDE "data/moves/movedex_type_palettes.asm"
+INCLUDE "engine/menus/learnsets.asm"
 ;;;;;;;;;;
 
 SECTION "Pokédex Rating", ROMX
@@ -242,7 +244,6 @@ SECTION "Hidden Objects 2", ROMX
 INCLUDE "engine/events/card_key.asm"
 INCLUDE "engine/events/prize_menu.asm"
 INCLUDE "engine/events/hidden_objects/school_notebooks.asm"
-INCLUDE "engine/events/hidden_objects/fighting_dojo.asm"
 INCLUDE "engine/events/hidden_objects/indigo_plateau_hq.asm"
 
 
@@ -302,7 +303,6 @@ SECTION "Hidden Objects 4", ROMX
 
 INCLUDE "engine/events/hidden_objects/gym_statues.asm"
 INCLUDE "engine/events/hidden_objects/bench_guys.asm"
-INCLUDE "engine/events/hidden_objects/blues_room.asm"
 INCLUDE "engine/events/hidden_objects/pokecenter_pc.asm"
 
 
@@ -363,6 +363,7 @@ INCLUDE "engine/pokemon/get_mon_header.asm"
 ; PureRGBnote: MOVED: moved from battle engine 7
 INCLUDE "engine/pokemon/evos_moves.asm"
 INCLUDE "data/pokemon/base_stats.asm"
+INCLUDE "engine/pokemon/read_level_up_learnsets.asm"
 
 SECTION "Splash Animation", ROMX
 ; PureRGBnote: MOVED: moved from bank1C
@@ -457,3 +458,8 @@ INCLUDE "engine/battle/move_effects/defense_curl_effect.asm"
 INCLUDE "engine/battle/remap_move_data.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/overworld/overworld_animation.asm"
+
+SECTION "newCode2", ROMX
+
+INCLUDE "engine/overworld/learnset_scripts.asm"
+INCLUDE "engine/overworld/make_pokemon_appear.asm"

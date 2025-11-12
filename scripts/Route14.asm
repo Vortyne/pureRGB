@@ -146,7 +146,70 @@ Route14CooltrainerM5EndBattleText:
 	text_far _Route14CooltrainerM5EndBattleText
 	text_end
 
+DoesPlayerHaveLegendaryBird::
+	CheckEvent FLAG_ARTICUNO_LEARNSET
+	jr nz, .zapdosCheck
+	ld d, ARTICUNO
+	callfar IsMonInParty
+	jr c, .hasLegendaryBird
+.zapdosCheck
+	CheckEvent FLAG_ZAPDOS_LEARNSET
+	jr nz, .moltresCheck
+	ld d, ZAPDOS
+	callfar IsMonInParty
+	jr c, .hasLegendaryBird
+.moltresCheck
+	CheckEvent FLAG_MOLTRES_LEARNSET
+	jr nz, .noBird
+	ld d, MOLTRES
+	callfar IsMonInParty
+	jr c, .hasLegendaryBird
+.noBird
+	and a
+	ret
+.hasLegendaryBird
+	; d = still the pokemon the player has
+	ld a, d
+	ld [wPokedexNum], a
+	ld hl, .whatYouHaveBirdAn
+	cp ARTICUNO
+	jr z, .gotText
+	ld hl, .whatYouHaveBirdA
+.gotText
+	push hl
+	call GetMonName
+	pop hl
+	rst _PrintText
+	ld hl, .learnset2
+	rst _PrintText
+	predef IndexToPokedex
+	scf
+	ret
+.whatYouHaveBirdA
+	text_far _LegendaryBirdLearnsetA
+	text_end
+.whatYouHaveBirdAn
+	text_far _LegendaryBirdLearnsetAn
+	text_end
+.learnset2
+	text_far _LegendaryBirdLearnset
+	text_end
+
 Route14CooltrainerM5AfterBattleText:
+	text_asm
+	call DoesPlayerHaveLegendaryBird
+	jr c, .hasLegendaryBird
+	ld hl, .defaultAfterText
+	rst _PrintText
+	rst TextScriptEnd
+.hasLegendaryBird
+	ld a, [wPokedexNum]
+	ld h, a
+	ld l, BIRD_KEEPER
+	ld de, TextNothing
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
+.defaultAfterText 
 	text_far _Route14CooltrainerM5AfterBattleText
 	text_end
 

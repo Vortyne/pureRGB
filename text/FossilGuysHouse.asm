@@ -44,6 +44,7 @@ _FossilGuyHaveFossil::
 	para "Sound good?"
 	done
 
+_GenericSuitYourselfText::
 _FossilGuyDenied::
 	text "Suit yourself!"
 	done

@@ -275,6 +275,12 @@ OhFineThenTextPtr:
 	text_waitbutton
 	text_end
 
+IsMonAPrizePokemon::
+	ld a, [wCurPartySpecies]
+	ld hl, PrizeMonLevelDictionary
+	ld de, 2
+	jp IsInArray
+
 GetPrizeMonLevel:
 	ld a, [wCurPartySpecies]
 	ld b, a

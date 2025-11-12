@@ -28,8 +28,35 @@ ViridianCityPokecenterBenchGuyText::
 	text_end
 
 PewterCityPokecenterBenchGuyText::
+	text_asm
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .no
+	CheckEvent FLAG_WIGGLYTUFF_FAMILY_LEARNSET
+	jr nz, .no
+	ld d, JIGGLYPUFF
+	callfar IsMonInParty
+	jr nc, .no
+	ld hl, .oh
+	rst _PrintText
+	ld de, BenchGuyName
+	call CopyTrainerName
+	lb hl, DEX_JIGGLYPUFF, $FF
+	ld de, PewterCityBenchGuyJigglyPuff2
+	ld bc, LearnsetFadeOutInDream
+	predef_jump LearnsetTrainerScriptMain
+.no
+	ld hl, .yawn
+	rst _PrintText
+	rst TextScriptEnd
+.oh
+	text_far _PewterPokecenterBenchGuyLearnsetText1
+	text_end
+.yawn
 	text_far _PewterCityPokecenterGuyText
 	text_end
+
+BenchGuyName:
+	db "BENCH GUY@"
 
 CeruleanCityPokecenterBenchGuyText::
 	text_far _CeruleanPokecenterGuyText

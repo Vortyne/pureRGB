@@ -50,7 +50,7 @@ _CeladonMartCallOakText::
 	cont "the phone!"
 	para "How is @"
 	text_ram wNameBuffer
-	text " "
+	text_start
 	line "doing?"
 	prompt
 

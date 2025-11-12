@@ -77,10 +77,7 @@ StatusScreen:
 	ld b, $1
 	call CalcStats ; Recalculate stats
 .DontRecalculate
-	ld hl, wStatusFlags2
-	set BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $33
-	ldh [rNR50], a ; Reduce the volume
+	call HalfVolume
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call UpdateSprites
@@ -503,10 +500,7 @@ StatusScreenOriginal:
 ExitStatusScreen:
 	pop af
 	ldh [hTileAnimations], a
-	ld hl, wStatusFlags2
-	res BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $77
-	ldh [rNR50], a
+	call MaxVolume
 	call GBPalWhiteOut
 	jp ClearScreen
 

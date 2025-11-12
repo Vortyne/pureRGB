@@ -207,12 +207,12 @@ ChampArenaBrunoMoveset:
 	db SLAM ; FILTHY_SLAM
 	; hitmonlee
 	db HI_JUMP_KICK
-	db ROLLING_KICK
+	db AGILITY
 	db EARTHQUAKE
 	db SUBMISSION
 	; onix
 	db WITHDRAW
-	db TAKE_DOWN ; HEAT_RUSH
+	db CRABHAMMER
 	db EARTHQUAKE
 	db ROCK_SLIDE
 	; fearow
