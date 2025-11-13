@@ -18,8 +18,8 @@ ClearVariablesOnEnterMap::
 	ld hl, wCardKeyDoorY
 	ld [hli], a
 	ld [hl], a
-	ld hl, wWhichTrade
-	ld bc, wStandingOnWarpPadOrHole - wWhichTrade
+	ld hl, wSavedY
+	ld bc, wStandingOnWarpPadOrHole - wSavedY
 	call FillMemory
 ;;;;;;;;;; PureRGBnote: ADDED: code that helps track which of the new music tracks is playing if any are
 	ld a, [wCurrentMapScriptFlags]

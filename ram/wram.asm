@@ -896,8 +896,6 @@ wChangeBoxSavedMapTextPointer:: dw
 NEXTU
 wSavedY::
 wTempSCX::
-; which entry from TradeMons to select
-wWhichTrade::
 wDexMaxSeenMove::
 wDexMaxSeenMon::
 wDexLearnsetListCount::
@@ -1369,6 +1367,9 @@ wBattleMonNick:: ds NAME_LENGTH
 wBattleMon:: battle_struct wBattleMon
 
 
+; which entry from TradeMons to select for in game trades
+wWhichTrade::
+; which trainer class is being fought against
 wTrainerClass:: db
 
 	ds 1 ; unused lone byte

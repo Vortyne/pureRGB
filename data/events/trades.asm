@@ -18,7 +18,7 @@ TradeMons:
 	db ONIX,       GASTLY,    TRADE_DIALOGSET_HAPPY,  "Nebula@@@@@" ; vermilion city
 	db TAUROS,     LICKITUNG, TRADE_DIALOGSET_CASUAL_COLOR, "Saliva@@@@@" ; route 18 
 	db PIDGEOTTO,  SEEL,      TRADE_DIALOGSET_EVOLUTION, "Slappy@@@@@" ; cerulean city
-	db DITTO,      ZUBAT,     TRADE_DIALOGSET_EVOLUTION_COLOR, "EmeraldSDB@" ; cinnabar lab
+	db KRABBY,     ZUBAT,     TRADE_DIALOGSET_EVOLUTION_COLOR, "EmeraldSDB@" ; cinnabar lab
 	db LAPRAS,     SNORLAX,   TRADE_DIALOGSET_HAPPY_COLOR,  "Fatso@@@@@@" ; cinnabar lab 
 	db VOLTORB,    TANGELA,   TRADE_DIALOGSET_HAPPY,  "Discombob@@@" ; route 5
 	assert_table_length NUM_NPC_TRADES

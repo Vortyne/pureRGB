@@ -69,6 +69,7 @@ DoInGameTradeDialogue:
 	jr c, .printText
 	ld hl, TradedForText
 	rst _PrintText
+	call PlayDefaultMusic
 .printText
 	ld hl, wInGameTradeTextPointerTableIndex
 	ld a, [hld] ; wInGameTradeTextPointerTableIndex
@@ -82,7 +83,8 @@ DoInGameTradeDialogue:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	jp PrintText
+	rst _PrintText
+	ret
 
 ; copies name of species a to hl
 InGameTrade_GetMonName:
@@ -133,6 +135,7 @@ InGameTrade_DoTrade:
 	predef FlagActionPredef
 	ld hl, ConnectCableText
 	rst _PrintText
+	call PlayInGameTradeMusic
 	ld a, [wWhichPokemon]
 	push af
 	ld a, [wCurEnemyLevel]
@@ -169,6 +172,18 @@ InGameTrade_DoTrade:
 	ld a, 0
 	ld [wIsAltPalettePkmnData], a ; PureRGBnote: ADDED: clear any alt palette flags so the next pokemon we deal with won't be alt palette
 	ret
+
+PlayInGameTradeMusic:
+	ld a, [wOptions2]
+	bit BIT_MUSIC, a ; is the MUSIC option set to OG+?
+	jr z, .evoMusic ; if not, don't play anything new
+	ld c, BANK(Music_Route3_Early)
+	ld hl, Music_Route3_Early
+	jp PlaySpecialFieldMusic
+.evoMusic
+	ld a, MUSIC_SAFARI_ZONE
+	ld c, BANK(Music_SafariZone)
+	jp PlayMusic
 
 GetTradeMonPalette:
 	ld a, [wWhichTrade]
@@ -215,8 +230,8 @@ InGameTrade_PrepareTradeData:
 	ld de, wTradedPlayerMonOT
 	ld bc, NAME_LENGTH
 	call InGameTrade_CopyData
-	ld hl, InGameTrade_TrainerString
 	ld de, wTradedEnemyMonOT
+	call GetInGameTradeTrainerName
 	call InGameTrade_CopyData
 	ld de, wLinkEnemyTrainerName
 	call InGameTrade_CopyData
@@ -250,8 +265,7 @@ InGameTrade_CopyDataToReceivedMon:
 	ld hl, wPartyMonOT
 	ld bc, NAME_LENGTH
 	call InGameTrade_GetReceivedMonPointer
-	ld hl, InGameTrade_TrainerString
-	ld bc, NAME_LENGTH
+	call GetInGameTradeTrainerName
 	rst _CopyData
 	ld hl, wPartyMon1OTID
 	ld bc, wPartyMon2 - wPartyMon1
@@ -270,8 +284,30 @@ InGameTrade_GetReceivedMonPointer:
 	ld d, h
 	ret
 
-InGameTrade_TrainerString:
-	db "<TRAINER>@@@@@@@@@@"
+GetInGameTradeTrainerName:
+	ld hl, InGameTrade_TrainerStrings
+	ld a, [wWhichTrade]
+	and a
+	ret z
+	ld bc, NAME_LENGTH
+.loop
+	add hl, bc
+	dec a
+	jr nz, .loop
+	ret
+
+InGameTrade_TrainerStrings:
+	db "BOBO@@@@@@@"
+	db "GABE@@@@@@@"
+	db "CROCKET@@@@"
+	db "DRGREEN@@@@"
+	db "MIMI@@@@@@@"
+	db "SHEEN@@@@@@"
+	db "EDMUND@@@@@"
+	db "MIKE@@@@@@@"
+	db "GRACIE@@@@@"
+	db "LILIAN@@@@@"
+
 
 InGameTradeTextPointers:
 ; entries correspond to TRADE_DIALOGSET_* constants
@@ -351,7 +387,13 @@ ConnectCableText:
 
 TradedForText:
 	text_far _TradedForText
-	sound_get_key_item
+	text_asm
+	call WaitForSoundToFinish
+	ld a, SFX_GET_KEY_ITEM
+	rst _PlaySound
+	ld hl, .pause
+	ret
+.pause
 	text_pause
 	text_end
 

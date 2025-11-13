@@ -472,6 +472,7 @@ INCLUDE "audio/music/tcg2/herecomesteamgr.asm"
 INCLUDE "audio/music/unused_beta_tracks/battle_victory_guide.asm"
 INCLUDE "audio/music/unused_beta_tracks/rest_at_house.asm"
 INCLUDE "audio/music/unusedsong.asm"
+INCLUDE "audio/music/unused_beta_tracks/route3_early.asm"
 
 SECTION "New Engine 3 SFX", ROMX
 
