@@ -570,10 +570,12 @@ HandlePoisonBurnLeechSeed:
 	call PlayMoveAnimation ; play leech seed animation (from opposing mon)
 	pop af
 	ldh [hWhoseTurn], a
+	SetEvent FLAG_LEECH_SEED_DAMAGE_PROC
 	pop hl
 	call HandlePoisonBurnLeechSeed_DecreaseOwnHP
 	call HandlePoisonBurnLeechSeed_IncreaseEnemyHP
 	push hl
+	ResetEvent FLAG_LEECH_SEED_DAMAGE_PROC
 	ld hl, HurtByLeechSeedText
 	rst _PrintText
 	pop hl
@@ -638,14 +640,46 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	ld a, [de]    ; increment toxic counter
 	inc a
 	ld [de], a
-	ld hl, 0
-.toxicTicksLoop
-	add hl, bc
-	dec a
-	jr nz, .toxicTicksLoop
-	ld b, h       ; bc = damage * toxic counter
-	ld c, l
+	call .multiplyDamage
+	jr .doneToxic
 .noToxic
+	CheckEvent FLAG_LEECH_SEED_DAMAGE_PROC
+	jr z, .doneToxic
+	push hl
+	push bc
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .playerTurn2
+	ld a, [wPlayerMoveType]
+	push af
+	ld a, GRASS
+	ld [wPlayerMoveType], a
+	call GetPlayerTypeEffectiveness
+	pop af
+	ld [wPlayerMoveType], a
+	jr .checkEffectiveness
+.playerTurn2
+	ld a, [wEnemyMoveType]
+	push af
+	ld a, GRASS
+	ld [wEnemyMoveType], a
+	call AIGetImmediateTypeEffectiveness
+	pop af
+	ld [wEnemyMoveType], a
+.checkEffectiveness
+	pop bc
+	pop hl
+	ld a, [wTypeEffectiveness]
+	cp NOT_VERY_EFFECTIVE
+	jr z, .doneToxic
+	cp EFFECTIVE
+	ld d, 2
+	jr z, .gotAdditionalLeechSeedDamage
+	inc d
+.gotAdditionalLeechSeedDamage
+	ld a, d
+	call .multiplyDamage
+.doneToxic
 	pop hl
 	inc hl
 	ld a, [hl]    ; subtract total damage from current HP
@@ -668,6 +702,16 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	call UpdateCurMonHPBar
 	pop hl
 	ret
+.multiplyDamage
+	ld hl, 0
+.toxicTicksLoop
+	add hl, bc
+	dec a
+	jr nz, .toxicTicksLoop
+	ld b, h       ; bc = damage * toxic counter
+	ld c, l
+	ret
+
 
 ; adds bc to enemy HP
 ; bc isn't updated if HP subtracted was capped to prevent overkill

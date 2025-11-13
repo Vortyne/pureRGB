@@ -506,7 +506,7 @@ _AcidDexEntry::
 
 	bage "Always lowers"
 	next "either foe's"
-	next "ATTACK or DEFENSE."
+	next "ATTACK or DEFENSE"
 	dex
 
 _EmberDexEntry::
@@ -757,6 +757,14 @@ _LeechSeedDexEntry::
 	bage "The seeds stay"
 	next "until the foe"
 	next "faints/switches."
+
+	bage "Seed damage goes"
+	next "up if the foe is"
+	next "weak to GRASS."
+
+	bage "RESIST: 1/16 HP"
+	next "NORMAL:  1/8 HP"
+	next "WEAK:   3/16 HP"
 
 	bage "Doesn't work on"
 	next "GRASS-type"
