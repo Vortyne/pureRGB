@@ -434,9 +434,9 @@ SilphCo11FPorygonText:
 	; dex number still stored in wPokedexNum
 	callfar IsPokemonLearnsetUnlockedDirect
 	jr nz, .done
-	callfar SetPokemonLearnsetUnlocked
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
+	callfar SetPokemonLearnsetUnlocked
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, .infoOn

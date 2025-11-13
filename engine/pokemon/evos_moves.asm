@@ -461,9 +461,9 @@ LearnMoveFromLevelUp:
 	predef IndexToPokedex
 	callfar IsPokemonLearnsetUnlockedDirect
 	jr nz, .done ; already unlocked
-	callfar SetPokemonLearnsetUnlocked
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done ; don't print any text if movedex not unlocked, just mark learnset unlocked in case they get the movedex later	
+	callfar SetPokemonLearnsetUnlocked
 	call .done
 	call GetMonName
 	ld hl, YoureAnExpertText

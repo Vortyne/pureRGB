@@ -29,7 +29,7 @@ ViridianCityPokecenterBenchGuyText::
 
 PewterCityPokecenterBenchGuyText::
 	text_asm
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .no
 	CheckEvent FLAG_WIGGLYTUFF_FAMILY_LEARNSET
 	jr nz, .no

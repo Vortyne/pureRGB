@@ -775,8 +775,8 @@ SetPokemonLearnsetUnlocked::
 	ld b, FLAG_SET
 	jr LearnsetFlagAction
 IsPokemonLearnsetUnlocked:
-	CheckEvent EVENT_GOT_MOVEDEX
-	ret z ; Treat pokemon learnsets as not unlocked if movedex not unlocked (learnset unlock flags can still get set)
+	call AreLearnsetsEnabled
+	ret z
 IsPokemonLearnsetUnlockedDirect::
 	ld b, FLAG_TEST
 LearnsetFlagAction:

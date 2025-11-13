@@ -77,13 +77,19 @@
 	const EVENT_GOT_TM34
 	const EVENT_BEAT_BROCK
 
-	; pureRGBnote: ~11 bits of unused event space
+	; pureRGBnote: ~9 bits of unused event space
 
 ; World Options ; PureRGBnote: ADDED: flags for the world options menu (only 1 at the moment)
-	const_next $82
+	const_next $80
+DEF EVENT_OPTIONS_START1 EQU const_value
 	const FLAG_VOLCANO_AREA_TURNED_OFF
 
-	; pureRGBnote: ~21 bits of unused event space
+	const_next $88
+	const FLAG_LEARNSETS_DISABLED
+	const FLAG_FLASHING_REDUCED
+	const FLAG_IMPERIAL_METRIC
+
+	; pureRGBnote: ~13 bits of unused event space
 
 ; Cerulean City events
 	const_next $98

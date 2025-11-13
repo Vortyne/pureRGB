@@ -50,7 +50,7 @@ CeladonCityLittleGirlText:
 	text_asm
 	CheckEvent FLAG_WEEZING_FAMILY_LEARNSET
 	jr nz, .done
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	call DisplayTextPromptButton
 	ld hl, .wantToSee
@@ -168,7 +168,7 @@ CeladonCityFisherText:
 	callfar SetMonSeen
 	CheckEvent FLAG_POLIWRATH_FAMILY_LEARNSET
 	jr nz, .done
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	call DisplayTextPromptButton
 	ld hl, .seeMoves

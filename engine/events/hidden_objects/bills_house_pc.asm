@@ -113,9 +113,9 @@ BillsHousePokemonList::
 	; dex number still stored in wPokedexNum
 	callfar IsPokemonLearnsetUnlockedDirect
 	jr nz, .noFurtherText
-	callfar SetPokemonLearnsetUnlocked
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .noFurtherText
+	callfar SetPokemonLearnsetUnlocked
 	ld hl, BillsHousePokemonInfo
 	rst _PrintText
 	; wNameBuffer still contains pokemon name

@@ -329,6 +329,9 @@ BattleTransition_OutwardSpiral_:
 
 FlashScreen:
 BattleTransition_FlashScreen_:
+	CheckEvent FLAG_FLASHING_REDUCED
+	jr nz, .flashScreenLessFlashing
+.start
 	ld hl, BattleTransition_FlashScreenPalettes
 .loop
 	ld a, [hli]
@@ -341,8 +344,10 @@ BattleTransition_FlashScreen_:
 	jr .loop
 .done
 	dec b
-	jr nz, BattleTransition_FlashScreen_
+	jr nz, .start
 	ret
+.flashScreenLessFlashing
+	jpfar AnimationFlashScreenLongLessFlashing
 
 BattleTransition_FlashScreenPalettes:
 	dc 3, 3, 2, 1

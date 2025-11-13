@@ -14,9 +14,9 @@ LearnsetTrainerScriptDefault:
 	ld [wTrainerClass], a
 	callfar IsPokemonLearnsetUnlockedDirect
 	jr nz, .noFurtherText
-	callfar SetPokemonLearnsetUnlocked
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .noFurtherText
+	callfar SetPokemonLearnsetUnlocked
 	callfar PokedexToIndex
 	ld a, [wNamedObjectIndex]
 	push af
@@ -114,7 +114,7 @@ LearnsetFadeOutInReadAlot::
 	jr LearnsetFadeOutIn
 
 KeepReadingBookLearnset::
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	push de
 	ld c, d

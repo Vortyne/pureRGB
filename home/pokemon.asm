@@ -403,3 +403,13 @@ StarterToPartyID::
 	ld a, b
 	ret
 
+AreLearnsetsEnabled::
+	CheckEvent FLAG_LEARNSETS_DISABLED
+	jr nz, .no
+	CheckEvent EVENT_GOT_MOVEDEX
+	jr z, .no
+	; nz required to reach here
+	ret
+.no
+	xor a
+	ret

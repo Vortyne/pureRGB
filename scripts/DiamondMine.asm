@@ -420,10 +420,10 @@ DiamondMineProspectorText:
 	call UpdateSprites
 	call Delay3
 	call GBFadeInFromWhite
+	call AreLearnsetsEnabled
+	jr z, .alreadyUnlocked
 	CheckAndSetEvent FLAG_ONIX_LEARNSET
 	jr nz, .alreadyUnlocked
-	CheckEvent EVENT_GOT_MOVEDEX
-	jr z, .alreadyUnlocked
 	callfar LearnsetUnlockedScript
 	call DisplayTextPromptButton
 .alreadyUnlocked

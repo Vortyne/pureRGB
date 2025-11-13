@@ -21,7 +21,7 @@ PokemonFanClubPikachuFanText:
 	jr nc, .no
 	ld hl, .yoursText
 	rst _PrintText
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	CheckEvent FLAG_RAICHU_FAMILY_LEARNSET
 	jr nz, .done
@@ -69,7 +69,7 @@ PokemonFanClubSeelFanText:
 	jr nc, .no
 	ld hl, .yoursText
 	rst _PrintText
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	CheckEvent FLAG_DEWGONG_FAMILY_LEARNSET
 	jr nz, .done
@@ -155,7 +155,7 @@ PokemonFanClubChairmanText:
 .gotBikeVoucherAlready
 	CheckEvent FLAG_RAPIDASH_FAMILY_LEARNSET
 	jr nz, .final
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .final
 	ld hl, .moreAboutRapidash
 	rst _PrintText

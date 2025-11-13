@@ -90,7 +90,7 @@ Route2AfterBattleText1:
 	text_asm
 	CheckEvent EVENT_GOT_LEARNSET_FROM_STORM_KID
 	jr nz, .done
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	CheckBothEventsSet FLAG_PINSIR_LEARNSET, FLAG_SCYTHER_LEARNSET
 	jr z, .done

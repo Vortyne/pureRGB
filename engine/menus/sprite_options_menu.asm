@@ -16,7 +16,7 @@ SpriteOptionsHeader:
 	dw SpriteOptionsSetCursorPositionActions
 	dw SetSpriteOptionsFromCursorPositions
 	dw SpriteOptionsLeftRightFuncs
-	dw DisplayOptionMenu
+	dw DisplayOptions3
 	dw DisplayBattleOptions
 	dw SpriteOptionsAorSelectButton
 	dw SpriteInfoTextJumpTable

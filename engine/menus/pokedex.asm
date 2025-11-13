@@ -19,6 +19,13 @@ ShowPokedexMenu:
 	call RunPaletteCommand
 	callfar LoadPokedexTilePatterns
 ;;;;;;;;;;; PureRGBnote: ADDED: load these new button prompt graphics into VRAM
+	CheckEvent FLAG_IMPERIAL_METRIC
+	jr z, .noMetric
+	ld de, MetricGraphics
+	ld hl, vChars2 tile $60
+	lb bc, BANK(MetricGraphics), 2
+	call CopyVideoDataDouble ; load pokeball tile for marking caught mons
+.noMetric
 	ld de, PokedexPromptGraphics
 	ld hl, vChars1 tile $40
 	lb bc, BANK(PokedexPromptGraphics), (PokedexPromptGraphicsEnd - PokedexPromptGraphics) / $10
@@ -656,7 +663,11 @@ ShowNextPokemonData:
 	ld [wPokedexNum], a
 
 	hlcoord 9, 6
+	CheckEvent FLAG_IMPERIAL_METRIC
 	ld de, HeightWeightText
+	jr z, .gotImperialMetricText
+	ld de, HeightWeightTextMetric
+.gotImperialMetricText
 	call PlaceString
 
 	call GetMonName
@@ -793,8 +804,44 @@ ShowNextPokemonData:
 
 
 .printHeightWeight
+	CheckEvent FLAG_IMPERIAL_METRIC
+	jr z, .imperial
+	; skip past the units in the pokemon data as metric doesn't use them
+	inc de
+	inc de
+	inc de
+	inc de
+	push de
+	push hl
+	call IndexToPokedex
+	callfar GetMetricMeasurements
+	call PokedexToIndex
+	; de = weight, h = height
+	ld a, h
+	pop hl
+	push de
+	push af
+	ld de, w2CharStringBuffer
+	ld [de], a
+	hlcoord 13, 6
+	lb bc, 1, 3
+	call PrintNumber ; print decimetre (height)
+	hlcoord 14, 6
+	pop af
+	cp $a
+	jr nc, .heightNext
+	ld [hl], "0" ; if the height is less than 10, put a 0 before the decimal point
+.heightNext
+	inc hl
+	ld a, [hli]
+	ld [hld], a ; make space for the decimal point by moving the last digit forward one tile
+	ld [hl], "<DOT>" ; decimal point tile
+; now print the weight (note that weight is stored in tenths of kilograms internally)
+	pop de
+	call PrintDexWeight
+	jr .printDescription
+.imperial
 	inc de ; de = address of feet (height)
-	ld a, [de] ; reads feet, but a is overwritten without being used
 	hlcoord 12, 6
 	lb bc, 1, 2
 	call PrintNumber ; print feet (height)
@@ -808,42 +855,16 @@ ShowNextPokemonData:
 ; now print the weight (note that weight is stored in tenths of pounds internally)
 	inc de
 	inc de
-	inc de ; de = address of upper byte of weight
+	ld a, [de] ; high byte of weight
+	ld b, a
+	inc de
+	ld a, [de] ; low byte of weight
 	push de
-; put weight in big-endian order at hDexWeight
-	ld hl, hDexWeight
-	ld a, [hl] ; save existing value of [hDexWeight]
-	push af
-	ld a, [de] ; a = upper byte of weight
-	ld [hli], a ; store upper byte of weight in [hDexWeight]
-	ld a, [hl] ; save existing value of [hDexWeight + 1]
-	push af
-	dec de
-	ld a, [de] ; a = lower byte of weight
-	ld [hl], a ; store lower byte of weight in [hDexWeight + 1]
-	ld de, hDexWeight
-	hlcoord 11, 8
-	lb bc, 2, 5 ; 2 bytes, 5 digits
-	call PrintNumber ; print weight
-	hlcoord 14, 8
-	ldh a, [hDexWeight + 1]
-	sub 10
-	ldh a, [hDexWeight]
-	sbc 0
-	jr nc, .next
-	ld [hl], "0" ; if the weight is less than 10, put a 0 before the decimal point
-.next
-	inc hl
-	ld a, [hli]
-	ld [hld], a ; make space for the decimal point by moving the last digit forward one tile
-	ld [hl], "<DOT>" ; decimal point tile
-	pop af
-	ldh [hDexWeight + 1], a ; restore original value of [hDexWeight + 1]
-	pop af
-	ldh [hDexWeight], a ; restore original value of [hDexWeight]
-
+	ld d, a
+	ld e, b
+	call PrintDexWeight
 .printDescription
-	pop hl
+	pop hl ; pop de into hl
 	push hl
 	inc hl ; hl = address of pokedex description text
 	bccoord 1, 11
@@ -1087,6 +1108,9 @@ ShowNextPokemonData:
 HeightWeightText:
 	db   "HT  ?′??″"
 	next "WT   ???lb@"
+HeightWeightTextMetric:
+	db   "HT   ???<M>"
+	next "WT   ???<K><G>@"
 
 ; XXX does anything point to this? ; PureRGBnote: CHANGED: no, so comment out
 ;PokeText:
@@ -1135,6 +1159,44 @@ IndexToPokedex:
 	ld [wPokedexNum], a
 	pop hl
 	pop bc
+	ret
+
+; input d = high byte of weight e = low byte of weight
+PrintDexWeight:
+	; put weight in big-endian order at hDexWeight
+	ld hl, hDexWeight
+	ld a, [hl] ; save existing value of [hDexWeight]
+	push af
+	ld a, d ; a = upper byte of weight
+	ld [hli], a ; store upper byte of weight in [hDexWeight]
+	ld a, [hl] ; save existing value of [hDexWeight + 1]
+	push af
+	ld [hl], e ; store lower byte of weight in [hDexWeight + 1]
+	ld de, hDexWeight
+	CheckEvent FLAG_IMPERIAL_METRIC
+	hlcoord 11, 8
+	lb bc, 2, 5 ; 2 bytes, 5 digits
+	jr z, .imperial
+	inc hl ; hlcoord 12, 8
+	lb bc, 2, 4 ; 2 bytes, 4 digits
+.imperial
+	call PrintNumber ; print weight
+	hlcoord 14, 8
+	ldh a, [hDexWeight + 1]
+	sub 10
+	ldh a, [hDexWeight]
+	sbc 0
+	jr nc, .next
+	ld [hl], "0" ; if the weight is less than 10, put a 0 before the decimal point
+.next
+	inc hl
+	ld a, [hli]
+	ld [hld], a ; make space for the decimal point by moving the last digit forward one tile
+	ld [hl], "<DOT>" ; decimal point tile
+	pop af
+	ldh [hDexWeight + 1], a ; restore original value of [hDexWeight + 1]
+	pop af
+	ldh [hDexWeight], a ; restore original value of [hDexWeight]
 	ret
 
 INCLUDE "data/pokemon/dex_order.asm"

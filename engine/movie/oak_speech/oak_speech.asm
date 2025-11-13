@@ -1,28 +1,8 @@
 PrepareOakSpeech:
 	ld a, [wLetterPrintingDelayFlags]
 	push af
-	ld a, [wOptions]
-	push af
-	; Retrieve BIT_DEBUG_MODE set in DebugMenu for StartNewGameDebug.
-	; BUG: StartNewGame carries over BIT_ALWAYS_ON_BIKE from previous save files,
-	; which causes CheckForceBikeOrSurf to not return.
-	; To fix this in debug builds, reset BIT_ALWAYS_ON_BIKE here or in StartNewGame.
-	; In non-debug builds, the instructions can be removed.
-	ld a, [wStatusFlags6]
-	push af
-;;;;;;;;;; PureRGBnote: ADDED: these new options variables need to be preserved when starting a new game.
-	ld a, [wSpriteOptions]
-	push af
-	ld a, [wSpriteOptions2]
-	push af
-	ld a, [wSpriteOptions3]
-	push af
-	ld a, [wSpriteOptions4]
-	push af
-	ld a, [wOptions2]
-	push af
-	ld a, [wOptions3]
-	push af
+;;;;;;;;;; PureRGBnote: ADDED: Preserve all options settings when starting a new game
+	call BackupOptionsSettings
 	ld hl, wPlayerName
 	ld bc, wBoxDataEnd - wPlayerName
 	xor a
@@ -31,24 +11,8 @@ PrepareOakSpeech:
 	ld bc, wSpriteDataEnd - wSpriteDataStart
 	xor a
 	call FillMemory
-	pop af
-	ld [wOptions3], a
-	pop af
-	ld [wOptions2], a
-	pop af
-	ld [wSpriteOptions4], a
-	pop af
-	ld [wSpriteOptions3], a
-	pop af
-	ld [wSpriteOptions2], a
-	pop af
-	ld [wSpriteOptions], a
-;;;;;;;;;;
-	pop af
-	res BIT_ALWAYS_ON_BIKE, a ; prevent forced bike state on new game
-	ld [wStatusFlags6], a
-	pop af
-	ld [wOptions], a
+	call RestoreOptionsSettings
+;;;;;;;;;
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ld a, [wOptionsInitialized]
@@ -293,3 +257,115 @@ IntroDisplayPicCenteredOrUpperRight:
 	xor a
 	ldh [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
+
+BackupOptionsSettings:
+	ld de, wBuffer
+	ld hl, BackupList
+	jr DoOptionsBackup
+
+RestoreOptionsSettings:
+	ld de, wBuffer
+	ld hl, BackupList
+	call DoOptionsRestore
+	ld hl, wStatusFlags6
+	res BIT_ALWAYS_ON_BIKE, [hl]
+	ret
+
+DoOptionsBackup:
+	ld b, [hl]
+	inc hl
+.loopBackup
+	push hl
+	hl_deref
+	ld a, [hl]
+	ld [de], a
+	pop hl
+	inc hl
+	inc hl
+	inc de
+	dec b
+	jr nz, .loopBackup
+	ret
+
+DoOptionsRestore:
+	ld b, [hl]
+	inc hl
+.loopBackup
+	push hl
+	hl_deref
+	ld a, [de]
+	ld [hl], a
+	pop hl
+	inc hl
+	inc hl
+	inc de
+	dec b
+	jr nz, .loopBackup
+	ret
+
+BackupList:
+	db 11
+	dw wOptions2
+	dw wSpriteOptions
+	dw wSpriteOptions2
+	dw wSpriteOptions3
+	dw wSpriteOptions4
+	dw wOptions3
+	dw wOptions
+	dw wWorldOptions
+	dw wSpriteOptions5
+	dw wOptions4
+	dw wStatusFlags6
+
+CopyOptionsFromSRAM::
+	ld a, SRAM_ENABLE
+	ld [MBC1SRamEnable], a
+	ld a, 1
+	ld [MBC1SRamBankingMode], a
+	ld [MBC1SRamBank], a
+	; by checking if a name has been saved we can know if a save file was created
+	callfar CheckSaveFileExists
+	jr nc, .doneLoad
+	ld hl, SRAMCopyList
+	ld de, BackupList+1
+	ld b, [hl]
+	inc hl
+.loop
+	push hl
+	push de
+	; deref de
+	ld a, [de]
+	ld c, a
+	inc de
+	ld a, [de]
+	ld d, a
+	ld e, c
+	hl_deref
+	ld a, [hl]
+	ld [de], a
+	pop de
+	pop hl
+	inc hl
+	inc hl
+	inc de
+	inc de
+	dec b
+	jr nz, .loop
+.doneLoad
+	xor a
+	ld [MBC1SRamBankingMode], a
+	ld [MBC1SRamEnable], a
+	ret
+
+SRAMCopyList:
+	db 10
+	dw sOptions2
+	dw sSpriteOptions
+	dw sSpriteOptions2
+	dw sSpriteOptions3
+	dw sSpriteOptions4
+	dw sOptions3
+	dw sOptions
+	dw sWorldOptions
+	dw sSpriteOptions5
+	dw sOptions4

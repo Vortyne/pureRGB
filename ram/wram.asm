@@ -2554,8 +2554,16 @@ NEXTU
 
 wLearnsetFlags:: ds 11 ; learnset flags are in unused space in the middle of the event constants, 82 flags, one for each pokemon evolution family
 wLearnsetFlagsEnd::
-ENDU
+NEXTU
+	ds EVENT_OPTIONS_START1 / 8
 
+wWorldOptions::db
+wOptions4::db
+NEXTU
+
+	ds SPRITE_OPTIONS_FLAGS_FIFTH_BATCH_START / 8
+wSpriteOptions5::db
+ENDU
 
 UNION
 wGrassRate:: db

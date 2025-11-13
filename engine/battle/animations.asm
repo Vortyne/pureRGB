@@ -1179,7 +1179,9 @@ CallOnEnemyTurn:
 	ret
 
 ; flashes the screen for an extended period (48 frames)
-AnimationFlashScreenLong:
+AnimationFlashScreenLong::
+	CheckEventHL FLAG_FLASHING_REDUCED
+	jr nz, AnimationFlashScreenLongLessFlashing
 	ld a, 3 ; cycle through the palettes 3 times
 	ld [wFlashScreenLongCounter], a
 	ld a, [wOnSGB] ; running on SGB?
@@ -1204,6 +1206,24 @@ AnimationFlashScreenLong:
 	pop hl
 	jr nz, .loop
 	vc_hook_red Stop_reducing_move_anim_flashing_Psychic
+	ret
+AnimationFlashScreenLongLessFlashing::
+	ld a, 4
+.loop2
+	; just modify the sprite palettes instead of flashing the whole screen
+	push af
+	call AnimationDarkenMonPalette
+	ld c, 4
+	rst _DelayFrames
+	call AnimationLightenMonPalette
+	ld c, 4
+	rst _DelayFrames
+	call AnimationResetScreenPalette
+	ld c, 4
+	rst _DelayFrames
+	pop af
+	dec a
+	jr nz, .loop2
 	ret
 
 ; BG palettes
@@ -1257,6 +1277,8 @@ AnimationFlashLightScreen:
 	ldh a, [rBGP]
 	push af ; save initial palette
 	ld a, %10010000 ; light screen colors
+	CheckEventHL FLAG_FLASHING_REDUCED
+	jr nz, AnimationFlashScreenCommonLessLightFlashing
 	jr AnimationFlashScreenCommon
 
 MegaPunchSpecialEffect::
@@ -1275,6 +1297,8 @@ AnimationFlashScreen:
 	ldh a, [rBGP]
 	push af ; save initial palette
 	ld a, %00011011 ; 0, 1, 2, 3 (inverted colors)
+	CheckEventHL FLAG_FLASHING_REDUCED
+	jr nz, AnimationFlashScreenCommonLessDarkFlashing
 	; fall through
 AnimationFlashScreenCommon:
 	ldh [rBGP], a
@@ -1286,9 +1310,28 @@ AnimationFlashScreenCommon:
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
 	ld c, 2
 	rst _DelayFrames
+.restore
 	pop af
 	ldh [rBGP], a ; restore initial palette
 	jp UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
+
+AnimationFlashScreenCommonLessDarkFlashing:
+	ldh a, [rBGP]
+	cp %11100100 ; default palettes
+	call z, AnimationDarkenMonPalette ; play a less intense sprite flicker instead of full screen flash if in default palettes 
+	; otherwise it will not flash
+	ld c, 4
+	rst _DelayFrames
+	jr AnimationFlashScreenCommon.restore
+
+AnimationFlashScreenCommonLessLightFlashing:
+	ldh a, [rBGP]
+	cp %11100100 ; default palettes
+	call z, AnimationLightenMonPalette ; play a less intense sprite flicker instead of full screen flash if in default palettes
+	; otherwise it will not flash
+	ld c, 4
+	rst _DelayFrames
+	jr AnimationFlashScreenCommon.restore
 
 AnimationDarkScreenPalette:
 ; Changes the screen's palette to a dark palette.
@@ -1317,9 +1360,9 @@ AnimationResetScreenPalette:
 ;	lb bc, $00, $00
 ;	jr SetAnimationBGPalette
 
-;AnimationUnusedPalette4:
-;	lb bc, $40, $40
-;	jr SetAnimationBGPalette
+AnimationLightenMonPalette:
+	lb bc, %11100000, %11100000
+	jr SetAnimationBGPalette
 
 AnimationLightScreenPalette::
 ; Changes the screen to use a palette with light colors.

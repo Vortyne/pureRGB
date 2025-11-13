@@ -183,6 +183,38 @@ _VolcanoInfoText::
 	cont "other new events."
 	prompt
 
+_LearnsetsInfoText::
+	text "If ON and you"
+	line "have the MOVEDEX,"
+	para "you can unlock"
+	line "learnset info for"
+	cont "#MON raising"
+	cont "your #MON to a"
+	cont "high level or by"
+	cont "talking to other"
+	cont "<TRAINER>s."
+	prompt
+
+_IntroInfoText::
+	text "You can skip the"
+	line "intro animation"
+	cont "when booting up"
+	cont "the game."
+	prompt
+
+_FlashingInfoText::
+	text "If LESS, flashing"
+	line "animations will"
+	cont "be reduced."
+	prompt
+
+_UnitsInfoText::
+	text "Switch between"
+	line "metric / imperial"
+	cont "units used in the"
+	cont "#DEX entries."
+	prompt
+
 ;_MoveMysticInfoText::
 ;	text "If ON, a few"
 ;	line "#MON will get"

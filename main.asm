@@ -422,6 +422,7 @@ INCLUDE "engine/menus/front_sprite_options2.asm"
 INCLUDE "engine/menus/front_sprite_options3.asm"
 INCLUDE "engine/menus/front_sprite_options4.asm"
 INCLUDE "engine/menus/front_sprite_options5.asm"
+INCLUDE "engine/menus/options_menu3.asm"
 INCLUDE "engine/gfx/mon_icons2.asm"
 INCLUDE "engine/overworld/select_button_functionality.asm"
 INCLUDE "engine/overworld/use_another_repel.asm"
@@ -463,3 +464,4 @@ SECTION "newCode2", ROMX
 
 INCLUDE "engine/overworld/learnset_scripts.asm"
 INCLUDE "engine/overworld/make_pokemon_appear.asm"
+INCLUDE "data/pokemon/metric_measurements.asm"

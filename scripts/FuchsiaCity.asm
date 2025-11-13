@@ -269,7 +269,7 @@ FuchsiaCitySoMuchInfoText:
 
 LearnsetFuchsiaZoo:
 	ld [wPokedexNum], a
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	push de
 	xor a

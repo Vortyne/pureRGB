@@ -1,7 +1,7 @@
 DEF OPTION_PAGE_1_COUNT EQU 3 ; number of options on this page
 DEF MAX_OPTIONS_PER_PAGE EQU 7
 DEF OPTION_PAGE_NUMBER EQU 1 ; must be 1 digit
-DEF HOW_MANY_MAIN_OPTIONS_PAGES EQU 4 ; must be 1 digit
+DEF HOW_MANY_MAIN_OPTIONS_PAGES EQU 5 ; must be 1 digit
 DEF NEXT_BUTTON_X_COORD EQU 1
 DEF BACK_BUTTON_X_COORD EQU 7
 DEF PAGE_CONTROLS_Y_COORD EQU 17
@@ -156,7 +156,7 @@ OptionMenu1Header:
 	dw SetOptionsFromCursorPositions
 	dw OptionLeftRightFuncs
 	dw DisplayOptions2
-	dw DisplaySpriteOptions
+	dw DisplayOptions3
 	dw OptionsPageAorSelectButtonDefault
 	dw OptionsMenu1InfoTextJumpTable
 	; fall through (options display address should be after A button pointer)
@@ -573,30 +573,6 @@ TextSpeedOptionData:
 	db  9, TEXT_DELAY_MEDIUM
 	db  1, TEXT_DELAY_FAST
 	db  9, -1 ; end (default X coordinate)
-
-; PureRGBnote: MOVED: CHANGED: Used to be in main_menu.asm but moved for space. 
-; this menu was changed a bit to have a NEXT and BACK button to navigate pages more easily.
-
-CopyOptionsFromSRAM::
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
-	ld a, 1
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamBank], a
-	; by checking if a name has been saved we can know if a save file was created
-	callfar CheckSaveFileExists
-	jr nc, .doneLoad
-	ld a, [sOptions2]
-	ld [wOptions2], a
-	ld a, [sSpriteOptions]
-	ld [wSpriteOptions], a
-	ld a, [sSpriteOptions3]
-	ld [wSpriteOptions3], a
-.doneLoad
-	xor a
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
-	ret
 
 OptionsMenu1InfoTextJumpTable:
 	dw TextSpeedInfoText

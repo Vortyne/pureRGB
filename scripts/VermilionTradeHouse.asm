@@ -19,7 +19,7 @@ VermilionTradeHouseGameboyKidText:
 	text_far _VermilionCityTradeHouseGameboyKidText
 	text_asm
 	call VermilionTradeHouseSeeFarfetchd
-	CheckEvent EVENT_GOT_MOVEDEX
+	call AreLearnsetsEnabled
 	jr z, .done
 	CheckEvent FLAG_FARFETCHD_LEARNSET
 	jr nz, .done
