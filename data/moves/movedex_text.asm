@@ -504,9 +504,9 @@ _AcidDexEntry::
 	next "is unleashed on"
 	next "the <opponent>."
 
-	bage "33% chance to"
-	next "lower DEFENSE."
-	next "(-1 DEFENSE)"
+	bage "Always lowers"
+	next "either foe's"
+	next "ATTACK or DEFENSE."
 	dex
 
 _EmberDexEntry::

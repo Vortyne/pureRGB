@@ -1194,8 +1194,9 @@ DEF FLAG_SKIP_STAT_ANIMATION EQU const_value
 	const FLAG_MOVEDEX_SORTING_MODE
 	const FLAG_INTERRUPTED_TEXT
 	const FLAG_SKIP_MULTI_CHOICE_LOADGBPAL
+	const FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
 	
-	; pureRGBnote: 5 flag spaces remain
+	; pureRGBnote: 4 flag spaces remain
 
 ; Indigo Plateau events
 	const_next $8E0

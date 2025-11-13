@@ -93,4 +93,5 @@ MoveEffectPointerTable:
 	dw ReflectLightScreenEffect  ; ACID_ARMOR_EFFECT
 	dw ExplodeRecoilEffect       ; EXPLODE_RECOIL_EFFECT
 	dw ConversionEffect          ; CONVERSION_EFFECT
+	dw AcidEffect                ; ACID_EFFECT
 	assert_table_length NUM_MOVE_EFFECTS

@@ -802,6 +802,8 @@ StatModifierDownEffect:
 	bit BIT_THUNDERBADGE, a
 	jr nz, .statModifierDownEffect
 ;;;;;;;;;;
+	CheckFlag FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
+	jr nz, .statModifierDownEffect
 	; hardcoded 25% miss rate for opponents using stat down effect moves (feature in the original game) 
 	call BattleRandom
 	cp 25 percent + 1 ; chance to miss by in regular battle
@@ -1952,3 +1954,26 @@ IsStatMaxed:
 DefenseCurlEffect:
 	jpfar _DefenseCurlEffect
 
+AcidEffect:
+	SetEvents FLAG_SKIP_STAT_ANIMATION, FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
+	; either attack down or defense down effect, always one of them
+	call BattleRandom
+	bit 0, a
+	ld b, ATTACK_DOWN1_EFFECT
+	jr z, .attackDown
+	ld b, DEFENSE_DOWN1_EFFECT
+.attackDown
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wPlayerMoveEffect
+	jr z, .playersTurn
+	ld hl, wEnemyMoveEffect
+.playersTurn
+	ld [hl], b
+.done
+	push hl
+	call StatModifierDownEffect
+	ResetEvents FLAG_SKIP_STAT_ANIMATION, FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
+	pop hl
+	ld [hl], ACID_SIDE_EFFECT
+	ret
