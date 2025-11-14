@@ -94,7 +94,9 @@ LearnsetFadeOutIn::
 	call GBPalNormal
 	pop hl
 	rst _PrintText
+	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
+	call UpdateSprites
 	call GBFadeInFromWhite
 LearnsetUnlockedScript::
 	ld hl, LearnsetUnlockedText2

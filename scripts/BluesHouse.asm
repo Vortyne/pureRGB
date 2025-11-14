@@ -226,6 +226,7 @@ BluesHouseTeaEvent:
 	ld de, House_GFX tile $36
 	lb bc, BANK(House_GFX), 1
 	call CopyVideoData
+	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
 	ld a, [wXCoord]
 	cp 2

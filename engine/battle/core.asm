@@ -2020,7 +2020,7 @@ DrawHUDsAndHPBars:
 	call DrawPlayerHUDAndHPBar
 	jp DrawEnemyHUDAndHPBar
 
-DrawPlayerHUDAndHPBar:
+DrawPlayerHUDAndHPBar::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	hlcoord 9, 7
@@ -2086,7 +2086,7 @@ DrawPlayerHUDAndHPBar:
 	set BIT_LOW_HEALTH_ALARM, [hl]
 	ret
 
-DrawEnemyHUDAndHPBar:
+DrawEnemyHUDAndHPBar::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	hlcoord 0, 0

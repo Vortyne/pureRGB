@@ -54,6 +54,14 @@ CheckOverworldAnimation::
 	jr nz, .notDiglettsCave
 	jpfar DiglettsCaveDiglettAnimation
 .notDiglettsCave
+	cp SEAFOAM_ISLANDS_B4F
+	jr nz, .notSeafoamB4F
+	jpfar SeafoamWaveSFXB4F
+.notSeafoamB4F
+	cp SEAFOAM_ISLANDS_B3F
+	jr nz, .notSeafoamB3F
+	jpfar SeafoamWaveSFXB3F
+.notSeafoamB3F
 	xor a
 	ld [wOverworldAnimationCounter], a
 	ResetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION

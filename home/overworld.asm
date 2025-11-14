@@ -646,6 +646,8 @@ CheckMapConnections::
 
 ; function to play a sound when changing maps
 PlayMapChangeSound::
+	CheckEvent FLAG_MAP_HAS_OVERWORLD_ANIMATION
+	call nz, StopChannel8
 	lda_coord 8, 8 ; upper left tile of the 4x4 square the player's sprite is standing on
 	cp $0b ; door tile in tileset 0
 ; PureRGBnote: OPTIMIZED

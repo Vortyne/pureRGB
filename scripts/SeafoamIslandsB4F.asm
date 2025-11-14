@@ -13,6 +13,7 @@ SeafoamIslandsB4FOnMapLoad::
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
+	SetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
 	ld a, [wSeafoamIslandsB4FCurScript]
 	cp SCRIPT_SEAFOAMISLANDSB4F_DRAGONAIR_EVENT_START
 	jp z, SeafoamIslandsB4FDragonairEventOnMapLoad
@@ -428,3 +429,53 @@ SeafoamIslandsB4FFastCurrent::
 SeafoamIslandsB4FFastCurrentText::
 	text_far _CurrentTooFastText2
 	text_end
+
+SeafoamWaveSFXB4F::
+	ld hl, wAudioFlags
+	bit 0, [hl]
+	ret nz ; don't play the sound if we're waiting for sounds to finish currently or it'll wait forever
+	ld hl, wOverworldAnimationCounter
+	inc [hl]
+.notAllDone
+	ld a, [wOverworldAnimationCounter]
+	and %11
+	ret nz ; every 2 iterations the below code will run
+	CheckBothEventsSet EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
+	lb bc, 2, 7
+	lb de, 14, 17
+	jr z, .blockedTide
+	lb bc, 4, 11
+	lb de, 10, 15
+.blockedTide
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr z, .closeSound
+.next1
+	lb bc, 18, 23
+	lb de, 13, 17
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr nz, .further
+.closeSound
+	ld de, CurrentSoundLoud
+	jp PlayNewSoundChannel8
+.further
+	CheckBothEventsSet EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
+	lb bc, 2, 7
+	lb de, 12, 17
+	jr z, .blockedTide2
+	lb bc, 1, 16
+	lb de, 8, 17
+.blockedTide2
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr z, .farSound	
+.next2
+	lb bc, 15, 26
+	lb de, 11, 17
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	ret nz
+.farSound
+	ld de, CurrentSoundQuiet
+	jp PlayNewSoundChannel8

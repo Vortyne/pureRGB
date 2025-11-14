@@ -10,7 +10,7 @@ ENDM
 PredefPointers::
 ; these are pointers to ASM routines.
 ; they appear to be used in overworld map scripts.
-	add_predef DrawPlayerHUDAndHPBar
+	add_predef ArePlayerCoordsInRangePredef
 	add_predef CopyUncompressedPicToTilemap
 	add_predef AnimateSendingOutMon
 	add_predef ScaleSpriteByTwo

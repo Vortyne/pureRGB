@@ -410,3 +410,7 @@ MaxVolume::
 	ldh [rNR50], a
 	ret
 
+StopChannel8:
+	ld de, EndSound
+	call PlayNewSoundChannel8
+	rst _DelayFrame

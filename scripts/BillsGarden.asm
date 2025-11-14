@@ -617,6 +617,7 @@ BillsGardenDadText:
 	call GBPalNormal
 	ld hl, BillsGardenDadText3Yes
 	rst _PrintText
+	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
 	call UpdateSprites
 	call GBFadeInFromWhite

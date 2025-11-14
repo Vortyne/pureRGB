@@ -88,3 +88,11 @@ Ghost_Encounter_SFX2:: ; Actually just the beginning of the Pokemon Pinball grav
 	transpose 0, 0
 	sound_ret
 
+
+CurrentSoundQuiet::
+	noise_note 5, 3, 7, 5
+	sound_ret
+
+CurrentSoundLoud::
+	noise_note 10, 5, 7, 5
+	sound_ret

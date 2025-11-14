@@ -53,6 +53,7 @@ SeafoamIslandsB3FOnMapLoad::
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
+	SetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
 	; script constants were changed from older save file versions so potentially need to update them here to remove invalid values
 	; TODO: remove later?
 	ld hl, wSeafoamIslandsB3FCurScript
@@ -144,3 +145,65 @@ PickUpFossilText:
 BoulderBlockingWaterB3F:
 	text_far _BoulderBlockingCurrent
 	text_end
+
+SeafoamWaveSFXB3F::
+	ld hl, wAudioFlags
+	bit 0, [hl]
+	ret nz ; don't play the sound if we're waiting for sounds to finish currently or it'll wait forever
+	ld hl, wOverworldAnimationCounter
+	inc [hl]
+.notAllDone
+	ld a, [wOverworldAnimationCounter]
+	and %11
+	ret nz ; every 2 iterations the below code will run
+	lb bc, 7, 21
+	lb de, 0,  4
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr z, .closeSound
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	lb bc, 16, 21
+	lb de, 5, 7
+	jr z, .currentBlocked1
+	lb bc, 12, 22
+	lb de, 5, 12
+.currentBlocked1
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr z, .closeSound
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	jr z, .further
+	lb bc, 18, 22
+	lb de, 12, 17
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr nz, .further
+.closeSound
+	ld de, CurrentSoundLoud
+	jp PlayNewSoundChannel8
+.further
+	lb bc, 5, 24
+	lb de, 0,  6
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr z, .farSound
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	lb bc, 14, 23
+	lb de, 5, 11
+	jr z, .currentBlocked2
+	lb bc, 9, 24
+	lb de, 5, 14
+.currentBlocked2
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	jr z, .farSound
+	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
+	ret z
+	lb bc, 16, 24
+	lb de, 12, 17
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	ret nz
+.farSound
+	ld de, CurrentSoundQuiet
+	jp PlayNewSoundChannel8

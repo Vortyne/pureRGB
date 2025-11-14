@@ -181,6 +181,14 @@ IsMoveLearnableByParty:
 	and a
 	ret
 
+; PredefArePlayerCoordsInRange
+ArePlayerCoordsInRangePredef::
+	call GetPredefRegisters
+	call ArePlayerCoordsInRange
+	ld d, 0
+	ret nc
+	inc d
+	ret
 ; input
 ; b = leftmost x coord
 ; c = rightmost x coord

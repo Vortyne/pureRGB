@@ -131,6 +131,7 @@ RedsHouse1FMomText:
 	rst _PrintText
 	call ClearScreen
 	call MomHealPokemonImmediate
+	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
 
 	; remove food tiles on the table
