@@ -98,6 +98,10 @@ StatusScreen:
 	ld hl, vChars2 tile $72
 	lb bc, BANK(PTile), 1
 	call CopyVideoDataDouble ; bold P (for PP)
+	ld de, StatExpPrompt
+	ld hl, vFont tile 75
+	lb bc, BANK(StatExpPrompt), 5
+	call CopyVideoDataDouble
 ;;;;; PureRGBnote: ADDED: If the pokemon has max DVs, load the APEX prompt into vram.
 	call DoesLoadedMonHaveMaxDVs
 	jr nc, .notMaxDVs
@@ -181,7 +185,7 @@ StatusScreen:
 	inc hl
 	ld [hl], $CA
 .notMaxDVs2
-;;;;;
+;;;;; 
 	call Delay3
 	call GBPalNormal
 	hlcoord 1, 0
@@ -262,11 +266,12 @@ PTile: INCBIN "gfx/font/P.1bpp"
 
 PrintStatsBox:
 	ld a, d
-	and a ; a is 0 from the status screen
+	and a
 	jr nz, .DifferentBox
 	hlcoord 0, 8
 	lb bc, 8, 8
 	call TextBoxBorder ; Draws the box
+.default
 	hlcoord 1, 9 ; Start printing stats from here
 	ld bc, $19 ; Number offset
 	jr .PrintStats
@@ -277,13 +282,18 @@ PrintStatsBox:
 	hlcoord 11, 3
 	ld bc, $18
 .PrintStats
+	push de
 	push bc
 	push hl
 	ld de, StatsText
 	call PlaceString
 	pop hl
 	pop bc
+	pop de
 	add hl, bc
+	ld a, d
+	cp 2
+	jr z, .statExp
 	ld de, wLoadedMonAttack
 	lb bc, 2, 3
 	call PrintStat
@@ -292,6 +302,18 @@ PrintStatsBox:
 	ld de, wLoadedMonSpeed
 	call PrintStat
 	ld de, wLoadedMonSpecial
+	jp PrintNumber
+.statExp
+	dec hl
+	dec hl
+	lb bc, 2, 5
+	ld de, wLoadedMonAttackExp
+	call PrintStat
+	ld de, wLoadedMonDefenseExp
+	call PrintStat
+	ld de, wLoadedMonSpeedExp
+	call PrintStat
+	ld de, wLoadedMonSpecialExp
 	jp PrintNumber
 PrintStat:
 	push hl
@@ -490,8 +512,12 @@ StatusScreenOriginal:
 	ldh a, [hTileAnimations]
 	push af
 	call StatusScreen
-	ld b, A_BUTTON | B_BUTTON
+.continue
+	ld b, A_BUTTON | B_BUTTON | SELECT
 	call PokedexStatusWaitForButtonPressLoop
+	bit BIT_SELECT, a
+	jr nz, ExitStatusScreen.select
+	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
 	bit BIT_B_BUTTON, a
 	jr nz, ExitStatusScreen
 	call StatusScreen2
@@ -503,7 +529,9 @@ ExitStatusScreen:
 	call MaxVolume
 	call GBPalWhiteOut
 	jp ClearScreen
-
+.select
+	call ToggleStatData
+	jr StatusScreenOriginal.continue
 ;;;;;;;;;; 
 
 ;;;;;;;;;; PureRGBnote: ADDED: code that allows going up and down on the dpad
@@ -514,7 +542,12 @@ StatusScreenLoop:
 	push af
 .displayNextMon
 	call StatusScreen
+.continue
+	ld a, A_BUTTON | B_BUTTON | SELECT
 	call PokemonStatusWaitForButtonPress
+	bit BIT_SELECT, a
+	jr nz, .changeStatData
+	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
 	bit BIT_D_UP, a
 	jr nz, .prevMon
 	bit BIT_D_DOWN, a
@@ -522,6 +555,7 @@ StatusScreenLoop:
 	bit BIT_B_BUTTON, a
 	jr nz, .exitStatus
 	call StatusScreen2
+	ld a, A_BUTTON | B_BUTTON
 	call PokemonStatusWaitForButtonPress
 	bit BIT_D_UP, a
 	jr nz, .prevMon
@@ -541,10 +575,38 @@ StatusScreenLoop:
 	ld hl, wPartyAndBillsPCSavedMenuItem
 	dec [hl]
 	jr .displayNextMon
+.changeStatData
+	call ToggleStatData
+	jr .continue
+
+ToggleStatData:
+	hlcoord 1, 9
+	lb bc, 8, 8
+	call ClearScreenArea
+	ToggleEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
+	ld d, 0
+	jr z, .normalStats
+	ld d, 2
+	hlcoord 1, 17
+	ld [hl], $CB
+	inc hl
+	ld [hl], $CC
+	inc hl
+	ld [hl], $CE
+	inc hl
+	ld [hl], $CF
+	jr .donePrompt
+.normalStats
+	hlcoord 3, 17
+	ld [hl], $CD
+	inc hl
+	ld [hl], $7A
+.donePrompt
+	jp PrintStatsBox.default
+
 
 PokemonStatusWaitForButtonPress:
 .decideButtons
-	ld a, A_BUTTON | B_BUTTON
 	ld b, a
 	ld a, [wWhichPokemon]
 	and a

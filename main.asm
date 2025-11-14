@@ -88,7 +88,7 @@ INCLUDE "gfx/player.asm"
 INCLUDE "engine/overworld/turn_sprite.asm"
 INCLUDE "engine/menus/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
-INCLUDE "engine/battle/end_of_battle.asm"
+; INCLUDE "engine/battle/end_of_battle.asm" ; moved to newCode2
 INCLUDE "engine/battle/wild_encounters.asm"
 ; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9
 INCLUDE "engine/battle/get_trainer_name.asm"
@@ -465,3 +465,4 @@ SECTION "newCode2", ROMX
 INCLUDE "engine/overworld/learnset_scripts.asm"
 INCLUDE "engine/overworld/make_pokemon_appear.asm"
 INCLUDE "data/pokemon/metric_measurements.asm"
+INCLUDE "engine/battle/end_of_battle.asm" ; moved from battle engine 1
