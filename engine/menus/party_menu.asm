@@ -310,3 +310,23 @@ SetPartyMenuHPBarColor:
 	ld hl, wWhichPartyMenuHPBar
 	inc [hl]
 	ret
+
+GetPartyMenuWatchedKeys::
+	ld a, [wIsInBattle]
+	and a
+	jr nz, .inBattle
+	ld a, [wPartyMenuTypeOrMessageID]
+	and a ; NORMAL_PARTY_MENU
+	ld d, A_BUTTON | B_BUTTON | SELECT
+	ret z
+	cp SWAP_MONS_PARTY_MENU
+	ret z
+.inBattle
+	ld a, [wForcePlayerToChooseMon]
+	and a
+	ld d, A_BUTTON | B_BUTTON
+	ret z
+	xor a
+	ld [wForcePlayerToChooseMon], a
+	ld d, A_BUTTON
+	ret

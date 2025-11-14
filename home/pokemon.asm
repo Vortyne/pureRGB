@@ -207,14 +207,11 @@ PartyMenuInit::
 ; otherwise, it is 0
 .storeMaxMenuItemID
 	ld [hli], a ; max menu item ID
-	ld a, [wForcePlayerToChooseMon]
-	and a
-	ld a, A_BUTTON | B_BUTTON
-	jr z, .next
-	xor a
-	ld [wForcePlayerToChooseMon], a
-	inc a ; a = A_BUTTON
+	push hl
+	callfar GetPartyMenuWatchedKeys
+	pop hl
 .next
+	ld a, d
 	ld [hli], a ; menu watched keys
 	pop af
 	ld [hl], a ; old menu item ID
@@ -232,6 +229,21 @@ HandlePartyMenuInput::
 	ld [wPartyMenuAnimMonEnabled], a
 	ld a, [wCurrentMenuItem]
 	ld [wPartyAndBillsPCSavedMenuItem], a
+	bit BIT_SELECT, b
+	jr z, .notSelect
+	push af
+	ld a, SFX_PRESS_AB
+	rst _PlaySound
+	ld a, [wMenuItemToSwap]
+	and a
+	jr nz, .swap
+	pop af
+	inc a ; [wMenuItemToSwap] counts from 1
+	ld [wMenuItemToSwap], a
+	jr HandlePartyMenuInput
+.swap
+	pop af
+.notSelect
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wMenuItemToSwap]
@@ -274,7 +286,7 @@ HandlePartyMenuInput::
 	ld a, [wCurrentMenuItem]
 	ld [wWhichPokemon], a
 	farcall SwitchPartyMon
-	jr HandlePartyMenuInput
+	jp HandlePartyMenuInput
 
 DrawPartyMenu::
 	ld hl, DrawPartyMenu_
