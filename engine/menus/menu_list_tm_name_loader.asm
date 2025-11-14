@@ -37,22 +37,24 @@ CheckLoadTmName:: ; loads a TM name when the cursor is on TMs
 	bccoord 6, 14
 	ld hl, TMParamMoveNameText
 	call TextCommandProcessor
-	ld a, 1
-	ld [wListMenuHoverTextShown], a
-	ret
+	ld hl, wListMenuNewFlags
+	set BIT_SHOWING_TM_HOVER_TEXT, [hl]
+	jr TryDrawItemCount
 .notTMHM
 	; fall through
 ClearTMTextBox:
-	ld a, [wListMenuHoverTextShown]
-	and a
-	ret z
+	ld hl, wListMenuNewFlags
+	bit BIT_SHOWING_TM_HOVER_TEXT, [hl]
+	res BIT_SHOWING_TM_HOVER_TEXT, [hl]
+	jr z, TryDrawItemCount
 	hlcoord 4, 13
 	lb bc, 16, 3 
 	predef LoadScreenTileAreaFromBuffer3
 	call UpdateSprites
-	xor a
-	ld [wListMenuHoverTextShown], a
-	ret
+	; fall through
+TryDrawItemCount:
+	jpfar CheckDrawItemCount
+
 
 CheckSaveTMTextScreenTiles::
 	; we need to save some tiles for later in case we display a TM text box above these tiles

@@ -159,7 +159,7 @@ DisplayListMenuIDLoop::
 	ld [wChosenMenuItem], a
 	xor a
 	ldh [hJoy7], a ; joypad state update flag
-	ld [wListMenuHoverTextShown], a ; PureRGBnote: ADDED: once we pick a list entry, we consider TM text not shown so we will re-render it after finishing
+	ld [wListMenuNewFlags], a ; PureRGBnote: ADDED: once we pick a list entry, we consider TM text not shown so we will re-render it after finishing
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay
 	jp BankswitchBack
@@ -363,7 +363,7 @@ ExitListMenu::
 	res BIT_NO_TEXT_DELAY, [hl]
 	call BankswitchBack
 	xor a
-	ld [wListMenuHoverTextShown], a ; PureRGBnote: ADDED: when we leave a list menu we are no longer displaying any TM text
+	ld [wListMenuNewFlags], a ; PureRGBnote: ADDED: when we leave a list menu we are no longer displaying any TM text
 	ldh [hJoy7], a
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
 	scf

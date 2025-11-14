@@ -466,3 +466,4 @@ INCLUDE "engine/overworld/learnset_scripts.asm"
 INCLUDE "engine/overworld/make_pokemon_appear.asm"
 INCLUDE "data/pokemon/metric_measurements.asm"
 INCLUDE "engine/battle/end_of_battle.asm" ; moved from battle engine 1
+INCLUDE "engine/menus/item_menu_count_box.asm"

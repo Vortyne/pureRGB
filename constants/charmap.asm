@@ -40,18 +40,18 @@
 ; Actual characters (from gfx/font/font_extra.png)
 
 	charmap "<BOLD_A>",  $60 ; unused
-	charmap "<BOLD_B>",  $61 ; unused
-	charmap "<BOLD_C>",  $62 ; unused
-	charmap "<BOLD_D>",  $63 ; unused
-	charmap "<BOLD_E>",  $64 ; unused
-	charmap "<BOLD_F>",  $65 ; unused
-	charmap "<BOLD_G>",  $66 ; unused
-	charmap "<BOLD_H>",  $67 ; unused
-	charmap "<BOLD_I>",  $68 ; unused
+	charmap "<BOLD_P2>", $61
+	charmap "<BOLD_C>",  $62
+	charmap "<SMALL_S>", $63
+	charmap "<BOLD_E>",  $64 
+	charmap "<BOLD_F>",  $65 
+	charmap "<BOLD_G>",  $66 
+	charmap "<BOLD_T>",  $67
+	charmap "<BOLD_I>",  $68
 	charmap "<BOLD_V>",  $69
 	charmap "<BOLD_S>",  $6a
 	charmap "<BOLD_L>",  $6b ; unused
-	charmap "<BOLD_M>",  $6c ; unused
+	charmap "<BOLD_M>",  $6c
 	charmap "<COLON>",   $6d ; colon with tinier dots than ":"
 	charmap "ぃ",         $6e ; hiragana small i, unused
 	charmap "ぅ",         $6f ; hiragana small u, unused

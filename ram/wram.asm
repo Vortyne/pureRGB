@@ -956,7 +956,9 @@ wNewInGameFlags:: db
 
 wListMenuCustomType:: db ; for list menus with custom list entry text rendering methods, which entry text renderer should be used
 wListMenuHoverTextType:: db ; whether the current list menu should display a text box on navigating between entries and which type it is
-wListMenuHoverTextShown:: db ; whether text for a TM is visible
+; bit 0 = TM text for item list is shown
+; bit 1 = "item list count" has been loaded once already
+wListMenuNewFlags:: db
 wSum:: ; a temp store for 16 bit values created by addition, used with PrintNumber to display the sum on screen
 wDamageIntention:: dw ; in battle, the amount of damage a move will do before doing it (used for high jump kick / jump kick crash effect)
 wIsAltPalettePkmn:: db ;a flag for features related to alternate pokemon color palettes, set in these scenarios:

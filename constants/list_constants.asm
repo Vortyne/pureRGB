@@ -22,3 +22,8 @@
 	const INIT_BAG_ITEM_LIST   ; 2
 	const INIT_OTHER_ITEM_LIST ; 3
 	const INIT_PLAYEROT_LIST   ; 4
+
+	const_def
+	const BIT_SHOWING_TM_HOVER_TEXT
+	const BIT_LOADED_ITEM_COUNT_TEXTBOX
+	

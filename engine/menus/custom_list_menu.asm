@@ -85,8 +85,8 @@ CheckLoadTypes:
 	jr c, .noText
 	; a = which pokemon ID in the list is selected
 	ld [wCurSpecies], a ; needed to make PrintMonType work
-	ld a, 1
-	ld [wListMenuHoverTextShown], a
+	ld hl, wListMenuNewFlags
+	set BIT_SHOWING_TM_HOVER_TEXT, [hl]
 	hlcoord 4, 13
 	lb bc, 3, 14  ; height, width
 	call TextBoxBorder
@@ -112,15 +112,15 @@ CheckLoadTypes:
 	ld de, MenuType2Text
 	jp PlaceString
 .noText
-	ld a, [wListMenuHoverTextShown]
-	and a
+	ld hl, wListMenuNewFlags
+	bit BIT_SHOWING_TM_HOVER_TEXT, [hl]
 	ret z
 	hlcoord 4, 13
 	lb bc, 16, 5
 	predef LoadScreenTileAreaFromBuffer3
 	call UpdateSprites
-	xor a
-	ld [wListMenuHoverTextShown], a
+	ld hl, wListMenuNewFlags
+	res BIT_SHOWING_TM_HOVER_TEXT, [hl]
 	ret
 
 MenuType1Text:
