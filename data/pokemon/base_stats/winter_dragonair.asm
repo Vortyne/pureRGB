@@ -8,7 +8,7 @@
 	db 218 ; base exp
 
 	INCBIN "gfx/pokemon/front_alt/dragonair.pic", 0, 1 ; sprite dimensions
-	dw WinterDragonairPicFront, DragonairPicBackSW
+	dw WinterDragonairPicFront, WinterDragonairPicBackSW
 
 	db WRAP, LEER, ROAR, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
@@ -49,7 +49,7 @@
 	db BANK(WinterDragonairPicFront)
 	db 0
 	db BANK(DragonairPicBack)
-	db BANK(DragonairPicBackSW)
+	db BANK(WinterDragonairPicBackSW)
 
 	dw 0, DragonairPicBack
 

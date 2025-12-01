@@ -332,7 +332,6 @@ TentacoolPicBackSW::  INCBIN "gfx/pokemon/back_sw/tentacoolb.pic"
 GastlyPicFront::      INCBIN "gfx/pokemon/front/gastly.pic"
 GastlyPicBackSW::     INCBIN "gfx/pokemon/back_sw/gastlyb.pic"
 ScytherPicFront::     INCBIN "gfx/pokemon/front/scyther.pic"
-ScytherPicBackSW::    INCBIN "gfx/pokemon/back_sw/scytherb.pic"
 StaryuPicFront::      INCBIN "gfx/pokemon/front/staryu.pic"
 StaryuPicBackSW::     INCBIN "gfx/pokemon/back_sw/staryub.pic"
 BlastoisePicFront::   INCBIN "gfx/pokemon/front/blastoise.pic"
@@ -373,6 +372,7 @@ VaporeonPicFront::    INCBIN "gfx/pokemon/front/vaporeon.pic"
 VaporeonPicBackSW::   INCBIN "gfx/pokemon/back_sw/vaporeonb.pic"
 MukPicFront::          INCBIN "gfx/pokemon/front/muk.pic"
 MukPicBackSW::         INCBIN "gfx/pokemon/back_sw/mukb.pic"
+DragonairPicBackSW::  INCBIN "gfx/pokemon/back_sw/dragonairb.pic"
 
 SECTION "Pics 8", ROMX, BANK[PICS_8]
 
@@ -421,7 +421,7 @@ WeepinbellPicBackSW::  INCBIN "gfx/pokemon/back_sw/weepinbellb.pic"
 VictreebelPicFront::   INCBIN "gfx/pokemon/front/victreebel.pic"
 VictreebelPicBackSW::  INCBIN "gfx/pokemon/back_sw/victreebelb.pic"
 DragonairPicFront::   INCBIN "gfx/pokemon/front/dragonair.pic"
-DragonairPicBackSW::  INCBIN "gfx/pokemon/back_sw/dragonairb.pic"
+ScytherPicBackSW::    INCBIN "gfx/pokemon/back_sw/scytherb.pic"
 
 MissingnoPicFront::    INCBIN "gfx/pokemon/front/missingno.pic"
 MissingnoPicBackSW::   INCBIN "gfx/pokemon/back_sw/missingnob.pic"
@@ -590,6 +590,8 @@ KoffingPicFrontAlt::  INCBIN "gfx/pokemon/front_alt/koffing.pic"
 ArmoredMewtwoPicFront:: INCBIN "gfx/pokemon/front/armored_mewtwo.pic"
 ArmoredMewtwoPicBackSW:: INCBIN "gfx/pokemon/back_sw/armored_mewtwob.pic"
 ArmoredMewtwoPicFrontAlt:: INCBIN "gfx/pokemon/front_alt/armored_mewtwo.pic"
+
+WinterDragonairPicBackSW:: INCBIN "gfx/pokemon/back_sw/winter_dragonairb.pic"
 
 ; used elsewhere
 KidPic::           INCBIN "gfx/unused_prototype_sprites/cool_kid.pic"
