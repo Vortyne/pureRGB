@@ -288,7 +288,7 @@ RangersLeftText2:
 GetTileAndCoordsInFrontOfPlayer:
 	call GetPredefRegisters
 
-_GetTileAndCoordsInFrontOfPlayer:
+_GetTileAndCoordsInFrontOfPlayer::
 	ld a, [wYCoord]
 	ld d, a
 	ld a, [wXCoord]

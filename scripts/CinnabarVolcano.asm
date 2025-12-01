@@ -2380,13 +2380,6 @@ PlayerQuickSpin::
 PlayerQuickSpinFacings:
 	db PLAYER_DIR_LEFT, PLAYER_DIR_UP, PLAYER_DIR_RIGHT, PLAYER_DIR_DOWN
 
-MoveSpriteButAllowAOrBPress:
-	call MoveSprite
-	ld hl, wJoyIgnore
-	res BIT_B_BUTTON, [hl]
-	res BIT_A_BUTTON, [hl]
-	ret
-
 ; bc = picture id backup in wMapSpriteOriginalPictureIDs
 ; de = tile location for this sprite
 ; hl = picture id wram variable

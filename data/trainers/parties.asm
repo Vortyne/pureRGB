@@ -55,6 +55,9 @@ TrainerDataPointers:
 	dw SoldierData
 	dw ChiefData
 	dw GymGuideData
+	dw RookieData
+	dw RookieData
+	dw RookieData
 	assert_table_length NUM_TRAINERS
 
 ; if first byte != $FF, then
@@ -350,6 +353,7 @@ FisherData:
 ; Route 21
 	db 49, SEADRA, VICTREEBEL, FEAROW, SEAKING, 0
 	db 53, MAROWAK, CLOYSTER, 0
+FitnessProxyParty6:: 
 	db 99, MAGIKARP, MAGIKARP, MAGIKARP, MAGIKARP, MAGIKARP, DITTO, 0
 	db 52, SEAKING, SCYTHER, 0
 ; Route 12
@@ -646,6 +650,7 @@ RocketData:
 	db 44, SCYTHER, ARBOK, GENGAR, GOLEM, 0
 	db 46, EXEGGUTOR, KINGLER, 0
 	db 46, RAICHU, SANDSLASH, 0
+FitnessProxyParty4:: 
 ; Silph Co. 8F
 	db 43, RATICATE, NIDOKING, PRIMEAPE, RAPIDASH, 0
 	db 45, HITMONLEE, GOLBAT, GENGAR, 0
@@ -653,7 +658,8 @@ RocketData:
 	db 45, VENOMOTH, HITMONCHAN, MAROWAK, 0
 	db 45, RHYDON, SLOWBRO, MACHAMP, 0
 ; Silph Co. 10F
-	db 50, ALAKAZAM, 0 
+	db 50, ALAKAZAM, 0
+FitnessProxyParty5:: 
 ; Silph Co. 11F
 	db 43, LICKITUNG, CHARIZARD, GOLEM, MAGMAR, GYARADOS, 0
 	db 46, STARMIE, RAICHU, MAROWAK, 0
@@ -812,12 +818,15 @@ ChannelerData:
 	db 34, GASTLY, MR_MIME, 0
 	db 37, NINETALES, 0 
 	db 37, LICKITUNG, 0 
+FitnessProxyParty3::
 ; Pokémon Tower 6F
 	db 35, GASTLY, VENONAT, GASTLY, 0
 	db 37, JYNX, 0 
 	db 36, KADABRA, 0 
+FitnessProxyParty2::
 ; Saffron Gym
 	db 50, MR_MIME, NINETALES, 0
+FitnessProxyParty1::
 	db 51, GENGAR, 0
 	db 49, HYPNO, LAPRAS, GOLDUCK, 0
 
@@ -893,3 +902,4 @@ SoldierData:
 GymGuideData:
 	db $FD, CHAMP_ARENA_GYM_GUIDE_MOVESET, 81 + 128, CHANSEY, 81 + 128, SNORLAX, 82 + 128, CLOYSTER, 83 + 128, ALAKAZAM, 83 + 128, TAUROS, 85 + 128, MISSINGNO, 0 
 	db $FD, CHAMP_ARENA_GYM_GUIDE_MOVESET, 91 + 128, CHANSEY, 91 + 128, SNORLAX, 92 + 128, CLOYSTER, 93 + 128, ALAKAZAM, 93 + 128, TAUROS, 95 + 128, MISSINGNO, 0 
+ 

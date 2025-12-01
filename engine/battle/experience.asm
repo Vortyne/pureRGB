@@ -7,6 +7,18 @@ GainExperience:
 	xor a
 	ld [wWhichPokemon], a
 .partyMonLoop ; loop over each mon and add gained exp
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	jr z, .notFitnessBattle1
+	push hl
+	ld bc, wPartyMon1Level - wPartyMon1
+	add hl, bc
+	ld c, [hl]
+	ld a, [wLevelLimit]
+	dec a
+	cp c
+	pop hl
+	jp c, .nextMon ; no EXP gain for pokemon over fitness level limit
+.notFitnessBattle1
 	inc hl
 	ld a, [hli]
 	or [hl] ; is mon's HP 0?
@@ -70,6 +82,9 @@ GainExperience:
 	add hl, de
 	ld a, [hli]
 	ld b, a ; party mon OTID
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	ld a, 1
+	jr nz, .next ; won't get even more of an EXP boost from the booster chip in fitness battles, the boost is already crazy
 ;;;;;;;;;; PureRGBnote: ADDED: new item that causes all pokemon to gain EXP as if they were received from a trade.
 	CheckEvent EVENT_BOOSTER_CHIP_ACTIVE ; always get traded pokemon boost if BOOSTER CHIP was used.
 	jr nz, .tradedMon
@@ -96,6 +111,8 @@ GainExperience:
 	ld a, [wIsInBattle]
 	dec a ; is it a trainer battle?
 	call nz, BoostExp ; if so, boost exp
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	call nz, TripleExp
 	inc hl
 	inc hl
 	inc hl
@@ -126,23 +143,26 @@ GainExperience:
 	ld a, [hl]
 	ld [wCurSpecies], a
 	call GetMonHeader
-	ld d, MAX_LEVEL
-	callfar CalcExperience ; get max exp
-; compare max exp with current exp
-	ldh a, [hExperience]
-	ld b, a
-	ldh a, [hExperience + 1]
-	ld c, a
-	ldh a, [hExperience + 2]
-	ld d, a
 	pop hl
-	ld a, [hld]
-	sub d
-	ld a, [hld]
-	sbc c
-	ld a, [hl]
-	sbc b
-	jr c, .next2
+	push hl
+	ld d, MAX_LEVEL
+	call GetArbitraryLevelExp
+	jr nc, .capExp
+	pop hl
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	dec hl
+	jr z, .next2
+	inc hl
+	ld a, [wLevelLimit]
+	ld d, a
+	call GetArbitraryLevelExp ; cap at the level limit's EXP
+	jr c, .next2b
+	jr .capExp2
+.capExp
+	; TODO: test this branch with level 100
+	inc sp
+	inc sp ; "pop hl" into nothing
+.capExp2
 ; the mon's exp is greater than the max exp, so overwrite it with the max exp
 	ld a, b
 	ld [hli], a
@@ -150,8 +170,9 @@ GainExperience:
 	ld [hli], a
 	ld a, d
 	ld [hld], a
-	dec hl
 .next2
+	dec hl
+.next2b
 	push hl
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
@@ -401,6 +422,26 @@ BoostExp:
 	ldh [hQuotient + 2], a
 	ret
 
+TripleExp:
+	push bc
+	push hl
+	ldh a, [hQuotient + 2]
+	ld b, a
+	ldh a, [hQuotient + 3]
+	ld c, a
+	ld h, b
+	ld l, c
+	add hl, bc
+	add hl, bc
+	ld a, h
+	ldh [hQuotient + 2], a
+	ld a, l
+	ldh [hQuotient + 3], a
+	pop hl
+	pop bc
+	ret
+
+
 GainedText:
 	text_far _GainedText
 	text_asm
@@ -436,4 +477,23 @@ GrewLevelText:
 HasExpBar:
 	ld a, [wOptions3]
 	bit BIT_EXP_BAR, a
+	ret
+
+GetArbitraryLevelExp:
+	push hl
+	callfar CalcExperience ; get max exp
+; compare max exp with current exp
+	ldh a, [hExperience]
+	ld b, a
+	ldh a, [hExperience + 1]
+	ld c, a
+	ldh a, [hExperience + 2]
+	ld d, a
+	pop hl
+	ld a, [hld]
+	sub d
+	ld a, [hld]
+	sbc c
+	ld a, [hl]
+	sbc b
 	ret

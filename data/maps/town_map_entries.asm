@@ -70,8 +70,10 @@ InternalMapEntries:
 	internal_map MT_MOON_POKECENTER,             5,  2, Route4Name
 	internal_map POWER_PLANT_ROOF,              15,  3, PowerPlantName
 	internal_map DAYCARE,                       10,  4, Route5Name
-	internal_map UNDERGROUND_PATH_ROUTE_6_COPY, 10,  6, Route6Name
-	internal_map UNDERGROUND_PATH_ROUTE_7_COPY,  9,  5, Route7Name
+	internal_map UNDERGROUND_PATH_ROUTE_6,      10,  6, Route6Name
+	internal_map VERMILION_FITNESS_CLUB,        10,  9, VermilionCityName
+	internal_map UNDERGROUND_PATH_ROUTE_7,       9,  5, Route7Name
+	internal_map CELADON_BACK_ALLEY,             7,  5, CeladonCityName
 	internal_map UNDERGROUND_PATH_ROUTE_8,      11,  5, Route8Name
 	internal_map ROCK_TUNNEL_POKECENTER,        14,  3, Route10Name
 	internal_map ROCK_TUNNEL_1F,                14,  3, RockTunnelName

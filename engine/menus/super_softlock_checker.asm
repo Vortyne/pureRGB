@@ -5,7 +5,7 @@
 ; format: map id, left x coord, right x coord, top y coord, bottom y coord
 ; the coordinates form a square in which being inside this square you are "inside a cut alcove"
 ; these are checked directly in their map scripts and the cut trees are removed in cases where you would get blocked from inside an alcove
-VermilionCutAlcove::  db 6, 15, 19, 23
+VermilionCutAlcove::  db 6, 15, 21, 25
 Route2CutAlcove::     db 12, 19, 22, 68
 Route8CutAlcove::     db 29, 40, 8, 15
 Route12CutAlcove1::   db 4, 6, 87, 89

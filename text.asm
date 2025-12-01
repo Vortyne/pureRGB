@@ -296,6 +296,9 @@ SECTION "Text 13", ROMX
 INCLUDE "text/PokemonTowerCatacombs.asm"
 INCLUDE "text/ErikAndSara.asm"
 INCLUDE "text/Learnsets.asm"
+INCLUDE "text/VermilionFitnessClub.asm"
+INCLUDE "text/CeladonBackAlley.asm"
+INCLUDE "text/FightingDojoExpertClub.asm"
 
 SECTION "Pokédex Text", ROMX
 

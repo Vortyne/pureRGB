@@ -57,11 +57,12 @@ DisplayPokemonCenterDialogue_::
 	ld [wSprite01StateData1ImageIndex], a ; make the nurse bow
 	ld c, a
 	rst _DelayFrames
-	jr .done
+	ld hl, PokemonCenterFarewellTextDelay
+	jr .printDone
 .declinedHealing
 	call LoadScreenTilesFromBuffer1 ; restore screen
-.done
 	ld hl, PokemonCenterFarewellText
+.printDone
 	rst _PrintText
 	xor a
 	ld [wUnusedC000], a
@@ -88,7 +89,8 @@ PokemonFightingFitText:
 	text_far _PokemonFightingFitText
 	text_end
 
-PokemonCenterFarewellText:
+PokemonCenterFarewellTextDelay:
 	text_pause
+PokemonCenterFarewellText:
 	text_far _PokemonCenterFarewellText
 	text_end

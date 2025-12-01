@@ -301,8 +301,6 @@ DisplayTwoOptionMenu:
 ; No/Yes menu
 ; this menu type ignores the B button
 ; it only seems to be used when confirming the deletion of a save file
-	xor a
-	ld [wTwoOptionMenuID], a
 	ld a, [wMiscFlags]
 	push af
 	push hl
@@ -321,8 +319,6 @@ DisplayTwoOptionMenu:
 	rst _PlaySound
 	jr .pressedAButton
 .notNoYesMenu
-	xor a
-	ld [wTwoOptionMenuID], a
 	call HandleMenuInput
 	pop hl
 	bit BIT_B_BUTTON, a
@@ -335,8 +331,6 @@ DisplayTwoOptionMenu:
 ; chose first menu item
 	ld a, CHOSE_FIRST_ITEM
 	ld [wMenuExitMethod], a
-	ld c, 15
-	rst _DelayFrames
 	call TwoOptionMenu_RestoreScreenTiles
 	and a
 	ret
@@ -346,8 +340,26 @@ DisplayTwoOptionMenu:
 	ld [wChosenMenuItem], a
 	ld a, CHOSE_SECOND_ITEM
 	ld [wMenuExitMethod], a
-	ld c, 15
-	rst _DelayFrames
+	push hl
+	; if the player used B to select the second option, indicate it with an arrow change
+	ld hl, wTileMap
+	ld a, [wTopMenuItemY]
+	lb de, 0, SCREEN_WIDTH
+.loopAddY
+	add hl, de
+	dec a
+	jr nz, .loopAddY
+	ld a, [wTopMenuItemX]
+	ld b, 0
+	ld c, a
+	add hl, bc
+	; hl = coords of top menu item
+	ld [hl], " "
+	add hl, de ; go down two more lines
+	add hl, de
+	ld [hl], "▶"
+	pop hl
+.skipRedrawArrow
 	call TwoOptionMenu_RestoreScreenTiles
 	scf
 	ret
@@ -375,6 +387,8 @@ TwoOptionMenu_SaveScreenTiles:
 	ret
 
 TwoOptionMenu_RestoreScreenTiles:
+	ld c, 15
+	rst _DelayFrames
 	ld de, wBuffer
 	lb bc, 5, 6
 .loop
@@ -390,6 +404,8 @@ TwoOptionMenu_RestoreScreenTiles:
 	ld c, 6
 	dec b
 	jr nz, .loop
+	xor a
+	ld [wTwoOptionMenuID], a
 	jp UpdateSprites
 
 INCLUDE "data/yes_no_menu_strings.asm"

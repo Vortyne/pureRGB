@@ -8,26 +8,63 @@ VermilionCity_Script:
 	pop hl
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	call nz, .setFirstLockTrashCanIndexAndCheckRemoveTree
+	call nz, .setFirstLockTrashCanIndexAndCheckTileReplacements
+	bit BIT_CROSSED_MAP_CONNECTION, [hl]
+	res BIT_CROSSED_MAP_CONNECTION, [hl]
+	call nz, .checkTileReplacementsNoRedraw
 	ld hl, VermilionCity_ScriptPointers
 	ld a, [wVermilionCityCurScript]
 	jp CallFunctionInTable
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
-.setFirstLockTrashCanIndexAndCheckRemoveTree
-	ld de, VermilionCutAlcove
-	callfar FarArePlayerCoordsInRange
-	; if we're in the specific area where we can get trapped without CUT, remove the tree on map load.
-	call c, .removeTree
+.setFirstLockTrashCanIndexAndCheckTileReplacements
 	call Random
 	ldh a, [hRandomSub]
 	and $e
 	ld [wFirstLockTrashCanIndex], a
+	jr .checkTileReplacements
+.checkTileReplacementsNoRedraw
+	SetFlag FLAG_SKIP_MAP_REDRAW
+.checkTileReplacements
+	ld hl, wTileBlockReplaceCount
+	ld [hl], 0
+	ld de, VermilionCutAlcove
+	callfar FarArePlayerCoordsInRange
+	; if we're in the specific area where we can get trapped without CUT, remove the tree on map load.
+	ld de, wTileBlockReplaceData
+	jr nc, .skipTreeRemoval
+	ld hl, VermilionCutTreeBlockReplacement 
+	call .copyDataAndTerminate
+.skipTreeRemoval
+	CheckEvent FLAG_CATCHUP_CLUBS_TURNED_OFF
+	jr z, .skipDoorReplace
+	ld hl, VermilionFitnessClubDoorBlockReplacement
+	call .copyDataAndTerminate
+.skipDoorReplace
+	ld a, [wTileBlockReplaceCount]
+	and a
+	jr z, .done
+	ld de, wTileBlockReplaceData
+	callfar ReplaceMultipleTileBlocks
+.done
+	ResetFlag FLAG_SKIP_MAP_REDRAW
 	ret
-.removeTree
-	lb bc, 9, 7
-	ld a, $4C
-	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+.copyDataAndTerminate
+	push hl
+	ld hl, wTileBlockReplaceCount
+	inc [hl]
+	pop hl
+	ld bc, 3
+	rst _CopyData
+	ld a, -1
+	ld [de], a
+	ret
+
+
+VermilionCutTreeBlockReplacement:
+	db 10, 7, $4C
+
+VermilionFitnessClubDoorBlockReplacement:
+	db 2, 10, $37
 
 VermilionCityLeftSSAnneCallbackScript:
 	CheckEventHL EVENT_SS_ANNE_LEFT
@@ -84,7 +121,7 @@ VermilionCityDefaultScript:
 	ret
 
 SSAnneTicketCheckCoords:
-	dbmapcoord 18, 30
+	dbmapcoord 18, 32
 	db -1 ; end
 
 VermilionCityPlayerAllowedToPassScript:
@@ -215,8 +252,8 @@ VermilionCitySailor1Text:
 	rst TextScriptEnd
 
 .inFrontOfOrBehindGuardCoords
-	dbmapcoord 19, 29 ; in front of guard
-	dbmapcoord 19, 31 ; behind guard
+	dbmapcoord 19, 31 ; in front of guard
+	dbmapcoord 19, 33 ; behind guard
 	db -1 ; end
 
 .WelcomeToSSAnneText:

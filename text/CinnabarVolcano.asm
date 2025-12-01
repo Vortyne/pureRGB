@@ -375,7 +375,7 @@ _VolcanoBlockagesGone::
 
 _VolcanoGoBackMainFloor::
 	text_start
-	para "Lets see how"
+	para "Let's see how"
 	line "they did back"
 	cont "up at the top."
 	done
@@ -397,7 +397,7 @@ _VolcanoProspectorDone::
 _VolcanoProspectorDone2::
 	text "Well, that should"
 	line "stop an eruption!"
-	para "Lets get out"
+	para "Let's get out"
 	line "of here, kid!"
 	para "I'm sweating like"
 	line "an ODDISH at a"

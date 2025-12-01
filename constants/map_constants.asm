@@ -21,7 +21,7 @@ ENDM
 	map_const PEWTER_CITY,                   20, 18 ; $02
 	map_const CERULEAN_CITY,                 20, 18 ; $03
 	map_const LAVENDER_TOWN,                 10,  9 ; $04
-	map_const VERMILION_CITY,                20, 18 ; $05
+	map_const VERMILION_CITY,                20, 19 ; $05
 	map_const CELADON_CITY,                  25, 18 ; $06
 	map_const SAFFRON_CITY,                  20, 18 ; $07 ; PureRGBnote: MOVED: Saffron city was moved earlier in the index so it appears before Fuchsia city in the fly menu 
 	map_const FUCHSIA_CITY,                  20, 18 ; $08
@@ -94,10 +94,10 @@ DEF FIRST_INDOOR_MAP EQU const_value
 	map_const DAYCARE,                        4,  4 ; $48
 	map_const ROUTE_6_GATE,                   4,  3 ; $49
 	map_const UNDERGROUND_PATH_ROUTE_6,       4,  4 ; $4A
-	map_const UNDERGROUND_PATH_ROUTE_6_COPY,  4,  4 ; $4B ; pointless map
+	map_const VERMILION_FITNESS_CLUB,         9,  5 ; $4B ; pureRGBnote: ADDED: new map
 	map_const ROUTE_7_GATE,                   3,  4 ; $4C
 	map_const UNDERGROUND_PATH_ROUTE_7,       4,  4 ; $4D
-	map_const UNDERGROUND_PATH_ROUTE_7_COPY,  4,  4 ; $4E ; pointless map
+	map_const CELADON_BACK_ALLEY,            21,  8 ; $4E ; pureRGBnote: ADDED: new map 
 	map_const ROUTE_8_GATE,                   3,  4 ; $4F
 	map_const UNDERGROUND_PATH_ROUTE_8,       4,  4 ; $50
 	map_const ROCK_TUNNEL_POKECENTER,         7,  4 ; $51
@@ -151,14 +151,14 @@ DEF FIRST_INDOOR_MAP EQU const_value
 	map_const CELADON_MANSION_2F,             4, 11 ; $81
 	map_const CELADON_MANSION_3F,             4,  6 ; $82
 	map_const CELADON_MANSION_ROOF,           4,  8 ; $83
-	map_const CELADON_MANSION_ROOF_HOUSE,     4,  4 ; $84
+	map_const CELADON_MANSION_ROOF_HOUSE,    11,  4 ; $84
 	map_const CELADON_POKECENTER,             7,  4 ; $85
 	map_const CELADON_GYM,                    5,  9 ; $86
 	map_const GAME_CORNER,                   10,  9 ; $87
 	map_const CELADON_MART_5F,               10,  4 ; $88
 	map_const GAME_CORNER_PRIZE_ROOM,         5,  4 ; $89
 	map_const CELADON_DINER,                  5,  4 ; $8A
-	map_const CELADON_CHIEF_HOUSE,            4,  4 ; $8B
+	map_const CELADON_CHIEF_HOUSE,           11,  4 ; $8B
 	map_const CELADON_HOTEL,                  7,  4 ; $8C
 	map_const LAVENDER_POKECENTER,            7,  4 ; $8D
 	map_const POKEMON_TOWER_1F,              10,  9 ; $8E

@@ -198,6 +198,10 @@ DisplayListMenuIDLoop::
 
 
 DisplayChooseQuantityMenu::
+	ld a, 1
+	ld [wMinItemQuantity], a
+	ld [wInitialItemQuantity], a
+DisplayChooseQuantityMenuMinQuantity::
 ; text box dimensions/coordinates for just quantity
 	hlcoord 15, 9
 	lb bc, 1, 3 ; height, width
@@ -217,8 +221,9 @@ DisplayChooseQuantityMenu::
 .printInitialQuantity
 	ld de, InitialQuantityText
 	call PlaceString
-	xor a
-	ld [wItemQuantity], a ; initialize current quantity to 0
+	ld a, [wInitialItemQuantity]
+	dec a
+	ld [wItemQuantity], a
 	jp .incrementQuantity
 .waitForKeyPressLoop
 	call JoypadLowSensitivity
@@ -247,12 +252,16 @@ DisplayChooseQuantityMenu::
 	ld a, [hl]
 	cp b
 	jr nz, .handleNewQuantity
-; wrap to 1 if the player goes above the max quantity
-	ld [hl], 1
+	ld a, [wMinItemQuantity]
+; wrap to min quantity if the player goes above the max quantity
+	ld [hl], a
 	jr .handleNewQuantity
 .decrementQuantity
 	ld hl, wItemQuantity ; current quantity
+	ld a, [wMinItemQuantity]
+	ld b, [hl]
 	dec [hl]
+	cp b
 	jr nz, .handleNewQuantity
 ;;;;;;;;;; PureRGBnote: ADDED: functionality to decrement or increment amounts by 10 when pressing right or left
 ; wrap to the max quantity if the player goes below 1
@@ -270,12 +279,16 @@ DisplayChooseQuantityMenu::
 	cp b
 	jr c, .handleNewQuantity
 ; wrap to 1 if the player goes above the max quantity
-	ld [hl], 1
+	ld a, [wMinItemQuantity]
+	ld [hl], a
 	jr .handleNewQuantity
 .decrementQuantity10
 	ld hl, wItemQuantity ; current quantity
+	ld a, [wMinItemQuantity]
+	add 10
+	ld d, a
 	ld a, [hl]
-	cp 11
+	cp d
 	jr c, .wrapMax
 	sub 10
 	ld [hl], a
@@ -336,6 +349,8 @@ DisplayChooseQuantityMenu::
 	ld de, wItemQuantity ; current quantity
 	lb bc, LEADING_ZEROES | 1, 2 ; 1 byte, 2 digits
 	call PrintNumber
+	call UpdateSprites
+	rst _DelayFrame
 	jp .waitForKeyPressLoop
 .buttonAPressed ; the player chose to make the transaction
 	xor a

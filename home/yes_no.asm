@@ -1,21 +1,13 @@
 ; displays yes/no choice
-; yes -> set carry
-YesNoChoice::
+YesNoChoice:: ; TODO: don't have to load wCurrentMenuItem after anymore so adjust
 	call SaveScreenTilesToBuffer1
-	call InitYesNoTextBoxParameters
-	jr DisplayYesNoChoice
-
-;TwoOptionMenu:: ; unreferenced
-;	ld a, TWO_OPTION_MENU
-;	ld [wTextBoxID], a
-;	call InitYesNoTextBoxParameters
-;	jp DisplayTextBoxID
-
-InitYesNoTextBoxParameters::
 	xor a ; YES_NO_MENU
 	ld [wTwoOptionMenuID], a
 	hlcoord 14, 7
 	lb bc, 8, 15
+	call YesNoChoiceCommon
+	ld a, [wCurrentMenuItem]
+	and a
 	ret
 
 YesNoChoicePokeCenter::
@@ -25,8 +17,7 @@ YesNoChoicePokeCenter::
 	hlcoord 11, 6
 	lb bc, 8, 12
 	; fall through
-
-DisplayYesNoChoice::
+YesNoChoiceCommon:
 	ld a, TWO_OPTION_MENU
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
@@ -51,10 +42,3 @@ DisplayMultiChoiceTextBoxNoMenuReset::
 	ldh a, [hJoy5]
 	bit BIT_B_BUTTON, a
 	ret
-
-;WideYesNoChoice:: ; unused
-;	call SaveScreenTilesToBuffer1
-;	ld a, WIDE_YES_NO_MENU
-;	ld [wTwoOptionMenuID], a
-;	hlcoord 12, 7
-;	lb bc, 8, 13

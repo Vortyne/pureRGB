@@ -13,7 +13,6 @@ INCLUDE "data/maps/objects/ViridianCity.asm"
 ViridianCity_Blocks: INCBIN "maps/ViridianCity.blk"
 
 INCLUDE "data/maps/headers/PewterCity.asm"
-	ds 1
 INCLUDE "data/maps/objects/PewterCity.asm"
 PewterCity_Blocks: INCBIN "maps/PewterCity.blk"
 
@@ -1018,6 +1017,15 @@ INCLUDE "data/maps/headers/CinnabarPokecenter.asm"
 INCLUDE "scripts/CinnabarPokecenter.asm"
 INCLUDE "data/maps/objects/CinnabarPokecenter.asm"
 
+INCLUDE "data/maps/headers/VermilionFitnessClub.asm"
+INCLUDE "scripts/VermilionFitnessClub.asm"
+INCLUDE "data/maps/objects/VermilionFitnessClub.asm"
+VermilionFitnessClub_Blocks: INCBIN "maps/VermilionFitnessClub.blk"
+
+INCLUDE "data/maps/headers/CeladonBackAlley.asm"
+INCLUDE "scripts/CeladonBackAlley.asm"
+INCLUDE "data/maps/objects/CeladonBackAlley.asm"
+CeladonBackAlley_Blocks: INCBIN "maps/CeladonBackAlley.blk"
 
 
 

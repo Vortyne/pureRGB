@@ -2,6 +2,8 @@
 	const_export CELADONCHIEFHOUSE_CHIEF
 	const_export CELADONCHIEFHOUSE_ROCKET
 	const_export CELADONCHIEFHOUSE_SAILOR
+	const_export BACKALLEYSENIORHOUSE_GRAMPS
+	const_export BACKALLEYSENIORHOUSE_GRANNY
 
 CeladonChiefHouse_Object:
 	db $f ; border block
@@ -9,6 +11,9 @@ CeladonChiefHouse_Object:
 	def_warp_events
 	warp_event  2,  7, LAST_MAP, 12
 	warp_event  3,  7, LAST_MAP, 12
+	warp_event  16,  7, CELADON_CITY, 9
+	warp_event  17,  7, CELADON_CITY, 9
+	warp_event  18,  0, CELADON_BACK_ALLEY, 1
 
 	def_bg_events
 	bg_event 2, 1, TEXT_CELADONCHIEFHOUSE_BOOKCASE_LEFT
@@ -19,5 +24,7 @@ CeladonChiefHouse_Object:
 	object_event  4,  2, SPRITE_GRAMPS, STAY, DOWN, TEXT_CELADONCHIEFHOUSE_CHIEF
 	object_event  1,  4, SPRITE_ROCKET, WALK, ANY_DIR, TEXT_CELADONCHIEFHOUSE_ROCKET
 	object_event  5,  6, SPRITE_SAILOR, STAY, LEFT, TEXT_CELADONCHIEFHOUSE_SAILOR
+	object_event  20, 4, SPRITE_GRAMPS, STAY, DOWN, TEXT_BACKALLEYSENIORHOUSE_GRAMPS
+	object_event  19, 1, SPRITE_GRANNY, STAY, DOWN, TEXT_BACKALLEYSENIORHOUSE_GRANNY
 
 	def_warps_to CELADON_CHIEF_HOUSE

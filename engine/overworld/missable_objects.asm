@@ -215,7 +215,7 @@ HideObjectCommon:
 	jp UpdateSprites
 
 MissableObjectFlagAction:
-; identical to FlagAction
+; identical to FlagAction ; TODO: use flagaction instead?
 
 	push hl
 	push de

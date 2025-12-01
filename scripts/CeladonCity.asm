@@ -7,20 +7,61 @@ CeladonCityCheckHideCutTree:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	ret z ; map wasn't just loaded
+	jr nz, .checkTileReplacements
+	bit BIT_CROSSED_MAP_CONNECTION, [hl]
+	res BIT_CROSSED_MAP_CONNECTION, [hl]
+	ret z 
+	SetFlag FLAG_SKIP_MAP_REDRAW
+.checkTileReplacements
+	ld hl, wTileBlockReplaceCount
+	ld [hl], 0
 	ld de, CeladonCutAlcove1
 	callfar FarArePlayerCoordsInRange
-	call c, .removeTreeBlocker
+	jr c, .replaceTree
 	ld de, CeladonCutAlcove2
 	callfar FarArePlayerCoordsInRange
-	call c, .removeTreeBlocker
+	jr c, .replaceTree
+	ld de, wTileBlockReplaceData
+	jr .doneCheckingTreeReplace
+.replaceTree
+	call .addTreeRemovalData
+.doneCheckingTreeReplace
+	CheckEvent FLAG_CATCHUP_CLUBS_TURNED_OFF
+	jr z, .doneCheckingTileBlockReplace
+	; de = still the current index of wTileBlockReplaceData
+	ld hl, wTileBlockReplaceCount
+	inc [hl]
+	ld hl, CeladonBackAlleyEntranceBlockData
+	ld bc, 6
+	call .copyDataAndTerminate
+.doneCheckingTileBlockReplace
+	ld a, [wTileBlockReplaceCount]
+	and a
+	jr z, .done
+	ld de, wTileBlockReplaceData
+	callfar ReplaceMultipleTileBlocks
+.done
+	ResetFlag FLAG_SKIP_MAP_REDRAW
 	ret
-.removeTreeBlocker
+.addTreeRemovalData
 	; if we're in the cut alcove, remove the tree
-	lb bc, 16, 17
-	ld a, $6D
-	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	ld hl, wTileBlockReplaceCount
+	inc [hl]
+	ld hl, CutAlcoveBlockData
+	ld de, wTileBlockReplaceData
+	ld bc, 3
+.copyDataAndTerminate
+	rst _CopyData
+	ld a, -1
+	ld [de], a
+	ret
+
+CutAlcoveBlockData:
+	db 16, 17, $6D
+
+CeladonBackAlleyEntranceBlockData:
+	db 9, 19, $37
+	db 9, 21, $37
 
 CeladonCity_TextPointers:
 	def_text_pointers

@@ -676,7 +676,7 @@ SeafoamIslands4HiddenObjects:
 	db -1 ; end
 
 VermilionCityHiddenObjects:
-	hidden_object 14, 11, HIDDEN_ITEM_VERMILION_CITY_SURF, HiddenItems2
+	hidden_object 14, 13, HIDDEN_ITEM_VERMILION_CITY_SURF, HiddenItems2
 	db -1 ; end
 
 CeruleanCityHiddenObjects:

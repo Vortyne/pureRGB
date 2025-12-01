@@ -215,6 +215,21 @@ _UnitsInfoText::
 	cont "#DEX entries."
 	prompt
 
+_CatchupInfoText::
+	text "If ON, clubs in"
+	line "which you can"
+	cont "train low level"
+	cont "#MON to a set"
+	cont "level limit will"
+	cont "show up in:"
+	para "SAFFRON, CELADON,"
+	line "+ VERMILION CITY."
+	para "Won't really be"
+	line "needed unless you"
+	cont "switch #MON in"
+	cont "your team a lot."
+	prompt
+
 ;_MoveMysticInfoText::
 ;	text "If ON, a few"
 ;	line "#MON will get"

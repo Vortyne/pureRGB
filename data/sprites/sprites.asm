@@ -101,6 +101,8 @@ SpriteSheetPointerTable:
 	overworld_sprite NothingSprite, 12                 ; SPRITE_NOTHING
 	overworld_sprite GhostSprite, 12                  ; SPRITE_GHOST
 	overworld_sprite SnakeSprite, 12                  ; SPRITE_SNAKE
+	overworld_sprite FitnessGirlSprite, 12            ; SPRITE_FITNESS_GIRL
+	overworld_sprite HooliganSprite, 12               ; SPRITE_HOOLIGAN
 	overworld_sprite PokeBallSprite, 4                ; SPRITE_POKE_BALL
 	overworld_sprite FossilSprite, 4                  ; SPRITE_FOSSIL
 	overworld_sprite BoulderSprite, 4                 ; SPRITE_BOULDER

@@ -64,6 +64,9 @@ TrainerClassMoveChoiceModifications:
 	move_choices 1, 3    ; SOLDIER
 	move_choices 1, 3, 4 ; CHIEF
 	move_choices 1, 3, 4 ; GYM_GUIDE
+	move_choices 1, 3    ; FITNESS_PRO
+	move_choices 1, 3    ; SPRINTER
+	move_choices 1, 3    ; FISTFIGHTER
 	assert_list_length NUM_TRAINERS
 
 ChampArenaGenericMoveChoices:

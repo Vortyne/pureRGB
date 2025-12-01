@@ -35,10 +35,10 @@ DEF PC_ITEM_CAPACITY  EQU 60 ; PureRGBnote: CHANGED: pc item space increased to 
 ; TwoOptionMenuStrings indexes (see data/yes_no_menu_strings.asm)
 	const_def
 	const YES_NO_MENU       ; 0
-	const NORTH_WEST_MENU   ; 1
-	const SOUTH_EAST_MENU   ; 2
-	const WIDE_YES_NO_MENU  ; 3
-	const NORTH_EAST_MENU   ; 4
+	const NORTH_WEST_MENU   ; 1 ; unused
+	const SOUTH_EAST_MENU   ; 2 ; unused
+	const WIDE_YES_NO_MENU  ; 3 ; unused
+	const NORTH_EAST_MENU   ; 4 ; unused
 	const TRADE_CANCEL_MENU ; 5
 	const HEAL_CANCEL_MENU  ; 6
 	const NO_YES_MENU       ; 7

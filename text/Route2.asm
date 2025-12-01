@@ -42,7 +42,7 @@ _Route2AfterBattle2Learnset::
 	line "@"
 	text_ram wNameBuffer
 	text "!"
-	para "Come on! Lets"
+	para "Come on! Let's"
 	line "hang out."
 	para "I'll tell you"
 	line "more about it."

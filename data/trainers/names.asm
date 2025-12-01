@@ -53,4 +53,7 @@ TrainerNames::
 	li "SOLDIER"
 	li "CHIEF"
 	li "GYM GUIDE"
+	li "FITNESS PRO"
+	li "SPRINTER"
+	li "FISTFIGHTER"
 	assert_list_length NUM_TRAINERS

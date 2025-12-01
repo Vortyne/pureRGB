@@ -29,7 +29,6 @@ VermilionPidgeyHousePidgeyText:
 	callfar SetMonSeen
 	ld a, PIDGEY
 	call PlayCry
-	call WaitForSoundToFinish
 	rst TextScriptEnd
 
 VermilionPidgeyHouseLetterText:

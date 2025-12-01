@@ -1,9 +1,18 @@
 CeladonMansionRoofHouse_Script:
+	ld a, CELADON_CITY
+	ld [wLastMap], a
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	call nz, RunDefaultPaletteCommand
 	jp EnableAutoTextBoxDrawing
 
 CeladonMansionRoofHouse_TextPointers:
 	def_text_pointers
 	dw_const CeladonMansionRoofHouseHikerText,         TEXT_CELADONMANSION_ROOF_HOUSE_HIKER
+	dw_const CeladonRuffianHouseHooliganText,          TEXT_CELADON_RUFFIAN_HOUSE_HOOLIGAN
+	dw_const CeladonRuffianHouseRockerText,            TEXT_CELADON_RUFFIAN_HOUSE_ROCKER
+	dw_const CeladonRuffianHouseBikerText,             TEXT_CELADON_RUFFIAN_HOUSE_BIKER
 	dw_const CeladonMansionRoofHouseEeveePokeballText, TEXT_CELADONMANSION_ROOF_HOUSE_EEVEE_POKEBALL
 
 CeladonMansionRoofHouseHikerText:
@@ -20,3 +29,15 @@ CeladonMansionRoofHouseEeveePokeballText:
 	predef HideObject
 .party_full
 	rst TextScriptEnd
+
+CeladonRuffianHouseHooliganText:
+	text_far _CeladonRuffianHouseHooliganText
+	text_end
+
+CeladonRuffianHouseRockerText:
+	text_far _CeladonRuffianHouseRockerText
+	text_end
+
+CeladonRuffianHouseBikerText:
+	text_far _CeladonRuffianHouseBikerText
+	text_end

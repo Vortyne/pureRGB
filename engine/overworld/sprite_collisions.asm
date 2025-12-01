@@ -52,6 +52,8 @@ LoadExtraTiles::
 	jr z, .seafoamIslands1F
 	cp CINNABAR_VOLCANO
 	jr z, .cinnabarVolcano
+	cp FIGHTING_DOJO
+	jr z, .fightingDojo
 	ret
 .typeGuyHouse
 	jpfar CheckLoadLightSwitch
@@ -63,7 +65,8 @@ LoadExtraTiles::
 	jpfar SeafoamIslands1FCheckLoadCustomTiles
 .cinnabarVolcano
 	jpfar CinnabarVolcanoCheckLoadCustomTiles
-
+.fightingDojo
+	jpfar FightingDojoLoadBetaDojoTiles
 
 UpdateNonPlayerSprite:
 	dec a

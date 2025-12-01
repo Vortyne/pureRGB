@@ -47,6 +47,12 @@ ReadTrainer:
 ; - if [wLoneAttackNo] != 0, one pokemon on the team has a special move
 ; else the first byte is the level of every pokemon on the team
 .IterateTrainer
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	jr z, .notFitnessBattle
+	callfar GetFitnessTrainerPartyPointer
+	ld h, d
+	ld l, e
+.notFitnessBattle
 	ld a, [hli]
 	cp $FF ; is the trainer special?
 	jr z, .SpecialTrainer ; if so, check for special moves
@@ -57,11 +63,21 @@ ReadTrainer:
 	cp $FD
 	jr z, .CustomMovesetTrainer
 	ld [wCurEnemyLevel], a
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	jr z, .LoopTrainerData
+	ld a, [wFitnessOpponentLevel]
+	ld [wCurEnemyLevel], a
 .LoopTrainerData
 	ld a, [hli]
 	and a ; have we reached the end of the trainer data?
 	jp z, .FinishUp
 	ld [wCurPartySpecies], a
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	jr z, .noRandomFitnessPokemon
+	push hl
+	callfar GetRandomFitnessPokemon
+	pop hl
+.noRandomFitnessPokemon
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
 	push hl

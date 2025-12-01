@@ -4,12 +4,11 @@ BikeRidingTilesets::
 	db UNDERGROUND
 	db SHIP_PORT
 	db CAVERN
+	db PLATEAU
 	db -1 ; end
 
 ;;;;;;;;;; PureRGBnote: ADDED: Allow bike riding in specific maps that dont have any of the above tilesets
 BikeRidingMaps::
-	db ROUTE_23,
-	db INDIGO_PLATEAU,
 	db ROUTE_5_GATE,
 	db ROUTE_6_GATE,
 	db ROUTE_7_GATE,

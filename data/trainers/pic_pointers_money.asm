@@ -60,4 +60,7 @@ TrainerPicAndMoneyPointers::
 	pic_money SoldierPic,      6000
 	pic_money ChiefPic,        9900
 	pic_money GymGuidePic,     9900
+	pic_money FitnessGirlPic,  3000
+	pic_money SprinterPic,     3000
+	pic_money FistFighterPic,  3000
 	assert_table_length NUM_TRAINERS

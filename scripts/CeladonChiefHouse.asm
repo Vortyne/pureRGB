@@ -1,4 +1,10 @@
 CeladonChiefHouse_Script:
+	ld a, CELADON_CITY
+	ld [wLastMap], a
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	call nz, RunDefaultPaletteCommand
 	jp EnableAutoTextBoxDrawing
 
 CeladonChiefHouse_TextPointers:
@@ -6,6 +12,8 @@ CeladonChiefHouse_TextPointers:
 	dw_const CeladonChiefHouseChiefText,  TEXT_CELADONCHIEFHOUSE_CHIEF
 	dw_const CeladonChiefHouseRocketText, TEXT_CELADONCHIEFHOUSE_ROCKET
 	dw_const CeladonChiefHouseSailorText, TEXT_CELADONCHIEFHOUSE_SAILOR
+	dw_const CeladonSeniorHouseGrampsText, TEXT_BACKALLEYSENIORHOUSE_GRAMPS
+	dw_const CeladonSeniorHouseGrannyText, TEXT_BACKALLEYSENIORHOUSE_GRANNY
 	dw_const CeladonChiefHouseBookCaseLeftText, TEXT_CELADONCHIEFHOUSE_BOOKCASE_LEFT
 	dw_const CeladonChiefHousePlaqueText, TEXT_CELADONCHIEFHOUSE_PLAQUE
 	dw_const CeladonChiefHouseBookCaseRightText, TEXT_CELADONCHIEFHOUSE_BOOKCASE_RIGHT
@@ -48,4 +56,12 @@ CeladonChiefHouseBookCaseRightText:
 
 CeladonChiefHousePlaqueText:
 	text_far _CeladonChiefHousePlaqueText
+	text_end
+
+CeladonSeniorHouseGrampsText:
+	text_far _CeladonSeniorHouseGrampsText
+	text_end
+	
+CeladonSeniorHouseGrannyText:
+	text_far _CeladonSeniorHouseGrannyText
 	text_end

@@ -1080,6 +1080,8 @@ TrainerBattleVictory:
 	ld c, 40
 	rst _DelayFrames
 	call PrintEndBattleText
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	ret nz ; no money earnings in fitness battles
 ; win money
 	ld hl, MoneyForWinningText
 	rst _PrintText
@@ -7660,6 +7662,7 @@ SetEnemyActedBit:
 
 ;shinpokerednote: ADDED: custom functions for determining which trainerAI pkmn have already been sent out before
 ;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
+; TODO: optimize
 CheckAISentOut:
 	ld a, [wWhichPokemon]	
 	cp 5

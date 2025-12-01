@@ -1,5 +1,5 @@
 ; PureRGBnote: ADDED: Accessed from your PC. This options page changes what areas are in the world. Currently only Volcano can be turned off/on.
-DEF WORLD_OPTIONS_COUNT EQU 1 ; number of options on this page
+DEF WORLD_OPTIONS_COUNT EQU 2 ; number of options on this page
 DEF WORLD_OPTIONS_PAGE_NUMBER EQU 1 ; must be 1 digit.
 DEF HOW_MANY_WORLD_OPTIONS_PAGES EQU 1
 
@@ -7,6 +7,8 @@ DEF HOW_MANY_WORLD_OPTIONS_PAGES EQU 1
 WorldOptionsXPosBitData:
 	db 15, 12, FLAG_VOLCANO_AREA_TURNED_OFF % 8
 	dw wEventFlags + (FLAG_VOLCANO_AREA_TURNED_OFF / 8)
+	db 15, 12, FLAG_CATCHUP_CLUBS_TURNED_OFF % 8
+	dw wEventFlags + (FLAG_CATCHUP_CLUBS_TURNED_OFF / 8)
 	db -1
 
 WorldOptionsHeader:
@@ -40,11 +42,13 @@ WorldOptionsData:
 
 WorldOptionsYCoordXVariableOffsetList:
 	db 3, 0
+	db 5, 1
 	db PAGE_CONTROLS_Y_COORD, MAX_OPTIONS_PER_PAGE
 
 WorldOptionsText:
 	db   "WORLD OPTIONS"
-	next " VOLCANO:   ON OFF@"
+	next " VOLCANO:   ON OFF"
+	next " CLUBS:     ON OFF@"
 
 DrawWorldOptionsMenu:
 	hlcoord 0, 0
@@ -56,8 +60,10 @@ DrawWorldOptionsMenu:
 
 WorldOptionsSetCursorPositionActions:
 	dw SetCursorPositionFromWorldOptions
+	dw SetCursorPositionFromWorldOptions
 
 WorldOptionsLeftRightFuncs:
+	dw GenericWorldOptionsToggleFunc
 	dw GenericWorldOptionsToggleFunc
 	dw CursorCancelRow
 
@@ -77,7 +83,12 @@ SetCursorPositionFromWorldOptions:
 
 WorldOptionsInfoTextJumpTable:
 	dw VolcanoInfoText
+	dw CatchupInfoText
 
 VolcanoInfoText:
 	text_far _VolcanoInfoText
+	text_end
+
+CatchupInfoText:
+	text_far _CatchupInfoText
 	text_end

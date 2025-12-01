@@ -600,6 +600,9 @@ RookiePic::        INCBIN "gfx/unused_prototype_sprites/rookie.pic"
 SoldierPic::       INCBIN "gfx/unused_prototype_sprites/soldier.pic"
 ChiefPic::         INCBIN "gfx/unused_prototype_sprites/chief.pic"
 GymGuidePic::      INCBIN "gfx/unused_prototype_sprites/gym_guide.pic"
+FitnessGirlPic::   INCBIN "gfx/unused_prototype_sprites/fitness_girl.pic"
+SprinterPic::      INCBIN "gfx/unused_prototype_sprites/sprinter.pic"
+FistFighterPic::   INCBIN "gfx/unused_prototype_sprites/fist_fighter.pic"
 
 SECTION "Pics 11", ROMX
 
@@ -689,3 +692,4 @@ LearnsetMenuUI2BPP:: INCBIN "gfx/pokedex/learnset_menu_2bpp.2bpp"
 LearnsetMenuUI1BPP:: INCBIN "gfx/pokedex/learnset_menu_1bpp.1bpp"
 MetricGraphics:: INCBIN "gfx/pokedex/metric.1bpp"
 StatExpPrompt:: INCBIN "gfx/font/stat_exp.1bpp"
+DojoBetaTiles:: INCBIN "gfx/unused_prototype_sprites/dojo_beta.2bpp"
