@@ -41,7 +41,8 @@
 	const_next $28
 	const EVENT_VIRIDIAN_GYM_OPEN
 	const EVENT_GOT_TM42
-	const_skip 14
+	const EVENT_USING_MAX_REPEL
+	const_skip 13
 	const EVENT_OAK_GOT_PARCEL
 	const EVENT_GOT_OAKS_PARCEL
 	const EVENT_CHECKED_AROUND_SCHOOLHOUSE

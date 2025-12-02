@@ -1930,6 +1930,11 @@ ItemUseSuperRepel:
 	jp ItemUseRepelCommon
 
 ItemUseMaxRepel:
+	ld a, [wIsInBattle]
+	and a
+	jr nz, .skip
+	SetEvent EVENT_USING_MAX_REPEL
+.skip
 	ld b, 250
 	jp ItemUseRepelCommon
 
