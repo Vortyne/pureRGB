@@ -1185,9 +1185,8 @@ PokemonTowerB1FMarowakBlockedHyperBeamText:
 	call GetMoveName
 	call CopyToStringBuffer
 	call SaveScreenTilesToBuffer2
-	; have to clear screen because the "choose move to forget" box renders below sprites
-	call ClearScreen
-	call Delay3
+	xor a
+	ld [wLetterPrintingDelayFlags], a
 	predef LearnMove ; teach sonicboom
 	call .markCuboneSeenCaught
 	call LoadScreenTilesFromBuffer2

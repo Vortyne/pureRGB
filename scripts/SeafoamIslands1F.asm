@@ -440,10 +440,29 @@ DragonairEventTransformText:
 	ld a, WINTER_DRAGONAIR
 	ld [wCurPartySpecies], a
 	callfar ChangePartyPokemonSpecies
+	ld a, PLAYER_DIR_DOWN
+	ld [wPlayerMovingDirection], a
+	call UpdateSprites
+	rst _DelayFrame
+	ld a, SFX_GET_ITEM_1
+	rst _PlaySound
+	ld hl, wChannelCommandPointers + CHAN5 * 2
+	ld de, DragonairPowerUpSFX
+	call RemapSoundChannel
+	inc hl
+	ld de, DragonairPowerUpSFX2
+	call RemapSoundChannel
+	inc hl
+	ld de, DragonairPowerUpSFX3
+	call RemapSoundChannel
+	call .powerupAnimation
 	ld a, SFX_INTRO_WHOOSH
 	rst _PlaySound
 	call GBFadeOutToWhite
 	call LoadGBPal
+	; re-enable sprite updates after animation
+	ld a, 1
+	ld [wUpdateSpritesEnabled], a
 	ld hl, .transformed2
 	rst _PrintText
 	; make it learn ICE BEAM if it doesn't have it
@@ -461,10 +480,10 @@ DragonairEventTransformText:
 	ld [wNamedObjectIndex], a
 	call GetMoveName
 	call CopyToStringBuffer
+	call ClearTextBox
 	call SaveScreenTilesToBuffer2
-	; have to clear screen because the "choose move to forget" box renders below sprites
-	call ClearScreen
-	call Delay3
+	xor a
+	ld [wLetterPrintingDelayFlags], a
 	predef LearnMove ; teach ice beam
 	call LoadScreenTilesFromBuffer2
 	call Delay3
@@ -487,6 +506,94 @@ DragonairEventTransformText:
 .transformed3
 	text_far _DragonairEventTransformText3
 	text_end
+.powerupAnimation
+	; sparkle tile from battle animations
+	ld de, MoveAnimationTiles0 tile 28
+	ld hl, vNPCSprites tile $77
+	lb bc, BANK(MoveAnimationTiles0), 1
+	call CopyVideoData
+	; disable sprite update routine so we can manipulate some sparkle sprites without map sprite code running
+	ld a, $FF
+	ld [wUpdateSpritesEnabled], a
+	ldh a, [hGBC]
+	and a
+	jr z, .notGBC
+	; set the sparkle to be white
+.notInBlankingPeriod
+	ldh a, [rSTAT]
+	and %10 ; mask for non-V-blank/non-H-blank STAT mode
+	jr nz, .notInBlankingPeriod
+	ld a, $8A ; bit 7 set and 10th byte
+	ldh [rOBPI], a ; 2nd color of 2nd palette and auto increment bit set
+	ld a, $FF
+	ldh [rOBPD], a ; white
+	ldh [rOBPD], a ; white
+.notGBC
+	ld hl, wShadowOAMSprite39TileID
+	ld [hl], $77
+	ld hl, wShadowOAMSprite39Attributes
+	ld [hl], 1
+	ld hl, wShadowOAMSprite39YCoord
+	ld c, 2
+.powerUpLoopStart
+	push bc
+	ld de, SparkleSpriteStartingCoords
+	ld b, 4
+.powerUpLoop
+	ld a, [de]
+	inc de
+	ld [hli], a
+	ld a, [de]
+	inc de
+	ld [hl], a
+	rst _DelayFrame
+	ld c, 7
+.powerUpInnerLoop
+	; hl = x coord of sprite
+	ld a, [de] ; de = whether to dec or inc
+	call .incOrDec ; inc or dec x coord
+	inc de
+	dec hl ; y coord of sprite
+	ld a, [de] ; de = whether to dec or inc
+	call .incOrDec ; inc or dec y coord
+	dec de
+	inc hl ; x coord of sprite
+	rst _DelayFrame
+	dec c
+	jr nz, .powerUpInnerLoop
+	dec hl ; y coord of sprite
+	inc de 
+	inc de ; start of next coords
+	dec b
+	jr nz, .powerUpLoop
+	call GBPalNormal
+	pop bc
+	dec c
+	jr nz, .powerUpLoopStart
+	; move sparkle offscreen
+	ld hl, wShadowOAMSprite39YCoord
+	ld [hl], $A0
+	inc hl
+	ld [hl], 0
+	ret
+.incOrDec
+	and a
+	jr z, .dec
+	inc [hl]
+	ret
+.dec
+	dec [hl] 
+	ret
+
+
+SparkleSpriteStartingCoords:
+	; y pixel coord, x pixel coord, x iteration, y iteration
+	; 1 = increment pixel, 0 = decrement pixel
+	db $44, $40, 1, 1 ; top left
+	db $5C, $58, 0, 0 ; bottom right
+	db $44, $58, 0, 1 ; top right
+	db $5C, $40, 1, 0 ; bottom left
+
 
 
 SeaweedTiles:

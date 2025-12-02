@@ -96,3 +96,45 @@ CurrentSoundQuiet::
 CurrentSoundLoud::
 	noise_note 10, 5, 7, 5
 	sound_ret
+
+DragonairPowerUpSFX::
+	execute_music
+	duty_cycle 1
+	note_type 2, 6, 1
+	octave 6
+	note C_, 2
+	note C#, 2
+	note D_, 2
+	volume_envelope 9, 1
+	note D#, 2
+	note E_, 2
+	note F_, 2
+	volume_envelope 12, 1
+	note F#, 2
+	note G_, 2
+	note G#, 2
+	volume_envelope 14, 1
+	note A_, 2
+	note A#, 2
+	note A_, 2
+	note A#, 2
+	note B_, 2
+	note G_, 2
+	note B_, 2
+	octave 7
+	note D_, 2
+	octave 6
+	note B_, 2
+	sound_ret
+
+DragonairPowerUpSFX2::
+	transpose 1, 5
+	sound_call DragonairPowerUpSFX
+	transpose 0, 0
+	sound_ret
+
+DragonairPowerUpSFX3::
+	transpose 1, 7
+	sound_call DragonairPowerUpSFX
+	transpose 0, 0
+	sound_ret

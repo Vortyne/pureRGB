@@ -154,6 +154,7 @@ TryingToLearn:
 	hlcoord 4, 7
 	lb bc, 4, 14
 	call TextBoxBorder
+	call UpdateSprites
 	hlcoord 6, 8
 	ld de, wMovesString
 	ldh a, [hUILayoutFlags]

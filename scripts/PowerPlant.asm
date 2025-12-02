@@ -399,6 +399,7 @@ ZapdosAbsorbAnimation:
 	ld a, POWERPLANT_ZAPDOS
 	call SetSpriteFacingDown
 	call UpdateSprites
+	rst _DelayFrame
 	ld de, vNPCSprites tile $0C
 	callfar FarOpenBirdSpriteWings
 	ld a, SFX_BATTLE_25
