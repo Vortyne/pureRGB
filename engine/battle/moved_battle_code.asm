@@ -244,10 +244,10 @@ LoadPlayerBackPic::
 	ld de, vBackPic
 	call InterlaceMergeSpriteBuffers
 .nextFinish
-	ld a, $a
-	ld [MBC1SRamEnable], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
 	xor a
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld hl, vSprites
 	ld de, sSpriteBuffer1
 	ldh a, [hLoadedROMBank]
@@ -255,7 +255,7 @@ LoadPlayerBackPic::
 	ld c, 7 * 7
 	call CopyVideoData
 	xor a
-	ld [MBC1SRamEnable], a
+	ld [rRAMG], a
 	ld a, $31
 	ldh [hStartTileID], a
 	hlcoord 1, 5

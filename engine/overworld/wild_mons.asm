@@ -16,10 +16,10 @@ LoadWildData::
 	jr z, .NoGrassData ; if no grass data, skip to surfing data
 	push hl
 	ld de, wGrassMons ; otherwise, load grass data
-	ld bc, $14
+	ld bc, WILDDATA_LENGTH - 1
 	rst _CopyData
 	pop hl
-	ld bc, $14
+	ld bc, WILDDATA_LENGTH - 1
 	add hl, bc
 .NoGrassData
 	ld a, [hli]
@@ -27,7 +27,7 @@ LoadWildData::
 	and a
 	jr z, .loadPaletteData   ; if no water data, no need to load it
 	ld de, wWaterMons  ; otherwise, load surfing data
-	ld bc, $14
+	ld bc, WILDDATA_LENGTH - 1
 	rst _CopyData
 .loadPaletteData
 	jp GetWildPokemonPalettes ; PureRGBnote: ADDED: we always need to load the palette flags for wild pokemon on loading a map.

@@ -543,11 +543,11 @@ DiamondMineLoadPlayerDirections:
 	jr .loop
 
 PlayerWalkDownHoleDirectionsBelow:
-	db D_UP
+	db PAD_UP
 PlayerWalkDownHoleDirectionsRight:
-	db D_UP
-	db D_UP
-	db D_LEFT
+	db PAD_UP
+	db PAD_UP
+	db PAD_LEFT
 	db -1
 
 DiamondMineBoombox:

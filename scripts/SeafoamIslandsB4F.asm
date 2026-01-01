@@ -369,7 +369,7 @@ SeafoamIslandsB4FDragonairEventStartScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	; add more "downs" to the surf auto movement
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd + 1
 	ld [hli], a
 	ld [hli], a

@@ -342,7 +342,7 @@ PowerPlantDrawLightning:
 	cp c
 	ld a, $C1
 	jr z, .load
-	ld a, " " ; empty
+	ld a, ' ' ; empty
 .load
 	ld [hli], a
 	dec b

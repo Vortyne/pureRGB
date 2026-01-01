@@ -11,10 +11,10 @@ UncompressSpriteData::
 	push af
 	ld a, b
 	call SetCurBank
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
 	xor a
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	call _UncompressSpriteData
 	pop af
 	jp SetCurBank
@@ -458,7 +458,7 @@ DecodeNybble1TableFlipped::
 	dn $e, $6
 	dn $2, $a
 
-; combines the two loaded chunks with xor (the chunk loaded second is the destination). The source chunk is differeintial decoded beforehand.
+; combines the two loaded chunks with xor (the chunk loaded second is the destination). The source chunk is differential decoded beforehand.
 XorSpriteChunks::
 	xor a
 	ld [wSpriteCurPosX], a
@@ -556,7 +556,7 @@ ResetSpriteBufferPointers::
 NybbleReverseTable::
 	db $0, $8, $4, $c, $2, $a, $6, $e, $1, $9, $5, $d, $3, $b, $7, $f
 
-; combines the two loaded chunks with xor (the chunk loaded second is the destination). Both chunks are differeintial decoded beforehand.
+; combines the two loaded chunks with xor (the chunk loaded second is the destination). Both chunks are differential decoded beforehand.
 UnpackSpriteMode2::
 	call ResetSpriteBufferPointers
 	ld a, [wSpriteFlipped]

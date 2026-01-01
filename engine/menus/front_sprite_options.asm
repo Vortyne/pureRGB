@@ -38,7 +38,7 @@ DisplayFrontSpriteOptions:
 
 FrontSpriteSelectButtonDefault:
 	ld a, [hJoy5]
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	ret z
 	ld a, [wTopMenuItemY]
 	cp PAGE_CONTROLS_Y_COORD ; is cursor on NEXT/PREV row?
@@ -89,7 +89,7 @@ DrawChildMenuDigit:
 	add NUMBER_CHAR_OFFSET
 	hlcoord 14, PAGE_CONTROLS_Y_COORD
 	ld [hli], a
-	ld [hl], "→"
+	ld [hl], '→'
 	ret
 
 DrawFrontSpriteOptionsMenu:

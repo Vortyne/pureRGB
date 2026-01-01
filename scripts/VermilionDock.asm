@@ -20,7 +20,7 @@ VermilionDock_Script:
 	ld hl, wStatusFlags5
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld [hl], a
@@ -72,7 +72,7 @@ VermilionDockSSAnneLeavesScript:
 	ld [wSpritePlayerStateData1ImageIndex], a
 	ld c, 120
 	rst _DelayFrames
-	ld b, $9c
+	ld b, HIGH(vBGMap1)
 	call CopyScreenTileBufferToVRAM
 	hlcoord 0, 10
 	ld bc, SCREEN_WIDTH * 6
@@ -151,7 +151,7 @@ VermilionDock_AnimSmokePuffDriftRight:
 	ld a, [wSSAnneSmokeDriftAmount]
 	swap a
 	ld c, a
-	ld de, 4
+	ld de, OBJ_SIZE
 .drift_loop
 	inc [hl]
 	inc [hl]
@@ -178,10 +178,10 @@ VermilionDock_EmitSmokePuff:
 
 VermilionDockOAMBlock:
 ; tile ID, attributes
-	db $fc, $10
-	db $fd, $10
-	db $fe, $10
-	db $ff, $10
+	db $fc, OAM_PAL1
+	db $fd, OAM_PAL1
+	db $fe, OAM_PAL1
+	db $ff, OAM_PAL1
 
 VermilionDock_SyncScrollWithLY:
 	ld h, d
@@ -305,7 +305,7 @@ TruckCheck:
 	set BIT_CUR_MAP_USED_ELEVATOR, [hl] ; wait until the next time the player presses left
 	ret z
 	ldh a, [hJoyHeld]
-	bit BIT_D_LEFT, a ; is player pressing left
+	bit B_PAD_LEFT, a ; is player pressing left
 	ret z
 	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
 	ld a, $ff

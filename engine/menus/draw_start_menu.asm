@@ -10,7 +10,7 @@ DrawStartMenu::
 .drawTextBoxBorder
 	call TextBoxBorder
 	; PureRGBnote: CHANGED: now SELECT button is tracked on this menu. Used in the new box-switching anywhere functionality.
-	ld a, D_DOWN | D_UP | START | B_BUTTON | A_BUTTON | SELECT 
+	ld a, PAD_DOWN | PAD_UP | PAD_START | PAD_B | PAD_A | PAD_SELECT
 	ld [wMenuWatchedKeys], a
 	ld a, $02
 	ld [wTopMenuItemY], a ; Y position of first menu choice

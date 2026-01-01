@@ -162,7 +162,7 @@ DragonairUnderWaterEventAreaScript:
 	cp 36
 	jr z, .upOne
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld a, [wBattleResult]
@@ -170,14 +170,14 @@ DragonairUnderWaterEventAreaScript:
 	ld b, 2
 	jr z, .caught
 	inc b
-	ld [hl], D_LEFT
+	ld [hl], PAD_LEFT
 	inc hl
 .caught
 	ld a, b
 	ld [wSimulatedJoypadStatesIndex], a
 	jp StartSimulatingJoypadStates
 .upOne
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 .forceWalkDown
 	SetEvent EVENT_DRAGONAIR_EVENT_FOUGHT_CLOYSTER_ONCE

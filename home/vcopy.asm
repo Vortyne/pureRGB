@@ -19,11 +19,16 @@ GetRowColAddressBgMap::
 ; clears a VRAM background map with blank space tiles
 ; INPUT: h - high byte of background tile map address in VRAM
 ClearBgMap::
-	ld a, " "
-	jr .next
+	ld a, ' '
+	jr FillBgMapCommon
+
+; fills a VRAM background map with tile index in register l
+; INPUT: h - high byte of background tile map address in VRAM
+FillBgMap:: ; unreferenced
 	ld a, l
-.next
-	ld de, BG_MAP_WIDTH * BG_MAP_HEIGHT
+
+FillBgMapCommon:
+	ld de, TILEMAP_AREA
 	ld l, e
 .loop
 	ld [hli], a
@@ -61,7 +66,7 @@ RedrawRowOrColumn::
 	inc de
 	ld a, [hli]
 	ld [de], a
-	ld a, BG_MAP_WIDTH - 1
+	ld a, TILEMAP_WIDTH - 1
 	add e
 	ld e, a
 	jr nc, .noCarry
@@ -69,8 +74,8 @@ RedrawRowOrColumn::
 .noCarry
 ; the following 4 lines wrap us from bottom to top if necessary
 	ld a, d
-	and $3
-	or $98
+	and HIGH(TILEMAP_AREA - 1)
+	or HIGH(vBGMap0)
 	ld d, a
 	dec c
 	jr nz, .loop1
@@ -86,7 +91,7 @@ RedrawRowOrColumn::
 	push de
 	call .DrawHalf ; draw upper half
 	pop de
-	ld a, BG_MAP_WIDTH ; width of VRAM background map
+	ld a, TILEMAP_WIDTH
 	add e
 	ld e, a
 	; fall through and draw lower half
@@ -106,10 +111,10 @@ RedrawRowOrColumn::
 	xor e
 	and $1f
 	xor e
-	;and $1f
+	;and %11111
 	;ld b, a
 	;ld a, e
-	;and $e0
+	;and %11100000
 	;or b
 	ld e, a
 	dec c
@@ -146,8 +151,8 @@ AutoBgMapTransfer::
 	dec a
 	jr z, .transferMiddleThird
 .transferBottomThird
-    coord sp, 0, 12
-	ld de, (12 * 32)
+    coord sp, 0, 2 * SCREEN_HEIGHT / 3
+	ld de, (2 * SCREEN_HEIGHT / 3) * TILEMAP_WIDTH
 	add hl, de
 	xor a ; TRANSFERTOP
 	jr .doTransfer
@@ -156,14 +161,14 @@ AutoBgMapTransfer::
 	ld a, TRANSFERMIDDLE
 	jr .doTransfer
 .transferMiddleThird
-    coord sp, 0, 6
-	ld de, (6 * 32)
+    coord sp, 0, SCREEN_HEIGHT / 3
+	ld de, (SCREEN_HEIGHT / 3) * TILEMAP_WIDTH
 	add hl, de
 	ld a, TRANSFERBOTTOM
 ;;;;;;;;
 .doTransfer
 	ldh [hAutoBGTransferPortion], a ; store next portion
-	ld b, 6
+	ld b, SCREEN_HEIGHT / 3
 
 TransferBgRows::
 ; unrolled loop and using pop for speed
@@ -179,7 +184,7 @@ ENDR
 	inc l
 	ld [hl], d
 
-	ld a, BG_MAP_WIDTH - (SCREEN_WIDTH - 1)
+	ld a, TILEMAP_WIDTH - (SCREEN_WIDTH - 1)
 	add l
 	ld l, a
 	jr nc, .ok
@@ -278,7 +283,7 @@ VBlankCopyDouble::
 .loop
 ;;;;;;;; PureRGBnote: OPTIMIZED
 ;;;; More cycles
-;REPT LEN_2BPP_TILE / 4 - 1
+;REPT TILE_SIZE / 4 - 1
 ;	pop de
 ;	ld [hl], e
 ;	inc l
@@ -299,7 +304,7 @@ VBlankCopyDouble::
 ;	ld a, d
 ;	ld [hli], a
 ;;;; Less cycles
-REPT LEN_2BPP_TILE / 4
+REPT TILE_SIZE / 4
 	pop de
 	ld a, e
 	ld [hli], a
@@ -386,7 +391,7 @@ VBlankCopy::
 
 .loop
 ;;;;;;;; PureRGBnote: OPTIMIZED
-REPT LEN_2BPP_TILE / 2
+REPT TILE_SIZE / 2
 	pop de
 	ld a, e
 	ld [hli], a

@@ -52,7 +52,7 @@ TreeDeleterText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, TreeDeleterOptions
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBoxNoMenuReset
 	jr nz, .goodbye
 	ld hl, TextPointers_TreeDelete

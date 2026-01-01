@@ -90,7 +90,7 @@ GetAnimationSpeed:
 .animateSprite
 	push bc
 	ld hl, wShadowOAMSprite00TileID
-	ld bc, $10
+	ld bc, OBJ_SIZE * 4
 	ld a, [wCurrentMenuItem]
 	call AddNTimes
 	; mechanicalpennote: ADDED: don't use hardcoded icon sprite indices
@@ -246,7 +246,7 @@ WriteMonPartySpriteOAM:
 .makeCopy
 	ld hl, wShadowOAM
 	ld de, wMonPartySpritesSavedOAM
-	ld bc, $60
+	ld bc, OBJ_SIZE * 4 * PARTY_LENGTH
 	jp CopyData
 
 TradeBubbleIconGFX:  INCBIN "gfx/trade/bubble.2bpp"

@@ -500,11 +500,11 @@ SchoolB1FNerdNotebook:
 	ld [wListPointer], a
 	ld a, h
 	ld [wListPointer + 1], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	callfar DisplayMultiChoiceMenu
 	ldh a, [hJoy5]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .done
 	ld hl, SchoolB1FNerdNotebookTextPointers
 	ld a, [wCurrentMenuItem]
@@ -646,7 +646,7 @@ SchoolB1FMovedexTest:
 DoMoveDexTestQuestion:
 	inc hl
 	inc hl
-	ld a, A_BUTTON
+	ld a, PAD_A
 	ld [wMenuWatchedKeys], a
 	push hl
 	ld a, [hli]

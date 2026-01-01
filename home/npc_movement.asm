@@ -55,9 +55,9 @@ IF DEF(_DEBUG)
 	bit BIT_DEBUG_MODE, a
 	ret z
 	ldh a, [hJoyHeld]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	ret nz
 	ldh a, [hJoyPressed]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 ENDC
 	ret

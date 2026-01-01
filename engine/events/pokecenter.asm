@@ -8,7 +8,7 @@ DisplayPokemonCenterDialogue_::
 	set BIT_UNKNOWN_4_1, [hl]
 	set BIT_USED_POKECENTER, [hl]
 	ldh a, [hJoyHeld]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr z, .normalWelcome ; NEW: if you're holding b when you start talking to the nurse, it'll skip right to healing.
 .fastWelcome
 	CheckEventHL EVENT_DONATED_TO_POKECENTER_CHARITY ; must donate to pokecenter charity at rock tunnel pokecenter to be able to do this

@@ -41,10 +41,10 @@ FlagAction:
 	ld a, b
 	and a
 	jr z, .reset
-	cp 2
+	cp FLAG_TEST
 	jr z, .read
 
-.set
+; set
 	ld b, [hl]
 	ld a, d
 	or b

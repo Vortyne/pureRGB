@@ -357,7 +357,7 @@ BillsGardenBlueText:
 
 	call SaveScreenTilesToBuffer1
 	ld hl, BillsGardenBlueThanks
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer1
 	ld a, [wCurrentMenuItem]

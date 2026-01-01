@@ -9,7 +9,7 @@ ShowConversionMenu::
 	ld hl, .chooseConversionMode
 	rst _PrintText
 	ld hl, ConversionMenu
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	jr nz, .back
 	call LoadScreenTilesFromBuffer1

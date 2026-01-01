@@ -47,7 +47,7 @@ HiddenItemsInit:
 
 HiddenItemsFinish:
 	ld [wTempStore1], a
-	ld a, "@"
+	ld a, '@'
 	ld [wTempStore2], a
 	tx_pre_jump FoundHiddenItemText
 

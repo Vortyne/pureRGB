@@ -79,7 +79,7 @@ RocketHideoutB4FBeatGiovanniScript:
 	jp z, RocketHideoutB4FSetDefaultScript
 	call PlayGiovanniMusic
 	call UpdateSprites
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
 	ld a, TEXT_ROCKETHIDEOUTB4F_GIOVANNI_HOPE_WE_MEET_AGAIN

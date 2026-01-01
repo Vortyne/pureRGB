@@ -25,7 +25,7 @@ JoypadLowSensitivity::
 	ldh a, [hJoyPressed] ; newly pressed buttons
 	and a ; have any buttons been newly pressed since last check?
 	jr z, .noNewlyPressedButtons
-.newlyPressedButtons
+; newly pressed buttons
 	ldh [hJoy5], a ; shinpokerednote: FIXED: helps prevent holding the A button from messing up list scrolling (without this fix holding A makes down/up select a menu item)
 	ld a, 30 ; half a second delay
 	ldh [hFrameCounter], a
@@ -34,14 +34,14 @@ JoypadLowSensitivity::
 	ldh a, [hFrameCounter]
 	and a ; is the delay over?
 	jr z, .delayOver
-.delayNotOver
+; delay not over
 	xor a
 	ldh [hJoy5], a ; report no buttons as pressed
 	ret
 .delayOver
 ; if [hJoy6] = 0 and A or B is pressed, report no buttons as pressed
 	ldh a, [hJoyHeld]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr z, .setShortDelay
 	ldh a, [hJoy6] ; flag
 	and a
@@ -73,7 +73,7 @@ WaitForTextScrollButtonPress::
 	call JoypadLowSensitivity
 	predef CableClub_Run
 	ldh a, [hJoy5]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr z, .loop
 	pop af
 	ldh [hDownArrowBlinkCount2], a
