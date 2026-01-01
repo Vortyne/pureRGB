@@ -10,7 +10,7 @@ LearnMove:
 
 DontAbandonLearning:
 	ld hl, wPartyMon1Moves
-	ld bc, wPartyMon2Moves - wPartyMon1Moves
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wWhichPokemon]
 	call AddNTimes
 	ld d, h
@@ -38,7 +38,7 @@ DontAbandonLearning:
 .next
 	ld a, [wMoveNum]
 	ld [hl], a
-	ld bc, wPartyMon1PP - wPartyMon1Moves
+	ld bc, MON_PP - MON_MOVES
 	add hl, bc
 	push hl
 	push de
@@ -66,7 +66,7 @@ DontAbandonLearning:
 	ld de, wBattleMonMoves
 	ld bc, NUM_MOVES
 	rst _CopyData
-	ld bc, wPartyMon1PP - wPartyMon1OTID
+	ld bc, MON_PP - MON_OTID
 	add hl, bc
 	ld de, wBattleMonPP
 	ld bc, NUM_MOVES
@@ -119,7 +119,7 @@ TryingToLearn:
 	rst _PrintText
 	SetEvent FLAG_SKIP_MULTI_CHOICE_LOADGBPAL
 	ld hl, YesNoHideTM
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	jr nz, .no ; if B button was pressed assume "no"
 	ld a, [wCurrentMenuItem]
@@ -173,14 +173,14 @@ TryingToLearn:
 	inc hl
 	ld a, [wNumMovesMinusOne]
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | START | B_BUTTON ; PureRGBnote: ADDED: START button is tracked in this menu 
+	ld a, PAD_A | PAD_START | PAD_B ; PureRGBnote: ADDED: START button is tracked in this menu 
 	ld [hli], a ; wMenuWatchedKeys
 	ld [hl], 0 ; wLastMenuItem
 	ld hl, hUILayoutFlags
 	set BIT_DOUBLE_SPACED_MENU, [hl]
 .menuLoop
 	call HandleMenuInput
-	bit BIT_A_BUTTON, a ; PureRGBnote: FIXED: Press START to learn a move instead of A to prevent accidental mashing A move-forget woes
+	bit B_PAD_A, a ; PureRGBnote: FIXED: Press START to learn a move instead of A to prevent accidental mashing A move-forget woes
 	jr nz, .pressStart
 	ld hl, hUILayoutFlags
 	res BIT_DOUBLE_SPACED_MENU, [hl]
@@ -188,7 +188,7 @@ TryingToLearn:
 	call LoadScreenTilesFromBuffer1
 	pop af
 	pop hl
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .cancel
 	push hl
 	ld a, [wCurrentMenuItem]

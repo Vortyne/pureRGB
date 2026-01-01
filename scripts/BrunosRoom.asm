@@ -39,7 +39,7 @@ BrunosRoom_ScriptPointers:
 BrunoScriptWalkIntoRoom:
 ; Walk six steps upward.
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a
@@ -72,7 +72,7 @@ BrunosRoomDefaultScript:
 	ld a, TEXT_BRUNOSROOM_BRUNO_DONT_RUN_AWAY
 	ldh [hTextID], a
 	call DisplayTextID  ; "Don't run away!"
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [wSimulatedJoypadStatesEnd], a
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a

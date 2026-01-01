@@ -48,16 +48,16 @@ HandleMenuInput_::
 	ldh a, [hJoy5]
 	ld b, a
 	;shinpokerednote: FIXED: fix from pokeyellow to prioritize the A button over the directional buttons
-	bit BIT_A_BUTTON, a ; pressed A key?
+	bit B_PAD_A, a ; pressed A key?
 	jr nz, .checkOtherKeys
 
-	bit BIT_D_UP, a ; pressed Up key?
+	bit B_PAD_UP, a ; pressed Up key?
 	jr z, .checkIfDownPressed
-.upPressed
+; Up pressed
 	ld a, [wCurrentMenuItem] ; selected menu item
 	and a ; already at the top of the menu?
 	jr z, .alreadyAtTop
-.notAtTop
+; not at top
 	dec a
 	ld [wCurrentMenuItem], a ; move selected menu item up one space
 	call CheckForHoverText ; PureRGBnote: ADDED: when moving up and down (but not scrolling) specific list menus, we need to display TM text
@@ -70,16 +70,16 @@ HandleMenuInput_::
 	ld [wCurrentMenuItem], a ; wrap to the bottom of the menu
 	jr .checkOtherKeys
 .checkIfDownPressed
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr z, .checkOtherKeys
-.downPressed
+; Down pressed
 	ld a, [wCurrentMenuItem]
 	inc a
 	ld c, a
 	ld a, [wMaxMenuItem]
 	cp c
 	jr nc, .notAtBottom
-.alreadyAtBottom
+; already at bottom
 	ld a, [wMenuWrappingEnabled]
 	and a ; is wrapping around enabled?
 	jr z, .noWrappingAround
@@ -94,7 +94,7 @@ HandleMenuInput_::
 	jp z, .loop1
 .checkIfAButtonOrBButtonPressed
 	ld a, b ; shinpokerednote: CHANGED: load from b, which contains [hJoy5], to save 1 byte
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr z, .skipPlayingSound
 .AButtonOrBButtonPressed
 	ld a, [wMiscFlags] ;shinpokerednote: CHANGED: remove push/pop with hl to save 2 bytes
@@ -152,9 +152,9 @@ PlaceMenuCursor::
 	jr nz, .oldMenuItemLoop
 .checkForArrow1
 	ld a, [hl]
-	cp "▶" ; was an arrow next to the previously selected menu item?
+	cp '▶' ; was an arrow next to the previously selected menu item?
 	jr nz, .skipClearingArrow
-.clearArrow
+; clear arrow
 	ld a, [wTileBehindCursor]
 	ld [hl], a
 .skipClearingArrow
@@ -178,11 +178,11 @@ PlaceMenuCursor::
 	jr nz, .currentMenuItemLoop
 .checkForArrow2
 	ld a, [hl]
-	cp "▶" ; has the right arrow already been placed?
+	cp '▶' ; has the right arrow already been placed?
 	jr z, .skipSavingTile ; if so, don't lose the saved tile
 	ld [wTileBehindCursor], a ; save tile before overwriting with right arrow
 .skipSavingTile
-	ld [hl], "▶"
+	ld [hl], '▶'
 	ld a, l
 	ld [wMenuCursorLocation], a
 	ld a, h
@@ -207,14 +207,14 @@ CheckForHoverText::
 PlaceUnfilledArrowMenuCursor::
 	ld b, a
 	hl_deref wMenuCursorLocation
-	ld [hl], "▷"
+	ld [hl], '▷'
 	ld a, b
 	ret
 
 ; Replaces the menu cursor with a blank space.
 EraseMenuCursor::
 	hl_deref wMenuCursorLocation
-	ld [hl], " "
+	ld [hl], ' '
 	ret
 
 ; This toggles a blinking down arrow at hl on and off after a delay has passed.
@@ -228,7 +228,7 @@ EraseMenuCursor::
 HandleDownArrowBlinkTiming::
 	ld a, [hl]
 	ld b, a
-	ld a, "▼"
+	ld a, '▼'
 	cp b
 	jr nz, .downArrowOff
 .downArrowOn
@@ -240,7 +240,7 @@ HandleDownArrowBlinkTiming::
 	dec a
 	ldh [hDownArrowBlinkCount2], a
 	ret nz
-	ld [hl], " "
+	ld [hl], ' '
 	ld a, $ff
 	ldh [hDownArrowBlinkCount1], a
 	ld a, $06
@@ -261,7 +261,7 @@ HandleDownArrowBlinkTiming::
 	ret nz
 	ld a, $06
 	ldh [hDownArrowBlinkCount2], a
-	ld [hl], "▼"
+	ld [hl], '▼'
 	ret
 
 ; The following code either enables or disables the automatic drawing of

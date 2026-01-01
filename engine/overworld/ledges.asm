@@ -49,7 +49,7 @@ HandleLedges::
 	ldh a, [hJoyHeld]
 	and e
 	ret z
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wMovementFlags
 	set BIT_LEDGE_OR_FISHING, [hl]
@@ -84,19 +84,19 @@ HandleLedges::
 	lda_coord 8, 10
 	cp $41 ; down ledge
 	ret nz
-	ld e, D_DOWN
+	ld e, PAD_DOWN
 	jr .noCutTile
 .left
 	lda_coord 7, 9
 	cp $30 ; left ledge
 	ret nz
-	ld e, D_LEFT
+	ld e, PAD_LEFT
 	jr .noCutTile
 .right
 	lda_coord 10, 9
 	cp $40 ; right ledge
 	ret nz
-	ld e, D_RIGHT
+	ld e, PAD_RIGHT
 	jr .noCutTile
 ;;;;;;;;
 
@@ -107,7 +107,7 @@ INCLUDE "data/tilesets/ledge_tiles.asm"
 LoadHoppingShadowOAM:
 	ld hl, vChars1 tile $7f
 	ld de, LedgeHoppingShadow
-	lb bc, BANK(LedgeHoppingShadow), (LedgeHoppingShadowEnd - LedgeHoppingShadow) / $8
+	lb bc, BANK(LedgeHoppingShadow), (LedgeHoppingShadowEnd - LedgeHoppingShadow) / TILE_1BPP_SIZE
 	call CopyVideoDataDouble
 	ld a, $9
 	lb bc, $54, $48 ; b, c = y, x coordinates of shadow
@@ -120,7 +120,7 @@ LedgeHoppingShadowEnd:
 
 LedgeHoppingShadowOAMBlock:
 ; tile ID, attributes
-	db $ff, OAM_OBP1
-	db $ff, OAM_HFLIP
-	db $ff, OAM_VFLIP
-	db $ff, OAM_HFLIP | OAM_VFLIP
+	db $ff, OAM_PAL1
+	db $ff, OAM_XFLIP
+	db $ff, OAM_YFLIP
+	db $ff, OAM_XFLIP | OAM_YFLIP

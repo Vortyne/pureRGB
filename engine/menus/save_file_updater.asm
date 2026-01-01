@@ -43,11 +43,11 @@ SaveFileUpdateCheck::
 	ld [wCurrentMenuItem], a
 .reload
 	ld hl, SaveFileUpdaterMenu
-	ld b, A_BUTTON | START | B_BUTTON
+	ld b, PAD_A | PAD_START | PAD_B
 	call DisplayMultiChoiceTextBoxNoMenuReset
 	jr nz, .exitSaveUpdater
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr z, .startPressed
 	ld hl, PressStartToContinueText
 	rst _PrintText

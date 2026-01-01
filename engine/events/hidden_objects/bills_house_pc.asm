@@ -81,7 +81,7 @@ BillsHousePokemonList::
 	ld [wTopMenuItemX], a
 .billsPokemonLoop
 ;;;;;;;;;; PureRGBnote: MOVED: moved here because opening a pokedex entry changes wMenuWatchedKeys now and this needs to be repeated every menu loop.
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 ;;;;;;;;;;
 	ld hl, wStatusFlags5
@@ -96,7 +96,7 @@ BillsHousePokemonList::
 	rst _PrintText
 	call SaveScreenTilesToBuffer2
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .cancel
 	ld a, [wCurrentMenuItem]
 	add EEVEE

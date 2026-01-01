@@ -42,7 +42,7 @@ PlayerPCMenu:
 	inc hl
 	ld a, 4 ; PureRGBnote: CHANGED: increased menu length for WORLD OPTIONS to be added
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hl], a
@@ -55,7 +55,7 @@ PlayerPCMenu:
 	ld hl, WhatDoYouWantText
 	rst _PrintText
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, ExitPlayerPC
 	call PlaceUnfilledArrowMenuCursor
 	ld a, [wCurrentMenuItem]
@@ -279,7 +279,7 @@ PlayerPCToss:
 
 ; PureRGBnote: ADDED: happens when pressing start in a list menu - used for facilitating depositing items from the start item menu
 CheckButtonStartPressed::
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jr z, .continue
 	push af
 	ld a, [wListMenuID]

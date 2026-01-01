@@ -21,7 +21,7 @@ GainExperience:
 	and a ; is mon's gain exp flag set?
 	pop hl
 	jp z, .nextMon ; if mon's gain exp flag not set, go to next mon
-	ld de, (wPartyMon1HPExp + 1) - (wPartyMon1HP + 1)
+	ld de, (MON_HP_EXP + 1) - (MON_HP + 1)
 	add hl, de
 	ld d, h
 	ld e, l
@@ -66,10 +66,10 @@ GainExperience:
 	ldh [hDivisor], a
 	ld b, 4
 	call Divide
-	ld hl, wPartyMon1OTID - (wPartyMon1DVs - 1)
+	ld hl, MON_OTID - (MON_DVS - 1)
 	add hl, de
 	ld a, [hli]
-	ld b, a ; party mon OTID
+	ld b, a ; wPartyMon*OTID
 ;;;;;;;;;; PureRGBnote: ADDED: new item that causes all pokemon to gain EXP as if they were received from a trade.
 	CheckEvent EVENT_BOOSTER_CHIP_ACTIVE ; always get traded pokemon boost if BOOSTER CHIP was used.
 	jr nz, .tradedMon
@@ -168,7 +168,7 @@ GainExperience:
 ;;;;;;;;;;
 	call LoadMonData
 	pop hl
-	ld bc, wPartyMon1Level - wPartyMon1Exp
+	ld bc, MON_LEVEL - MON_EXP
 	add hl, bc
 	push hl
 	farcall CalcLevelFromExperience
@@ -191,13 +191,13 @@ GainExperience:
 	ld a, d
 	ld [wCurEnemyLevel], a
 	ld [hl], a
-	ld bc, wPartyMon1Species - wPartyMon1Level
+	ld bc, MON_SPECIES - MON_LEVEL
 	add hl, bc
 	ld a, [hl]
 	ld [wCurSpecies], a
 	ld [wPokedexNum], a
 	call GetMonHeader
-	ld bc, (wPartyMon1MaxHP + 1) - wPartyMon1Species
+	ld bc, (MON_MAXHP + 1) - MON_SPECIES
 	add hl, bc
 	push hl
 	ld a, [hld]
@@ -206,7 +206,7 @@ GainExperience:
 	push bc ; push max HP (from before levelling up)
 	ld d, h
 	ld e, l
-	ld bc, (wPartyMon1HPExp - 1) - wPartyMon1MaxHP
+	ld bc, (MON_HP_EXP - 1) - MON_MAXHP
 	add hl, bc
 	ld b, $1 ; consider stat exp when calculating stats
 	call CalcStats
@@ -218,15 +218,15 @@ GainExperience:
 	ld a, [hl]
 	sbc b
 	ld b, a ; bc = difference between old max HP and new max HP after levelling
-	ld de, (wPartyMon1HP + 1) - wPartyMon1MaxHP
+	ld de, (MON_HP + 1) - MON_MAXHP
 	add hl, de
 ; add to the current HP the amount of max HP gained when levelling
-	ld a, [hl] ; wPartyMon1HP + 1
+	ld a, [hl] ; wPartyMon*HP + 1
 	add c
 	ld [hld], a
-	ld a, [hl] ; wPartyMon1HP + 1
+	ld a, [hl] ; wPartyMon*HP + 1
 	adc b
-	ld [hl], a ; wPartyMon1HP
+	ld [hl], a ; wPartyMon*HP
 	ld a, [wPlayerMonNumber]
 	ld b, a
 	ld a, [wWhichPokemon]
@@ -241,7 +241,7 @@ GainExperience:
 	ld a, [hl]
 	ld [de], a
 ; copy other stats from party mon to battle mon
-	ld bc, wPartyMon1Level - (wPartyMon1HP + 1)
+	ld bc, MON_LEVEL - (MON_HP + 1)
 	add hl, bc
 	push hl
 	ld de, wBattleMonLevel
@@ -276,7 +276,7 @@ GainExperience:
 .noExpBar3
 ;;;;;;;;;;
 	call LoadMonData
-	ld d, $1
+	ld d, LEVEL_UP_STATS_BOX
 	callfar PrintStatsBox
 	call WaitForTextScrollButtonPress
 	call LoadScreenTilesFromBuffer1
@@ -339,7 +339,7 @@ GainExperience:
 	cp b
 	jr z, .done
 	ld [wWhichPokemon], a
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld hl, wPartyMon1
 	call AddNTimes
 	jp .partyMonLoop

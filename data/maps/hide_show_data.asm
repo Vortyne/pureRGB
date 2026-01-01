@@ -256,7 +256,7 @@ MapHSPointers:
 	dw -1 ; end
 
 NoHS:
-	db $FF, $FF, $FF
+	db -1, -1, -1 ; end
 
 MissableObjects:
 ; entries correspond to HS_* constants (see constants/hide_show_constants)
@@ -590,8 +590,8 @@ CeruleanRocketHouse1FHS:
 	db CERULEAN_ROCKET_HOUSE_1F, CERULEANROCKETHOUSE1F_ROCKET, SHOW
 CeladonHotelHS:
 	db CELADON_HOTEL, CELADONHOTEL_LAPRAS_GUY, SHOW
-	db $FF, $01, SHOW ; end
-	assert_table_length NUM_HS_OBJECTS + 1
+	assert_table_length NUM_HS_OBJECTS
+	db -1, 1, SHOW ; end
 
 ExtraMissableObjects:
 ; entries correspond to HS_* constants (see constants/hide_show_constants)

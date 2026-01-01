@@ -90,7 +90,7 @@ ENDM
 	dict  TX_SCRIPT_PRIZE_VENDOR,            TextScript_GameCornerPrizeMenu
 	dict2 TX_SCRIPT_CABLE_CLUB_RECEPTIONIST, callfar CableClubNPC
 
-	call PrintText_NoCreatingTextBox ; display the text
+	call PrintText_NoCreatingTextBox
 	ld a, [wDoNotWaitForButtonPressAfterDisplayingText]
 	and a
 	jr nz, HoldTextDisplayOpen
@@ -105,7 +105,7 @@ AfterDisplayingTextID::
 HoldTextDisplayOpen::
 	call Joypad
 	ldh a, [hJoyHeld]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, HoldTextDisplayOpen
 
 ; FIXME: this unintentionally gets run after HoldTextDisplayOpen...but that may be a good thing since resetting sprite facings seems pointless.
@@ -132,8 +132,8 @@ CloseTextDisplayPart1:
 CloseTextDisplaySpriteUpdateLoop:
 ; loop to make sprites face the directions they originally faced before the dialogue
 	ld hl, wSprite01StateData2OrigFacingDirection
-	ld c, $0f
-	ld de, $10
+	ld c, NUM_SPRITESTATEDATA_STRUCTS - 1
+	ld de, SPRITESTATEDATA1_LENGTH
 .restoreSpriteFacingDirectionLoop
 	ld a, [hl] ; x#SPRITESTATEDATA2_ORIGFACINGDIRECTION
 	dec h

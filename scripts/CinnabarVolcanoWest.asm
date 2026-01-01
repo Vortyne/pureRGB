@@ -44,7 +44,7 @@ CinnabarVolcanoWestMagmar1Text:
   	cp MAGMAR
   	ld hl, .wrongMon
   	jr nz, .printDone
-  	ld d, D_RIGHT
+  	ld d, PAD_RIGHT
 	callfar ForceStepFromDoor
 	SetEvent EVENT_MAGMAR_TRANSFORMATION
   	ld hl, .lavaBath

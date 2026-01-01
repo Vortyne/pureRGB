@@ -26,7 +26,7 @@ DiglettsCaveCheckStandingOnWarp:
 	call .standingOnBottomWarp
 	jr nz, .loadDigletts
 	SetEvent EVENT_FOUND_SECRET_DIG_TUNNEL
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 .checkStandingOnWarp
 	call .standingOnBottomWarp

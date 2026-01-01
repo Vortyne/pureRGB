@@ -77,7 +77,7 @@ ReplaceDoor:
 .upDoorCheck
 	cp 16
 	ret nz
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 .clearPassword
 	xor a
@@ -136,7 +136,7 @@ CheckOpponentWalkIn:
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld a, 3
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP
+	ld a, PAD_UP
 	ld b, 3
 	ld hl, wSimulatedJoypadStatesEnd
 .loop
@@ -146,10 +146,10 @@ CheckOpponentWalkIn:
 	ld a, [wXCoord]
 	cp 4
 	jr z, .done
-	ld c, D_RIGHT
+	ld c, PAD_RIGHT
 	ld d, a
 	jr c, .right
-	ld c, D_LEFT
+	ld c, PAD_LEFT
 	sub 4
 	jr .loop2
 .right
@@ -447,10 +447,10 @@ CheckPasswordCorrect:
 	ret
 
 PlayerMoveToDoor:: ; these happen in reverse order
-	db D_LEFT
-	db D_LEFT
-	db D_LEFT
-	db D_DOWN
+	db PAD_LEFT
+	db PAD_LEFT
+	db PAD_LEFT
+	db PAD_DOWN
 
 StoreNoteToPassword:
 	pop af
@@ -831,7 +831,7 @@ SecretLabMewtwoMachineText:
 	jr nz, .startTransform
 	ld a, 6
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_LEFT
+	ld a, PAD_LEFT
 	ld de, wSimulatedJoypadStatesEnd + 5
 	ld [de], a
 .startTransform
@@ -842,11 +842,11 @@ SecretLabMewtwoMachineText:
 	rst TextScriptEnd
 
 PlayerMewtwoTransformMoveScript:: ; these happen in reverse order
-	db D_LEFT
-	db D_DOWN
-	db D_DOWN
-	db D_UP
-	db D_LEFT
+	db PAD_LEFT
+	db PAD_DOWN
+	db PAD_DOWN
+	db PAD_UP
+	db PAD_LEFT
 
 SecretLabMewtwoMachineText1:
 	text_far _SecretLabMewtwoMachineText

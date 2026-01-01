@@ -181,7 +181,7 @@ CheckStartStopSpinning::
 	ret nz ; if we're already spinning don't replay the sound or reload joyignore
 	ld a, SFX_ARROW_TILES
 	rst _PlaySound
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_START | PAD_RIGHT | PAD_LEFT | PAD_UP | PAD_DOWN
 	ld [wJoyIgnore], a
 	ret
 .next
@@ -205,16 +205,16 @@ CheckStartStopSpinning::
 ; 2nd byte: bottom right tile player must be standing on
 ; 3rd byte: direction it should move player
 SpinnerTilesFacilityTileset:
-	db $30, $30, D_RIGHT
-	db $20, $20, D_LEFT
-	db $21, $31, D_UP
-	db $20, $30, D_DOWN
+	db $30, $30, PAD_RIGHT
+	db $20, $20, PAD_LEFT
+	db $21, $31, PAD_UP
+	db $20, $30, PAD_DOWN
 	db -1
 
 SpinnerTilesGymTileset:
-	db $4D, $4D, D_RIGHT
-	db $4C, $4C, D_LEFT
-	db $3C, $3D, D_UP
-	db $4C, $4D, D_DOWN
+	db $4D, $4D, PAD_RIGHT
+	db $4C, $4C, PAD_LEFT
+	db $3C, $3D, PAD_UP
+	db $4C, $4D, PAD_DOWN
 	db -1
 ;;;;;

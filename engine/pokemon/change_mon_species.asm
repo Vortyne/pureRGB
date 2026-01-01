@@ -88,7 +88,7 @@ CheckMonNickNameDefault::
 	inc de
 	cp b
 	jr nz, .noMatch
-	cp "@"
+	cp '@'
 	jr nz, .loop
 	; they're the same, so rename
 .rename
@@ -100,7 +100,7 @@ CheckMonNickNameDefault::
 .loop2
 	ld a, [de]
 	ld [hli], a
-	cp "@"
+	cp '@'
 	ret z
 	inc de
 	jr .loop2
