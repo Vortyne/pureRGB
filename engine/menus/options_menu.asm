@@ -23,7 +23,7 @@ OptionsDoNothing:
 OptionsPageAorSelectButtonDefault:
 	; by default the A button does nothing but the select button displays info on each option
 	ldh a, [hJoy5]
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	ret z ; if select wasn't pressed do nothing
 	ld a, [wTopMenuItemY]
 	cp PAGE_CONTROLS_Y_COORD ; is cursor on NEXT/PREV row?
@@ -82,20 +82,20 @@ DrawOptionsPageInfo:
 	add NUMBER_CHAR_OFFSET
 	ld [hl], a
 	hlcoord 17, PAGE_CONTROLS_Y_COORD
-	ld [hl], "/"
+	ld [hl], '/'
 	hlcoord 18, PAGE_CONTROLS_Y_COORD
 	pop bc
 	inc bc
 	ld a, [bc] ; number of pages in total
 	add NUMBER_CHAR_OFFSET
 	ld [hli], a
-	ld [hl], " "
+	ld [hl], ' '
 	hlcoord 14, PAGE_CONTROLS_Y_COORD
 	ld a, [hl]
 	cp $7a ; check if info text has just displayed and trashed the coords beside page number with a menu border
 	jr nz, .skip
 	;if so, clear the menu border tiles out
-	ld a, " "
+	ld a, ' '
 	ld [hli], a
 	ld [hl], a
 .skip
@@ -104,7 +104,7 @@ DrawOptionsPageInfo:
 	call PlaceString
 ; add cursor in front of NEXT
 	hlcoord 1, PAGE_CONTROLS_Y_COORD
-	ld [hl], "▷"
+	ld [hl], '▷'
 ; add SELECT:INFO prompt to top of menu
 	push bc
 	hlcoord 14, 0
@@ -229,7 +229,7 @@ DisplayOptionMenuCommon:
 	jr nz, .doneLoad
 	push hl
 	hlcoord NEXT_BUTTON_X_COORD, PAGE_CONTROLS_Y_COORD
-	ld [hl], " "
+	ld [hl], ' '
 	pop hl
 .doneLoad
 	ld a, 1
@@ -249,15 +249,15 @@ OptionsMenuLoop:
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
 	ld b, a
-	and A_BUTTON | B_BUTTON | START | SELECT | D_RIGHT | D_LEFT | D_UP | D_DOWN 
+	and PAD_A | PAD_B | PAD_START | PAD_SELECT | PAD_RIGHT | PAD_LEFT | PAD_UP | PAD_DOWN 
 	jr z, .getJoypadStateLoop
-	bit BIT_B_BUTTON, b
+	bit B_PAD_B, b
 	jr nz, .exitMenu
-	bit BIT_START, b
+	bit B_PAD_START, b
 	jr nz, .exitMenu
-	bit BIT_SELECT, b
+	bit B_PAD_SELECT, b
 	jr nz, .selectPressed
-	bit BIT_A_BUTTON, b
+	bit B_PAD_A, b
 	jr z, .checkDirectionKeys
 .AbuttonPressed
 	ld b, PAGE_CONTROLS_Y_COORD
@@ -301,9 +301,9 @@ OptionsMenuLoop:
 	ret
 .checkDirectionKeys
 	ld hl, wCurrentOptionIndex
-	bit BIT_D_DOWN, b
+	bit B_PAD_DOWN, b
 	jr nz, .downPressed
-	bit BIT_D_UP, b
+	bit B_PAD_UP, b
 	jr nz, .upPressed
 	ld e, [hl]
 	pop hl
@@ -348,7 +348,7 @@ OptionsMenuLoop:
 	jp OptionsMenuLoop
 
 CursorInTextSpeed:
-	bit BIT_D_LEFT, b
+	bit B_PAD_LEFT, b
 	jp z, .pressedRightInTextSpeed
 ;;;;;;;;;; PureRGBnote: CHANGED: Instant text speed replaced medium speed, so we need to adjust the X positions of the cursors a bit.
 	ld a, [wOptions1CursorX] ; text speed cursor X coordinate
@@ -528,7 +528,7 @@ PlaceUnfilledRightArrow:
 	ld e, a
 	ld d, 0
 	add hl, de
-	ld [hl], "▷"
+	ld [hl], '▷'
 	ret
 
 SetTextSpeedCursorPosition:
@@ -578,11 +578,12 @@ TextSpeedOptionData:
 ; this menu was changed a bit to have a NEXT and BACK button to navigate pages more easily.
 
 CopyOptionsFromSRAM::
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
-	ld a, 1
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamBank], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
+	ld a, BMODE_ADVANCED
+	ld [rBMODE], a
+	ASSERT BANK("Save Data") == BMODE_ADVANCED
+	ld [rRAMB], a
 	; by checking if a name has been saved we can know if a save file was created
 	callfar CheckSaveFileExists
 	jr nc, .doneLoad
@@ -594,8 +595,9 @@ CopyOptionsFromSRAM::
 	ld [wSpriteOptions3], a
 .doneLoad
 	xor a
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
+	ld [rBMODE], a
+	ASSERT RAMG_SRAM_DISABLE == BMODE_SIMPLE
+	ld [rRAMG], a
 	ret
 
 OptionsMenu1InfoTextJumpTable:

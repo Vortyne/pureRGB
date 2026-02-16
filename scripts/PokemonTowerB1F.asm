@@ -166,13 +166,13 @@ PokemonTowerB1FOnMapLoad:
 	ld a, DOWN
 	ld [wMapSpriteData + ((POKEMONTOWERB1F_GHOST_MAROWAK - 1) * 2)], a
 	SetEvent EVENT_CATACOMBS_SPRITE_WALKING
-	ld a, D_LEFT
+	ld a, PAD_LEFT
 	ld hl, wSimulatedJoypadStatesEnd
-	ld [hl], D_UP
+	ld [hl], PAD_UP
 	inc hl
 	ld [hli], a
 	ld [hli], a
-	ld [hl], D_DOWN
+	ld [hl], PAD_DOWN
 	inc hl
 	ld [hl], -1
 	ld a, 4
@@ -995,7 +995,7 @@ PokemonTowerB1FWaitForNPCWalk:
 	ld a, TEXT_POKEMONTOWERB1F_CUBONE
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, D_RIGHT
+	ld a, PAD_RIGHT
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hl], -1
@@ -1013,7 +1013,7 @@ PokemonTowerB1FWaitForNPCWalk:
 	cp 5
 	ret nz
 	SetEvent EVENT_CATACOMBS_SPRITE_WALKING
-	ld a, D_UP
+	ld a, PAD_UP
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hli], a

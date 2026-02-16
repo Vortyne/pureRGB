@@ -434,7 +434,7 @@ GetChampArenaMusicNameIntoWRAM:
 .loop
 	ld a, [hli]
 	ld [de], a
-	cp "@"
+	cp '@'
 	jr z, .done
 	inc de
 	jr .loop
@@ -449,7 +449,7 @@ GetChampArenaMusicName:
 	ld b, a ; b = which name in the list it is
 .loop
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr nz, .loop
 	dec b
 	ret z

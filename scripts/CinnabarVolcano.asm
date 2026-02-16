@@ -65,7 +65,7 @@ CinnabarVolcanoOnMapLoad:
 .next
 	jp CheckIfVolcanoBattleOccurred
 .forceWalkUp
-	ld d, D_UP
+	ld d, PAD_UP
 	callfar ForceStepFromDoor
 	jr .doneForcedWalk
 .forceWalkDown
@@ -362,20 +362,20 @@ CheckForceSurfDirection::
 	ret nz
 	lda_coord 8, 9 ; tile below player
 	cp $24 ; down flowing lava
-	ld b, D_DOWN
+	ld b, PAD_DOWN
 	jr z, .forceInput
 	ld a, [wYCoord]
 	cp 53
 	ret c ; prevents other direction lava currents from functioning when not on bottom floor
 	lda_coord 8, 9 ; tile below player
 	cp $23 ; right flowing lava
-	ld b, D_RIGHT
+	ld b, PAD_RIGHT
 	jr z, .forceInput
 	cp $25 ; left flowing lava
-	ld b, D_LEFT
+	ld b, PAD_LEFT
 	jr z, .forceInput
 	cp $26 ; up flowing lava
-	ld b, D_UP
+	ld b, PAD_UP
 	ret nz
 .forceInput
 	ld a, b
@@ -450,7 +450,7 @@ ReplaceLadderAndWalkUp:
 	SetEvent EVENT_HOLE_DRILL_FINISHED
 	ld a, 1
 	ld [wOverworldAnimationCooldown], a
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 
 DrilledFloor2Ladder:
@@ -1268,7 +1268,7 @@ CinnabarVolcanoBombRockDoneText:
 	; wall breaks open, the whole side
 	ld hl, .uhoh
 	rst _PrintText
-	ld a, D_UP
+	ld a, PAD_UP
 	ld b, 4
 	ld hl, wSimulatedJoypadStatesIndex
 	ld [hl], b
@@ -1941,7 +1941,7 @@ CheckForceTalkToProspector::
 	ld a, [wYCoord]
 	cp 16
 	ret nz
-	ld a, D_UP
+	ld a, PAD_UP
 	ld b, 4
 	ld hl, wSimulatedJoypadStatesIndex
 	ld [hl], b
@@ -1953,7 +1953,7 @@ CheckForceTalkToProspector::
 	ld a, [wXCoord]
 	cp 22
 	jr nz, .movePlayer
-	ld a, D_RIGHT
+	ld a, PAD_RIGHT
 	ld [hl], a
 	ld hl, wSimulatedJoypadStatesIndex
 	inc [hl]
@@ -1990,7 +1990,7 @@ CheckForceTalkToProspector::
 	ret nz
 	; force player to avoid west area until finishing volcano
 	ld hl, wSimulatedJoypadStatesEnd
-	ld [hl], D_DOWN
+	ld [hl], PAD_DOWN
 	inc hl
 	ld [hl], -1
 	ld a, 1
@@ -2368,8 +2368,8 @@ PlayerQuickSpinFacings:
 MoveSpriteButAllowAOrBPress:
 	call MoveSprite
 	ld hl, wJoyIgnore
-	res BIT_B_BUTTON, [hl]
-	res BIT_A_BUTTON, [hl]
+	res B_PAD_B, [hl]
+	res B_PAD_A, [hl]
 	ret
 
 ; bc = picture id backup in wMapSpriteOriginalPictureIDs

@@ -1,6 +1,6 @@
 EnterMap::
 ; Load a new map.
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call LoadMapData
 	farcall ClearVariablesOnEnterMap
@@ -84,16 +84,16 @@ OverworldLoopLessDelay::
 ;.notSimulating
 ;	ldh a, [hJoyPressed]
 .checkIfStartIsPressed
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jr z, .startButtonNotPressed
 ; if START is pressed
 	xor a ; TEXT_START_MENU
 	ldh [hTextID], a
 	jp .displayDialogue
 .startButtonNotPressed
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, .aorSelectPressed ; PureRGBnote: ADDED: functionality that happens when pressing SELECT in overworld (bicycle)
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jp z, .checkIfDownButtonIsPressed
 .aorSelectPressed	
 ; if A is pressed
@@ -105,7 +105,7 @@ OverworldLoopLessDelay::
 ;;;;;;;;;; PureRGBnote: ADDED: functionality that happens when pressing SELECT in overworld (bicycle)
 .trySelectingBikeRod
 	ldh a, [hJoyPressed]
-	bit BIT_SELECT, a	;is Select being pressed?
+	bit B_PAD_SELECT, a	;is Select being pressed?
 	jr z, .notSelect
 	callfar CheckForRodBike
 	jp OverworldLoop
@@ -137,12 +137,12 @@ OverworldLoopLessDelay::
 	ld [wEnteringCableClub], a
 ; XXX can this code be reached?
 ;	jr z, .changeMap
-;	predef LoadSAV
+;	predef TryLoadSaveFile
 ;	ld a, [wCurMap]
 ;	ld [wDestinationMap], a
 ;	call PrepareForSpecialWarp
 ;	ld a, [wCurMap]
-;	call SwitchToMapRomBank ; switch to the ROM bank of the current map
+;	call SwitchToMapRomBank
 ;	ld hl, wCurMapTileset
 ;	set BIT_NO_PREVIOUS_MAP, [hl]
 .changeMap
@@ -158,8 +158,8 @@ OverworldLoopLessDelay::
 	call UpdateSprites
 ;;;;;;;;;;; PureRGBnote: ADDED: code for changing direction without moving by pressing A+B and a direction when standing still.
 	ldh a, [hJoyHeld] 
-	and B_BUTTON | A_BUTTON
-	cp B_BUTTON | A_BUTTON
+	and PAD_B | PAD_A
+	cp PAD_B | PAD_A
 	jr nz, .resetDirectionChangeState ; hold both B and A button to go into "change direction without moving" mode.
 	ld a, [wDirectionChangeModeCounter]
 	and %01111111 ; prevents wrapping to 0 by incrementing past 255
@@ -182,7 +182,7 @@ OverworldLoopLessDelay::
 
 .checkIfDownButtonIsPressed
 	ldh a, [hJoyHeld] ; current joypad state
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr z, .checkIfUpButtonIsPressed
 	ld a, 1
 	ld [wSpritePlayerStateData1YStepVector], a
@@ -190,7 +190,7 @@ OverworldLoopLessDelay::
 	jr .handleDirectionButtonPress
 
 .checkIfUpButtonIsPressed
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr z, .checkIfLeftButtonIsPressed
 	ld a, -1
 	ld [wSpritePlayerStateData1YStepVector], a
@@ -198,7 +198,7 @@ OverworldLoopLessDelay::
 	jr .handleDirectionButtonPress
 
 .checkIfLeftButtonIsPressed
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr z, .checkIfRightButtonIsPressed
 	ld a, -1
 	ld [wSpritePlayerStateData1XStepVector], a
@@ -206,7 +206,7 @@ OverworldLoopLessDelay::
 	jr .handleDirectionButtonPress
 
 .checkIfRightButtonIsPressed
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr z, .noDirectionButtonsPressed
 	ld a, 1
 	ld [wSpritePlayerStateData1XStepVector], a
@@ -337,7 +337,7 @@ OverworldLoopLessDelay::
 .normalPlayerSpriteAdvancement
 	; PureRGBnote: ADDED: Holding B makes you run at 2x walking speed
 	ldh a, [hJoyHeld]
-	and B_BUTTON
+	and PAD_B
 	call nz, DoBikeSpeedup
 .notRunning
 	call AdvancePlayerSprite
@@ -441,7 +441,7 @@ GetBikeSpeed::
 	cp ROUTE_17 ; Cycling Road
 	jr z, .cyclingRoad
 	ldh a, [hJoyHeld]
-	and B_BUTTON
+	and PAD_B
 	jr z, DoBikeSpeedup
 	; B button held
 	call DoBikeSpeedup
@@ -450,14 +450,14 @@ GetBikeSpeed::
 .cyclingRoad
 	; uphill we can only go a bit faster, downhill we can go full speed
 	ldh a, [hJoyHeld]
-	and D_UP | D_LEFT | D_RIGHT
+	and PAD_UP | PAD_LEFT | PAD_RIGHT
 	call z, DoBikeSpeedup
 	ldh a, [hJoyHeld]
-	and B_BUTTON
+	and PAD_B
 	ret z
 	call DoBikeSpeedup
 	ldh a, [hJoyHeld]
-	and D_UP | D_LEFT | D_RIGHT
+	and PAD_UP | PAD_LEFT | PAD_RIGHT
 	ret nz
 	; fall through
 
@@ -513,7 +513,7 @@ CheckWarpsNoCollisionLoop::
 	pop bc
 	pop de
 	ldh a, [hJoyHeld]
-	and D_DOWN | D_UP | D_LEFT | D_RIGHT
+	and PAD_CTRL_PAD
 	jr z, CheckWarpsNoCollisionRetry2 ; if directional buttons aren't being pressed, do not pass through the warp
 	jr WarpFound1
 
@@ -585,7 +585,7 @@ WarpFound2::
 ; for maps that can have the 0xFF destination map, which means to return to the outside map
 ; not all these maps are necessarily indoors, though
 .indoorMaps
-	ldh a, [hWarpDestinationMap] ; destination map
+	ldh a, [hWarpDestinationMap]
 	cp LAST_MAP
 	jr z, .goBackOutside
 ; if not going back to the previous map
@@ -1067,8 +1067,7 @@ IsSpriteOrSignInFrontOfPlayer::
 	ld a, [hli] ; sign X
 	cp e
 	jr nz, .retry
-.xCoordMatched
-; found sign
+; X coord matched: found sign
 	push hl
 	push bc
 	ld hl, wSignTextIDs
@@ -1141,7 +1140,7 @@ IsSpriteInFrontOfPlayer2::
 	ld a, PLAYER_DIR_LEFT
 .doneCheckingDirection
 	ld [wPlayerDirection], a
-	ld a, [wNumSprites] ; number of sprites
+	ld a, [wNumSprites]
 	and a
 	ret z
 ; if there are sprites
@@ -1168,7 +1167,7 @@ IsSpriteInFrontOfPlayer2::
 .nextSprite
 	pop hl
 	ld a, l
-	add $10
+	add SPRITESTATEDATA1_LENGTH
 	ld l, a
 	inc e
 	dec d
@@ -1230,15 +1229,15 @@ CollisionCheckOnLand::
 ; function that checks if the tile in front of the player is passable
 ; clears carry if it is, sets carry if not
 CheckTilePassable::
-	predef GetTileAndCoordsInFrontOfPlayer ; get tile in front of player
-	ld a, [wTileInFrontOfPlayer] ; tile in front of player
+	predef GetTileAndCoordsInFrontOfPlayer
+	ld a, [wTileInFrontOfPlayer]
 ;;;;;;;;;; PureRGBnote: CHANGED: unified code for checking if a tile is passable
 	ld d, a
 	callfar _CheckTilePassable
-	jr c, .notPassable
+	jr c, .tileNotPassable
 	and a
 	ret
-.notPassable
+.tileNotPassable
 ;;;;;;;;;;
 	scf
 	ret
@@ -1249,7 +1248,7 @@ CheckTilePassable::
 ; sets carry if there is a collision and unsets carry if not
 CheckForJumpingAndTilePairCollisions::
 	push hl
-	predef GetTileAndCoordsInFrontOfPlayer ; get the tile in front of the player
+	predef GetTileAndCoordsInFrontOfPlayer
 	push de
 	push bc
 	farcall HandleLedges ; check if the player is trying to jump a ledge
@@ -1282,7 +1281,7 @@ CheckForTilePairCollisions::
 	inc hl
 	jr .tilePairCollisionLoop
 .tilesetMatches
-	ld a, [wTilePlayerStandingOn] ; tile the player is on
+	ld a, [wTilePlayerStandingOn]
 	ld b, a
 	ld a, [hl]
 	cp b
@@ -1317,7 +1316,7 @@ INCLUDE "data/tilesets/pair_collision_tile_ids.asm"
 LoadCurrentMapView::
 	ldh a, [hLoadedROMBank]
 	push af
-	ld a, [wTilesetBank] ; tile data ROM bank
+	ld a, [wTilesetBank]
 	call SetCurBank ; switch to ROM bank that contains tile data
 	ld a, [wCurrentTileBlockMapViewPointer] ; address of upper left corner of current map view
 	ld e, a
@@ -1406,7 +1405,7 @@ AdvancePlayerSprite::
 	ld b, a
 	ld a, [wSpritePlayerStateData1XStepVector]
 	ld c, a
-	ld hl, wWalkCounter ; walking animation counter
+	ld hl, wWalkCounter
 	dec [hl]
 	jr nz, .afterUpdateMapCoords
 ; if it's the end of the animation, update the player's map coordinates
@@ -1417,7 +1416,7 @@ AdvancePlayerSprite::
 	add c
 	ld [wXCoord], a
 .afterUpdateMapCoords
-	ld a, [wWalkCounter] ; walking animation counter
+	ld a, [wWalkCounter]
 ;;;;;;;;;; shinpokerednote: 60fps
 	push bc
 	ld b, $0F
@@ -1578,7 +1577,7 @@ AdvancePlayerSprite::
 ; shift all the sprites in the direction opposite of the player's motion
 ; so that the player appears to move relative to them
 	ld hl, wSprite01StateData1YPixels
-	ld a, [wNumSprites] ; number of sprites
+	ld a, [wNumSprites]
 	and a ; are there any sprites?
 	ret z ;jr z, .done ; PureRGBnote: OPTIMIZED
 	ld e, a
@@ -1788,9 +1787,9 @@ JoypadOverworld::
 	cp ROUTE_17 ; Cycling Road
 	jr nz, .notForcedDownwards
 	ldh a, [hJoyHeld]
-	and D_DOWN | D_UP | D_LEFT | D_RIGHT | B_BUTTON | A_BUTTON
+	and PAD_CTRL_PAD | PAD_B | PAD_A
 	jr nz, .notForcedDownwards
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ldh [hJoyHeld], a ; on the cycling road, if there isn't a trainer and the player isn't pressing buttons, simulate a down press
 .notForcedDownwards
 	ld a, [wStatusFlags5]
@@ -2031,7 +2030,7 @@ LoadMapHeader::
 ; copy connection data (if any) to WRAM
 	ld a, [wCurMapConnections]
 	ld b, a
-.checkNorth
+; check north
 	bit NORTH_F, b
 	jr z, .checkSouth
 	ld de, wNorthConnectionHeader
@@ -2061,7 +2060,7 @@ LoadMapHeader::
 	ld de, wMapBackgroundTile
 	ld a, [hli]
 	ld [de], a
-.loadWarpData
+; load warp data
 	ld a, [hli]
 	ld [wNumberOfWarps], a
 	and a
@@ -2132,8 +2131,8 @@ LoadMapHeader::
 	jr nz, .zeroSpriteDataLoop
 ; disable SPRITESTATEDATA1_IMAGEINDEX (set to $ff) for sprites 01-15
 	ld hl, wSprite01StateData1ImageIndex
-	ld de, $10
-	ld c, $0f
+	ld de, SPRITESTATEDATA1_LENGTH
+	ld c, NUM_SPRITESTATEDATA_STRUCTS - 1
 .disableSpriteEntriesLoop
 	ld [hl], $ff
 	add hl, de
@@ -2291,7 +2290,7 @@ CopyMapConnectionHeader::
 LoadMapData::
 	ldh a, [hLoadedROMBank]
 	push af
-	ld a, $98
+	ld a, HIGH(vBGMap0)
 	ld [wMapViewVRAMPointer + 1], a
 	xor a
 	ld [wMapViewVRAMPointer], a
@@ -2322,7 +2321,7 @@ LoadMapData::
 	call SpecialCopyData
 	pop bc
 
-	ld a, BG_MAP_WIDTH - SCREEN_WIDTH
+	ld a, TILEMAP_WIDTH - SCREEN_WIDTH
 	add e
 	ld e, a
 	jr nc, .noCarry
@@ -2402,14 +2401,14 @@ CheckForUserInterruption::
 	pop bc
 
 	ldh a, [hJoyHeld]
-	cp D_UP + SELECT + B_BUTTON
+	cp PAD_UP + PAD_SELECT + PAD_B
 	jr z, .input
 
 	ldh a, [hJoy5]
 IF DEF(_DEBUG)
-	and START | SELECT | A_BUTTON
+	and PAD_START | PAD_SELECT | PAD_A
 ELSE
-	and START | A_BUTTON
+	and PAD_START | PAD_A
 ENDC
 	jr nz, .input
 

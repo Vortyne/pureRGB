@@ -12,7 +12,7 @@ DisplayDiploma::
 	rst _DelayFrame	; shinpokerednote: FIXED: the overworld sprite wobble fix makes the player sprites hidden unless a delay is added
 	ld hl, CircleTile
 	ld de, vChars2 tile CIRCLE_TILE_ID
-	ld bc, $10
+	ld bc, TILE_SIZE
 	ld a, BANK(CircleTile)
 	call FarCopyData2
 	hlcoord 0, 0
@@ -75,13 +75,13 @@ DisplayDiploma::
 	jp GBPalNormal
 
 ;UnusedPlayerNameLengthFunc:
-; Unused function that does a calculation involving the length of the player's
-; name.
+;; Unused function that performs bc = -(player name's length)
+;; leftover from the JPN versions
 ;	ld hl, wPlayerName
 ;	lb bc, $ff, $00
 ;.loop
 ;	ld a, [hli]
-;	cp "@"
+;	cp '@'
 ;	ret z
 ;	dec c
 ;	jr .loop

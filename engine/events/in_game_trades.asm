@@ -116,7 +116,7 @@ InGameTrade_DoTrade:
 	ld a, [wWhichPokemon]
 ;;;;;;;;;; PureRGBnote: ADDED: check if we need to store whether the player's pokemon uses alternate palette to make the trade animation correct
 	ld hl, wPartyMon1Flags
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [hl]
 	and 1
@@ -221,7 +221,7 @@ InGameTrade_PrepareTradeData:
 	ld de, wLinkEnemyTrainerName
 	call InGameTrade_CopyData
 	ld hl, wPartyMon1OTID
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wWhichPokemon]
 	call AddNTimes
 	ld de, wTradedPlayerMonOTID
@@ -254,10 +254,10 @@ InGameTrade_CopyDataToReceivedMon:
 	ld bc, NAME_LENGTH
 	rst _CopyData
 	ld hl, wPartyMon1OTID
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call InGameTrade_GetReceivedMonPointer
 	ld hl, wTradedEnemyMonOTID
-	ld bc, $2
+	ld bc, 2
 	jp CopyData
 
 ; the received mon's index is (partyCount - 1),
@@ -271,7 +271,7 @@ InGameTrade_GetReceivedMonPointer:
 	ret
 
 InGameTrade_TrainerString:
-	db "<TRAINER>@@@@@@@@@@"
+	dname "<TRAINER>", NAME_LENGTH
 
 InGameTradeTextPointers:
 ; entries correspond to TRADE_DIALOGSET_* constants

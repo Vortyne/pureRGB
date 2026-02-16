@@ -81,7 +81,7 @@ CeladonMart1PhoneRight:
 	ld hl, CeladonMart1CallWhoQuestion
 	rst _PrintText
 	ld hl, CeladonMartPhoneList
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	jr nz, .no
 
@@ -248,7 +248,7 @@ CallHome:
 	ld hl, CeladonMartCallMomText
 	rst _PrintText
 	ld hl, CeladonMartCallMomQuestion1
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]
@@ -262,7 +262,7 @@ CallHome:
 	ld hl, CeladonMartCallMomHomesickText
 	rst _PrintText
 	ld hl, CeladonMartCallMomQuestion3
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]
@@ -281,7 +281,7 @@ CallHome:
 	ld hl, CeladonMartCallMomBoredText
 	rst _PrintText
 	ld hl, CeladonMartCallMomQuestion2
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]
@@ -294,7 +294,7 @@ CallHome:
 	ld hl, CeladonMartCallMomGoodbyeText
 	rst _PrintText
 	ld hl, CeladonMartCallMomQuestion4
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]
@@ -325,7 +325,7 @@ CallHome:
 	ld a, [wNumSetBits]
 	add NUMBER_CHAR_OFFSET
 	ld [w2CharStringBuffer], a
-	ld a, "@"
+	ld a, '@'
 	ld [w2CharStringBuffer + 1], a
 	SetEvent EVENT_CALLED_DAD_WAITING
 	ld hl, CeladonMartCallDadText2
@@ -449,7 +449,7 @@ CallOak:
 	rst _PrintText
 
 	ld hl, CeladonMartCallOakQuestion1
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]
@@ -460,7 +460,7 @@ CallOak:
 .question2
 	rst _PrintText
 	ld hl, CeladonMartCallOakQuestion2
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]

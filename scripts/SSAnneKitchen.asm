@@ -144,7 +144,7 @@ SSAnneKitchenWaiterText:
 	rst _PrintText
 	call SaveScreenTilesToBuffer2
 	ld hl, SSAnneFoodMenu
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	call Delay3

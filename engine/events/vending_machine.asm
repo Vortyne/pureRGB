@@ -11,7 +11,7 @@ VendingMachineMenu::
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 3
 	ld [wMaxMenuItem], a
@@ -46,7 +46,7 @@ VendingMachineMenu::
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, .notThirsty
 	ld a, [wCurrentMenuItem]
 	cp 3 ; chose Cancel?

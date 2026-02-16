@@ -68,7 +68,7 @@ DrawSpriteOptionsMenu:
 
 SpriteOptionsAorSelectButton:
 	ld a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp z, OptionsPageAorSelectButtonDefault
 	; fall through
 SpriteOptionsAButton:
@@ -88,7 +88,7 @@ SpriteOptionsAButton:
 	rst _PlaySound
 	call DisplayFrontSpriteOptions
 	hlcoord 14, PAGE_CONTROLS_Y_COORD
-	ld a, " "
+	ld a, ' '
 	ld [hli], a
 	ld [hl], a
 	pop af

@@ -252,7 +252,7 @@ PrintSafariZoneSteps::
 	cp 10
 	jr nc, .tenOrMore
 	hlcoord 5, 3
-	ld [hl], " "
+	ld [hl], ' '
 .tenOrMore
 	hlcoord 6, 3
 	ld de, wNumSafariBalls

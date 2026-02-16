@@ -331,12 +331,12 @@ ChampArenaGetRemainingOpponentCount:
 	cp 10
 	jr c, .lowerThan10
 	sub 10
-	ld [hl], "１"
+	ld [hl], '１'
 	inc hl
 .lowerThan10
 	add NUMBER_CHAR_OFFSET
 	ld [hli], a
-	ld [hl], "@"
+	ld [hl], '@'
 	ret
 
 ChampArenaAssistantText:
@@ -441,13 +441,13 @@ ChampArenaAssistantText:
 	text_end
 
 PlayerCenterFieldDirectionsLeft:
-	db D_DOWN
+	db PAD_DOWN
 PlayerCenterFieldDirectionsRight:
-	db D_DOWN
-	db D_DOWN
-	db D_LEFT
-	db D_LEFT
-	db D_DOWN
+	db PAD_DOWN
+	db PAD_DOWN
+	db PAD_LEFT
+	db PAD_LEFT
+	db PAD_DOWN
 	db -1
 
 ChampArenaIntroText:
@@ -577,7 +577,7 @@ ReloadChallengerSprite:
 	call CopyVideoData
 	pop bc
 	pop de
-	ld hl, LEN_2BPP_TILE * 12 ; 12 tiles
+	ld hl, 12 tiles
 	add hl, de ; make hl now pointing to the walking tile data of the sprite that will replace's data
 	ld d, h
 	ld e, l
@@ -707,7 +707,7 @@ ChampArenaStartBattleText:
 	call SaveScreenTilesToBuffer2
 	pop hl
 	; hl will have which music option menu to use
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	ld a, [wCurrentMenuItem]
 	and a

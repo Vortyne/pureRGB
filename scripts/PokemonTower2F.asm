@@ -111,7 +111,7 @@ PokemonTower2FPlayerMovingScript:
 	cp 5
 	jr nz, .doneMoving
 .startMoving
-	ld d, D_LEFT
+	ld d, PAD_LEFT
 	jpfar ForceStepFromDoor
 .doneMoving
 	ld a, PLAYER_DIR_LEFT
@@ -132,7 +132,7 @@ PokemonTower2FDefeatedRivalScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, PokemonTower2FResetRivalEncounter
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL
 	ld a, TEXT_POKEMONTOWER2F_RIVAL

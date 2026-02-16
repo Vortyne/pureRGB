@@ -27,7 +27,7 @@ DrawFrameBlock:
 	jp z, .flipHorizontalTranslateDown ; SUBANIMTYPE_HFLIP
 	dec a
 	jr z, .flipBaseCoords              ; SUBANIMTYPE_COORDFLIP
-.noTransformation
+; no transformation
 	ld a, [wBaseCoordY]
 	add [hl]
 	ld [de], a ; store Y
@@ -98,13 +98,13 @@ DrawFrameBlock:
 ; toggle horizontal and vertical flip
 	ld a, [hli] ; flags
 	and a
-	ld b, OAM_VFLIP | OAM_HFLIP
+	ld b, OAM_YFLIP | OAM_XFLIP
 	jr z, .storeFlags1
-	cp OAM_HFLIP
-	ld b, OAM_VFLIP
+	cp OAM_XFLIP
+	ld b, OAM_YFLIP
 	jr z, .storeFlags1
-	cp OAM_VFLIP
-	ld b, OAM_HFLIP
+	cp OAM_YFLIP
+	ld b, OAM_XFLIP
 	jr z, .storeFlags1
 	ld b, 0
 .storeFlags1
@@ -141,13 +141,13 @@ DrawFrameBlock:
 	ld [de], a ; store tile ID
 	inc de
 	ld a, [hli]
-	bit OAM_X_FLIP, a
+	bit B_OAM_XFLIP, a
 	jr nz, .disableHorizontalFlip
 .enableHorizontalFlip
-	set OAM_X_FLIP, a
+	set B_OAM_XFLIP, a
 	jr .storeFlags2
 .disableHorizontalFlip
-	res OAM_X_FLIP, a
+	res B_OAM_XFLIP, a
 .storeFlags2
 ;;;;;;;;;; shinpokerednote: gbcnote: oam updates from yellow version
 	ld b, a
@@ -162,7 +162,7 @@ DrawFrameBlock:
 	ld a, [wNumFBTiles]
 	cp c
 	jp nz, .loop ; go back up if there are more tiles to draw
-.afterDrawingTiles
+; after drawing tiles
 	ld a, [wFBMode]
 	cp FRAMEBLOCKMODE_02
 	jr z, .advanceFrameBlockDestAddr ; skip delay and don't clean OAM buffer
@@ -216,7 +216,7 @@ PlayAnimation:
 	ret z
 	cp FIRST_SE_ID ; is this subanimation or a special effect?
 	jr c, .playSubanimation
-.doSpecialEffect
+; do Special Effect
 	ld c, a
 	ld de, SpecialEffectPointers
 .searchSpecialEffectTableLoop
@@ -331,11 +331,11 @@ LoadSubanimation:
 	and %11100000
 	cp SUBANIMTYPE_ENEMY << 5
 	vc_hook_blue Reduce_move_anim_flashing_Blizzard
-	jr nz, .isNotType5
-.isType5
+	jr nz, .isNotTypeEnemy
+; subanim type enemy
 	call GetSubanimationTransform2
 	jr .saveTransformation
-.isNotType5
+.isNotTypeEnemy
 	vc_hook Reduce_move_anim_flashing_Hyper_Beam
 	call GetSubanimationTransform1
 .saveTransformation
@@ -477,11 +477,11 @@ MoveAnimationContent:
 	call PlayAnimation
 	vc_hook_red Stop_reducing_move_anim_flashing_Bubblebeam_Mega_Kick
 	vc_hook_blue Stop_reducing_move_anim_flashing_Spore
-	jr .next4
+	jr .next
 .animationsDisabled
 	ld c, 30
 	rst _DelayFrames
-.next4
+.next
 	vc_hook_red Stop_reducing_move_anim_flashing
 	vc_hook_blue Stop_reducing_move_anim_flashing_Rock_Slide_Dream_Eater
 	call PlayApplyingAttackAnimation ; shake the screen or flash the pic in and out (to show damage)
@@ -809,7 +809,7 @@ DoBallTossSpecialEffects:
 	dec b
 	jr nz, .loop
 	ld a, %00001000
-	ldh [rNR10], a ; Channel 1 sweep register
+	ldh [rAUD1SWEEP], a ; Channel 1 sweep register
 	ret
 .isTrainerBattle ; if it's a trainer battle, shorten the animation by one frame
 	ld a, [wSubAnimCounter]
@@ -1133,7 +1133,7 @@ BallMoveDistances2:
 DoGrowlSpecialEffects:
 	ld hl, wShadowOAM
 	ld de, wShadowOAMSprite04
-	ld bc, $10
+	ld bc, OBJ_SIZE * 4
 	rst _CopyData ; copy the musical note graphic
 	ld a, [wSubAnimCounter]
 	dec a
@@ -1336,7 +1336,9 @@ SetAnimationBGPalette:
 	ldh [rBGP], a
 	jp UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
 
-	;ld b, $5 ; unused label?
+AnimationUnusedShakeScreen: ; unreferenced
+; Shakes the screen for a while.
+	;ld b, $5
 
 AnimationShakeScreenVertically:
 	predef_jump PredefShakeScreenVertically
@@ -1519,12 +1521,12 @@ _AnimationSlideMonUp:
 	push bc
 
 ; In each iteration, slide up all rows but the top one (which is overwritten).
-	ld b, 6
+	ld b, PIC_HEIGHT - 1
 .slideLoop
 	push bc
 	push de
 	push hl
-	ld bc, 7
+	ld bc, PIC_WIDTH
 	rst _CopyData
 ; Note that de and hl are popped in the same order they are pushed, swapping
 ; their values. When CopyData is called, hl points to a tile 1 row below
@@ -1548,10 +1550,10 @@ _AnimationSlideMonUp:
 	ld a, [wSlideMonUpBottomRowLeftTile]
 	inc a
 	ld [wSlideMonUpBottomRowLeftTile], a
-	ld c, 7
+	ld c, PIC_WIDTH
 .fillBottomRowLoop
 	ld [hli], a
-	add 7
+	add PIC_WIDTH
 	dec c
 	jr nz, .fillBottomRowLoop
 
@@ -1653,7 +1655,7 @@ AdjustOAMBlockXPos:
 	ld h, d
 
 AdjustOAMBlockXPos2:
-	ld de, 4
+	ld de, OBJ_SIZE
 .loop
 	ld a, [wCoordAdjustmentAmount]
 	ld b, a
@@ -1663,7 +1665,7 @@ AdjustOAMBlockXPos2:
 	jr c, .skipPuttingEntryOffScreen
 ; put off-screen if X >= 168
 	dec hl
-	ld a, 160
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [hli], a
 .skipPuttingEntryOffScreen
 	ld [hl], a
@@ -1677,7 +1679,7 @@ AdjustOAMBlockYPos:
 	ld h, d
 
 AdjustOAMBlockYPos2:
-	ld de, 4
+	ld de, OBJ_SIZE
 .loop
 	ld a, [wCoordAdjustmentAmount]
 	ld b, a
@@ -2064,7 +2066,7 @@ _AnimationSquishMonPic:
 	call AnimCopyRowRight
 	inc hl
 .next
-	ld [hl], " "
+	ld [hl], ' '
 	pop hl
 	ld de, SCREEN_WIDTH
 	add hl, de
@@ -2132,7 +2134,7 @@ _AnimationShootBallsUpward:
 	dec a
 	ld [wNumShootingBalls], a
 .next
-	ld de, 4
+	ld de, OBJ_SIZE
 	add hl, de ; next OAM entry
 	dec b
 	jr nz, .innerLoop
@@ -2194,10 +2196,10 @@ AnimationMinimizeMon:
 	ld hl, wTempPic
 	push hl
 	xor a
-	ld bc, 7 * 7 * $10
+	ld bc, PIC_SIZE tiles
 	call FillMemory
 	pop hl
-	ld de, 7 * 3 * $10 + 4 * $10 + 4
+	ld de, (PIC_WIDTH * 3 + 4) tiles + TILE_SIZE / 4
 	add hl, de
 	ld de, MinimizedMonSprite
 	ld c, MinimizedMonSpriteEnd - MinimizedMonSprite
@@ -2314,7 +2316,7 @@ _AnimationSlideMonOff:
 ; plus one instead. 
 	cp $62 ; PureRGBnote: CHANGED: now it's plus one as the above comment indicates
 	ret c
-	ld a, " "
+	ld a, ' '
 	ret
 
 .EnemyNextTile
@@ -2324,7 +2326,7 @@ _AnimationSlideMonOff:
 ; the lower right tile is in the first column to slide off the screen.
 	cp $30
 	ret c
-	ld a, " "
+	ld a, ' '
 	ret
 
 ;;;;;;;;;; PureRGBnote: ADDED: new animation used in some moves like Filthy Slam.
@@ -2350,7 +2352,7 @@ CopyTempPicToMonPic:
 	ld hl, vFrontPic ; enemy turn
 .next
 	ld de, wTempPic
-	ld bc, 7 * 7
+	ld bc, PIC_SIZE
 	jp CopyVideoData
 
 AnimationWavyScreen::
@@ -2428,7 +2430,7 @@ AnimationSubstitute:
 ; Changes the pokemon's sprite to the mini sprite
 	ld hl, wTempPic
 	xor a
-	ld bc, 7 * 7 tiles
+	ld bc, PIC_SIZE tiles
 	call FillMemory
 	ldh a, [hWhoseTurn]
 	and a
@@ -2464,7 +2466,7 @@ AnimationSubstitute:
 	jp AnimationShowMonPic
 
 CopyMonsterSpriteData:
-	ld bc, 1 tiles
+	ld bc, TILE_SIZE
 	ld a, BANK(MonsterSprite)
 	jp FarCopyData2
 
@@ -2876,7 +2878,7 @@ FallingObjects_UpdateOAMEntry:
 	inc a
 	cp 112
 	jr c, .next
-	ld a, 160 ; if Y >= 112, put it off-screen
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS ; if Y >= 112, put it off-screen
 .next
 	ld [hli], a ; Y
 ;;;;;;;;;; shinpokerednote: gbcnote: oam updates from pokemon yellow
@@ -2931,7 +2933,7 @@ FallingObjects_UpdateOAMEntry:
 .asm_79e5c
 ;;;;;;;;;;
 	inc hl
-	ld a, 1 << OAM_X_FLIP
+	ld a, OAM_XFLIP
 .next2
 ;;;;;;;;;; shinpokerednote: gbcnote: oam updates from pokemon yellow
 	ld b, a
@@ -3001,7 +3003,7 @@ AnimationShakeEnemyHUD:
 ; Make a copy of the back pic's tile patterns in sprite tile pattern VRAM.
 	ld de, vBackPic
 	ld hl, vSprites
-	ld bc, 7 * 7
+	ld bc, PIC_SIZE
 	call CopyVideoData
 
 	xor a

@@ -190,7 +190,7 @@ SaffronAbandonedBuildingRocket1Text:
 	ld hl, .password
 	rst _PrintText
 	ld hl, RocketPasswordMenu
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	push af
 	call LoadScreenTilesFromBuffer2
@@ -209,7 +209,7 @@ SaffronAbandonedBuildingRocket1Text:
 .failedPrint
 	rst _PrintText
 .failed
-	ld a, D_RIGHT
+	ld a, PAD_RIGHT
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hli], a
@@ -270,7 +270,7 @@ SaffronAbandonedBuildingHeliumPipe::
 	CheckEvent EVENT_FLOATING_WEEZING_ANIMATION
 	ret z
 	; make player walk down one step
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hl], -1

@@ -106,7 +106,7 @@ CheckLoadTypes:
 	predef PrintMonType
 	hlcoord 11, 16
 	ld a, [hl]
-	cp " "
+	cp ' '
 	ret z ; if no type printed for the second type at this point, don't print "Type2:" on that line
 	hlcoord 5, 16
 	ld de, MenuType2Text

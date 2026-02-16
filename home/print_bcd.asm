@@ -21,9 +21,9 @@ PrintBCDNumber::
 	bit BIT_LEADING_ZEROES, b
 	jr nz, .loop
 ; PureRGBnote; OPTIMIZED
-	ld a, "¥"
+	ld a, '¥'
 	ld [hli], a
-	;ld [hl], "¥"
+	;ld [hl], '¥'
 	;inc hl
 .loop
 	ld a, [de]
@@ -38,19 +38,19 @@ PrintBCDNumber::
 ; PureRGBnote: OPTIMIZED
 	ret z
 	;jr z, .done ; if so, we are done
-.numberEqualsZero ; if every digit of the BCD number is zero
+; if every digit of the BCD number is zero, print the last 0
 	bit BIT_LEFT_ALIGN, b
 	jr nz, .skipRightAlignmentAdjustment
 	dec hl ; if the string is right-aligned, it needs to be moved back one space
 .skipRightAlignmentAdjustment
 	bit BIT_MONEY_SIGN, b
 	jr z, .skipCurrencySymbol
-	ld a, "¥"
+	ld a, '¥'
 	ld [hli], a
-	;ld [hl], "¥"
+	;ld [hl], '¥'
 	;inc hl
 .skipCurrencySymbol
-	ld [hl], "0"
+	ld [hl], '0'
 	call PrintLetterDelay
 	inc hl
 ;.done
@@ -66,13 +66,13 @@ PrintBCDDigit::
 ; if bit 7 is set, then no numbers have been printed yet
 	bit BIT_MONEY_SIGN, b
 	jr z, .skipCurrencySymbol
-	ld [hl], "¥"
+	ld [hl], '¥'
 	inc hl
 	res BIT_MONEY_SIGN, b
 .skipCurrencySymbol
 	res BIT_LEADING_ZEROES, b
 .outputDigit
-	add "0"
+	add '0'
 	ld [hli], a
 	jp PrintLetterDelay
 .zeroDigit

@@ -7,12 +7,12 @@ AnimateHallOfFame:
 	call LoadTextBoxTilePatterns
 	call DisableLCD
 	ld hl, vBGMap0
-	ld bc, $800
-	ld a, " "
+	ld bc, 2 * TILEMAP_AREA
+	ld a, ' '
 	call FillMemory
 	call EnableLCD
 	ld hl, rLCDC
-	set rLCDC_BG_TILEMAP, [hl]
+	set B_LCDC_BG_MAP, [hl]
 	xor a
 	ld hl, wHallOfFame
 	ld bc, HOF_TEAM
@@ -51,7 +51,7 @@ AnimateHallOfFame:
 	ld [wHoFPartyMonIndex], a
 	call StoreHoFAltPaletteFlag ; PureRGBnote: ADDED: we will set a flag to indicate whether the pokemon uses alt palette or not
 	ld hl, wPartyMon1Level
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [hl]
 	ld [wHoFMonLevel], a
@@ -90,7 +90,7 @@ AnimateHallOfFame:
 	xor a
 	ldh [hWY], a
 	ld hl, rLCDC
-	res rLCDC_BG_TILEMAP, [hl]
+	res B_LCDC_BG_MAP, [hl]
 	ret
 
 ; PureRGBnote: ADDED: sets a flag in wHallofFamePalettes if the pokemon uses an alt palette.
@@ -209,7 +209,7 @@ HoFLoadPlayerPics:
 	call UncompressSpriteFromDE
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
-	ld bc, $310
+	ld bc, 2 * SPRITEBUFFERSIZE
 	rst _CopyData
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers

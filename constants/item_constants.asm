@@ -92,7 +92,7 @@
 	const MAX_ELIXER    ; $53
 DEF NUM_ITEMS EQU const_value - 1
 
-; elevator floors use item IDs
+; elevator floors use item IDs (see scripts/CeladonMartElevator.asm and scripts/SilphCoElevator.asm)
 	const FLOOR_B2F     ; $54
 	const FLOOR_B1F     ; $55
 	const FLOOR_1F      ; $56

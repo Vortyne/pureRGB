@@ -8,7 +8,7 @@ MainMenu:
 	call CheckForPlayerNameInSRAM
 	jr nc, .mainMenuLoop
 
-	predef LoadSAV
+	predef TryLoadSaveFile
 
 .mainMenuLoop
 	ld c, 20
@@ -64,12 +64,12 @@ MainMenu:
 	ld [wTopMenuItemX], a
 	inc a
 	ld [wTopMenuItemY], a
-	ld a, A_BUTTON | B_BUTTON | START
+	ld a, PAD_A | PAD_B | PAD_START
 	ld [wMenuWatchedKeys], a
 	ld a, [wSaveFileStatus]
 	ld [wMaxMenuItem], a
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, DisplayTitleScreen ; if so, go back to the title screen
 	ld c, 20
 	rst _DelayFrames
@@ -106,9 +106,9 @@ MainMenu:
 	ldh [hJoyHeld], a
 	call Joypad
 	ldh a, [hJoyHeld]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, .pressedA
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, .mainMenuLoop
 	jr .inputLoop
 .pressedA
@@ -182,7 +182,7 @@ LinkMenu:
 	ld a, 2
 	ld [hli], a
 	ASSERT wMaxMenuItem + 1 == wMenuWatchedKeys
-	ASSERT 2 + 1 == A_BUTTON | B_BUTTON
+	ASSERT 2 + 1 == PAD_A | PAD_B
 	inc a
 	ld [hli], a
 	ASSERT wMenuWatchedKeys + 1 == wLastMenuItem
@@ -190,7 +190,7 @@ LinkMenu:
 	ld [hl], a
 .waitForInputLoop
 	call HandleMenuInput
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	add a
 	add a
 	ld b, a
@@ -240,13 +240,13 @@ LinkMenu:
 	jr nz, .skipStartingTransfer
 	rst _DelayFrame
 	rst _DelayFrame
-	ld a, START_TRANSFER_INTERNAL_CLOCK
+	ld a, SC_START | SC_INTERNAL
 	ldh [rSC], a
 .skipStartingTransfer
-	lb bc, " ", " "
-	ld d, "▷"
+	lb bc, ' ', ' '
+	ld d, '▷'
 	ld a, [wLinkMenuSelectionSendBuffer]
-	and B_BUTTON << 2 ; was B button pressed?
+	and PAD_B << 2 ; was B button pressed?
 	jr nz, .updateCursorPosition
 ; A button was pressed
 	ld a, [wCurrentMenuItem]
@@ -269,7 +269,7 @@ LinkMenu:
 	rst _DelayFrames
 	call LoadScreenTilesFromBuffer1
 	ld a, [wLinkMenuSelectionSendBuffer]
-	and B_BUTTON << 2 ; was B button pressed?
+	and PAD_B << 2 ; was B button pressed?
 	jr nz, .choseCancel ; cancel if B pressed
 	ld a, [wCurrentMenuItem]
 	cp $2
@@ -488,15 +488,17 @@ CheckForPlayerNameInSRAM:
 ; Check if the player name data in SRAM has a string terminator character
 ; (indicating that a name may have been saved there) and return whether it does
 ; in carry.
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
-	ld a, 1
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamBank], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
+	ld a, BMODE_ADVANCED
+	ld [rBMODE], a
+	ASSERT BANK(sPlayerName) == BMODE_ADVANCED
+	ld [rRAMB], a
 	call CheckSaveFileExists ; PureRGBnote: MOVED: this code was moved to home since it is used on booting the game to load options early.
-	ld a, 0
-	ld [MBC1SRamEnable], a
-	ld [MBC1SRamBankingMode], a
+	ld a, RAMG_SRAM_DISABLE
+	ld [rRAMG], a
+	ld [rBMODE], a
+	ASSERT RAMG_SRAM_DISABLE == BMODE_SIMPLE
 	jr c, .found
 ; not found
 	and a
@@ -511,10 +513,11 @@ CheckSaveFileExists::
 	ld hl, sPlayerName
 .loop
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr z, .found
 	dec b
 	jr nz, .loop
+; not found
 	and a
 	ret
 .found

@@ -105,7 +105,7 @@ DisplayPokemartDialogue_::
 	;dec a
 	;jr z, .restoreItemIndexSellMenuLoop
 
-.sellItem
+; sell item
 	ld a, [wBoughtOrSoldItemInMart]
 	and a
 	jr nz, .skipSettingFlag1
@@ -177,7 +177,7 @@ DisplayPokemartDialogue_::
 	ld a, [wMenuExitMethod]
 	cp CHOSE_SECOND_ITEM
 	jp z, .restoreItemIndexBuyMenuLoop ; if the player chose No or pressed the B button
-.buyItem
+; buy item
 	call .isThereEnoughMoney
 	jr c, .notEnoughMoney
 	ld hl, wNumBagItems

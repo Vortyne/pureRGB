@@ -94,13 +94,13 @@ SeafoamIslandsB3FDefaultScript:
 SeafoamIslandsCurrents:
 	lda_coord 8, 9 ; tile below player
 	cp $30
-	ld b, D_UP
+	ld b, PAD_UP
 	jr z, .forceInput
 	cp $3B
-	ld b, D_RIGHT
+	ld b, PAD_RIGHT
 	jr z, .forceInput
 	cp $42
-	ld b, D_DOWN
+	ld b, PAD_DOWN
 	jr z, .forceInput
 	and a
 	ret

@@ -40,6 +40,11 @@ RGBFIX  ?= $(RGBDS)rgbfix
 RGBGFX  ?= $(RGBDS)rgbgfx
 RGBLINK ?= $(RGBDS)rgblink
 
+RGBASMFLAGS  ?= -Weverything -Wtruncation=1
+RGBLINKFLAGS ?= -Weverything -Wtruncation=1
+RGBFIXFLAGS  ?= -Weverything
+RGBGFXFLAGS  ?= -Weverything
+
 
 ### Build targets
 
@@ -47,7 +52,18 @@ RGBLINK ?= $(RGBDS)rgblink
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
-.PHONY: all red blue green blue_debug clean tidy compare tools
+.PHONY: \
+	all \
+	red \
+	blue \
+	green \
+	blue_debug \
+	red_vc \
+	blue_vc \
+	clean \
+	tidy \
+	compare \
+	tools
 
 all: $(roms)
 red:        pokered.gbc
@@ -89,7 +105,7 @@ tools:
 	$(MAKE) -C tools/
 
 
-RGBASMFLAGS = -Q8 -P includes.asm -Weverything -Wtruncation=1
+RGBASMFLAGS += -Q8 -P includes.asm
 # Create a sym/map for debug purposes if `make` run with `DEBUG=1`
 ifeq ($(DEBUG),1)
 RGBASMFLAGS += -E
@@ -134,26 +150,24 @@ $(foreach obj, $(pokeblue_vc_obj), $(eval $(call DEP,$(obj),$(obj:_blue_vc.o=.as
 endif
 
 
-%.asm: ;
+pokered.gbc:        RGBLINKFLAGS += -p 0x00
+pokeblue.gbc:       RGBLINKFLAGS += -p 0x00
+pokeblue_debug.gbc: RGBLINKFLAGS += -p 0xff
+pokered_vc.gbc:     RGBLINKFLAGS += -p 0x00
+pokeblue_vc.gbc:    RGBLINKFLAGS += -p 0x00
 
-
-pokered_pad        = 0x00
-pokeblue_pad       = 0x00
-pokegreen_pad      = 0x00
-pokered_vc_pad     = 0x00
-pokeblue_vc_pad    = 0x00
-pokeblue_debug_pad = 0xff
-
-pokered_opt        = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKEMON RED"
-pokeblue_opt       = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKEMON BLUE"
-pokegreen_opt      = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKEMON GREEN"
-pokeblue_debug_opt = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKEMON BLUE"
-pokered_vc_opt     = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKEMON RED"
-pokeblue_vc_opt    = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKEMON BLUE"
+RGBFIXFLAGS += -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03
+pokered.gbc:        RGBFIXFLAGS += -p 0x00 -t "POKEMON RED"
+pokeblue.gbc:       RGBFIXFLAGS += -p 0x00 -t "POKEMON BLUE"
+pokegreen.gbc:      RGBFIXFLAGS += -p 0x00 -t "POKEMON GREEN"
+pokeblue_debug.gbc: RGBFIXFLAGS += -p 0xff -t "POKEMON BLUE"
+					RGBLINKFLAGS+= -p 0xff
+pokered_vc.gbc:     RGBFIXFLAGS += -p 0x00 -t "POKEMON RED"
+pokeblue_vc.gbc:    RGBFIXFLAGS += -p 0x00 -t "POKEMON BLUE"
 
 %.gbc: $$(%_obj) layout.link
-	$(RGBLINK) -p $($*_pad) -m $*.map -n $*.sym -l layout.link -o $@ $(filter %.o,$^)
-	$(RGBFIX) -p $($*_pad) $($*_opt) $@
+	$(RGBLINK) $(RGBLINKFLAGS) -l layout.link -m $*.map -n $*.sym -o $@ $(filter %.o,$^)
+	$(RGBFIX) $(RGBFIXFLAGS) $@
 
 
 ### Misc file-specific graphics rules
@@ -161,13 +175,13 @@ pokeblue_vc_opt    = -cjsv -n 0 -k 01 -l 0x33 -m MBC3+RAM+BATTERY -r 03 -t "POKE
 gfx/battle/move_anim_0.2bpp: tools/gfx += --trim-whitespace
 gfx/battle/move_anim_1.2bpp: tools/gfx += --trim-whitespace
 
-gfx/intro/blue_jigglypuff_1.2bpp: rgbgfx += --columns
-gfx/intro/blue_jigglypuff_2.2bpp: rgbgfx += --columns
-gfx/intro/blue_jigglypuff_3.2bpp: rgbgfx += --columns
-gfx/intro/red_nidorino_1.2bpp: rgbgfx += --columns
-gfx/intro/red_nidorino_2.2bpp: rgbgfx += --columns
-gfx/intro/red_nidorino_3.2bpp: rgbgfx += --columns
-gfx/intro/gengar.2bpp: rgbgfx += --columns
+gfx/intro/blue_jigglypuff_1.2bpp: RGBGFXFLAGS += --columns
+gfx/intro/blue_jigglypuff_2.2bpp: RGBGFXFLAGS += --columns
+gfx/intro/blue_jigglypuff_3.2bpp: RGBGFXFLAGS += --columns
+gfx/intro/red_nidorino_1.2bpp: RGBGFXFLAGS += --columns
+gfx/intro/red_nidorino_2.2bpp: RGBGFXFLAGS += --columns
+gfx/intro/red_nidorino_3.2bpp: RGBGFXFLAGS += --columns
+gfx/intro/gengar.2bpp: RGBGFXFLAGS += --columns
 gfx/intro/gengar.2bpp: tools/gfx += --remove-duplicates --preserve=0x19,0x76
 
 gfx/credits/the_end.2bpp: tools/gfx += --interleave --png=$<
@@ -184,17 +198,27 @@ gfx/trade/game_boy.2bpp: tools/gfx += --remove-duplicates
 
 ### Catch-all graphics rules
 
-%.png: ;
-
 %.2bpp: %.png
-	$(RGBGFX) $(rgbgfx) -o $@ $<
+	$(RGBGFX) --colors dmg $(RGBGFXFLAGS) -o $@ $<
 	$(if $(tools/gfx),\
-		tools/gfx $(tools/gfx) -o $@ $@)
+		tools/gfx $(tools/gfx) -o $@ $@ || $$($(RM) $@ && false))
 
 %.1bpp: %.png
-	$(RGBGFX) $(rgbgfx) --depth 1 -o $@ $<
+	$(RGBGFX) --colors dmg $(RGBGFXFLAGS) --depth 1 -o $@ $<
 	$(if $(tools/gfx),\
-		tools/gfx $(tools/gfx) --depth 1 -o $@ $@)
+		tools/gfx $(tools/gfx) --depth 1 -o $@ $@ || $$($(RM) $@ && false))
 
 %.pic: %.2bpp
 	tools/pkmncompress $< $@
+
+
+### File extensions that are never generated and should be manually created
+
+%.asm: ;
+%.inc: ;
+%.png: ;
+%.pal: ;
+%.bin: ;
+%.blk: ;
+%.bst: ;
+%.rle: ;

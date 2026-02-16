@@ -15,7 +15,7 @@ LoadShootingStarGraphics:
 	call CopyVideoData
 	ld de, FallingStar
 	ld hl, vChars1 tile $22
-	lb bc, BANK(FallingStar), (FallingStarEnd - FallingStar) / $10
+	lb bc, BANK(FallingStar), (FallingStarEnd - FallingStar) / TILE_SIZE
 	call CopyVideoData
 	ld hl, GameFreakLogoOAMData
 	ld de, wShadowOAMSprite24
@@ -61,11 +61,11 @@ AnimateShootingStar:
 	jr nz, .bigStarLoop
 
 ; Clear big star OAM.
-	ld hl, wShadowOAM
+	ld hl, wShadowOAMSprite00YCoord
 	ld c, 4
-	ld de, 4
+	ld de, OBJ_SIZE
 .clearOAMLoop
-	ld [hl], 160
+	ld [hl], SCREEN_HEIGHT_PX + OAM_Y_OFS
 	add hl, de
 	dec c
 	jr nz, .clearOAMLoop
@@ -148,7 +148,7 @@ AnimateShootingStar:
 ; shift the existing OAM entries down to make room for the next wave
 	ld hl, wShadowOAMSprite04
 	ld de, wShadowOAM
-	ld bc, $50
+	ld bc, OBJ_SIZE * 20
 	rst _CopyData
 
 	pop af
@@ -161,7 +161,7 @@ AnimateShootingStar:
 	ret
 
 SmallStarsOAM:
-	dbsprite  0,  0,  0,  0, $A2, OAM_BEHIND_BG | OAM_OBP1
+	dbsprite  0,  0,  0,  0, $A2, OAM_PRIO | OAM_PAL1
 SmallStarsOAMEnd:
 
 SmallStarsWaveCoordsPointerTable:
@@ -259,10 +259,10 @@ GameFreakLogoOAMDataEnd:
 
 GameFreakShootingStarOAMData:	;shinpokerednote: gbcnote: changing the attribute to use palette 4 via GBC bits
 ;last column is byte 3 of OAM data; the attribute byte
-	db $00,$A0,$A0,$14
-	db $00,$A8,$A0,$34
-	db $08,$A0,$A1,$14
-	db $08,$A8,$A1,$34
+	dbsprite 20,  0,  0,  0, $a0, $04
+	dbsprite 21,  0,  0,  0, $a0, $04 | OAM_XFLIP
+	dbsprite 20,  1,  0,  0, $a1, $04
+	dbsprite 21,  1,  0,  0, $a1, $04 | OAM_XFLIP
 GameFreakShootingStarOAMDataEnd:
 
 FallingStar:: INCBIN "gfx/splash/falling_star.2bpp"

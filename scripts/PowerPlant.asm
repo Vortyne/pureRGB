@@ -210,7 +210,7 @@ CopyMenuSpritesVideoData:
 	call CopyVideoData
 	pop bc
 	pop hl
-	ld a, LEN_2BPP_TILE * 4
+	ld a, 4 tiles
 	ld d, 0
 	ld e, a
 	add hl, de
@@ -218,7 +218,7 @@ CopyMenuSpritesVideoData:
 	ld e, l
 	pop hl
 	push de
-	ld a, LEN_2BPP_TILE * 2
+	ld a, 2 tiles
 	ld d, 0
 	ld e, a
 	add hl, de
@@ -586,7 +586,7 @@ PowerPlantMagnet::
 	cp SCRIPT_MAGNETON_SUPERCHARGE
 	ret nz
 	; make player walk down one step
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hl], -1

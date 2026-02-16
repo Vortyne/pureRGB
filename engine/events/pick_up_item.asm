@@ -61,7 +61,7 @@ PickUpItemCommon:
 .multiItemPickup
 	add NUMBER_CHAR_OFFSET ; index of first number character in charmap (assumes c must be 0-9)
 	ld [wTempStore1], a
-	ld a, "@"
+	ld a, '@'
 	ld [wTempStore2], a
 	ld hl, FoundMultipleItemText
 	jr .print

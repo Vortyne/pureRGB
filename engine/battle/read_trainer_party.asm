@@ -32,14 +32,14 @@ ReadTrainer:
 ; and hl points to the trainer class.
 ; Our next task is to iterate through the trainers,
 ; decrementing b each time, until we get to the right one.
-.outer
+.CheckNextTrainer
 	dec b
 	jr z, .IterateTrainer
-.inner
+.SkipTrainer
 	ld a, [hli]
 	and a
-	jr nz, .inner
-	jr .outer
+	jr nz, .SkipTrainer
+	jr .CheckNextTrainer
 
 ; if the first byte of trainer data is FF,
 ; - each pokemon has a specific level
@@ -132,7 +132,7 @@ ReadTrainer:
 	ld d, [hl] ; move to be given
 	ld hl, wEnemyMon1Moves
 	add hl, bc ; select which move will be replaced based on c
-	ld bc, wEnemyMon2 - wEnemyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes ; select the correct pokemon to modify
 	ld [hl], d ; modify the move at the given slot to be the given move
 ;;;;;;;;;;
