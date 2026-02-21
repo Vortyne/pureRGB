@@ -369,3 +369,9 @@ SRAMCopyList:
 	dw sWorldOptions
 	dw sSpriteOptions5
 	dw sOptions4
+
+DebugNewGamePlayerName:
+	db "NINTEN@"
+
+DebugNewGameRivalName:
+	db "SONY@"

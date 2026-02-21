@@ -217,8 +217,20 @@ SetPal_Slots:
 	ret
 
 SetPal_TitleScreen:
-	ld hl, PalPacket_Titlescreen
+	ldh a, [hGBC]
+	and a
+	ld de, BlkPacket_PureTitlescreen ; gbc works with always using these packets
+	jr nz, .normalPalPacket
+	ld a, [wSpriteOptions2]
+	bit BIT_NEW_TITLE_SCREEN, a
+	ld hl, PalPacket_PureTitlescreen_SGB
+	jr nz, .next
+	; on SGB we need to use the original block packet on the original title screen
+	; on GB, doesn't matter which since there is no color
 	ld de, BlkPacket_Titlescreen
+.normalPalPacket
+	ld hl, PalPacket_Titlescreen
+.next
 	ret
 
 ; used mostly for menus and the Oak intro
@@ -1325,7 +1337,7 @@ palPacketPointers:
 	dw BlkPacket_StatusScreen
 	dw BlkPacket_Pokedex
 	dw BlkPacket_Slots
-	dw BlkPacket_Titlescreen
+	dw BlkPacket_PureTitlescreen
 	dw BlkPacket_NidorinoIntro
 	dw wPartyMenuBlkPacket
 	dw wTrainerCardBlkPacket

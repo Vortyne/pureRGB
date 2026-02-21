@@ -224,6 +224,8 @@ ROMX $3B
 ROMX $3C
 	"Camera Pics"
 	"NPC Sprites 5"
+ROMX $3D
+	"newCode3"
 WRAM0
 	"Audio RAM"
 	org $c100

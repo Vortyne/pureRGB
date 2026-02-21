@@ -3,7 +3,7 @@ SECTION "bank1", ROMX
 INCLUDE "data/sprites/facings.asm"
 INCLUDE "engine/events/black_out.asm"
 INCLUDE "engine/battle/safari_zone.asm"
-INCLUDE "engine/movie/title.asm"
+INCLUDE "engine/movie/title3.asm"
 INCLUDE "engine/pokemon/load_mon_data.asm"
 INCLUDE "data/items/prices.asm"
 INCLUDE "data/items/names.asm"
@@ -487,3 +487,7 @@ INCLUDE "engine/battle/move_effects/siphon_snag.asm"
 INCLUDE "engine/menus/map_wild_data.asm"
 INCLUDE "engine/battle/move_effects/screech.asm"
 INCLUDE "engine/menus/preview_front_sprite.asm"
+
+SECTION "newCode3", ROMX
+
+INCLUDE "engine/movie/title.asm"

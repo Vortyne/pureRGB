@@ -1,11 +1,13 @@
 ; PureRGBnote: ADDED: Accessed from your PC. This options page changes what areas are in the world. Currently only Volcano can be turned off/on.
-DEF OPTIONS_PAGE_5_COUNT EQU 4 ; number of options on this page
+DEF OPTIONS_PAGE_5_COUNT EQU 5 ; number of options on this page
 DEF OPTIONS_PAGE_5_NUMBER EQU 5 ; must be 1 digit.
 
 ; format: "bit set" x position, "bit not set" x position, which bit it is, pointer to wram variable
 Options3XPosBitData:
 	db 15, 12, FLAG_LEARNSETS_DISABLED % 8
 	dw wEventFlags + (FLAG_LEARNSETS_DISABLED / 8)
+	db 14, 11, BIT_NEW_TITLE_SCREEN ; TODO: save file updater needs to set this to off
+	dw wSpriteOptions2
 	db 14, 11, BIT_SKIP_INTRO
 	dw wSpriteOptions2
 	db 14, 11, FLAG_FLASHING_REDUCED % 8
@@ -36,6 +38,7 @@ Options3CoordOffsetList:
 	db 5, 1
 	db 7, 2
 	db 9, 3
+	db 11, 3
 	db PAGE_CONTROLS_Y_COORD, MAX_OPTIONS_PER_PAGE
 
 OptionsMenu3Data:
@@ -49,10 +52,12 @@ Options3SetCursorPositionActions:
 	dw SetCursorPositionFromOptions3
 	dw SetCursorPositionFromOptions3
 	dw SetCursorPositionFromOptions3
+	dw SetCursorPositionFromOptions3
 
 OptionsMenu3Text:
 	db   "OPTIONS 3"
 	next " LEARNSETS: ON OFF"
+	next " TITLE:    OG Pure"
 	next " INTRO:    ON SKIP"
 	next " FLASHING: OG LESS"
 	next " UNITS:    IMP MET@"
@@ -67,6 +72,7 @@ DrawOptionsMenu3:
 
 Options3LeftRightFuncs:
 	dw Options3CursorToggleFunc15
+	dw Options3CursorToggleFunc14
 	dw Options3CursorToggleFunc14
 	dw Options3CursorToggleFunc14
 	dw Options3CursorToggleFunc15b
@@ -97,12 +103,17 @@ SetCursorPositionFromOptions3:
 
 Options3InfoTextJumpTable:
 	dw LearnsetsInfoText
+	dw TitleInfoText
 	dw IntroInfoText
 	dw FlashingInfoText
 	dw UnitsInfoText
 
 LearnsetsInfoText:
 	text_far _LearnsetsInfoText
+	text_end
+
+TitleInfoText:
+	text_far _TitleInfoText
 	text_end
 
 IntroInfoText:

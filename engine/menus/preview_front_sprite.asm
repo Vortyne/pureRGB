@@ -13,10 +13,8 @@ PreviewFrontSprite::
 	ld [wCurSpecies], a
 	ld b, SET_PAL_MIDDLE_SCREEN_MON_BOX
 	call RunPaletteCommand
-	call .displayPopup
-	hlcoord 2, 14
-	lb bc, 2, 15
-	call TextBoxBorder
+	; check which text will display in the popup by looking at the tiles currently displaying on the screen
+	; have to do this before displaying the image textbox
 	hlcoord 0, 0
 	ld a, [wTopMenuItemX]
 	ld d, 0
@@ -28,6 +26,12 @@ PreviewFrontSprite::
 	inc hl
 	inc hl
 	ld a, [hl]
+	push af ; save the value for after drawing the textbox
+	call .displayPopup
+	hlcoord 2, 14
+	lb bc, 2, 15
+	call TextBoxBorder
+	pop af
 	ld hl, SpriteTypeMapping
 	ld de, 3
 	call IsInArray

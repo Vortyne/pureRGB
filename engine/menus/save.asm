@@ -1,8 +1,10 @@
 LoadSAV:
 ; if carry, write "the file data is destroyed"
 	call ClearScreen
+	call DisableLCD
 	call LoadFontTilePatterns
 	call LoadTextBoxTilePatterns
+	call EnableLCD
 	call LoadSAV0
 	jr c, .badsum
 	call LoadSAV1

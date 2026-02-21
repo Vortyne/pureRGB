@@ -40,7 +40,7 @@ DisplayDiploma::
 	hlcoord 10, 4
 	ld de, wPlayerName
 	call PlaceString
-	farcall DrawPlayerCharacter
+	farcall DrawPlayerCharacterForceOriginal
 
 ; Move the player 33 pixels right and set the priority bit so he appears
 ; behind the background layer.

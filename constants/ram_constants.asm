@@ -212,8 +212,8 @@ DEF PALETTES_YELLOW2    EQU  %01000011
 	const BIT_MENU_ICON_SPRITES ; 3
 	const BIT_ELECTABUZZ_SPRITE ; 4
 	const BIT_RATICATE_SPRITE   ; 5
-	const BIT_NEW_TITLE_SCREEN ; 6 ; TODO: not implemented yet
-	const BIT_SKIP_INTRO       ; 7 ; TODO: not implemented yet 
+	const BIT_NEW_TITLE_SCREEN ; 6
+	const BIT_SKIP_INTRO       ; 7 
 
 ; wSpriteOptions3
 	const_def

@@ -181,6 +181,8 @@ DisplayOptionMenuCommon:
 	call CallOptionsMenuHeaderFunction
 	pop bc
 	call DrawOptionsPageInfo
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
 	inc hl
 	inc hl ; second function in header
 	xor a
@@ -284,6 +286,8 @@ OptionsMenuLoop:
 .pageRow
 	ld a, SFX_PRESS_AB
 	rst _PlaySound
+	xor a
+	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
 	pop hl ; points to third function in header
 	lb de, 0, 4
