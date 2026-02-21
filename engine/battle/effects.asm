@@ -99,12 +99,12 @@ PoisonEffect:
 	jr z, .regularPoisonEffect
 	ld a, b
 	call PlayBattleAnimation2
-	rst _PrintText
-	ret
+	jr .printDone
 .regularPoisonEffect
 	call PlayCurrentMoveAnimation2
+.printDone
 	rst _PrintText
-	ret
+	jp DrawTargetHPBar
 .noEffect
 	ld a, [de]
 	cp POISON_EFFECT
@@ -250,34 +250,41 @@ FreezeBurnParalyzeEffect:
 	ld a, 1 << PAR
 	ld [wBattleMonStatus], a
 	call QuarterSpeedDueToParalysis
-	jp PrintMayNotAttackText
+	jr PrintMayNotAttackText
 .burn2
 	ld a, 1 << BRN
 	ld [wBattleMonStatus], a
 	call HalveAttackDueToBurn
-	jp PrintBurnText
+	jr PrintBurnText
 .freeze2
 ; hyper beam bits aren't reset for opponent's side
 	ld a, 1 << FRZ
 	ld [wBattleMonStatus], a
-	jp PrintFrozenText
+	; fall through
+PrintFrozenText:
+	ld hl, FrozenText
+.printDone
+	rst _PrintText
+	jp DrawTargetHPBar
 
 PrintBurnText:
 	ld hl, BurnedText
-	rst _PrintText
-	ret
+	jr PrintFrozenText.printDone
+
+PrintMayNotAttackText:
+	ld hl, ParalyzedMayNotAttackText
+	jr PrintFrozenText.printDone
+
+FrozenText:
+	text_far _FrozenText
+	text_end
 
 BurnedText:
 	text_far _BurnedText
 	text_end
 
-PrintFrozenText:
-	ld hl, FrozenText
-	rst _PrintText
-	ret
-
-FrozenText:
-	text_far _FrozenText
+ParalyzedMayNotAttackText:
+	text_far _ParalyzedMayNotAttackText
 	text_end
 
 CheckDefrost:
@@ -295,10 +302,6 @@ CheckDefrost:
 	ld hl, wEnemyMon1Status
 	ld a, [wEnemyMonPartyPos]
 	ld bc, wEnemyMon2 - wEnemyMon1
-	call AddNTimes
-	xor a
-	ld [hl], a ; clear status in roster
-	ld hl, FireDefrostedText
 	jr .common
 .opponent
 	ld a, [wEnemyMoveType] ; same as above with addresses swapped
@@ -308,12 +311,13 @@ CheckDefrost:
 	ld hl, wPartyMon1Status
 	ld a, [wPlayerMonNumber]
 	ld bc, wPartyMon2 - wPartyMon1
+.common
 	call AddNTimes
 	xor a
 	ld [hl], a
 	ld hl, FireDefrostedText
-.common
 	rst _PrintText
+	call DrawTargetHPBar
 	farjp CheckDefrostMove
 
 
@@ -1744,15 +1748,6 @@ DidntAffectText:
 
 IsUnaffectedText:
 	text_far _IsUnaffectedText
-	text_end
-
-PrintMayNotAttackText:
-	ld hl, ParalyzedMayNotAttackText
-	rst _PrintText
-	ret
-
-ParalyzedMayNotAttackText:
-	text_far _ParalyzedMayNotAttackText
 	text_end
 
 CheckTargetSubstitute:

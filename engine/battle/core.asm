@@ -2029,10 +2029,17 @@ ReadPlayerMonCurHPAndStatus:
 	ld bc, $4               ; 2 bytes HP, 1 byte unknown (unused?), 1 byte status
 	jp CopyData
 
-DrawHUDsAndHPBars::
-	call DrawPlayerHUDAndHPBar
-	jp DrawEnemyHUDAndHPBar
+;DrawUserHPBar:
+;	ldh a, [hWhoseTurn]
+;	and a
+;	jr z, DrawPlayerHUDAndHPBar
+;	jp DrawEnemyHUDAndHPBar
 
+DrawTargetHPBar::
+	ldh a, [hWhoseTurn]
+	and a
+	jp z, DrawEnemyHUDAndHPBar
+	; fall through
 DrawPlayerHUDAndHPBar::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -2099,6 +2106,9 @@ DrawPlayerHUDAndHPBar::
 	set BIT_LOW_HEALTH_ALARM, [hl]
 	ret
 
+DrawHUDsAndHPBars::
+	call DrawPlayerHUDAndHPBar
+	; fall through
 DrawEnemyHUDAndHPBar::
 	xor a
 	ldh [hAutoBGTransferEnabled], a

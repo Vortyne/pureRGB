@@ -76,7 +76,7 @@ _SleepEffect::
 	callfar PlayCurrentMoveAnimation2
 	ld hl, FellAsleepText
 	rst _PrintText
-	jpfar DrawHUDsAndHPBars
+	jpfar DrawTargetHPBar
 .didntAffect
 	jpfar PrintDidntAffectText
 .opponentHasScreech
