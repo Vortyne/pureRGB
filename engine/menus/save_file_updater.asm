@@ -23,6 +23,14 @@ SaveFileUpdateWarpText:
 	text_far _SaveFileUpdateWarpText
 	text_end
 
+SaveFileUpdating:
+	text_far _SaveFileUpdating
+	text_end
+
+BeforeVersion2_7_0SaveFileUpdateScript::
+	call BeforeVersion2_7_0SaveFileUpdate
+	jr SaveFileUpdateCheck.updateComplete
+
 SaveFileUpdateCheck::
 	ld a, [wGameInternalVersion]
 	cp CURRENT_INTERNAL_VERSION
@@ -33,6 +41,8 @@ SaveFileUpdateCheck::
 	pop af
 	cp INTERNAL_VERSION_ORIGINAL_GAME
 	jr z, .updateSave
+	cp INTERNAL_VERSION_2_7_0
+	jr c, BeforeVersion2_7_0SaveFileUpdateScript
 	; TODO: future save file updates go here
 	jr .askPalletWarp
 .updateSave
@@ -55,6 +65,7 @@ SaveFileUpdateCheck::
 .startPressed
 	call LoadScreenTilesFromBuffer1
 	call .updateSaveFile
+.updateComplete
 	ld hl, SaveFileUpdateCompleteText
 	rst _PrintText
 	call DisplayTextPromptButton
@@ -78,6 +89,8 @@ SaveFileUpdateCheck::
 	jp z, EarlierVersionSaveFileUpdate
 	; fall through
 OriginalGameSaveFileUpdate:
+	ld hl, SaveFileUpdating
+	rst _PrintText
 	; first we will copy item data to the correct locations
 	; step 1: copy the pc item data over to the new location
 	ld hl, wOriginalGameBoxItemsData
@@ -142,8 +155,52 @@ OriginalGameSaveFileUpdate:
 	call InsertValuesToFlagArray
 	; step 12: EVENT_BECAME_CHAMP set if player became champ
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
-	ret z
+	jr z, .skipSetChamp
 	SetEvent EVENT_BECAME_CHAMP
+.skipSetChamp
+	call BeforeVersion2_7_0SaveFileUpdate
+	ld c, 0 ; set all flags to 0
+ResetMonFlagsFully:
+	; step 13: Update party pokemon to have their flags set to 0 (used to be catch rate, now it's for alt palette pokemon and pokeball type)
+	ld a, [wPartyCount]
+	ld b, a
+	ld hl, wPartyMon1Flags
+	ld de, wPartyMon2Flags - wPartyMon1Flags
+.loop
+	ld a, [hl]
+	and c
+	ld [hl], a
+	add hl, de
+	dec b
+	jr nz, .loop
+	; step 14: Update all boxed pokemon to have their flags set to 0 (used to be catch rate, now it's for alt palette pokemon and pokeball type) 
+	; this step should come last because it updates the save file itself in SRAM
+	ld d, NUM_BOXES
+.loopThroughBoxes
+	push de
+	push bc
+	dec d
+	callfar ChangeBoxData
+	callfar SaveSAVtoSRAM
+	pop bc
+	ld hl, wBoxMon1Flags
+	ld a, [wBoxCount]
+	and a
+	jr z, .nextBox
+	ld b, a
+	ld de, wBoxMon2Flags - wBoxMon1Flags
+.boxMonLoop
+	ld a, [hl]
+	and c
+	ld [hl], a
+	add hl, de
+	dec b
+	jr nz, .boxMonLoop
+.nextBox
+	pop de
+	dec d
+	jr nz, .loopThroughBoxes
+	callfar SaveSAVtoSRAM
 	ret
 	
 
@@ -154,6 +211,7 @@ SaveFileUpdaterLoadPointer:
    	ld [wListPointer + 1], a
    	ret
 
+; update versions prior to 2.6.0
 EarlierVersionSaveFileUpdate:
 	; step 1: Booster chip variable was changed to an event flag, set event flag if it was set previously in the other version
 	ld a, [wPrior2_6_0_BoosterChipActive]
@@ -188,22 +246,26 @@ EarlierVersionSaveFileUpdate:
 	; step 6: update hide show variables based on events (if possible)
 	CheckEvent EVENT_MET_DAD
 	ld a, HS_REDS_HOUSE_1F_DAD
-	call z, .hideExtraObjectEntry
+	call z, HideExtraObjectEntry
 	CheckEvent EVENT_DIAMOND_MINE_COMPLETED
 	ld a, HS_PROSPECTORS_HOUSE_PROSPECTOR
-	call z, .hideExtraObjectEntry
+	call z, HideExtraObjectEntry
 	callfar SetDetentionHideShows
 	ld hl, SaveFileUpdater2_6_0_Hides
-	; fall through
-.hideMultipleObjects
+	call HideMultipleObjects
+	call BeforeVersion2_7_0SaveFileUpdate
+	ld c, %00000001 ; reset all flags except the alt palette flag
+	jp ResetMonFlagsFully
+
+HideMultipleObjects:
 	ld a, [hli]
 	cp -1
 	ret z
 	push hl
-	call .hideExtraObjectEntry
+	call HideExtraObjectEntry
 	pop hl
-	jr .hideMultipleObjects
-.hideExtraObjectEntry
+	jr HideMultipleObjects
+HideExtraObjectEntry:
 	ld [wMissableObjectIndex], a
 	predef_jump HideExtraObject
 
@@ -561,5 +623,22 @@ AddedHiddenItemFlags:
 	db 51
 	db -1
 
+BeforeVersion2_7_0SaveFileUpdate:
+	ld hl, SaveFileUpdater2_7_0_Hides
+	call HideMultipleObjects
+	ld hl, wSpriteOptions2
+	res BIT_NEW_TITLE_SCREEN, [hl]
+	res BIT_SKIP_INTRO, [hl]
+	ResetEvent EVENT_CELADON_POOL_GRAMPS_TUTORED_ONCE ; used to be the event marker for getting TM41, so reset it
+	ld hl, wPrior2_7_0_PlayTimeHours ; play time tracking hours was modified, move the value to the top byte
+	ld a, [hli]
+	ld [hld], a
+	ld [hl], 0
+	ret
+
+SaveFileUpdater2_7_0_Hides:
+	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD
+	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD2
+	db -1
 
 ; Note: if EVENT_RESCUED_MR_FUJI_2 is ever used set it correctly in save updater.

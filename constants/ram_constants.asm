@@ -164,7 +164,8 @@ DEF BIT_HAS_CHANGED_BOXES EQU 7
 	const BIT_PLAYER_LOWER_X ; 1
 
 ;;;;;;;;;; PureRGBnote: ADDED: New constants for all the new options that appear in the new options menus. 
-;;;;;;;;;;                     Controls which bits they use in the options wram variables.
+;;;;;;;;;;                     Controls which bits they use in the options wram variables. 
+;;;;;;;;;;                     Some are defined in event constants instead of here.
 
 ; wOptions2
 
@@ -242,5 +243,7 @@ DEF PALETTES_YELLOW2    EQU  %01000011
 	const_def
 	const IN_GAME
 	const IN_POKEMART_MENU
+	const VIEWED_ITEMFINDER_TEXT_ONCE
+	const ITEM_DUPLICATION_ACTIVE
 
 ;;;;;;;;;;

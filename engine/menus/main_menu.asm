@@ -5,10 +5,15 @@ MainMenu:
 	ld [wOptionsInitialized], a
 	inc a
 	ld [wSaveFileStatus], a
+	call ClearScreen
+	call DisableLCD
+	call LoadFontTilePatterns
+	call LoadTextBoxTilePatterns
+	call EnableLCD
 	call CheckForPlayerNameInSRAM
 	jr nc, .mainMenuLoop
 
-	predef LoadSAV
+	callfar LoadSAV
 
 .mainMenuLoopResetCurrentMenuItem
 
@@ -359,7 +364,7 @@ ENDC
 SpecialEnterMap::
 ;;;;;;;;;; PureRGBnote: ADDED: new flag for determining if not yet playing the game
 	ld hl, wNewInGameFlags 
-	set 0, [hl] 
+	set IN_GAME, [hl] 
 ;;;;;;;;;;
 	xor a
 	ldh [hJoyPressed], a
@@ -476,7 +481,12 @@ PrintNumOwnedMons:
 
 PrintPlayTime:
 	ld de, wPlayTimeHours
+	ld a, [wGameInternalVersion]
+	cp INTERNAL_VERSION_2_7_0
+	lb bc, 1, 5
+	jr c, .noPlayTimeHourUpdateYet
 	lb bc, 2, 5
+.noPlayTimeHourUpdateYet
 	call PrintNumber
 	ld a, $6d
 	ld [hli], a

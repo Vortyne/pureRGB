@@ -3,7 +3,7 @@
 ; it only triggers if we have watched the old man catch a pokemon since the last time we turned the game on before encountering missingno.
 MissingNoBattleStart::
 	ld a, [wNewInGameFlags]
-	bit 3, a
+	bit ITEM_DUPLICATION_ACTIVE, a
 	ret z
 	ld hl, wBagItems + 11 ; sixth item in bag's quantity
 	set 7, [hl] ; adds 128 to the quantity, if you don't already have 128.

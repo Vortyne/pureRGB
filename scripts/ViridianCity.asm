@@ -73,7 +73,7 @@ ViridianCityOldManStartCatchTrainingScript:
 
 ;;;;;;;;;; PureRGBnote: ADDED: enable item duplication "glitch" via this new wram variable
 	ld hl, wNewInGameFlags
-	set 3, [hl] ; each time the game is reset we have to trigger this to allow item duplication from missingno
+	set ITEM_DUPLICATION_ACTIVE, [hl] ; each time the game is reset we have to trigger this to allow item duplication from missingno
 ;;;;;;;;;;
 
 	; set up battle for Old Man

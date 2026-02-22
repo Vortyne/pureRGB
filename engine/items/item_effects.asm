@@ -2331,8 +2331,8 @@ ItemUseItemfinder:
 .doneLoop
 	; say itemfinder found an item if we haven't seen this text yet
 	ld hl, wNewInGameFlags
-	bit 2, [hl]
-	set 2, [hl]
+	bit VIEWED_ITEMFINDER_TEXT_ONCE, [hl]
+	set VIEWED_ITEMFINDER_TEXT_ONCE, [hl]
 	jr nz, .doDirectionFacing ; already have seen the text since restarting the cartridge
 	ld hl, ItemfinderFoundItemText
 	rst _PrintText

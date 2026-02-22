@@ -91,8 +91,8 @@ PredefPointers::
 	add_predef AskName
 	add_predef PewterGuys
 	add_predef SaveSAVtoSRAM2
-	add_predef LoadSAV2
-	add_predef LoadSAV
+	add_predef SaveScreenTileAreaToBuffer3
+	add_predef LoadScreenTileAreaFromBuffer3
 	add_predef SaveSAVtoSRAM1
 	add_predef DoInGameTradeDialogue
 	add_predef HallOfFamePC
@@ -111,6 +111,3 @@ PredefPointers::
 	add_predef OaksAideScript
 	add_predef PickUpItemQuantity
 	add_predef FarLoadTownMapEntry
-	add_predef SaveScreenTileAreaToBuffer3
-	add_predef LoadScreenTileAreaFromBuffer3
-	

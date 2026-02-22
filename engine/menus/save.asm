@@ -1,10 +1,5 @@
 LoadSAV:
 ; if carry, write "the file data is destroyed"
-	call ClearScreen
-	call DisableLCD
-	call LoadFontTilePatterns
-	call LoadTextBoxTilePatterns
-	call EnableLCD
 	call LoadSAV0
 	jr c, .badsum
 	call LoadSAV1
@@ -388,17 +383,9 @@ ChangeBox::
 	res BIT_DOUBLE_SPACED_MENU, [hl]
 	bit BIT_B_BUTTON, a
 	jr nz, .done
-	call GetBoxSRAMLocation
-	ld e, l
-	ld d, h
-	ld hl, wBoxDataStart
-	call CopyBoxToOrFromSRAM ; copy old box from WRAM to SRAM
 	ld a, [wCurrentMenuItem]
-	set BIT_HAS_CHANGED_BOXES, a
-	ld [wCurrentBoxNum], a
-	call GetBoxSRAMLocation
-	ld de, wBoxDataStart
-	call CopyBoxToOrFromSRAM ; copy new box from SRAM to WRAM
+	ld d, a
+	call ChangeBoxData
 	ld hl, wCurMapTextPtr
 	ld de, wChangeBoxSavedMapTextPointer
 	ld a, [hli]
@@ -419,6 +406,22 @@ ChangeBox::
 	pop af
 	ld [wStatusFlags5], a
 	ret
+
+ChangeBoxData::
+	push de
+	call GetBoxSRAMLocation
+	ld e, l
+	ld d, h
+	ld hl, wBoxDataStart
+	call CopyBoxToOrFromSRAM ; copy old box from WRAM to SRAM
+	pop de
+	ld a, d
+	set BIT_HAS_CHANGED_BOXES, a
+	ld [wCurrentBoxNum], a
+	call GetBoxSRAMLocation
+	ld de, wBoxDataStart
+	jp CopyBoxToOrFromSRAM ; copy new box from SRAM to WRAM
+
 
 WhenYouChangeBoxText:
 	text_far _WhenYouChangeBoxText

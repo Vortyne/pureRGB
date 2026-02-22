@@ -1880,6 +1880,11 @@ _SaveFileUpdateTextConfirm::
 	line "confirm."
 	done
 
+_SaveFileUpdating::
+	text "Updating<...>"
+	line "Please wait<...>"
+	done
+
 _SaveFileUpdateCompleteText::
 	text "Your save file has"
 	line "been updated."

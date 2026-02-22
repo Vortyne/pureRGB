@@ -1,5 +1,4 @@
 ; PureRGBnote: ADDED: heal effect is also used now to give the user of TELEPORT in battle 25% HP regen on switching out
-; TODO: auto-wake up after applying effect if screeches are echoing
 TeleportHealEffect:
 	ld a, d
 	push af
