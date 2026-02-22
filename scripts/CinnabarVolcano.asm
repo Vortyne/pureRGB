@@ -2311,9 +2311,66 @@ CinnabarVolcanoProspectorText:
 .prospecting
 	text_far _VolcanoProspectorAfterMessage
 	text_end
+.moreInfo
+	text_far _VolcanoNeedSomeInfo
+	text_end
+.getToIt2
+	text_far _VolcanoGetToIt2
+	text_end
 .getToIt
 	text_far _VolcanoGetToIt
-	text_end
+	text_asm
+	ld hl, .moreInfo
+	rst _PrintText
+	hlcoord 8, 5
+	lb bc, 5, 10
+	call TextBoxBorderUpdateSprites
+	call DisableTextDelay
+	hlcoord 10, 6
+	ld de, VolcanoHelpMenu
+	call PlaceString
+	call EnableTextDelay
+	xor a
+	ld [wCurrentMenuItem], a
+.repeatHelp
+	ld a, 9
+	ld [wTopMenuItemX], a
+	ld a, 6
+	ld [wTopMenuItemY], a
+	ld a, 3
+	ld [wMaxMenuItem], a
+	call HandleMenuInput
+	ldh a, [hJoy5]
+	bit BIT_B_BUTTON, a
+	ld hl, .getToIt2
+	jr nz, .printDone
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .printDone
+	dec a
+	ld hl, .drillInfo
+	jr z, .printRepeat
+	ld hl, .lavaconefull
+	rst _PrintText
+	ld a, CINNABAR_VOLCANO_PROSPECTOR
+	call SetSpriteFacingLeft
+	ld hl, .blowrocks
+.printRepeat
+	rst _PrintText
+	ld a, CINNABAR_VOLCANO_PROSPECTOR
+	call SetSpriteFacingRight
+	ld hl, .moreInfo
+	rst _PrintText
+	jr .repeatHelp
+	; show list of text options
+.printDone
+	rst _PrintText
+	rst TextScriptEnd
+
+VolcanoHelpMenu:
+	db "Nah."
+	next "DRILL"
+	next "Blockages@"
 
 BlaineWalksOut:
 	db NPC_MOVEMENT_DOWN
