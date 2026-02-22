@@ -300,7 +300,7 @@ CheckStartVolcanoRumbling:
 LavaFloodReset::
 	CheckEvent EVENT_IN_LAVA_FLOOD_ROOM
 	ret z
-	ld a, 200 ; shorter cooldown in lava flood area
+	ld a, 197 ; shorter cooldown in lava flood area
 	ld [wOverworldAnimationCooldown], a
 LavaFloodResetAlways::
 	; lava flood specific code
