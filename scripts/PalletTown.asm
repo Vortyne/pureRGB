@@ -211,8 +211,15 @@ PalletTownSignText:
 	text_end
 
 PalletTownPlayersHouseSignText:
+IF DEF(_DEBUG)
+	text_asm
+	callfar GBCSetCPU1xSpeed
+	predef HallOfFamePC
+	jp SoftReset
+ELSE
 	text_far _PalletTownPlayersHouseSignText
 	text_end
+ENDC
 
 PalletTownRivalsHouseSignText:
 	text_far _PalletTownRivalsHouseSignText
