@@ -249,8 +249,6 @@ BillsGardenOverheardText:
 	ld hl, BillsGardenEavesDropQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, BillsGardenEavesDropQuestionNo
 	jr nz, .done
 	ld a, [wBillsGardenVisitor]
@@ -288,8 +286,6 @@ BillsGardenErikaText:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, BillsGardenErikaText2No
 	jr nz, .print
 	; make sabrina face left
@@ -604,8 +600,6 @@ BillsGardenDadText:
 	ld hl, BillsGardenDadText3
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, BillsGardenDadText3No
 	jr nz, .no
 	call GBFadeOutToWhite

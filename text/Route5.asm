@@ -60,7 +60,7 @@ _Route5CharmeleonLearnset::
 	line "positive aspects"
 	cont "of training a"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text ":"
 	prompt
 
@@ -88,7 +88,7 @@ _Route5AfterBattleText3::
 
 _Route5SquirtleLearnset::
 	text "I put my @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	line "in the DAYCARE"
 	cont "while I studied"

@@ -864,20 +864,14 @@ DoPoofSpecialEffects:
 	rst _PlaySound
 	ret
 .masterBallSFX
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
 	ld a, SFX_HORN_DRILL
-	rst _PlaySound
-	ret
+	jp PlaySoundResetSFXModifiers
 .ballToss
 	ld a, [wUnusedC000]
 	and a
 	ret z
 	ld b, a
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
+	call ResetSFXModifiers
 	ld a, b
 	; special effects for ball tosses
 	cp GREATTOSS_ANIM
@@ -2722,12 +2716,11 @@ AnimCopyRowRight:
 	ret
 
 ; only used by the unreferenced PlayIntroMoveSound
-; TODO: remove unused code?
-GetIntroMoveSound:
-	ld a, b
-	call GetMoveSound
-	ld b, a
-	ret
+;GetIntroMoveSound:
+;	ld a, b
+;	call GetMoveSound
+;	ld b, a
+;	ret
 
 GetMoveSound:
 	ld hl, MoveSoundTable
@@ -3510,3 +3503,9 @@ AnimationSendOutMonPoofJump:
 
 AnimationSiphonSnagAttack:
 	jpfar _AnimationSiphonSnagAttack
+
+AnimationSpecialSoundEffect:
+	; currently only used by Lovely Kiss, but can be expanded to be used with different moves in the future by checking wAnimSoundID
+	ld hl, wChannelCommandPointers + CHAN5 * 2
+	ld de, SFX_LovelyKiss_Ch5
+	jp RemapSoundChannel

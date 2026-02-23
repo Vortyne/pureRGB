@@ -1222,7 +1222,8 @@ LovelyKissAnim:
 	battle_anim METRONOME, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
-	battle_anim LOVELY_KISS, SUBANIM_0_HEART_1_MUSIC, 0, 6
+	battle_anim LOVELY_KISS, SE_CUSTOM_MOVE_SFX
+	battle_anim NO_MOVE, SUBANIM_0_HEART_1_MUSIC, 0, 6
 	db -1 ; end
 
 SkyAttackAnim:

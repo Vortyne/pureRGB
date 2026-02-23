@@ -111,7 +111,7 @@ StartDigEnterMapAnimation::
 	call DigLoadMonsterSprite
 	ld c, 20
 	rst _DelayFrames
-	jp ResetSoundModifiers
+	jp ResetSFXModifiers
 
 DigLoadMonsterSprite::
 	ld a, [wSpriteOptions2]
@@ -264,12 +264,6 @@ PlayDigSound:
 	rst _PlaySound
 	ret
 
-ResetSoundModifiers:
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
-	ret
-
 StartDigLeaveMapAnimation::
 	call DigLoadMonsterSprite
 	ld a, SPRITE_FACING_DOWN
@@ -289,7 +283,7 @@ StartDigLeaveMapAnimation::
 	call DigAnimationMonsterFrame4
 	call DigAnimationMonsterFrame5
 	call DigAnimationMonsterFrame6
-	call ResetSoundModifiers
+	call ResetSFXModifiers
 	ld c, 36
 	rst _DelayFrames
 	ret

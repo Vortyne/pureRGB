@@ -15,8 +15,6 @@ VermilionGuruHouseText1:
 	ld hl, .DoYouLikeToFishText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .refused
 	lb bc, GOOD_ROD, 1
 	call GiveItem
@@ -44,6 +42,7 @@ VermilionGuruHouseText1:
 
 .TakeThisText:
 	text_far _VermilionOldRodHouseFishingGuruTakeThisText
+	text_far _GenericReceivedItemA
 	sound_get_item_1
 	text_end
 

@@ -76,7 +76,7 @@ _ItemUseBallText06::
 _SurfingGotOnText::
 	text "<PLAYER> got on"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 
@@ -94,7 +94,7 @@ _ApexChipPutOnPokeballText::
 	text "You installed the"
 	line "APEX CHIP on"
 	para "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "'s"
 	line "Poké Ball.@"
 	text_asm
@@ -111,7 +111,7 @@ _ApexChipPutOnPokeballText::
 	rst TextScriptEnd
 
 _ApexChipDVsMaxedText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "'s"
 	line "potential is"
 	cont "maximized!"
@@ -123,7 +123,7 @@ _ApexChipAlreadyUsedText::
 	line "an APEX CHIP"
 	para "installed on"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "'s"
 	cont "Poké Ball."
 	prompt
@@ -139,10 +139,10 @@ _BoosterChipInstalledText::
 	text_end
 
 _VitaminStatRoseText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "'s"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " rose."
 	prompt
 
@@ -215,14 +215,14 @@ _RestorePPWhichTechniqueText::
 	done
 
 _PPMaxedOutText::
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "'s PP"
 	line "has already been"
 	cont "maxed out."
 	prompt
 
 _PPIncreasedText::
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "'s max"
 	line "PP increased."
 	prompt
@@ -242,26 +242,26 @@ _BootedUpHMText::
 _TeachMachineMoveText::
 	text "It contained"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 
 	para "Teach @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text_start
 	line "to a #MON?"
 	done
 
 _MonCannotLearnMachineMoveText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " is not"
 	line "compatible with"
 	cont "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "."
 
 	para "It can't learn"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "."
 	prompt
 
@@ -324,7 +324,7 @@ _NoCyclingAllowedHereText::
 _NoSurfingHereText::
 	text "No SURFing on"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " here!"
 	prompt
 

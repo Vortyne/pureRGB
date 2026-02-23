@@ -35,13 +35,13 @@ _Route12Fisher1AfterBattleText::
 _LearnsetGoldeen::
 	text "I usually have"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " use"
 	cont "SUPERSONIC to"
 	cont "unsnag it."
 	para "Gotta love"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "@"
 	text_end
@@ -66,7 +66,7 @@ _Route12Fisher2AfterBattleText::
 _LearnsetTentacool::
 	text "Not just a bunch"
 	line "of @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "<...>"
 	para "Well actually,"
@@ -128,7 +128,7 @@ _SeadraLearnset::
 	line "you meet someone"
 	cont "who can catch a"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "They live pretty"
 	line "deep underwater!"
@@ -269,4 +269,11 @@ _Route12MetronomeGamblerMetronomeTeach2Text::
 	para "And come back if"
 	line "you want me to"
 	cont "teach it again!"
+	done
+
+_Route12MetronomeGamblerNoDitto::
+	text "DITTO?!"
+	para "No need!"
+	para "It's already a"
+	line "randomness master!"
 	done

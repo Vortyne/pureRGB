@@ -138,8 +138,7 @@ CheckStartMagmarTransform:
 	call DisplayTextID
 	ld c, 60
 	rst _DelayFrames
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld de, SFX_Fire_Powerup
 	call PlayNewSoundChannel8
 	ld de, MonsterSwimmingSprite tile 12
@@ -156,8 +155,7 @@ CheckStartMagmarTransform:
 	ld de, MonsterSwimmingSprite
 	lb bc, BANK(MonsterSwimmingSprite), 4
 	call .copyMonsterSprite
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld a, VOLCANIC_MAGMAR
 	ld [wCurPartySpecies], a
 	callfar ChangePartyPokemonSpecies

@@ -2,7 +2,7 @@ _LearnsetCuteTalk::
 	text "I could talk"
 	line "about my cute"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " all"
 	cont "day!"
 	prompt
@@ -39,7 +39,7 @@ _LearnsetRude::
 _LearnsetKnowAlotAbout::
 	text "I know a lot"
 	line "about @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "I'll share some"
 	line "of my secrets!"
@@ -48,7 +48,7 @@ _LearnsetKnowAlotAbout::
 _LearnsetKnowEverythingAbout::
 	text "I know everything"
 	line "about @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "Time to hear"
 	line "from an expert!"
@@ -58,7 +58,7 @@ _LearnsetKnowMoreThanYou::
 	text "I know more than"
 	line "you when it comes"
 	cont "to @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "I'll prove it!"
 	prompt
@@ -68,7 +68,7 @@ _LearnsetBoring::
 	para "You'd never train"
 	line "a cool #MON"
 	cont "like @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "You just wouldn't"
 	line "get it!"
@@ -80,7 +80,7 @@ _LearnsetAppreciator::
 	para "<...>"
 	para "<...>"
 	para "The @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	line "APPRECIATOR CLUB!"
 	prompt
@@ -90,7 +90,7 @@ _LearnsetMastering::
 	line "mastering the art"
 	cont "of training this"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "Listen well!"
 	prompt
@@ -98,7 +98,7 @@ _LearnsetMastering::
 _LearnsetCool::
 	text "The coolness level"
 	line "of @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " is"
 	cont "off the charts!"
 	para "Listen up bro!"
@@ -108,7 +108,7 @@ _LearnsetTough::
 	text "You'll never find"
 	line "a #MON tougher"
 	cont "than @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "You should train"
 	line "one!"
@@ -119,7 +119,7 @@ _LearnsetMystery::
 	line "interested in the"
 	cont "mysterious nature"
 	cont "of @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?"
 	prompt
 
@@ -129,7 +129,7 @@ _WhileGoingBackToPkmnCenter::
 	text_start
 	line "taught you about"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " while"
 	cont "on a trip to the"
 	cont "#MON CENTER."
@@ -141,7 +141,7 @@ _StartedTalkingAboutDetails::
 	text_start
 	line "started talking"
 	cont "about @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	cont "in great detail."
 	prompt
@@ -162,7 +162,7 @@ _ShowedCoolMoves::
 	text_start
 	line "showed off a few"
 	cont "of @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "'s"
 	cont "best abilities."
 	prompt
@@ -170,7 +170,7 @@ _ShowedCoolMoves::
 _ReadAlotAboutPkmn::
 	text "You read a lot"
 	line "about @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "Wow, this is"
 	line "so @"
@@ -231,7 +231,7 @@ _WhileGoingHeadingToShipInfirmary::
 	text_start
 	line "taught you about"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " while"
 	cont "heading to the"
 	cont "ship infirmary."
@@ -244,7 +244,7 @@ _LearnsetFondMemories::
 	line "recounted fond"
 	cont "memories made"
 	cont "with @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	prompt
 
@@ -256,7 +256,7 @@ _PlayedAroundWith::
 	text " played"
 	cont "around with"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " a bit."
 	prompt
 
@@ -268,7 +268,7 @@ _LearnsetDream::
 	cont "strange dream"
 	cont "they had about"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	prompt
 
@@ -279,14 +279,14 @@ _BlaineStory::
 	line "his epic story"
 	cont "about being saved"
 	cont "by @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	prompt
 
 _LearnsetNaturalHabitatText::
 	text "<PLAYER> observed"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " in its"
 	cont "natural habitat."
 	prompt

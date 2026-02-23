@@ -408,19 +408,14 @@ MoveMysticCrystalBallText:
 	rst _PrintText
 	call WaitForSoundToFinish
 	; start the "crystal ball" animation
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call PauseMusic
+	call DisableSpriteUpdates
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK(SFX_Psybeam)
 	ld [wAudioROMBank], a
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
 	ld a, SFX_PSYBEAM
-	rst _PlaySound
+	call PlaySoundResetSFXModifiers
 	ld a, 4
 	call .sparkleCrystalBall
 	ld a, 5
@@ -430,8 +425,8 @@ MoveMysticCrystalBallText:
 	call WaitForSoundToFinish
 	pop af
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
+	; a = 0 after ResumeMusic
 	ld [wMapPalOffset], a
 	inc a
 	ld [wUpdateSpritesEnabled], a

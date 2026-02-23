@@ -281,8 +281,6 @@ PokemonTower2FChannelerText:
 .skip2
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .no
 	jr nz, .printDone
 	ld a, SILPH_SCOPE
@@ -296,8 +294,6 @@ PokemonTower2FChannelerText:
 	ld hl, .back
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .backNo
 	jr nz, .printDone
 	lb bc, SILPH_SCOPE, 1

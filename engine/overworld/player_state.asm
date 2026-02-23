@@ -160,8 +160,7 @@ IsWarpTileInFrontOfPlayer::
 	ld h, [hl]
 	ld l, a
 	ld a, [wTileInFrontOfPlayer]
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 .done
 	pop bc
 	pop de
@@ -195,9 +194,8 @@ IsPlayerStandingOnDoorTileOrWarpTile::
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	ld de, $1
 	lda_coord 8, 9
-	call IsInArray
+	call IsInSingleByteArray
 	jr nc, .done
 	ld hl, wMovementFlags
 	res BIT_STANDING_ON_WARP, [hl]

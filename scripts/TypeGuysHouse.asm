@@ -56,8 +56,7 @@ TypeGuysHouseLightSwitch::
 	; turn on the lights
 	xor a
 	ld [wMapPalOffset], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	; add the "on" light switch tile
 	jr LoadLightSwitchOnGraphic
 .turnOff
@@ -67,8 +66,7 @@ TypeGuysHouseTurnOffLights:
 	; turn off the lights
 	ld a, 6
 	ld [wMapPalOffset], a
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	; add the "off" light switch tile
 	jr LoadLightSwitchOffGraphic
 

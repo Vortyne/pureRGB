@@ -40,7 +40,7 @@ _Route2AfterBattle1Learnset::
 _Route2AfterBattle2Learnset::
 	text "Everybody loves"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "Come on! Let's"
 	line "hang out."
@@ -93,7 +93,7 @@ _Route2AfterBattleText3::
 
 _Route2AfterBattle3Learnset::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " likes"
 	line "to doze among"
 	cont "the flowers."

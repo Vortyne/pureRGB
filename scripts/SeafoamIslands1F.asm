@@ -258,11 +258,7 @@ DragonairEventErikText:
 	ld hl, .leaveQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .no
-	call DragonairUnderWaterEventAreaScript.warpOut
-.no
+	call z, DragonairUnderWaterEventAreaScript.warpOut
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	rst TextScriptEnd
@@ -350,8 +346,6 @@ DragonairEventCloysterText:
 	ld hl, .initial2
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 .yes
 	; make player re-choose dragonair since it's position in the party could've changed
@@ -461,8 +455,7 @@ DragonairEventTransformText:
 	call GBFadeOutToWhite
 	call LoadGBPal
 	; re-enable sprite updates after animation
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	ld hl, .transformed2
 	rst _PrintText
 	; make it learn ICE BEAM if it doesn't have it
@@ -508,8 +501,7 @@ DragonairEventTransformText:
 	text_end
 .powerupAnimation
 	; disable sprite update routine so we can manipulate some sparkle sprites without map sprite code running
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ldh a, [hGBC]
 	and a
 	jr z, .notGBC

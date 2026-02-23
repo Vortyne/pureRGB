@@ -75,8 +75,6 @@ LightChannelerText:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, LightChannelerHaunterNo
 	jr nz, .no
 	ld hl, LightChannelerHaunterYes

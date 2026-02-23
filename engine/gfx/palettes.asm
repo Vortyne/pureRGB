@@ -278,8 +278,7 @@ SetPal_Overworld:
 	jr nz, .notCeladon
 	ld a, [wCurMap]
 	ld hl, NoRainbowCeladonMaps
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr nc, .rainbow
 .notCeladon
 	ld hl, PalPacket_Empty

@@ -154,7 +154,7 @@ FitnessClubIntroScript::
 	ld a, $FF
 	ld [wFitnessClubChallenger], a
 	push de
-	call FitnessClubYesNoChoice
+	call YesNoChoice
 	pop de
 	jr nz, .decidedNotToStart
 	ld a, [wPartyMon1Level]
@@ -280,8 +280,7 @@ StartFitnessClubBattle::
 	pop de
 	push af
 	callfar FarMoveSpriteInRelationToPlayer
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	call GBPalNormal
 	ld c, 30
 	rst _DelayFrames
@@ -415,8 +414,7 @@ FitnessClubHideOpponents:
 	rst _PlaySound
 	pop hl
 	call hl_caller
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	jp GBPalNormal
 
 VermilionFitnessClubHideOpponents:
@@ -435,7 +433,7 @@ FitnessClubAfterBattleText::
 	push de
 	ld hl, .battleAgain
 	rst _PrintText
-	call FitnessClubYesNoChoice
+	call YesNoChoice
 	pop de
 	ld hl, .doneBattling
 	jr nz, .printDoneLeave
@@ -475,7 +473,7 @@ FitnessClubAfterBattleText::
 .firstMonBelowLimit
 	ld hl, .changeSettings
 	rst _PrintText
-	call FitnessClubYesNoChoice
+	call YesNoChoice
 	jr nz, .settings
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -506,12 +504,6 @@ FitnessClubAfterBattleText::
 .doneBattling
 	text_far _FitnessClubDone
 	text_end
-
-FitnessClubYesNoChoice:
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	ret
 
 VermilionFitnessClubExerciseBikes:
 	text_far _VermilionFitnessClubExerciseBikes

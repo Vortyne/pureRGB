@@ -9,13 +9,13 @@ _CableClubNPCMakingPreparationsText::
 	done
 
 _UsedStrengthText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " used"
 	line "STRENGTH.@"
 	text_end
 
 _CanMoveBouldersText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can"
 	line "move boulders."
 	done
@@ -102,19 +102,19 @@ _WarpToLastPokemonCenterText::
 	prompt
 
 _CannotUseTeleportNowText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can't"
 	line "use TELEPORT now."
 	prompt
 
 _CannotFlyHereText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can't"
 	line "FLY here."
 	prompt
 
 _CannotDigHereText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can't"
 	line "DIG here."
 	prompt
@@ -159,7 +159,7 @@ _CannotGetOffHereText::
 _GotMonText::
 	text "<PLAYER> got"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!@"
 	text_end
 
@@ -171,7 +171,7 @@ _SentToBoxText::
 	text " was"
 	cont "sent to #MON"
 	cont "BOX @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " on <PC>!"
 	prompt
 

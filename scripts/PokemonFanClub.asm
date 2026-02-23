@@ -75,7 +75,7 @@ PokemonFanClubSeelFanText:
 	jr nz, .done
 	ld de, FanName
 	call CopyTrainerName
-	lb hl, DEX_SEEL, $FF ; TODO: fix
+	lb hl, DEX_SEEL, $FF
 	ld de, LearnsetBeautyTalk
 	ld bc, LearnsetFadeOutInDetails
 	predef_jump LearnsetTrainerScriptMain
@@ -179,8 +179,6 @@ PokemonFanClubChairmanText:
 	rst TextScriptEnd
 .yesNoChoice
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .NoStoryText
 	ret
 

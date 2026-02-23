@@ -147,35 +147,35 @@ _CinnabarVolcanoYouClearEast::
 	prompt
 
 _ExplodeRocksExplosionText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " used"
 	line "EXPLOSION to"
 	cont "blow up the rocks!"
 	done
 
 _ExplodeRocksSelfdestructText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " used"
 	line "SELFDESTRUCT to"
 	cont "blow up the rocks!"
 	done
 
 _ShatteredRocksSkullBashText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " smashed"
 	line "the rocks with"
 	cont "SKULL BASH!"
 	done
 
 _ShatteredRocksText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " smashed"
 	line "the rocks with"
 	cont "a powerful blow!"
 	done
 
 _MeltedRocksText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " melted"
 	line "the rocks with"
 	cont "superheated fire!"
@@ -540,7 +540,7 @@ _CinnabarVolcanoWestLavaFlowText::
 
 _CinnabarVolcanoWestMagmarTransformText1::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " looks"
 	line "excited for a"
 	cont "lava bath!"
@@ -548,7 +548,7 @@ _CinnabarVolcanoWestMagmarTransformText1::
 
 _CinnabarVolcanoWestMagmarTransformText2::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " did a"
 	line "cannonball into"
 	cont "the lava pool!"
@@ -558,7 +558,7 @@ _CinnabarVolcanoWestMagmarTransformText3::
 	text "Volcanic power"
 	line "radiated through"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	done
 
@@ -575,7 +575,7 @@ _CinnabarVolcanoWestMagmarTransformText4::
 	cont "all water near it"
 	cont "will vaporize!"
 	para "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " became"
 	line "immune to WATER"
 	cont "and FIRE-type"

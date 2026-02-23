@@ -19,7 +19,7 @@ _Route9CooltrainerF1AfterBattleText::
 
 _LearnsetGloom::
 	text "My @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can use"
 	line "FLASH to get rid"
 	cont "of the darkness!"
@@ -46,7 +46,7 @@ _RhyhornLearnset::
 	para "Saw you eyeing my"
 	line "rough-and-tumble"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "You know it's"
 	line "drop dead cool!"
@@ -106,7 +106,7 @@ _Route9Hiker1AfterBattleText::
 
 _LearnsetSandslash::
 	text "Love my @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "He's a trooper, eh?"
 	para "My anchor, eh?"
@@ -134,7 +134,7 @@ _GeodudeLearnset::
 	text "Resilient and"
 	line "hardy, like my"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "Talk about a"
 	line "classic HIKER"

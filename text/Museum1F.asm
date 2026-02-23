@@ -15,12 +15,6 @@ _Museum1FScientist1ThankYouText::
 	line "Thank you!"
 	done
 
-_Museum1FScientist1DontHaveEnoughMoneyText::
-; TODO: reuse the one in text 7 or whatever
-	text "You don't have"
-	line "enough money."
-	prompt
-
 _Museum1FScientist1DoYouKnowWhatAmberIsText::
 	text "You can't sneak"
 	line "in the back way!"
@@ -80,11 +74,6 @@ _Museum1FScientist2TakeThisToAPokemonLabText::
 	line "#MON LAB and"
 	cont "get it examined!"
 	prompt
-
-_Museum1FScientist2ReceivedOldAmberText::
-	text "<PLAYER> received"
-	line "OLD AMBER!@" ; TODO: load item name?
-	text_end
 
 _Museum1FScientist2GetTheOldAmberCheckText::
 	text "Ssh! Get the OLD"

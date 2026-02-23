@@ -29,7 +29,7 @@ GetChampArenaMusicNameListMenu:
 	jpfar GetChampArenaMusicNameIntoWRAM
 
 GetBadgeNameListMenu:
-	jpfar GetBadgeName
+	jpfar _GetBadgeName
 
 GetFloorNameListMenu:
 	jpfar GetFloorName

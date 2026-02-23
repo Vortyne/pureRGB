@@ -74,8 +74,6 @@ VermilionGymLTSurgeReceiveTM24Script:
 .gym_victory
 	ld hl, wObtainedBadges
 	set BIT_THUNDERBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_THUNDERBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
@@ -274,7 +272,7 @@ VermilionGymSailorAfterBattleText:
 
 VermilionGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges]
 	bit BIT_THUNDERBADGE, a
 	jr nz, .afterBeat
 	ld hl, VermilionGymGuideChampInMakingText
@@ -330,6 +328,7 @@ AlreadyReceivedApexChipsText3:
 	text_end
 
 VermilionGymGuideChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _VermilionGymGymGuideChampInMakingText
 	text_end
 

@@ -7,7 +7,7 @@ _VermilionPidgeyHouseYoungsterText::
 
 _VermilionPidgeyHouseYoungsterLearnset::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " is actually"
 	line "a very capable"
 	cont "letter deliverer!"

@@ -16,7 +16,7 @@ _SilphCo2FSilphWorkerFReceivedTM36Text::
 _Route1Youngster1GotPotionText::
 	text "<PLAYER> got"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 

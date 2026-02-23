@@ -112,8 +112,7 @@ StatusScreen:
 	push af
 	ld a, [wUpdateSpritesEnabled]
 	push af
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	xor a
 	ldh [hTileAnimations], a
 	hlcoord 19, 1

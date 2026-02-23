@@ -673,6 +673,7 @@ ShowNextPokemonData:
 	hlcoord 9, 2
 	call PlaceString
 
+	call IndexToPokedex
 	ld hl, PokedexEntryPointers
 	ld a, [wPokedexNum]
 	dec a
@@ -686,6 +687,7 @@ ShowNextPokemonData:
 
 	hlcoord 9, 4
 	call PlaceString ; print species name
+	call PokedexToIndex
 
 	ld h, b
 	ld l, c

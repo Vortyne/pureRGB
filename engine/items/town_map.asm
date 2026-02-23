@@ -620,8 +620,7 @@ GetWildDataTownMapID:
 
 GetTownMapOrderFromMapID:
 	ld hl, TownMapOrder
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	ld a, b
 	ret c
 	xor a

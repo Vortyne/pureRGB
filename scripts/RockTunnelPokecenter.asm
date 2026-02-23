@@ -34,8 +34,6 @@ RockTunnelCharityNurseText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	xor a
 	ldh [hMoney], a

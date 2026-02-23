@@ -50,9 +50,6 @@ SpritesOptionText:
 	next " BACK:   OG SW97"
 	next " ICONS:  OG OG+"
 	next " FRONT:  @"
-	;next "BOOT OPTIONS" ; TODO: 
-	;next " INTRO:  ON SKIP"
-	;next " TITLE:  OG PURE@"
 
 DrawSpriteOptionsMenu:
 	hlcoord 0, 0

@@ -50,8 +50,6 @@ GiveFossilToCinnabarLab::
 	ld hl, .ScientistSeesFossilText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .cancelledGivingFossil
 	ld hl, .ScientistTakesFossilText
 	rst _PrintText

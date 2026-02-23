@@ -33,7 +33,7 @@ _TM34ExplanationText::
 	cont "carefully!"
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "BIDE!"
 

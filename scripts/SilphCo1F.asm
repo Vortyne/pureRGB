@@ -339,8 +339,7 @@ CheckFloatingWeezingAnimation:
 	ret nz ; wait for player to finish walking
 	CheckAndResetEvent EVENT_FLOATING_WEEZING_ANIMATION
 	ret z
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	; make player face up
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
@@ -373,8 +372,7 @@ CheckFloatingWeezingAnimation:
 	ld a, TEXT_WEEZING_STARTED_FLOATING
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld c, 60
 	rst _DelayFrames
 	ld de, vNPCSprites tile $3C

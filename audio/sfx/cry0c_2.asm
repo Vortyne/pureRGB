@@ -22,6 +22,5 @@ SFX_Cry0C_2_Ch6:
 	square_note 2, 8, 1, 1489
 	square_note 2, 9, 1, 1497
 	square_note 8, 9, 1, 1505
-
 SFX_Cry0C_2_Ch8:
 	sound_ret

@@ -95,11 +95,13 @@ _CeruleanGymAfterBattleText2::
 	line "someone like you!"
 	done
 
-_CeruleanGymGymGuideChampInMakingText::
+_GymGuideChampInMakingText::
 	text "Yo! Champ in"
-	line "making!"
+	line "making!<PARA>@"
+	text_end
 
-	para "Here's my advice!"
+_CeruleanGymGymGuideChampInMakingText::
+	text "Here's my advice!"
 
 	para "The LEADER, MISTY,"
 	line "is a pro who uses"

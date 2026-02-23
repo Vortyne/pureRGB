@@ -68,7 +68,7 @@ _CinnabarLabKinglerLearnset::
 	text "I think I'll HAMMER"
 	line "some awesome"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " facts"
 	cont "into your skull!"
 	prompt

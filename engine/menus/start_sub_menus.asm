@@ -421,13 +421,11 @@ StartMenu_Item::
 	cp HM01
 	jr nc, .useItem_partyMenu
 	ld hl, UsableItems_CloseMenu
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .useItem_closeMenu
 	ld a, [wCurItem]
 	ld hl, UsableItems_PartyMenu
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .useItem_partyMenu
 	call UseItemWithIndexBackup
 	jp ItemMenuLoop

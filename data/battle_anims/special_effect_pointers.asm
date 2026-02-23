@@ -56,4 +56,5 @@ SpecialEffectPointers:
 	special_effect SE_DIVINE_PROTECTION, AnimationDivineProtection ; $CE
 	special_effect SE_LOAD_POKEDOLL, AnimationLoadPokeDoll ; $CD
 	special_effect SE_SEND_OUT_MON_POOF_ANIM, AnimationSendOutMonPoofJump ; $CC
+	special_effect SE_CUSTOM_MOVE_SFX, AnimationSpecialSoundEffect
 	db -1 ; end

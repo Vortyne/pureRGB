@@ -50,8 +50,6 @@ SaffronGymSabrinaReceiveTM46Script:
 .gymVictory
 	ld hl, wObtainedBadges
 	set BIT_MARSHBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_MARSHBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6
@@ -258,6 +256,7 @@ SaffronGymGuideApexChipPsychicText:
 	text_end
 
 SaffronGymGuideChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _SaffronGymGuideChampInMakingText
 	text_end
 

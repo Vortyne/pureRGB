@@ -78,8 +78,7 @@ MtMoonB2FDefeatedSuperNerdScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, MtMoonB2FResetScripts
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	SetEvent EVENT_BEAT_MT_MOON_EXIT_SUPER_NERD
 	xor a
 	ld [wJoyIgnore], a
@@ -280,8 +279,6 @@ MtMoonB2FDomeFossilText:
 	ld hl, .YouWantText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	lb bc, DOME_FOSSIL, 1
 	call GiveItem
@@ -308,8 +305,6 @@ MtMoonB2FHelixFossilText:
 	ld hl, .YouWantText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	lb bc, HELIX_FOSSIL, 1
 	call GiveItem
@@ -377,7 +372,8 @@ MtMoonSuperNerdTakeFossilQuestionText:
 
 MtMoonSuperNerdTakeFossilQuestion:
 	CheckEvent EVENT_RECEIVED_FOSSIL_PKMN_FROM_SUPER_NERD
-	jr nz, .lookingForMoreFossils
+	ld hl, MtMoon3TextSuperNerdLookingForMoreFossils
+	jr nz, .printRet
 	CheckEvent EVENT_GAVE_FOSSIL_TO_SUPER_NERD
 	jr nz, .end
 	ld hl, MtMoonB2FSuperNerdTheresAPokemonLabText
@@ -385,9 +381,8 @@ MtMoonSuperNerdTakeFossilQuestion:
 	ld hl, MtMoon3TextSuperNerdGiveFossil
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .no
+	ld hl, MtMoon3TextSuperNerdKeptFossil
+	jr nz, .printRet
 .yes
 	CheckEvent EVENT_GOT_DOME_FOSSIL
 	ld b, DOME_FOSSIL
@@ -395,11 +390,8 @@ MtMoonSuperNerdTakeFossilQuestion:
 	ld b, HELIX_FOSSIL
 .isInBag
 	call IsItemInBag
-	jr nz, .haveFossil
-.noFossil
 	ld hl, MtMoon3TextSuperNerdNoFossil
-	rst _PrintText
-	ret
+	jr z, .printRet
 .haveFossil
 	SetEvent EVENT_GAVE_FOSSIL_TO_SUPER_NERD
 	CheckEvent EVENT_GOT_DOME_FOSSIL
@@ -419,14 +411,7 @@ MtMoonSuperNerdTakeFossilQuestion:
 	rst _PrintText
 .end
 	ld hl, MtMoon3TextSuperNerdGaveFossilEnd
-	rst _PrintText
-	ret
-.lookingForMoreFossils
-	ld hl, MtMoon3TextSuperNerdLookingForMoreFossils
-	rst _PrintText
-	ret
-.no
-	ld hl, MtMoon3TextSuperNerdKeptFossil
+.printRet
 	rst _PrintText
 	ret
 	

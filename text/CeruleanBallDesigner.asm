@@ -16,7 +16,7 @@ _NoBallsToSwitch::
 _CurrentlyInABall::
 	text "Currently in:"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_end
 
 _AlreadyInThatBall::
@@ -31,18 +31,18 @@ _NoRoomForBall::
 
 _ChangedBallText1::
 	text "Put @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text ""
 	line "into a pristine"
 	cont "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 	done
 
 _ChangedBallText2::
 	text "Put the old"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " into"
 	cont "your bag."
 	done
@@ -50,16 +50,16 @@ _ChangedBallText2::
 _ChangeIntoWarning::
 	text "If you put it"
 	line "in a @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text ","
 	para "you can't get the"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " back."
 	para "Due to a powerful"
 	line "catch mechanism,"
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "s can't"
 	line "be reused!"
 	para "Change anyway?"
@@ -68,11 +68,11 @@ _ChangeIntoWarning::
 _ChangeOutOfWarning::
 	text "Taking it out of"
 	line "a @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text ""
 	cont "will destroy the"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "Its powerful catch"
 	line "mechanism can"
@@ -233,7 +233,7 @@ _CeruleanBallDesignerDesigned::
 	line "inspiration,"
 	para "I designed the"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 	done
 

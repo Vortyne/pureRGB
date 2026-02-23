@@ -93,7 +93,7 @@ _NidorinaLearnset::
 	line "them stay cute?!"
 	para "Should I evolve"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " with"
 	cont "a MOON STONE?"
 	para "I can't decide!"
@@ -200,7 +200,7 @@ _ClefableLearnset::
 	text "That's how I got"
 	line "my CLEFABLE!"
 	para "I hear @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "<LINE>and CLEFABLE came"
 	cont "from outer space!"
 	para "I like to imagine"

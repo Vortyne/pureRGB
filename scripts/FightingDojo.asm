@@ -363,8 +363,6 @@ FightingDojoHitmonleePokeBallText:
 	ld hl, .Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	ld a, [wCurPartySpecies]
 	ld b, a
@@ -402,8 +400,6 @@ FightingDojoHitmonchanPokeBallText:
 	ld hl, .Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	ld a, [wCurPartySpecies]
 	ld b, a

@@ -47,8 +47,7 @@ InitNewArenaCutscene:
 	ld a, CHAMP_ARENA_ASSISTANT
 	ldh [hSpriteIndex], a
   	call SetSpriteFacingDirection
-	call UpdateSprites
-	jp Delay3
+  	jp UpdateSpritesAndDelay3
 
 ChampArenaWaitForPlayerWalkToFinish:
 	CheckEvent EVENT_ARENA_PLAYER_WALKING
@@ -375,8 +374,6 @@ ChampArenaAssistantText:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .noChoiceOfChallenger
 	CheckEvent EVENT_ARENA_ALL_CHALLENGERS_DEFEATED
 	jr z, .noChoiceOfChallenger
@@ -498,8 +495,6 @@ ChampArenaContinueText:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .notAllDefeated
 	CheckEvent EVENT_ARENA_ALL_CHALLENGERS_DEFEATED
 	jr z, .notAllDefeated

@@ -26,8 +26,7 @@ GetMonHeader2::
 .notNonPokemonSpecies
 	ld a, [wCurSpecies]
 	ld hl, NonDexPokemonSpecies
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr nc, .notNonDexPokemonSpecies
 	ld a, b
 	ld hl, NonDexMonsBaseStats

@@ -1,3 +1,7 @@
+; wAudioFlags
+	const_def
+	const BIT_WAITING_FOR_SOUND_TO_FINISH
+
 ; wSlotMachineFlags
 	const_def 6
 	const BIT_SLOTS_CAN_WIN               ; 6
@@ -60,7 +64,7 @@ DEF BIT_NO_PREVIOUS_MAP EQU 7
 ; wCurrentBoxNum
 DEF BIT_HAS_CHANGED_BOXES EQU 7
 
-; wObtainedBadges, wBeatGymFlags
+; wObtainedBadges
 	const_def
 	const BIT_BOULDERBADGE ; 0
 	const BIT_CASCADEBADGE ; 1

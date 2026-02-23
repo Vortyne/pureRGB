@@ -96,8 +96,7 @@ VermilionDockSSAnneLeavesScript:
 	push hl
 	ld a, SFX_SS_ANNE_HORN
 	call PlaySoundWaitForCurrent
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	lb de, 0, 8
 .shift_columns_up
 	ld hl, $2
@@ -131,8 +130,7 @@ VermilionDockSSAnneLeavesScript:
 	call VermilionDock_EraseSSAnne
 	ld a, $90
 	ldh [hWY], a
-	ld a, $1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	pop hl
 	pop bc
 	ld a, b
@@ -268,8 +266,7 @@ MewBattleText:
 	ld de, wShadowOAMSprite08
 	ld bc, 4 * 13
 	rst _CopyData
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld hl, wShadowOAMSprite08
 	ld d, 13
 	ld a, [wXCoord]
@@ -454,9 +451,8 @@ TruckCheck:
 	bit BIT_D_LEFT, a ; is player pressing left
 	ret z
 	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
-	ld a, $ff
-	ld [wJoyIgnore], a
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
+	ld [wJoyIgnore], a ; a = $FF due to DisableSpriteUpdates
 	; make it look like the player bumped into the truck
 	call VermilionDockRedLeftAnimate
 	xor a
@@ -502,9 +498,8 @@ TruckCheck:
 	SetEvent EVENT_FOUND_MEW
 	ret
 
-ShowMew:	
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+ShowMew:
+	call EnableSpriteUpdates
 	ld a, HS_MEW_VERMILION_DOCK
 	ld [wMissableObjectIndex], a
 	predef_jump ShowObject

@@ -34,7 +34,7 @@ _Route18AerodactylLearnsetText::
 	text "Bet you didn't"
 	line "expect me to have"
 	cont "an @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "I revived it from"
 	line "OLD AMBER!"

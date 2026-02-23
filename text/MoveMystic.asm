@@ -32,11 +32,10 @@ _MoveMysticAhYes::
 	text "Ah yes<...>"
 	line "I see it."
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text ", the@"
 	text_end
 
-; TODO: use pokemon's names correctly with stringbuffer
 _BeedrillMoveMysticText::
 	text_start
 	line "hypodermic"
@@ -146,13 +145,13 @@ _ArcanineMoveMysticText::
 _MoveMysticMasterOfMoveText::
 	text "It's a master"
 	line "of @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 
 _MoveMysticTalentOfMoveText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text ""
 	line "is its talent!"
 	prompt
@@ -160,14 +159,14 @@ _MoveMysticTalentOfMoveText::
 _MoveMysticSoulCallsForMoveText::
 	text "Its soul calls"
 	line "for @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 
 _MoveMysticLovesMoveText::
 	text "It loves to use"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 
@@ -199,7 +198,6 @@ _MoveMysticJigglyWigglyOnlyLevel20Text::
 	line "above level 20!"
 	done
 
-; TODO: use another smaller buffer
 _GenericMovePowerIncreasesText::
 	text "Its POWER"
 	line "increases to @"

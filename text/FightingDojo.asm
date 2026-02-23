@@ -77,7 +77,7 @@ _FightingDojoBlackbelt2AfterBattleText::
 
 _MachokeLearnsetText2::
 	text "He beat my @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	line "at grappling!"
 	para "I still can't"
@@ -106,7 +106,7 @@ _FightingDojoBlackbelt3AfterBattleText::
 
 _PrimeapeLearnsetText::
 	text "Even my @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	line "doesn't like it."
 	para "I'm going to train"

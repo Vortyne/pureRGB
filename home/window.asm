@@ -287,8 +287,7 @@ PrintText::
 	ld a, MESSAGE_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	pop hl
 PrintText_NoCreatingTextBox::
 	bccoord 1, 14

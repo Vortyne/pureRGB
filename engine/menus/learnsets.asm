@@ -1,8 +1,7 @@
 INCLUDE "data/pokemon/pokemon_family_map.asm"
 
 LoadLearnsetTiles:
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	; load mon's header data into wram
 	ld a, [wPokedexNum]
 	ld [wCurSpecies], a
@@ -90,8 +89,7 @@ ShowMonLearnsetMenu:
 	jr c, .showMovedex
 	cp 1
 	jr z, .changePage
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 .exitLearnset
 	ret
 .changePage
@@ -126,8 +124,7 @@ ShowMonLearnsetMenu:
 	ld hl, wMovedexSeen
 	call IsMoveBitSet
 	jr z, .notSeen
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	ld hl, wPokedexDataFlags
 	set 3, [hl]
 	call ShowMoveDataExternal

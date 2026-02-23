@@ -18,7 +18,7 @@ _Route10SuperNerd1AfterBattleText::
 _ElectabuzzLearnsetText::
 	text "I caught this rare"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " at the"
 	cont "POWER PLANT."
 	para "I read a lot about"

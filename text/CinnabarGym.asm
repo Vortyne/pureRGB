@@ -58,7 +58,7 @@ _CinnabarGymBlaineVolcanoBadgeInfoText::
 _CinnabarGymBlaineTM38ExplanationText::
 	text_start
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "FIRE BLAST!"
 
@@ -200,10 +200,7 @@ _CinnabarGymFirefighter2AfterBattleText::
 	done
 
 _CinnabarGymGymGuideChampInMakingText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "The hot-headed"
+	text "The hot-headed"
 	line "BLAINE is a fire"
 	cont "#MON pro!"
 

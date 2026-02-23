@@ -363,7 +363,7 @@ ErikSarasHouseSaraText:
 	call DoErikSaraFacings
 	CheckEvent EVENT_ERIK_SARA_EXPLAINED_RESEARCH_ONCE
 	jr z, .noFirstQuestion
-	call .doYesNo
+	call YesNoChoice
 	jr nz, .noResearch
 	jr .skipFirstPrompt
 .noFirstQuestion
@@ -372,7 +372,7 @@ ErikSarasHouseSaraText:
 	SetEvent EVENT_ERIK_SARA_EXPLAINED_RESEARCH_ONCE
 	ld hl, .researchExp
 	rst _PrintText
-	call .doYesNo
+	call YesNoChoice
 	jr z, .noSeafoamInfo
 	ld hl, .seafoamInfo
 	rst _PrintText
@@ -392,7 +392,7 @@ ErikSarasHouseSaraText:
   	jr nc, .done
   	ld hl, .perfectDragonair
   	rst _PrintText
-  	call .doYesNo
+  	call YesNoChoice
   	ld hl, .suitYourself
   	jr nz, .printDone
   	ld a, [wWhichPokemon]
@@ -418,11 +418,6 @@ ErikSarasHouseSaraText:
 	rst _PrintText
 .done
 	rst TextScriptEnd
-.doYesNo
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	ret
 .welcomeSara
 	text_far _SaraHouseIntroText
 	text_end

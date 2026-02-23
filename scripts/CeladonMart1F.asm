@@ -65,8 +65,6 @@ CeladonMart1PhoneRight:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	xor a
 	ldh [hMoney], a

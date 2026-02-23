@@ -175,8 +175,7 @@ DisplayPokemartNoGreeting:: ; PureRGBnote: ADDED: show pokemart without the "wel
 	ret
 
 LoadItemList::
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	ld a, h
 	ld [wItemListPointer], a
 	ld a, l

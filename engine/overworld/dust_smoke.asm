@@ -5,8 +5,7 @@ AnimateBoulderDust::
 	ld [wWhichAnimationOffsets], a ; select the boulder dust offsets
 	ld a, [wUpdateSpritesEnabled]
 	push af
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld a, %11100100
 	ldh [rOBP1], a
 	call UpdateGBCPal_OBP1 ; shinpokerednote: gbcnote: gbc color code from yellow 

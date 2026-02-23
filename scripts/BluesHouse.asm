@@ -98,8 +98,6 @@ BluesHouseDaisySittingText:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, DaisyTeaEventNo
 	jr nz, .done
 	; check if player is on sitting coord next to her

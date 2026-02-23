@@ -161,7 +161,7 @@ _Route3CooltrainerF3AfterBattleText::
 
 _Route3CooltrainerF3AfterBattleText2::
 	text "But @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	line "and I met here"
 	cont "on ROUTE 3!"

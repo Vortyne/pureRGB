@@ -204,8 +204,6 @@ PokemonMansion2FSwitchText:
 	ld hl, .Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .not_pressed
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a

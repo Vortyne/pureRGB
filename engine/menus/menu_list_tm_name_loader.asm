@@ -60,5 +60,5 @@ CheckSaveTMTextScreenTiles::
 
 TMParamMoveNameText::
 	text "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text_end

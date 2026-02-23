@@ -15,5 +15,6 @@ Route15GateLeftBinoculars:
 	
 
 Route15UpstairsBinocularsText::
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route15UpstairsBinocularsText
 	text_end

@@ -279,7 +279,7 @@ ENDC
 	ldh [hAutoBGTransferDest + 1], a
 	ld a, SCREEN_HEIGHT_PX
 	ldh [hWY], a
-	call DrawPlayerCharacterAgainAfterLogoAnimationBGTiles ; TODO: optionify
+	call DrawPlayerCharacterAgainAfterLogoAnimationBGTiles
 	call Delay3
 	call DrawPlayerCharacterAgainAfterLogoAnimationSpritePortion
 	call PureTitleScreenVersionAnimation

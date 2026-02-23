@@ -379,13 +379,11 @@ CeruleanBallDesignerGetsAnIdeaAnimation:
 	ld b, BANK(ExclamationBubbleSFX)
 	call MuteAudioAndChangeAudioBank
 	call .emotionBubble
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld de, wShadowOAMSprite04
 	callfar FlipSpriteOAM
 	call .emotionBubble
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call .emotionBubble
 	call UnmuteAudioAndRestoreAudioBank
 	ret

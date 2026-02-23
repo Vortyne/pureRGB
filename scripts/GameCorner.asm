@@ -146,8 +146,6 @@ GameCornerClerk1Text:
 	ld hl, .DoYouNeedSomeGameCoins
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .declined
 .wantsToBuyMoreCoins
 	CheckEvent EVENT_GOT_COIN_CASE ; PureRGBnote: CHANGED: coin case is an event instead of an item
@@ -194,8 +192,6 @@ GameCornerClerk1Text:
 	ld hl, .CeladonGameCornerText_another500
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr z, .wantsToBuyMoreCoins
 	ld hl, .CeladonGameCornerThanks
 ;;;;;;;;;;
@@ -359,6 +355,7 @@ GymGuideMoreApexChipText4:
 	text_end
 
 CeladonGameCornerText_gymguide:
+	text_far _GymGuideChampInMakingText
 	text_far _CeladonGameCornerText_gymguide
 	text_end
 
@@ -556,8 +553,7 @@ GameCornerDrawCoinBox:
 	ld de, GameCornerMoneyText
 	call PlaceString
 	hlcoord 12, 3
-	ld de, GameCornerBlankText
-	call PlaceString
+	call .clearLine
 	hlcoord 12, 3
 	ld de, wPlayerMoney
 	ld c, 3 | MONEY_SIGN | LEADING_ZEROES
@@ -566,8 +562,7 @@ GameCornerDrawCoinBox:
 	ld de, GameCornerCoinText
 	call PlaceString
 	hlcoord 12, 5
-	ld de, GameCornerBlankText
-	call PlaceString
+	call .clearLine
 	hlcoord 15, 5
 	ld de, wPlayerCoins
 	ld c, 2 | LEADING_ZEROES
@@ -575,16 +570,15 @@ GameCornerDrawCoinBox:
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	ret
+.clearLine
+	lb bc, 1, 7
+	jp ClearScreenArea
 
 GameCornerMoneyText:
 	db "MONEY@"
 
 GameCornerCoinText:
 	db "COIN@"
-
-; TODO: just clear the screen area instead of making this pointless blank text data
-GameCornerBlankText:
-	db "       @"
 
 Has9990Coins:
 	ld a, $99

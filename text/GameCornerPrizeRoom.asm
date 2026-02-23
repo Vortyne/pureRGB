@@ -47,7 +47,7 @@ _GameCornerPrizeRoomLetsSeeText::
 
 _JynxPrizeKingText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " is a"
 	line "powerful and fast"
 	cont "#MON that"
@@ -57,7 +57,7 @@ _JynxPrizeKingText::
 
 _ElectabuzzPrizeKingText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can"
 	line "dish out both"
 	cont "strong PHYSICAL"
@@ -68,7 +68,7 @@ _ElectabuzzPrizeKingText::
 
 _TangelaPrizeKingText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " has"
 	line "crazy DEFENSE!"
 	para "It learns SPORE"
@@ -81,7 +81,7 @@ _TangelaPrizeKingText::
 
 _DratiniPrizeKingText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " is a rare"
 	line "DRAGON #MON."
 	para "It may seem weak,"
@@ -92,7 +92,7 @@ _DratiniPrizeKingText::
 
 _DittoPrizeKingText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " can do only"
 	line "one thing:"
 	para "Transform into a"
@@ -101,14 +101,14 @@ _DittoPrizeKingText::
 
 _PorygonPrizeKingText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " huh."
 	para "So you managed to"
 	line "get one as well."
 	para "That makes only"
 	line "two people ever!"
 	para "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " gets some"
 	line "crazy good moves!"
 	para "TRI ATTACK"

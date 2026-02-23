@@ -33,8 +33,6 @@ GameCornerPrizeRoomPrizeKingText:
 	rst _PrintText
 .choice
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .suitYourself
 	jr nz, .printDone
 	ld hl, .woohoo

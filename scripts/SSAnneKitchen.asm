@@ -1,6 +1,17 @@
 ; PureRGBnote: ADDED: You can now eat in the SS Anne Kitchen.
 SSAnneKitchen_Script:
 	call EnableAutoTextBoxDrawing
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	jr z, .notLoaded
+.reroll
+	; get a random value which will decide what text the randomized text chef will say first.
+	call Random
+	and %00000011
+	jr z, .reroll
+	ld [wMapMultiTextTracker], a
+.notLoaded
 	CheckEvent EVENT_GENERIC_NPC_WALKING_FLAG
 	ret z
 	ld a, $FF
@@ -94,19 +105,17 @@ SSAnneKitchenCook7Text:
 	text_asm
 	ld hl, .MainCourseIsText
 	rst _PrintText
-	ldh a, [hRandomAdd]
-	bit 7, a
-	jr z, .not_dialog_1
+	ld a, [wMapMultiTextTracker]
+	dec a
+	push af
 	ld hl, .SalmonDuSaladText
-	jr .done
-.not_dialog_1
-	bit 4, a
-	jr z, .not_dialog_2
-	ld hl, .EelsAuBarbecueText
-	jr .done
-.not_dialog_2
-	ld hl, .PrimeBeefSteakText
-.done
+	ld bc, 5
+	call AddNTimes
+	pop af
+	jr nz, .not0
+	ld a, 3
+.not0
+	ld [wMapMultiTextTracker], a
 	rst _PrintText
 	rst TextScriptEnd
 
@@ -114,14 +123,13 @@ SSAnneKitchenCook7Text:
 	text_far _SSAnneKitchenCook7MainCourseIsText
 	text_end
 
+; keep these 3 text entries next to each other and in the same format
 .SalmonDuSaladText:
 	text_far SSAnneKitchenCook7SalmonDuSaladText
 	text_end
-
 .EelsAuBarbecueText:
 	text_far SSAnneKitchenCook7EelsAuBarbecueText
 	text_end
-
 .PrimeBeefSteakText:
 	text_far SSAnneKitchenCook7PrimeBeefSteakText
 	text_end
@@ -130,8 +138,6 @@ SSAnneKitchenWaiterText:
 	text_far _SSAnneKitchenWaiter
 	text_asm
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .suitYourself
 	ld a, [wYCoord]
 	cp 13

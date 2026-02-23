@@ -80,7 +80,7 @@ _Route24CooltrainerM1ReceivedNuggetText::
 _GenericReceivedItemA::
 	text "<PLAYER> received"
 	line "a @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 

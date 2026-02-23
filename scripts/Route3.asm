@@ -89,8 +89,6 @@ Route3Youngster2AfterBattleText:
 	ld hl, ShortsYoungsterAfterQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr z, .continue
 	ld hl, ShortsYoungsterAfterQuestionNo
 	rst _PrintText

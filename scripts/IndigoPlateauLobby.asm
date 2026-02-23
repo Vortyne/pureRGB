@@ -35,8 +35,9 @@ IndigoPlateauLobbyGymGuideText: ; PureRGBnote: ADDED: gym guide sells you apex c
 	jr nz, .afterChamp
 	CheckEvent EVENT_GOT_PEWTER_APEX_CHIPS ; have to hear about apex chips to receive them after that
 	jr z, .donePrompt
-	ld hl, IndigoPlateauLobbyGymGuideText2Prompt
+	ld hl, IndigoPlateauLobbyGymGuideText2
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, IndigoPlateauApexChipsAfterChamp
 	rst _PrintText
 	jr .done
@@ -124,12 +125,8 @@ IndigoGymGuideSonText:  ; PureRGBnote: ADDED: new NPC who will sell TMs - sells 
 	rst TextScriptEnd
 
 IndigoPlateauLobbyGymGuideText2:
+	text_far _GymGuideChampInMakingText
 	text_far _IndigoPlateauLobbyGymGuideText
-	text_end
-
-IndigoPlateauLobbyGymGuideText2Prompt:
-	text_far _IndigoPlateauLobbyGymGuideText
-	text_promptbutton
 	text_end
 
 IndigoPlateauApexChipsAfterChamp:
@@ -172,6 +169,7 @@ ELSE
 ENDC
 
 IndigoPlateauGymGuideSonText:
+	text_far _GymGuideChampInMakingText
 	text_far _IndigoPlateauGymGuideSonText
 	text_end
 

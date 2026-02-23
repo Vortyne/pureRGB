@@ -10,17 +10,11 @@ _Route16Gate2FLittleGirlText::
 	done
 
 _Route16Gate2FLeftBinocularsText::
-	text "Looked into the"
-	line "binoculars."
-
-	para "It's CELADON DEPT."
+	text "It's CELADON DEPT."
 	line "STORE!"
 	done
 
 _Route16Gate2FRightBinocularsText::
-	text "Looked into the"
-	line "binoculars."
-
-	para "There's a long"
+	text "There's a long"
 	line "path over water!"
 	done

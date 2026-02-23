@@ -50,8 +50,6 @@ CeruleanGymReceiveTM11:
 .gymVictory
 	ld hl, wObtainedBadges
 	set BIT_CASCADEBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_CASCADEBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
@@ -234,6 +232,7 @@ AlreadyReceivedApexChipsText2:
 	text_end
 
 CeruleanGymChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _CeruleanGymGymGuideChampInMakingText
 	text_end
 

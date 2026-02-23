@@ -59,30 +59,26 @@ Route12Gate2FBrunetteGirlText:
 Route12Gate2FLeftBinocularsText:
 	text_asm
 	ld hl, .Text
-	jp GateUpstairsScript_PrintIfFacingUp
+	jr GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route12Gate2FLeftBinocularsText
 	text_end
 
 Route12Gate2FRightBinocularsText:
 	text_asm
 	ld hl, .Text
-	jp GateUpstairsScript_PrintIfFacingUp
+	jr GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route12Gate2FRightBinocularsText
 	text_end
 
 GateUpstairsScript_PrintIfFacingUp:
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
-	jr z, .up
-	ld a, TRUE
-	jr .done
-.up
+	jp nz, TextScriptEndNoButtonPress
 	rst _PrintText
-	xor a
-.done
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	rst TextScriptEnd

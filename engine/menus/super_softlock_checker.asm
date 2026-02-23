@@ -65,9 +65,8 @@ SurfRestrictedAreas:
 
 CheckInSurfRestrictedMapOrArea::
 	ld hl, SurfRestrictedMapsOnMoveDelete
-	ld de, 1
 	ld a, [wCurMap]
-	call IsInArray
+	call IsInSingleByteArray
 	ret c ; if we're in specific maps, don't clear the autosurf bit on deleting surf
 	;fall through
 CheckInSurfRestrictedArea::

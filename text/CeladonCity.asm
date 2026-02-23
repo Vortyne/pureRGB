@@ -117,7 +117,7 @@ _ViridianGymGiovanniReceivedTM27Text::
 _Route12Gate2FBrunetteGirlReceivedTM39Text::
 	text "<PLAYER> received"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
@@ -156,7 +156,7 @@ _CeladonCityFisher2Text::
 
 _PoliwrathLearnsetText::
 	text "Ready, @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?"
 	prompt
 

@@ -152,11 +152,11 @@ _Route25Hiker3AfterBattleText::
 
 _MankeyLearnsetText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " and I hike"
 	line "it every day!"
 	para "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " is always"
 	line "brimming with"
 	cont "energy!"

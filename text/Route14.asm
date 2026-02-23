@@ -92,7 +92,7 @@ _LegendaryBirdLearnsetAn::
 	text "WHAT?!?"
 	para "You caught an"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?!"
 	prompt
 
@@ -100,7 +100,7 @@ _LegendaryBirdLearnsetA::
 	text "WHAT?!?"
 	para "You caught a"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?!"
 	prompt
 

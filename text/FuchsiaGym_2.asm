@@ -27,7 +27,7 @@ _FuchsiaGymKogaSoulBadgeInfoText::
 _FuchsiaGymKogaTM06ExplanationText::
 	text_start
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "TOXIC!"
 
@@ -173,10 +173,7 @@ _FuchsiaGymJuggler4AfterBattleText::
 	done
 
 _FuchsiaGymGymGuideChampInMakingText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "FUCHSIA GYM is"
+	text "FUCHSIA GYM is"
 	line "riddled with"
 	cont "invisible walls!"
 

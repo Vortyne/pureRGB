@@ -21,8 +21,6 @@ UseAnotherRepel::
 	rst _PrintText
 	call YesNoChoice
 	pop bc
-	ld a, [wCurrentMenuItem]
-	and a
 	ret nz
 	ld a, b
 	ld [wCurItem], a	;load item to be used

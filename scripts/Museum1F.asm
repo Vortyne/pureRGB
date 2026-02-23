@@ -54,14 +54,15 @@ Museum1FScientist1Text:
 	jr nz, .already_bought_ticket
 	ld hl, .GoToOtherSideText
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
 .check_ticket
 	CheckEvent EVENT_BOUGHT_MUSEUM_TICKET
 	jr z, .no_ticket
 .already_bought_ticket
 	ld hl, .TakePlentyOfTimeText
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
+	
 .no_ticket
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
@@ -71,8 +72,6 @@ Museum1FScientist1Text:
 	ld hl, .WouldYouLikeToComeInText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .deny_entry
 	xor a
 	ldh [hMoney], a
@@ -83,7 +82,18 @@ Museum1FScientist1Text:
 	jr nc, .buy_ticket
 	ld hl, .DontHaveEnoughMoneyText
 	rst _PrintText
-	jp .deny_entry
+
+.deny_entry
+	ld hl, .ComeAgainText
+	rst _PrintText
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_DOWN
+	ld [wSimulatedJoypadStatesEnd], a
+	call StartSimulatingJoypadStates
+	call UpdateSprites
+	rst TextScriptEnd
+
 .buy_ticket
 	ld hl, .ThankYouText
 	rst _PrintText
@@ -103,36 +113,21 @@ Museum1FScientist1Text:
 	ld a, SFX_PURCHASE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-	jr .allow_entry
-.deny_entry
-	ld hl, .ComeAgainText
-	rst _PrintText
-	ld a, $1
-	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN
-	ld [wSimulatedJoypadStatesEnd], a
-	call StartSimulatingJoypadStates
-	call UpdateSprites
-	jr .done
+
 .allow_entry
 	ld a, SCRIPT_MUSEUM1F_NOOP
 	ld [wMuseum1FCurScript], a
-	jr .done
+	rst TextScriptEnd
 
 .behind_counter
 	ld hl, .DoYouKnowWhatAmberIsText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .explain_amber
-	ld hl, .TheresALabSomewhereText
-	rst _PrintText
-	jr .done
-.explain_amber
 	ld hl, .AmberIsFossilizedTreeSapText
+	jr nz, .printDone
+	ld hl, .TheresALabSomewhereText
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .ComeAgainText:
@@ -148,7 +143,7 @@ Museum1FScientist1Text:
 	text_end
 
 .DontHaveEnoughMoneyText:
-	text_far _Museum1FScientist1DontHaveEnoughMoneyText
+	text_far _GenericYouDontHaveEnoughMoneyText
 	text_end
 
 .DoYouKnowWhatAmberIsText:
@@ -213,7 +208,7 @@ Museum1FScientist2Text:
 	text_end
 
 .ReceivedOldAmberText:
-	text_far _Museum1FScientist2ReceivedOldAmberText
+	text_far _GenericPlayerReceivedText
 	sound_get_item_1
 	text_end
 

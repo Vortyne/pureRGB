@@ -15,8 +15,6 @@ CeruleanOldRodHouse1Text1:
 	ld hl, .CeruleanOldRodHouseImTheFishingGuruText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .refused
 	lb bc, OLD_ROD, 1
 	call GiveItem

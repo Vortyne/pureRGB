@@ -1,4 +1,4 @@
-GetBadgeName::
+_GetBadgeName::
 	ld a, [wNamedObjectIndex]
 	ld hl, BadgeNames
 	ld bc, ITEM_NAME_LENGTH

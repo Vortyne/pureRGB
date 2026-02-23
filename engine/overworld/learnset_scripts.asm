@@ -96,6 +96,7 @@ LearnsetFadeOutIn::
 	rst _PrintText
 	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
+	call Delay3
 	call UpdateSprites
 	call GBFadeInFromWhite
 LearnsetUnlockedScript::
@@ -126,8 +127,6 @@ KeepReadingBookLearnset::
 	ld hl, KeepReadingText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	pop de
 	jr z, .yes
 	ld hl, TextForgetIt178
@@ -168,8 +167,7 @@ PlayLearnsetSound:
 	ld hl, PlayLearnsetSoundMain
 PlaySoundOnAudio3Engine:
 	; TODO: make generic in home bank?
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK("Audio Engine 3")
@@ -177,9 +175,7 @@ PlaySoundOnAudio3Engine:
 	call hl_caller
 	pop af
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 ; input c = pokemon dex ID - 1
 SetMonSeen::

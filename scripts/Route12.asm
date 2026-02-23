@@ -69,8 +69,7 @@ Route12DefaultScript:
 ; PureRGBnote: ADDED: There's a new animation when snorlax wakes up.
 SnorlaxWakesUpAnimation::
 	; show an exclamation bubble when snorlax wakes up for effect
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK(ExclamationBubbleSFX)
@@ -259,8 +258,7 @@ SnorlaxText:: ; PureRGBnote: CHANGED: now also used by route 16's snorlax
 ; PureRGBnote: ADDED: when you talk to sleeping snorlax, there's a little snoring animation.
 SnorlaxSnoring::
 	call .sound
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld c, 10
 	rst _DelayFrames
 .sound
@@ -494,12 +492,18 @@ Route12GamblerText:
 	ld hl, .teach
 	rst _PrintText
 	call YesNoChoice
-	and a
 	jr nz, .exit
 	call ClearTextBox
 	callfar GenericShowPartyMenuSelection
 	jr c, .exit
-	; TODO: no ditto allowed
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Species
+	ld bc, wPartyMon2Species - wPartyMon1Species
+	call AddNTimes
+	ld a, [hl]
+	cp DITTO
+	ld hl, .ditto
+	jr z, .printDone
 	ld a, METRONOME
 	ld [wMoveNum], a
 	ld [wNamedObjectIndex], a
@@ -529,6 +533,9 @@ Route12GamblerText:
 	text_end
 .ohWell
 	text_far _NoTrade1Text
+	text_end
+.ditto
+	text_far _Route12MetronomeGamblerNoDitto
 	text_end
 
 Route12GamblerBattleText:

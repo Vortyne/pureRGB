@@ -62,8 +62,6 @@ ViridianGymReceiveTM27:
 .gym_victory
 	ld hl, wObtainedBadges
 	set BIT_EARTHBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_EARTHBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
@@ -135,8 +133,7 @@ ViridianGymGiovanniText:
 	ld a, HS_VIRIDIAN_GYM_GIOVANNI
 	ld [wMissableObjectIndex], a
 	predef HideObject
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	CheckEvent EVENT_CAUGHT_GHOST_MAROWAK
 	jr z, .dontMoveKarateKing
 	ld a, VIRIDIANGYM_HIKER3
@@ -437,6 +434,7 @@ ViridianGymGuideApexChipGroundText:
 	text_end
 
 ViridianGymGuidePreBattleText:
+	text_far _GymGuideChampInMakingText
 	text_far _ViridianGymGuidePreBattleText
 	text_end
 

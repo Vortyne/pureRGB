@@ -59,8 +59,6 @@ OptionalText:
 	ld hl, .OptionalTextQ
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	scf
 	ret

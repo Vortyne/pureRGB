@@ -221,8 +221,6 @@ SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jp nz, .PleaseComeAgain
 	xor a
 	ldh [hMoney], a
@@ -285,8 +283,6 @@ SafariZoneGateSafariZoneWorker1LeavingEarlyText:
 	text_far _SafariZoneGateSafariZoneWorker1LeavingEarlyText
 	text_asm
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .not_ready_to_leave
 	ld hl, .ReturnSafariBallsText
 	rst _PrintText
@@ -346,8 +342,6 @@ SafariZoneGateSafariZoneWorker2Text:
 	ld hl, .FirstTimeHereText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .YoureARegularHereText
 	jr nz, .print_text
 	call AskGameTypeExplanation
@@ -498,6 +492,7 @@ GiveHyperBall:
 
 ReceivedHyperBallText:
 	text_far _ReceivedHyperBallText
+	text_far _GenericReceivedItemA
 	sound_get_key_item
 	text_end
 

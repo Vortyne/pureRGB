@@ -382,8 +382,6 @@ DepositItemFromItemMenu::
 	call YesNoChoice
 	ld a, 1
 	ld [wListMenuHoverTextType], a ; enable displaying TM names again.
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 .next
 ; do the depositing

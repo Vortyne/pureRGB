@@ -418,5 +418,4 @@ INCLUDE "data/trainers/encounter_types.asm"
 IsFemaleTrainer:
 	ld a, [wCurOpponent]
 	ld hl, FemaleTrainerList
-	ld de, 1
-	jp IsInArray
+	jp IsInSingleByteArray

@@ -191,8 +191,6 @@ HandlePrizeChoice:
 	ld hl, SoYouWantPrizeTextPtr
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem] ; yes/no answer (Y=0, N=1)
-	and a
 	jr nz, .printOhFineThen
 	call LoadCoinsToSubtract
 	call HasEnoughCoins

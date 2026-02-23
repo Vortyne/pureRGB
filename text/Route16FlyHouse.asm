@@ -10,8 +10,8 @@ _Route16FlyHouseBrunetteGirlText::
 
 _Route16FlyHouseBrunetteGirlReceivedHM02Text::
 	text "<PLAYER> received"
-	line "HM02!@" ; TODO: generic message
-	text_end
+	line "HM02!"
+	done
 
 _Route16FlyHouseBrunetteGirlHM02ExplanationText::
 	text "HM02 is FLY."

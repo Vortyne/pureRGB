@@ -68,7 +68,7 @@ _ViridianGymGiovanniTM27ExplanationText::
 	text_start
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text ": EARTHQUAKE!"
 	line "A reliable and"
 	cont "immensely strong"
@@ -216,10 +216,7 @@ _ViridianGymCooltrainerM3AfterBattleText::
 	done
 
 _ViridianGymGuidePreBattleText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "Even I don't know"
+	text "Even I don't know"
 	line "VIRIDIAN LEADER's"
 	cont "identity!"
 

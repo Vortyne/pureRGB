@@ -12,8 +12,7 @@ PrintBookshelfText::
 	jr nc, .noMatch
 .notCeladonHouses
 	ld hl, NoBookCaseTextMaps
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .noMatch
 ;;;;;;;;;;
 	ld a, [wCurMapTileset]

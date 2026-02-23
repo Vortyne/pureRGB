@@ -14,8 +14,6 @@ DaycareGentlemanText:
 	ld hl, .IntroText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .ComeAgainText
 	jp nz, .done
 	ld a, [wPartyCount]
@@ -135,8 +133,6 @@ DaycareGentlemanText:
 	call DisplayTextBoxID
 	call YesNoChoice
 	ld hl, .AllRightThenText
-	ld a, [wCurrentMenuItem]
-	and a
 	jp nz, .leaveMonInDayCare
 	ld hl, wDayCareTotalCost
 	ldh [hMoney], a

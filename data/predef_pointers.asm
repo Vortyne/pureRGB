@@ -61,7 +61,6 @@ PredefPointers::
 	add_predef BattleTransition
 	add_predef CopyTileIDsFromList
 	add_predef PlayIntro
-	add_predef GetIntroMoveSound
 	add_predef FlashScreen
 	add_predef GetTileAndCoordsInFrontOfPlayer
 	add_predef StatusScreenOriginal

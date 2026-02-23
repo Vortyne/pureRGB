@@ -59,16 +59,14 @@ CheckShowDarkClouds::
 	ld [wMapPalOffset], a
 	call GBPalNormal
 	call LoadGBPal
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, BANK(SFX_Battle_25)
 	ld [wAudioROMBank], a
 	call PlayThunderRumbleSound
 	call WaitForSoundToFinish
 	ld a, BANK(Music_Dungeon1)
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld a, TEXT_POWER_PLANT_ROOF_DARK_CLOUDS
 	ldh [hTextID], a
 	jp DisplayTextID
@@ -95,8 +93,7 @@ PowerPlantRoofDarkCloudsText:
 PowerPlantRoofZapdosText:
 	text_far _PowerPlantZapdosBattleText
 	text_asm
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, ZAPDOS
 	call PlayCry
 	SetEvent EVENT_ZAPDOS_LIGHTNING_ANIMATION
@@ -115,8 +112,7 @@ CheckDoZapdosLightningAnimation:
 	call CopyVideoData
 	; zapdos lightning animation
 	; disable sprite update routine so we can manipulate some rain sprites directly without map sprite code running
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	; load all the rain and zap sprites into sprite OAM
 	ld c, 28
 	ld hl, wShadowOAMSprite08
@@ -261,8 +257,7 @@ CheckDoZapdosLightningAnimation:
 	ld [wEngagedTrainerSet], a
 	call InitBattleEnemyParameters
 	callfar PlayDefaultTrainerMusic ; TODO: adjust if making special rare pokemon encounter music
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld c, 90
 	rst _DelayFrames
 	ld a, POWER_PLANT_ROOF_ZAPDOS

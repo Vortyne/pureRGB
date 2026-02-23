@@ -410,8 +410,6 @@ db " v"
 INCLUDE "version_number.asm"
 db "@"
 
-; TODO: optimize below here, duplicated code
-
 DisplayContinueGameInfo:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -429,11 +427,7 @@ DisplayContinueGameInfo:
 	hlcoord 16, 13
 	call PrintNumOwnedMons
 	hlcoord 11, 15
-	call PrintPlayTime
-	ld a, 1
-	ldh [hAutoBGTransferEnabled], a
-	ld c, 5
-	jp DelayFrames
+	jr PrintSaveScreenText.done
 
 PrintSaveScreenText:
 	xor a
@@ -453,11 +447,13 @@ PrintSaveScreenText:
 	hlcoord 16, 6
 	call PrintNumOwnedMons
 	hlcoord 11, 8
+.done
 	call PrintPlayTime
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	ld c, 5 ; PureRGBnote: CHANGED: reduce the artificial delay when displaying this screen.
-	jp DelayFrames
+	rst _DelayFrames
+	ret
 
 PrintNumBadges:
 	push hl

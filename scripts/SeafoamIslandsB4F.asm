@@ -138,8 +138,7 @@ SeafoamIslandsB4FArticunoIntroAnimation:
 	ld hl, vNPCSprites tile $0C
 	call OpenBirdSpriteWings
 	; show snowflakes flying outwards in an X pattern
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	ld de, ArticunoIcyWindSFX
 	call PlayNewSoundChannel8
 	; replace the "nothing" sprite with
@@ -148,8 +147,7 @@ SeafoamIslandsB4FArticunoIntroAnimation:
 	lb bc, BANK(IceCrystalSprite), 4
 	ld hl, vNPCSprites tile $18
 	call CopyVideoData
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call .copyCrystalTileIDs
 	rst _DelayFrame
 	ld c, 8
@@ -282,8 +280,7 @@ SeafoamIslandsB4FArticunoIntroAnimation:
 	call PlayNewSoundChannel8
 	ld c, 60
 	rst _DelayFrames
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	; articuno shows an animation when you fight it now
 	ld a, ARTICUNO
 	ld [wEngagedTrainerClass], a
@@ -472,7 +469,7 @@ SeafoamIslandsB4FFastCurrentText::
 
 SeafoamWaveSFXB4F::
 	ld hl, wAudioFlags
-	bit 0, [hl]
+	bit BIT_WAITING_FOR_SOUND_TO_FINISH, [hl]
 	ret nz ; don't play the sound if we're waiting for sounds to finish currently or it'll wait forever
 	ld hl, wOverworldAnimationCounter
 	inc [hl]

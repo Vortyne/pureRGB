@@ -19,9 +19,9 @@ _BikeShopCantAffordText::
 _BikeShopClerkOhThatsAVoucherText::
 	text "Oh, that's<...>"
 
-	para "A BIKE VOUCHER!" ; TODO: load item name into string buffer?
+	para "A BIKE VOUCHER!"
 
-	para "OK! Here you go!" ; TODO: generic Here you go! text?
+	para "OK! Here you go!"
 	prompt
 
 _BikeShopExchangedVoucherText::

@@ -759,6 +759,22 @@ TextCommand_PLURALIZE::
 	inc hl
 	jp NextTextCommand
 
+TextCommand_STRINGBUFFER::
+	ld de, wStringBuffer
+	jr PlaceStringFromDENextTextCommand
+
+TextCommand_NAMEBUFFER::
+	ld de, wNameBuffer
+	; fall through
+PlaceStringFromDENextTextCommand:
+; write text from de then next text comment
+	ld h, b
+	ld l, c
+	call PlaceString
+	pop hl
+	jp NextTextCommand
+
+
 ; Checks if variable wram text pointer in hl fits on the same line as the current text printing coordinate bc
 ; with line endpoint coords de
 ; sets carry if it does not fit
@@ -812,4 +828,6 @@ ENDC
 	dw TextCommand_RAM_CHECK_CONT   ; TX_RAM_CONT
 	dw TextCommand_RAM_CHECK_LINE   ; TX_RAM_LINE
 	dw TextCommand_PLURALIZE     ; TX_PLURALIZE
+	dw TextCommand_STRINGBUFFER  ; TX_RAM_STRINGBUFFER
+	dw TextCommand_NAMEBUFFER    ; TX_RAM_NAMEBUFFER
 	; greater TX_* constants are handled directly by NextTextCommand

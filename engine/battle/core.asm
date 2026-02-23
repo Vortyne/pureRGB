@@ -880,9 +880,7 @@ FaintEnemyPokemon:
 	ld a, [wIsInBattle]
 	dec a
 	jr z, .wild_win
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
+	call ResetSFXModifiers
 	ld a, SFX_FAINT_FALL
 	call PlaySoundWaitForCurrent
 .sfxwait
@@ -3417,20 +3415,17 @@ PlayerCanExecuteMove:
 	rst _Bankswitch
 	ld a, [wPlayerMoveEffect] ; effect of the move just used
 	ld hl, ResidualEffects1
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect ; ResidualEffects1 moves skip damage calculation and accuracy tests
 	                    ; unless executed as part of their exclusive effect functions
 	ld a, [wPlayerMoveEffect]
 	ld hl, SpecialEffectsCont
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect ; execute the effects of SpecialEffectsCont moves (e.g. Wrap, Thrash) but don't skip anything
 PlayerCalcMoveDamage:
 	ld a, [wPlayerMoveEffect]
 	ld hl, SetDamageEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, .moveHitTest ; SetDamageEffects moves (e.g. Seismic Toss and Super Fang) skip damage calculation
 	call CriticalHitTest
 	;call HandleCounterMove ; PureRGBnote: CHANGED: Counter changed to have an effect similar to drain punch, so dont need this code
@@ -3519,8 +3514,7 @@ MirrorMoveCheck:
 	jp z, MimicEffect
 	ld a, [wPlayerMoveEffect]
 	ld hl, ResidualEffects2
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect ; done here after executing effects of ResidualEffects2
 	ld a, [wMoveMissed]
 	and a
@@ -3541,8 +3535,7 @@ MirrorMoveCheck:
 .notDone
 	ld a, [wPlayerMoveEffect]
 	ld hl, AlwaysHappenSideEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect ; not done after executing effects of AlwaysHappenSideEffects
 	ld hl, wEnemyMonHP
 	ld a, [hli]
@@ -3569,8 +3562,7 @@ MirrorMoveCheck:
 	and a
 	jp z, ExecutePlayerMoveDone
 	ld hl, SpecialEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	call nc, JumpMoveEffect ; move effects not included in SpecialEffects or in either of the ResidualEffect arrays,
 	; which are the effects not covered yet. Rage effect will be executed for a second time (though it's irrelevant).
 	; Includes side effects that only need to be called if the target didn't faint.
@@ -3945,9 +3937,9 @@ ConfusedNoMoreText:
 	text_far _ConfusedNoMoreText
 	text_end
 
-SavingEnergyText:
-	text_far _SavingEnergyText
-	text_end
+;SavingEnergyText:
+;	text_far _SavingEnergyText
+;	text_end
 
 ;UnleashedEnergyText:
 ;	text_far _UnleashedEnergyText
@@ -4721,8 +4713,6 @@ CalculateDamage:
 	cp TWO_TO_FIVE_ATTACKS_EFFECT
 	jr z, .skipbp
 	cp TWO_OR_THREE_ATTACKS_EFFECT
-	jr z, .skipbp
-	cp $1e ; TODO: remove?
 	jr z, .skipbp
 
 ; Calculate OHKO damage based on remaining HP.
@@ -5934,9 +5924,8 @@ MoveHitTest::
 	ret
 
 CheckIsMistBlockedMove:
-	ld de, 1
 	ld hl, MistBlockedMoves
-	jp IsInArray
+	jp IsInSingleByteArray
 
 ; values for player turn
 CalcHitChance:
@@ -6109,20 +6098,17 @@ EnemyCanExecuteMove:
 	callfar CheckSpecialBattleMoveModifiersEnemy
 	ld a, [wEnemyMoveEffect]
 	ld hl, ResidualEffects1
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect
 	ld a, [wEnemyMoveEffect]
 	ld hl, SpecialEffectsCont
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect
 EnemyCalcMoveDamage:
 	call SwapPlayerAndEnemyLevels
 	ld a, [wEnemyMoveEffect]
 	ld hl, SetDamageEffects
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, EnemyMoveHitTest
 	call CriticalHitTest
 	;call HandleCounterMove ; PureRGBnote: CHANGED: counter changed to have an effect similar to drain punch
@@ -6217,8 +6203,7 @@ EnemyCheckIfMirrorMoveEffect:
 	jp z, MimicEffect
 	ld a, [wEnemyMoveEffect]
 	ld hl, ResidualEffects2
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect
 	ld a, [wMoveMissed]
 	and a
@@ -6239,8 +6224,7 @@ EnemyCheckIfMirrorMoveEffect:
 .handleExplosionMiss
 	ld a, [wEnemyMoveEffect]
 	ld hl, AlwaysHappenSideEffects
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect
 	ld hl, wBattleMonHP
 	ld a, [hli]
@@ -6266,8 +6250,7 @@ EnemyCheckIfMirrorMoveEffect:
 	and a
 	jr z, ExecuteEnemyMoveDone
 	ld hl, SpecialEffects
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	call nc, JumpMoveEffect
 	jr ExecuteEnemyMoveDone
 
@@ -6740,7 +6723,7 @@ LoadEnemyMonData:
 	ld a, [hli]            ; copy type 2
 	ld [de], a
 	inc de
-	; ??? TODO: This can run if a gift or caught pokemon, does it cause issues?
+	; ??? This can run if a gift or caught pokemon, does it cause issues? (apparently not?)
 	push de
 	push hl
 	push bc
@@ -6892,8 +6875,7 @@ DoBattleTransitionAndInitBattleVariables:
 	xor a
 	ld [wMenuJoypadPollCount], a
 	callfar DisplayLinkBattleVersusTextBox
-	ld a, $1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call ClearScreen
 .next
 	rst _DelayFrame
@@ -6901,8 +6883,7 @@ DoBattleTransitionAndInitBattleVariables:
 	callfar LoadHudAndHpBarAndStatusTilePatterns
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call ClearSprites
 	call ClearScreen
 	xor a
@@ -7489,12 +7470,12 @@ _LoadTrainerPic:
 	ld c, a
 	jp LoadUncompressedSpriteData
 
-; unreferenced
-ResetCryModifiers:
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
-	jp PlaySound
+; unreferenced ; PureRGBnote: CHANGED: So comment it out
+;ResetCryModifiers:
+;	xor a
+;	ld [wFrequencyModifier], a
+;	ld [wTempoModifier], a
+;	jp PlaySound
 
 ; animates the mon "growing" out of the pokeball
 AnimateSendingOutMon:
@@ -7678,80 +7659,29 @@ SetEnemyActedBit:
 
 ;shinpokerednote: ADDED: custom functions for determining which trainerAI pkmn have already been sent out before
 ;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
-; TODO: optimize
+
 CheckAISentOut:
-	ld a, [wWhichPokemon]	
-	cp 5
-	jr z, .party5
-	cp 4
-	jr z, .party4
-	cp 3
-	jr z, .party3
-	cp 2
-	jr z, .party2
-	cp 1
-	ld a, [wAIWhichPokemonSentOutAlready]
-	jr z, .party1
-	bit 1, a
-	ret
-.party5
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 6, a
-	ret
-.party4
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 5, a
-	ret
-.party3
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 4, a
-	ret
-.party2
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 3, a
-	ret
-.party1
-	bit 2, a
-	ret
+	ld a, FLAG_TEST
+	jr AISentOutFlagAction
 	
 SetAISentOut:
-	ld a, [wWhichPokemon]	
-	cp $05
-	jr z, .party5
-	cp $04
-	jr z, .party4
-	cp $03
-	jr z, .party3
-	cp $02
-	jr z, .party2
-	cp $01
-	jr z, .party1
-	jr .party0
-.party5
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 6, a
-	jr .partyret
-.party4
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 5, a
-	jr .partyret
-.party3
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 4, a
-	jr .partyret
-.party2
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 3, a
-	jr .partyret
-.party1
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 2, a
-	jr .partyret
-.party0
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 1, a
-.partyret
-	ld [wAIWhichPokemonSentOutAlready], a
+	ld a, FLAG_SET
+	; fall through
+AISentOutFlagAction:
+	push bc
+	push de
+	push hl
+	ld b, a
+	ld a, [wWhichPokemon]
+	inc a
+	ld c, a
+	ld hl, wAIWhichPokemonSentOutAlready
+	predef FlagActionPredef
+	ld a, c
+	and a
+	pop hl
+	pop de
+	pop bc
 	ret
 
 ; PureRGBnote: ADDED: determines if the opponent is immune to the move being used due to having used haze or mist

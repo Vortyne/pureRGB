@@ -38,7 +38,7 @@ _PokemonCenterFarewellChamp5Text::
 _PokemonCenterFarewellChamp6Text::
 	text "Wow! I healed your"
 	line "famous @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 	done
 
@@ -51,6 +51,6 @@ _PokemonCenterFarewellChamp7Text::
 _PokemonCenterFarewellChamp8Text::
 	text "Can I get a photo"
 	line "with @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "?"
 	done

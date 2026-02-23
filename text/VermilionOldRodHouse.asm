@@ -17,12 +17,7 @@ _VermilionOldRodHouseFishingGuruTakeThisText::
 	line "your style!"
 
 	para "Take this and"
-	line "fish, young one!"
-
-	para "<PLAYER> received" ; TODO: remove?
-	line "a @"
-	text_ram wStringBuffer
-	text "!@"
+	line "fish, young one!<PARA>@"
 	text_end
 
 _VermilionOldRodHouseFishingGuruHowAreTheFishBitingText::

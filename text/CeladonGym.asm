@@ -65,7 +65,7 @@ _TM21ExplanationText::
 	text_start
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "RAZOR LEAF."
 

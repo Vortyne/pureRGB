@@ -20,7 +20,7 @@ _PewterPokecenterBenchGuyLearnsetText1::
 _PewterPokecenterBenchGuyLearnsetText2::
 	text "You have a"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " of"
 	cont "your own?"
 	para "This one keeps"

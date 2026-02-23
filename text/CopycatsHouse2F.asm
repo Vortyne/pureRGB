@@ -29,7 +29,7 @@ _CopycatsHouse2FCopycatTM31PreReceiveText::
 _CopycatsHouse2FCopycatTM31Explanation1Text::
 	text_start
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains my"
 	line "favorite,"
 	cont "SUBSTITUTE!"

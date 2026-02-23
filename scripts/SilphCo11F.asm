@@ -250,8 +250,7 @@ SilphCo11FGiovanniAfterBattleScript:
 	call DisplayTextID
 	call GBFadeOutToBlack
 	call SilphCo11FTeamRocketLeavesScript
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	call GBFadeInFromBlack
 	SetEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	callfar PlayDefaultMusicIfMusicBitSet

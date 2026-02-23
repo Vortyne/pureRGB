@@ -6,7 +6,7 @@ DEF OPTIONS_PAGE_5_NUMBER EQU 5 ; must be 1 digit.
 Options3XPosBitData:
 	db 15, 12, FLAG_LEARNSETS_DISABLED % 8
 	dw wEventFlags + (FLAG_LEARNSETS_DISABLED / 8)
-	db 14, 11, BIT_NEW_TITLE_SCREEN ; TODO: save file updater needs to set this to off
+	db 14, 11, BIT_NEW_TITLE_SCREEN
 	dw wSpriteOptions2
 	db 14, 11, BIT_SKIP_INTRO
 	dw wSpriteOptions2

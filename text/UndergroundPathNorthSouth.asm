@@ -60,7 +60,7 @@ _UndergroundPathNorthSouthAfterBattleText3::
 
 _LearnsetKrabbyKid::
 	text "My @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " always"
 	line "likes a good"
 	cont "scrap!"

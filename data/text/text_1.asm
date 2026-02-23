@@ -26,7 +26,7 @@ _CardKeyDoneText::
 	done
 
 _TrainerNameText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text ": @"
 	text_end
 
@@ -77,14 +77,14 @@ _PokeCenterSignText::
 _FoundItemText::
 	text "<PLAYER> found"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
 _FoundMultipleItemText::
 	text "<PLAYER> found"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " ×@"
 	text_ram wTempStore1
 	text "!@"

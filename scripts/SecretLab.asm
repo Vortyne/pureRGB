@@ -286,9 +286,7 @@ CheckRestartMusic:
 	ld a, [wYCoord]
 	cp 27
 	ret c
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 CheckNoteButtons:
 	ld a, [wYCoord]
@@ -376,10 +374,7 @@ CheckNoteButtons:
 .playButtonPressTick	
 	push af
 	CheckEvent EVENT_OPENED_SECRET_LAB_BARRICADE
-	jr nz, .noStopMusic
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
-.noStopMusic
+	call z, PauseMusic
 	ld a, SFX_TELEPORT_ENTER_2
 	rst _PlaySound
 	ld c, 10

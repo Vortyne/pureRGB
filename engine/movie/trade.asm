@@ -171,8 +171,7 @@ LoadTradingGFXAndMonNames:
 	ld a, " "
 	call FillMemory
 	call ClearSprites
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wOnSGB]

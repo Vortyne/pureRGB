@@ -140,8 +140,7 @@ GetBallName:
 BallCustomizationMenu::
 	ld a, [wCurrentMenuItem]
 	push af
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call DisableTextDelay
 	xor a
 	ld [wCurrentMenuItem], a
@@ -311,8 +310,7 @@ BallCustomizationMenu::
 	jr z, .rename
 	jr .goToLoop
 .exit
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	pop af
 	ld [wCurrentMenuItem], a
 	call EnableTextDelay
@@ -322,8 +320,7 @@ BallCustomizationMenu::
 	jp RunDefaultPaletteCommand
 .visualize
 	call VizualizeBallAnimation
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 .goToLoop
 	jp .loopCustomizationMenu
 .tileMenu
@@ -936,8 +933,8 @@ BallSFXCustomizationMenu:
 	call StopSFXChannels
 	call .isUnlocked
 	jr nc, .loopMenu
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
+	; TODO: use new audio funcs?
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK("Audio Engine 2")
@@ -947,8 +944,7 @@ BallSFXCustomizationMenu:
 	call WaitForSoundToFinish
 	pop af
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	jr .loopMenu
 .isUnlocked
 	ld c, BALL_CUSTOM_FORMAT_SFX
@@ -1058,8 +1054,7 @@ BallSpecialCustomizationMenu:
 
 
 VizualizeBallAnimation:
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	call HideAnimationOAMEntries
 	call ClearScreen
 	ld c, 16
@@ -1110,8 +1105,8 @@ VizualizeBallAnimation:
 	call WaitForSoundToFinish
 	pop af
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
+	; a = 0 still
 	ld [wBallAnimFrameCounter], a ; makes it so the multicolor color uses PAL_PRISMATIC
 	ld [wBallAnimSGBColorLoadFlag], a
 	ret

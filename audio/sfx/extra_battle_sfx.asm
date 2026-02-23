@@ -114,7 +114,7 @@ SFX_Electric_Whirl_Poof_Ch8::
 
 SFX_Hearts_Poof_Ch5::
 	sound_call SFX_Short_Ball_Poof_Ch5
-SFX_Battle_37_Ch5::
+SFX_LovelyKiss_Ch5::
 	duty_cycle 2
 	pitch_sweep 1, 5
 	square_note 10, 15, 0, 1264

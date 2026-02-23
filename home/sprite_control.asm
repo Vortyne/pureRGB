@@ -66,7 +66,6 @@ IsPlayerAtCoords::
 	cp e
 	ret
 
-; TODO: use these functions
 EnableSpriteUpdates::
 	ld a, 1
 	jr ChangeUpdateSpritesEnabled

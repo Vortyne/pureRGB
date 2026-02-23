@@ -115,19 +115,19 @@ _FightingBrosRightBroWhich::
 _FightingBrosRightBroConvene::
 	text "Perfect."
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "Give me some time"
 	line "to speak with"
 	cont "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "<CONT>to convince it!"
 	prompt
 
 _FightingBrosRightBroConvene2::
 	text "It took a while,"
 	para "but @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "<LINE>trusts your"
 	cont "judgement!"
 	para "It'll allow it."
@@ -175,7 +175,7 @@ _FightingBrosLeftBroAfterTeachText::
 
 _MoveTutorChooseMoveToLearnText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?"
 	para "I can teach it"
 	line "these moves."
@@ -183,7 +183,7 @@ _MoveTutorChooseMoveToLearnText::
 
 _MoveTutorCantTeach::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?"
 	line "Ah, sorry!"
 	para "It can't learn any"

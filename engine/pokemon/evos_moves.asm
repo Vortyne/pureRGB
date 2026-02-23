@@ -153,8 +153,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	call ClearScreenArea
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call ClearSprites
 	callfar EvolveMon
 	jp c, CancelledEvolution

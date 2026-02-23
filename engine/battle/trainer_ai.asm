@@ -193,8 +193,7 @@ AIMoveChoiceModification1:
 .notInArray
 	ld a, [wEnemyMoveEffect]
 	ld hl, StatusAilmentMoveEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	pop bc
 	pop de
 	pop hl
@@ -272,8 +271,7 @@ AIMoveChoiceModification1:
 .discourageStatBoostingMoveWhenMaxedOut
 	ld a, [wEnemyMoveEffect]
 	ld hl, StatBoostingEffectList
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp nc, .notStatBoostingMove
 	ld a, [wEnemyMoveEffect]
 	cp ATTACK_SPECIAL_SPEED_UP1
@@ -573,8 +571,7 @@ AIMoveChoiceModification2:
 	push de
 	push bc
 	ld hl, Modifier2PreferredMoves
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	pop bc
 	pop de
 	pop hl
@@ -986,8 +983,7 @@ AIMoveChoiceModification4:
 	push de
 	push bc
 	ld hl, Modifier4PreferredMoves
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	pop bc
 	pop de
 	pop hl

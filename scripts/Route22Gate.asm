@@ -59,6 +59,8 @@ Route22Gate_TextPointers:
 
 Route22GateGuardText:
 	text_asm
+	ld a, BOULDERBADGE
+	call GetBadgeName
 	ld a, [wObtainedBadges]
 	bit BIT_BOULDERBADGE, a
 	jr nz, .has_boulderbadge

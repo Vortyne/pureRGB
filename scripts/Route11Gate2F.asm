@@ -59,10 +59,12 @@ Route11Gate2FLeftBinocularsText:
 	rst TextScriptEnd
 
 .SnorlaxText:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route11Gate2FLeftBinocularsSnorlaxText
 	text_end
 
 .NoSnorlaxText:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route11Gate2FLeftBinocularsNoSnorlaxText
 	text_end
 
@@ -72,5 +74,6 @@ Route11Gate2FRightBinocularsText:
 	jp GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route11Gate2FRightBinocularsText
 	text_end

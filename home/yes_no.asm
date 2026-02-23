@@ -1,5 +1,5 @@
 ; displays yes/no choice
-YesNoChoice:: ; TODO: don't have to load wCurrentMenuItem after anymore so adjust
+YesNoChoice::
 	call SaveScreenTilesToBuffer1
 	xor a ; YES_NO_MENU
 	ld [wTwoOptionMenuID], a

@@ -443,8 +443,7 @@ BillsPCMenuText:
 	;push hl 
 	;push bc
 	;ld hl, HMMoveArray
-	;ld de, 1
-	;call IsInArray
+	;call IsInSingleByteArray
 	;pop bc
 	;pop hl
 	;ret c

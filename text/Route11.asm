@@ -33,7 +33,7 @@ _LearnsetBellsprout::
 	text "You've got to be"
 	line "flexible, like my"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "Move, sway, and"
 	line "adapt!"
@@ -72,7 +72,7 @@ _Route11SuperNerd1AfterBattleText::
 
 _LearnsetMagneton::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " gather"
 	line "in places that"
 	cont "overuse energy."
@@ -152,7 +152,7 @@ _Route11Youngster3AfterBattleText::
 _LearnsetStaryu::
 	text "But I've already"
 	line "got this @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	para "It has such a"
 	line "peculiar shape."
@@ -171,6 +171,6 @@ _LearnsetVulpixLuckyNumber::
 	line "number!"
 	para "That's why I"
 	line "raised a @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt

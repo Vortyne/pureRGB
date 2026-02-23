@@ -136,8 +136,6 @@ CinnabarLabFossilRoomColorChangerText:
 	ld hl, LabColorChangerGreeting
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .noDeutsch
 	ld hl, LabColorChangerGreetingYes
 	jr .doneGreeting
@@ -157,8 +155,6 @@ CinnabarLabFossilRoomColorChangerText:
 	ld hl, LabColorChangerStart
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jp nz, .noColorChange
 	ld hl, LabColorChangerNext
 	rst _PrintText
@@ -182,8 +178,6 @@ CinnabarLabFossilRoomColorChangerText:
 	ld hl, LabColorChangerPicsShown
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .showPartySelection
 	ld hl, LabColorChangerStartColorChange
 	rst _PrintText

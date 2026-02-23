@@ -1,5 +1,4 @@
 ; Load TM Learnset into wram, 1 byte per move that is learnable, byte value = TM/HM item ID
-; TODO: into tms.asm
 LoadTMLearnsetIntoWram:
 	ld a, [wPokedexNum] 
 	push af

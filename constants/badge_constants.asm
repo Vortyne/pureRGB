@@ -11,4 +11,3 @@
 DEF NUM_BADGES EQU const_value
 ;;;;;;;;;;
 
-; TODO: use when printing badge names in text

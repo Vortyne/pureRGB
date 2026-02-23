@@ -24,13 +24,11 @@ UseCameraItem::
 	jr z, .printDone
 	ld hl, .perfect
 	rst _PrintText
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, SFX_POKEDEX_RATING
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld hl, .perfectBallDesigner
 	rst _PrintText
 	jp ReloadAfterCameraPic
@@ -195,8 +193,7 @@ UseCameraRoute6:
 	rst _PrintText
 	ld c, 60
 	rst _DelayFrames
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	; move the shadow sprite to the bank of the pond
 	ld hl, wShadowOAMSprite04YCoord
 	ld d, [hl]
@@ -521,10 +518,8 @@ UseCameraRoute24:
 	lb de, 0, -2
 	ld c, ROUTE24_ABRA
 	callfar FarMoveSpriteInRelationToPlayer
-	call UpdateSprites
-	call Delay3
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call UpdateSpritesAndDelay3
+	call DisableSpriteUpdates
 	ld a, [wXCoord]
 	cp 4
 	ld hl, wShadowOAMSprite04YCoord
@@ -1200,8 +1195,7 @@ MakePlayerHoldCamera::
 	call UpdateSprites
 	ld de, CameraSprite
 	call LoadCameraSprite
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	; to have the camera take priority over the player's sprite have to make it the earlier OAM sprite
 	; so copy the player's OAM data to the last sprite in OAM
 	ld hl, wShadowOAMSprite00
@@ -1440,8 +1434,7 @@ ShowCameraPicture::
 	call ClearScreen
 	xor a
 	ldh [hTileAnimations], a
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call HideAnimationOAMEntries
 	call GBFadeInFromWhite
 	call DisableLCD
@@ -1650,8 +1643,7 @@ ReloadAfterCameraPicNoFadeIn::
 .skipGBC
 	call EnableLCD
 	callfar LoadExtraTiles
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call UpdateSprites
 	call LoadCurrentMapView
 	call Delay3

@@ -30,7 +30,7 @@ _PokemonTower1FGirl2Text::
 	para "You want to hear"
 	line "about my darling"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?"
 	prompt
 

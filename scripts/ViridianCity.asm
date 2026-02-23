@@ -96,8 +96,7 @@ ViridianCityOldManEndCatchTrainingScript:
 	ld [wSprite03StateData2MapY], a
 	ldh a, [hSpriteMapXCoord]
 	ld [wSprite03StateData2MapX], a
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN_YOU_NEED_TO_WEAKEN_THE_TARGET
@@ -178,8 +177,6 @@ ViridianCityYoungster2Text:
 	ld hl, .YouWantToKnowAboutText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	ld hl, .CaterpieAndWeedleDescriptionText
 	rst _PrintText
@@ -292,8 +289,6 @@ ViridianCityOldManText:
 	ld c, 2
 	rst _DelayFrames
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr z, .refused
 	ld hl, .KnowHowToCatchPokemonText
 	rst _PrintText

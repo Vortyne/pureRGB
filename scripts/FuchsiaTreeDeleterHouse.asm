@@ -160,8 +160,6 @@ FuchsiaTreeDeleterRoute2:
 	ld hl, FuchsiaTreeDeleterRoute2Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	xor a
 	ldh [hMoney], a 
@@ -190,8 +188,6 @@ FuchsiaTreeDeleterCeruleanCity:
 	ld hl, FuchsiaTreeDeleterCeruleanCityText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	xor a
 	ldh [hMoney], a 
@@ -220,8 +216,6 @@ FuchsiaTreeDeleterRoute9:
 	ld hl, FuchsiaTreeDeleterRoute9Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	xor a
 	ldh [hMoney], a 
@@ -250,8 +244,6 @@ FuchsiaTreeDeleterFuchsiaCity:
 	ld hl, FuchsiaTreeDeleterFuchsiaCityText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 	xor a
 	ldh [hMoney + 2], a

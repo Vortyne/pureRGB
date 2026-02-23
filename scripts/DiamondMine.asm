@@ -313,8 +313,6 @@ DiamondMineProspectorText:
 	ld hl, .intro
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .okayThen
 	jr nz, .done1
 	SetEvent EVENT_DIAMOND_MINE_AGREED_TO_HELP
@@ -335,9 +333,7 @@ DiamondMineProspectorText:
 	ld hl, .giveRepels3
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
 	ld hl, .okayThen
-	and a
 	jr nz, .done1
 	SetEvent EVENT_DIAMOND_MINE_GAVE_REPELS
 	ld a, REPEL
@@ -375,8 +371,6 @@ DiamondMineProspectorText:
 	ld hl, .help4
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .okayThen
 	jr nz, .done1point5
 	call DiamondMineShowPartyMenuSelection
@@ -409,16 +403,14 @@ DiamondMineProspectorText:
 	rst _PrintText
 	call ClearScreen
 	call GBPalWhiteOut
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call LoadScreenTilesFromBuffer2
 	SetEvent EVENT_DIAMOND_MINE_COMPLETED
 	ld a, HS_PROSPECTORS_HOUSE_PROSPECTOR
 	ld [wMissableObjectIndex], a
 	predef ShowExtraObject
 	call DiamondMineReplaceHole
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	call GBFadeInFromWhite
 	call AreLearnsetsEnabled
 	jr z, .alreadyUnlocked
@@ -444,8 +436,6 @@ DiamondMineProspectorText:
 	ld hl, .moreOnix1
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .okayThen
 	jr nz, .done2
 	ld hl, .moreOnix2
@@ -570,8 +560,6 @@ DiamondMineBoombox:
 	ld hl, .zapquestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .printForgetIt
 	call DiamondMineShowPartyMenuSelection
 	jr c, .printForgetIt

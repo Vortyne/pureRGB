@@ -19,9 +19,8 @@ WaitForSoundToFinish::
 	ret nz
 	push hl
 ;;;;; PureRGBnote: ADDED: This flag indicates we're currently waiting for a sound to finish.
-;;;;; TODO: use a constant for it
 	ld hl, wAudioFlags
-	set 0, [hl]
+	set BIT_WAITING_FOR_SOUND_TO_FINISH, [hl]
 	push hl
 ;;;;;
 .waitLoop
@@ -36,7 +35,7 @@ WaitForSoundToFinish::
 	jr nz, .waitLoop
 ;;;;; PureRGBnote: ADDED: reset the "waiting for sound to end" flag
 	pop hl ; wAudioFlags
-	res 0, [hl]
+	res BIT_WAITING_FOR_SOUND_TO_FINISH, [hl]
 	pop hl
 	ret
 ;;;;;

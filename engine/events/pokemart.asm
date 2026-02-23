@@ -225,8 +225,7 @@ DisplayPokemartDialogue_::
 	res IN_POKEMART_MENU, [hl]
 	ld hl, PokemartThankYouText
 	rst _PrintText
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call UpdateSprites
 	ld a, [wSavedListScrollOffset]
 	ld [wListScrollOffset], a

@@ -1248,7 +1248,7 @@ wChampArenaChallenger:: db ; which challenger we're currently fighting in the ch
 wAITargetMonType1:: db ; the type of the pokemon the AI should think it's attacking (stays as the previous pokemon when you switch pokemon)
 wAITargetMonType2:: db ; the type of the pokemon the AI should think it's attacking (stays as the previous pokemon when you switch pokemon)
 wAITargetMonStatus:: db ; the current status of the pokemon the AI should think it's attacking (set when healing a pokemon's status or switching it out)
-wMapMultiTextTracker:: db ; in a few maps there is "randomized" multi-text for certain things you speak to. This ensures the text will cycle through each available text before repeating. ; TODO: use in ss anne kitchen
+wMapMultiTextTracker:: db ; in a few maps there is "randomized" multi-text for certain things you speak to. This ensures the text will cycle through each available text before repeating.
 ; 7 unused bytes left
 ;;;;;;;;;;
 ENDU
@@ -1306,7 +1306,7 @@ wLoadedMon:: party_struct wLoadedMon
 ;bit 4: 4th pkmn (position 3)
 ;bit 5: 5th pkmn (position 4)
 ;bit 6: 6th pkmn (position 5)
-;bit 7: viewing town map currently
+;bit 7: NOT ACTUALLY USED SINCE I COMMENTED THIS viewing town map currently
 ;wViewingTownMap::
 wAIWhichPokemonSentOutAlready::
 wFontLoaded:: db
@@ -2519,9 +2519,7 @@ wUnusedCardKeyGateID:: db ; unused save file byte?
 ; bit 7: set by ItemUseCardKey, which is leftover code from a previous implementation of the Card Key
 wStatusFlags1:: db
 	ds 1 ; unused save file byte
-; used to determine whether to show name on statue and in two NPC text scripts
-; TODO: remove pointless dupe?
-wBeatGymFlags:: db ; redundant because it matches wObtainedBadges
+	ds 1 ; used to be wBeatGymFlags, save file update if used
 	ds 1 ; unused save file byte
 
 ; bit 0: if not set, the 3 minimum steps between random battles have passed

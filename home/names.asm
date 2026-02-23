@@ -36,8 +36,7 @@ IsItemHM::
 ; Input: a = move ID
 ;IsMoveHM:: ; PureRGBnote: FIXED: Moves are never considered HMs removing deletion restrictions
 	;ld hl, HMMoves
-	;ld de, 1
-	;jp IsInArray
+	;jp IsInSingleByteArray
 
 GetMoveName::
 	ld a, [wNamedObjectIndex]
@@ -55,3 +54,7 @@ GetMoveNameCommon::
 	pop bc
 	pop hl
 	ret
+
+GetBadgeName::
+	ld [wNamedObjectIndex], a
+	jpfar _GetBadgeName

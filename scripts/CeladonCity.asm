@@ -97,8 +97,6 @@ CeladonCityLittleGirlText:
 	ld hl, .wantToSee
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	ld hl, .prettyCool
 	rst _PrintText
@@ -213,8 +211,6 @@ CeladonCityFisherText:
 	ld hl, .seeMoves
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CeladonSuitYourself
 	jr nz, .printDone
 	ld a, CELADONCITY_POLIWRATH

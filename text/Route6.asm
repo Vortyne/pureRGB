@@ -43,7 +43,7 @@ _Route6Youngster1AfterBattleText::
 
 _Route6VenonatLearnsetText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " started"
 	line "showing up there"
 	cont "recently!"
@@ -103,7 +103,7 @@ _Route6Youngster2AfterBattleText::
 _Route6ButterfreeLearnsetText::
 	text "I try so hard to"
 	line "train @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 

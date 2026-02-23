@@ -380,8 +380,7 @@ PlayBattleSFXWhenNotInBattleWithMods::
 ; hl = what code to run while the sound is playing
 ; by definition map music can't be playing while the sound effect is
 PlayBattleSFXWhenNotInBattle::
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK("Audio Engine 2")
@@ -394,9 +393,7 @@ PlayBattleSFXWhenNotInBattle::
 	call WaitForSoundToFinish
 	pop af
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 ;;;;;;;;;;
 
@@ -421,8 +418,6 @@ StopChannel8:
 	call PlayNewSoundChannel8
 	rst _DelayFrame
 
-; TODO: use the below new functions
-
 StopSFXChannels::
 	xor a
 	ld hl, wChannelSoundIDs + CHAN5
@@ -445,7 +440,7 @@ PlaySoundResetSFXModifiers::
 ; only call this function, it expected to be called not jumped to
 ResetModifiersMuteAudioAndChangeAudioBank::
 	call ResetSFXModifiers
-; only call this function, it expected to be called not jumped to
+; only call this function, it expected to be called not jumped to ; TODO: use this
 MuteAudioAndChangeAudioBank::
 	call PauseMusic
 	ld a, [wAudioROMBank]

@@ -24,7 +24,7 @@ _ArbokLearnset::
 	line "did I have?"
 	para "Ah<...>my lovely"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "<...>"
 	para "I'll miss you"
 	line "QUEENIE<...>"
@@ -35,16 +35,15 @@ _Route12Gate2FBrunetteGirlTM39NoRoomText::
 	line "room for this."
 	done
 
-_Route12Gate2FLeftBinocularsText::
-	text "Looked into the" ; TODO: parameterize "looked into the binoculars"
-	line "binoculars."
+_GenericLookedIntoTheBinocularsText::
+	text "Looked into the" 
+	line "binoculars<...><PARA>@"
+	text_end
 
-	para "A man fishing!"
+_Route12Gate2FLeftBinocularsText::
+	text "A man fishing!"
 	done
 
 _Route12Gate2FRightBinocularsText::
-	text "Looked into the"
-	line "binoculars."
-
-	para "It's #MON TOWER!"
+	text "It's #MON TOWER!"
 	done

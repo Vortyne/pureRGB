@@ -11,7 +11,7 @@ CinnabarGymSetMapAndTiles:
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	call nz, UpdateCinnabarGymGateTileBlocks
-	ResetEvent EVENT_2A7
+	;ResetEvent EVENT_2A7
 	ret
 
 CinnabarGymResetScripts:
@@ -153,8 +153,6 @@ CinnabarGymReceiveTM38:
 	call DisplayTextID
 .gymVictory
 	ld hl, wObtainedBadges
-	set BIT_VOLCANOBADGE, [hl]
-	ld hl, wBeatGymFlags
 	set BIT_VOLCANOBADGE, [hl]
 
 	; deactivate gym trainers
@@ -521,6 +519,7 @@ CinnabarGymGuideApexChipFireText:
 	text_end
 
 ChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _CinnabarGymGymGuideChampInMakingText
 	text_end
 

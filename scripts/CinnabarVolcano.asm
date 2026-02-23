@@ -588,8 +588,7 @@ VolcanoBombableRockDone:
 	call CinnabarVolcanoDisplayTextIDEntry
 	CheckEvent EVENT_VOLCANO_BOMBED_FLOOR4
 	jr nz, .done ; skip resuming music if it's the 4th floor
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 .done
 	jp ResumeVolcanoShaking
 
@@ -699,8 +698,7 @@ VolcanoBombableRockCommon:
 	and a
 	ret z
 	push af
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	call PlayCryOfSelectedPartyPokemon
 	call WaitForSoundToFinish
 	pop af
@@ -1029,8 +1027,7 @@ CinnabarVolcanoRubyTextCommon:
 	text_asm
 	ld hl, .gotAllOfThem
 	rst _PrintText
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, SFX_TRADE_MACHINE
 	rst _PlaySound
 	ld c, 30
@@ -1038,8 +1035,7 @@ CinnabarVolcanoRubyTextCommon:
 	ld de, SFX_Drill_PowerUp
 	call PlayNewSoundChannel8
 	call WaitForSoundToFinish
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	call DisplayTextPromptButton
 	ld hl, .drillPoweredUp
 	rst _PrintText
@@ -1079,8 +1075,6 @@ CinnabarVolcanoBombRockText:
 	ld hl, .initialText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .printForgetIt
 	callfar GenericShowPartyMenuSelection
 	jr c, .printForgetIt
@@ -1211,8 +1205,6 @@ CinnabarVolcanoSurfingRhydonText:
 	ld hl, .getOn
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	ld a, RHYDON
 	ld [wNamedObjectIndex], a
@@ -1357,9 +1349,7 @@ VolcanoBlowWallOpen::
 	call CinnabarVolcanoDisplayTextIDEntry
 	ld a, HS_VOLCANO_BLAINE
 	call VolcanoShowSpriteEntry
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 VolcanoFloor4TileBlockReplacements:
 	SetFlag FLAG_SKIP_MAP_REDRAW
@@ -1411,8 +1401,6 @@ CinnabarVolcanoHungryGravelerText:
 	ld hl, .giveRockSalts
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CinnabarVolcanoBombRockText.forgetIt
 	jr nz, .done
 	SetEvent EVENT_VOLCANO_SPRITE_MOVING
@@ -1473,8 +1461,6 @@ CinnabarVolcanoSickRhydonText:
 	ld hl, .giveLimestone
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CinnabarVolcanoBombRockText.forgetIt
 	jr nz, .done
 	ld hl, .grinded
@@ -1551,8 +1537,6 @@ CinnabarVolcanoBossMagmarText:
 	ld hl, .battleQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CinnabarVolcanoBombRockText.forgetIt
 	jr nz, .done
 	ld a, MAGMAR
@@ -1939,9 +1923,7 @@ VolcanoPlayMusic::
 	CheckEvent EVENT_GOT_LAVA_SUIT
 	ret nz
 	; music is muted in entrance room before getting lava suit for effect
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp PauseMusic
 
 CheckForceTalkToProspector::
 	CheckEvent EVENT_VOLCANO_TALKED_TO_BLAINE

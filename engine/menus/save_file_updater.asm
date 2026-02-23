@@ -76,8 +76,6 @@ SaveFileUpdateCheck::
 	ld hl, SaveFileUpdateWarpText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a ; clear carry
 	dec a
 	ret
 .exitSaveUpdater

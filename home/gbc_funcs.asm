@@ -76,8 +76,5 @@ Func_3082:: ; added from pokeyellow - update audio so it doesn't "lag"
 	pop af
 	jp BankswitchCommon
 
-; TODO: is this used?
-StopSFXChannel::
-	noise_note 0, 0, 0, 0
 EndSound::
 	sound_ret

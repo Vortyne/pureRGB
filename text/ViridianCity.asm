@@ -94,7 +94,7 @@ _ViridianCityFisherGastlyLearnset::
 	line "I had in detail?"
 	para "It was about"
 	line "a giant @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	para "Here goes<...>"
 	prompt

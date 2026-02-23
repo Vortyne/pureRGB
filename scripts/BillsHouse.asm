@@ -151,8 +151,6 @@ BillsHouseBillPokemonText:
 	ld hl, .ImNotAPokemonText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .answered_no
 .use_machine
 	ld hl, .UseSeparationSystemText

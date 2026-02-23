@@ -15,8 +15,7 @@ ShowMapWildEncounters::
 	push de
 	ld a, d
 	ld hl, NoWildMonsMaps
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	pop de
 	ret c
 	push de
@@ -213,8 +212,7 @@ FindSubsequentWildDataType:
 MapHasGrassEncounters:
 	ld a, [wCurTownMapInternalWildDataMap]
 	ld hl, NoGrassEncountersMaps
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .done
 	ld a, [wGrassRate]
 	and a

@@ -148,7 +148,7 @@ BoulderBlockingWaterB3F:
 
 SeafoamWaveSFXB3F::
 	ld hl, wAudioFlags
-	bit 0, [hl]
+	bit BIT_WAITING_FOR_SOUND_TO_FINISH, [hl]
 	ret nz ; don't play the sound if we're waiting for sounds to finish currently or it'll wait forever
 	ld hl, wOverworldAnimationCounter
 	inc [hl]

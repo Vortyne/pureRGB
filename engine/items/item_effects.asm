@@ -951,8 +951,7 @@ ItemUseEvoStone:
 	push af
 	ld a, EVO_STONE_PARTY_MENU
 	ld [wPartyMenuTypeOrMessageID], a
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call DisplayPartyMenu
 	pop bc
 	jr c, .canceledItemUse
@@ -1002,8 +1001,7 @@ ItemUseMedicine:
 	push af
 	ld a, USE_ITEM_PARTY_MENU
 	ld [wPartyMenuTypeOrMessageID], a
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld a, [wPseudoItemID]
 	and a ; using Softboiled?
 	jr z, .notUsingSoftboiled
@@ -1602,8 +1600,7 @@ ItemUseMedicine:
 	xor a
 	ld [wForceEvolution], a
 	callfar TryEvolvingMon ; evolve pokemon, if appropriate
-	ld a, $01
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	pop af
 	ld [wCurItem], a
 	pop af
@@ -1776,8 +1773,6 @@ ItemUseEscapeRope:
 	ld hl, .escapeText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ret nz
 ;;;;;;;;;;
 	ld hl, wStatusFlags6
@@ -1815,8 +1810,6 @@ ItemUsePocketAbra:
 	ld hl, .wantToTeleportText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr z, .yes
 .no
 	ld hl, .pocketAbraNo
@@ -2086,8 +2079,7 @@ ItemUsePokeFlute:
 	jr nz, .skipMusic
 	call WaitForSoundToFinish ; wait for sound to end
 ;;;;;;;;;; PureRGBnote: ADDED: pause music here to make music work better when playing out-of-bank battle music
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 ;;;;;;;;;; 
 	farcall Music_PokeFluteInBattle ; play in-battle pokeflute music
 .musicWaitLoop ; wait for music to finish playing
@@ -2095,8 +2087,7 @@ ItemUsePokeFlute:
 	and a ; music off?
 	jr nz, .musicWaitLoop
 ;;;;;;;;;; PureRGBnote: ADDED: resume music here to make music work better when playing out-of-bank battle music
-	; a = 0 here
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 ;;;;;;;;;;
 .skipMusic
 	ld hl, FluteWokeUpText
@@ -2644,8 +2635,7 @@ ItemUseTMHM:
 	ld de, wTempMoveNameBuffer
 	ld bc, 14
 	rst _CopyData ; save the move name because DisplayPartyMenu will overwrite it
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld a, TMHM_PARTY_MENU
 	ld [wPartyMenuTypeOrMessageID], a
 	call DisplayPartyMenu
@@ -3329,8 +3319,7 @@ SendNewMonToBox:
 IsNextTileShoreOrWater::
 	ld a, [wCurMapTileset]
 	ld hl, WaterTilesets
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr nc, WaterTileSetIsNextTileShoreOrWater.notShoreOrWater
 	; fall through
 WaterTileSetIsNextTileShoreOrWater::
@@ -3384,9 +3373,8 @@ WaterTileSetIsNextTileShoreOrWater::
 	jr nc, .notShoreOrWater
 .volcanoTileCheck
 	ld a, [wTileInFrontOfPlayer]
-	ld de, 1
 	ld hl, LavaSurfTiles
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .shoreOrWater
 	jr .notShoreOrWater
 .cavern

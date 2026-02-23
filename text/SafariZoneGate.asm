@@ -137,12 +137,7 @@ _RangerHuntDoneSuccessText::
 
 _ReceivedHyperBallText::
 	text "Here's your well-"
-	line "earned prize!!"
-
-	para "<PLAYER> received" ; TODO: use generic message
-	line "a @"
-	text_ram wStringBuffer
-	text "!@"
+	line "earned prize!!<PARA>@"
 	text_end
 
 _SafariZoneEntranceHyperBallOwedText::

@@ -159,9 +159,7 @@ GainExperience:
 	jr c, .next2b
 	jr .capExp2
 .capExp
-	; TODO: test this branch with level 100
-	inc sp
-	inc sp ; "pop hl" into nothing
+	pop af ; "pop hl" into af throwing it away since it's not needed
 .capExp2
 ; the mon's exp is greater than the max exp, so overwrite it with the max exp
 	ld a, b

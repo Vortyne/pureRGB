@@ -161,8 +161,7 @@ ENDC
 	lb bc, 7, 7
 	call ClearScreenArea
 	call LoadTextBoxTilePatterns
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	ld c, 50
 	rst _DelayFrames
 	call GBFadeOutToWhite

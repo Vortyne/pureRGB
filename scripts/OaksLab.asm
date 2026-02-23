@@ -875,8 +875,6 @@ OaksLabMonChoiceMenu:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	call YesNoChoice ; yes/no menu
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, OaksLabMonChoiceEnd
 	ld a, [wCurPartySpecies]
 	ld [wPlayerStarter], a

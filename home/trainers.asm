@@ -198,7 +198,7 @@ EndTrainerBattle::
 	; code that removes overworld pokemon like articuno, mewtwo, snorlax, etc. when defeated
 	; TODO: hide extra object if in extra map???
 	ld hl, wMissableObjectList
-	ld de, FLAG_TEST
+	ld de, 2
 	ld a, [wSpriteIndex]
 	call IsInArray              ; search for sprite ID
 	inc hl

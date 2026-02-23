@@ -97,7 +97,7 @@ _TaurosLearnsetText::
 	line "now tell you a"
 	cont "famous folk tale"
 	cont "about @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "<...>"
 	prompt
 

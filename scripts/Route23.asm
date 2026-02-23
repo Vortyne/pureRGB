@@ -72,53 +72,9 @@ Route23GuardsYCoords:
 	db -1 ; end
 
 Route23CopyBadgeTextScript:
-	ld hl, BadgeTextPointers
 	ld a, [wWhichBadge]
-	ld c, a
-	ld b, 0
-	add hl, bc
-	add hl, bc
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	ld de, wNameBuffer
-.copyTextLoop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	cp "@"
-	jr nz, .copyTextLoop
-	ret
-
-BadgeTextPointers:
-	dw CascadeBadgeText
-	dw ThunderBadgeText
-	dw RainbowBadgeText
-	dw SoulBadgeText
-	dw MarshBadgeText
-	dw VolcanoBadgeText
-	dw EarthBadgeText
-
-EarthBadgeText:
-	db "EARTHBADGE@"
-
-VolcanoBadgeText:
-	db "VOLCANOBADGE@"
-
-MarshBadgeText:
-	db "MARSHBADGE@"
-
-SoulBadgeText:
-	db "SOULBADGE@"
-
-RainbowBadgeText:
-	db "RAINBOWBADGE@"
-
-ThunderBadgeText:
-	db "THUNDERBADGE@"
-
-CascadeBadgeText:
-	db "CASCADEBADGE@"
+	inc a
+	jp GetBadgeName
 
 Route23MovePlayerDownScript:
 	ld a, $1

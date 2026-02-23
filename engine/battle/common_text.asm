@@ -129,10 +129,7 @@ PlayGhostSfx:
 	ld a, SFX_BATTLE_2F
 	rst _PlaySound
 	call WaitForSoundToFinish
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
-	ret
+	jp ResetSFXModifiers
 ;;;;;;;;;;
 
 WildMonAppearedText:

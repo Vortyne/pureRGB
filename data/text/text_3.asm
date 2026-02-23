@@ -43,27 +43,27 @@ _ChooseABoxDataWillSaveText::
 	text_end
 
 _EvolvedText::
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " evolved"
 	done
 
 _IntoText::
 	text_start
 	line "into @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	done
 
 _StoppedEvolvingText::
 	text "Huh? @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text_start
 	line "stopped evolving!"
 	prompt
 
 _IsEvolvingText::
 	text "What? @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text_start
 	line "is evolving!"
 	done
@@ -71,7 +71,7 @@ _IsEvolvingText::
 _YoureAnExpertText::
 	text "You're an expert"
 	line "with @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!@"
 	sound_get_item_2
 	text_promptbutton
@@ -79,7 +79,7 @@ _YoureAnExpertText::
 
 _LearnsetUnlockedText::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "'s learn-"
 	line "set was recorded!"
 	done
@@ -122,12 +122,13 @@ _FireDefrostedText::
 _MonsStatsRoseText::
 	text "<USER>'s"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "@"
 	text_end
 
+_GreatlyFellText::
 _GreatlyRoseText::
-	text "<SCROLL>greatly@" ; TODO: Parameterize?
+	text "<SCROLL>greatly@"
 	text_end
 
 _RoseText::
@@ -137,12 +138,8 @@ _RoseText::
 _MonsStatsFellText::
 	text "<TARGET>'s"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "@"
-	text_end
-
-_GreatlyFellText::
-	text "<SCROLL>greatly@"
 	text_end
 
 _FellText::
@@ -208,7 +205,7 @@ _MimicLearnedMoveText::
 _MoveWasDisabledText::
 	text "<TARGET>'s"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " was"
 	cont "disabled!"
 	prompt
@@ -317,7 +314,7 @@ _TransformedText::
 	text "<USER>"
 	line "transformed into"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 
@@ -382,7 +379,7 @@ _SiphonSnagHealedPartyText::
 	line "siphoned energy,"
 	para "curing team member"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 

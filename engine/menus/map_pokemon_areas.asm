@@ -41,8 +41,7 @@ GetAreaDisplayTypes:
 	ld a, [wPokedexNum]
 	push hl
 	ld hl, DisableVolcanoSurfingMons
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	pop hl
 	call c, .forceNoWaterLocations
 .doneChecks
