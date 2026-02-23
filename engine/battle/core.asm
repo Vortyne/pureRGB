@@ -670,8 +670,8 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	pop bc
 	pop hl
 	ld a, [wTypeEffectiveness]
-	cp NOT_VERY_EFFECTIVE
-	jr z, .doneToxic
+	cp NOT_VERY_EFFECTIVE + 1
+	jr c, .doneToxic ; NOT_VERY_EFFECTIVE or lower
 	cp EFFECTIVE
 	ld d, 2
 	jr z, .gotAdditionalLeechSeedDamage
