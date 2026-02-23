@@ -345,6 +345,7 @@ PotentiallyPointlessMoveEffectsJumpTable:
 	dbw ACID_ARMOR_EFFECT, CheckBothReflectLightScreenUp
 	dbw ACCURACY_DOWN1_EFFECT, CheckAccuracyDownWorks
 	db -1
+	; TODO: use siphon snag if afflicted with status?
 
 StatusAilmentMoveEffects:
 	db SLEEP_EFFECT
@@ -485,6 +486,10 @@ CheckStatusImmunity:
 	jr z, .getMonTypes
 	cp PARALYZE_EFFECT
 	jr z, .checkParalyze
+	; SLEEP_EFFECT
+	ld a, [wBattleFunctionalFlags]
+	bit 2, a ; are screeches echoing?
+	jr nz, .discourage
 	jr .done
 .checkParalyze
 	ld a, [wEnemyMoveType]
