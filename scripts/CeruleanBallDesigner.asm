@@ -857,7 +857,7 @@ CeruleanBallDesignerSwitchBallMenu:
 	ld hl, .changed
 	rst _PrintText
 	ld a, SFX_TRADE_MACHINE
-	rst _PlaySound
+	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	pop bc
 	ld a, c ; c = source ball

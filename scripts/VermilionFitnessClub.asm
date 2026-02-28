@@ -1,5 +1,15 @@
 VermilionFitnessClub_Script:
 	call EnableAutoTextBoxDrawing
+	CheckEvent EVENT_GOT_HM01
+	jr nz, .partysOver
+	lb de, 9, 9
+	call IsPlayerAtCoords
+	ret nz
+	call UpdateSpritesAndDelay3
+	ld a, TEXT_VERMILIONFITNESSCLUB_JANITOR
+	ldh [hTextID], a
+	jp DisplayTextID
+.partysOver
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	jr nz, .afterBattle
@@ -67,6 +77,7 @@ VermilionFitnessClub_TextPointers:
 	dw_const VermilionFitnessClubSprinterOpponentText, TEXT_VERMILIONFITNESSCLUB_SPRINTER_OPPONENT
 	dw_const VermilionFitnessClubSailorOpponentText, TEXT_VERMILIONFITNESSCLUB_SAILOR_OPPONENT
 	dw_const VermilionFitnessClubBeautyOpponentText, TEXT_VERMILIONFITNESSCLUB_BEAUTY_OPPONENT
+	dw_const VermilionFitnessClubJanitorText, TEXT_VERMILIONFITNESSCLUB_JANITOR
 	dw_const VermilionFitnessClubSign, TEXT_VERMILIONFITNESSCLUB_SIGN
 	dw_const VermilionFitnessClubAfterBattleText, TEXT_VERMILIONFITNESSCLUB_AFTER_BATTLE
 	dw_const VermilionFitnessClubExerciseBikes, TEXT_VERMILIONFITNESSCLUB_BIKES
@@ -106,16 +117,8 @@ VermilionFitnessClubClerk:
 	call FitnessClubIntroScript
 	jr c, .startBattle
 	call IsPlayerBesideVermilionFitnessClubClerk
-	jr nz, .done
 	; force player to walk down 1 coord if battle not started and they were beside clerk
-	ld a, D_DOWN
-	ld hl, wSimulatedJoypadStatesEnd
-	ld [hli], a
-	ld [hl], -1
-	ld a, 1
-	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
-.done
+	call z, VermilionFitnessClubForceWalkDown
 	rst TextScriptEnd
 .startBattle
 	ld hl, wSimulatedJoypadStatesEnd
@@ -145,6 +148,15 @@ VermilionFitnessClubClerk:
 .start
 	text_far _VermilionFitnessClubClerkBattleText
 	text_end
+
+VermilionFitnessClubForceWalkDown:	
+	ld a, D_DOWN
+	ld hl, wSimulatedJoypadStatesEnd
+	ld [hli], a
+	ld [hl], -1
+	ld a, 1
+	ld [wSimulatedJoypadStatesIndex], a
+	jp StartSimulatingJoypadStates
 
 FitnessClubIntroScript::
 	ld a, d
@@ -512,3 +524,9 @@ VermilionFitnessClubExerciseBikes:
 VermilionFitnessClubDumbbells:
 	text_far _VermilionFitnessClubDumbbells
 	text_end
+
+VermilionFitnessClubJanitorText:
+	text_far _VermilionFitnessClubJanitorText
+	text_asm
+	call VermilionFitnessClubForceWalkDown
+	rst TextScriptEnd

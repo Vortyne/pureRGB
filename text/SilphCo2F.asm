@@ -9,19 +9,30 @@ SilphCo2FSilphWorkerFPleaseTakeThisText::
 	cont "please take this!"
 	prompt
 
-_SilphCo2FSilphWorkerFTM36ExplanationText::
-	text "<TM>36 is"
-	line "BARRAGE!"
+_SilphCo2FSilphWorkerFTM50ExplanationText::
+	text "<TM>50 is"
+	line "SUBSTITUTE!"
 
-	para "It's hits twice,"
-	line "and is effective"
-	cont "against almost"
-	cont "all types."
+	para "A decoy will"
+	line "replace your"
+	cont "#MON."
+	para "It'll take damage"
+	line "instead!"
+	para "Kind of like an"
+	line "imposter<...>"
+
+	para "Many of my SILPH"
+	line "team members were"
+	cont "imposters!"
+	
+	para "They were just"
+	line "<ROCKET> spies!"
+	cont "Those snakes!"
 
 	para "Be careful."
 	done
 
-_SilphCo2FSilphWorkerFTM36NoRoomText::
+_SilphCo2FSilphWorkerFTM50NoRoomText::
 	text "You don't have any"
 	line "room for this."
 	done

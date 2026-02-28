@@ -2425,6 +2425,8 @@ ItemUsePPRestore:
 	ld a, 1 ; 1 PP Up used
 	ld [wUsingPPUp], a
 	call RestoreBonusPP ; add the bonus PP to current PP
+	ld a, SFX_TELEPORT_EXIT_2
+	call PlaySoundOverrideCurrent
 	ld hl, PPIncreasedText
 	rst _PrintText
 .done

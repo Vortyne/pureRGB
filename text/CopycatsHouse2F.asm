@@ -13,38 +13,62 @@ _CopycatsHouse2FCopycatDoYouLikePokemonText::
 
 	para "But, that's my"
 	line "favorite hobby!"
-	prompt
+	done
 
-_CopycatsHouse2FCopycatTM31PreReceiveText::
+_CopycatsHouse2FCopycatGaveDollText::
 	text "Oh wow!"
 	line "A # DOLL!"
 
 	para "For me?"
 	line "Thank you!"
-
-	para "You can have"
-	line "this, then!"
 	prompt
 
-_CopycatsHouse2FCopycatTM31Explanation1Text::
-	text_start
-	para "@"
-	text_ram_stringbuffer
-	text " contains my"
-	line "favorite,"
-	cont "SUBSTITUTE!"
+_CopyCatsHouse2FCopycatILikeYouText::
+	text "I like you!"
+	line "Know what?"
 
-	para "Your #MON will"
-	line "trick the foe"
-	cont "with a decoy!"
+	para "I'll teach your"
+	line "#MON my"
+	cont "favorite move:"
+	para "MIMIC!"
+	para "Who should I"
+	line "teach it to?"
+	prompt
 
-	para "Use it on a good"
-	line "#MON!@"
-	text_end
+_CopycatsHouse2FCopycatCancelledFirstTimeText::
+	text "<PLAYER>: No way"
+	line "am I teaching my"
+	cont "#MON that"
+	cont "crummy move!"
+	para "<PLAYER>: Hey!"
+	line "I didn't say that!"
+	para "COPYCAT: But you"
+	line "were thinking it!"
+	para "Hehehe!"
+	done
 
-_CopycatsHouse2FCopycatTM31Explanation2Text::
-	text "<PLAYER>: Hi!"
-	line "Thanks for <TM>50!"
+_CopyCatsHouse2FCopycatDittoText::
+	text "COPYCAT: Is that a"
+	line "DITTO?!"
+	para "DITTO is the best"
+	line "copycat there is!"
+	para "Can I have it?"
+	done
+
+;_CopycatsHouse2FCopycatTM31Explanation1Text::
+;	text_start
+;
+;	para "TM31 contains my"
+;	line "favorite, MIMIC!"
+;
+;	para "Use it on a good"
+;	line "#MON!@"
+;	text_end
+
+_CopycatsHouse2FCopycatSuccessText::
+	text "<PLAYER>: Thanks"
+	line "for teaching my"
+	cont "#MON MIMIC!"
 
 	para "<PLAYER>: Pardon?"
 
@@ -54,12 +78,34 @@ _CopycatsHouse2FCopycatTM31Explanation2Text::
 
 	para "COPYCAT: You bet!"
 	line "It's a scream!"
+
+	para "I'll teach MIMIC"
+	line "for you anytime!"
 	done
 
-_CopycatsHouse2FCopycatTM31NoRoomText::
-	text "Don't you want"
-	line "this?@"
-	text_end
+_CopycatsHouse2FCopycatAgainText::
+	text "<PLAYER>: Hey,"
+	line "weirdo!"
+	para "I'm here to learn"
+	line "MIMIC again!"
+	para "<PLAYER>: Oh for"
+	line "crying out loud!"
+	cont "I'm not that rude!"
+	para "COPYCAT: Just"
+	line "teasing! Hehehe!"
+	para "Who should I"
+	line "teach?"
+	prompt
+
+_CopycatsHouse2FCopycatCancelledAgainText::
+	text "Changed your"
+	line "mind?"
+	done
+
+;_CopycatsHouse2FCopycatTM31NoRoomText::
+;	text "Don't you want"
+;	line "this?@"
+;	text_end
 
 _CopycatsHouse2FDoduoText::
 	text "DODUO: Giiih!"

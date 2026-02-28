@@ -49,6 +49,12 @@ DrawHP_:
 	ld bc, SCREEN_WIDTH + 1 ; below bar
 .printFraction
 	add hl, bc
+	call PlaceHPText
+	pop hl
+	pop de
+	ret
+
+PlaceHPText:
 	ld de, wLoadedMonHP
 	lb bc, 2, 3
 	call PrintNumber
@@ -56,10 +62,7 @@ DrawHP_:
 	ld [hli], a
 	ld de, wLoadedMonMaxHP
 	lb bc, 2, 3
-	call PrintNumber
-	pop hl
-	pop de
-	ret
+	jp PrintNumber
 
 
 ; Predef 0x37
@@ -284,11 +287,13 @@ PrintStatsBox:
 	ld bc, $19 ; Number offset
 	jr .PrintStats
 .DifferentBox
+	push de
 	hlcoord 9, 2
 	lb bc, 8, 9
 	call TextBoxBorder
 	hlcoord 11, 3
 	ld bc, $18
+	pop de
 .PrintStats
 	push de
 	push bc
@@ -302,6 +307,7 @@ PrintStatsBox:
 	ld a, d
 	cp 2
 	jr z, .statExp
+	push de
 	ld de, wLoadedMonAttack
 	lb bc, 2, 3
 	call PrintStat
@@ -310,7 +316,14 @@ PrintStatsBox:
 	ld de, wLoadedMonSpeed
 	call PrintStat
 	ld de, wLoadedMonSpecial
-	jp PrintNumber
+	call PrintNumber
+	pop de
+	dec d
+	ret z
+	; if d = 0 we will re-print the hp text
+	call .clearHPRow
+	hlcoord 12, 4
+	jp PlaceHPText
 .statExp
 	dec hl
 	dec hl
@@ -322,7 +335,18 @@ PrintStatsBox:
 	ld de, wLoadedMonSpeedExp
 	call PrintStat
 	ld de, wLoadedMonSpecialExp
+	call PrintNumber
+	push bc
+	call .clearHPRow
+	pop bc
+	hlcoord 12, 4
+	ld de, wLoadedMonHPExp
 	jp PrintNumber
+.clearHPRow
+	hlcoord 11, 4
+	lb bc, 1, 8
+	jp ClearScreenArea
+
 PrintStat:
 	push hl
 	call PrintNumber

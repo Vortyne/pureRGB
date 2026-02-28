@@ -12,7 +12,7 @@ _Route1Youngster1MartSampleText::
 	cont "Here you go!"
 	prompt
 
-_SilphCo2FSilphWorkerFReceivedTM36Text::
+_SilphCo2FSilphWorkerFReceivedTM50Text::
 _Route1Youngster1GotPotionText::
 	text "<PLAYER> got"
 	line "@"

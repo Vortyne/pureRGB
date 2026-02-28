@@ -159,6 +159,7 @@ TypeGuysHouseLeftTallBookcaseText:
 	ld hl, .leftTallBookcase
 .done
 	rst _PrintText
+.done2
 	rst TextScriptEnd
 .leftTallBookcase
 	text_far _TypeGuysHouseLeftTallBookcaseText
@@ -166,7 +167,7 @@ TypeGuysHouseLeftTallBookcaseText:
 	text_far _TypeGuysHouseLeftTallBookcaseText2
 	text_asm
 	CheckEvent FLAG_GOLEM_FAMILY_LEARNSET
-	jr nz, .done
+	jr nz, .done2
 	ld d, DEX_GEODUDE
 	jpfar KeepReadingBookLearnset
 

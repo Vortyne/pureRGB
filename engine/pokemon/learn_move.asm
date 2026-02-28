@@ -168,6 +168,10 @@ TryingToLearn:
 	hlcoord 4, 7
 	lb bc, 4, 14
 	call TextBoxBorderUpdateSprites
+	ld a, [wLetterPrintingDelayFlags]
+	push af
+	xor a
+	ld [wLetterPrintingDelayFlags], a
 	hlcoord 6, 8
 	ld de, wMovesString
 	ldh a, [hUILayoutFlags]
@@ -177,6 +181,8 @@ TryingToLearn:
 	ldh a, [hUILayoutFlags]
 	res BIT_SINGLE_SPACED_LINES, a
 	ldh [hUILayoutFlags], a
+	pop af
+	ld [wLetterPrintingDelayFlags], a
 	ld hl, wTopMenuItemY
 	ld a, 8
 	ld [hli], a ; wTopMenuItemY

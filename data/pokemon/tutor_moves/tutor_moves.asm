@@ -9,6 +9,8 @@ INCLUDE "data/pokemon/tutor_moves/mega_kick.asm"
 INCLUDE "data/pokemon/tutor_moves/pay_day.asm"
 ; Old TM20
 INCLUDE "data/pokemon/tutor_moves/rage.asm"
+; Old TM30
+INCLUDE "data/pokemon/tutor_moves/teleport.asm"
 ; Old TM36 and TM47
 INCLUDE "data/pokemon/tutor_moves/selfdestruct_explosion.asm"
 ; Old TM37

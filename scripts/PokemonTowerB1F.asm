@@ -1441,8 +1441,6 @@ LearnArbitraryMove::
 	ld [wNamedObjectIndex], a
 	call GetMoveName
 	call CopyToStringBuffer
-	xor a
-	ld [wLetterPrintingDelayFlags], a
 	predef LearnMove
 	ld d, b
 	ret

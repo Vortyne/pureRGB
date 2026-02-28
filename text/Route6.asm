@@ -104,8 +104,8 @@ _Route6ButterfreeLearnsetText::
 	text "I try so hard to"
 	line "train @"
 	text_ram_namebuffer
-	text "!"
-	prompt
+	text "!<PARA>@"
+	text_end
 
 _Route6BattleText7::
 	text "Huh! The guard"

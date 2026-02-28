@@ -210,3 +210,17 @@ _VermilionFitnessClubDumbbells::
 	text "Lots of dumbbells"
 	line "and weights!"
 	done
+
+_VermilionFitnessClubJanitorText::
+	text "Hello! The FITNESS"
+	line "CLUB is closed!"
+	para "Everyone is off"
+	line "partying on the"
+	cont "S.S.ANNE!"
+	para "Oh, me? Haha,"
+	line "I'm the janitor!"
+	para "Once the party's"
+	line "done, we'll be"
+	cont "open again!"
+	para "Come back then!"
+	done

@@ -104,3 +104,16 @@ _Route18CyclingRoadSignText::
 	line "No pedestrians"
 	cont "permitted!"
 	done
+
+_Route18TipsSign::
+	text "<TIPS>"
+	para "Press SELECT"
+	line "when viewing a"
+	cont "#MON's STATS"
+	cont "to view STAT EXP!"
+	para "STAT EXP is raised"
+	line "by battling and"
+	cont "using vitamins!"
+	para "More EXP means"
+	line "a higher STAT!"
+	done

@@ -212,3 +212,19 @@ _CeladonRuffianHouseBikerText::
 	para "Got a problem"
 	line "with that?"
 	done
+
+; TODO: add back in?
+;_CeladonBackAlleyCircleHooliganNoKidsAllowedText::
+;	text "Hey! No kids"
+;	line "allowed!"
+;	para "Oh, a wiseguy,"
+;	line "huh?"
+;	para "Alright, if you"
+;	line "want in, prove"
+;	cont "yourself to us!"
+;	para "Find the <ROCKET>"
+;	line "HQ in this city"
+;	cont "and cause havoc!"
+;	para "Then we'll let"
+;	line "you join!"
+;	done

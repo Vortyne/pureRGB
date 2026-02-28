@@ -492,36 +492,19 @@ Route12GamblerText:
 	ld hl, .teach
 	rst _PrintText
 	call YesNoChoice
-	jr nz, .exit
-	call ClearTextBox
-	callfar GenericShowPartyMenuSelection
-	jr c, .exit
-	ld a, [wWhichPokemon]
-	ld hl, wPartyMon1Species
-	ld bc, wPartyMon2Species - wPartyMon1Species
-	call AddNTimes
-	ld a, [hl]
-	cp DITTO
-	ld hl, .ditto
-	jr z, .printDone
+	ld hl, .ohWell
+	jr nz, .printDone
 	ld a, METRONOME
 	ld [wMoveNum], a
-	ld [wNamedObjectIndex], a
-	call GetMoveName
-	call CopyToStringBuffer
-	xor a
-	ld [wLetterPrintingDelayFlags], a
-	predef LearnMove
-	push bc
-	call LoadScreenTilesFromBuffer2
-	pop bc
-	ld a, b
+	callfar SingleMoveTutorScript
+	ld a, d
 	and a
-	jr z, .exit
-	ld hl, .chaos
-	jr .printDone
-.exit
 	ld hl, .ohWell
+	jr z, .printDone
+	dec a
+	ld hl, .chaos
+	jr z, .printDone
+	ld hl, .ditto
 .printDone
 	rst _PrintText
 	rst TextScriptEnd

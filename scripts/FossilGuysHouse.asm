@@ -615,6 +615,7 @@ FormulateMoveMysticMonList:
 	jr z, .seen
 	push hl
 	push bc
+	dec c
 	ld hl, wPokedexSeen
 	ld b, FLAG_TEST
 	predef FlagActionPredef

@@ -284,11 +284,6 @@ INCLUDE "scripts/LavenderTown.asm"
 
 SECTION "Maps 6", ROMX
 
-INCLUDE "data/maps/headers/PokemonMansion1F.asm"
-INCLUDE "scripts/PokemonMansion1F.asm"
-INCLUDE "data/maps/objects/PokemonMansion1F.asm"
-PokemonMansion1F_Blocks: INCBIN "maps/PokemonMansion1F.blk"
-
 INCLUDE "data/maps/headers/SeafoamIslands1F.asm"
 INCLUDE "scripts/SeafoamIslands1F.asm"
 INCLUDE "data/maps/objects/SeafoamIslands1F.asm"
@@ -338,6 +333,11 @@ INCLUDE "data/maps/headers/SafariZoneCenter.asm"
 INCLUDE "scripts/SafariZoneCenter.asm"
 INCLUDE "data/maps/objects/SafariZoneCenter.asm"
 SafariZoneCenter_Blocks: INCBIN "maps/SafariZoneCenter.blk"
+
+INCLUDE "data/maps/headers/SafariZoneWest.asm"
+INCLUDE "scripts/SafariZoneWest.asm"
+INCLUDE "data/maps/objects/SafariZoneWest.asm"
+SafariZoneWest_Blocks: INCBIN "maps/SafariZoneWest.blk"
 
 INCLUDE "data/maps/headers/SafariZoneCenterRestHouse.asm"
 INCLUDE "scripts/SafariZoneCenterRestHouse.asm"
@@ -605,6 +605,11 @@ INCLUDE "scripts/SilphCo7F.asm"
 INCLUDE "data/maps/objects/SilphCo7F.asm"
 SilphCo7F_Blocks: INCBIN "maps/SilphCo7F.blk"
 
+INCLUDE "data/maps/headers/PokemonMansion1F.asm"
+INCLUDE "scripts/PokemonMansion1F.asm"
+INCLUDE "data/maps/objects/PokemonMansion1F.asm"
+PokemonMansion1F_Blocks: INCBIN "maps/PokemonMansion1F.blk"
+
 INCLUDE "data/maps/headers/PokemonMansion2F.asm"
 INCLUDE "scripts/PokemonMansion2F.asm"
 INCLUDE "data/maps/objects/PokemonMansion2F.asm"
@@ -629,11 +634,6 @@ INCLUDE "data/maps/headers/TypeGuysHouse.asm"
 INCLUDE "scripts/TypeGuysHouse.asm"
 INCLUDE "data/maps/objects/TypeGuysHouse.asm"
 TypeGuysHouse_Blocks: INCBIN "maps/TypeGuysHouse.blk"
-
-INCLUDE "data/maps/headers/SafariZoneWest.asm"
-INCLUDE "scripts/SafariZoneWest.asm"
-INCLUDE "data/maps/objects/SafariZoneWest.asm"
-SafariZoneWest_Blocks: INCBIN "maps/SafariZoneWest.blk"
 
 INCLUDE "data/maps/headers/SafariZoneSecretHouse.asm"
 INCLUDE "scripts/SafariZoneSecretHouse.asm"

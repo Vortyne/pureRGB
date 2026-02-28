@@ -68,7 +68,8 @@
 	const_next $68
 	const EVENT_BOUGHT_MUSEUM_TICKET
 	const EVENT_GOT_OLD_AMBER
-	const_skip 6
+	const_skip 5
+	const EVENT_GYM_GUIDE_CALLED_PLAYER_OVER
 	const EVENT_RETURNED_LOST_WALLET
 	const EVENT_BEAT_WALLET_KID
 	const EVENT_BEAT_PEWTER_GYM_TRAINER_0
@@ -394,11 +395,12 @@ DEF CUSTOM_BALL_SNAPPED_FLAGS_START EQU const_value
 	const EVENT_LAB_STILL_REVIVING_FOSSIL
 	const EVENT_LAB_HANDING_OVER_FOSSIL_MON
 
-	; pureRGBnote: ~94 bits of unused event space (large)
+	; pureRGBnote: ~93 bits of unused event space (large)
 
 ; Saffron City events
-	const_next $340
-	const EVENT_GOT_TM31
+	const_next $33F
+	const EVENT_COPYCAT_TAUGHT_MIMIC_ONCE
+	const EVENT_GAVE_COPYCAT_POKE_DOLL
 	const EVENT_SUPER_NERD_GOING_TO_CINNABAR
 	const EVENT_GAVE_FOSSIL_TO_SUPER_NERD
 	const EVENT_RECEIVED_FOSSIL_PKMN_FROM_SUPER_NERD
@@ -985,7 +987,7 @@ DEF FLAG_JIGGLE_TOGGLE EQU const_value
 	const_skip 7
 	const EVENT_SILPH_CO_2_UNLOCKED_DOOR1
 	const EVENT_SILPH_CO_2_UNLOCKED_DOOR2
-	const EVENT_GOT_TM36
+	const EVENT_GOT_TM50
 	const_skip 2
 	const EVENT_BEAT_SILPH_CO_3F_TRAINER_0
 	const EVENT_BEAT_SILPH_CO_3F_TRAINER_1
@@ -1165,9 +1167,10 @@ DEF LEARNSET_FLAGS_END EQU const_value
 
 	; pureRGBnote: ~6 bits of unused space
 
-; Safari Zone events
+; Safari Zone events 
 	const_next $880
 	const EVENT_GOT_HM03
+	; everything between here and EVENT_BEAT_SAFARI_ZONE_WEST_TRAINER_4 get reset on entering the safari zone
 	const EVENT_BEAT_SAFARI_ZONE_CENTER_RANGER_0
 	const EVENT_BEAT_SAFARI_ZONE_CENTER_TRAINER_0
 	const EVENT_BEAT_SAFARI_ZONE_CENTER_TRAINER_1

@@ -16,3 +16,12 @@ _PewterGymBrockPreBattleText::
 	cont "Fine then! Show"
 	cont "me your best!"
 	done
+
+_PewterGymGuideCallOverText::
+	text "GYM GUIDE: Hey"
+	line "kid! You won!"
+	para "That was a rock-"
+	line "solid battle!"
+	para "Come over"
+	line "here for a sec."
+	done

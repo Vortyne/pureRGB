@@ -2027,11 +2027,11 @@ ReadPlayerMonCurHPAndStatus:
 	ld bc, $4               ; 2 bytes HP, 1 byte unknown (unused?), 1 byte status
 	jp CopyData
 
-;DrawUserHPBar:
-;	ldh a, [hWhoseTurn]
-;	and a
-;	jr z, DrawPlayerHUDAndHPBar
-;	jp DrawEnemyHUDAndHPBar
+DrawUserHPBar::
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, DrawPlayerHUDAndHPBar
+	jp DrawEnemyHUDAndHPBar
 
 DrawTargetHPBar::
 	ldh a, [hWhoseTurn]

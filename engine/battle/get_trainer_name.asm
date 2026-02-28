@@ -13,6 +13,7 @@ GetTrainerName::
 	jr z, .foundName
 	ld hl, TrainerNames
 	dec a
+	jr z, .foundTrainer
 	ld b, a
 .loopFindTrainerName
 	ld a, [hli]

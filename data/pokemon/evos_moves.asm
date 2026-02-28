@@ -890,8 +890,8 @@ GolduckEvosMoves:
 	db 27, REFLECT
 	db 32, WATERFALL
 	db 34, TELEPORT
-	db 38, AMNESIA
-	db 44, PSYCHIC_M
+	db 38, PSYBEAM
+	db 44, AMNESIA
 	db 50, SWIFT
 	db 56, HYDRO_PUMP
 	db 60, MEDITATE

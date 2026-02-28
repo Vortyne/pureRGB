@@ -186,9 +186,12 @@ _Route13TrainerTips2Text::
 	cont "the ITEM window!"
 
 	para "This also works"
-	line "during battle"
-	cont "with #MON"
-	cont "attacks!"
+	line "in battle with"
+	cont "#MON attacks!"
+
+	para "It even works"
+	line "with <PK><MN> order"
+	cont "swapping, try it!"
 	done
 
 _Route13SignText::

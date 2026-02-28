@@ -38,7 +38,7 @@ Options3CoordOffsetList:
 	db 5, 1
 	db 7, 2
 	db 9, 3
-	db 11, 3
+	db 11, 4
 	db PAGE_CONTROLS_Y_COORD, MAX_OPTIONS_PER_PAGE
 
 OptionsMenu3Data:

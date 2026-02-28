@@ -13,61 +13,75 @@ CopycatsHouse2F_TextPointers:
 
 CopycatsHouse2FCopycatText:
 	text_asm
-	CheckEvent EVENT_GOT_TM31
-	jr nz, .got_item
-	ld a, TRUE
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	CheckEvent EVENT_COPYCAT_TAUGHT_MIMIC_ONCE
+	ld hl, .mimicTeachAgain
+	jr nz, .mimicTeach
+	CheckEvent EVENT_GAVE_COPYCAT_POKE_DOLL
+	jr nz, .mimicTeachFirstTime
 	ld hl, .DoYouLikePokemonText
 	rst _PrintText
 	ld b, POKE_DOLL
 	call IsItemInBag
 	jr z, .done
-	ld hl, .TM31PreReceiveText
-	rst _PrintText
-	lb bc, TM_SAFFRON_CITY_COPYCAT_POKEDOLL_REWARD, 1
-	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedTM31Text
-	rst _PrintText
+	call DisplayTextPromptButton
 	ld a, POKE_DOLL
 	ldh [hItemToRemoveID], a
 	farcall RemoveItemByID
-	SetEvent EVENT_GOT_TM31
-	jr .done
-.bag_full
-	ld hl, .TM31NoRoomText
+	ld hl, .gaveDoll
 	rst _PrintText
-	jr .done
-.got_item
-	ld hl, .TM31Explanation2Text
+	SetEvent EVENT_GAVE_COPYCAT_POKE_DOLL
+.mimicTeachFirstTime
+	ld hl, .ILikeYou
+.mimicTeach
 	rst _PrintText
+	ld a, MIMIC
+	ld [wMoveNum], a
+	callfar SingleMoveTutorScript
+	CheckEvent EVENT_COPYCAT_TAUGHT_MIMIC_ONCE
+	ld hl, .cancelledLearning
+	jr z, .continue
+	ld hl, .cancelledAgain
+.continue
+	ld a, d
+	and a
+	jr z, .printDone ; cancelled learning
+	dec a
+	jr z, .success
+	ld hl, .ditto
+.printDone
+	rst _PrintText
+	rst TextScriptEnd
+.success
+	ld hl, .successLearning
+	rst _PrintText
+	SetEvent EVENT_COPYCAT_TAUGHT_MIMIC_ONCE
 .done
 	rst TextScriptEnd
-
 .DoYouLikePokemonText:
 	text_far _CopycatsHouse2FCopycatDoYouLikePokemonText
 	text_end
-
-.TM31PreReceiveText:
-	text_far _CopycatsHouse2FCopycatTM31PreReceiveText
+.gaveDoll:
+	text_far _CopycatsHouse2FCopycatGaveDollText
+	text_end
+.mimicTeachAgain
+	text_far _CopycatsHouse2FCopycatAgainText
+	text_end
+.ILikeYou
+	text_far _CopyCatsHouse2FCopycatILikeYouText
+	text_end
+.successLearning
+	text_far _CopycatsHouse2FCopycatSuccessText
+	text_end
+.cancelledLearning
+	text_far _CopycatsHouse2FCopycatCancelledFirstTimeText
+	text_end 
+.ditto
+	text_far _CopyCatsHouse2FCopycatDittoText
+	text_end
+.cancelledAgain
+	text_far _CopycatsHouse2FCopycatCancelledAgainText
 	text_end
 
-.ReceivedTM31Text:
-	text_far _CopycatsHouse2FCopycatReceivedTM31Text
-	sound_get_item_1
-.TM31Explanation1Text:
-	text_far _CopycatsHouse2FCopycatTM31Explanation1Text
-	text_waitbutton
-	text_end
-
-.TM31Explanation2Text:
-	text_far _CopycatsHouse2FCopycatTM31Explanation2Text
-	text_end
-
-.TM31NoRoomText:
-	text_far _CopycatsHouse2FCopycatTM31NoRoomText
-	text_waitbutton
-	text_end
 
 CopycatsHouse2FDoduoText:
 	text_far _CopycatsHouse2FDoduoText

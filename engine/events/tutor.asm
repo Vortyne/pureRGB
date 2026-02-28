@@ -5,8 +5,8 @@ CeladonMoveTutorMoves::
 	dbw DREAM_EATER,  DreamEaterLearnset
 	dbw PAY_DAY,      PayDayLearnset
 	dbw REST,         -1
+	dbw TELEPORT,     TeleportLearnset
 	dbw SOFTBOILED,   SoftboiledLearnset
-	; TODO: RAZOR WIND?
 	db -1
 
 SaffronMoveTutorMoves::
@@ -328,5 +328,38 @@ ShowMoveTutorMoveList::
 .info
 	text_far _MoveTutorInfoText
 	text_end
+
+; script for move tutors that teach one move
+; [wMoveNum] = which move will be taught
+; at the moment all pokemon will be able to learn the move except for ditto (may change if needed later)
+; output:
+; d = 0 = cancelled teaching or already knew move
+; d = 1 = successfully taught move
+; d = 2 = ditto was selected
+SingleMoveTutorScript::
+	call ClearTextBox
+	callfar GenericShowPartyMenuSelection
+	ld d, 0
+	ret c
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Species
+	ld bc, wPartyMon2Species - wPartyMon1Species
+	call AddNTimes
+	ld a, [hl]
+	cp DITTO
+	ld d, 2
+	ret z
+	ld a, [wMoveNum]
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+	call CopyToStringBuffer
+	xor a
+	ld [wLetterPrintingDelayFlags], a
+	predef LearnMove
+	push bc
+	call LoadScreenTilesFromBuffer2
+	pop bc
+	ld d, b
+	ret
 
 INCLUDE "data/pokemon/tutor_moves/tutor_moves.asm"

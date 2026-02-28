@@ -537,4 +537,5 @@ MACRO ToggleEvent
 	ld a, [wEventFlags + ((\1) / 8)]
 	xor 1 << (\1) % 8
 	ld [wEventFlags + ((\1) / 8)], a
+	bit (\1) % 8, a
 ENDM

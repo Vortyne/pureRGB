@@ -752,12 +752,12 @@ _VermilionGymTrashSuccessText3::
 	line "opened!@"
 	text_end
 
-_VermilionGymTrashFailText::
-	text "Nope! There's"
-	line "only trash here."
-	cont "Hey! The electric"
-	cont "locks were reset!@"
-	text_end
+;_VermilionGymTrashFailText::
+;	text "Nope! There's"
+;	line "only trash here."
+;	cont "Hey! The electric"
+;	cont "locks were reset!@"
+;	text_end
 
 _FoundHiddenItemText::
 	text "<PLAYER> found"
@@ -1665,8 +1665,12 @@ _WhichPrizeText::
 	done
 
 _HereYouGoText::
-	text "Here you go!@"
-	text_end
+	text "Here you go!"
+	done
+
+_GoodChoice::
+	text "Good choice!"
+	done
 
 _SoYouWantPrizeText::
 	text "So, you want"

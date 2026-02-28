@@ -250,19 +250,19 @@ EarlierVersionSaveFileUpdate:
 	call z, HideExtraObjectEntry
 	callfar SetDetentionHideShows
 	ld hl, SaveFileUpdater2_6_0_Hides
-	call HideMultipleObjects
+	call HideMultipleExtraObjects
 	call BeforeVersion2_7_0SaveFileUpdate
 	ld c, %00000001 ; reset all flags except the alt palette flag
 	jp ResetMonFlagsFully
 
-HideMultipleObjects:
+HideMultipleExtraObjects:
 	ld a, [hli]
 	cp -1
 	ret z
 	push hl
 	call HideExtraObjectEntry
 	pop hl
-	jr HideMultipleObjects
+	jr HideMultipleExtraObjects
 HideExtraObjectEntry:
 	ld [wMissableObjectIndex], a
 	predef_jump HideExtraObject
@@ -622,8 +622,12 @@ AddedHiddenItemFlags:
 	db -1
 
 BeforeVersion2_7_0SaveFileUpdate:
-	ld hl, SaveFileUpdater2_7_0_Hides
-	call HideMultipleObjects
+	CheckEvent EVENT_GOT_HM01
+	ld hl, SaveFileUpdater2_7_0_AfterCutHides
+	jr nz, .gotHideList
+	ld hl, SaveFileUpdater2_7_0_BeforeCutHides
+.gotHideList
+	call HideMultipleExtraObjects
 	ld hl, wSpriteOptions2
 	res BIT_NEW_TITLE_SCREEN, [hl]
 	res BIT_SKIP_INTRO, [hl]
@@ -634,7 +638,15 @@ BeforeVersion2_7_0SaveFileUpdate:
 	ld [hl], 0
 	ret
 
-SaveFileUpdater2_7_0_Hides:
+SaveFileUpdater2_7_0_BeforeCutHides:
+	db HS_VERMILIONFITNESSCLUB_CLERK
+	db VERMILIONFITNESSCLUB_MUSCLE1
+	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD
+	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD2
+	db -1
+
+SaveFileUpdater2_7_0_AfterCutHides:
+	db VERMILIONFITNESSCLUB_JANITOR
 	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD
 	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD2
 	db -1

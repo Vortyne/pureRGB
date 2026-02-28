@@ -1414,7 +1414,7 @@ AIPrintItemUseAndUpdateHPBar:
 	xor a
 	ld [wHPBarType], a
 	predef UpdateHPBar2
-	jp DecrementAICount
+	jp DrawHudDecrementAICount
 
 AISwitchIfEnoughMons:
 ; enemy trainer switches if there are 2 or more unfainted mons in party
@@ -1686,6 +1686,8 @@ AIIncreaseStat:
 AIPrintItemUse:
 	ld [wAIItem], a
 	call AIPrintItemUse_
+DrawHudDecrementAICount:
+	callfar DrawEnemyHUDAndHPBar
 	jp DecrementAICount
 
 AIPrintItemUse_:

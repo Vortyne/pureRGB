@@ -143,8 +143,8 @@ PrintPrizePrice:
 	ld de, .CoinString
 	call PlaceString
 	hlcoord 13, 1
-	ld de, .SixSpacesString
-	call PlaceString
+	lb bc, 1, 6
+	call ClearScreenArea
 	hlcoord 13, 1
 	ld de, wPlayerCoins
 	ld c, 2 | LEADING_ZEROES
@@ -152,9 +152,6 @@ PrintPrizePrice:
 
 .CoinString:
 	db "COIN@"
-
-.SixSpacesString:
-	db "      @"
 
 LoadCoinsToSubtract:
 	ld a, [wWhichPrize]
@@ -232,7 +229,18 @@ HandlePrizeChoice:
 	ld de, wPlayerCoins + 1
 	ld c, $02 ; how many bytes
 	predef SubBCDPredef
-	jp PrintPrizePrice
+	call PrintPrizePrice
+	ld a, SFX_59
+	call PlaySoundWaitForCurrent
+	call WaitForSoundToFinish
+	ld a, [wWhichPrizeWindow]
+	cp 2
+	ld hl, HereYouGoTextPtr
+	jr z, .gotText
+	ld hl, GoodChoiceText
+.gotText
+	rst _PrintText
+	ret
 .bagFull
 	ld hl, PrizeRoomBagIsFullTextPtr
 	jp PrintText
@@ -243,9 +251,9 @@ HandlePrizeChoice:
 	ld hl, OhFineThenTextPtr
 	jp PrintText
 
-UnknownPrizeData:
+;UnknownPrizeData:
 ; XXX what's this?
-	db $00,$01,$00,$01,$00,$01,$00,$00,$01
+;	db $00,$01,$00,$01,$00,$01,$00,$00,$01
 
 HereYouGoTextPtr:
 	text_far _HereYouGoText
@@ -268,6 +276,11 @@ PrizeRoomBagIsFullTextPtr:
 
 OhFineThenTextPtr:
 	text_far _OhFineThenText
+	text_waitbutton
+	text_end
+
+GoodChoiceText::
+	text_far _GoodChoice
 	text_waitbutton
 	text_end
 

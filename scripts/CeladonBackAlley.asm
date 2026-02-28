@@ -81,6 +81,12 @@ CeladonBackAlley_TextPointers:
 CeladonBackAlleyHooliganText:
 	text_far _CeladonBackAlleyCircleHooliganText
 	text_asm
+;	CheckEvent EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
+;	jr nz, .allowedIn
+;	ld hl, .noKidsAllowed
+;	rst _PrintText
+;	jr .leave
+;.allowedIn
 	CheckAndSetEvent EVENT_MET_CELADON_BACK_ALLEY_HOOLIGAN
 	jr nz, .met
 	ld hl, .intro
@@ -91,6 +97,7 @@ CeladonBackAlleyHooliganText:
 	lb de, 32, 21 ; max opponent level, min opponent level
 	call FitnessClubIntroScript
 	jr c, .startBattle
+.leave
 	call IsPlayerBesideCeladonBackAlleyHooligan
 	jr nz, .done
 	; force player to walk up 1 coord if battle not started and they were beside clerk
@@ -137,6 +144,9 @@ CeladonBackAlleyHooliganText:
 .start
 	text_far _CeladonBackAlleyCircleHooliganBattleText
 	text_end
+;.noKidsAllowed
+;	text_far _CeladonBackAlleyCircleHooliganNoKidsAllowedText
+;	text_end
 
 CeladonBackAlleyCircleBiker1Text:
 	text_far _CeladonBackAlleyCircleBiker1Text

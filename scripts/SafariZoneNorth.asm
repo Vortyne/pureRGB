@@ -14,7 +14,8 @@ SafariZoneNorth_ScriptPointers:
 	dw_const CheckFightingMapTrainers,              SCRIPT_SAFARIZONENORTH_DEFAULT
 	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SAFARIZONENORTH_START_BATTLE
 	dw_const EndTrainerBattle,                      SCRIPT_SAFARIZONENORTH_END_BATTLE
-	dw_const RangerPostBattleNorth,                 SCRIPT_SAFARIZONENORTH_RANGER_POST_BATTLE
+	dw_const RangerPostBattle,                 		SCRIPT_SAFARIZONENORTH_RANGER_POST_BATTLE
+	ASSERT BANK(RangerPostBattle) == BANK(SafariZoneNorth_Script)
 
 SafariZoneNorth_TextPointers:
 	def_text_pointers
@@ -32,9 +33,6 @@ SafariZoneNorth_TextPointers:
 	dw_const SafariZoneNorthTrainerTips2Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_2
 	dw_const SafariZoneNorthTrainerTips3Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_3
 
-RangerPostBattleNorth:
-	SetEvent EVENT_BEAT_SAFARI_ZONE_NORTH_RANGER_0
-	jpfar RangerPostBattle
 
 SafariZoneNorthRestHouseSignText:
 	text_far _SafariZoneNorthRestHouseSignText

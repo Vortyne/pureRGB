@@ -2321,6 +2321,8 @@ CinnabarVolcanoProspectorText:
 	ld [wTopMenuItemY], a
 	ld a, 3
 	ld [wMaxMenuItem], a
+	ld a, A_BUTTON | B_BUTTON
+	ld [wMenuWatchedKeys], a
 	call HandleMenuInput
 	ldh a, [hJoy5]
 	bit BIT_B_BUTTON, a

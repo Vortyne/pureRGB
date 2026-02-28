@@ -42,6 +42,7 @@ CeruleanOldRodHouse1Text1:
 
 .CeruleanOldRodHouseGiveRod:
 	text_far _VermilionOldRodHouseFishingGuruTakeThisText
+	text_far _GenericReceivedItemA
 	sound_get_item_1
 	text_far _CeruleanOldRodHouseFishingIsAWayOfLifeText
 	text_end

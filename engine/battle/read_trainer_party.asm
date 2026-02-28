@@ -127,12 +127,14 @@ ReadTrainer:
 	push hl
 	call AddPartyMon
 	pop hl
-	jr .SpecialTrainer
+	jr .SpecialTrainerLoop
 .AddLoneMove
 ; does the trainer have a single monster with a different move?
 	ld a, [wLoneAttackNo] ; Brock is 01, Misty is 02, Erika is 04, etc
 	and a
 	jr z, .AddTeamMove
+	cp 9
+	jr nc, .AddTeamMove ; higher than 8 are elite four which we don't want getting these moves since their movesets are good already
 ;;;;;;;;;; PureRGBnote: CHANGED: gym leader special moves can have custom indices instead of hardcoded to replace move 2 of the given pokemon.
 	dec a ; indices start at 0, wLoneAttackNo starts at 1
 	ld b, a
@@ -172,15 +174,15 @@ ReadTrainer:
 	jr nz, .IterateTeamMoves
 
 ; no matches found. is this trainer champion rival?
-	ld a, b
-	cp RIVAL3
-	jr z, .ChampionRival
+	;ld a, b
+	;cp RIVAL3
+	;jr z, .ChampionRival
 	jr .FinishUp ; nope
 .GiveTeamMoves
 	ld a, [hl]
 	ld [wEnemyMon6Moves + 1], a ; PureRGBnote: CHANGED: elite four trainers replace their 6th pokemon's 2nd move with their special moves.
-	jr .FinishUp
-.ChampionRival ; give moves to his team
+	;jr .FinishUp
+;.ChampionRival ; give moves to his team
 ; PureRGBnote: CHANGED: not necessary because champion's team already has good moves at such high level from their learnset.
 
 ; pidgeot
