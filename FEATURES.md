@@ -178,6 +178,9 @@ The fifth page contains some additional options.
 - MAX REPEL entirely disables wild pokemon encounters while it's active
 - Through optimization of text printing code, the speed and snappiness of navigating list menus has been increased.
 - Play Time tracking can now go above 255 hours, all the way up to 10000+ hours!
+- Reduced the weirdly long artificial delay when swapping items in the item menu
+- Improved the speed and responsiveness of the main menu (CONTINUE / NEW GAME / OPTIONS) menu
+- In Elevator menus, the current floor is now displayed.
 
 ## New Gameplay Features
 - Mew is under the truck!!! Use strength on it from the right side. If the SS Anne has left, it returns after obtaining the Soul Badge.
@@ -408,6 +411,7 @@ The fifth page contains some additional options.
 - In the original game, if your opponent used minimize or substitute, you opened your FIGHT menu, exited, went to PARTY, looked at a pokemon's status menu, then returned to the fight, the opponent's sprite would be all messed up. Now it's fixed and doesn't do that.
 - Doing the same thing as the above on unidentified GHOSTS would reveal what pokemon they are. Now it doesn't.
 - After saving in rock tunnel, going title screen -> continue screen -> title screen -> continue screen will cause the continue screen to take on darker colors. Now it stays normal colors.
+- Draining moves now miss on substituted pokemon as originally intended in the code.
 
 ## Tweaks
 - Trainers in general have a bit less type-specific parties and more varied pokemon. 
@@ -438,7 +442,9 @@ The fifth page contains some additional options.
 - In the original game, if you open the OPTIONS menu in rock tunnel while it's dark, the menu will also be dark. Now it's normal colors.
 - Pokemon Center nurses will now recognize you became the CHAMP and treat you a bit differently. You are famous!
 - Some trainers that say things that don't make sense after you defeat the gym leader in the gym they reside in had their text adjusted to reflect that you defeated the gym leader. (3 in Vermilion Gym, 1 in Celadon Gym, 1 in Fuchsia Gym)
-- Mr Psychic now requires you to defeat the FIGHTING DOJO before he gives you the PSYCHIC TM. 
+- Mr Psychic now requires you to defeat the FIGHTING DOJO before he gives you the PSYCHIC TM.
+- In-game trade trainers will now have unique OT names instead of just TRAINER for all of them.
+- The SAFARI ZONE warden will say different things to you if you've gotten HM03 instead of telling you to get it when you already have.
 
 ## Move changes
 - Disable disables the previously selected move of the opponent. If they haven't selected a move yet, it chooses a random move. It has 85% accuracy. It lasts 2-7 turns.
