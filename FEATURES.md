@@ -1,5 +1,7 @@
 # Full Features / Bugfixes List
 
+![covers](/box_art/PureRGB_Covers.png?raw=true)
+
 The only version differences between PureRed / PureBlue / PureGreen are visual. Play whatever color you like the most.
 
 ## New Options in the Options Menu
