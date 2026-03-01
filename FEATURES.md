@@ -72,7 +72,7 @@ The fourth page contains Sprite-related options.
 
  ![Menu Icons 1](/gfx/icons/menusprites1.png?raw=true) ![Menu Icons 2](/gfx/icons/menusprites2.png?raw=true)
     ![Brock](/gfx/sprites/brock.png?raw=true) ![Misty](/gfx/sprites/misty.png?raw=true) ![LtSurge](/gfx/sprites/lt_surge.png?raw=true) ![Erika](/gfx/sprites/erika.png?raw=true) ![Sabrina](/gfx/sprites/sabrina.png?raw=true) ![Blaine](/gfx/sprites/blaine.png?raw=true)
-  - If you press A on `EDIT` of the 3rd Option, it will open 5 new pages on another level. These 5 pages are for customizing the front sprites of the game. 
+  - If you press A on `EDIT` of the 3rd Option, it will open 5 new pages on another level. These 5 pages are for customizing the front sprites of the game. You can press A or SELECT to see which front sprite you chose for each option.
 
 ![Front Sprite Options 1](/screenshots/front_sprite_options1.png?raw=true)
 ![Front Sprite Options 2](/screenshots/front_sprite_options2.png?raw=true)
@@ -83,6 +83,17 @@ The fourth page contains Sprite-related options.
   You can customize the below sprites:
 
 ![front_sprite_options](/gfx/pokemon/gallery/front_sprite_options.png?raw=true)
+
+The fifth page contains some additional options.
+
+![Options Fifth Page](/screenshots/options_page_5.png?raw=true)
+- Turn on or off the learnset feature in the game. On by default. You can unlock learnsets for pokemon in various ways (discussed in the "New Features" section if this is turned on)
+- Turn on a new title screen created for PureRGB. By default, it displays the original game's title screen for the version you are playing.
+  
+![Pure Red Title](/screenshots/pure_red_title0.png?raw=true)![Pure Green Title](/screenshots/pure_green_title0.png?raw=true)![Pure Blue Title](/screenshots/pure_blue_title0.png?raw=true)
+- You can skip the intro when booting up the game and go straight to the title screen.
+- You can set battles to have less intense flashing animations.
+- You can switch between Imperial and Metric units used in pokedex info.
 
 ## Quality of Life Enhancements
 - Stone evos and trade evos have full movesets
@@ -159,6 +170,12 @@ The fourth page contains Sprite-related options.
 - You can use the itemfinder in the GAME CORNER to detect hidden coins now.
 - A Save file updater was implemented, allowing you to transfer your save from the original game to work with PureRGB. Just open the original save file on PureRGB and the game will ask whether to update it.
 - Press SELECT while on the WITHDRAW option of the PC. You can view the pokemon in the box even if your party is full by doing this.
+- Press SELECT while viewing a pokemon's stats to see their stat EXP for each stat.
+- You can swap around pokemon in the party menu by pressing SELECT, like switching items or attacks.
+- When viewing your Item list or PC item list, it will show how full your bag is. 15/30, 20/60
+- MAX REPEL entirely disables wild pokemon encounters while it's active
+- Through optimization of text printing code, the speed and snappiness of navigating list menus has been increased.
+- Play Time tracking can now go above 255 hours, all the way up to 10000+ hours!
 
 ## New Gameplay Features
 - Mew is under the truck!!! Use strength on it from the right side. If the SS Anne has left, it returns after obtaining the Soul Badge.
@@ -166,9 +183,17 @@ The fourth page contains Sprite-related options.
 
  ![Missingno](/screenshots/missingno.png?raw=true)
 
-- And entirely new pokedex mode has been added. It's called the MOVEDEX. This tracks every move you have seen the animation of in battle, and will list all their information and data in detail for you to see. Try to complete your MOVEDEX! The movedex is unlocked in a new basement classroom of the schoolhouse in Viridian City. You can switch the sorting mode of the movedex from ID to alphabetical with SELECT while viewing the movedex.
+- An entirely new pokedex mode has been added. It's called the MOVEDEX. This tracks every move you have seen the animation of in battle, and will list all their information and data in detail for you to see. Try to complete your MOVEDEX! The movedex is unlocked in a new basement classroom of the schoolhouse in Viridian City. You can switch the sorting mode of the movedex from ID to alphabetical with SELECT while viewing the movedex.
 
 ![movedex](/screenshots/movedex.png?raw=true) ![movedex thunderbolt](/screenshots/movedex_thunderbolt.png?raw=true) ![movedex flamethrower](/screenshots/movedex_flamethrower.png?raw=true) ![movedex surf](/screenshots/movedex_surf.png?raw=true) ![movedex eq](/screenshots/movedex_earthquake.png?raw=true)
+
+- ANOTHER entirely new pokedex mode has been added. Learnset viewing! This will list level-up learnsets, TM learnsets, and evolutions for a pokemon! You can unlock pokemon learnsets if you have obtained the MOVEDEX, by talking to people who know about specific pokemon, by reading books in the game about specific pokemon, or just by levelling up your pokemon to a high enough level such that you're an expert on that pokemon yourself!
+
+![learnset 1](/screenshots/learnset_1.png?raw=true) ![learnset_2](/screenshots/learnset_2.png?raw=true) ![learnset_3](/screenshots/learnset_3.png?raw=true)
+
+- YET ANOTHER entirely new pokedex mode has been added. View wild pokemon distributions by selecting areas on the town map! You can even select specific floors in dungeons with multiple floors! Unlock this feature by catching 50 pokemon and talking to the AIDE in FUCHSIA city's meeting room building.
+
+![town map wild data](/screenshots/town_map_wild_data.png?raw=true)
  
 - Ghost Marowak can be caught, and if you have Alt Pkmn Palettes turned on, it has a special ghostly coloration. It wants revenge on Team Rocket! Mr Fuji will react differently to being saved if you caught it.
 
@@ -198,6 +223,10 @@ The fourth page contains Sprite-related options.
 - The Power Plant has been enhanced visually with a beta tileset from Spaceworld 1997. Now it also has a bit more of a puzzle. You must press a bunch of buttons to unlock electrical gates, which allow you to reach the end of the area. It also has a roof area, and a secret area where your MAGNETON can be powered up!
 
 ![power plant](/screenshots/power_plant.png?raw=true) ![power plant2](/screenshots/power_plant2.png?raw=true)
+
+- In CERULEAN CITY you can find the POKE BALL DESIGNER! This woman designs the look of all poke balls for SILPH CO! Become her assistant and take some pictures of cool things with her borrowed CAMERA to inspire her to create new POKE BALLs with special audiovisual effects! Switch your pokemon's poke balls! CUSTOMIZE 16 OF YOUR OWN POKE BALLS WITH CUSTOM NAMES, 16 CUSTOMIZABLE POOF ANIMATIONS, 16 CUSTOMIZABLE THROW ANIMATIONS, 16 CUSTOMIZABLE COLOR PALETTES, 16 CUSTOMIZABLE SOUND EFFECT OPTIONS, 16 CUSTOMIZABLE ANIMATION PARTICLES!! Poke Balls have never been this customizable! BECOME A POKE BALL DESIGNER!
+
+![ball designer 1](/screenshots/ball_designer1.png?raw=true) ![ball designer 2](/screenshots/ball_designer2.png?raw=true)![ball designer 3](/screenshots/ball_designer3.png?raw=true) ![ball designer 4](/screenshots/ball_designer4.png?raw=true)
 
 - The urban legend - Bills Garden - was added into the game! It only is accessible once you become champ. You'll find some amusing stuff there. Visit it a couple of times! What you find might change! If you have alt palettes turned on in the options...is that a blue pikachu??
 
@@ -258,11 +287,21 @@ The fourth page contains Sprite-related options.
 
 ![saffron abandoned building](/screenshots/saffron_abandoned_building.png?raw=true)
 
+- There are now 3 places you can train up weak pokemon faster in Vermilion City, Celadon City, and Saffron City! VERMILION FITNESS CLUB, BACK ALLEY BATTLE CLUB, and the FIGHTING DOJO. Each has a level cap in which any pokemon past that level won't receive any experience. You gain triple experience when battling in these places! Good for training up new pokemon you catch if you want to change your team up! You can turn these new areas off if you like from the WORLD OPTIONS.
+
+![clubs 1](/screenshots/clubs1.png?raw=true)![clubs 2](/screenshots/clubs2.png?raw=true)![clubs 3](/screenshots/clubs3.png?raw=true)![clubs 4](/screenshots/clubs4.png?raw=true)
+
 - The MOVE MYSTIC in Saffron City can tell you all about new SIGNATURE MOVES that some pokemon have. They get bonus power or accuracy on specific moves.
 
 ![move mystic](/screenshots/move_mystic.png?raw=true)
 
 - You can now eat food on the SS Anne to heal your pokemon while on it.
+
+- A METRONOME move tutor was added on route 12. This GAMBLER embraces chaos!
+
+- The Gramps who gave the SOFTBOILED TM in the original game will now tutor you various moves that used to be TMs.
+
+- Two FIGHTING DOJO members can be found in a house in SAFFRON CITY. They want you to beat SABRINA as revenge for her beating the FIGHTING DOJO! If you do, one of them will tutor your pokemon with additional moves that used to be TMs in the original game, and the other will tutor your ALAKAZAM with an elemental punch of your choice...BUT ONLY ONCE!
 
 - A secret stairway opens up in a building somewhere after you become champ. The last in-game trade and some interesting stuff to see is in there. 
 
@@ -280,12 +319,12 @@ The fourth page contains Sprite-related options.
 
 ## Restored Cut Content
 
-- If you turn on OG+ Music mode, the cut content Giovanni theme will play when you encounter Giovanni
+- If you turn on OG+ Music mode, the cut content Giovanni theme will play when you encounter Giovanni, and hear an early version of the Route 2 music when doing an in-game trade.
 - There is unused text in the game for when you lose to your rival - these were re-implemented and now work as expected!
 - There was an unused trainer class for Prof Oak. It's been added back into the game. Find him in Cerulean Cave after beating the Elite Four. He can be battled repeatedly. Just leave the area and come back.
-- Some trainer classes based on Beta or unused sprites were reintroduced to the game: `ROOKIE`, `RANGER`, `FIREFIGHTER`, `COOL KID`, `SOLDIER`, `CHIEF`. You'll find them in previously empty places or routes!
+- Some trainer classes based on Beta or unused sprites were reintroduced to the game: `ROOKIE`, `RANGER`, `FIREFIGHTER`, `COOL KID`, `SOLDIER`, `CHIEF`, `FIST FIGHTER`, `FITNESS PRO`, `SPRINTER`. You'll find them in previously empty places or routes!
 
-![Rookie](/gfx/unused_prototype_sprites/rookie.png?raw=true) ![Ranger](/gfx/unused_prototype_sprites/ranger.png?raw=true) ![Firefighter](/gfx/unused_prototype_sprites/firefighter.png?raw=true) ![Cool Kid](/gfx/unused_prototype_sprites/cool_kid.png?raw=true) ![Soldier](/gfx/unused_prototype_sprites/soldier.png?raw=true) ![Chief](/gfx/unused_prototype_sprites/chief.png?raw=true)
+![Rookie](/gfx/unused_prototype_sprites/rookie.png?raw=true) ![Ranger](/gfx/unused_prototype_sprites/ranger.png?raw=true) ![Firefighter](/gfx/unused_prototype_sprites/firefighter.png?raw=true) ![Cool Kid](/gfx/unused_prototype_sprites/cool_kid.png?raw=true) ![Soldier](/gfx/unused_prototype_sprites/soldier.png?raw=true) ![Chief](/gfx/unused_prototype_sprites/chief.png?raw=true) ![Fist Fighter](/gfx/unused_prototype_sprites/fist_fighter.png?raw=true) ![Chief](/gfx/unused_prototype_sprites/fitness_girl.png?raw=true) ![Chief](/gfx/unused_prototype_sprites/sprinter.png?raw=true)
 
 - There were unused icy-looking tiles in the Cave tileset that were meant to be used in seafoam island. Now they are used there!
 ![seafoam cut tiles](/screenshots/seafoam_islands_cut_content_tiles.png?raw=true)
@@ -294,6 +333,7 @@ The fourth page contains Sprite-related options.
 - Erik and Sara's house on route 19 was inspired by a house showing on earlier builds of the game on route 21.
 - Cinnabar Volcano as an area was inspired by an unused map called MOLTRES in earlier builds of the game.
 - You can enable and disable a cut content "Rainbow Palette" for Celadon City by talking to the "Celadon City - City of Rainbow Dreams" sign.
+- Unused tiles for the FIGHTING DOJO have been used in the new training area if you have the CLUBS option turned on in the WORLD OPTIONS.
 
 ## Visual changes
 - Burn status has a burn animation instead of reusing the poison animation.
@@ -323,7 +363,7 @@ The fourth page contains Sprite-related options.
 - If you turn on OG+ Icons mode, in diglett's cave you will see DIGLETTs popping up and down visually and hiding from you.
 - If you're playing on SGB or GBC, talking to the "Saffron City - City of Rainbow Dreams" sign will switch between a special Rainbow palette (unused code from the original game) and the original palette.
 - Using a poke doll in battle will have a little animation now.
-- In seafoam islands, you can see the water currents moving visually.
+- In seafoam islands, you can see the water currents moving visually. When you are close to them, there are also proximity "fast water" sound effects!
 
 ![Seafoam Currents](/screenshots/seafoam_currents.png?raw=true)
 
@@ -394,17 +434,20 @@ The fourth page contains Sprite-related options.
 - New text entries were added to objects where there was previously either nothing at all or generic reused text in some cases. (Example: some trash cans in peoples house's now have unique text)
 - You can use a larger variation of characters in pokemon/player nicknames.
 - In the original game, if you open the OPTIONS menu in rock tunnel while it's dark, the menu will also be dark. Now it's normal colors.
+- Pokemon Center nurses will now recognize you became the CHAMP and treat you a bit differently. You are famous!
+- Some trainers that say things that don't make sense after you defeat the gym leader in the gym they reside in had their text adjusted to reflect that you defeated the gym leader. (3 in Vermilion Gym, 1 in Celadon Gym, 1 in Fuchsia Gym)
+- Mr Psychic now requires you to defeat the FIGHTING DOJO before he gives you the PSYCHIC TM. 
 
 ## Move changes
 - Disable disables the previously selected move of the opponent. If they haven't selected a move yet, it chooses a random move. It has 85% accuracy. It lasts 2-7 turns.
 - Trapping moves only last 2 or 3 turns but deal a bit more damage to compensate. 2/3 chance of 2 turns, 1/3 chance of 3 turns.
 - 7 moves that people almost never use were renamed and changed to have much more useful effects (mostly based on unused prototype moves):
-  - CONSTRICT is now STATIC SNAG - 75 base power, electric type, 30% chance of paralysis, 100% accuracy (Inspired by the unused prototype moves `PARALYZING SCISSORS` and `ELEKITER`)
-  - TAKE DOWN is now HEAT RUSH - 75 base power, fire type, 30% chance of burn, 100% accuracy (Inspired by the unused prototype move `MEGA FIRE`)
+  - CONSTRICT is now SIPHON SNAG - 75 base power, electric type, move that heals status effects on the user, or one pokemon in your party if the user doesn't have status, 100% accuracy (Inspired by the unused prototype moves `PARALYZING SCISSORS` and `ELEKITER`)
+  - TAKE DOWN is now HEAT RUSH - 75 base power, fire type, 30% chance of burn, 100% accuracy. If used by a FIRE type pokemon, also has a 40% chance of increasing SPECIAL stat by one stage. (Inspired by the unused prototype move `MEGA FIRE`)
   - KINESIS is now FIREWALL - 20 base power, fire type, causes burn, 90% accuracy (Inspired by the unused prototype move `F WALL`). If used on a pokemon that is already burned, power increases to 40. If used again after that, power increases to a maximum of 80. If the user is at least level 50, the increases are instead to 80 and 140 power maximum.
   - COUNTER is now DRAIN PUNCH - 75 base power, fighting type, drains HP, 100% accuracy
   - RAZOR WIND is now ROOST - heals 1/2 max HP
-  - SLAM is now FILTHY SLAM - 80 base power, poison type, no additional effect, 100% accuracy  (Inspired by the unused prototype move `GASTRO ACID`)
+  - SLAM is now FILTHY SLAM - 80 base power, poison type, no additional effect, 100% accuracy. Power increases to 130 if the target is poisoned.  (Inspired by the unused prototype move `GASTRO ACID`)
   - FURY SWIPES is now DUST CLAW - 40 base power, ground type, no additional effect, 100% accuracy (early-game ground type move) (Inspired by the numerous cut content physical moves)
 - Some moves that were fairly useless were made less useless
   - WHIRLWIND - 110 base power, flying type, 30% chance of confusion, 85% accuracy
@@ -436,7 +479,13 @@ The fourth page contains Sprite-related options.
   - DOUBLESLAP - does double damage on sleeping pokemon! But also makes them wake up.
   - SONICBOOM - Priority move, GHOST type, 50 power. If you use it on the first turn you can attack, it will always cause the opponent to flinch.
   - ACID ARMOR - Does both LIGHT SCREEN and REFLECT in one move.
-- Some pokemon get SIGNATURE MOVES! This means they do more damage or get better accuracy with specific moves. For example, if ARBOK uses ACID, its power will be 100 instead of 50. An NPC in Saffron City can tell you which pokemon get signature moves and what the bonuses are to those moves. 
+  - ACID - Always lowers either the opponents ATTACK or DEFENSE by one stage.
+  - LEECH SEED - will do more damage per turn depending on the opponent's resistance to GRASS type. It will stay at 1/16th of their HP per turn if they resist GRASS type, 1/8th if GRASS is normally effective, and 3/16th if they are weak to GRASS type.
+  - SMOKESCREEN doesn't affect FIRE-type pokemon. (Allows some counter-play to these moves)
+  - SAND-ATTACK doesn't affect GROUND or FLYING-type pokemon. (Allows some counter-play to these moves)
+  - TOXIC - 100% accuracy when used by poison pokemon.
+  - SCREECH - Still lowers defense by 2 stages, but now never misses, and also causes an effect "Echoing screeches" which will wake up any sleeping pokemon, and prevent sleep moves from being used. Echoing screeches will last for the whole battle! The move is used automatically if a pokemon that has it in their move list is attempted to be put to sleep by the opponent. Say NO to sleep moves if you want!
+- Some pokemon get SIGNATURE MOVES! This means they do more damage or get better accuracy with specific moves. For example, if ARBOK uses ACID, its power will be 100 instead of 50. An NPC in Saffron City can tell you which pokemon get signature moves and what the bonuses are to those moves. You can disable signature moves by turning off the MOVEMYSTIC option in the WORLD OPTIONS.
 - There are many more tweaks to moves. Check your MOVEDEX in game to see what a move you just saw's effects were, or see the wiki for a link to the complete move list. Be sure to try almost every move and don't write them off. Except for splash. It still does nothing as usual.
 
 ## Pokemon type changes
@@ -482,6 +531,7 @@ Additionally, GHOST type was made a "Dynamic type". What this means, is it can d
 - Trainers that can use boosting items like X Attack will only do so if it appears safe to use it.
 
 ## Audio Changes
+- If you set Audio mode to OG+ in the options, an entirely new 2-minute-long song I composed for the Safari Zone based on the original short evolution song will play.
 - The ghosts in pokemon tower now have a sound effect on encountering
 - Booting up a TM or HM has a little sound effect
 - Pushing a boulder down a hole in Seafoam / Victory road has a sound and feedback with it now
@@ -498,6 +548,8 @@ Additionally, GHOST type was made a "Dynamic type". What this means, is it can d
 - If you set MUSIC to OG+ mode, 6 pokemon (POLIWHIRL, VILEPLUME, GOLDEEN, RHYHORN, OMANYTE, DITTO) will have slightly different cries so their cries aren't exact duplicates of other pokemon.
 - Music volume was decreased when you enter the pokemon nicknaming screen.
 - The game's unused fanfare sound effect has been used in a couple of new events such as the VOLCANO area.
+- A sound plays when bill enters the teleporter.
+- A sound plays when using PP Up to increase a move's Max PP.
 
 ## Pokemon Green visuals
 The version-specific visuals of japanese pokemon green were added into PureGreen.
