@@ -1,6 +1,6 @@
 # Pokémon PureRGB (PureRed, PureGreen, PureBlue)
 
-![covers](/screenshots/box_art/PureRGB_Covers.png?raw=true)
+![covers](/box_art/PureRGB_Covers.png?raw=true)
 
 A purist's enhancement of Pokémon Red, Green, and Blue based on the pokered disassembly.
 
