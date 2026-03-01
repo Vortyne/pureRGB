@@ -62,3 +62,12 @@
 01FF5CD8
 01FF5DD8
 01035ED8
+!disabled
+# Enemy Attacks Do Almost No Damage
+0101CECF
+!disabled
+# Enemy Attacks Do No Damage
+0100CECF
+!disabled
+# Enemy Attacks Always Miss
+0100D0CF
