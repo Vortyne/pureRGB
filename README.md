@@ -1,5 +1,7 @@
 # Pokémon PureRGB (PureRed, PureGreen, PureBlue)
 
+![covers](/screenshots/box_art/PureRGB_Covers.png?raw=true)
+
 A purist's enhancement of Pokémon Red, Green, and Blue based on the pokered disassembly.
 
 To download the latest version of this romhack, [**go here**](https://github.com/Vortyne/pureRGB/releases/latest)
@@ -24,9 +26,11 @@ This is a purist's enhancement of Pokemon Red/Blue/Green. The goal is to enhance
 - Game bugs that can be used to your own advantage (like the leech seed/toxic bug, the hyper beam no recharge on faint bug, etc.) are unchanged, because they are quirks of the battle engine that you can use as your own tool. 
 - Mew is under the truck as expected!
 - Missingno and the item duplication glitch are intact - but won't corrupt your save anymore!
-- An entirely new mode for the pokedex called the MOVEDEX was added. It shows data about moves you have seen in detail. You unlock the MOVEDEX in viridian city.
+- Multiple entirely new pokedex modes were added, such as the MOVEDEX, unlockable learnsets, and town map wild pokemon data were added! You can unlock the MOVEDEX in viridian city, and can upgrade your town map with wild data in fuchsia city.
 - CINNABAR VOLCANO was added (an area based on unused map data). It's accessible from Route 21. You can turn it off from your PC if you don't want this new area.
+- In CERULEAN CITY, you can meet the POKE BALL DESIGNER! She needs help designing new POKE BALLs! Take pictures with her CAMERA of interesting things, and help her design new poke balls! Then, with the most in depth poke ball designing system in a pokemon game, design your own custom poke balls with their own custom audiovisual effects! Switch your pokemon's poke balls around if you want! Reuse your great balls and ultra balls if you want!
 - There is an arena to rematch gym leaders and other important trainers after becoming CHAMP.
+- Train up low level pokemon to a level cap quickly at CLUBS! You can find these in Vermilion City, Celadon City, and Saffron City. You can turn off this feature.
 - There are multiple secret areas to be found after becoming CHAMP. Bills Garden, Team Rocket / Mewtwo lore, and more...
 - [Many options to enhance the game visually and mechanically were added.](https://github.com/Vortyne/pureRGB/blob/master/FEATURES.md#new-options-in-the-options-menu) **(You must turn them on via the options in-game!)** Including:
   - Switchable color palettes (Choose between original colors, Super Gameboy Colors, or Pokemon Yellow Colors in-game whenever you like! Works on GBC and Super Gameboy. Yes, this romhack has GBC support!)
@@ -41,6 +45,10 @@ This is a purist's enhancement of Pokemon Red/Blue/Green. The goal is to enhance
   - Optional in-battle experience bar
   - Option to give trainers some Stat EXP to their pokemon based on level. Makes the game a little bit harder.
   - Option to have the game track the PP of opponents (the original game they had infinite PP). Makes the game a little bit easier.
+  - Option for metric or imperial units in the pokedex
+  - Option for less flashing in battles
+  - Option to skip the intro animation when booting up the game and go straight to the title screen
+  - Option to switch to an entirely new PureRGB title screen instead of the original game's title screen
 - If you're playing on GBC and have the palettes set to SGB or GBC mode, move animations will have colors! Surf will be blue, ember will be red, etc.
 - There are a couple entirely new things added into the game to facilitate quality of life fixes. Including:
   - An NPC who can permanently remove CUT trees.
