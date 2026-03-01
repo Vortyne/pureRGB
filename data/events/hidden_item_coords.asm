@@ -62,7 +62,7 @@ HiddenItemCoords:
 	hidden_item ROUTE_25,                      10,   3
 	hidden_item MT_MOON_B2F,                   33,   9
 	hidden_item SEAFOAM_ISLANDS_B3F,            9,  16
-	hidden_item VERMILION_CITY,                14,  11
+	hidden_item VERMILION_CITY,                14,  13
 	hidden_item CERULEAN_CITY,                 15,   8
 	hidden_item ROUTE_4,                       40,   3
 	hidden_item ROUTE_2,					   18,  66

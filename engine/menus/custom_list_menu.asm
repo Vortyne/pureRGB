@@ -3,6 +3,8 @@ CustomListMenuTextMethods:
 	dw GetMonNameListMenu
 	dw GetTrainerNameListMenu
 	dw GetChampArenaMusicNameListMenu
+	dw GetBadgeNameListMenu
+	dw GetFloorNameListMenu
 
 CustomListMenuGetEntryText::
 	push hl
@@ -19,12 +21,18 @@ GetMonNameListMenu:
 GetTrainerNameListMenu:
 	ld a, [wNamedObjectIndex]
 	ld [wTrainerClass], a
-	callfar GetTrainerName_
+	callfar GetTrainerName
 	ld de, wTrainerName
 	ret
 
 GetChampArenaMusicNameListMenu:
 	jpfar GetChampArenaMusicNameIntoWRAM
+
+GetBadgeNameListMenu:
+	jpfar _GetBadgeName
+
+GetFloorNameListMenu:
+	jpfar GetFloorName
 
 CheckLoadHoverText::
 	push af
@@ -45,6 +53,8 @@ CheckLoadHoverText::
 CustomListMenuHoverTextMethods:
 	dw CheckLoadTmName
 	dw CheckLoadTypes
+	dw _ChangeCustomBallTile
+	dw _ChangeCustomBallColor
 
 GetListEntryID:
 	ld a, [wListCount]
@@ -85,8 +95,8 @@ CheckLoadTypes:
 	jr c, .noText
 	; a = which pokemon ID in the list is selected
 	ld [wCurSpecies], a ; needed to make PrintMonType work
-	ld a, 1
-	ld [wListMenuHoverTextShown], a
+	ld hl, wListMenuNewFlags
+	set BIT_SHOWING_TM_HOVER_TEXT, [hl]
 	hlcoord 4, 13
 	lb bc, 3, 14  ; height, width
 	call TextBoxBorder
@@ -112,15 +122,15 @@ CheckLoadTypes:
 	ld de, MenuType2Text
 	jp PlaceString
 .noText
-	ld a, [wListMenuHoverTextShown]
-	and a
+	ld hl, wListMenuNewFlags
+	bit BIT_SHOWING_TM_HOVER_TEXT, [hl]
 	ret z
 	hlcoord 4, 13
 	lb bc, 16, 5
 	predef LoadScreenTileAreaFromBuffer3
 	call UpdateSprites
-	xor a
-	ld [wListMenuHoverTextShown], a
+	ld hl, wListMenuNewFlags
+	res BIT_SHOWING_TM_HOVER_TEXT, [hl]
 	ret
 
 MenuType1Text:
@@ -132,6 +142,7 @@ MenuType2Text:
 CustomListMenuHoverTextSaveScreenTileMethods:
 	dw CheckSaveTMTextScreenTiles
 	dw CheckSaveTypeTextScreenTiles
+	dw DoRet
 
 CheckSaveHoverTextScreenTiles::
 	; wListMenuHoverTextType still loaded
@@ -170,4 +181,14 @@ CheckBadOffset::
 	ld hl, wListScrollOffset
 	dec [hl] ; decs once because it is assumed only 1 item can be removed from the list at a time
 	ret
+
+HandleMenuInputFromBank1::
+	; to get hover text when doing HandleMenuInput it expects bank 1 to be loaded
+	jp HandleMenuInput
+
+_ChangeCustomBallTile:
+	jpfar ChangeCustomBallTile
+
+_ChangeCustomBallColor:
+	jpfar ChangeCustomBallColor
 

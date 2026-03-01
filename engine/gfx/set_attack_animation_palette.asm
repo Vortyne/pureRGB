@@ -86,6 +86,37 @@ SetAttackAnimPal:
 	pop bc
 	pop hl
 	ret	
+
+TransferSpecificAnimPalette::
+	ldh a, [hGBC]
+	and a
+	jr z, .notGBC
+	push hl
+	push bc
+	push de
+	ld a, [wCurPartySpecies]
+	push af
+	ld b, d
+	jr SetAttackAnimPal.gotPalette
+.notGBC
+	; on SGB or GB
+	; we will only transfer the color once per animation since it's slow
+	; this means no multi-color-cycling prism ball on SGB
+	ld hl, wBallAnimSGBColorLoadFlag
+	bit 1, [hl]
+	ld b, SET_PAL_BATTLE
+	jr nz, .fullAnim
+	ld b, SET_PAL_GENERIC
+	jr .skip
+.fullAnim
+	bit 0, [hl]
+	set 0, [hl]
+	ret nz
+.skip
+	ld a, d
+	ld [wGenericPaletteOverride], a
+	jp RunPaletteCommand
+
 TypePalColorList:
 	db PAL_BLACK2;normal
 	db PAL_GRAYMON;fighting

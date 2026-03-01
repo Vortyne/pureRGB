@@ -135,6 +135,8 @@ PokemonTower2FDefeatedRivalScript:
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL
+	ld d, POKEMONTOWER2F_RIVAL
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_POKEMONTOWER2F_RIVAL
 	call PokemonTower2FDisplayTextID
 	ld de, PokemonTower2FRivalDownThenRightMovement
@@ -279,8 +281,6 @@ PokemonTower2FChannelerText:
 .skip2
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .no
 	jr nz, .printDone
 	ld a, SILPH_SCOPE
@@ -294,8 +294,6 @@ PokemonTower2FChannelerText:
 	ld hl, .back
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .backNo
 	jr nz, .printDone
 	lb bc, SILPH_SCOPE, 1
@@ -338,7 +336,7 @@ PokemonTower2FChannelerText:
 	text_far _FossilGuyDenied
 	text_end
 .bagFull
-	text_far _CeladonCityGramps3TM41NoRoomText
+	text_far _GenericPackIsFullOfItemsText
 	text_end
 .borrowAgain
 	text_far _PokemonTower2FChannelerTextBorrowAgain

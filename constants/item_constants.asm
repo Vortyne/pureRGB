@@ -31,7 +31,7 @@
 	const SAFARI_ROCK   ; $16
 	const OLD_COIN      ; $17 ; PureRGBnote: ADDED: New item
 	const TOPSECRETKEY  ; $18 ; PureRGBnote: ADDED: New item
-	const UNUSED_ITEM3  ; $19
+	const CAMERA        ; $19 ; PureRGBnote: ADDED: New item
 	const UNUSED_ITEM4  ; $1A
 	const UNUSED_ITEM5  ; $1B
 	const UNUSED_ITEM6  ; $1C
@@ -92,32 +92,6 @@
 	const MAX_ELIXER    ; $53
 DEF NUM_ITEMS EQU const_value - 1
 
-; elevator floors use item IDs
-	const FLOOR_B2F     ; $54
-	const FLOOR_B1F     ; $55
-	const FLOOR_1F      ; $56
-	const FLOOR_2F      ; $57
-	const FLOOR_3F      ; $58
-	const FLOOR_4F      ; $59
-	const FLOOR_5F      ; $5A
-	const FLOOR_6F      ; $5B
-	const FLOOR_7F      ; $5C
-	const FLOOR_8F      ; $5D
-	const FLOOR_9F      ; $5E
-	const FLOOR_10F     ; $5F
-	const FLOOR_11F     ; $60
-	const FLOOR_B4F     ; $61
-DEF NUM_FLOORS EQU const_value - 1 - NUM_ITEMS
-;;;;;;;;;; PureRGBnote: MOVED: these constants used to be defined higher up as actual items, they are only used to generate a menu in cerulean city
-	const BOULDERBADGE  ; $62
-	const CASCADEBADGE  ; $63
-	const THUNDERBADGE  ; $64
-	const RAINBOWBADGE  ; $65
-	const SOULBADGE     ; $66
-	const MARSHBADGE    ; $67
-	const VOLCANOBADGE  ; $68
-	const EARTHBADGE    ; $69
-;;;;;;;;;;
 	const_next $C4
 
 ; HMs are defined before TMs, so the actual number of TM definitions

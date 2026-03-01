@@ -32,6 +32,12 @@ Route7TrainerHeader1:
 Route7Gambler1Text:
 	text_asm
 	ld hl, Route7TrainerHeader0
+	jr Route7TalkToTrainerScript
+
+Route7Gambler2Text:
+	text_asm
+	ld hl, Route7TrainerHeader1
+Route7TalkToTrainerScript:
 	call TalkToTrainer
 	rst TextScriptEnd
 
@@ -46,12 +52,6 @@ Route7EndBattleText1:
 Route7AfterBattleText1:
 	text_far _Route7AfterBattleText1
 	text_end
-
-Route7Gambler2Text:
-	text_asm
-	ld hl, Route7TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route7BattleText2:
 	text_far _Route7BattleText2

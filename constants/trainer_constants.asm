@@ -1,4 +1,4 @@
-DEF OPP_ID_OFFSET EQU 200
+DEF OPP_ID_OFFSET EQU 197
 
 MACRO trainer_const
 	const \1
@@ -68,6 +68,9 @@ ENDM
 	trainer_const SOLDIER        ; $33
 	trainer_const CHIEF          ; $34 ; used to be an earlier ID
 	trainer_const GYM_GUIDE      ; $35 ; replaced unused juggler
+	trainer_const FITNESS_GIRL   ; $36
+	trainer_const SPRINTER       ; $37
+	trainer_const FIST_FIGHTER   ; $38
 ;;;;;;;;;;
 	; two trainer slots left
 DEF NUM_TRAINERS EQU const_value - 1

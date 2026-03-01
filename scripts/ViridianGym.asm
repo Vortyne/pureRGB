@@ -41,6 +41,8 @@ ViridianGymGiovanniPostBattle:
 ; fallthrough
 ViridianGymReceiveTM27:
 	callfar PlayGiovanniMusic
+	ld d, VIRIDIANGYM_GIOVANNI
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
 	ldh [hTextID], a
 	call DisplayTextID
@@ -60,8 +62,6 @@ ViridianGymReceiveTM27:
 .gym_victory
 	ld hl, wObtainedBadges
 	set BIT_EARTHBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_EARTHBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
@@ -71,6 +71,10 @@ ViridianGymReceiveTM27:
 	predef ShowObject
 	SetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 	callfar PlayDefaultMusicIfMusicBitSet
+	
+	ld a, VIRIDIANGYM_GIOVANNI
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp ViridianGymResetScripts
 
 ViridianGym_TextPointers:
@@ -129,8 +133,7 @@ ViridianGymGiovanniText:
 	ld a, HS_VIRIDIAN_GYM_GIOVANNI
 	ld [wMissableObjectIndex], a
 	predef HideObject
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	CheckEvent EVENT_CAUGHT_GHOST_MAROWAK
 	jr z, .dontMoveKarateKing
 	ld a, VIRIDIANGYM_HIKER3
@@ -431,6 +434,7 @@ ViridianGymGuideApexChipGroundText:
 	text_end
 
 ViridianGymGuidePreBattleText:
+	text_far _GymGuideChampInMakingText
 	text_far _ViridianGymGuidePreBattleText
 	text_end
 

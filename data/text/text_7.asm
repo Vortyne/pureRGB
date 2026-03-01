@@ -3,7 +3,7 @@ _ItemUseText001::
 	text_end
 
 _ItemUseText002::
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 	done
 
@@ -12,7 +12,7 @@ _GotOnBicycleText1::
 	text_end
 
 _GotOnBicycleText2::
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 	prompt
 
@@ -22,21 +22,21 @@ _GotOffBicycleText1::
 
 _GotOffBicycleText2::
 	text "the @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "."
 	prompt
 
 _ThrewAwayItemText::
 	text "Threw away"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	prompt
 
 _IsItOKToTossItemText::
 	text "Is it OK to toss"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "?"
 	prompt
 
@@ -46,10 +46,10 @@ _TooImportantToTossText::
 	prompt
 
 _AlreadyKnowsText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " knows"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!"
 	prompt
 
@@ -199,7 +199,7 @@ _NothingToCutText::
 	prompt
 
 _UsedCutText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " hacked"
 	line "away with CUT!"
 	prompt

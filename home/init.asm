@@ -115,11 +115,18 @@ DEF rLCDC_DEFAULT EQU (1 << rLCDC_ENABLE) | (1 << rLCDC_WINDOW_TILEMAP) | (1 << 
 	dec a
 	ld [wUpdateSpritesEnabled], a
 
-IF DEF(_DEBUG)
-	;jpfar DebugMenu ; PureRGBnote: ADDED: uncomment this to instantly enter debug mode on starting the game in the debug rom
+IF DEF(_DEBUG) & SKIP_INTRO
+	jpfar DebugMenu ; PureRGBnote: ADDED: uncomment this to instantly enter debug mode on starting the game in the debug rom
 ENDC
-	predef PlayIntro 
-
+	ld a, [wSpriteOptions2]
+	bit BIT_SKIP_INTRO, a
+	jr nz, .noIntro
+	predef PlayIntro
+	jr .doneIntro
+.noIntro
+	ld b, SET_PAL_GAME_FREAK_INTRO
+	call RunPaletteCommand
+.doneIntro
 	call DisableLCD
 	call ClearVram
 	call GBPalNormal

@@ -27,20 +27,16 @@ CeladonMart3F_TextPointers:
 CeladonMart3FClerkText:
 	text_asm
 	CheckEvent EVENT_GOT_TM18
-	jr nz, .got_item
+	ld hl, .TM18ExplanationText
+	jr nz, .done
 	ld hl, .TM18PreReceiveText
 	rst _PrintText
 	lb bc, TM_CELADON_MART_GAME_SHOP_GUY, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .TM18NoRoomText
+	jr nc, .done
 	SetEvent EVENT_GOT_TM18
 	ld hl, .ReceivedTM18Text
-	jr .done
-.bag_full
-	ld hl, .TM18NoRoomText
-	jr .done
-.got_item
-	ld hl, .TM18ExplanationText
 .done
 	rst _PrintText
 	rst TextScriptEnd

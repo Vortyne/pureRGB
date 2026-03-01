@@ -228,11 +228,8 @@ SilphCo7FRivalAfterBattleScript:
 	SetEvent EVENT_BEAT_SILPH_CO_RIVAL
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerMovingDirection], a
-	ld a, SILPHCO7F_RIVAL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-	ldh [hSpriteFacingDirection], a
-	call SetSpriteFacingDirectionAndDelay
+	ld d, SILPHCO7F_RIVAL
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_SILPHCO7F_RIVAL_GOOD_LUCK_TO_YOU
 	ldh [hTextID], a
 	call DisplayTextID
@@ -331,7 +328,8 @@ SilphCo7FSilphWorkerM1Text:
 	ld hl, .HaveThisPokemonText
 	rst _PrintText
 	lb bc, LAPRAS, 40 ; PureRGBnote: CHANGED: lapras level increased to keep up with party level
-	call GivePokemon
+	ld a, BALL_DATA_GREAT << 3
+	call GivePokemonCommon
 	jr nc, .done
 	ld a, [wAddedToParty]
 	and a

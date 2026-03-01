@@ -3,6 +3,9 @@
 ; Control characters (see home/text.asm)
 
 	charmap "<NULL>",    $00
+	DEF FIRST_TEXT_SHORCUT_ID EQU $3F
+	charmap "or",        $3F ; PureRGBnote: ADDED: single byte version of or
+	charmap "ing",       $40 ; PureRGBnote: ADDED: single byte version of ing
 	charmap "the",       $41 ; PureRGBnote: ADDED: single byte version of the
 	charmap "you",       $42 ; PureRGBnote: ADDED: single byte version of you
 	charmap "<opponent>",$43 ; PureRGBnote: ADDED: single byte version of opponent
@@ -15,6 +18,7 @@
 	charmap "<PKMN>",    $4a ; "<PK><MN>"
 	charmap "<_CONT>",   $4b ; implements "<CONT>"
 	charmap "<SCROLL>",  $4c
+	charmap "is",        $4d ; PureRGBnote: ADDED: single byte version of is
 	charmap "<NEXT>",    $4e
 	charmap "<LINE>",    $4f
 	charmap "@",         $50 ; string terminator
@@ -33,22 +37,23 @@
 	charmap "<TRAINER>", $5d ; "TRAINER"
 	charmap "<ROCKET>",  $5e ; "ROCKET"
 	charmap "<DEXEND>",  $5f
+	DEF LAST_TEXT_SHORTCUT_ID EQU $5f
 
 ; Actual characters (from gfx/font/font_extra.png)
 
 	charmap "<BOLD_A>",  $60 ; unused
-	charmap "<BOLD_B>",  $61 ; unused
-	charmap "<BOLD_C>",  $62 ; unused
-	charmap "<BOLD_D>",  $63 ; unused
-	charmap "<BOLD_E>",  $64 ; unused
-	charmap "<BOLD_F>",  $65 ; unused
-	charmap "<BOLD_G>",  $66 ; unused
-	charmap "<BOLD_H>",  $67 ; unused
-	charmap "<BOLD_I>",  $68 ; unused
+	charmap "<BOLD_P2>", $61
+	charmap "<BOLD_C>",  $62
+	charmap "<SMALL_S>", $63
+	charmap "<BOLD_E>",  $64 
+	charmap "<BOLD_F>",  $65 
+	charmap "<BOLD_G>",  $66 
+	charmap "<BOLD_T>",  $67
+	charmap "<BOLD_I>",  $68
 	charmap "<BOLD_V>",  $69
 	charmap "<BOLD_S>",  $6a
 	charmap "<BOLD_L>",  $6b ; unused
-	charmap "<BOLD_M>",  $6c ; unused
+	charmap "<BOLD_M>",  $6c
 	charmap "<COLON>",   $6d ; colon with tinier dots than ":"
 	charmap "ぃ",         $6e ; hiragana small i, unused
 	charmap "ぅ",         $6f ; hiragana small u, unused
@@ -85,6 +90,9 @@
 	; needed for ShowPokedexDataInternal (see engine/menus/pokedex.asm)
 	charmap "′",         $60 ; gfx/pokedex/pokedex.png
 	charmap "″",         $61 ; gfx/pokedex/pokedex.png
+	charmap "<M>",       $60 ; gfx/pokedex/pokedex.png
+	charmap "<K>",       $61 ; gfx/pokedex/pokedex.png
+	charmap "<G>",       $62 ; gfx/pokedex/pokedex.png
 
 	; needed for StatusScreen (see engine/pokemon/status_screen.asm)
 	charmap "<BOLD_P>",  $72 ; gfx/font/P.1bpp

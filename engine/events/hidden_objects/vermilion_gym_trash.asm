@@ -133,40 +133,37 @@ GymTrashCans:
 VermilionGymTrashSuccessText1::
 	text_far _VermilionGymTrashSuccessText1
 	text_asm
-	call WaitForSoundToFinish
 	ld a, SFX_SWITCH
-	rst _PlaySound
+	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	rst TextScriptEnd
 
 ; unused
-VermilionGymTrashSuccessText2::
-	text_far _VermilionGymTrashSuccessText2
-	text_end
+;VermilionGymTrashSuccessText2::
+;	text_far _VermilionGymTrashSuccessText2
+;	text_end
 
 ; unused
-VermilionGymTrashSuccesPlaySfx:
-	text_asm
-	call WaitForSoundToFinish
-	ld a, SFX_SWITCH
-	rst _PlaySound
-	call WaitForSoundToFinish
-	rst TextScriptEnd
+;VermilionGymTrashSuccesPlaySfx:
+;	text_asm
+;	ld a, SFX_SWITCH
+;	rst PlaySoundWaitForCurrent
+;	call WaitForSoundToFinish
+;	rst TextScriptEnd
 
 VermilionGymTrashSuccessText3::
+	text_far _VermilionGymTrashSuccessText2
 	text_far _VermilionGymTrashSuccessText3
 	text_asm
-	call WaitForSoundToFinish
 	ld a, SFX_GO_INSIDE
-	rst _PlaySound
+	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	rst TextScriptEnd
 
-VermilionGymTrashFailText::
-	text_far _VermilionGymTrashFailText
-	text_asm
-	call WaitForSoundToFinish
-	ld a, SFX_DENIED
-	rst _PlaySound
-	call WaitForSoundToFinish
-	rst TextScriptEnd
+;VermilionGymTrashFailText::
+;	text_far _VermilionGymTrashFailText
+;	text_asm
+;	ld a, SFX_DENIED
+;	rst PlaySoundWaitForCurrent
+;	call WaitForSoundToFinish
+;	rst TextScriptEnd

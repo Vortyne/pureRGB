@@ -74,6 +74,8 @@ CeladonGymErikaPostBattleScript:
 	ld [wJoyIgnore], a
 
 CeladonGymReceiveTM21:
+	ld d, CELADONGYM_ERIKA
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_CELADONGYM_RAINBOWBADGE_INFO
 	ldh [hTextID], a
 	call DisplayTextID
@@ -93,12 +95,13 @@ CeladonGymReceiveTM21:
 .gymVictory
 	ld hl, wObtainedBadges
 	set BIT_RAINBOWBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_RAINBOWBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6
 
+	ld a, CELADONGYM_ERIKA
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp CeladonGymResetScripts
 
 CeladonGym_TextPointers:
@@ -208,6 +211,16 @@ CeladonGymEndBattleText2:
 	text_end
 
 CeladonGymAfterBattleText2:
+	text_asm
+	CheckEvent EVENT_BEAT_ERIKA
+	ld hl, .beforeBeat
+	ret z
+	ld hl, .afterBeat
+	ret
+.afterBeat
+	text_far _CeladonGymAfterBattleText2GymDefeated
+	text_end
+.beforeBeat
 	text_far _CeladonGymAfterBattleText2
 	text_end
 

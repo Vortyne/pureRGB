@@ -52,7 +52,7 @@ _PokemonTower2FChannelerText::
 	cont "wayward GHOSTs!"
 
 	para "A @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text_start
 	line "might be able to"
 	cont "unmask them."
@@ -75,7 +75,7 @@ _PokemonTower2FChannelerTextBorrowSilphScope::
 	line "maybe you could"
 	cont "lend me that"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "?"
 	para "It'd help us"
 	line "with the wayward"
@@ -91,21 +91,21 @@ _PokemonTower2FChannelerTextBorrowSilphScopeYes::
 	para "<PLAYER> handed"
 	line "the channeler the"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "."
 	done
 
 _PokemonTower2FChannelerTextBack::
 	text "Do you want your"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " back?"
 	done
 
 _PlayerGotBackItem::
 	text "<PARA><PLAYER> got back"
 	line "the @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	done
 
@@ -113,7 +113,7 @@ _PokemonTower2FChannelerTextBorrowAgain::
 	text "By the way<...>"
 	para "May I borrow your"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " again?"
 	done
 

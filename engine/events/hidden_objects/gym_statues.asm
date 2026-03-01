@@ -19,7 +19,7 @@ GymStatues:
 	jr .loop
 .match
 	ld b, [hl]
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges]
 	and b
 	cp b
 	tx_pre_id GymStatueText2
@@ -38,7 +38,8 @@ GymStatueText1::
 	rst TextScriptEnd
 
 GymStatueText1Text::
-	text_far _GymStatueText1
+	text_far _GymStatueText
+	text_far _GymStatueRival
 	text_end
 
 GymStatueText2::
@@ -49,7 +50,8 @@ GymStatueText2::
 	rst TextScriptEnd
 
 GymStatueText2Text::
-	text_far _GymStatueText2
+	text_far _GymStatueText
+	text_far _GymStatueRivalPlayer
 	text_end
 
 ; PureRGBnote: CHANGED: Previously gym statue name data was loaded by the respective gym's map script into wram, 
@@ -59,12 +61,12 @@ GymStatueText2Text::
 GetStatueNames:
 	ld hl, StatueTextMap
 	ld a, [wCurMap]
-	ld de, 5
+	ld de, 4
 	call IsInArray
 	ret nc
 	inc hl
 	push hl
-	call GetAddressFromPointer
+	hl_deref
 	ld de, wStringBuffer
 	ld bc, 17 ; original byte length of wGymCityName
 	ld a, BANK(PewterCityName)
@@ -72,36 +74,24 @@ GetStatueNames:
 	pop hl
 	inc hl
 	inc hl
-	call GetAddressFromPointer
-	ld d, h
-	ld e, l
-	ld hl, wNameBuffer
-	jp CopyString
+	ld a, [hl]
+	ld [wTrainerClass], a
+	jpfar GetTrainerName
 
-; TODO: user trainer names? GetTrainerName_
 StatueTextMap::
-	db PEWTER_GYM, 
-	dw PewterCityName, BrockName
-	db CERULEAN_GYM,
-	dw CeruleanCityName, MistyName
-	db VERMILION_GYM,
-	dw VermilionCityName, SurgeName
-	db CELADON_GYM,
-	dw CeladonCityName, ErikaName
+	db PEWTER_GYM
+	dwb PewterCityName, BROCK 
+	db CERULEAN_GYM 
+	dwb CeruleanCityName, MISTY
+	db VERMILION_GYM
+	dwb VermilionCityName, LT_SURGE
+	db CELADON_GYM
+	dwb CeladonCityName, ERIKA
 	db FUCHSIA_GYM
-	dw FuchsiaCityName, KogaName
+	dwb FuchsiaCityName, KOGA
 	db SAFFRON_GYM
-	dw SaffronCityName, SabrinaName
+	dwb SaffronCityName, SABRINA
 	db CINNABAR_GYM
-	dw CinnabarIslandName, BlaineName
+	dwb CinnabarIslandName, BLAINE
 	db VIRIDIAN_GYM
-	dw ViridianCityName, GiovanniName
-
-BrockName: db "BROCK@"
-MistyName: db "MISTY@"
-SurgeName: db "LT.SURGE@"
-ErikaName: db "ERIKA@"
-KogaName: db "KOGA@"
-SabrinaName: db "SABRINA@"
-BlaineName: db "BLAINE@"
-GiovanniName: db "GIOVANNI@"
+	dwb ViridianCityName, GIOVANNI

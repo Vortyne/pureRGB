@@ -19,3 +19,13 @@ _CopycatsHouse1FChanseyText::
 	text "CHANSEY: Chaan!"
 	line "Sii!@"
 	text_end
+
+_CopycatsHouse1FChanseyText2::
+	text "LADY: That's our"
+	line "CHANSEY."
+	para "She's named"
+	line "SMILY."
+	para "She loves to lay"
+	line "eggs for us!"
+	para "Very nutritious!"
+	prompt

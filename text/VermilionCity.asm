@@ -161,3 +161,42 @@ _VermilionCityDockBeautyEndText::
 	cont "sound of the"
 	cont "gentle waves."
 	done
+
+_VermilionCityTradeHouseGameboyKidText::
+	text "Trade you my"
+	line "FARFETCH'D?"
+	para "Why would I ever"
+	line "do that?!"
+	para "DUX is my best"
+	line "#MON!"
+	para "Go catch your"
+	line "own."
+	done
+
+_VermilionCityTradeHouseGameboyKidLearnsetText::
+	text "Hey! Can't you"
+	line "see I'm busy?"
+	para "Here!"
+	para "Take my notes from"
+	line "training DUX!"
+	prompt
+
+_VermilionCityTradeHouseDUXText::
+	text "DUX: Quack!"
+	done
+
+_VermilionCityTradeHouseDUX2Text::
+	text "It hands you a"
+	line "sprig of onion."
+	para "Looks like it has"
+	line "extras!"
+	done
+
+
+_VermilionCityTradeHouseClipboardText::
+	text "Secret tips for"
+	line "the video game"
+	cont "he's playing."
+	para "He must've phoned"
+	line "NINTENDO HOTLINE!"
+	done

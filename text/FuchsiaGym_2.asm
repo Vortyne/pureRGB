@@ -27,7 +27,7 @@ _FuchsiaGymKogaSoulBadgeInfoText::
 _FuchsiaGymKogaTM06ExplanationText::
 	text_start
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "TOXIC!"
 
@@ -122,6 +122,13 @@ _FuchsiaGymTamer1AfterBattleText::
 	cont "invisible walls!"
 	done
 
+_FuchsiaGymTamer1AfterBattleGymDefeatedText::
+	text "I've never seen a"
+	line "ninja master lose"
+	cont "until today!"
+	para "You're insane!"
+	done
+
 _FuchsiaGymTamer2BattleText::
 	text "I also study the"
 	line "way of the ninja"
@@ -166,10 +173,7 @@ _FuchsiaGymJuggler4AfterBattleText::
 	done
 
 _FuchsiaGymGymGuideChampInMakingText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "FUCHSIA GYM is"
+	text "FUCHSIA GYM is"
 	line "riddled with"
 	cont "invisible walls!"
 

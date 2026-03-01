@@ -13,7 +13,22 @@ Route13CheckHideCutTree:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	ret z ; map wasn't just loaded
+	jr nz, .next 
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CROSSED_MAP_CONNECTION, [hl]
+	res BIT_CROSSED_MAP_CONNECTION, [hl]
+	ret z
+.movePidgeot
+	CheckEvent EVENT_SNAPPED_CAMERA_PIC_TORNADO_BALL
+	ret nz
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	lb bc, SPRITESTATEDATA2_MAPX, ROUTE13_PIDGEOT
+	call GetFromSpriteStateData2
+	ld [hl], 6 + 4
+	ret
+.next
+	call .movePidgeot
 	ld de, Route13CutAlcove
 	callfar FarArePlayerCoordsInRange
 	call c, .removeTreeBlocker
@@ -43,6 +58,7 @@ Route13_TextPointers:
 	dw_const Route13Beauty2Text,       TEXT_ROUTE13_BEAUTY2
 	dw_const Route13BikerText,         TEXT_ROUTE13_BIKER
 	dw_const Route13CooltrainerM3Text, TEXT_ROUTE13_COOLTRAINER_M3
+	dw_const Route13PidgeotText,       TEXT_ROUTE13_PIDGEOT
 	dw_const Route13TrainerTips1Text,  TEXT_ROUTE13_TRAINER_TIPS1
 	dw_const Route13TrainerTips2Text,  TEXT_ROUTE13_TRAINER_TIPS2
 	dw_const Route13SignText,          TEXT_ROUTE13_SIGN
@@ -249,7 +265,10 @@ Route13CooltrainerM3EndBattleText:
 
 Route13CooltrainerM3AfterBattleText:
 	text_far _Route13CooltrainerM3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_FEAROW, BIRD_KEEPER
+	ld de, FearowLearnset
+	predef_jump LearnsetTrainerScript
 
 Route13TrainerTips1Text:
 	text_far _Route13TrainerTips1Text
@@ -262,3 +281,19 @@ Route13TrainerTips2Text:
 Route13SignText:
 	text_far _Route13SignText
 	text_end
+
+Route13PidgeotText:
+	text_far _Route13PidgeotText
+	text_end
+
+PidgeotHiddenObject::
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	CheckEvent EVENT_SNAPPED_CAMERA_PIC_TORNADO_BALL
+	ret nz
+	ld c, DEX_PIDGEOT - 1
+  	callfar SetMonSeen
+	ld a, TEXT_ROUTE13_PIDGEOT
+.displayTextID
+	ldh [hTextID], a
+	jp DisplayTextID

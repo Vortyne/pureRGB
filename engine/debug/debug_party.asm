@@ -120,6 +120,18 @@ IF DEF(_DEBUG)
 	ld b, wMovedexSeenEnd - wMovedexSeen - 1
 	call DebugSetPokedexEntries
 	ld [hl], %00011111
+	;ld hl, wCustomBallPhotoSnappedFlags
+	;ld a, $FF
+	;ld [hli], a
+	;ld [hl], a
+	;ld hl, wCustomBallUnlockFlags
+	;ld a, $FF
+	;ld [hli], a
+	;ld [hl], a
+	;ld hl, wLearnsetFlags
+	;ld b, wLearnsetFlagsEnd - wLearnsetFlags - 1
+	;call DebugSetPokedexEntries
+	;ld [hl], %00000011
 	SetEvent EVENT_GOT_POKEDEX
 	SetEvent EVENT_GOT_MOVEDEX
 	SetEvent EVENT_LEARNED_TO_DIG_BETWEEN_TOWNS
@@ -129,6 +141,8 @@ IF DEF(_DEBUG)
 	SetEvent EVENT_DELETED_FUCHSIA_TREES 
 	SetEvent EVENT_CAUGHT_GHOST_MAROWAK
 	SetEvent EVENT_DONATED_TO_POKECENTER_CHARITY
+	SetEvent EVENT_HIDE_ALREADY_HAS_FOUR_MOVES_MSG
+	;SetEvent EVENT_UNLOCKED_AT_LEAST_ONE_CUSTOM_BALL
 	;SetEvent EVENT_ARENA_ALL_CHALLENGERS_DEFEATED
 
 	;callfar SilphCo11FTeamRocketLeavesScript
@@ -140,6 +154,12 @@ IF DEF(_DEBUG)
 	ld a, HS_OLD_MAN
 	ld [wMissableObjectIndex], a
 	predef ShowObject
+	ld a, HS_ERIK_HOUSE
+	ld [wMissableObjectIndex], a
+	predef ShowExtraObject
+	ld a, HS_SARA_HOUSE
+	ld [wMissableObjectIndex], a
+	predef ShowExtraObject
 
 	; Rival chose Squirtle,
 	; Player chose Charmander.
@@ -181,7 +201,6 @@ DebugNewGameItemsList:
 	db HM_FLY, 1
 	db TM_SUBSTITUTE, 20
 	db TOPSECRETKEY, 1
-	db POKE_DOLL, 1
 	db -1 ; end
 
 ELSE

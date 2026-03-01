@@ -5,7 +5,7 @@
 ; format: map id, left x coord, right x coord, top y coord, bottom y coord
 ; the coordinates form a square in which being inside this square you are "inside a cut alcove"
 ; these are checked directly in their map scripts and the cut trees are removed in cases where you would get blocked from inside an alcove
-VermilionCutAlcove::  db 6, 15, 19, 23
+VermilionCutAlcove::  db 6, 15, 21, 25
 Route2CutAlcove::     db 12, 19, 22, 68
 Route8CutAlcove::     db 29, 40, 8, 15
 Route12CutAlcove1::   db 4, 6, 87, 89
@@ -47,7 +47,7 @@ CheckAreaForRestriction:
 ; deleting surf from your pokemon in specific parts of these maps won't clear the autosurf flag to avoid softlocks
 SurfRestrictedAreas:
 	; format: map id, left x coord, right x coord, top y coord, bottom y coord
-	db CELADON_CITY, 21, 24, 16, 17
+	db CELADON_CITY, 21, 24, 15, 17
 	db SAFARI_ZONE_CENTER, 12, 17, 10, 11
 	db VERMILION_CITY, 4, 7, 28, 29
 	db ROUTE_10, 2, 15, 30, 45
@@ -65,9 +65,8 @@ SurfRestrictedAreas:
 
 CheckInSurfRestrictedMapOrArea::
 	ld hl, SurfRestrictedMapsOnMoveDelete
-	ld de, 1
 	ld a, [wCurMap]
-	call IsInArray
+	call IsInSingleByteArray
 	ret c ; if we're in specific maps, don't clear the autosurf bit on deleting surf
 	;fall through
 CheckInSurfRestrictedArea::
@@ -181,6 +180,14 @@ IsMoveLearnableByParty:
 	and a
 	ret
 
+; PredefArePlayerCoordsInRange
+ArePlayerCoordsInRangePredef::
+	call GetPredefRegisters
+	call ArePlayerCoordsInRange
+	ld d, 0
+	ret nc
+	inc d
+	ret
 ; input
 ; b = leftmost x coord
 ; c = rightmost x coord

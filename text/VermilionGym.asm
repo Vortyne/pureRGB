@@ -39,3 +39,24 @@ _VermilionGymBookshelfText::
 	para "THE DANGER OF"
 	line "DITTO SPIES<...>"
 	done
+
+_VermilionGymGentlemanAfterBattleGymDefeatedText::
+	text "War ain't pretty,"
+	line "kid!"
+	para "Some say it's the"
+	line "fifth season!"
+	done
+
+_VermilionGymSuperNerdAfterBattleGymDefeatedText::
+	text "I'm going to"
+	line "boot camp soon!"
+	para "Joining the army!"
+	done
+
+_VermilionGymSailorAfterBattleGymDefeatedText::
+	text "LT.SURGE won't be"
+	line "pleased about his"
+	cont "loss!"
+	para "Sorry, sir!"
+	line "We blew it!"
+	done

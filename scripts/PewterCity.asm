@@ -214,8 +214,6 @@ PewterCitySuperNerd1Text:
 	ld hl, .DidYouCheckOutMuseumText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .playerDidNotGoIntoMuseum
 	ld hl, .WerentThoseFossilsAmazingText
 	rst _PrintText
@@ -260,8 +258,6 @@ PewterCitySuperNerd2Text:
 	ld hl, .DoYouKnowWhatImDoingText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .playerDoesNotKnow
 	ld hl, .ThatsRightText
 	rst _PrintText

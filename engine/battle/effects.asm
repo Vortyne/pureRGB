@@ -24,58 +24,7 @@ _JumpMoveEffect:
 INCLUDE "data/moves/effects_pointers.asm"
 
 SleepEffect:
-	ld de, wEnemyMonStatus
-	ld bc, wEnemyBattleStatus2
-	ldh a, [hWhoseTurn]
-	and a
-	jp z, .sleepEffect
-	ld de, wBattleMonStatus
-	ld bc, wPlayerBattleStatus2
-
-.sleepEffect
-	ld a, [bc]
-	bit NEEDS_TO_RECHARGE, a ; does the target need to recharge? (hyper beam)
-	res NEEDS_TO_RECHARGE, a ; target no longer needs to recharge
-	ld [bc], a
-	jr nz, .setSleepCounter ; if the target had to recharge, all hit tests will be skipped
-	                        ; including the event where the target already has another status
-	ld a, [de]
-	ld b, a
-	and $7
-	jr z, .notAlreadySleeping ; can't affect a mon that is already asleep
-	ld hl, AlreadyAsleepText
-	rst _PrintText
-	ret
-.notAlreadySleeping
-	ld a, b
-	and a
-	jr nz, .didntAffect ; can't affect a mon that is already statused
-	push de
-	call MoveHitTest ; apply accuracy tests
-	pop de
-	ld a, [wMoveMissed]
-	and a
-	jr nz, .didntAffect
-.setSleepCounter
-; set target's sleep counter to a random number between 1 and 7
-	call BattleRandom
-	and $7
-	jr z, .setSleepCounter
-	ld [de], a
-	call PlayCurrentMoveAnimation2
-	ld hl, FellAsleepText
-	rst _PrintText
-	ret
-.didntAffect
-	jp PrintDidntAffectText
-
-FellAsleepText:
-	text_far _FellAsleepText
-	text_end
-
-AlreadyAsleepText:
-	text_far _AlreadyAsleepText
-	text_end
+	jpfar _SleepEffect
 
 PoisonEffect:
 	ld hl, wEnemyMonStatus
@@ -150,12 +99,12 @@ PoisonEffect:
 	jr z, .regularPoisonEffect
 	ld a, b
 	call PlayBattleAnimation2
-	rst _PrintText
-	ret
+	jr .printDone
 .regularPoisonEffect
 	call PlayCurrentMoveAnimation2
+.printDone
 	rst _PrintText
-	ret
+	jp DrawTargetHPBar
 .noEffect
 	ld a, [de]
 	cp POISON_EFFECT
@@ -301,34 +250,41 @@ FreezeBurnParalyzeEffect:
 	ld a, 1 << PAR
 	ld [wBattleMonStatus], a
 	call QuarterSpeedDueToParalysis
-	jp PrintMayNotAttackText
+	jr PrintMayNotAttackText
 .burn2
 	ld a, 1 << BRN
 	ld [wBattleMonStatus], a
 	call HalveAttackDueToBurn
-	jp PrintBurnText
+	jr PrintBurnText
 .freeze2
 ; hyper beam bits aren't reset for opponent's side
 	ld a, 1 << FRZ
 	ld [wBattleMonStatus], a
-	jp PrintFrozenText
+	; fall through
+PrintFrozenText:
+	ld hl, FrozenText
+.printDone
+	rst _PrintText
+	jp DrawTargetHPBar
 
 PrintBurnText:
 	ld hl, BurnedText
-	rst _PrintText
-	ret
+	jr PrintFrozenText.printDone
+
+PrintMayNotAttackText:
+	ld hl, ParalyzedMayNotAttackText
+	jr PrintFrozenText.printDone
+
+FrozenText:
+	text_far _FrozenText
+	text_end
 
 BurnedText:
 	text_far _BurnedText
 	text_end
 
-PrintFrozenText:
-	ld hl, FrozenText
-	rst _PrintText
-	ret
-
-FrozenText:
-	text_far _FrozenText
+ParalyzedMayNotAttackText:
+	text_far _ParalyzedMayNotAttackText
 	text_end
 
 CheckDefrost:
@@ -346,10 +302,6 @@ CheckDefrost:
 	ld hl, wEnemyMon1Status
 	ld a, [wEnemyMonPartyPos]
 	ld bc, wEnemyMon2 - wEnemyMon1
-	call AddNTimes
-	xor a
-	ld [hl], a ; clear status in roster
-	ld hl, FireDefrostedText
 	jr .common
 .opponent
 	ld a, [wEnemyMoveType] ; same as above with addresses swapped
@@ -359,12 +311,13 @@ CheckDefrost:
 	ld hl, wPartyMon1Status
 	ld a, [wPlayerMonNumber]
 	ld bc, wPartyMon2 - wPartyMon1
+.common
 	call AddNTimes
 	xor a
 	ld [hl], a
 	ld hl, FireDefrostedText
-.common
 	rst _PrintText
+	call DrawTargetHPBar
 	farjp CheckDefrostMove
 
 
@@ -802,6 +755,8 @@ StatModifierDownEffect:
 	bit BIT_THUNDERBADGE, a
 	jr nz, .statModifierDownEffect
 ;;;;;;;;;;
+	CheckFlag FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
+	jr nz, .statModifierDownEffect
 	; hardcoded 25% miss rate for opponents using stat down effect moves (feature in the original game) 
 	call BattleRandom
 	cp 25 percent + 1 ; chance to miss by in regular battle
@@ -1773,7 +1728,7 @@ ConditionalPrintButItFailed:
 	and a
 	ret nz ; return if the side effect failed, yet the attack was successful
 
-PrintButItFailedText_:
+PrintButItFailedText_::
 	ld hl, ButItFailedText
 	rst _PrintText
 	ret
@@ -1782,7 +1737,7 @@ ButItFailedText:
 	text_far _ButItFailedText
 	text_end
 
-PrintDidntAffectText:
+PrintDidntAffectText::
 	ld hl, DidntAffectText
 	rst _PrintText
 	ret
@@ -1793,15 +1748,6 @@ DidntAffectText:
 
 IsUnaffectedText:
 	text_far _IsUnaffectedText
-	text_end
-
-PrintMayNotAttackText:
-	ld hl, ParalyzedMayNotAttackText
-	rst _PrintText
-	ret
-
-ParalyzedMayNotAttackText:
-	text_far _ParalyzedMayNotAttackText
 	text_end
 
 CheckTargetSubstitute:
@@ -1816,7 +1762,7 @@ CheckTargetSubstitute:
 	pop hl
 	ret
 
-PlayCurrentMoveAnimation2:
+PlayCurrentMoveAnimation2::
 ; animation at MOVENUM will be played unless MOVENUM is 0
 ; plays wAnimationType 3 or 6
 	ldh a, [hWhoseTurn]
@@ -1952,3 +1898,112 @@ IsStatMaxed:
 DefenseCurlEffect:
 	jpfar _DefenseCurlEffect
 
+AcidEffect:
+	SetEvents FLAG_SKIP_STAT_ANIMATION, FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
+	; either attack down or defense down effect, always one of them
+	call BattleRandom
+	bit 0, a
+	ld b, ATTACK_DOWN1_EFFECT
+	jr z, .attackDown
+	ld b, DEFENSE_DOWN1_EFFECT
+.attackDown
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wPlayerMoveEffect
+	jr z, .playersTurn
+	ld hl, wEnemyMoveEffect
+.playersTurn
+	ld [hl], b
+.done
+	push hl
+	call StatModifierDownEffect
+	ResetEvents FLAG_SKIP_STAT_ANIMATION, FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
+	pop hl
+	ld [hl], ACID_SIDE_EFFECT
+	ret
+
+AccuracyDownEffect::
+	jpfar _AccuracyDownEffect
+
+SiphonSnagEffect::
+	jpfar _SiphonSnagEffect
+
+HeatRushEffect::
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wPlayerMoveEffect
+	ld de, wBattleMonType1
+	jr z, .next
+	ld hl, wEnemyMoveEffect
+	ld de, wEnemyMonType1
+.next
+	ld [hl], SPECIAL_UP1_EFFECT
+	push hl
+	call BattleRandom
+	cp 40 percent + 1
+	jr nc, .skip
+	ld a, [de]
+	cp FIRE
+	jr z, .found
+	inc de
+	ld a, [de]
+	cp FIRE
+	jr nz, .skip
+.found
+	call GetSpecialPointers
+	call IsStatMaxed
+	jr c, .skip
+	SetEvent FLAG_SKIP_STAT_ANIMATION
+	call StatModifierUpEffect
+	ResetEvent FLAG_SKIP_STAT_ANIMATION
+.skip
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wEnemyMonHP
+	jr z, .playersTurn
+	ld hl, wBattleMonHP
+.playersTurn
+	ld a, [hli]
+	ld b, [hl]
+	or b
+	jr z, .done ; if foe is fainted, don't try to burn anyone
+	pop hl
+	push hl
+	ld [hl], BURN_SIDE_EFFECT2
+	call FreezeBurnParalyzeEffect
+.done
+	pop hl
+	ld [hl], HEAT_RUSH_EFFECT
+	ret
+
+
+MegaPunchEffect::
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wPlayerMoveEffect
+	ld de, wBattleMonType1
+	jr z, .next
+	ld hl, wEnemyMoveEffect
+	ld de, wEnemyMonType1
+.next
+	ld b, FLINCH_SIDE_EFFECT2
+	ld a, [de]
+	inc de
+	cp FIGHTING
+	jr z, .done
+	ld a, [de]
+	cp FIGHTING
+	jr z, .done
+	; not fighting
+	ld b, FLINCH_SIDE_EFFECT1
+.done
+	ld [hl], b
+	jp FlinchSideEffect
+
+ScreechEffect:
+	jpfar _ScreechEffect
+
+FarBattleRandom::
+	call BattleRandom
+	ld d, a
+	ret

@@ -479,8 +479,8 @@ MoveAnimationContent:
 	vc_hook_blue Stop_reducing_move_anim_flashing_Spore
 	jr .next4
 .animationsDisabled
-	ld c, 30
-	rst _DelayFrames
+	ld c, 10 ; PureRGBnote: CHANGED: less delay when animations are turned off to speed up gameplay.
+	rst _DelayFrames 
 .next4
 	vc_hook_red Stop_reducing_move_anim_flashing
 	vc_hook_blue Stop_reducing_move_anim_flashing_Rock_Slide_Dream_Eater
@@ -864,20 +864,14 @@ DoPoofSpecialEffects:
 	rst _PlaySound
 	ret
 .masterBallSFX
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
 	ld a, SFX_HORN_DRILL
-	rst _PlaySound
-	ret
+	jp PlaySoundResetSFXModifiers
 .ballToss
 	ld a, [wUnusedC000]
 	and a
 	ret z
 	ld b, a
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
+	call ResetSFXModifiers
 	ld a, b
 	; special effects for ball tosses
 	cp GREATTOSS_ANIM
@@ -1179,7 +1173,9 @@ CallOnEnemyTurn:
 	ret
 
 ; flashes the screen for an extended period (48 frames)
-AnimationFlashScreenLong:
+AnimationFlashScreenLong::
+	CheckEventHL FLAG_FLASHING_REDUCED
+	jr nz, AnimationFlashScreenLongLessFlashing
 	ld a, 3 ; cycle through the palettes 3 times
 	ld [wFlashScreenLongCounter], a
 	ld a, [wOnSGB] ; running on SGB?
@@ -1204,6 +1200,24 @@ AnimationFlashScreenLong:
 	pop hl
 	jr nz, .loop
 	vc_hook_red Stop_reducing_move_anim_flashing_Psychic
+	ret
+AnimationFlashScreenLongLessFlashing::
+	ld a, 4
+.loop2
+	; just modify the sprite palettes instead of flashing the whole screen
+	push af
+	call AnimationDarkenMonPalette
+	ld c, 4
+	rst _DelayFrames
+	call AnimationLightenMonPalette
+	ld c, 4
+	rst _DelayFrames
+	call AnimationResetScreenPalette
+	ld c, 4
+	rst _DelayFrames
+	pop af
+	dec a
+	jr nz, .loop2
 	ret
 
 ; BG palettes
@@ -1257,6 +1271,8 @@ AnimationFlashLightScreen:
 	ldh a, [rBGP]
 	push af ; save initial palette
 	ld a, %10010000 ; light screen colors
+	CheckEventHL FLAG_FLASHING_REDUCED
+	jr nz, AnimationFlashScreenCommonLessLightFlashing
 	jr AnimationFlashScreenCommon
 
 MegaPunchSpecialEffect::
@@ -1271,10 +1287,12 @@ MegaPunchSpecialEffect::
 	ret z
 ;;;;;
 	; fall through
-AnimationFlashScreen:
+AnimationFlashScreen::
 	ldh a, [rBGP]
 	push af ; save initial palette
 	ld a, %00011011 ; 0, 1, 2, 3 (inverted colors)
+	CheckEventHL FLAG_FLASHING_REDUCED
+	jr nz, AnimationFlashScreenCommonLessDarkFlashing
 	; fall through
 AnimationFlashScreenCommon:
 	ldh [rBGP], a
@@ -1286,9 +1304,28 @@ AnimationFlashScreenCommon:
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
 	ld c, 2
 	rst _DelayFrames
+.restore
 	pop af
 	ldh [rBGP], a ; restore initial palette
 	jp UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
+
+AnimationFlashScreenCommonLessDarkFlashing:
+	ldh a, [rBGP]
+	cp %11100100 ; default palettes
+	call z, AnimationDarkenMonPalette ; play a less intense sprite flicker instead of full screen flash if in default palettes 
+	; otherwise it will not flash
+	ld c, 4
+	rst _DelayFrames
+	jr AnimationFlashScreenCommon.restore
+
+AnimationFlashScreenCommonLessLightFlashing:
+	ldh a, [rBGP]
+	cp %11100100 ; default palettes
+	call z, AnimationLightenMonPalette ; play a less intense sprite flicker instead of full screen flash if in default palettes
+	; otherwise it will not flash
+	ld c, 4
+	rst _DelayFrames
+	jr AnimationFlashScreenCommon.restore
 
 AnimationDarkScreenPalette:
 ; Changes the screen's palette to a dark palette.
@@ -1317,9 +1354,9 @@ AnimationResetScreenPalette:
 ;	lb bc, $00, $00
 ;	jr SetAnimationBGPalette
 
-;AnimationUnusedPalette4:
-;	lb bc, $40, $40
-;	jr SetAnimationBGPalette
+AnimationLightenMonPalette:
+	lb bc, %11100000, %11100000
+	jr SetAnimationBGPalette
 
 AnimationLightScreenPalette::
 ; Changes the screen to use a palette with light colors.
@@ -1372,11 +1409,6 @@ AnimationWaterDropletsEverywhereFast:
 AnimationSmokeEverywhere: 
 	xor a
 	ld e, $7A
-	jr AnimationTileEverywhereFastInit
-
-AnimationStaticEverywhere: 
-	ld a, 1
-	ld e, $7B
 	jr AnimationTileEverywhereFastInit
 
 AnimationSnowflakesEverywhere: 
@@ -1695,15 +1727,20 @@ AdjustOAMBlockYPos2:
 	jr nz, .loop
 	ret
 
-AnimationBlinkEnemyMon:
+AnimationBlinkEnemyMon::
 ; Make the enemy mon's sprite blink on and off for a second or two
 	ld hl, AnimationBlinkMon
 	jp CallWithTurnFlipped
 
-AnimationBlinkMon:
+AnimationBlinkMon::
 ; Make the mon's sprite blink on and off for a second or two.
 	push af
 	ld c, 6
+	call BlinkMonCommon
+	pop af
+	ret
+
+BlinkMonCommon::
 .loop
 	push bc
 	call AnimationHideMonPic
@@ -1715,7 +1752,6 @@ AnimationBlinkMon:
 	pop bc
 	dec c
 	jr nz, .loop
-	pop af
 	ret
 
 AnimationFlashMonPic:
@@ -2680,12 +2716,11 @@ AnimCopyRowRight:
 	ret
 
 ; only used by the unreferenced PlayIntroMoveSound
-; TODO: remove unused code?
-GetIntroMoveSound:
-	ld a, b
-	call GetMoveSound
-	ld b, a
-	ret
+;GetIntroMoveSound:
+;	ld a, b
+;	call GetMoveSound
+;	ld b, a
+;	ret
 
 GetMoveSound:
 	ld hl, MoveSoundTable
@@ -3407,14 +3442,7 @@ AnimationDivineProtection:
 	ld a, 2 ; which tileset to use
 	ld c, 1 ; need 1 sparkle
 	call InitMultipleObjectsOAM
-	ld a, SFX_BATTLE_35
-	rst _PlaySound
-	ld hl, wChannelCommandPointers + CHAN5 * 2
-	ld de, SFX_Sparkle_Ch5
-	call RemapSoundChannel
-	inc hl
-	ld de, SFX_Sparkle_Ch6
-	call RemapSoundChannel
+	callfar DivineProtectionSound
 	call AnimationLightScreenPalette
 	ld b, 4 ; number of sprites to show falling
 	ld hl, wShadowOAMSprite00YCoord
@@ -3452,6 +3480,7 @@ AnimationDivineProtection:
 	dec b
 	jr nz, .outerLoopFallingSparkles
 	jp AnimationCleanOAM
+
 ;;;;;;
 
 ;;;;;; PureRGBnote: ADDED: more code related to the new poke doll throwing animation
@@ -3468,3 +3497,15 @@ AnimationLoadPokeDoll:
 	rst _PlaySound
 	ret
 ;;;;;;
+
+AnimationSendOutMonPoofJump:
+	jpfar AnimationSendOutMoonPoof
+
+AnimationSiphonSnagAttack:
+	jpfar _AnimationSiphonSnagAttack
+
+AnimationSpecialSoundEffect:
+	; currently only used by Lovely Kiss, but can be expanded to be used with different moves in the future by checking wAnimSoundID
+	ld hl, wChannelCommandPointers + CHAN5 * 2
+	ld de, SFX_LovelyKiss_Ch5
+	jp RemapSoundChannel

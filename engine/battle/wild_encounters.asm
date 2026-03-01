@@ -93,6 +93,8 @@ TryDoWildEncounter:
 	ld a, [wRepelRemainingSteps]
 	and a
 	jr z, .willEncounter
+	CheckEvent EVENT_USING_MAX_REPEL
+	jr nz, .CantEncounter2 ; max repel doesn't care about levels, never will encounter pokemon
 	ld a, [wPartyMon1Level]
 	ld b, a
 	ld a, [wCurEnemyLevel]
@@ -101,6 +103,7 @@ TryDoWildEncounter:
 	jr .willEncounter
 .lastRepelStep
 	ld [wRepelRemainingSteps], a
+	ResetEvent EVENT_USING_MAX_REPEL
 	ld a, TEXT_REPEL_WORE_OFF
 	ldh [hTextID], a
 	call EnableAutoTextBoxDrawing

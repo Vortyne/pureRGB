@@ -426,7 +426,7 @@ _GymGuideIntroText2::
 	cont "going down over"
 	cont "here and thought"
 	cont "to take a look!"
-	para "Lets see how my"
+	para "Let's see how my"
 	line "#MON fare"
 	cont "against yours!"
 	prompt

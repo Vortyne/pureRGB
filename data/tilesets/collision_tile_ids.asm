@@ -8,7 +8,7 @@ _CheckTilePassable::
 	jr z, .impassable
 	cp d
 	jr nz, .tilePassableLoop
-	and a ; passable
+	; passable ; c not set, z set
 	ret
 .impassable
 	scf ; impassable
@@ -24,7 +24,7 @@ ENDM
 ; the ID of tiles that do NOT incur a collision
 
 Underground_Coll::
-	coll_tiles $0b, $0c, $13, $15, $18, $0D
+	coll_tiles $0b, $0c, $13, $15, $18, $0D, $0F
 
 Overworld_Coll::
 	coll_tiles $00, $04, $10, $1b, $20, $21, $23, $2c, $2d, $2e, $30, $31, $33, $39, $3c, $3e, $52, $54, $58, $5b
@@ -38,6 +38,7 @@ Pokecenter_Coll::
 	coll_tiles $11, $1a, $1c, $3c, $5e
 
 Dojo_Coll::
+	db $5F 
 Gym_Coll::
 	coll_tiles $11, $16, $19, $2b, $3c, $3d, $3f, $4a, $4c, $4d, $03
 
@@ -75,7 +76,7 @@ Mansion_Coll::
 	coll_tiles $01, $05, $11, $12, $14, $1a, $1c, $2c, $53
 
 Lab_Coll::
-	coll_tiles $0c, $26, $16, $1e, $34, $37
+	coll_tiles $0c, $26, $16, $1e, $34, $37, $01
 
 Club_Coll::
 	coll_tiles $0f, $1a, $1f, $26, $28, $29, $2c, $2d, $2e, $2f, $41
@@ -84,7 +85,7 @@ Facility_Coll::
 	coll_tiles $01, $10, $11, $13, $1b, $20, $21, $22, $30, $31, $32, $42, $43, $52, $55, $58, $5c, $5e
 
 Plateau_Coll::
-	coll_tiles $1b, $23, $2c, $2d, $3b, $45
+	coll_tiles $1b, $23, $2c, $2d, $34, $3c, $3f, $42, $43, $45, $4C
 
 SecretLab_Coll::
 	coll_tiles $08, $09, $18, $19, $1A, $1E, $1F, $2E, $2F, $36, $3C, $3D, $3E, $3F, $42, $43, $46, $49, $4C, $4D, $52

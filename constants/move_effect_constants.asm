@@ -99,4 +99,9 @@
 	const ACID_ARMOR_EFFECT          ; $5A ; PureRGBnote: ADDED: new effect, does light screen and reflect in one move
 	const EXPLODE_RECOIL_EFFECT      ; $5B ; PureRGBnote: ADDED: new effect, selfdestruct/explosion base effect, changes at lower health to EXPLODE_EFFECT
 	const CONVERSION_EFFECT          ; $5C ; PureRGBnote: ADDED: new effect, used with conversion
+	const ACID_SIDE_EFFECT           ; $5D ; PureRGBnote: ADDED: new effect, 50% attack or defense chance of lowering opponent
+	const SIPHON_SNAG_EFFECT         ; $5E ; PureRGBnote: ADDED: new effect, heals status on self, or a mon in party if no status on self
+	const HEAT_RUSH_EFFECT           ; $5F ; PureRGBnote: ADDED: new effect, 30% burn chance, and if used by a fire pokemon, 40% chance of raising special one stage
+	const MEGA_PUNCH_EFFECT          ; $60 ; PureRGBnote: ADDED: new effect, 30% flinch chance if user is FIGHTING type, 10% flinch otherwise
+	const SCREECH_EFFECT             ; $61 ; PureRGBnote: ADDED: new effect, Defense down 2, but also prevents SLEEP status for the battle. Auto-used when a pokemon who has it is put to sleep.
 DEF NUM_MOVE_EFFECTS EQU const_value - 1

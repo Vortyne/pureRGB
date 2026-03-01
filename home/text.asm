@@ -59,15 +59,22 @@ PlaceNextChar::
 	ret
 .NotTerminator
 ; PureRGBnote: CHANGED: Check against a jump table instead of a dictionary.
+; this actually speeds up text a lot because it doesn't make do a ton of cp commands for every single character
 	push hl
-	push de
-	ld hl, TextShortcutCommandJumpTable
-	ld de, 3
-	call IsInArray
-	pop de
+	cp FIRST_TEXT_SHORCUT_ID
+	jr c, .no
+	cp LAST_TEXT_SHORTCUT_ID + 1
 	jr nc, .no
-	inc hl
+	push de
+	sub FIRST_TEXT_SHORCUT_ID
+	ld hl, TextShortcutCommandJumpTable
+	ld d, 0
+	ld e, a
+	add hl, de
+	add hl, de
 	hl_deref
+	pop de
+.gotCommand
 	ld b, h
 	ld c, l
 	pop hl
@@ -82,52 +89,63 @@ NextChar::
 	inc de
 	jp PlaceNextChar
 
-NullChar::
-	ld b, h
-	ld c, l
-	pop hl
-	; A "<NULL>" character in a printed string
-	; displays an error message with the current value
-	; of hTextID in decimal format.
-	; This is a debugging leftover.
-	ld de, TextIDErrorText
-	dec de
-	ret	
+;NullChar::
+;	ld b, h
+;	ld c, l
+;	pop hl
+;	; A "<NULL>" character in a printed string
+;	; displays an error message with the current value
+;	; of hTextID in decimal format.
+;	; This is a debugging leftover.
+;	ld de, TextIDErrorText
+;	dec de
+;	ret	
 
 ; PureRGBnote: CHANGED: many shortcut commands were added here 
 ; because it greatly reduces text data size if certain commonly used phrases are parameterized.
+; must match the order of the charmap shortcuts and no gaps are allowed
 TextShortcutCommandJumpTable:
-	dbw "<NEXT>",    NextCharCmd
-	dbw "<LINE>",    LineChar
-	dbw "<NULL>",    NullChar
-	dbw "<BAGE>",    MultiButtonPageChar
-	dbw "<SCROLL>",  _ContTextNoPause
-	dbw "<_CONT>",   _ContText
-	dbw "<PARA>",    Paragraph
-	dbw "<PAGE>",    PageChar
-	dbw "<PLAYER>",  PrintPlayerName
-	dbw "<RIVAL>",   PrintRivalName
-	dbw "#",         PlacePOKe
-	dbw "<PC>",      PCChar
-	dbw "<TEAM>",    TeamChar
-	dbw "<ROCKET>",  RocketChar
-	dbw "<TM>",      TMChar
-	dbw "<TRAINER>", TrainerChar
-	dbw "<CONT>",    ContText
-	dbw "<...>",     ThreeDotsChar
-	dbw "<DONE>",    DoneText
-	dbw "<PROMPT>",  PromptText
-	dbw "<PKMN>",    PlacePKMN
-	dbw "<DEXEND>",  PlaceDexEnd
-	dbw "<TARGET>",  PlaceMoveTargetsName
-	dbw "<USER>",    PlaceMoveUsersName
-	dbw "<TIPS>",    TrainerTipsChar
-	dbw "#MON",      PokemonChar
-	dbw "<opponent>",OpponentChar
-	dbw "<user>",    UserChar
-	dbw "the",       TheChar
-	dbw "you",       YouChar
-	db -1
+	dw OrChar
+	dw IngChar
+	dw TheChar
+	dw YouChar
+	dw OpponentChar
+	dw UserChar
+	dw PokemonChar
+	dw TrainerTipsChar
+	dw TeamChar
+	dw MultiButtonPageChar
+	dw PageChar
+	dw PlacePKMN
+	dw _ContText
+	dw _ContTextNoPause
+	dw IsChar
+	dw NextCharCmd
+	dw LineChar
+	dw DoRet ; string terminator
+	dw Paragraph
+	dw PrintPlayerName
+	dw PrintRivalName
+	dw PlacePOKe
+	dw ContText
+	dw ThreeDotsChar
+	dw DoneText
+	dw PromptText
+	dw PlaceMoveTargetsName
+	dw PlaceMoveUsersName
+	dw PCChar
+	dw TMChar
+	dw TrainerChar
+	dw RocketChar
+	dw PlaceDexEnd
+
+	; " the "
+	; " to "
+	; "here"
+	; " a "
+	; "his"
+	; "that"
+	; "for"
 
 LineChar::
 	pop hl
@@ -152,24 +170,6 @@ MACRO print_name
 	ld de, \1
 	jr PlaceCommandCharacter
 ENDM
-
-PrintPlayerName:: print_name wPlayerName
-PrintRivalName::  print_name wRivalName
-
-TrainerChar:: print_name TrainerCharText
-TMChar::      print_name TMCharText
-PCChar::      print_name PCCharText
-RocketChar::  print_name RocketCharText
-PlacePOKe::   print_name PlacePOKeText
-PlacePKMN::   print_name PlacePKMNText
-TeamChar::    print_name TeamCharText
-ThreeDotsChar:: print_name ThreeDotsText
-TrainerTipsChar:: print_name TrainerTipsText
-PokemonChar:: print_name PlaceMonText
-OpponentChar:: print_name OpponentText
-UserChar:: print_name UserText
-TheChar:: print_name TheText
-YouChar:: print_name YouText
 	
 
 PlaceMoveTargetsName::
@@ -204,6 +204,27 @@ PlaceCommandCharacter::
 	inc de
 	jp PlaceNextChar
 
+PrintPlayerName:: print_name wPlayerName
+PrintRivalName::  print_name wRivalName
+
+TrainerChar:: print_name TrainerCharText
+TMChar::      print_name TMCharText
+PCChar::      print_name PCCharText
+RocketChar::  print_name RocketCharText
+PlacePOKe::   print_name PlacePOKeText
+PlacePKMN::   print_name PlacePKMNText
+TeamChar::    print_name TeamCharText
+ThreeDotsChar:: print_name ThreeDotsText
+TrainerTipsChar:: print_name TrainerTipsText
+PokemonChar:: print_name PlaceMonText
+OpponentChar:: print_name OpponentText
+UserChar:: print_name UserText
+TheChar:: print_name TheText
+YouChar:: print_name YouText
+IngChar:: print_name IngText
+OrChar:: print_name OrText
+IsChar:: print_name IsText
+
 
 TrainerCharText:: db "TRAINER@"
 TMCharText::      db "TM@"
@@ -212,10 +233,16 @@ RocketCharText::  db "ROCKET@"
 EnemyText::       db "Enemy @"
 ThreeDotsText::   db "...@"
 TrainerTipsText:: db "<TRAINER> TIPS@"
-UserText::        db "user@"
 OpponentText::    db "opponent@"
 TheText::         db "t","he@" ; have to separate with a comma to avoid it entering the same macro again
 YouText::         db "y","ou@" ; have to separate with a comma to avoid it entering the same macro again
+IngText::         db "i","ng@" ; have to separate with a comma to avoid it entering the same macro again
+OrText::          db "o","r@" ; have to separate with a comma to avoid it entering the same macro again
+IsText::          db "i","s@" ; have to separate with a comma to avoid it entering the same macro again
+
+;TextIDErrorText:: ; "[hTextID] ERROR."
+;	text_far _TextIDErrorText
+;	text_end
 
 ContText::
 	push de
@@ -263,9 +290,7 @@ Paragraph::
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	call ManualTextScroll
-	hlcoord 1, 13
-	lb bc, 4, 18
-	call ClearScreenArea
+	call ClearTextBox
 	ld c, 20
 	rst _DelayFrames
 	pop de
@@ -452,6 +477,38 @@ TextCommand_RAM::
 	pop hl
 	jr NextTextCommand
 
+TextCommand_RAM_CHECK_CONT::
+	pop hl
+	push hl
+	push de
+	decoord 17, 16
+	call DoesTextPtrHLFitOnBCCoordLine
+	jr nc, .yes
+	ld a, "▼"
+	ldcoord_a 18, 16
+	call Delay3
+	call ManualTextScroll
+	ld a, " "
+	ldcoord_a 18, 16
+	call ScrollTextUpOneLine
+	call ScrollTextUpOneLine
+	bccoord 1, 16
+.yes
+	pop de
+	jr TextCommand_RAM
+
+TextCommand_RAM_CHECK_LINE::
+	pop hl
+	push hl
+	push de
+	decoord 19, 14
+	call DoesTextPtrHLFitOnBCCoordLine
+	pop de
+	jr nc, .fits
+	bccoord 1, 16
+.fits
+	jr TextCommand_RAM
+
 TextCommand_BCD::
 ; write bcd from address, typically ram
 	pop hl
@@ -468,7 +525,7 @@ TextCommand_BCD::
 	ld b, h
 	ld c, l
 	pop hl
-	jr NextTextCommand
+	jp NextTextCommand
 
 ; PureRGBnote: ADDED: jump to a different address in the same text bank so we can reuse text
 TextCommand_JUMP::
@@ -604,10 +661,16 @@ TextCommand_SOUND::
 	ld a, [wOptions]
 	and TEXT_DELAY_MASK
 	call z, WaitForSoundToFinish
-;;;;;;;;;;
+	ld a, [wAudioFadeOutControl]
+	push af
+	xor a
+	ld [wAudioFadeOutControl], a ; don't allow fading out audio to skip the sound being played below
 	ld a, [hl]
 	rst _PlaySound
 	call WaitForSoundToFinish
+	pop af
+	ld [wAudioFadeOutControl], a
+;;;;;;;;;;
 	pop hl
 	pop bc
 	jp NextTextCommand
@@ -680,6 +743,66 @@ TextCommand_FAR::
 	call SetCurBank
 	jp NextTextCommand
 
+TextCommand_PLURALIZE::
+	pop hl
+	push hl
+	hl_deref
+	ld a, [hl]
+	dec a
+	jr z, .skip
+	ld a, "s"
+	ld [bc], a
+	inc bc
+.skip
+	pop hl
+	inc hl
+	inc hl
+	jp NextTextCommand
+
+TextCommand_STRINGBUFFER::
+	ld de, wStringBuffer
+	jr PlaceStringFromDENextTextCommand
+
+TextCommand_NAMEBUFFER::
+	ld de, wNameBuffer
+	; fall through
+PlaceStringFromDENextTextCommand:
+; write text from de then next text comment
+	ld h, b
+	ld l, c
+	call PlaceString
+	pop hl
+	jp NextTextCommand
+
+
+; Checks if variable wram text pointer in hl fits on the same line as the current text printing coordinate bc
+; with line endpoint coords de
+; sets carry if it does not fit
+DoesTextPtrHLFitOnBCCoordLine:
+	push bc
+	hl_deref
+	ld b, -1
+.loopCount
+	inc b
+	ld a, [hli]
+	cp "@"
+	jr nz, .loopCount
+	ld h, 0
+	ld l, b
+	pop bc
+	push bc
+	add hl, bc
+	ld a, l
+	cp e
+	jr nc, .nope
+	pop bc
+	and a
+	ret
+.nope
+	pop bc
+	scf
+	ret
+
 TextCommandJumpTable::
 ; entries correspond to TX_* constants (see macros/scripts/text.asm)
 	dw TextCommand_START         ; TX_START
@@ -702,4 +825,9 @@ ENDC
 	dw TextCommand_WAIT_BUTTON   ; TX_WAIT_BUTTON
 	dw TextCommand_JUMP          ; TX_JUMP
 	dw TextCommand_CALL          ; TX_CALL
+	dw TextCommand_RAM_CHECK_CONT   ; TX_RAM_CONT
+	dw TextCommand_RAM_CHECK_LINE   ; TX_RAM_LINE
+	dw TextCommand_PLURALIZE     ; TX_PLURALIZE
+	dw TextCommand_STRINGBUFFER  ; TX_RAM_STRINGBUFFER
+	dw TextCommand_NAMEBUFFER    ; TX_RAM_NAMEBUFFER
 	; greater TX_* constants are handled directly by NextTextCommand

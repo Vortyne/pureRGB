@@ -7,7 +7,7 @@ _CeladonMartRoofLittleGirlYayText::
 	text "Yay!"
 
 	para "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 
 	para "Thank you!"
@@ -20,7 +20,7 @@ _CeladonMartRoofLittleGirlTM13ExplanationText::
 	text_start
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "ICE BEAM!"
 
@@ -32,7 +32,7 @@ _CeladonMartRoofLittleGirlTM48ExplanationText::
 	text_start
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "ROCK SLIDE!"
 
@@ -44,7 +44,7 @@ _CeladonMartRoofLittleGirlTM49ExplanationText::
 	text_start
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "GLARE!"
 	para "It paralyzes the"
@@ -94,7 +94,7 @@ _VendingMachineText4::
 	done
 
 _VendingMachineText5::
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text_start
 	line "popped out!"
 	prompt

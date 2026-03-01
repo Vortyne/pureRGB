@@ -56,8 +56,7 @@ EmotionBubbleArbitrary:
 	lb bc, BANK(LoveEmote), 4
 .gotBank
 	call CopyVideoData
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld a, [wMovementFlags]
 	bit BIT_LEDGE_OR_FISHING, a ; are the last 4 OAM entries reserved for a shadow or fishing rod?
 	ld hl, wShadowOAMSprite35Attributes

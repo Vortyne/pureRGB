@@ -81,8 +81,13 @@ CinnabarLabFossilRoomScientist1Text:
 	ld c, 30
 	call GivePokemon
 	jr nc, .done
+	ld a, [wFossilMon]
+	cp AERODACTYL
+	jr nz, .notAerodactyl
+	SetEvent EVENT_CINNABAR_LAB_REVIVED_AERODACTYL
+.notAerodactyl
 	ResetEvents EVENT_GAVE_FOSSIL_TO_LAB, EVENT_LAB_STILL_REVIVING_FOSSIL, EVENT_LAB_HANDING_OVER_FOSSIL_MON
-	jr .done
+	rst TextScriptEnd
 
 .Text:
 	text_far _CinnabarLabFossilRoomScientist1Text
@@ -131,8 +136,6 @@ CinnabarLabFossilRoomColorChangerText:
 	ld hl, LabColorChangerGreeting
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .noDeutsch
 	ld hl, LabColorChangerGreetingYes
 	jr .doneGreeting
@@ -152,8 +155,6 @@ CinnabarLabFossilRoomColorChangerText:
 	ld hl, LabColorChangerStart
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jp nz, .noColorChange
 	ld hl, LabColorChangerNext
 	rst _PrintText
@@ -177,8 +178,6 @@ CinnabarLabFossilRoomColorChangerText:
 	ld hl, LabColorChangerPicsShown
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .showPartySelection
 	ld hl, LabColorChangerStartColorChange
 	rst _PrintText
@@ -240,10 +239,7 @@ ShowBeforeAfterImages:
 	call GBPalWhiteOut ; zero all palettes
 	call ClearScreen
 	call UpdateSprites
-	ld hl, wStatusFlags2
-	set BIT_NO_AUDIO_FADE_OUT, [hl]
-	ld a, $33 ; 3/7 volume
-	ldh [rNR50], a
+	call HalfVolume
 	
 	ld b, SET_PAL_BEFORE_AFTER
 	call RunPaletteCommand
@@ -274,12 +270,7 @@ ShowBeforeAfterImages:
 	and A_BUTTON | B_BUTTON
 	jr z, .waitForButtonPress
 
-	ld hl, wStatusFlags2
-	res BIT_NO_AUDIO_FADE_OUT, [hl]
- 	ld a, $77
- 	ldh [rNR50], a ; full volume
-	
-	ret
+	jp MaxVolume
 
 BeforeString:
 	db "BEFORE@"
@@ -297,9 +288,8 @@ DoColorSwap:
 	ld bc, wPartyMon2 - wPartyMon1
 	call AddNTimes ; we are jumping to the index of the chosen pokemon by incrementing N times where N = a
 	ld a, [hl] ; hl points to the flags data of the chosen pokemon now 
-	and 1 ; only the first bit of flags is used for alt color palette setting
-	xor 1 ; toggle the value
-	ld [hl], a ; store it
+	xor 1 ; toggle the lowest bit
+	ld [hl], a ; store the modified value
 	call GBFadeOutToBlack
 	call FiddlingAroundSounds
 	call GBFadeInFromBlack

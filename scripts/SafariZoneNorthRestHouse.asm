@@ -10,31 +10,19 @@ SafariZoneNorthRestHouse_TextPointers:
 SafariZoneNorthRestHouseScientistText:
 ; PureRGBnote: ADDED: this NPC will display different text depending on what type of safari game you're playing
 	text_asm
+	ld hl, .default
 	ld a, [wSafariType]
-	cp SAFARI_TYPE_RANGER_HUNT
-	jr z, .rangerHuntText
-	cp SAFARI_TYPE_FREE_ROAM
-	jr z, .freeRoamText
-	ld hl, SafariZoneRestHouse4TextDefault
-	jr .done
-.rangerHuntText
-	ld hl, SafariZoneRestHouse4TextRangerHunt
-	jr .done
-.freeRoamText
-	ld hl, SafariZoneRestHouse4TextChansey
-.done
+	ld bc, 5
+	call AddNTimes
 	rst _PrintText
 	rst TextScriptEnd
-
-SafariZoneRestHouse4TextDefault:
+.default:
 	text_far _SafariZoneNorthRestHouseScientistText
 	text_end
-
-SafariZoneRestHouse4TextRangerHunt:
+.rangerHunt:
 	text_far _SafariZoneRestHouse4TextRangerHunt
 	text_end
-
-SafariZoneRestHouse4TextChansey:
+.freeRoam:
 	text_far _SafariZoneRestHouse4TextChansey
 	text_end
 

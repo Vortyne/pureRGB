@@ -30,6 +30,16 @@ _Route18CooltrainerM2AfterBattleText::
 	cont "weekends!"
 	done
 
+_Route18AerodactylLearnsetText::
+	text "Bet you didn't"
+	line "expect me to have"
+	cont "an @"
+	text_ram_namebuffer
+	text "!"
+	para "I revived it from"
+	line "OLD AMBER!"
+	prompt
+
 _Route18CooltrainerM3BattleText::
 	text "This is my turf!"
 	line "Get out of here!"
@@ -93,4 +103,17 @@ _Route18CyclingRoadSignText::
 	text "CYCLING ROAD"
 	line "No pedestrians"
 	cont "permitted!"
+	done
+
+_Route18TipsSign::
+	text "<TIPS>"
+	para "Press SELECT"
+	line "when viewing a"
+	cont "#MON's STATS"
+	cont "to view STAT EXP!"
+	para "STAT EXP is raised"
+	line "by battling and"
+	cont "using vitamins!"
+	para "More EXP means"
+	line "a higher STAT!"
 	done

@@ -22,7 +22,7 @@ _SilphCo11FSilphPresidentText::
 _SilphCo11FSilphPresidentReceivedMasterBallText::
 	text "<PLAYER> got a"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
@@ -130,6 +130,6 @@ _SilphCo11FRocket2AfterBattleText::
 	done
 
 _SilphCo11FPorygonText::
-	text "The monitor has"
+	text "The monitor has a"
 	line "#MON on it!"
 	prompt

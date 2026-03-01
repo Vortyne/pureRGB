@@ -20,6 +20,7 @@
 	const ELITE_FOUR_RIVAL1_MOVESET
 	const ELITE_FOUR_RIVAL2_MOVESET
 	const ELITE_FOUR_RIVAL3_MOVESET
+	const METRONOME_GAMBLER_MOVESET
 
 ; input d = which moveset
 LoadTrainerMoveSet:
@@ -70,6 +71,7 @@ MoveSetMappings:
 	dw EliteFourRivalMoveset1
 	dw EliteFourRivalMoveset2
 	dw EliteFourRivalMoveset3
+	dw MetronomeGamblerMoveset
 
 ChampArenaErikaMoveset:
 	; victreebel
@@ -94,7 +96,7 @@ ChampArenaErikaMoveset:
 	db THUNDER_WAVE
 	; venusaur
 	db GROWTH
-	db CONSTRICT ; STATIC_SNAG
+	db CONSTRICT ; SIPHON_SNAG
 	db SOLARBEAM
 	db EARTHQUAKE
 	; vileplume
@@ -181,7 +183,7 @@ ChampArenaSabrinaMoveset:
 	; golduck
 	db HYDRO_PUMP
 	db TELEPORT
-	db PSYCHIC_M
+	db PSYBEAM
 	db HI_JUMP_KICK
 	; alakazam 1
 	db TELEPORT
@@ -207,12 +209,12 @@ ChampArenaBrunoMoveset:
 	db SLAM ; FILTHY_SLAM
 	; hitmonlee
 	db HI_JUMP_KICK
-	db ROLLING_KICK
+	db AGILITY
 	db EARTHQUAKE
 	db SUBMISSION
 	; onix
 	db WITHDRAW
-	db TAKE_DOWN ; HEAT_RUSH
+	db CRABHAMMER
 	db EARTHQUAKE
 	db ROCK_SLIDE
 	; fearow
@@ -298,7 +300,7 @@ ChampArenaLanceMoveset:
 ChampArenaKogaMoveset:
 	; tentacruel
 	db MEGA_DRAIN
-	db CONSTRICT ; STATIC_SNAG
+	db CONSTRICT ; SIPHON_SNAG
 	db TOXIC
 	db SURF
 	; scyther
@@ -330,9 +332,9 @@ ChampArenaKogaMoveset:
 ChampArenaLoreleiMoveset:
 	; dewgong
 	db WITHDRAW
-	db ICE_BEAM
+	db BLIZZARD
 	db SURF
-	db CONSTRICT ; STATIC_SNAG
+	db CONSTRICT ; SIPHON_SNAG
 	; slowbro
 	db WITHDRAW
 	db PSYCHIC_M
@@ -678,3 +680,20 @@ EliteFourRivalMoveset3:
 	db SLEEP_POWDER
 	db GROWTH
 	db FLASH
+
+MetronomeGamblerMoveset:
+	; meowth
+	db METRONOME
+	db NO_MOVE
+	db NO_MOVE
+	db NO_MOVE
+	; kadabra
+	db METRONOME
+	db NO_MOVE
+	db NO_MOVE
+	db NO_MOVE
+	; machoke
+	db METRONOME
+	db NO_MOVE
+	db NO_MOVE
+	db NO_MOVE

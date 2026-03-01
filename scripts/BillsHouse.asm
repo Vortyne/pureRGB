@@ -71,6 +71,8 @@ BillsHousePokemonEntersMachineScript:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_BILL_SAID_USE_CELL_SEPARATOR
+	ld a, SFX_TRADE_MACHINE
+	rst _PlaySound
 	xor a
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_BILLSHOUSE_BILL_EXITS_MACHINE
@@ -149,8 +151,6 @@ BillsHouseBillPokemonText:
 	ld hl, .ImNotAPokemonText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .answered_no
 .use_machine
 	ld hl, .UseSeparationSystemText

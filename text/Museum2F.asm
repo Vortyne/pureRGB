@@ -83,10 +83,13 @@ _Museum2FWalletKidWalletGive::
 	cont "starter #MON!@"
 	text_end
 
+_GenericReceivedTheText::
 _Museum2FReceivedLostWalletText::
 	text "<PLAYER> received"
-	line "the LOST WALLET!@" ; TODO: parameterize
-	text_end
+	line "the @"
+	text_ram_stringbuffer
+	text "!"
+	done
 
 _Museum2FWalletKidEnd::
 	text "My mom wouldn't"

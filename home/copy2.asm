@@ -246,6 +246,7 @@ ClearScreen::
 ; Clear wTileMap, then wait
 ; for the bg map to update.
 	ld bc, 20 * 18
+ClearScreenArbitrary::
 	inc b
 	hlcoord 0, 0
 	ld a, " "

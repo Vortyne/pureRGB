@@ -10,7 +10,7 @@ ENDM
 PredefPointers::
 ; these are pointers to ASM routines.
 ; they appear to be used in overworld map scripts.
-	add_predef DrawPlayerHUDAndHPBar
+	add_predef ArePlayerCoordsInRangePredef
 	add_predef CopyUncompressedPicToTilemap
 	add_predef AnimateSendingOutMon
 	add_predef ScaleSpriteByTwo
@@ -19,12 +19,12 @@ PredefPointers::
 	add_predef EmotionBubbleQuick
 	add_predef HealParty
 	add_predef MoveAnimation
-	add_predef DivideBCDPredef
-	add_predef DivideBCDPredef2
+	add_predef LearnsetTrainerScript
+	add_predef LearnsetTrainerScriptMain
 	add_predef AddBCDPredef
 	add_predef SubBCDPredef
 	add_predef DivideBCDPredef3
-	add_predef DivideBCDPredef4
+	add_predef MakePokemonAppearInOverworld
 	add_predef CopyMenuSpritesVideoDataFar
 	add_predef FlagActionPredef
 	add_predef HideObject
@@ -61,7 +61,6 @@ PredefPointers::
 	add_predef BattleTransition
 	add_predef CopyTileIDsFromList
 	add_predef PlayIntro
-	add_predef GetIntroMoveSound
 	add_predef FlashScreen
 	add_predef GetTileAndCoordsInFrontOfPlayer
 	add_predef StatusScreenOriginal
@@ -80,7 +79,7 @@ PredefPointers::
 	add_predef CanLearnTM
 	add_predef TMToMove
 	add_predef _RunPaletteCommand
-	add_predef StarterDex ; TODO: is this necessary to be a predef, it's barely used
+	add_predef MakePokemonDisappearInOverworld
 	add_predef _AddPartyMon
 	add_predef UpdateHPBar2
 	add_predef DrawEnemyHUDAndHPBar
@@ -91,8 +90,8 @@ PredefPointers::
 	add_predef AskName
 	add_predef PewterGuys
 	add_predef SaveSAVtoSRAM2
-	add_predef LoadSAV2
-	add_predef LoadSAV
+	add_predef SaveScreenTileAreaToBuffer3
+	add_predef LoadScreenTileAreaFromBuffer3
 	add_predef SaveSAVtoSRAM1
 	add_predef DoInGameTradeDialogue
 	add_predef HallOfFamePC
@@ -111,6 +110,3 @@ PredefPointers::
 	add_predef OaksAideScript
 	add_predef PickUpItemQuantity
 	add_predef FarLoadTownMapEntry
-	add_predef SaveScreenTileAreaToBuffer3
-	add_predef LoadScreenTileAreaFromBuffer3
-	

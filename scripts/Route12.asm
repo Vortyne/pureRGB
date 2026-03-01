@@ -69,8 +69,7 @@ Route12DefaultScript:
 ; PureRGBnote: ADDED: There's a new animation when snorlax wakes up.
 SnorlaxWakesUpAnimation::
 	; show an exclamation bubble when snorlax wakes up for effect
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK(ExclamationBubbleSFX)
@@ -212,6 +211,7 @@ Route12_TextPointers:
 	dw_const Route12Fisher5Text,           TEXT_ROUTE12_FISHER5
 	dw_const Route12Text9,                 TEXT_ROUTE12_TAMER
 	dw_const Route12Text10,                TEXT_ROUTE12_SUPER_NERD
+	dw_const Route12GamblerText,           TEXT_ROUTE12_GAMBLER
 	dw_const PickUpItemText,               TEXT_ROUTE12_ITEM1
 	dw_const PickUpItemText,               TEXT_ROUTE12_ITEM2
 	dw_const PickUpItemText,               TEXT_ROUTE12_ITEM3 ; PureRGBnote: ADDED: new item in this location
@@ -241,6 +241,8 @@ Route12TrainerHeader7:
 	trainer EVENT_BEAT_ROUTE_12_TRAINER_7, 4, Route12BattleText8, Route12EndBattleText8, Route12AfterBattleText8
 Route12TrainerHeader8:
 	trainer EVENT_BEAT_ROUTE_12_TRAINER_8, 3, Route12BattleText9, Route12EndBattleText9, Route12AfterBattleText9
+Route12TrainerHeader9:
+	trainer EVENT_BEAT_ROUTE_12_TRAINER_9, 0, Route12GamblerBattleText, Route12GamblerEndBattleText, DoRet
 	db -1 ; end
 
 SnorlaxText:: ; PureRGBnote: CHANGED: now also used by route 16's snorlax
@@ -256,8 +258,7 @@ SnorlaxText:: ; PureRGBnote: CHANGED: now also used by route 16's snorlax
 ; PureRGBnote: ADDED: when you talk to sleeping snorlax, there's a little snoring animation.
 SnorlaxSnoring::
 	call .sound
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld c, 10
 	rst _DelayFrames
 .sound
@@ -284,7 +285,7 @@ Route12SnorlaxWokeUpText: ; PureRGBnote: CHANGED: now also used by route 16's sn
 	text_asm
 	ld hl, .wokeUp
 	rst _PrintText
-	callfar PlayTrainerMusic
+	callfar PlayDefaultTrainerMusic
 	rst TextScriptEnd
 .wokeUp
 	text_far _Route12SnorlaxWokeUpText
@@ -310,7 +311,10 @@ Route12Fisher1EndBattleText:
 
 Route12Fisher1AfterBattleText:
 	text_far _Route12Fisher1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_GOLDEEN, FISHER
+	ld de, LearnsetGoldeen
+	predef_jump LearnsetTrainerScript
 
 Route12Fisher2Text:
 	text_asm
@@ -328,7 +332,10 @@ Route12Fisher2EndBattleText:
 
 Route12Fisher2AfterBattleText:
 	text_far _Route12Fisher2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_TENTACOOL, FISHER
+	ld de, TentacoolLearnset
+	predef_jump LearnsetTrainerScript
 
 Route12CooltrainerMText:
 	text_asm
@@ -382,7 +389,10 @@ Route12Fisher3EndBattleText:
 
 Route12Fisher3AfterBattleText:
 	text_far _Route12Fisher3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_SEADRA, FISHER
+	ld de, SeadraLearnset
+	predef_jump LearnsetTrainerScript
 
 Route12Fisher4Text:
 	text_asm
@@ -436,7 +446,10 @@ Route12EndBattleText8:
 
 Route12AfterBattleText8:
 	text_far _Route12AfterBattleText8
-	text_end
+	text_asm
+	lb hl, DEX_SHELLDER, TAMER
+	ld de, ShellderLearnset
+	predef_jump LearnsetTrainerScript
 
 Route12Text10:
 	text_asm
@@ -467,3 +480,52 @@ Route12SportFishingSignText:
 Route12SnorlaxWentBackToSleepText:
 	text_far _SnorlaxWentBackToSleepText
 	text_end
+
+Route12GamblerText:
+	text_asm
+	CheckEvent EVENT_BEAT_ROUTE_12_TRAINER_9
+	jr nz, .metronomeTeach
+	ld hl, Route12TrainerHeader9
+	call TalkToTrainer
+	rst TextScriptEnd
+.metronomeTeach
+	ld hl, .teach
+	rst _PrintText
+	call YesNoChoice
+	ld hl, .ohWell
+	jr nz, .printDone
+	ld a, METRONOME
+	ld [wMoveNum], a
+	callfar SingleMoveTutorScript
+	ld a, d
+	and a
+	ld hl, .ohWell
+	jr z, .printDone
+	dec a
+	ld hl, .chaos
+	jr z, .printDone
+	ld hl, .ditto
+.printDone
+	rst _PrintText
+	rst TextScriptEnd
+.teach
+	text_far _Route12MetronomeGamblerMetronomeTeachText
+	text_end
+.chaos
+	text_far _Route12MetronomeGamblerMetronomeTeach2Text
+	text_end
+.ohWell
+	text_far _NoTrade1Text
+	text_end
+.ditto
+	text_far _Route12MetronomeGamblerNoDitto
+	text_end
+
+Route12GamblerBattleText:
+	text_far _Route12MetronomeGamblerText
+	text_end
+
+Route12GamblerEndBattleText:
+	text_far _Route12MetronomeGamblerEndBattleText
+	text_end
+	

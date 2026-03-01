@@ -95,6 +95,7 @@ GotRecoilDamage:
 .updateHPBar
 	ld [wHPBarType], a
 	predef UpdateHPBar2
+	callfar DrawUserHPBar ; PureRGBnote: ADDED: ensures correct color of HP bar after recoil damage
 	ld hl, HitWithRecoilText
 	jp PrintText
 HitWithRecoilText:

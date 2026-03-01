@@ -1,5 +1,12 @@
+Music_Route3_Early::
+	channel_count 4
+	channel 1, Route3Early_Ch1
+	channel 2, Route3Early_Ch2
+	channel 3, Route3Early_Ch3
+	channel 4, Route3Early_Ch4
+
 ;;----------------------------------------
-Field6_Ch1:
+Route3Early_Ch1::
 ;;----------------------------------------
 
 	tempo 128
@@ -17,7 +24,7 @@ Field6_Ch1:
 	sound_loop 0, .loop10
 
 ;;----------------------------------------
-Field6_Ch2:
+Route3Early_Ch2::
 ;;----------------------------------------
 
 	duty_cycle 1
@@ -117,7 +124,7 @@ Field6_Ch2:
 
 
 ;;----------------------------------------
-Field6_Ch3:
+Route3Early_Ch3::
 ;;----------------------------------------
 
 	note_type 12, 1, 1
@@ -172,7 +179,7 @@ Field6_Ch3:
 	sound_ret
 
 ;;----------------------------------------
-Field6_Ch4:
+Route3Early_Ch4::
 ;;----------------------------------------
 
 	drum_speed 6

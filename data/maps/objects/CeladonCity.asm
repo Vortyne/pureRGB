@@ -8,6 +8,7 @@
 	const_export CELADONCITY_POLIWRATH
 	const_export CELADONCITY_ROCKET1
 	const_export CELADONCITY_ROCKET2
+	const_export CELADONCITY_ANIMATION_PROXY
 
 CeladonCity_Object:
 	db $f ; border block
@@ -21,12 +22,15 @@ CeladonCity_Object:
 	warp_event 41,  9, CELADON_POKECENTER, 1
 	warp_event 12, 27, CELADON_GYM, 1
 	warp_event 28, 19, GAME_CORNER, 1
-	warp_event 39, 19, CELADON_MART_5F, 1
+	warp_event 39, 19, CELADON_CHIEF_HOUSE, 4
 	warp_event 33, 19, GAME_CORNER_PRIZE_ROOM, 1
 	warp_event 31, 27, CELADON_DINER, 1
 	warp_event 35, 27, CELADON_CHIEF_HOUSE, 1
 	warp_event 43, 27, CELADON_HOTEL, 1
 	warp_event  3, 27, CELADON_MANSION_2F, 6
+	warp_event 37, 16, CELADON_BACK_ALLEY, 3
+	warp_event 43, 19, CELADON_MANSION_ROOF_HOUSE, 4
+	warp_event 23, 15, CELADON_CHIEF_HOUSE, 6
 
 	def_bg_events
 	bg_event 27, 15, TEXT_CELADONCITY_TRAINER_TIPS1 
@@ -50,6 +54,7 @@ CeladonCity_Object:
 	object_event 30, 12, SPRITE_FIGHTING, STAY, RIGHT, TEXT_CELADONCITY_POLIWRATH ; person
 	object_event 32, 29, SPRITE_ROCKET, WALK, LEFT_RIGHT, TEXT_CELADONCITY_ROCKET1 ; person
 	object_event 42, 14, SPRITE_ROCKET, WALK, LEFT_RIGHT, TEXT_CELADONCITY_ROCKET2 ; person
+	object_event 55, 34, SPRITE_POKE_BALL, STAY, NONE, TEXT_CELADONCITY_ANIMATION_PROXY ; person
 
 	def_warps_to CELADON_CITY
 	

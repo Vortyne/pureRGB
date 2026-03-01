@@ -26,6 +26,9 @@ _Route19CooltrainerM2EndBattleText::
 _Route19CooltrainerM2AfterBattleText::
 	text "Watch out for"
 	line "TENTACOOL!"
+	para "My awesome PINSIR"
+	line "takes them out"
+	cont "while SURFing!"
 	done
 
 _Route19Swimmer1BattleText::

@@ -231,8 +231,6 @@ CeladonMartRoofLittleGirlText:
 	ld hl, .GiveHerADrinkText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	call z, CeladonMartRoofScript_GiveDrinkToGirl
 .noDrinksInBag
 	rst TextScriptEnd

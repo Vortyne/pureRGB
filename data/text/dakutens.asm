@@ -1,3 +1,4 @@
+; PureRGBnote: CHANGED: this file isn't even imported anymore since it was not needed
 Dakutens:
 	db "かが", "きぎ", "くぐ", "けげ", "こご"
 	db "さざ", "しじ", "すず", "せぜ", "そぞ"
@@ -9,7 +10,7 @@ Dakutens:
 	db "ハバ", "ヒビ", "フブ", "へべ", "ホボ"
 	db -1 ; end
 
-Handakutens: ; TODO: remove these from importing
+Handakutens:
 	db "はぱ", "ひぴ", "ふぷ", "へぺ", "ほぽ"
 	db "ハパ", "ヒピ", "フプ", "へぺ", "ホポ"
 	db -1 ; end

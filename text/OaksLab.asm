@@ -28,7 +28,7 @@ _OaksLabThoseArePokeBallsText::
 _OaksLabYouWantCharmanderText::
 	text "So! You want the"
 	line "fire #MON,"
-	cont "CHARMANDER?" ; TODO: parameterize?
+	cont "CHARMANDER?"
 	done
 
 _OaksLabYouWantSquirtleText::
@@ -51,7 +51,7 @@ _OaksLabMonEnergeticText::
 _OaksLabReceivedMonText::
 	text "<PLAYER> received"
 	line "a @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!@"
 	text_end
 
@@ -243,7 +243,7 @@ _OaksLabRivalIllTakeThisOneText::
 _OaksLabRivalReceivedMonText::
 	text "<RIVAL> received"
 	line "a @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!@"
 	text_end
 

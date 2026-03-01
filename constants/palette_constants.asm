@@ -84,4 +84,5 @@ DEF SET_PAL_DEFAULT EQU $ff
 	const PAL_SECRETLAB     ; $2B
 	const PAL_VOLCANO       ; $2C
 	const PAL_REALLY_REDMON ; $2D
+	const PAL_PRISMATIC     ; $2F
 DEF NUM_SGB_PALS EQU const_value

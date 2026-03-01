@@ -252,9 +252,9 @@ HoFDisplayPlayerStats:
 	hlcoord 1, 6
 	ld de, HoFPlayTimeText
 	call PlaceString
-	hlcoord 5, 7
+	hlcoord 3, 7
 	ld de, wPlayTimeHours
-	lb bc, 1, 3
+	lb bc, 2, 5
 	call PrintNumber
 	ld a, $6d
 	ld [hli], a

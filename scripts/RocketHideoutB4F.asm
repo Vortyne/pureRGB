@@ -44,6 +44,7 @@ RocketHideoutB4FDoorCallbackScript:
 	ld a, $2d ; Door block
 	jr .set_block
 .unlock_door
+	call WaitForMusicFadeOutToFinish
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound
 	SetEvent EVENT_ROCKET_HIDEOUT_4_DOOR_UNLOCKED
@@ -82,6 +83,8 @@ RocketHideoutB4FBeatGiovanniScript:
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
+	ld d, ROCKETHIDEOUTB4F_GIOVANNI
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_ROCKETHIDEOUTB4F_GIOVANNI_HOPE_WE_MEET_AGAIN
 	ldh [hTextID], a
 	call DisplayTextID
@@ -232,3 +235,12 @@ RocketHideoutB4FRocket3AfterBattleText:
 .Text:
 	text_far _RocketHideoutB4FRocket3AfterBattleText
 	text_end
+
+
+WaitForMusicFadeOutToFinish::
+.loop
+	rst _DelayFrame
+	ld a, [wAudioFadeOutControl]
+	and a
+	jr nz, .loop
+	ret

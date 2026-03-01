@@ -41,6 +41,8 @@ HazeEffect_:
 	call CureVolatileStatuses
 	ld hl, wEnemyBattleStatus2
 	call CureVolatileStatuses
+	ld hl, wBattleFunctionalFlags
+	res 2, [hl] ; PureRGBnote: CHANGED: Reset Screeches echoing flag
 
 ;;;;;;;;;; PureRGBnote: CHANGED: cure confusion, but only for the user
 	ldh a, [hWhoseTurn]

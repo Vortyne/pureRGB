@@ -1,9 +1,33 @@
 CeruleanBadgeHouse_Script:
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	jr z, .notFirstLoad
+	CheckEvent FLAG_LEARNSETS_DISABLED
+	jr z, .notFirstLoad
+	; move papers offscreen if learnsets disabled
+	lb bc, SPRITESTATEDATA2_MAPY, CERULEANBADGEHOUSE_PAPER1
+	call GetFromSpriteStateData2
+	ld bc, wSprite02StateData2MapY - wSprite01StateData2MapY
+	ld d, 4
+.loop
+	ld [hl], -1
+	add hl, bc
+	dec d
+	jr nz, .loop
+	ASSERT CERULEANBADGEHOUSE_PAPER2 == (CERULEANBADGEHOUSE_PAPER1 + 1)
+	ASSERT CERULEANBADGEHOUSE_PAPER3 == (CERULEANBADGEHOUSE_PAPER2 + 1)
+	ASSERT CERULEANBADGEHOUSE_PAPER4 == (CERULEANBADGEHOUSE_PAPER3 + 1)
+.notFirstLoad
 	jp EnableAutoTextBoxDrawing
 
 CeruleanBadgeHouse_TextPointers:
 	def_text_pointers
 	dw_const CeruleanBadgeHouseMiddleAgedManText, TEXT_CERULEANBADGEHOUSE_MIDDLE_AGED_MAN
+	dw_const CeruleanBadgeHouseLeftPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_LEFT
+	dw_const CeruleanBadgeHouseCenterLeftPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_CENTER_LEFT
+	dw_const CeruleanBadgeHouseCenterRightPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_CENTER_RIGHT
+	dw_const CeruleanBadgeHouseRightPaperText, TEXT_CERULEANBADGEHOUSE_PAPER_RIGHT
 	dw_const CeruleanBadgeHouseGarbageText, TEXT_CERULEANBADGEHOUSE_GARBAGE
 
 CeruleanBadgeHouseMiddleAgedManText:
@@ -28,13 +52,14 @@ CeruleanBadgeHouseMiddleAgedManText:
 	xor a
 	ld [wPrintItemPrices], a
 	ld [wMenuItemToSwap], a
-	ld a, SPECIALLISTMENU
+	ld a, CUSTOMLISTMENU
 	ld [wListMenuID], a
+	ld a, 3 ; badge menu
+	ld [wListMenuCustomType], a
 	call DisplayListMenuID
 	jr c, .done
 	ld hl, CeruleanBadgeHouseBadgeTextPointers
-	ld a, [wCurItem]
-	sub BOULDERBADGE
+	ld a, [wCurListMenuItem]
 	add a
 	ld d, $0
 	ld e, a
@@ -126,4 +151,20 @@ CeruleanBadgeHouseEarthBadgeText:
 CeruleanBadgeHouseGarbageText:
 	text_far _GarbageCrumpledUpPaper
 	text_far _CeruleanBadgeHouseGarbageText
+	text_end
+
+CeruleanBadgeHouseLeftPaperText:
+	text_far _CeruleanBadgeHouseLeftPaperText
+	text_end
+
+CeruleanBadgeHouseCenterLeftPaperText:
+	text_far _CeruleanBadgeHouseCenterLeftPaperText
+	text_end
+
+CeruleanBadgeHouseCenterRightPaperText:
+	text_far _CeruleanBadgeHouseCenterRightPaperText
+	text_end
+
+CeruleanBadgeHouseRightPaperText:
+	text_far _CeruleanBadgeHouseRightPaperText
 	text_end

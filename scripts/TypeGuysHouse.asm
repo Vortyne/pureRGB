@@ -56,8 +56,7 @@ TypeGuysHouseLightSwitch::
 	; turn on the lights
 	xor a
 	ld [wMapPalOffset], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	; add the "on" light switch tile
 	jr LoadLightSwitchOnGraphic
 .turnOff
@@ -67,8 +66,7 @@ TypeGuysHouseTurnOffLights:
 	; turn off the lights
 	ld a, 6
 	ld [wMapPalOffset], a
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	; add the "off" light switch tile
 	jr LoadLightSwitchOffGraphic
 
@@ -141,17 +139,17 @@ TypeGuysHouseRightTallBookcaseText:
 	text_asm 
 	call CheckLightsTurnedOn
 	ld hl, TypeGuysHouseTooDarkText
-	jr z, .done
+	jr z, .print
 	ld hl, .rightTallBookcase
-.done
+.print
 	rst _PrintText
+.done
 	rst TextScriptEnd
 .rightTallBookcase
 	text_far _TypeGuysHouseRightTallBookcaseText
 	text_far _FlippedToARandomPage
 	text_far _TypeGuysHouseRightTallBookcaseText2
 	text_end
-
 
 TypeGuysHouseLeftTallBookcaseText:
 	text_asm 
@@ -161,12 +159,17 @@ TypeGuysHouseLeftTallBookcaseText:
 	ld hl, .leftTallBookcase
 .done
 	rst _PrintText
+.done2
 	rst TextScriptEnd
 .leftTallBookcase
 	text_far _TypeGuysHouseLeftTallBookcaseText
 	text_far _FlippedToARandomPage
 	text_far _TypeGuysHouseLeftTallBookcaseText2
-	text_end
+	text_asm
+	CheckEvent FLAG_GOLEM_FAMILY_LEARNSET
+	jr nz, .done2
+	ld d, DEX_GEODUDE
+	jpfar KeepReadingBookLearnset
 
 
 

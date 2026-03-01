@@ -1,5 +1,7 @@
 ; PureRGBnote: ADDED: new trainers were added to this location
 ; PureRGBnote: ADDED: code that unlocks a stairway to the Secret Lab after certain conditions are fulfilled was added
+ASSERT BANK(ReplaceMansionTileBlockList) == BANK(PokemonMansionB1F_Script)
+ASSERT BANK(PokemonMansionSwitchScript) == BANK(PokemonMansionB1F_Script)
 
 PokemonMansionB1F_Script:
 	call MansionB1FCheckReplaceSwitchDoorBlocks
@@ -18,33 +20,27 @@ MansionB1FCheckReplaceSwitchDoorBlocks:
 	ret z
 	CheckEvent EVENT_UNLOCKED_SECRET_LAB
 	call nz, UnlockLab
+
+	ld hl, MansionB1FTileBlockReplacementCoords
+	ld de, MansionB1FTileBlockReplacementIDsOnOff
 	CheckEvent EVENT_MANSION_SWITCH_ON
 	jr nz, .switchTurnedOn
-	ld a, $e
-	ld bc, $80d
-	call Mansion2ReplaceBlock
-	ld a, $e
-	ld bc, $b06
-	call Mansion2ReplaceBlock
-	ld a, $5f
-	ld bc, $304
-	call Mansion2ReplaceBlock
-	ld a, $54
-	ld bc, $808
-	jp Mansion2ReplaceBlock
+	inc de
 .switchTurnedOn
-	ld a, $2d
-	ld bc, $80d
-	call Mansion2ReplaceBlock
-	ld a, $5f
-	ld bc, $b06
-	call Mansion2ReplaceBlock
-	ld a, $e
-	ld bc, $304
-	call Mansion2ReplaceBlock
-	ld a, $e
-	ld bc, $808
-	jp Mansion2ReplaceBlock
+	jp ReplaceMansionTileBlockList
+
+MansionB1FTileBlockReplacementCoords:
+	db  8, 13
+	db 11,  6
+	db  3,  4 
+	db  8,  8
+	db -1
+
+MansionB1FTileBlockReplacementIDsOnOff:
+	db  $2d, $0e
+	db  $5f, $0e 
+	db  $0e, $5f  
+	db  $0e, $54
 
 UnlockLab::
 	ld a, $78
@@ -88,14 +84,8 @@ Mansion4Text8:
 	text_end
 
 Mansion4Script_Switches::
-	ld a, [wSpritePlayerStateData1FacingDirection]
-	cp SPRITE_FACING_UP
-	ret nz
-	xor a
-	ldh [hJoyHeld], a
-	ld a, TEXT_POKEMONMANSIONB1F_SWITCH
-	ldh [hTextID], a
-	jp DisplayTextID
+	ld b, TEXT_POKEMONMANSIONB1F_SWITCH
+	jp PokemonMansionSwitchScript
 
 PokemonMansionB1F_ScriptPointers:
 	def_script_pointers
@@ -115,7 +105,7 @@ PokemonMansionB1F_TextPointers:
 	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM4
 	dw_const PokemonMansionB1FDiaryText,     TEXT_POKEMONMANSIONB1F_DIARY
 	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_SECRET_KEY
-	dw_const PokemonMansion2FSwitchText,     TEXT_POKEMONMANSIONB1F_SWITCH ; This switch uses the text script from the 2F.
+	dw_const PokemonMansionSwitchText,       TEXT_POKEMONMANSIONB1F_SWITCH
 	dw_const Mansion4Text8,                  TEXT_POKEMONMANSIONB1F_TOP_SECRET_KEYHOLE
 
 Mansion4TrainerHeaders:
@@ -133,24 +123,22 @@ Mansion4TrainerHeader3:
 PokemonMansionB1FBurglarText:
 	text_asm
 	ld hl, Mansion4TrainerHeader0
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonMansionB1FTalkToTrainer
 
 PokemonMansionB1FScientistText:
 	text_asm
 	ld hl, Mansion4TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonMansionB1FTalkToTrainer
 
 Mansion4Text3:
 	text_asm
 	ld hl, Mansion4TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonMansionB1FTalkToTrainer
 
 Mansion4Text4:
 	text_asm
 	ld hl, Mansion4TrainerHeader3
+PokemonMansionB1FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 

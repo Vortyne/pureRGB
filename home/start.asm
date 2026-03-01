@@ -1,10 +1,8 @@
 _Start::
 	cp CGB
+	ld a, 1
 	jr z, .gbc
-	xor a
-	jr .ok
+	dec a
 .gbc
-	ld a, 1 ; shinpokerednote: gbcnote: need to indicate we're on GBC
-.ok
-	ldh [hGBC], a
+	ldh [hGBC], a ; shinpokerednote: gbcnote: need to indicate we're on GBC
 	jp Init

@@ -26,7 +26,7 @@ _VermilionGymLTSurgeThunderBadgeInfoText::
 _TM24ExplanationText::
 	text_start
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "THUNDERBOLT!"
 
@@ -108,10 +108,7 @@ _VermilionGymSailorAfterBattleText::
 	done
 
 _VermilionGymGymGuideChampInMakingText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "LT.SURGE has a"
+	text "LT.SURGE has a"
 	line "nickname. People"
 	cont "refer to him as"
 	cont "the Lightning"
@@ -148,3 +145,20 @@ _VermilionGymGuideApexChipElectricText::
 	cont "storms,lightning"
 	cont "and thunder!"
 	prompt
+
+_VermilionGymGentlemanAfterLocksText::
+	text "There you go."
+	para "The gates opened!"
+	line "Good job!"
+	done
+
+_VermilionGymSuperNerdAfterLocksText::
+	text "Hey! You figured"
+	line "it out! Cool!"
+	done
+
+_VermilionGymSailorAfterLocksText::
+	text "You found the"
+	line "locks?"
+	para "You're sharp!"
+	done

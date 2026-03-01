@@ -10,8 +10,8 @@ _Route16FlyHouseBrunetteGirlText::
 
 _Route16FlyHouseBrunetteGirlReceivedHM02Text::
 	text "<PLAYER> received"
-	line "HM02!@" ; TODO: generic message
-	text_end
+	line "HM02!"
+	done
 
 _Route16FlyHouseBrunetteGirlHM02ExplanationText::
 	text "HM02 is FLY."
@@ -29,4 +29,17 @@ _Route16FlyHouseBrunetteGirlHM02NoRoomText::
 
 _Route16FlyHouseFearowText::
 	text "FEAROW: Kyueen!"
+	done
+
+_Route16FlyHouseFearow2Text::
+	text "@"
+	text_ram wTrainerName
+	text ": That's"
+	line "my FEAROW, POLLY."
+	para "She FLYs me around"
+	line "everywhere for"
+	cont "maximum privacy!"
+	para "Such a beautiful"
+	line "affectionate"
+	cont "birdy!"
 	done

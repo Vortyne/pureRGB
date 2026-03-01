@@ -213,6 +213,7 @@ AttackAnimationPointers:
 	dw RadiationAnim
 	dw DivineProtectionAnim
 	dw PokeDollAnim
+	dw SendOutMonPoofAnim
 	assert_table_length NUM_ATTACK_ANIMS
 	dw ZigZagScreenAnim
 
@@ -567,7 +568,7 @@ FlamethrowerAnim:
 
 MistAnim:
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
-	battle_anim LOVELY_KISS, SE_SNOWFLAKES_EVERYWHERE
+	battle_anim WATERFALL, SE_SNOWFLAKES_EVERYWHERE
 	battle_anim NO_MOVE, SE_SNOWFLAKES_EVERYWHERE
 	battle_anim NO_MOVE, SUBANIM_0_SPARKLES_FALLING, 0, 4
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
@@ -1140,11 +1141,7 @@ SpikeCannonAnim:
 	db -1 ; end
 
 ConstrictAnim:
-	battle_anim SCRATCH, SUBANIM_0_STAR_THRICE, 0, 4
-	battle_anim THUNDER_WAVE, SUBANIM_0_BIND, 0, 6
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
-	battle_anim NO_MOVE, SE_STATIC_EVERYWHERE
+	battle_anim CONSTRICT, SE_SIPHON_SNAG_ATTACK
 	db -1 ; end
 
 AmnesiaAnim:
@@ -1222,7 +1219,11 @@ LeechLifeAnim:
 	db -1 ; end
 
 LovelyKissAnim:
-	battle_anim WATER_GUN, SUBANIM_0_HEART_1_MUSIC, 0, 6
+	battle_anim METRONOME, SE_MOVE_MON_HORIZONTALLY
+	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim NO_MOVE, SE_RESET_MON_POSITION
+	battle_anim LOVELY_KISS, SE_CUSTOM_MOVE_SFX
+	battle_anim NO_MOVE, SUBANIM_0_HEART_1_MUSIC, 0, 6
 	db -1 ; end
 
 SkyAttackAnim:
@@ -1565,4 +1566,8 @@ PokeDollAnim:
 	battle_anim NO_MOVE, SE_LOAD_POKEDOLL
 	battle_anim NO_MOVE, SUBANIM_1_CLOUD_TOSS, 2, 2
 	battle_anim NO_MOVE, SE_SHAKE_ENEMY_BACK_AND_FORTH
+	db -1
+
+SendOutMonPoofAnim:
+	battle_anim NO_MOVE, SE_SEND_OUT_MON_POOF_ANIM
 	db -1

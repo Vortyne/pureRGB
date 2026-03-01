@@ -35,28 +35,22 @@ CeladonHotelTrainerHeader0:
 CeladonChannelerText: 
 	text_asm
 	CheckEvent EVENT_BEAT_CELADON_HOTEL_TRAINER_0
-	jr nz, .beat
+	ld hl, CeladonHotelAfterBattleText1
+	jr nz, .printDone
 	ld hl, CeladonChannelerIntroText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr z, .q2
-.no1
 	ld hl, CeladonChannelerNo1
-	rst _PrintText
-	jr .done
-.q2
+	jr nz, .printDone
 	ld hl, CeladonChannelerQ2
 	rst _PrintText
 	call YesNoChoice
+	; doesn't matter what you choose
 	ld hl, CeladonHotelTrainerHeader0
 	call TalkToTrainer
-	jr .done
-.beat
-	ld hl, CeladonHotelAfterBattleText1
+	rst TextScriptEnd
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 CeladonChannelerIntroText:
@@ -109,7 +103,8 @@ CeladonLaprasGuyText:
 	ld hl, CeladonLaprasGuyReady
 	rst _PrintText
 	lb bc, LAPRAS, 30
-	call GivePokemon
+	ld a, BALL_DATA_GREAT << 3
+	call GivePokemonCommon
 	jr nc, .noBoxRoom
 	ld a, [wSimulatedJoypadStatesEnd]
 	and a

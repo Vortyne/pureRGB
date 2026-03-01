@@ -7,6 +7,38 @@ _CeladonCityLittleGirlText::
 	cont "when it's angry!"
 	done
 
+_CeladonCityLittleGirlText2::
+	text "Want to see?"
+	done
+
+_CeladonCityLittleGirlText3::
+	text "Haha, it is pretty"
+	line "cool after all!"
+	done
+
+_KoffingLearnsetText::
+	text "Watch this!"
+	para "Go, KOFFING!@"
+	text_asm
+	ld a, [wPlayerDirection]
+	cp PLAYER_DIR_RIGHT
+	lb hl, 1, 1
+	jr z, .continue
+	cp PLAYER_DIR_UP
+	lb hl, -1, -1
+	jr z, .continue
+	cp PLAYER_DIR_DOWN
+	lb hl, -1, 1
+	jr z, .continue
+	lb hl, -2, 0
+.continue
+	ld de, vNPCSprites tile $78
+	lb bc, CELADONCITY_ANIMATION_PROXY, KOFFING
+	predef MakePokemonAppearInOverworld
+	ld a, KOFFING
+	call PlayCry
+	rst TextScriptEnd
+
 _CeladonCityGramps1Text::
 	text "Heheh! This GYM"
 	line "is great! It's"
@@ -35,15 +67,40 @@ _CeladonCityGramps3Text::
 	line "but I never had a"
 	cont "chance to talk!"
 
-	para "Here's a gift for"
-	line "dropping by!"
+	para "Shall I reward you"
+	line "for dropping by?"
+
+	para "Hmm<...>"
+	line "I know!"
+
+	para "I'm a retired"
+	line "teacher."
+
+	para "I know a lot about"
+	line "less popular"
+	cont "#MON moves!"
+
+	para "So I'll teach"
+	line "your #MON!"
 	prompt
 
+_CeladonCityGramps3Text2::
+	text "Hello again!"
+	para "Do your #MON"
+	line "want to learn?"
+	prompt
+
+_CeladonPoolGrampsAfterTeachText::
+	text "A new move is"
+	line "always exciting!"
+	para "Use it well!"
+	done
+
+_GenericPlayerReceivedText::
 _PewterGymReceivedTM34Text::
 _CeruleanGymMistyReceivedTM11Text::
 _VermilionGymLTSurgeReceivedTM24Text::
 _CeladonGymReceivedTM21Text::
-_CeladonCityGramps3ReceivedTM41Text::
 _CeladonMart3FClerkReceivedTM18Text::
 _CeladonMartRoofLittleGirlReceivedTM13Text::
 _CeladonMartRoofLittleGirlReceivedTM48Text::
@@ -60,23 +117,25 @@ _ViridianGymGiovanniReceivedTM27Text::
 _Route12Gate2FBrunetteGirlReceivedTM39Text::
 	text "<PLAYER> received"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
-_CeladonCityGramps3TM41ExplanationText::
-	text "<TM>41 teaches"
-	line "MEDITATE!"
+; PureRGBnote: CHANGED: he is now a tutor
+;_CeladonCityGramps3TM41ExplanationText::
+;	text "<TM>41 teaches"
+;	line "MEDITATE!"
+;
+;	para "It raises ATTACK,"
+;	line "SPECIAL and SPEED"
+;	cont "all by one stage!"
+;
+;	para "Your #MON will"
+;	line "be unstoppable!"
+;	done
 
-	para "It raises ATTACK,"
-	line "SPECIAL and SPEED"
-	cont "all by one stage!"
-
-	para "Your #MON will"
-	line "be unstoppable!"
-	done
-
-_CeladonCityGramps3TM41NoRoomText::
+;_CeladonCityGramps3TM41NoRoomText::
+_GenericPackIsFullOfItemsText::
 	text "Oh, your pack is"
 	line "full of items!"
 	done
@@ -89,6 +148,17 @@ _CeladonCityFisherText::
 	line "POLIWHIRL when I"
 	cont "used WATER STONE!"
 	done
+
+_CeladonCityFisher2Text::
+	text "Want to see some"
+	line "of its moves?"
+	done
+
+_PoliwrathLearnsetText::
+	text "Ready, @"
+	text_ram_namebuffer
+	text "?"
+	prompt
 
 _CeladonCityPoliwrathText::
 	text "POLIWRATH: Ribi"

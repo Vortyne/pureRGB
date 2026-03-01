@@ -20,13 +20,13 @@ GBCBasePalettes2:
 	RGB 31,31,31, 18,20,29, 20,28,30, 03,03,03 ; PAL_INDIGO ;;;;
 	RGB 31,31,31, 11,27,30, 18,26,10, 01,01,01 ; PAL_TOWNMAP ;;;;
 IF DEF(_RED)
-	RGB 31,31,31, 30,27,10, 17,23,10, 24,10,10 ; PAL_LOGO1 ;;;;
+	RGB 31,31,31, 31,12,00, 31,06,00, 24,10,10 ; PAL_LOGO1 ;;;;
 ENDC
 IF DEF(_BLUE)
-	RGB 31,31,31, 30,27,10, 21,00,04, 11,16,25 ; PAL_LOGO1 ;;;;
+	RGB 31,31,31, 14,19,29, 00,08,25, 11,16,25 ; PAL_LOGO1 ;;;;
 ENDC
 IF DEF(_GREEN)
-	RGB 31,31,31, 30,27,10, 17,23,10, 12,24,12 ; PAL_LOGO1 ;;;;
+	RGB 31,31,31, 03,15,05, 00,08,02, 12,24,12 ; PAL_LOGO1 ;;;;
 ENDC
 	RGB 31,31,31, 30,27,10, 16,18,26, 06,11,21 ; PAL_LOGO2 ;;;;
 	RGB 31,31,31, 23,21,26, 11,20,28, 03,03,03 ; PAL_0F ;;;;
@@ -84,11 +84,12 @@ ENDC
 	RGB 31,31,31, 25,25,27, 20,20,23, 03,03,03 ; PAL_WHITEMON ; white alt palette pokemon ;;;;
 	RGB 31,31,31, 20,26,31, 12,25,06, 03,03,03 ; PAL_BLUEGREENMON ; blue/green alt palette pokemon
 	RGB 31,31,31, 31,31,31, 03,03,03, 03,03,03 ; PAL_BLACK2 ; default move animation palette ;;;;
-	RGB 31,29,31, 30,27,10, 03,03,03, 03,03,03 ; PAL_ULTRABALL ; ultra ball palette when throwing one in battle ;;;;
+	RGB 31,31,31, 30,27,10, 03,03,03, 03,03,03 ; PAL_ULTRABALL ; ultra ball palette when throwing one in battle ;;;;
 	RGB 31,31,31, 24,28,20, 22,16,12, 03,03,03 ; PAL_SAFARIBALL ; safari ball palette when throwing one in battle ;;;;
 	RGB 31,31,31, 14,17,31, 10,11,11, 03,03,03 ; PAL_SECRETLAB ;;;;
 	RGB 31,31,31, 29,04,00, 10,11,11, 03,03,03 ; PAL_VOLCANO ;;;;
 	RGB 31,31,31, 26,00,00, 18,00,00, 03,03,03 ; PAL_REALLY_REDMON ;;;;
+	RGB 31,31,31, 21,24,27, 20,19,26, 03,03,03 ; PAL_PRISMATIC
 ;;;;;;;;;;
 	assert_table_length NUM_SGB_PALS
 

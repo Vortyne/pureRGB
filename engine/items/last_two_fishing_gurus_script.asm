@@ -6,8 +6,6 @@ LastTwoGurusScript::
 	ld hl, LastTwoGurusTextQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .refused
 	ld a, [wStatusFlags1]
 	bit BIT_GOT_SUPER_ROD, a ; received super rod?

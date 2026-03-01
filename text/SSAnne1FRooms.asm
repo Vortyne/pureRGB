@@ -103,3 +103,11 @@ _SSAnne1FRoomsGentleman3Text::
 	para "I'm on the trail"
 	line "of <TEAM><ROCKET>!"
 	done
+
+_GrowlitheLearnset::
+	text "Now I've got to"
+	line "go heal my@"
+	text_ram_cont wNameBuffer
+	text "!"
+	para "@"
+	text_end

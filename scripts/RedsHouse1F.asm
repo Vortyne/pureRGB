@@ -98,17 +98,8 @@ RedsHouse1FMomText:
 	rst _PlaySound
 	call WaitForSoundToFinish
 .noDad
-	; store a party pokemon's nickname to use later in the text
-	ld a, [wPartyCount]
-	cp 6 ; if they player has less than 6 pokemon just use the first pokemon
-	ld a, 0
-	jr nz, .firstPokemon
-.random ; otherwise randomize it between any of the 6
-	call Random
-	and %111
-	cp 6
-	jr nc, .random
-.firstPokemon
+	call RandomPartyPokemon
+	ld a, d
 	push af
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
@@ -131,6 +122,7 @@ RedsHouse1FMomText:
 	rst _PrintText
 	call ClearScreen
 	call MomHealPokemonImmediate
+	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
 
 	; remove food tiles on the table
@@ -338,3 +330,17 @@ DadHealText1:
 DadHealText2:
 	text_far _DadHealText2
 	text_end
+
+RandomPartyPokemon::
+	; store a party pokemon's nickname to use later in the text
+	ld a, [wPartyCount]
+	cp 6 ; if they player has less than 6 pokemon just use the first pokemon
+	ld d, 0
+	ret nz
+.random ; otherwise randomize it between any of the 6
+	call Random
+	and %111
+	cp 6
+	jr nc, .random
+	ld d, a
+	ret

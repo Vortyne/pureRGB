@@ -26,7 +26,18 @@ PokemonTower1FBaldingGuyText:
 
 PokemonTower1FGirlText:
 	text_far _PokemonTower1FGirlText
-	text_end
+	text_asm
+	ld c, DEX_GROWLITHE - 1
+	callfar SetMonSeen
+	ld de, .pensivegirl
+	call CopyTrainerName
+	lb hl, DEX_GROWLITHE, $FF
+	ld de, PokemonTower1FGirl2Text
+	ld bc, LearnsetRecountedFondMemories
+	predef_jump LearnsetTrainerScriptMain
+
+.pensivegirl
+	db "SAD LADY@"
 
 PokemonTower1FChannelerText:
 	text_far _PokemonTower1FChannelerText

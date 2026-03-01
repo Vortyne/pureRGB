@@ -11,7 +11,7 @@ CinnabarGymSetMapAndTiles:
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	call nz, UpdateCinnabarGymGateTileBlocks
-	ResetEvent EVENT_2A7
+	;ResetEvent EVENT_2A7
 	ret
 
 CinnabarGymResetScripts:
@@ -133,6 +133,8 @@ CinnabarGymBlainePostBattleScript:
 	ld [wJoyIgnore], a
 ; fallthrough
 CinnabarGymReceiveTM38:
+	ld d, CINNABARGYM_BLAINE
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
 	ldh [hTextID], a
 	call DisplayTextID
@@ -152,11 +154,13 @@ CinnabarGymReceiveTM38:
 .gymVictory
 	ld hl, wObtainedBadges
 	set BIT_VOLCANOBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_VOLCANOBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6
+	
+	ld a, CINNABARGYM_BLAINE
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp CinnabarGymResetScripts
 
 CinnabarGym_TextPointers:
@@ -202,6 +206,16 @@ CinnabarGymBlaineText:
 	call DisableWaitingAfterTextDisplay
 	rst TextScriptEnd
 .afterBeat
+	ld d, MOLTRES
+	callfar IsMonInParty
+	jr nc, .noMoltres
+	ld hl, .moltresText
+	rst _PrintText
+	lb hl, DEX_MOLTRES, BLAINE
+	ld de, TextNothing
+	ld bc, LearnsetFadeOutInBlaineStory
+	predef_jump LearnsetTrainerScriptMain
+.noMoltres
 	ld hl, .PostBattleAdviceText
 	rst _PrintText
 	rst TextScriptEnd
@@ -228,6 +242,11 @@ CinnabarGymBlaineText:
 .PostBattleAdviceText:
 	text_far _CinnabarGymBlainePostBattleAdviceText
 	text_end
+
+.moltresText
+	text_far _CinnabarGymBlaineMoltres
+	text_end
+
 
 CinnabarGymBlaineVolcanoBadgeInfoText:
 	text_far _CinnabarGymBlaineVolcanoBadgeInfoText
@@ -500,6 +519,7 @@ CinnabarGymGuideApexChipFireText:
 	text_end
 
 ChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _CinnabarGymGymGuideChampInMakingText
 	text_end
 

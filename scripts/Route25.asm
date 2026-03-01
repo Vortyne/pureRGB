@@ -258,7 +258,10 @@ Route25Hiker3EndBattleText:
 
 Route25Hiker3AfterBattleText:
 	text_far _Route25Hiker3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MANKEY, HIKER
+	ld de, MankeyLearnsetText
+	predef_jump LearnsetTrainerScript
 
 Route25BillSignText:
 	text_far _Route25BillSignText

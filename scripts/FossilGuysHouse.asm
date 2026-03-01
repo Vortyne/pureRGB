@@ -235,6 +235,8 @@ FossilGuyGoToCinnabarText:
 
 FossilGuysHouseCatText:
 	text_asm
+	ld c, DEX_MEOWTH - 1
+	callfar SetMonSeen
 	CheckEvent EVENT_MET_FOSSIL_GUYS_CAT
 	jr nz, .metCatAlready
 	SetEvent EVENT_MET_FOSSIL_GUYS_CAT
@@ -406,19 +408,14 @@ MoveMysticCrystalBallText:
 	rst _PrintText
 	call WaitForSoundToFinish
 	; start the "crystal ball" animation
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
-	ld a, $FF
-	ld [wUpdateSpritesEnabled], a
+	call PauseMusic
+	call DisableSpriteUpdates
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK(SFX_Psybeam)
 	ld [wAudioROMBank], a
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
 	ld a, SFX_PSYBEAM
-	rst _PlaySound
+	call PlaySoundResetSFXModifiers
 	ld a, 4
 	call .sparkleCrystalBall
 	ld a, 5
@@ -428,8 +425,8 @@ MoveMysticCrystalBallText:
 	call WaitForSoundToFinish
 	pop af
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
+	; a = 0 after ResumeMusic
 	ld [wMapPalOffset], a
 	inc a
 	ld [wUpdateSpritesEnabled], a
@@ -488,6 +485,11 @@ MoveMysticCrystalBallText:
 	jr z, .printDone
 	cp HYPNO
 	ld hl, .hypnoText
+	jr z, .printDone
+	ld hl, .accuracyText
+	cp ARCANINE
+	jr z, .printDone
+	cp DEWGONG
 	jr z, .printDone
 	ld hl, .genericMovePowerIncreasesText
 .printDone
@@ -560,6 +562,9 @@ MoveMysticCrystalBallText:
 .hypnoText
 	text_far _MoveMysticAccuracy85
 	text_end
+.accuracyText
+	text_far _MoveMysticAccuracy100
+	text_end
 
 ; hl = start of sprite in wShadowOAM at tile ID attribute
 HorizontalFlipOverworldSprite:
@@ -610,6 +615,7 @@ FormulateMoveMysticMonList:
 	jr z, .seen
 	push hl
 	push bc
+	dec c
 	ld hl, wPokedexSeen
 	ld b, FLAG_TEST
 	predef FlagActionPredef
@@ -639,6 +645,7 @@ FormulateMoveMysticMonList:
 
 ; mon ID, mon dex ID (needed for checking if it's seen)
 ; if it's guaranteed to be seen at meeting this NPC $FF is used instead for dex ID
+; TODO: dont need text dws cause can use the index as order?
 MoveMysticMonsList:
 	db BEEDRILL, $FF
 	dw BeedrillMoveMysticText
@@ -650,8 +657,14 @@ MoveMysticMonsList:
 	dw JigglypuffMoveMysticText
 	db WIGGLYTUFF, DEX_WIGGLYTUFF
 	dw WigglytuffMoveMysticText
+	db GOLDUCK, DEX_GOLDUCK
+	dw GolduckMoveMysticText
+	db ARCANINE, DEX_ARCANINE
+	dw ArcanineMoveMysticText
 	db GOLEM, DEX_GOLEM
 	dw GolemMoveMysticText
+	db DEWGONG, DEX_DEWGONG
+	dw DewgongMoveMysticText
 	db HYPNO, DEX_HYPNO
 	dw HypnoMoveMysticText
 	db HITMONLEE, DEX_HITMONLEE
@@ -673,7 +686,7 @@ MoveMysticMonsList:
 	db OMASTAR, DEX_OMASTAR
 	dw OmastarMoveMysticText
 	db DRAGONITE, DEX_DRAGONITE
-	dw DragoniteMoveMysticText
+	dw DragoniteMoveMysticText	
 	db -1
 
 BeedrillMoveMysticText:
@@ -742,4 +755,16 @@ JigglypuffMoveMysticText::
 
 WigglytuffMoveMysticText::
 	text_far _WigglytuffMoveMysticText
+	text_end
+
+GolduckMoveMysticText::
+	text_far _GolduckMoveMysticText
+	text_end
+
+DewgongMoveMysticText::
+	text_far _DewgongMoveMysticText
+	text_end
+
+ArcanineMoveMysticText::
+	text_far _ArcanineMoveMysticText
 	text_end

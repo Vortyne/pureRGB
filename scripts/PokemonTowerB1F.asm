@@ -279,8 +279,6 @@ PokemonTowerB1FDarkChannelerText:
 .catacombsIntro
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, PokemonTowerB1FDarkChannelerLowerText.no
 	jr nz, .printDone1
 	ld a, 1 ; second warp
@@ -377,8 +375,7 @@ GengarTransformation:
 	ld a, 6
 	ld [wMapPalOffset], a
 	call LoadGBPal
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	ld a, $42
 	ld [wFrequencyModifier], a
 	ld a, $01
@@ -588,8 +585,6 @@ PokemonTowerB1FDarkChannelerLowerText:
 	ld hl, .goBackQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .no
 	jr nz, .printDone
 	ld a, 2 ; third warp
@@ -749,13 +744,12 @@ PokemonTowerB1FIrradiatedGraveText:
 
 PrintPlayMusicScreamEnd:
 	rst _PrintText
-	callfar PlayTrainerMusic
+	callfar PlayDefaultTrainerMusic
 	call LoadGhostSpriteScream
 	rst TextScriptEnd
 
 SummonSpiritFlashScreen::
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, SFX_GET_ITEM_1
 	rst _PlaySound
 	ld hl, wChannelCommandPointers + CHAN5 * 2
@@ -795,9 +789,7 @@ SpiritToggleImageIndex3Times::
 	dec b
 	jr nz, .loop2
 	call WaitForSoundToFinish
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 LoadGhostSpriteScream:
 	ld de, GhostSprite tile 16
@@ -942,12 +934,10 @@ PokemonTowerB1FDisappearGhost:
 	rst _PlaySound
 	ld a, POKEMONTOWERB1F_GHOST
 	call SetSpriteFacingUp
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	ld a, POKEMONTOWERB1F_GHOST
 	call SetSpriteFacingLeft
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 PokemonTowerB1FHideGhost:
 	lb de, 15, 38
 	ld a, POKEMONTOWERB1F_GHOST
@@ -1178,17 +1168,11 @@ PokemonTowerB1FMarowakBlockedHyperBeamText:
 	callfar ChangePartyPokemonSpecies
 	; rename marowak to default CUBONE name (we'll ask nickname later)
 	callfar CheckMonNickNameDefault
+	call ClearTextBox
+	call SaveScreenTilesToBuffer2
 	; try to learn sonic boom immediately
 	ld a, SONICBOOM
-	ld [wMoveNum], a
-	ld [wNamedObjectIndex], a
-	call GetMoveName
-	call CopyToStringBuffer
-	call SaveScreenTilesToBuffer2
-	; have to clear screen because the "choose move to forget" box renders below sprites
-	call ClearScreen
-	call Delay3
-	predef LearnMove ; teach sonicboom
+	call LearnArbitraryMove
 	call .markCuboneSeenCaught
 	call LoadScreenTilesFromBuffer2
 	call Delay3
@@ -1449,3 +1433,14 @@ TheMawAnimation:
 .normalMusic
 	lb bc, SPIRIT_THE_MAW, 75
 	jp StartCatacombsBattle
+
+FarLearnArbitraryMove::
+	ld a, d
+LearnArbitraryMove::
+	ld [wMoveNum], a
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+	call CopyToStringBuffer
+	predef LearnMove
+	ld d, b
+	ret

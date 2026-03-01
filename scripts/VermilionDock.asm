@@ -96,8 +96,7 @@ VermilionDockSSAnneLeavesScript:
 	push hl
 	ld a, SFX_SS_ANNE_HORN
 	call PlaySoundWaitForCurrent
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	lb de, 0, 8
 .shift_columns_up
 	ld hl, $2
@@ -131,8 +130,7 @@ VermilionDockSSAnneLeavesScript:
 	call VermilionDock_EraseSSAnne
 	ld a, $90
 	ldh [hWY], a
-	ld a, $1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	pop hl
 	pop bc
 	ld a, b
@@ -239,15 +237,160 @@ VermilionDockMewText:
 	text_asm
 	ld hl, MewTrainerHeader
 	call TalkToTrainer
-	rst TextScriptEnd
+	ld c, 60
+	rst _DelayFrames
+	jp TextScriptEndNoButtonPress
 
 MewBattleText:
 	text_far _MewtwoBattleText ; Mew!
 	text_asm
 	ld a, MEW
 	call PlayCry
-	call WaitForSoundToFinish
+	;;;;; Mew floats up in a bubble animation
+	; Make mew face downwards
+	ld a, VERMILIONDOCK_MEW
+	call SetSpriteFacingDown
+	call UpdateSprites
+	ld hl, vNPCSprites tile $C0
+	ld de, MewBubbleTiles
+	lb bc, BANK(MewBubbleTiles), 4
+	call CopyVideoData
+	ld c, 20
+	rst _DelayFrames
+	ld b, BANK(SFX_Battle_24)
+	call MuteAudioAndChangeAudioBank
+	ld a, SFX_BATTLE_24
+	call PlaySoundResetSFXModifiers
+	; load bubble tiles
+	ld hl, BubbleOAMTable
+	ld de, wShadowOAMSprite08
+	ld bc, 4 * 13
+	rst _CopyData
+	call DisableSpriteUpdates
+	ld hl, wShadowOAMSprite08
+	ld d, 13
+	ld a, [wXCoord]
+	cp 21
+	lb bc, -16, 16
+	jr z, .adjustOAMCoords
+	cp 20
+	lb bc, 0, 32
+	jr z, .adjustOAMCoords
+.continue
+	ld c, 5
+	rst _DelayFrames
+	; move down slightly
+	call .mewDifferent
+	ld a, [wXCoord]
+	cp 20
+	lb bc, 1, -1
+	jr nz, .notLeft1
+	lb bc, 1, 1
+.notLeft1
+	ld e, 6
+	call .loopMoveMewAndBubble
+	ld c, 20
+	rst _DelayFrames
+	; move up into the air
+	ld a, SFX_BATTLE_1C
+	call PlaySoundResetSFXModifiers
+	call .mewNormal
+	ld a, [wXCoord]
+	cp 21
+	ld e, 54
+	jr nz, .notMiddle1
+	ld e, 44
+.notMiddle1
+	lb bc, -1, 0
+	call .loopMoveMewAndBubble
+	ld c, 10
+	rst _DelayFrames
+	; change player OAM to be the up facing sprite if it isn't already
+	ld a, [wYCoord]
+	cp 20
+	jr nz, .noFlip
+	ld de, wShadowOAMSprite00
+	call UnflipSpriteOAM
+.noFlip
+	ld e, 4
+	ld d, 4
+	ld bc, 4
+	ld hl, wShadowOAMSprite00TileID
+.loopChangePlayerFacing
+	ld [hl], d
+	add hl, bc
+	inc d
+	dec e
+	jr nz, .loopChangePlayerFacing
+	call .mewDifferent
+	ld e, 8
+	lb bc, 1, 0
+	call .loopMoveMewAndBubble
+	ld c, 10
+	rst _DelayFrames
+	call .mewNormal
+	ld e, 4
+	lb bc, -1, 0
+	call .loopMoveMewAndBubble
+	ld c, 40
+	rst _DelayFrames
+	call UnmuteAudioAndRestoreAudioBank
 	rst TextScriptEnd
+.adjustOAMCoords
+	call .loopAdjustOAMCoords
+	jr .continue
+.adjustMewAndBubbleCoords
+	ld d, 17
+	ld hl, wShadowOAMSprite04
+.loopAdjustOAMCoords
+	ld a, [hl]
+	add b
+	ld [hli], a
+	ld a, [hl]
+	add c
+	ld [hli], a
+	inc hl
+	inc hl
+	dec d
+	jr nz, .loopAdjustOAMCoords
+	ret
+.loopMoveMewAndBubble
+	call .adjustMewAndBubbleCoords
+	rst _DelayFrame
+	dec e
+	jr nz, .loopMoveMewAndBubble
+	ret
+.mewNormal
+	ld hl, vNPCSprites tile $0C
+	ld de, FairySprite
+	lb bc, BANK(FairySprite), 4
+	jr .copy2
+.mewDifferent
+	ld hl, vNPCSprites tile $0C
+	ld de, PartyMonSprites1 tile 24
+	call .copy
+	ld hl, vNPCSprites tile $0E
+	ld de, PartyMonSprites1 tile 28
+.copy
+	lb bc, BANK(PartyMonSprites1), 2
+.copy2
+	jp CopyVideoData
+
+
+BubbleOAMTable:
+	db $44, $30, $C0, $00
+	db $44, $38, $C1, $00
+	db $4C, $30, $C2, $00
+	db $44, $48, $C0, OAM_HFLIP
+	db $44, $40, $C1, OAM_HFLIP
+	db $4C, $48, $C2, OAM_HFLIP
+	db $5C, $30, $C0, OAM_VFLIP
+	db $5C, $38, $C1, OAM_VFLIP
+	db $54, $30, $C2, OAM_VFLIP
+	db $5C, $48, $C0, OAM_HFLIP | OAM_VFLIP
+	db $5C, $40, $C1, OAM_HFLIP | OAM_VFLIP
+	db $54, $48, $C2, OAM_HFLIP | OAM_VFLIP
+	db $4A, $40, $C3, $00
 
 TruckOAMTable:
 	db $50, $28, $C0, $10
@@ -308,9 +451,8 @@ TruckCheck:
 	bit BIT_D_LEFT, a ; is player pressing left
 	ret z
 	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
-	ld a, $ff
-	ld [wJoyIgnore], a
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
+	ld [wJoyIgnore], a ; a = $FF due to DisableSpriteUpdates
 	; make it look like the player bumped into the truck
 	call VermilionDockRedLeftAnimate
 	xor a
@@ -356,9 +498,8 @@ TruckCheck:
 	SetEvent EVENT_FOUND_MEW
 	ret
 
-ShowMew:	
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+ShowMew:
+	call EnableSpriteUpdates
 	ld a, HS_MEW_VERMILION_DOCK
 	ld [wMissableObjectIndex], a
 	predef_jump ShowObject

@@ -1,5 +1,8 @@
 	object_const_def
 	const_export CELADONMANSION_ROOF_HOUSE_HIKER
+	const_export CELADON_RUFFIAN_HOUSE_HOOLIGAN
+	const_export CELADON_RUFFIAN_HOUSE_ROCKER
+	const_export CELADON_RUFFIAN_HOUSE_BIKER
 	const_export CELADONMANSION_ROOF_HOUSE_EEVEE_POKEBALL
 
 CeladonMansionRoofHouse_Object:
@@ -8,11 +11,17 @@ CeladonMansionRoofHouse_Object:
 	def_warp_events
 	warp_event  2,  7, CELADON_MANSION_ROOF, 3
 	warp_event  3,  7, CELADON_MANSION_ROOF, 3
+	warp_event 16,  7, CELADON_CITY, 16
+	warp_event 17,  7, CELADON_CITY, 16
+	warp_event 19,  0, CELADON_BACK_ALLEY, 4
 
 	def_bg_events
 
 	def_object_events
 	object_event  2,  2, SPRITE_HIKER, STAY, DOWN, TEXT_CELADONMANSION_ROOF_HOUSE_HIKER
+	object_event 14,  3, SPRITE_HOOLIGAN, STAY, RIGHT, TEXT_CELADON_RUFFIAN_HOUSE_HOOLIGAN
+	object_event 18,  1, SPRITE_ROCKER, STAY, DOWN, TEXT_CELADON_RUFFIAN_HOUSE_ROCKER
+	object_event 20,  5, SPRITE_BIKER, STAY, LEFT, TEXT_CELADON_RUFFIAN_HOUSE_BIKER
 	object_event  4,  3, SPRITE_POKE_BALL, STAY, NONE, TEXT_CELADONMANSION_ROOF_HOUSE_EEVEE_POKEBALL
 
 	def_warps_to CELADON_MANSION_ROOF_HOUSE

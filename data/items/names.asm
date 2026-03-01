@@ -1,109 +1,255 @@
-ItemNames::
-	list_start
-	li "MASTER BALL"
-	li "ULTRA BALL"
-	li "GREAT BALL"
-	li "POKé BALL"
-	li "HYPER BALL"
-	li "BICYCLE"
-	li "?????" ; SURFBOARD
-	li "SAFARI BALL"
-	li "POKéDEX"
-	li "MOON STONE"
-	li "ANTIDOTE"
-	li "BURN HEAL"
-	li "ICE HEAL"
-	li "AWAKENING"
-	li "PARLYZ HEAL"
-	li "FULL RESTORE"
-	li "MAX POTION"
-	li "HYPER POTION"
-	li "SUPER POTION"
-	li "POTION"
-	li "BAIT"
-	li "ROCK"
-	li "OLD COIN"
-	li "TOPSECRETKEY"
-	li "UNUSED3"
-	li "UNUSED4"
-	li "UNUSED5"
-	li "UNUSED6"
-	li "ESCAPE ROPE"
-	li "REPEL"
-	li "OLD AMBER"
-	li "FIRE STONE"
-	li "THUNDERSTONE"
-	li "WATER STONE"
-	li "HP UP"
-	li "PROTEIN"
-	li "IRON"
-	li "CARBOS"
-	li "CALCIUM"
-	li "RARE CANDY"
-	li "DOME FOSSIL"
-	li "HELIX FOSSIL"
-	li "SECRET KEY"
-	li "POCKET ABRA"
-	li "BIKE VOUCHER"
-	li "X ACCURACY"
-	li "LEAF STONE"
-	li "CARD KEY"
-	li "NUGGET"
-	li "APEX CHIP"
-	li "POKé DOLL"
-	li "FULL HEAL"
-	li "REVIVE"
-	li "MAX REVIVE"
-	li "GUARD SPEC."
-	li "SUPER REPEL"
-	li "MAX REPEL"
-	li "DIRE HIT"
-	li "COIN"
-	li "FRESH WATER"
-	li "SODA POP"
-	li "LEMONADE"
-	li "S.S.TICKET"
-	li "GOLD TEETH"
-	li "X ATTACK"
-	li "X DEFEND"
-	li "X SPEED"
-	li "X SPECIAL"
-	li "LOST WALLET"
-	li "OAK's PARCEL"
-	li "ITEMFINDER"
-	li "SILPH SCOPE"
-	li "POKé FLUTE"
-	li "LIFT KEY"
-	li "BOOSTER CHIP"
-	li "OLD ROD"
-	li "GOOD ROD"
-	li "SUPER ROD"
-	li "PP UP"
-	li "ETHER"
-	li "MAX ETHER"
-	li "ELIXER"
-	li "MAX ELIXER"
-	assert_list_length NUM_ITEMS
-	li "B2F"
-	li "B1F"
-	li "1F"
-	li "2F"
-	li "3F"
-	li "4F"
-	li "5F"
-	li "6F"
-	li "7F"
-	li "8F"
-	li "9F"
-	li "10F"
-	li "11F"
-	li "B4F"
-	assert_list_length NUM_ITEMS + NUM_FLOORS
-	li "BOULDERBADGE"
-	li "CASCADEBADGE"
-	li "THUNDERBADGE"
-	li "RAINBOWBADGE"
-	li "SOULBADGE"
-	li "MARSHBADGE"
-	li "VOLCANOBADGE"
-	li "EARTHBADGE"
+; PureRGBnote: names here were converted to a jump table to reduce execution time in getting an item name
+; the downside is it takes up extra space
+ItemNameJumpTable::
+	table_width 2
+	dw MASTERBALLName
+	dw ULTRABALLName
+	dw GREATBALLName
+	dw POKEBALLName
+	dw HYPERBALLName
+	dw BICYCLEName
+	dw SURFBOARDName
+	dw SAFARIBALLName
+	dw POKEDEXName
+	dw MOONSTONEName
+	dw ANTIDOTEName
+	dw BURNHEALName
+	dw ICEHEALName
+	dw AWAKENINGName
+	dw PARLYZHEALName
+	dw FULLRESTOREName
+	dw MAXPOTIONName
+	dw HYPERPOTIONName
+	dw SUPERPOTIONName
+	dw POTIONName
+	dw BAITName
+	dw ROCKName
+	dw OLDCOINName
+	dw TOPSECRETKEYName
+	dw CAMERAName
+	dw UNUSED4Name
+	dw UNUSED5Name
+	dw UNUSED6Name
+	dw ESCAPEROPEName
+	dw REPELName
+	dw OLDAMBERName
+	dw FIRESTONEName
+	dw THUNDERSTONEName
+	dw WATERSTONEName
+	dw HPUPName
+	dw PROTEINName
+	dw IRONName
+	dw CARBOSName
+	dw CALCIUMName
+	dw RARECANDYName
+	dw DOMEFOSSILName
+	dw HELIXFOSSILName
+	dw SECRETKEYName
+	dw POCKETABRAName
+	dw BIKEVOUCHERName
+	dw XACCURACYName
+	dw LEAFSTONEName
+	dw CARDKEYName
+	dw NUGGETName
+	dw APEXCHIPName
+	dw POKEDOLLName
+	dw FULLHEALName
+	dw REVIVEName
+	dw MAXREVIVEName
+	dw GUARDSPECName
+	dw SUPERREPELName
+	dw MAXREPELName
+	dw DIREHITName
+	dw COINName
+	dw FRESHWATERName
+	dw SODAPOPName
+	dw LEMONADEName
+	dw SSTICKETName
+	dw GOLDTEETHName
+	dw XATTACKName
+	dw XDEFENDName
+	dw XSPEEDName
+	dw XSPECIALName
+	dw LOSTWALLETName
+	dw OAKSPARCELName
+	dw ITEMFINDERName
+	dw SILPHSCOPEName
+	dw POKEFLUTEName
+	dw LIFTKEYName
+	dw BOOSTERCHIPName
+	dw OLDRODName
+	dw GOODRODName
+	dw SUPERRODName
+	dw PPUPName
+	dw ETHERName
+	dw MAXETHERName
+	dw ELIXERName
+	dw MAXELIXERName
+	assert_table_length NUM_ITEMS
+
+MASTERBALLName:
+	db "MASTER BALL@"
+ULTRABALLName:
+	db "ULTRA BALL@"
+GREATBALLName:
+	db "GREAT BALL@"
+POKEBALLName:
+	db "POKé BALL@"
+HYPERBALLName:
+	db "HYPER BALL@"
+BICYCLEName:
+	db "BICYCLE@"
+SURFBOARDName:
+	db "?????@" ; SURFBOARD
+SAFARIBALLName:
+	db "SAFARI BALL@"
+POKEDEXName:
+	db "POKéDEX@"
+MOONSTONEName:
+	db "MOON STONE@"
+ANTIDOTEName:
+	db "ANTIDOTE@"
+BURNHEALName:
+	db "BURN HEAL@"
+ICEHEALName:
+	db "ICE HEAL@"
+AWAKENINGName:
+	db "AWAKENING@"
+PARLYZHEALName:
+	db "PARLYZ HEAL@"
+FULLRESTOREName:
+	db "FULL RESTORE@"
+MAXPOTIONName:
+	db "MAX POTION@"
+HYPERPOTIONName:
+	db "HYPER POTION@"
+SUPERPOTIONName:
+	db "SUPER POTION@"
+POTIONName:
+	db "POTION@"
+BAITName:
+	db "BAIT@"
+ROCKName:
+	db "ROCK@"
+OLDCOINName:
+	db "OLD COIN@"
+TOPSECRETKEYName:
+	db "TOPSECRETKEY@"
+CAMERAName:
+	db "CAMERA@"
+UNUSED4Name:
+	db "UNUSED4@"
+UNUSED5Name:
+	db "UNUSED5@"
+UNUSED6Name:
+	db "UNUSED6@"
+ESCAPEROPEName:
+	db "ESCAPE ROPE@"
+REPELName:
+	db "REPEL@"
+OLDAMBERName:
+	db "OLD AMBER@"
+FIRESTONEName:
+	db "FIRE STONE@"
+THUNDERSTONEName:
+	db "THUNDERSTONE@"
+WATERSTONEName:
+	db "WATER STONE@"
+HPUPName:
+	db "HP UP@"
+PROTEINName:
+	db "PROTEIN@"
+IRONName:
+	db "IRON@"
+CARBOSName:
+	db "CARBOS@"
+CALCIUMName:
+	db "CALCIUM@"
+RARECANDYName:
+	db "RARE CANDY@"
+DOMEFOSSILName:
+	db "DOME FOSSIL@"
+HELIXFOSSILName:
+	db "HELIX FOSSIL@"
+SECRETKEYName:
+	db "SECRET KEY@"
+POCKETABRAName:
+	db "POCKET ABRA@"
+BIKEVOUCHERName:
+	db "BIKE VOUCHER@"
+XACCURACYName:
+	db "X ACCURACY@"
+LEAFSTONEName:
+	db "LEAF STONE@"
+CARDKEYName:
+	db "CARD KEY@"
+NUGGETName:
+	db "NUGGET@"
+APEXCHIPName:
+	db "APEX CHIP@"
+POKEDOLLName:
+	db "POKé DOLL@"
+FULLHEALName:
+	db "FULL HEAL@"
+REVIVEName:
+	db "REVIVE@"
+MAXREVIVEName:
+	db "MAX REVIVE@"
+GUARDSPECName:
+	db "GUARD SPEC.@"
+SUPERREPELName:
+	db "SUPER REPEL@"
+MAXREPELName:
+	db "MAX REPEL@"
+DIREHITName:
+	db "DIRE HIT@"
+COINName:
+	db "COIN@"
+FRESHWATERName:
+	db "FRESH WATER@"
+SODAPOPName:
+	db "SODA POP@"
+LEMONADEName:
+	db "LEMONADE@"
+SSTICKETName:
+	db "S.S.TICKET@"
+GOLDTEETHName:
+	db "GOLD TEETH@"
+XATTACKName:
+	db "X ATTACK@"
+XDEFENDName:
+	db "X DEFEND@"
+XSPEEDName:
+	db "X SPEED@"
+XSPECIALName:
+	db "X SPECIAL@"
+LOSTWALLETName:
+	db "LOST WALLET@"
+OAKSPARCELName:
+	db "OAK's PARCEL@"
+ITEMFINDERName:
+	db "ITEMFINDER@"
+SILPHSCOPEName:
+	db "SILPH SCOPE@"
+POKEFLUTEName:
+	db "POKé FLUTE@"
+LIFTKEYName:
+	db "LIFT KEY@"
+BOOSTERCHIPName:
+	db "BOOSTER CHIP@"
+OLDRODName:
+	db "OLD ROD@"
+GOODRODName:
+	db "GOOD ROD@"
+SUPERRODName:
+	db "SUPER ROD@"
+PPUPName:
+	db "PP UP@"
+ETHERName:
+	db "ETHER@"
+MAXETHERName:
+	db "MAX ETHER@"
+ELIXERName:
+	db "ELIXER@"
+MAXELIXERName:
+	db "MAX ELIXER@"

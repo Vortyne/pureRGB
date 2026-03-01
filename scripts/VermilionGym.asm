@@ -53,6 +53,8 @@ VermilionGymLTSurgeAfterBattleScript:
 	ld [wJoyIgnore], a
 
 VermilionGymLTSurgeReceiveTM24Script:
+	ld d, VERMILIONGYM_LT_SURGE
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_VERMILIONGYM_LT_SURGE_THUNDER_BADGE_INFO
 	ldh [hTextID], a
 	call DisplayTextID
@@ -72,12 +74,13 @@ VermilionGymLTSurgeReceiveTM24Script:
 .gym_victory
 	ld hl, wObtainedBadges
 	set BIT_THUNDERBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_THUNDERBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
 
+	ld a, VERMILIONGYM_LT_SURGE
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp VermilionGymResetScripts
 
 VermilionGym_TextPointers:
@@ -180,7 +183,23 @@ VermilionGymGentlemanEndBattleText:
 	text_end
 
 VermilionGymGentlemanAfterBattleText:
+	text_asm
+	CheckEvent EVENT_BEAT_LT_SURGE
+	ld hl, .afterBeat
+	ret nz
+	CheckEvent EVENT_2ND_LOCK_OPENED
+	ld hl, .afterLocks
+	ret nz
+	ld hl, .beforeBeat
+	ret
+.afterBeat
+	text_far _VermilionGymGentlemanAfterBattleGymDefeatedText
+	text_end
+.beforeBeat
 	text_far _VermilionGymGentlemanAfterBattleText
+	text_end
+.afterLocks
+	text_far _VermilionGymGentlemanAfterLocksText
 	text_end
 
 VermilionGymSuperNerdText:
@@ -198,7 +217,23 @@ VermilionGymSuperNerdEndBattleText:
 	text_end
 
 VermilionGymSuperNerdAfterBattleText:
+	text_asm
+	CheckEvent EVENT_BEAT_LT_SURGE
+	ld hl, .afterBeat
+	ret nz
+	CheckEvent EVENT_2ND_LOCK_OPENED
+	ld hl, .afterLocks
+	ret nz
+	ld hl, .beforeBeat
+	ret
+.afterBeat
+	text_far _VermilionGymSuperNerdAfterBattleGymDefeatedText
+	text_end
+.beforeBeat
 	text_far _VermilionGymSuperNerdAfterBattleText
+	text_end
+.afterLocks
+	text_far _VermilionGymSuperNerdAfterLocksText
 	text_end
 
 VermilionGymSailorText:
@@ -216,12 +251,28 @@ VermilionGymSailorEndBattleText:
 	text_end
 
 VermilionGymSailorAfterBattleText:
+	text_asm
+	CheckEvent EVENT_BEAT_LT_SURGE
+	ld hl, .afterBeat
+	ret nz
+	CheckEvent EVENT_2ND_LOCK_OPENED
+	ld hl, .afterLocks
+	ret nz
+	ld hl, .beforeBeat
+	ret
+.afterBeat
+	text_far _VermilionGymSailorAfterBattleGymDefeatedText
+	text_end
+.beforeBeat
 	text_far _VermilionGymSailorAfterBattleText
+	text_end
+.afterLocks
+	text_far _VermilionGymSailorAfterLocksText
 	text_end
 
 VermilionGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges]
 	bit BIT_THUNDERBADGE, a
 	jr nz, .afterBeat
 	ld hl, VermilionGymGuideChampInMakingText
@@ -277,6 +328,7 @@ AlreadyReceivedApexChipsText3:
 	text_end
 
 VermilionGymGuideChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _VermilionGymGymGuideChampInMakingText
 	text_end
 

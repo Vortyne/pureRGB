@@ -1,5 +1,13 @@
 ; tileset ids
 ; Tilesets indexes (see data/tilesets/tileset_headers.asm)
+; If you add a new one:
+; - update DungeonTilesets if necessary
+; - update collision tiles, example Underground_Coll
+; - update DoorTileIDPointers if necessary
+; - update EscapeRopeTilesets if necessary
+; - update WarpTileIDPointers if necessary
+; - update WaterTilesets if necessary
+; - add graphics info in the maps.asm file, example Overworld_GFX
 	const_def
 	const OVERWORLD    ; 0
 	const REDS_HOUSE_1 ; 1

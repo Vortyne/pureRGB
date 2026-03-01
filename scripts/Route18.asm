@@ -24,6 +24,7 @@ Route18_TextPointers:
 	dw_const Route18Text5,               TEXT_ROUTE18_ROCKER
 	dw_const Route18SignText,            TEXT_ROUTE18_SIGN
 	dw_const Route18CyclingRoadSignText, TEXT_ROUTE18_CYCLING_ROAD_SIGN
+	dw_const Route18TrainerTipsSignText, TEXT_ROUTE18_TRAINER_TIPS_SIGN
 
 Route18TrainerHeaders:
 	def_trainers
@@ -73,7 +74,10 @@ Route18CooltrainerM2EndBattleText:
 
 Route18CooltrainerM2AfterBattleText:
 	text_far _Route18CooltrainerM2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_AERODACTYL, BIRD_KEEPER
+	ld de, Route18AerodactylLearnsetText
+	predef_jump LearnsetTrainerScript
 
 Route18CooltrainerM3Text:
 	text_asm
@@ -135,4 +139,8 @@ Route18SignText:
 
 Route18CyclingRoadSignText:
 	text_far _Route18CyclingRoadSignText
+	text_end
+
+Route18TrainerTipsSignText:
+	text_far _Route18TipsSign
 	text_end

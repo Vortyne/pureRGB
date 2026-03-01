@@ -66,7 +66,6 @@ _FuchsiaCityGymSignText::
 	line "Ninja Master"
 	done
 
-; TODO: use string buffer?
 _FuchsiaCityChanseySignText::
 	text "Name: CHANSEY"
 
@@ -142,4 +141,14 @@ _FuchsiaCityFossilFanText2::
 
 _FuchsiaCityFossilFanText3::
 	text "There it is!"
+	done
+
+_FuchsiaCitySoMuchInfo::
+	text "So much info"
+	line "about @"
+	text_ram_namebuffer
+	text "!"
+	para "Its ecology,"
+	line "physiology,"
+	cont "anatomy<...>"
 	done

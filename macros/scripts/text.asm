@@ -138,57 +138,81 @@ MACRO text_call
 	dw \1 ; address of text commands
 ENDM
 
+	const TX_RAM_CONT ; $10
+MACRO text_ram_cont
+	db TX_RAM_CONT
+	dw \1 ; address to read from
+ENDM
 
+	const TX_RAM_LINE ; $11
+MACRO text_ram_line
+	db TX_RAM_LINE
+	dw \1 ; address to read from
+ENDM
 
-	const TX_SOUND_POKEDEX_RATING ; $10
+	const TX_PLURALIZE ; $12
+MACRO text_pluralize
+	db TX_PLURALIZE
+	dw \1 ; wram address with the number that decides if we pluralize or not
+ENDM
+
+	const TX_RAM_STRINGBUFFER ; $13
+MACRO text_ram_stringbuffer
+	db TX_RAM_STRINGBUFFER
+ENDM
+
+	const TX_RAM_NAMEBUFFER ; $14
+MACRO text_ram_namebuffer
+	db TX_RAM_NAMEBUFFER
+ENDM
+
+	const TX_SOUND_POKEDEX_RATING ; $15
 MACRO sound_pokedex_rating
 	db TX_SOUND_POKEDEX_RATING
 ENDM
 
-;	const TX_SOUND_CRY_SNORLAX ; $11
+;	const TX_SOUND_CRY_SNORLAX ; used to be $11
 ;MACRO sound_cry_snorlax
 ;	db TX_SOUND_CRY_SNORLAX
 ;ENDM
-	const_skip
 
-	const TX_SOUND_GET_ITEM_2 ; $12
+	const TX_SOUND_GET_ITEM_2 ; $16
 MACRO sound_get_item_2
 	db TX_SOUND_GET_ITEM_2
 ENDM
 
-	const TX_SOUND_GET_KEY_ITEM ; $13
+	const TX_SOUND_GET_KEY_ITEM ; $17
 MACRO sound_get_key_item
 	db TX_SOUND_GET_KEY_ITEM
 ENDM
 
-	const TX_SOUND_CAUGHT_MON ; $14
+	const TX_SOUND_CAUGHT_MON ; $18
 MACRO sound_caught_mon
 	db TX_SOUND_CAUGHT_MON
 ENDM
 
-	const TX_SOUND_DEX_PAGE_ADDED ; $15
+	const TX_SOUND_DEX_PAGE_ADDED ; $19
 MACRO sound_dex_page_added
 	db TX_SOUND_DEX_PAGE_ADDED
 ENDM
 	
-	const_skip
-;	const TX_SOUND_CRY_NIDORINA ; $16
+;	const TX_SOUND_CRY_NIDORINA ; used to be $16
 ;MACRO sound_cry_nidorina
 ;	db TX_SOUND_CRY_NIDORINA
 ;ENDM
 
-	const TX_FAR ; $17
+	const TX_FAR ; $1A
 MACRO text_far
 	db TX_FAR
 	dab \1 ; address of text commands
 ENDM
 
-;	const TX_SOUND_CRY_PIDGEOT ; $18
+;	const TX_SOUND_CRY_PIDGEOT ; used to be $18
 ;MACRO sound_cry_pidgeot
 ;	db TX_SOUND_CRY_PIDGEOT
 ;ENDM
 
-;	const TX_SOUND_CRY_MEOWTH ; $19
+;	const TX_SOUND_CRY_MEOWTH ; used to be $19
 ;MACRO sound_cry_meowth
 ;	db TX_SOUND_CRY_MEOWTH
 ;ENDM

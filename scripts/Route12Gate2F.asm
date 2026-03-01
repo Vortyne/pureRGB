@@ -19,16 +19,22 @@ Route12Gate2FBrunetteGirlText:
 	ld hl, .ReceivedTM39Text
 	rst _PrintText
 	SetEvent EVENT_GOT_TM39
-	jr .done
+	rst TextScriptEnd
 .bag_full
 	ld hl, .TM39NoRoomText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .got_item
 	ld hl, .TM39ExplanationText
 	rst _PrintText
-.done
-	rst TextScriptEnd
+	ld de, .mourningGirl
+	call CopyTrainerName
+	ld c, DEX_ARBOK - 1
+	callfar SetMonSeen
+	lb hl, DEX_ARBOK, $FF
+	ld de, ArbokLearnset
+	ld bc, LearnsetRecountedFondMemories
+	predef_jump LearnsetTrainerScriptMain
 
 .YouCanHaveThisText:
 	text_far _Route12Gate2FBrunetteGirlYouCanHaveThisText
@@ -47,33 +53,32 @@ Route12Gate2FBrunetteGirlText:
 	text_far _Route12Gate2FBrunetteGirlTM39NoRoomText
 	text_end
 
+.mourningGirl
+	db "SAD GIRL@"
+
 Route12Gate2FLeftBinocularsText:
 	text_asm
 	ld hl, .Text
-	jp GateUpstairsScript_PrintIfFacingUp
+	jr GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route12Gate2FLeftBinocularsText
 	text_end
 
 Route12Gate2FRightBinocularsText:
 	text_asm
 	ld hl, .Text
-	jp GateUpstairsScript_PrintIfFacingUp
+	jr GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route12Gate2FRightBinocularsText
 	text_end
 
 GateUpstairsScript_PrintIfFacingUp:
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
-	jr z, .up
-	ld a, TRUE
-	jr .done
-.up
+	jp nz, TextScriptEndNoButtonPress
 	rst _PrintText
-	xor a
-.done
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	rst TextScriptEnd

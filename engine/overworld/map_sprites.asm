@@ -398,12 +398,9 @@ GetSplitMapSpriteSetID:
 	cp EAST_WEST
 	ld a, [hli] ; position of dividing line
 	ld b, a
-	jr z, .eastWestDivide
-.northSouthDivide
-	ld a, [wYCoord]
-	jr .compareCoord
-.eastWestDivide
 	ld a, [wXCoord]
+	jr z, .compareCoord
+	ld a, [wYCoord]
 .compareCoord
 	cp b
 	jr c, .loadSpriteSetID

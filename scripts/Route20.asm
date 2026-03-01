@@ -1,4 +1,10 @@
 Route20_Script:
+	CheckEvent EVENT_BEAT_ARTICUNO
+	jr z, .noDragonair
+	CheckEvent EVENT_SNAPPED_CAMERA_PIC_SUBZERO_BALL
+	jr nz, .noDragonair
+	SetEvent EVENT_SEAFOAM_DRAGONAIR_PRESENT
+.noDragonair
 	CheckAndResetEvent EVENT_IN_SEAFOAM_ISLANDS
 	call nz, Route20BoulderScript
 	call EnableAutoTextBoxDrawing

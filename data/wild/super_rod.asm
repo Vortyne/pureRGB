@@ -31,10 +31,9 @@ SuperRodData:
 	dbw SAFARI_ZONE_EAST,    Group6 
 	dbw SAFARI_ZONE_NORTH,   Group6 
 	dbw SAFARI_ZONE_WEST,    Group6 
-	dbw SAFARI_ZONE_CENTER,  Group6 
-	dbw CERULEAN_CAVE_2F,    Group9 ; all alt palette
-	dbw CERULEAN_CAVE_B1F,   Group9 ; all alt palette
+	dbw SAFARI_ZONE_CENTER,  Group6
 	dbw CERULEAN_CAVE_1F,    Group9 ; all alt palette
+	dbw CERULEAN_CAVE_B1F,   Group11 ; all alt palette (kabuto / omanyte)
 	db -1 ; end
 
 ; fishing groups
@@ -106,6 +105,13 @@ Group10:
 	db 25, KRABBY
 	db 28, GOLDEEN
 	db 19, MAGIKARP
+
+Group11:
+	db 4
+	db 45, KABUTO
+	db 47, OMANYTE
+	db 42, KABUTO
+	db 50, OMANYTE
 	db -1
 
 ; goes through all the super rod encounters and sets bit 3 in wTownMapAreaTypeFlags if the pokemon in wPokedexNum appears at all.
@@ -180,3 +186,22 @@ FindSuperRodLocations:
 	inc de
 	jr .nextMap
 
+DoesMapHaveSuperRodEncounters::
+	ld a, d
+	ld hl, SuperRodData
+	ld de, 3
+	jp IsInArray
+
+CopySuperRodEncounters:
+	call DoesMapHaveSuperRodEncounters
+	ret nc
+	inc hl
+	hl_deref
+	ld a, [hl]
+	add a
+	inc a
+	ld c, a
+	ld b, 0
+	ld de, wSuperRodCount
+	rst _CopyData
+	ret

@@ -12,7 +12,6 @@ FuchsiaTMKidShop::
 	TM_SLASH, \
 	TM_MEGA_DRAIN, \
 	TM_PIN_MISSILE, \
-	TM_AGILITY, \
-	TM_PSYBEAM
+	TM_AGILITY
 	
 

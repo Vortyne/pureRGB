@@ -55,6 +55,9 @@ TrainerDataPointers:
 	dw SoldierData
 	dw ChiefData
 	dw GymGuideData
+	dw RookieData
+	dw RookieData
+	dw RookieData
 	assert_table_length NUM_TRAINERS
 
 ; if first byte != $FF, then
@@ -80,7 +83,7 @@ YoungsterData:
 ; Mt. Moon 1F
 	db 10, DIGLETT, SPEAROW, ZUBAT, 0 
 ; Route 24
-	db 16, MANKEY, DODUO, KRABBY, 0 
+	db 16, MACHOP, DODUO, KRABBY, 0 
 ; Route 25
 	db 17, DIGLETT, SPEAROW, 0
 	db 17, GROWLITHE, SLOWPOKE, 0 ; PureRGBnote: level 17 slowpoke ensures mew glitch still works
@@ -265,8 +268,8 @@ HikerData:
 	db 10, GEODUDE, SHELLDER, ONIX, 0 
 ; Route 25
 	db 16, SPEAROW, GEODUDE, CHARMANDER, 0 
-	db 16, GEODUDE, CUBONE, MACHOP, PSYDUCK, 0 
-	db 17, RHYHORN, 0 
+	db 16, GEODUDE, CUBONE, PSYDUCK, 0 
+	db 17, RHYHORN, MANKEY, 0
 ; Route 9
 	db 25, GRAVELER, ONIX, 0
 	db 24, GEODUDE, DODUO, RHYHORN, 0
@@ -330,8 +333,8 @@ EngineerData:
 ; Safari Zone Center
 	db 47, MAGNETON, SANDSLASH, 0 ; NEWx
 ; Route 11
-	db 21, PORYGON, 0
 	db 18, MAGNEMITE, DODUO, MAGNETON, 0
+	db 21, PORYGON, 0
 ; Safari Zone East
 	db 45, PORYGON, JOLTEON, ALAKAZAM, 0 ; NEWx
 ; Safari Zone North
@@ -346,10 +349,11 @@ FisherData:
 	db 27, GOLDEEN, POLIWAG, TANGELA, 0
 	db 27, TENTACOOL, TAUROS, 0 
 	db 29, SEADRA, 0
-	db 26, POLIWAG, SHELLDER, SEAKING, SCYTHER, 0 
+	db 26, POLIWAG, HORSEA, SEAKING, SCYTHER, 0 
 ; Route 21
 	db 49, SEADRA, VICTREEBEL, FEAROW, SEAKING, 0
 	db 53, MAROWAK, CLOYSTER, 0
+FitnessProxyParty6:: 
 	db 99, MAGIKARP, MAGIKARP, MAGIKARP, MAGIKARP, MAGIKARP, DITTO, 0
 	db 52, SEAKING, SCYTHER, 0
 ; Route 12
@@ -405,6 +409,8 @@ GamblerData:
 	db 28, DROWZEE, NINETALES, 0
 ; Route 7
 	db 28, DRATINI, POLIWHIRL, WEEPINBELL, 0 ; NEWx
+; Route 12
+	db $FD, METRONOME_GAMBLER_MOVESET, 27, MEOWTH, 27, KADABRA, 28, MACHOKE, 0
 
 BeautyData:
 ; Celadon Gym
@@ -489,7 +495,7 @@ TamerData:
 ; Route 5
 	db 17, DITTO, SEEL, DRATINI, 0 ; NEWx
 ; Route 12
-	db 28, HORSEA, NIDORINO, 0 ; NEWx
+	db 28, SHELLDER, NIDORINO, 0 ; NEWx
 ; Route 18
 	db 42, KINGLER, SNORLAX, 0 ; NEWx
 
@@ -646,6 +652,7 @@ RocketData:
 	db 44, SCYTHER, ARBOK, GENGAR, GOLEM, 0
 	db 46, EXEGGUTOR, KINGLER, 0
 	db 46, RAICHU, SANDSLASH, 0
+FitnessProxyParty4:: 
 ; Silph Co. 8F
 	db 43, RATICATE, NIDOKING, PRIMEAPE, RAPIDASH, 0
 	db 45, HITMONLEE, GOLBAT, GENGAR, 0
@@ -653,7 +660,8 @@ RocketData:
 	db 45, VENOMOTH, HITMONCHAN, MAROWAK, 0
 	db 45, RHYDON, SLOWBRO, MACHAMP, 0
 ; Silph Co. 10F
-	db 50, ALAKAZAM, 0 
+	db 50, ALAKAZAM, 0
+FitnessProxyParty5:: 
 ; Silph Co. 11F
 	db 43, LICKITUNG, CHARIZARD, GOLEM, MAGMAR, GYARADOS, 0
 	db 46, STARMIE, RAICHU, MAROWAK, 0
@@ -812,12 +820,15 @@ ChannelerData:
 	db 34, GASTLY, MR_MIME, 0
 	db 37, NINETALES, 0 
 	db 37, LICKITUNG, 0 
+FitnessProxyParty3::
 ; Pokémon Tower 6F
 	db 35, GASTLY, VENONAT, GASTLY, 0
 	db 37, JYNX, 0 
 	db 36, KADABRA, 0 
+FitnessProxyParty2::
 ; Saffron Gym
 	db 50, MR_MIME, NINETALES, 0
+FitnessProxyParty1::
 	db 51, GENGAR, 0
 	db 49, HYPNO, LAPRAS, GOLDUCK, 0
 
@@ -893,3 +904,4 @@ SoldierData:
 GymGuideData:
 	db $FD, CHAMP_ARENA_GYM_GUIDE_MOVESET, 81 + 128, CHANSEY, 81 + 128, SNORLAX, 82 + 128, CLOYSTER, 83 + 128, ALAKAZAM, 83 + 128, TAUROS, 85 + 128, MISSINGNO, 0 
 	db $FD, CHAMP_ARENA_GYM_GUIDE_MOVESET, 91 + 128, CHANSEY, 91 + 128, SNORLAX, 92 + 128, CLOYSTER, 93 + 128, ALAKAZAM, 93 + 128, TAUROS, 95 + 128, MISSINGNO, 0 
+ 

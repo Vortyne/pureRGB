@@ -241,7 +241,7 @@ _CeladonMartCallDadText::
 	cont "catch #MON."
 	para "I heard you chose"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 

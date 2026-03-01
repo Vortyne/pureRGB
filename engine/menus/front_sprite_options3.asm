@@ -26,7 +26,7 @@ FrontSpriteOptions3Header:
 	dw FrontSpriteOptions3LeftRightFuncs
 	dw DisplayFrontSpriteOptions4
 	dw DisplayFrontSpriteOptions2
-	dw FrontSpriteSelectButtonDefault
+	dw FrontSprite3SelectButton
 	dw OptionsDoNothing
 	; fall through
 DisplayFrontSpriteOptions3:
@@ -88,3 +88,7 @@ SetFrontSpriteOptions3FromCursorPositions:
 SetCursorPositionFromFrontSpriteOptions3:
 	ld hl, FrontSpriteOptions3XPosBitData
 	jp SetGenericCursorPositionFromOptions
+
+FrontSprite3SelectButton:
+	ld e, (FRONT_SPRITE_OPTIONS_PAGE_3_NUMBER - 1) * 7
+	jp FrontSpriteSelectButtonDefault

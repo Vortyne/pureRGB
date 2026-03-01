@@ -1,7 +1,12 @@
 LoadWildData::
-	ld hl, WildDataPointers
 	ld a, [wCurMap]
+	call LoadWildDataCommon
+	jp GetWildPokemonPalettes ; PureRGBnote: ADDED: we always need to load the palette flags for wild pokemon on loading a map.
 
+LoadArbitraryWildData::
+	ld a, d
+LoadWildDataCommon::
+	ld hl, WildDataPointers
 	; get wild data for current map
 	ld c, a
 	ld b, 0
@@ -25,12 +30,11 @@ LoadWildData::
 	ld a, [hli]
 	ld [wWaterRate], a
 	and a
-	jr z, .loadPaletteData   ; if no water data, no need to load it
+	ret z   ; if no water data, no need to load it
 	ld de, wWaterMons  ; otherwise, load surfing data
 	ld bc, $14
 	rst _CopyData
-.loadPaletteData
-	jp GetWildPokemonPalettes ; PureRGBnote: ADDED: we always need to load the palette flags for wild pokemon on loading a map.
+	ret
 
 FindWaterLocations:
 	ld b, 1

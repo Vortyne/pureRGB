@@ -34,8 +34,6 @@ MtMoonPokecenterMagikarpSalesmanText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jp nz, .choseNo
 	ldh [hMoney], a
 	ldh [hMoney + 2], a
@@ -62,12 +60,24 @@ MtMoonPokecenterMagikarpSalesmanText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	SetEvent EVENT_BOUGHT_MAGIKARP
-	jr .done
+	rst TextScriptEnd
 .choseNo
 	ld hl, .NoText
 	jr .printText
 .alreadyBoughtMagikarp
 	ld hl, .NoRefundsText
+	rst _PrintText
+	ld d, GYARADOS
+	callfar IsMonInParty
+	jr nc, .done
+	CheckEvent FLAG_GYARADOS_FAMILY_LEARNSET
+	jr nz, .done
+	ld de, SalesManName
+	call CopyTrainerName
+	lb hl, DEX_GYARADOS, $FF
+	ld de, MtMoonPokecenterMagikarpSalesmanArentYouGladText
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
 .printText
 	rst _PrintText
 .done
@@ -88,6 +98,10 @@ MtMoonPokecenterMagikarpSalesmanText:
 .NoRefundsText
 	text_far _MtMoonPokecenterMagikarpSalesmanNoRefundsText
 	text_end
+
+
+SalesManName:
+	db "SALESMAN@"
 
 MtMoonPokecenterLinkReceptionistText:
 	script_cable_club_receptionist

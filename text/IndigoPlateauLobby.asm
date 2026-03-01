@@ -1,8 +1,5 @@
 _IndigoPlateauLobbyGymGuideText::
-	text "Yo! Champ in" ; TODO: genericize text
-	line "making!"
-
-	para "At #MON LEAGUE,"
+	text "At #MON LEAGUE,"
 	line "you have to face"
 	cont "the ELITE FOUR in"
 	cont "succession."
@@ -75,10 +72,7 @@ _IndigoPlateauApexChipsAfterChamp::
 	text_end
 
 _IndigoPlateauGymGuideSonText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "It's me! The <TM>"
+	text "It's me! The <TM>"
 	line "Pirate and Gym"
 	cont "Guide in making!"
 	prompt

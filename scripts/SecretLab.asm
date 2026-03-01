@@ -286,9 +286,7 @@ CheckRestartMusic:
 	ld a, [wYCoord]
 	cp 27
 	ret c
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 CheckNoteButtons:
 	ld a, [wYCoord]
@@ -376,10 +374,7 @@ CheckNoteButtons:
 .playButtonPressTick	
 	push af
 	CheckEvent EVENT_OPENED_SECRET_LAB_BARRICADE
-	jr nz, .noStopMusic
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
-.noStopMusic
+	call z, PauseMusic
 	ld a, SFX_TELEPORT_ENTER_2
 	rst _PlaySound
 	ld c, 10
@@ -769,6 +764,25 @@ SecretLabComputer2Text:
 	text_end
 SecretLabComputer3Text:
 	text_far _SecretLabComputer3Text
+	text_asm
+	ld d, MEWTWO
+	callfar IsMonInParty
+	jr c, .haveMewtwo
+	ld d, ARMORED_MEWTWO
+	callfar IsMonInParty
+	jr nc, .done
+.haveMewtwo
+	CheckEvent FLAG_MEWTWO_LEARNSET
+	jr nz, .done
+	call DisplayTextPromptButton
+	ld hl, .moreInfo
+	rst _PrintText
+	ld d, DEX_MEWTWO
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
+.moreInfo
+	text_far _SecretLabComputer3BText
 	text_end
 SecretLabComputer4Text:
 	text_far _SecretLabComputer4Text

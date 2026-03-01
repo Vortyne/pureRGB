@@ -189,10 +189,10 @@ ENDC
 	ld a, [hli]       ; type 2
 	ld [de], a
 	inc de
-	ld a, [hli]       ; catch rate (held item in gen 2)
 ;;;;;;;;;; PureRGBnote: CHANGED: we don't load catch rate here, we instead treat this byte as a set of flags. 
 ;;;;;;;;;; at the moment only bit 0 is used for indicating alt palettes. 
-	ld a, [wIsAltPalettePkmnData]
+	inc hl ; skip over catch rate
+	ld a, [wIsAltPalettePkmnData] ; also contains which ball the pokemon was caught in if it's a wild mon that was caught
 	ld [de], a
 ;;;;;;;;;;
 	ld hl, wMonHMoves
@@ -332,6 +332,7 @@ AddPartyMon_WriteMovePP:
 _AddEnemyMonToPlayerParty::
 ;;;;;;;;;; PureRGBnote: need to store whether the pokemon uses alternate palette after trading then reset that flag
 	ld a, [wIsAltPalettePkmnData]
+	; we default to pokeball here
 	ld [wLoadedMonFlags], a
 	xor a
 	ld [wIsAltPalettePkmnData], a

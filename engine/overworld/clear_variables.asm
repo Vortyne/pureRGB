@@ -18,8 +18,8 @@ ClearVariablesOnEnterMap::
 	ld hl, wCardKeyDoorY
 	ld [hli], a
 	ld [hl], a
-	ld hl, wWhichTrade
-	ld bc, wStandingOnWarpPadOrHole - wWhichTrade
+	ld hl, wSavedY
+	ld bc, wStandingOnWarpPadOrHole - wSavedY
 	call FillMemory
 ;;;;;;;;;; PureRGBnote: ADDED: code that helps track which of the new music tracks is playing if any are
 	ld a, [wCurrentMapScriptFlags]
@@ -32,4 +32,12 @@ ClearVariablesOnEnterMap::
 	xor a
 	ld [wReplacedMapMusic], a ; clear this variable in places where we don't have replaced map music
 ;;;;;;;;;;
+	ld hl, wStatusFlags2
+	bit BIT_WILD_ENCOUNTER_COOLDOWN, [hl]
+	jr z, .skipGivingThreeStepsOfNoRandomBattles
+	ld a, 3 ; minimum number of steps between battles
+	ld [wNumberOfNoRandomBattleStepsLeft], a
+.skipGivingThreeStepsOfNoRandomBattles
+	ld hl, wStatusFlags3
+	res BIT_NO_NPC_FACE_PLAYER, [hl]
 	ret

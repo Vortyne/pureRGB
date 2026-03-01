@@ -1,5 +1,10 @@
 	object_const_def
 	const_export MRPSYCHICSHOUSE_MR_PSYCHIC
+	const_export MRPSYCHICSHOUSE_POKEDEX
+	const_export FIGHTINGBROSHOUSE_LEFT_BRO
+	const_export FIGHTINGBROSHOUSE_RIGHT_BRO
+	const_export FIGHTINGBROSHOUSE_ROCKET
+	const_export FIGHTINGBROSHOUSE_CATALOG
 
 MrPsychicsHouse_Object:
 	db $a ; border block
@@ -7,10 +12,17 @@ MrPsychicsHouse_Object:
 	def_warp_events
 	warp_event  2,  7, LAST_MAP, 8
 	warp_event  3,  7, LAST_MAP, 8
+	warp_event 16,  7, LAST_MAP, 12
+	warp_event 17,  7, LAST_MAP, 12
 
 	def_bg_events
 
 	def_object_events
 	object_event  5,  3, SPRITE_FISHING_GURU, STAY, LEFT, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
+	object_event  4,  3, SPRITE_POKEDEX, STAY, NONE, TEXT_MRPSYCHICSHOUSE_TABLE_BOOK
+	object_event 16,  4, SPRITE_HIKER, STAY, RIGHT, TEXT_FIGHTINGBROSHOUSE_LEFT_BRO
+	object_event 19,  4, SPRITE_HIKER, STAY, LEFT, TEXT_FIGHTINGBROSHOUSE_RIGHT_BRO
+	object_event 15,  6, SPRITE_ROCKET, STAY, DOWN, TEXT_FIGHTINGBROSHOUSE_ROCKET
+	object_event 17,  -6, SPRITE_POKEDEX, STAY, NONE, TEXT_FIGHTINGBROSHOUSE_TABLE_BOOK
 
 	def_warps_to MR_PSYCHICS_HOUSE

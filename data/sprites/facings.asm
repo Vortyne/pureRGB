@@ -1,40 +1,40 @@
 SpriteFacingAndAnimationTable:
 ; This table is used for overworld sprites $1-$9.
-	dw .StandingDown, .NormalOAM  ; facing down, walk animation frame 0
-	dw .WalkingDown,  .NormalOAM  ; facing down, walk animation frame 1
-	dw .StandingDown, .NormalOAM  ; facing down, walk animation frame 2
-	dw .WalkingDown,  .FlippedOAM ; facing down, walk animation frame 3
-	dw .StandingUp,   .NormalOAM  ; facing up, walk animation frame 0
-	dw .WalkingUp,    .NormalOAM  ; facing up, walk animation frame 1
-	dw .StandingUp,   .NormalOAM  ; facing up, walk animation frame 2
-	dw .WalkingUp,    .FlippedOAM ; facing up, walk animation frame 3
-	dw .StandingLeft, .NormalOAM  ; facing left, walk animation frame 0
-	dw .WalkingLeft,  .NormalOAM  ; facing left, walk animation frame 1
-	dw .StandingLeft, .NormalOAM  ; facing left, walk animation frame 2
-	dw .WalkingLeft,  .NormalOAM  ; facing left, walk animation frame 3
-	dw .StandingLeft, .FlippedOAM ; facing right, walk animation frame 0
-	dw .WalkingLeft,  .FlippedOAM ; facing right, walk animation frame 1
-	dw .StandingLeft, .FlippedOAM ; facing right, walk animation frame 2
-	dw .WalkingLeft,  .FlippedOAM ; facing right, walk animation frame 3
+	dw .StandingDown, NormalSpriteOAM  ; facing down, walk animation frame 0
+	dw .WalkingDown,  NormalSpriteOAM  ; facing down, walk animation frame 1
+	dw .StandingDown, NormalSpriteOAM  ; facing down, walk animation frame 2
+	dw .WalkingDown,  FlippedSpriteOAM ; facing down, walk animation frame 3
+	dw .StandingUp,   NormalSpriteOAM  ; facing up, walk animation frame 0
+	dw .WalkingUp,    NormalSpriteOAM  ; facing up, walk animation frame 1
+	dw .StandingUp,   NormalSpriteOAM  ; facing up, walk animation frame 2
+	dw .WalkingUp,    FlippedSpriteOAM ; facing up, walk animation frame 3
+	dw .StandingLeft, NormalSpriteOAM  ; facing left, walk animation frame 0
+	dw .WalkingLeft,  NormalSpriteOAM  ; facing left, walk animation frame 1
+	dw .StandingLeft, NormalSpriteOAM  ; facing left, walk animation frame 2
+	dw .WalkingLeft,  NormalSpriteOAM  ; facing left, walk animation frame 3
+	dw .StandingLeft, FlippedSpriteOAM ; facing right, walk animation frame 0
+	dw .WalkingLeft,  FlippedSpriteOAM ; facing right, walk animation frame 1
+	dw .StandingLeft, FlippedSpriteOAM ; facing right, walk animation frame 2
+	dw .WalkingLeft,  FlippedSpriteOAM ; facing right, walk animation frame 3
 ; The rest of this table is used for sprites $a and $b.
 ; All orientation and animation parameters lead to the same result.
 ; Used for immobile sprites like items on the ground.
-	dw .StandingDown, .NormalOAM  ; facing down, walk animation frame 0
-	dw .StandingDown, .NormalOAM  ; facing down, walk animation frame 1
-	dw .StandingDown, .NormalOAM  ; facing down, walk animation frame 2
-	dw .StandingDown, .NormalOAM  ; facing down, walk animation frame 3
-	dw .StandingDown, .NormalOAM  ; facing up, walk animation frame 0
-	dw .StandingDown, .NormalOAM  ; facing up, walk animation frame 1
-	dw .StandingDown, .NormalOAM  ; facing up, walk animation frame 2
-	dw .StandingDown, .NormalOAM  ; facing up, walk animation frame 3
-	dw .StandingDown, .NormalOAM  ; facing left, walk animation frame 0
-	dw .StandingDown, .NormalOAM  ; facing left, walk animation frame 1
-	dw .StandingDown, .NormalOAM  ; facing left, walk animation frame 2
-	dw .StandingDown, .NormalOAM  ; facing left, walk animation frame 3
-	dw .StandingDown, .NormalOAM  ; facing right, walk animation frame 0
-	dw .StandingDown, .NormalOAM  ; facing right, walk animation frame 1
-	dw .StandingDown, .NormalOAM  ; facing right, walk animation frame 2
-	dw .StandingDown, .NormalOAM  ; facing right, walk animation frame 3
+	dw .StandingDown, NormalSpriteOAM  ; facing down, walk animation frame 0
+	dw .StandingDown, NormalSpriteOAM  ; facing down, walk animation frame 1
+	dw .StandingDown, NormalSpriteOAM  ; facing down, walk animation frame 2
+	dw .StandingDown, NormalSpriteOAM  ; facing down, walk animation frame 3
+	dw .StandingDown, NormalSpriteOAM  ; facing up, walk animation frame 0
+	dw .StandingDown, NormalSpriteOAM  ; facing up, walk animation frame 1
+	dw .StandingDown, NormalSpriteOAM  ; facing up, walk animation frame 2
+	dw .StandingDown, NormalSpriteOAM  ; facing up, walk animation frame 3
+	dw .StandingDown, NormalSpriteOAM  ; facing left, walk animation frame 0
+	dw .StandingDown, NormalSpriteOAM  ; facing left, walk animation frame 1
+	dw .StandingDown, NormalSpriteOAM  ; facing left, walk animation frame 2
+	dw .StandingDown, NormalSpriteOAM  ; facing left, walk animation frame 3
+	dw .StandingDown, NormalSpriteOAM  ; facing right, walk animation frame 0
+	dw .StandingDown, NormalSpriteOAM  ; facing right, walk animation frame 1
+	dw .StandingDown, NormalSpriteOAM  ; facing right, walk animation frame 2
+	dw .StandingDown, NormalSpriteOAM  ; facing right, walk animation frame 3
 
 ; four tile ids compose an overworld sprite
 .StandingDown: db $00, $01, $02, $03
@@ -44,14 +44,14 @@ SpriteFacingAndAnimationTable:
 .StandingLeft: db $08, $09, $0a, $0b
 .WalkingLeft:  db $88, $89, $8a, $8b
 
-.NormalOAM:
+NormalSpriteOAM::
 	; y, x, attributes
 	db 0, 0, $00 ; top left
 	db 0, 8, $00 ; top right
 	db 8, 0, UNDER_GRASS ; bottom left
 	db 8, 8, UNDER_GRASS | FACING_END ; bottom right
 
-.FlippedOAM:
+FlippedSpriteOAM::
 	; y, x, attributes
 	db 0, 8, OAM_HFLIP ; top left
 	db 0, 0, OAM_HFLIP ; top right

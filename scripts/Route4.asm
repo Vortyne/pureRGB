@@ -62,7 +62,10 @@ Route4CooltrainerF2EndBattleText:
 
 Route4CooltrainerF2AfterBattleText:
 	text_far _Route4CooltrainerF2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_PARAS, LASS
+	ld de, LearnsetLove
+	predef_jump LearnsetTrainerScript
 
 Route4Text3:
 	text_asm

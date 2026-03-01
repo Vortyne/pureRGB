@@ -13,4 +13,5 @@ DungeonTilesets:
 	db SECRET_LAB_TS
 	db VOLCANO
 	db REACTOR
+	db DOJO
 	db -1 ; end

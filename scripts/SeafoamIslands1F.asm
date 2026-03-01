@@ -258,11 +258,7 @@ DragonairEventErikText:
 	ld hl, .leaveQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .no
-	call DragonairUnderWaterEventAreaScript.warpOut
-.no
+	call z, DragonairUnderWaterEventAreaScript.warpOut
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	rst TextScriptEnd
@@ -350,8 +346,6 @@ DragonairEventCloysterText:
 	ld hl, .initial2
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 .yes
 	; make player re-choose dragonair since it's position in the party could've changed
@@ -385,7 +379,7 @@ DragonairEventCloysterText:
 	call DragonairEventOpenUpCloysterSprite
 	ld hl, .letsDoThis
 	rst _PrintText
-	callfar PlayTrainerMusic
+	callfar PlayDefaultTrainerMusic
 	ld a, 1
 	ld [wIsAltPalettePkmnData], a
 	ld a, CLOYSTER
@@ -457,10 +451,28 @@ DragonairEventTransformText:
 	ld a, WINTER_DRAGONAIR
 	ld [wCurPartySpecies], a
 	callfar ChangePartyPokemonSpecies
+	ld a, PLAYER_DIR_DOWN
+	ld [wPlayerMovingDirection], a
+	call UpdateSprites
+	rst _DelayFrame
+	ld a, SFX_GET_ITEM_1
+	rst _PlaySound
+	ld hl, wChannelCommandPointers + CHAN5 * 2
+	ld de, DragonairPowerUpSFX
+	call RemapSoundChannel
+	inc hl
+	ld de, DragonairPowerUpSFX2
+	call RemapSoundChannel
+	inc hl
+	ld de, DragonairPowerUpSFX3
+	call RemapSoundChannel
+	call .powerupAnimation
 	ld a, SFX_INTRO_WHOOSH
 	rst _PlaySound
 	call GBFadeOutToWhite
 	call LoadGBPal
+	; re-enable sprite updates after animation
+	call EnableSpriteUpdates
 	ld hl, .transformed2
 	rst _PrintText
 	; make it learn ICE BEAM if it doesn't have it
@@ -478,10 +490,10 @@ DragonairEventTransformText:
 	ld [wNamedObjectIndex], a
 	call GetMoveName
 	call CopyToStringBuffer
+	call ClearTextBox
 	call SaveScreenTilesToBuffer2
-	; have to clear screen because the "choose move to forget" box renders below sprites
-	call ClearScreen
-	call Delay3
+	xor a
+	ld [wLetterPrintingDelayFlags], a
 	predef LearnMove ; teach ice beam
 	call LoadScreenTilesFromBuffer2
 	call Delay3
@@ -504,6 +516,111 @@ DragonairEventTransformText:
 .transformed3
 	text_far _DragonairEventTransformText3
 	text_end
+.powerupAnimation
+	; disable sprite update routine so we can manipulate some sparkle sprites without map sprite code running
+	call DisableSpriteUpdates
+	ldh a, [hGBC]
+	and a
+	jr z, .notGBC
+	; set the sparkle to be white
+.notInBlankingPeriod
+	ldh a, [rSTAT]
+	and %10 ; mask for non-V-blank/non-H-blank STAT mode
+	jr nz, .notInBlankingPeriod
+	ld a, $8A ; bit 7 set and 10th byte
+	ldh [rOBPI], a ; 2nd color of 2nd palette and auto increment bit set
+	ld a, $FF
+	ldh [rOBPD], a ; white
+	ldh [rOBPD], a ; white
+.notGBC
+	; sparkle tile from battle animations
+	ld de, MoveAnimationTiles0 tile 28
+	ld hl, vNPCSprites tile $C4
+	lb bc, BANK(MoveAnimationTiles0), 1
+	call CopyVideoData
+	ld hl, wShadowOAMSprite39TileID
+	ld de, SparkleSpriteStartingCoords
+	jr TilePowerUpLoop
+
+JolteonTilePowerUpLoop::
+	ld hl, wShadowOAMSprite08TileID
+	ld de, JolteonSparkleSpriteStartingCoords
+TilePowerUpLoop::
+	ld [hl], $C4
+	inc hl
+	ld [hl], 1
+	dec hl
+	dec hl
+	dec hl
+	push hl
+	ld c, 2
+.powerUpLoopStart
+	push de
+	push bc
+	ld b, 4
+.powerUpLoop
+	ld a, [de]
+	inc de
+	ld [hli], a
+	ld a, [de]
+	inc de
+	ld [hl], a
+	rst _DelayFrame
+	ld c, 7
+.powerUpInnerLoop
+	; hl = x coord of sprite
+	ld a, [de] ; de = whether to dec or inc
+	call .incOrDec ; inc or dec x coord
+	inc de
+	dec hl ; y coord of sprite
+	ld a, [de] ; de = whether to dec or inc
+	call .incOrDec ; inc or dec y coord
+	dec de
+	inc hl ; x coord of sprite
+	rst _DelayFrame
+	dec c
+	jr nz, .powerUpInnerLoop
+	dec hl ; y coord of sprite
+	inc de 
+	inc de ; start of next coords
+	dec b
+	jr nz, .powerUpLoop
+	call GBPalNormal
+	pop bc
+	pop de
+	dec c
+	jr nz, .powerUpLoopStart
+	; move sprite offscreen after
+	pop hl
+	ld [hl], 0
+	inc hl
+	ld [hl], 0
+	ret
+.incOrDec
+	and a
+	jr z, .dec
+	inc [hl]
+	ret
+.dec
+	dec [hl] 
+	ret
+
+SparkleSpriteStartingCoords:
+	; y pixel coord, x pixel coord, x iteration, y iteration
+	; 1 = increment pixel, 0 = decrement pixel
+	db $44, $40, 1, 1 ; top left
+	db $5C, $58, 0, 0 ; bottom right
+	db $44, $58, 0, 1 ; top right
+	db $5C, $40, 1, 0 ; bottom left
+
+JolteonSparkleSpriteStartingCoords:
+	; y pixel coord, x pixel coord, x iteration, y iteration
+	; 1 = increment pixel, 0 = decrement pixel
+	db $44, $70, 1, 1 ; top left
+	db $5C, $88, 0, 0 ; bottom right
+	db $44, $88, 0, 1 ; top right
+	db $5C, $70, 1, 0 ; bottom left
+
 
 
 SeaweedTiles:

@@ -11,3 +11,10 @@ _ViridianForestSouthGateLittleGirlText::
 	cont "bite is wicked!"
 	cont "Did you get one?"
 	done
+
+_ViridianForestSouthGateLittleGirl2Text::
+	text "You did?!"
+	para "Right on!"
+	para "You're on the path"
+	line "to cool school!"
+	done

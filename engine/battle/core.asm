@@ -570,10 +570,12 @@ HandlePoisonBurnLeechSeed:
 	call PlayMoveAnimation ; play leech seed animation (from opposing mon)
 	pop af
 	ldh [hWhoseTurn], a
+	SetEvent FLAG_LEECH_SEED_DAMAGE_PROC
 	pop hl
 	call HandlePoisonBurnLeechSeed_DecreaseOwnHP
 	call HandlePoisonBurnLeechSeed_IncreaseEnemyHP
 	push hl
+	ResetEvent FLAG_LEECH_SEED_DAMAGE_PROC
 	ld hl, HurtByLeechSeedText
 	rst _PrintText
 	pop hl
@@ -638,14 +640,46 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	ld a, [de]    ; increment toxic counter
 	inc a
 	ld [de], a
-	ld hl, 0
-.toxicTicksLoop
-	add hl, bc
-	dec a
-	jr nz, .toxicTicksLoop
-	ld b, h       ; bc = damage * toxic counter
-	ld c, l
+	call .multiplyDamage
+	jr .doneToxic
 .noToxic
+	CheckEvent FLAG_LEECH_SEED_DAMAGE_PROC
+	jr z, .doneToxic
+	push hl
+	push bc
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .playerTurn2
+	ld a, [wPlayerMoveType]
+	push af
+	ld a, GRASS
+	ld [wPlayerMoveType], a
+	call GetPlayerTypeEffectiveness
+	pop af
+	ld [wPlayerMoveType], a
+	jr .checkEffectiveness
+.playerTurn2
+	ld a, [wEnemyMoveType]
+	push af
+	ld a, GRASS
+	ld [wEnemyMoveType], a
+	call AIGetImmediateTypeEffectiveness
+	pop af
+	ld [wEnemyMoveType], a
+.checkEffectiveness
+	pop bc
+	pop hl
+	ld a, [wTypeEffectiveness]
+	cp NOT_VERY_EFFECTIVE + 1
+	jr c, .doneToxic ; NOT_VERY_EFFECTIVE or lower
+	cp EFFECTIVE
+	ld d, 2
+	jr z, .gotAdditionalLeechSeedDamage
+	inc d
+.gotAdditionalLeechSeedDamage
+	ld a, d
+	call .multiplyDamage
+.doneToxic
 	pop hl
 	inc hl
 	ld a, [hl]    ; subtract total damage from current HP
@@ -668,6 +702,16 @@ HandlePoisonBurnLeechSeed_DecreaseOwnHP:
 	call UpdateCurMonHPBar
 	pop hl
 	ret
+.multiplyDamage
+	ld hl, 0
+.toxicTicksLoop
+	add hl, bc
+	dec a
+	jr nz, .toxicTicksLoop
+	ld b, h       ; bc = damage * toxic counter
+	ld c, l
+	ret
+
 
 ; adds bc to enemy HP
 ; bc isn't updated if HP subtracted was capped to prevent overkill
@@ -836,9 +880,7 @@ FaintEnemyPokemon:
 	ld a, [wIsInBattle]
 	dec a
 	jr z, .wild_win
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
+	call ResetSFXModifiers
 	ld a, SFX_FAINT_FALL
 	call PlaySoundWaitForCurrent
 .sfxwait
@@ -1036,6 +1078,8 @@ TrainerBattleVictory:
 	ld c, 40
 	rst _DelayFrames
 	call PrintEndBattleText
+	CheckEvent EVENT_IN_FITNESS_BATTLE
+	ret nz ; no money earnings in fitness battles
 ; win money
 	ld hl, MoneyForWinningText
 	rst _PrintText
@@ -1579,6 +1623,7 @@ EnemySendOutFirstMon:
 	ld a, [wEnemyMonSpecies2]
 	call PlayCry
 	call DrawEnemyHUDAndHPBar
+	callfar AutoWakeUpScreechEnemy
 	ld a, [wCurrentMenuItem]
 	and a
 	ret nz
@@ -1914,14 +1959,21 @@ SendOutMon:
 	ld [wPlayerDisabledMove], a
 	ld [wPlayerDisabledMoveNumber], a
 	ld [wPlayerMonMinimized], a
-	ld b, SET_PAL_BATTLE
-	call RunPaletteCommand
 	ld hl, wEnemyBattleStatus1
 	res USING_TRAPPING_MOVE, [hl]
+	SetEvent FLAG_SKIP_DELAY_IN_GBC_PALETTE_FUNC
+	ldh a, [hGBC]
+	and a
+	call nz, .palette
+	ResetEvent FLAG_SKIP_DELAY_IN_GBC_PALETTE_FUNC
 	ld a, $1
 	ldh [hWhoseTurn], a
-	ld a, POOF_ANIM
-	call PlayMoveAnimation
+	ld a, SEND_OUT_MON_BALL_POOF_ANIM
+	ld [wAnimationID], a
+	call PlayMoveAnimationNoDelay
+	ldh a, [hGBC]
+	and a
+	call z, .palette
 	hlcoord 4, 11
 	predef AnimateSendingOutMon
 	ld a, [wCurPartySpecies]
@@ -1929,6 +1981,9 @@ SendOutMon:
 	call PrintEmptyString
 	call SaveScreenTilesToBuffer1
 	jpfar CheckOnSendOutSpecialEffect
+.palette
+	ld b, SET_PAL_BATTLE
+	jp RunPaletteCommand
 
 ; show 2 stages of the player mon getting smaller before disappearing
 AnimateRetreatingPlayerMon:
@@ -1973,11 +2028,18 @@ ReadPlayerMonCurHPAndStatus:
 	rst _CopyData
 	ret
 
-DrawHUDsAndHPBars:
-	call DrawPlayerHUDAndHPBar
+DrawUserHPBar::
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, DrawPlayerHUDAndHPBar
 	jp DrawEnemyHUDAndHPBar
 
-DrawPlayerHUDAndHPBar:
+DrawTargetHPBar::
+	ldh a, [hWhoseTurn]
+	and a
+	jp z, DrawEnemyHUDAndHPBar
+	; fall through
+DrawPlayerHUDAndHPBar::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	hlcoord 9, 7
@@ -2043,7 +2105,10 @@ DrawPlayerHUDAndHPBar:
 	set BIT_LOW_HEALTH_ALARM, [hl]
 	ret
 
-DrawEnemyHUDAndHPBar:
+DrawHUDsAndHPBars::
+	call DrawPlayerHUDAndHPBar
+	; fall through
+DrawEnemyHUDAndHPBar::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	hlcoord 0, 0
@@ -3351,20 +3416,17 @@ PlayerCanExecuteMove:
 	rst _Bankswitch
 	ld a, [wPlayerMoveEffect] ; effect of the move just used
 	ld hl, ResidualEffects1
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect ; ResidualEffects1 moves skip damage calculation and accuracy tests
 	                    ; unless executed as part of their exclusive effect functions
 	ld a, [wPlayerMoveEffect]
 	ld hl, SpecialEffectsCont
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect ; execute the effects of SpecialEffectsCont moves (e.g. Wrap, Thrash) but don't skip anything
 PlayerCalcMoveDamage:
 	ld a, [wPlayerMoveEffect]
 	ld hl, SetDamageEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, .moveHitTest ; SetDamageEffects moves (e.g. Seismic Toss and Super Fang) skip damage calculation
 	call CriticalHitTest
 	;call HandleCounterMove ; PureRGBnote: CHANGED: Counter changed to have an effect similar to drain punch, so dont need this code
@@ -3453,8 +3515,7 @@ MirrorMoveCheck:
 	jp z, MimicEffect
 	ld a, [wPlayerMoveEffect]
 	ld hl, ResidualEffects2
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect ; done here after executing effects of ResidualEffects2
 	ld a, [wMoveMissed]
 	and a
@@ -3475,8 +3536,7 @@ MirrorMoveCheck:
 .notDone
 	ld a, [wPlayerMoveEffect]
 	ld hl, AlwaysHappenSideEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect ; not done after executing effects of AlwaysHappenSideEffects
 	ld hl, wEnemyMonHP
 	ld a, [hli]
@@ -3503,8 +3563,7 @@ MirrorMoveCheck:
 	and a
 	jp z, ExecutePlayerMoveDone
 	ld hl, SpecialEffects
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	call nc, JumpMoveEffect ; move effects not included in SpecialEffects or in either of the ResidualEffect arrays,
 	; which are the effects not covered yet. Rage effect will be executed for a second time (though it's irrelevant).
 	; Includes side effects that only need to be called if the target didn't faint.
@@ -3587,8 +3646,7 @@ CheckPlayerStatusConditions:
 	rst _PrintText
 	jr .sleepDone
 .WakeUp
-	ld hl, WokeUpText
-	rst _PrintText
+	call PrintMonWokeUp
 .sleepDone
 	xor a
 	ld [wPlayerUsedMove], a
@@ -3839,6 +3897,11 @@ FastAsleepText:
 	text_far _FastAsleepText
 	text_end
 
+PrintMonWokeUp::
+	ld hl, WokeUpText
+	rst _PrintText
+	ret
+	
 WokeUpText:
 	text_far _WokeUpText
 	text_end
@@ -3875,9 +3938,9 @@ ConfusedNoMoreText:
 	text_far _ConfusedNoMoreText
 	text_end
 
-SavingEnergyText:
-	text_far _SavingEnergyText
-	text_end
+;SavingEnergyText:
+;	text_far _SavingEnergyText
+;	text_end
 
 ;UnleashedEnergyText:
 ;	text_far _UnleashedEnergyText
@@ -4651,8 +4714,6 @@ CalculateDamage:
 	cp TWO_TO_FIVE_ATTACKS_EFFECT
 	jr z, .skipbp
 	cp TWO_OR_THREE_ATTACKS_EFFECT
-	jr z, .skipbp
-	cp $1e ; TODO: remove?
 	jr z, .skipbp
 
 ; Calculate OHKO damage based on remaining HP.
@@ -5758,7 +5819,7 @@ INCLUDE "data/types/type_matchups.asm"
 INCLUDE "data/battle/mist_blocked_moves.asm"
 
 ; some tests that need to pass for a move to hit
-MoveHitTest:
+MoveHitTest::
 ; player's turn
 	ld hl, wEnemyBattleStatus1
 	ld de, wPlayerMoveEffect
@@ -5780,11 +5841,11 @@ MoveHitTest:
 .swiftCheck
 	ld a, [de]
 	cp SWIFT_EFFECT
-	ret z ; Swift never misses (this was fixed from the Japanese versions)
-	call CheckTargetSubstitute ; substitute check (note that this overwrites a)
+	ret z ; Swift never misses
+	call CheckTargetSubstitute
 	jr z, .checkForDigOrFlyStatus
-; The fix for Swift broke this code. It's supposed to prevent HP draining moves from working on Substitutes.
-; Since CheckTargetSubstitute overwrites a with either $00 or $01, it never works.
+	; TODO: should the bug be fixed here or leave it?
+	ld a, [de]
 	cp DRAIN_HP_EFFECT
 	jp z, .moveMissed
 	cp DREAM_EATER_EFFECT
@@ -5864,9 +5925,8 @@ MoveHitTest:
 	ret
 
 CheckIsMistBlockedMove:
-	ld de, 1
 	ld hl, MistBlockedMoves
-	jp IsInArray
+	jp IsInSingleByteArray
 
 ; values for player turn
 CalcHitChance:
@@ -6028,11 +6088,7 @@ EnemyCanExecuteChargingMove:
 	res INVULNERABLE, [hl] ; no longer invulnerable to typical attacks
 	ld a, [wEnemyMoveNum]
 	ld [wNameListIndex], a
-	ld a, BANK(MoveNames)
-	ld [wPredefBank], a
-	ld a, MOVE_NAME
-	ld [wNameListType], a
-	call GetName
+	call GetMoveNameCommon
 	ld de, wNameBuffer
 	call CopyToStringBuffer
 EnemyCanExecuteMove:
@@ -6043,20 +6099,17 @@ EnemyCanExecuteMove:
 	callfar CheckSpecialBattleMoveModifiersEnemy
 	ld a, [wEnemyMoveEffect]
 	ld hl, ResidualEffects1
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect
 	ld a, [wEnemyMoveEffect]
 	ld hl, SpecialEffectsCont
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect
 EnemyCalcMoveDamage:
 	call SwapPlayerAndEnemyLevels
 	ld a, [wEnemyMoveEffect]
 	ld hl, SetDamageEffects
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, EnemyMoveHitTest
 	call CriticalHitTest
 	;call HandleCounterMove ; PureRGBnote: CHANGED: counter changed to have an effect similar to drain punch
@@ -6151,8 +6204,7 @@ EnemyCheckIfMirrorMoveEffect:
 	jp z, MimicEffect
 	ld a, [wEnemyMoveEffect]
 	ld hl, ResidualEffects2
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	jp c, JumpMoveEffect
 	ld a, [wMoveMissed]
 	and a
@@ -6173,8 +6225,7 @@ EnemyCheckIfMirrorMoveEffect:
 .handleExplosionMiss
 	ld a, [wEnemyMoveEffect]
 	ld hl, AlwaysHappenSideEffects
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	call c, JumpMoveEffect
 	ld hl, wBattleMonHP
 	ld a, [hli]
@@ -6200,8 +6251,7 @@ EnemyCheckIfMirrorMoveEffect:
 	and a
 	jr z, ExecuteEnemyMoveDone
 	ld hl, SpecialEffects
-	ld de, $1
-	call IsInArray
+	call IsInSingleByteArray
 	call nc, JumpMoveEffect
 	jr ExecuteEnemyMoveDone
 
@@ -6232,8 +6282,7 @@ CheckEnemyStatusConditions:
 	call PlayMoveAnimation
 	jr .sleepDone
 .wokeUp
-	ld hl, WokeUpText
-	rst _PrintText
+	call PrintMonWokeUp
 .sleepDone
 	xor a
 	ld [wEnemyUsedMove], a
@@ -6522,12 +6571,7 @@ GetCurrentMove:
 	call AddNTimes
 	ld a, BANK(Moves)
 	call FarCopyData
-
-	ld a, BANK(MoveNames)
-	ld [wPredefBank], a
-	ld a, MOVE_NAME
-	ld [wNameListType], a
-	call GetName
+	call GetMoveNameCommon
 	ld de, wNameBuffer
 	jp CopyToStringBuffer
 
@@ -6680,7 +6724,7 @@ LoadEnemyMonData:
 	ld a, [hli]            ; copy type 2
 	ld [de], a
 	inc de
-	; ??? TODO: This can run if a gift or caught pokemon, does it cause issues?
+	; ??? This can run if a gift or caught pokemon, does it cause issues? (apparently not?)
 	push de
 	push hl
 	push bc
@@ -6832,8 +6876,7 @@ DoBattleTransitionAndInitBattleVariables:
 	xor a
 	ld [wMenuJoypadPollCount], a
 	callfar DisplayLinkBattleVersusTextBox
-	ld a, $1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call ClearScreen
 .next
 	rst _DelayFrame
@@ -6841,8 +6884,7 @@ DoBattleTransitionAndInitBattleVariables:
 	callfar LoadHudAndHpBarAndStatusTilePatterns
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call ClearSprites
 	call ClearScreen
 	xor a
@@ -7266,6 +7308,7 @@ PlayMoveAnimation:
 	vc_hook_red Reduce_move_anim_flashing_Confusion
 	call Delay3
 	vc_hook_red Reduce_move_anim_flashing_Psychic
+PlayMoveAnimationNoDelay:
 ;;;;;;;;;; shinpokerednote: gbcnote: color code from yellow
 	predef MoveAnimation
 	jpfar Func_78e98
@@ -7309,7 +7352,7 @@ InitBattleCommon:
 	callfar InitBattleVariables
 	ld a, [wEnemyMonSpecies2]
 	sub OPP_ID_OFFSET
-	jp c, InitWildBattle
+	jr c, InitWildBattle
 	ld [wTrainerClass], a
 	callfar GetTrainerInformation ; PureRGBnote: MOVED: this function was moved out of home bank
 	callfar ReadTrainer
@@ -7326,7 +7369,7 @@ InitBattleCommon:
 	ld [wEnemyMonPartyPos], a
 	ld a, $2
 	ld [wIsInBattle], a
-	jp _InitBattleCommon
+	jr _InitBattleCommon
 
 ;;;;;;;;;; PureRGBnote: ADDED: this missingno code does the item duplication glitch if it's enabled when encountering missingno
 
@@ -7428,12 +7471,12 @@ _LoadTrainerPic:
 	ld c, a
 	jp LoadUncompressedSpriteData
 
-; unreferenced
-ResetCryModifiers:
-	xor a
-	ld [wFrequencyModifier], a
-	ld [wTempoModifier], a
-	jp PlaySound
+; unreferenced ; PureRGBnote: CHANGED: So comment it out
+;ResetCryModifiers:
+;	xor a
+;	ld [wFrequencyModifier], a
+;	ld [wTempoModifier], a
+;	jp PlaySound
 
 ; animates the mon "growing" out of the pokeball
 AnimateSendingOutMon:
@@ -7617,79 +7660,29 @@ SetEnemyActedBit:
 
 ;shinpokerednote: ADDED: custom functions for determining which trainerAI pkmn have already been sent out before
 ;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
+
 CheckAISentOut:
-	ld a, [wWhichPokemon]	
-	cp 5
-	jr z, .party5
-	cp 4
-	jr z, .party4
-	cp 3
-	jr z, .party3
-	cp 2
-	jr z, .party2
-	cp 1
-	ld a, [wAIWhichPokemonSentOutAlready]
-	jr z, .party1
-	bit 1, a
-	ret
-.party5
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 6, a
-	ret
-.party4
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 5, a
-	ret
-.party3
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 4, a
-	ret
-.party2
-	ld a, [wAIWhichPokemonSentOutAlready]
-	bit 3, a
-	ret
-.party1
-	bit 2, a
-	ret
+	ld a, FLAG_TEST
+	jr AISentOutFlagAction
 	
 SetAISentOut:
-	ld a, [wWhichPokemon]	
-	cp $05
-	jr z, .party5
-	cp $04
-	jr z, .party4
-	cp $03
-	jr z, .party3
-	cp $02
-	jr z, .party2
-	cp $01
-	jr z, .party1
-	jr .party0
-.party5
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 6, a
-	jr .partyret
-.party4
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 5, a
-	jr .partyret
-.party3
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 4, a
-	jr .partyret
-.party2
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 3, a
-	jr .partyret
-.party1
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 2, a
-	jr .partyret
-.party0
-	ld a, [wAIWhichPokemonSentOutAlready]
-	set 1, a
-.partyret
-	ld [wAIWhichPokemonSentOutAlready], a
+	ld a, FLAG_SET
+	; fall through
+AISentOutFlagAction:
+	push bc
+	push de
+	push hl
+	ld b, a
+	ld a, [wWhichPokemon]
+	inc a
+	ld c, a
+	ld hl, wAIWhichPokemonSentOutAlready
+	predef FlagActionPredef
+	ld a, c
+	and a
+	pop hl
+	pop de
+	pop bc
 	ret
 
 ; PureRGBnote: ADDED: determines if the opponent is immune to the move being used due to having used haze or mist

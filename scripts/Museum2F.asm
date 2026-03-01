@@ -101,6 +101,8 @@ WalletKidPostBattle:
 	cp $ff
 	jr z, ResetScripts
 GiveWallet:
+	ld d, MUSEUM2F_WALLET_KID
+	callfar MakeSpriteFacePlayer
 	SetEvent EVENT_BEAT_WALLET_KID
 	ld a, TEXT_MUSEUM2F_WALLET_KID_WALLET_GIVE
 	ldh [hTextID], a

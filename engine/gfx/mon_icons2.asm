@@ -38,7 +38,38 @@ LoadPartyMonSprites:
 	call FillPartyMonOAM
 	jp EnableLCD
 
+
+FarLoadPartyMonSpriteIntoVRAM::
+	ld a, c
 LoadPartyMonSpriteIntoVRAM:
+	call PreparePartyMonSpriteCopy
+	jp FarCopyData
+
+FarLoadPartyMonSpriteIntoVRAMScreenOn::
+	ld a, c
+	call PreparePartyMonSpriteCopy
+	ld b, a
+	ld c, 2
+	push hl
+	push de
+	pop hl
+	pop de ; swap de and hl
+	call CopyVideoData
+	push bc
+	ld bc, 4 tiles
+	push hl
+	push de
+	pop hl
+	add hl, bc
+	push hl
+	pop de
+	pop hl
+	ld bc, 2 tiles
+	add hl, bc
+	pop bc
+	jp CopyVideoData
+
+PreparePartyMonSpriteCopy:
 	push de
 	call GetPartyMonSpriteID
 	ld b, a
@@ -60,7 +91,7 @@ LoadPartyMonSpriteIntoVRAM:
 	ld a, BANK(PartyMonSprites1)
 	pop de
 	ld bc, $0080
-	jp FarCopyData
+	ret
 
 GetPartyMonSpriteID:
 	ld [wPokedexNum], a

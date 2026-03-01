@@ -29,6 +29,8 @@ FuchsiaGymKogaPostBattleScript:
 	ld [wJoyIgnore], a
 ; fallthrough
 FuchsiaGymReceiveTM06:
+	ld d, FUCHSIAGYM_KOGA
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_FUCHSIAGYM_KOGA_SOUL_BADGE_INFO
 	ldh [hTextID], a
 	call DisplayTextID
@@ -48,12 +50,13 @@ FuchsiaGymReceiveTM06:
 .gymVictory
 	ld hl, wObtainedBadges
 	set BIT_SOULBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_SOULBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5
 
+	ld a, FUCHSIAGYM_KOGA
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp FuchsiaGymResetScripts
 
 FuchsiaGym_TextPointers:
@@ -215,6 +218,16 @@ FuchsiaGymTamer1EndBattleText:
 	text_end
 
 FuchsiaGymTamer1AfterBattleText:
+	text_asm
+	CheckEvent EVENT_BEAT_KOGA
+	ld hl, .beforeBeat
+	ret z
+	ld hl, .afterBeat
+	ret
+.afterBeat
+	text_far _FuchsiaGymTamer1AfterBattleGymDefeatedText
+	text_end
+.beforeBeat
 	text_far _FuchsiaGymTamer1AfterBattleText
 	text_end
 
@@ -311,6 +324,7 @@ AlreadyReceivedApexChipsText5:
 	text_end
 
 FuchsiaGymChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _FuchsiaGymGymGuideChampInMakingText
 	text_end
 

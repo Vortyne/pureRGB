@@ -14,7 +14,7 @@ SafariZoneCenter_ScriptPointers:
 	dw_const CheckFightingMapTrainers,              SCRIPT_SAFARIZONECENTER_DEFAULT
 	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_SAFARIZONECENTER_START_BATTLE
 	dw_const EndTrainerBattle,                      SCRIPT_SAFARIZONECENTER_END_BATTLE
-	dw_const RangerPostBattleCenter,                SCRIPT_SAFARIZONECENTER_RANGER_POST_BATTLE
+	dw_const RangerPostBattle,                		SCRIPT_SAFARIZONECENTER_RANGER_POST_BATTLE
 
 SafariZoneCenter_TextPointers:
 	def_text_pointers
@@ -27,9 +27,14 @@ SafariZoneCenter_TextPointers:
 	dw_const SafariZoneCenterRestHouseSignText,   TEXT_SAFARIZONECENTER_REST_HOUSE_SIGN
 	dw_const SafariZoneCenterTrainerTipsSignText, TEXT_SAFARIZONECENTER_TRAINER_TIPS_SIGN
 
-RangerPostBattleCenter:
-	SetEvent EVENT_BEAT_SAFARI_ZONE_CENTER_RANGER_0
-	jpfar RangerPostBattle
+RangerPostBattle::
+	call EndTrainerBattle
+	ld a, [wIsInBattle] 
+	cp $ff ; if you lost the battle don't decrement and return
+	ret z
+	ld hl, wNumRangersLeft
+	dec [hl]
+	ret
 
 SafariZoneCenterRestHouseSignText:
 	text_far _SafariZoneCenterRestHouseSignText
@@ -37,31 +42,19 @@ SafariZoneCenterRestHouseSignText:
 
 SafariZoneCenterTrainerTipsSignText:
 	text_asm
+	ld hl, .default
 	ld a, [wSafariType]
-	cp SAFARI_TYPE_RANGER_HUNT
-	jr z, .rangerHuntText
-	cp SAFARI_TYPE_FREE_ROAM
-	jr z, .freeRoamText
-	ld hl, SafariZoneCenterText3Default
-	jr .done
-.rangerHuntText
-	ld hl, SafariZoneCenterText3RangerHunt
-	jr .done
-.freeRoamText
-	ld hl, SafariZoneCenterText3FreeRoam
-.done
+	ld bc, 5
+	call AddNTimes
 	rst _PrintText
 	rst TextScriptEnd
-
-SafariZoneCenterText3Default:
+.default:
 	text_far _SafariZoneCenterTrainerTipsSignText
 	text_end
-
-SafariZoneCenterText3RangerHunt:
+.rangerHunt:
 	text_far _SafariZoneCenterText3RangerHunt
 	text_end
-
-SafariZoneCenterText3FreeRoam:
+.freeRoam:
 	text_far _SafariZoneCenterText3FreeRoam
 	text_end
 
@@ -87,6 +80,28 @@ SafariZoneCenterRangerText0:
 	ld [wCurMapScript], a 
 	rst TextScriptEnd
 
+SafariZoneCenterTrainerText0:
+	text_asm
+	ld hl, SafariZoneCenterTrainerHeader0
+	jr SafariZoneCenterTalkToTrainer
+
+SafariZoneCenterTrainerText1:
+	text_asm
+	ld hl, SafariZoneCenterTrainerHeader1
+	jr SafariZoneCenterTalkToTrainer
+
+SafariZoneCenterTrainerText2:
+	text_asm
+	ld hl, SafariZoneCenterTrainerHeader2
+	jr SafariZoneCenterTalkToTrainer
+
+SafariZoneCenterTrainerText3:
+	text_asm
+	ld hl, SafariZoneCenterTrainerHeader3
+SafariZoneCenterTalkToTrainer:
+	call TalkToTrainer
+	rst TextScriptEnd
+
 SafariZoneCenterRangerBattleText0:
 	text_far _SafariZoneCenterRangerText
 	text_end
@@ -98,12 +113,6 @@ SafariZoneCenterRangerEndBattleText0:
 SafariZoneCenterRangerAfterBattleText0:
 	text_far _SafariZoneCenterRangerAfterBattleText
 	text_end
-
-SafariZoneCenterTrainerText0:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader0
-	call TalkToTrainer
-	rst TextScriptEnd
 
 SafariZoneCenterTrainerBattleText0:
 	text_far _SafariZoneCenterRockerText
@@ -117,12 +126,6 @@ SafariZoneCenterTrainerAfterBattleText0:
 	text_far _SafariZoneCenterRockerAfterBattleText
 	text_end
 
-SafariZoneCenterTrainerText1:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 SafariZoneCenterTrainerBattleText1:
 	text_far _SafariZoneCenterEngineerText
 	text_end
@@ -135,12 +138,6 @@ SafariZoneCenterTrainerAfterBattleText1:
 	text_far _SafariZoneCenterEngineerAfterBattleText
 	text_end
 
-SafariZoneCenterTrainerText2:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 SafariZoneCenterTrainerBattleText2:
 	text_far _SafariZoneCenterJugglerText
 	text_end
@@ -151,13 +148,11 @@ SafariZoneCenterTrainerEndBattleText2:
 
 SafariZoneCenterTrainerAfterBattleText2:
 	text_far _SafariZoneCenterJugglerAfterBattleText
-	text_end
-
-SafariZoneCenterTrainerText3:
 	text_asm
-	ld hl, SafariZoneCenterTrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	lb hl, DEX_TAUROS, JUGGLER
+	ld de, TaurosLearnsetText
+	ld bc, LearnsetFadeOutInStory
+	predef_jump LearnsetTrainerScriptMain
 
 SafariZoneCenterTrainerBattleText3:
 	text_far _SafariZoneCenterManiacText
@@ -170,3 +165,31 @@ SafariZoneCenterTrainerEndBattleText3:
 SafariZoneCenterTrainerAfterBattleText3:
 	text_far _SafariZoneCenterManiacAfterBattleText
 	text_end
+
+SafariZonePlayMusic::
+	ld a, [wWalkBikeSurfState]
+	cp BIKING
+	jr z, .bikeCheck
+.noBikeMusic
+	ld a, [wOptions2]
+	bit BIT_MUSIC, a
+	jr z, .ogMusic
+	ld a, MUSIC_SAFARI_ZONE_EXPANDED
+	ld [wReplacedMapMusic], a
+	ld hl, Music_SafariZone
+	ld c, BANK(Music_SafariZone)
+	jp PlaySpecialFieldMusic
+.ogMusic
+	xor a
+	ld [wReplacedMapMusic], a
+	ld hl, Music_Evolution_In_SafariZone
+	ld c, BANK(Music_Evolution_In_SafariZone)
+	jp PlaySpecialFieldMusic
+.bikeCheck
+	ld a, [wOptions2]
+	bit BIT_BIKE_MUSIC, a
+	jr nz, .noBikeMusic
+	; if we are on the bike currently, play default bike music
+	xor a
+	ld [wReplacedMapMusic], a
+	jp PlayDefaultMusic

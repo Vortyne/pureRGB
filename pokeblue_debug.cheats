@@ -26,3 +26,39 @@
 !disabled
 # Set first party pokemon's first move to CONVERSION (Change to other moves, change XX in 01XX7BD1 with the move IDs found at this link: https://github.com/Vortyne/pureRGB/blob/master/constants/move_constants.asm)
 01A07BD1
+!disabled
+# Unlock all moves in the movedex
+01FF39D3
+01FF3AD3
+01FF3BD3
+01FF3CD3
+01FF3DD3
+01FF3ED3
+01FF3FD3
+01FF40D3
+01FF41D3
+01FF42D3
+01FF43D3
+01FF44D3
+01FF45D3
+01FF46D3
+01FF47D3
+01FF48D3
+01FF49D3
+01FF4AD3
+01FF4BD3
+01FF4CD3
+011F4DD3
+!disabled
+# Unlock all learnsets
+01FF54D8
+01FF55D8
+01FF56D8
+01FF57D8
+01FF58D8
+01FF59D8
+01FF5AD8
+01FF5BD8
+01FF5CD8
+01FF5DD8
+01035ED8

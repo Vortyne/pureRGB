@@ -2,7 +2,7 @@
 ; PureRGBnote: CHANGED: refactored to mark the starters indicated by the starter constants 
 ; by converting them to dex constants so no changes are necessary other than changing the constant values
 ; downside is this function takes up more space than before
-StarterDex:
+StarterDex::
 	ld b, FLAG_SET
 	ld a, [wPokedexNum] ; currently has the pokemon's index number stored, need to save for when we display it after marking seen
 	push af

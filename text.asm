@@ -55,6 +55,7 @@ INCLUDE "text/LoreleisRoom.asm"
 INCLUDE "text/BrunosRoom.asm"
 INCLUDE "text/AgathasRoom.asm"
 INCLUDE "text/RockTunnelB1F.asm"
+INCLUDE "text/PewterNidoranHouse.asm"
 
 
 SECTION "Text 3", ROMX
@@ -76,6 +77,9 @@ INCLUDE "text/Daycare.asm"
 INCLUDE "text/SafariZoneWest.asm"
 INCLUDE "text/ProspectorsHouse.asm"
 INCLUDE "text/MoveMystic.asm"
+INCLUDE "text/PokemonCenterChamp.asm"
+INCLUDE "text/MrPsychicsHouse.asm"
+INCLUDE "text/SoftboiledGuysHouse.asm"
 
 
 SECTION "Text 4", ROMX
@@ -115,11 +119,11 @@ INCLUDE "text/Route7.asm"
 INCLUDE "text/Route8.asm"
 INCLUDE "text/Route9.asm"
 INCLUDE "text/Route10.asm"
-INCLUDE "text/Route11.asm"
 
 
 SECTION "Text 5", ROMX
 
+INCLUDE "text/Route11.asm"
 INCLUDE "text/Route11_2.asm"
 INCLUDE "text/Route12.asm"
 INCLUDE "text/Route13.asm"
@@ -138,7 +142,6 @@ INCLUDE "text/ViridianSchoolHouseQuiz.asm"
 INCLUDE "text/CinnabarLabTradeRoom.asm"
 INCLUDE "text/FuchsiaMeetingRoom.asm"
 INCLUDE "text/SSAnneKitchen.asm"
-INCLUDE "text/SaffronAbandonedBuilding.asm"
 
 SECTION "Text 6", ROMX
 
@@ -159,12 +162,12 @@ INCLUDE "text/ViridianGym.asm"
 INCLUDE "text/Museum1F.asm"
 INCLUDE "text/Museum2F.asm"
 INCLUDE "text/PewterGym.asm"
+INCLUDE "text/SaffronAbandonedBuilding.asm"
 
 
 SECTION "Text 7", ROMX
 
 INCLUDE "text/PewterGym_2.asm"
-INCLUDE "text/PewterNidoranHouse.asm"
 INCLUDE "text/PewterMart.asm"
 INCLUDE "text/PewterSpeechHouse.asm"
 INCLUDE "text/PewterPokecenter.asm"
@@ -218,7 +221,6 @@ INCLUDE "text/GameCorner.asm"
 INCLUDE "text/CeladonMart5F.asm"
 INCLUDE "text/GameCornerPrizeRoom.asm"
 INCLUDE "text/CeladonDiner.asm"
-INCLUDE "text/CeladonChiefHouse.asm"
 INCLUDE "text/CeladonHotel.asm"
 INCLUDE "text/FuchsiaMart.asm"
 INCLUDE "text/FuchsiaBillsGrandpasHouse.asm"
@@ -248,8 +250,8 @@ INCLUDE "text/SaffronPidgeyHouse.asm"
 INCLUDE "text/SaffronMart.asm"
 INCLUDE "text/SilphCo1F.asm"
 INCLUDE "text/SaffronPokecenter.asm"
-INCLUDE "text/MrPsychicsHouse.asm"
 INCLUDE "text/FossilGuysHouse.asm"
+INCLUDE "text/CeladonChiefHouse.asm"
 
 INCLUDE "data/text/text_4.asm"
 
@@ -290,11 +292,20 @@ SECTION "Text 12", ROMX
 INCLUDE "text/TypeGuysHouse.asm"
 INCLUDE "text/ChampArena.asm"
 INCLUDE "text/DiamondMine.asm"
-INCLUDE "text/OptionsInfoText.asm"
 
 SECTION "Text 13", ROMX
 INCLUDE "text/PokemonTowerCatacombs.asm"
 INCLUDE "text/ErikAndSara.asm"
+INCLUDE "text/Learnsets.asm"
+INCLUDE "text/VermilionFitnessClub.asm"
+INCLUDE "text/CeladonBackAlley.asm"
+INCLUDE "text/FightingDojoExpertClub.asm"
+
+SECTION "Text 14", ROMX
+INCLUDE "text/CeruleanBallDesigner.asm"
+INCLUDE "text/CameraEvents.asm"
+INCLUDE "text/OptionsInfoText.asm"
+INCLUDE "text/FightingBrosHouse.asm"
 
 SECTION "Pokédex Text", ROMX
 

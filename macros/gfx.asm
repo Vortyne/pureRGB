@@ -15,6 +15,8 @@ DEF color    EQUS "+ PAL_COLOR_SIZE *"
 
 DEF tiles EQUS "* LEN_2BPP_TILE"
 DEF tile  EQUS "+ LEN_2BPP_TILE *"
+DEF tiles1bpp EQUS "* LEN_1BPP_TILE"
+DEF tile1bpp  EQUS "+ LEN_1BPP_TILE *"
 
 MACRO dbsprite
 ; x tile, y tile, x pixel, y pixel, vtile offset, attributes

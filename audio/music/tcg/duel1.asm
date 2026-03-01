@@ -1717,36 +1717,36 @@ Music_DuelTheme1_Ch4::
 	octave 1
 .MainLoop:
 .Loop1:
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 3, 2
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 5, 2
-	drum_note 2, 1
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 3, 2
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 5, 2
+	drum_note_short 7, 1
+	drum_note_short 5, 1
 	rest 1
-	drum_note 4, 1
+	drum_note_short 4, 1
 	sound_loop 3, .Loop1
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 3, 2
-	drum_note 4, 1
-	drum_note 2, 1
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 3, 2
+	drum_note_short 4, 1
+	drum_note_short 7, 1
+	drum_note_short 5, 1
 	drum_speed 1
-	drum_note 3, 4
-	drum_note 3, 3
+	drum_note_short 3, 4
+	drum_note_short 3, 3
 	drum_speed 7
-	drum_note 2, 1
-	drum_note 2, 1
-	drum_note 2, 2
+	drum_note_short 7, 1
+	drum_note_short 7, 1
+	drum_note_short 7, 2
 .Loop2:
 	sound_call Branch_f5d39
 	sound_loop 3, .Loop2
@@ -1758,50 +1758,50 @@ Music_DuelTheme1_Ch4::
 .Loop4:
 	sound_call Branch_f5d39
 	sound_loop 15, .Loop4
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 2, 2
-	drum_note 5, 2
-	drum_note 4, 1
-	drum_note 2, 1
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 7, 2
+	drum_note_short 5, 2
+	drum_note_short 4, 1
+	drum_note_short 7, 1
+	drum_note_short 5, 1
 	drum_speed 1
-	drum_note 3, 4
-	drum_note 3, 3
+	drum_note_short 3, 4
+	drum_note_short 3, 3
 	drum_speed 7
 .Loop5:
-	drum_note 2, 1
+	drum_note_short 7, 1
 	sound_loop 4, .Loop5
 .Loop6:
-	drum_note 1, 1
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 2, 1
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 5, 2
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 4, 2
-	drum_note 2, 2
-	drum_note 5, 2
+	drum_note_short 1, 1
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 7, 1
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 5, 2
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 4, 2
+	drum_note_short 7, 2
+	drum_note_short 5, 2
 	sound_loop 5, .Loop6
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 2, 1
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 5, 2
-	drum_note 4, 1
-	drum_note 1, 1
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 7, 1
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 5, 2
+	drum_note_short 4, 1
+	drum_note_short 1, 1
+	drum_note_short 5, 1
 	drum_speed 1
-	drum_note 3, 4
-	drum_note 3, 3
+	drum_note_short 3, 4
+	drum_note_short 3, 3
 	drum_speed 7
 .Loop7:
-	drum_note 2, 1
+	drum_note_short 7, 1
 	sound_loop 4, .Loop7
 .Loop8:
 	sound_call Branch_f5d39
@@ -1818,63 +1818,63 @@ Music_DuelTheme1_Ch4::
 .Loop11:
 	sound_call Branch_f5d39
 	sound_loop 2, .Loop11
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 2, 2
-	drum_note 5, 2
-	drum_note 1, 1
-	drum_note 4, 1
-	drum_note 5, 2
-	drum_note 2, 2
-	drum_note 6, 14
-	drum_note 2, 4
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 7, 2
+	drum_note_short 5, 2
+	drum_note_short 1, 1
+	drum_note_short 4, 1
+	drum_note_short 5, 2
+	drum_note_short 7, 2
+	drum_note_short 6, 14
+	drum_note_short 7, 4
 	sound_loop 0, .MainLoop
 
 Branch_f5d39:
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 2, 2
-	drum_note 5, 2
-	drum_note 1, 1
-	drum_note 4, 1
-	drum_note 5, 2
-	drum_note 2, 1
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 7, 2
+	drum_note_short 5, 2
+	drum_note_short 1, 1
+	drum_note_short 4, 1
+	drum_note_short 5, 2
+	drum_note_short 7, 1
+	drum_note_short 5, 1
 	rest 1
-	drum_note 4, 1
+	drum_note_short 4, 1
 	sound_ret
 
 Branch_f5d46:
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 2, 2
-	drum_note 5, 2
-	drum_note 4, 1
-	drum_note 2, 1
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 7, 2
+	drum_note_short 5, 2
+	drum_note_short 4, 1
+	drum_note_short 7, 1
+	drum_note_short 5, 1
 	drum_speed 1
-	drum_note 3, 4
-	drum_note 3, 3
+	drum_note_short 3, 4
+	drum_note_short 3, 3
 	drum_speed 7
-	drum_note 2, 1
-	drum_note 2, 1
-	drum_note 2, 2
+	drum_note_short 7, 1
+	drum_note_short 7, 1
+	drum_note_short 7, 2
 	sound_ret
 
 Branch_f5d58:
-	drum_note 1, 2
-	drum_note 4, 1
-	drum_note 5, 1
-	drum_note 2, 2
-	drum_note 5, 1
+	drum_note_short 1, 2
+	drum_note_short 4, 1
+	drum_note_short 5, 1
+	drum_note_short 7, 2
+	drum_note_short 5, 1
 	drum_speed 1
-	drum_note 3, 4
-	drum_note 3, 3
+	drum_note_short 3, 4
+	drum_note_short 3, 3
 	drum_speed 7
 .Loop12:
-	drum_note 2, 1
+	drum_note_short 7, 1
 	sound_loop 8, .Loop12
 	sound_ret

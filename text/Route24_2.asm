@@ -19,6 +19,10 @@ _Route24CooltrainerM3EndBattleText::
 	line "Too much!"
 	prompt
 
+_Route24CooltrainerF1AfterBattleText::
+_Route24Youngster2AfterBattleText::
+_Route24CooltrainerF2AfterBattleText::
+_Route24Youngster1AfterBattleText::
 _Route24CooltrainerM3AfterBattleText::
 	text "I did my best, I"
 	line "have no regrets!"
@@ -34,11 +38,6 @@ _Route24CooltrainerF1EndBattleText::
 	line "too!"
 	prompt
 
-_Route24CooltrainerF1AfterBattleText::
-	text "I did my best, so"
-	line "I've no regrets!"
-	done
-
 _Route24Youngster1BattleText::
 	text "Here's No. 3!"
 	line "I won't be easy!"
@@ -49,11 +48,6 @@ _Route24Youngster1EndBattleText::
 	line "Stomped flat!"
 	prompt
 
-_Route24Youngster1AfterBattleText::
-	text "I did my best, I"
-	line "have no regrets!"
-	done
-
 _Route24CooltrainerF2BattleText::
 	text "I'm second!"
 	line "Now it's serious!"
@@ -63,11 +57,6 @@ _Route24CooltrainerF2EndBattleText::
 	text "How could I"
 	line "lose?"
 	prompt
-
-_Route24CooltrainerF2AfterBattleText::
-	text "I did my best, I"
-	line "have no regrets!"
-	done
 
 _Route24Youngster2BattleText::
 	text "This is NUGGET"
@@ -83,8 +72,3 @@ _Route24Youngster2EndBattleText::
 	text "Whoo!"
 	line "Good stuff!"
 	prompt
-
-_Route24Youngster2AfterBattleText::
-	text "I did my best, I"
-	line "have no regrets!"
-	done

@@ -196,8 +196,7 @@ _LeaveMapAnim::
 	jp RestoreFacingDirectionAndYScreenPos
 
 LeaveMapThroughHoleAnim:
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a ; disable UpdateSprites
+	call DisableSpriteUpdates
 	; shift upper half of player's sprite down 8 pixels and hide lower half
 	ld a, [wShadowOAMSprite00TileID]
 	ld [wShadowOAMSprite02TileID], a
@@ -218,8 +217,7 @@ LeaveMapThroughHoleAnim:
 	ld [wShadowOAMSprite02YCoord], a
 	ld [wShadowOAMSprite03YCoord], a
 	call GBFadeOutToWhite
-	ld a, $1
-	ld [wUpdateSpritesEnabled], a ; enable UpdateSprites
+	call EnableSpriteUpdates
 	jp RestoreFacingDirectionAndYScreenPos
 
 LoadBirdSpriteGraphics:
@@ -465,7 +463,7 @@ RedFishingTiles:
 	fishing_gfx RedFishingTilesFront, 2, $02
 	fishing_gfx RedFishingTilesBack,  2, $06
 	fishing_gfx RedFishingTilesSide,  2, $0a
-	fishing_gfx RedFishingRodTiles,   3, $c0
+	fishing_gfx RedFishingRodTiles,   2, $c0
 
 HandleMidJump::
 	ld a, [wPlayerJumpingYScreenCoordsIndex]
@@ -488,8 +486,7 @@ HandleMidJump::
 	ld a, [wWalkCounter]
 	and a
 	ret nz
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	xor a
 	ldh [hJoyHeld], a
 	ldh [hJoyPressed], a

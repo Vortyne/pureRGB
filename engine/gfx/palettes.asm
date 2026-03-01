@@ -15,6 +15,7 @@ _RunPaletteCommand:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+	; call hl then jp to SendSGBPackets
 	ld de, SendSGBPackets
 	push de
 	jp hl
@@ -31,6 +32,14 @@ SetPal_Battle:
 	ld de, wPalPacket
 	ld bc, $10
 	rst _CopyData
+	ld a, [wGenericPaletteOverride]
+	and a
+	jr z, .continue
+	ld b, a
+	xor a
+	ld [wGenericPaletteOverride], a
+	jr .override
+.continue
 	ld a, [wBattleMonFlags]
 	and 1 ; only the 1st bit of the flags determines alt palette
 	ld [wIsAltPalettePkmn], a
@@ -38,6 +47,7 @@ SetPal_Battle:
 	ld hl, wBattleMonSpecies
 	call DeterminePaletteID
 	ld b, a
+.override
 	ld a, [wEnemyMonFlags]
 	and 1 ; only the 1st bit of the flags determines alt palette
 	ld [wIsAltPalettePkmn], a
@@ -98,6 +108,18 @@ SetPal_StatusScreen:
 	ld [hli], a
 	inc hl
 	pop af
+	ld [hli], a
+	inc hl
+	push hl
+	ld a, [wLoadedMonFlags]
+	rra
+	rra
+	rra
+	and %11111 ; ball Data ID, decides color
+	ld e, a
+	callfar FarGetBallDataPalette
+	ld a, e
+	pop hl
 	ld [hl], a
 	ld hl, wPalPacket
 	ld de, BlkPacket_StatusScreen
@@ -195,14 +217,37 @@ SetPal_Slots:
 	ret
 
 SetPal_TitleScreen:
-	ld hl, PalPacket_Titlescreen
+	ldh a, [hGBC]
+	and a
+	ld de, BlkPacket_PureTitlescreen ; gbc works with always using these packets
+	jr nz, .normalPalPacket
+	ld a, [wSpriteOptions2]
+	bit BIT_NEW_TITLE_SCREEN, a
+	ld hl, PalPacket_PureTitlescreen_SGB
+	jr nz, .next
+	; on SGB we need to use the original block packet on the original title screen
+	; on GB, doesn't matter which since there is no color
 	ld de, BlkPacket_Titlescreen
+.normalPalPacket
+	ld hl, PalPacket_Titlescreen
+.next
 	ret
 
 ; used mostly for menus and the Oak intro
 SetPal_Generic:
 	ld hl, PalPacket_Generic
+	ld de, wPalPacket
+	ld bc, $10
+	rst _CopyData
+	ld hl, wPalPacket
 	ld de, BlkPacket_WholeScreen
+	ld a, [wGenericPaletteOverride]
+	and a
+	jr z, .noSpecialPal
+	ld [wPalPacket + 1], a
+.noSpecialPal
+	xor a
+	ld [wGenericPaletteOverride], a
 	ret
 
 SetPal_NidorinoIntro:
@@ -233,8 +278,7 @@ SetPal_Overworld:
 	jr nz, .notCeladon
 	ld a, [wCurMap]
 	ld hl, NoRainbowCeladonMaps
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr nc, .rainbow
 .notCeladon
 	ld hl, PalPacket_Empty
@@ -336,9 +380,22 @@ DiamondMinePalettes:
 	ld a, PAL_BLUEMON
 	ret
 
+BallDesignerPalettes:
+	xor a
+	ld [wMapPalOffset], a
+	ld a, [wXCoord]
+	cp 14
+	ld a, PAL_CERULEAN
+	ret c
+	ld a, 3
+	ld [wMapPalOffset], a
+	ld a, PAL_REALLY_REDMON
+	ret
+
 MapPalettesSpecialFunctionTable:
 	dbw DIAMOND_MINE, DiamondMinePalettes
 	dbw LORELEIS_ROOM, LoreleiPalettes
+	dbw CERULEAN_BALL_DESIGNER, BallDesignerPalettes
 	db -1
 
 MapTilesetPalettesTable:
@@ -646,20 +703,22 @@ _SendSGBPacket:
 
 ; shinpokerednote: gbcnote: run GBC color code if on GBC when running this function now
 LoadSGB:
+	ldh a, [hGBC]
+	and a
+	ld a, 1
+	ld [wOnSGB], a
+	ret nz ; no need to do anything else if on GBC, we just treat it as SGB
 	xor a
 	ld [wOnSGB], a
 	call CheckSGB
-	jr c, .onSGB
-	ldh a, [hGBC]
+	ld a, 1
+	jr c, .next
+	dec a
+.next
+	ld [wOnSGB], a
 	and a
-	ret z ; on DMG
-	;if on gbc, set SGB flag but skip all the SGB vram stuff
-	ld a, 1
-	ld [wOnSGB], a
-	ret	
+	ret z ; do nothing else if on DMG
 .onSGB
-	ld a, 1
-	ld [wOnSGB], a
 	di
 	call PrepareSuperNintendoVRAMTransfer
 	ei
@@ -815,7 +874,8 @@ CopyGfxToSuperNintendoVRAM:
 
 Wait7000:
 ; Each loop takes 9 cycles so this routine actually waits 63000 cycles.
-	ld de, 7000
+	; ld de, 7000
+	ld de, 2400 ; PureRGBnote: Decreased delay. Maybe it's fine to do so. Seems to work.
 .loop
 	nop
 	nop
@@ -839,6 +899,8 @@ SendSGBPackets:
 	ldh a, [rLCDC]
 	and 1 << rLCDC_ENABLE
 	ret z
+	CheckAndResetEvent FLAG_SKIP_DELAY_IN_GBC_PALETTE_FUNC
+	ret nz
 	jp Delay3
 .notGBC
 	push de
@@ -1093,7 +1155,7 @@ TransferBGPPals:: ;shinpokerednote: gbcnote: code from pokemon yellow
 	jr nz, .loop
 	ret
 
-TransferCurOBPData: ;shinpokerednote: gbcnote: code from pokemon yellow
+TransferCurOBPData:: ;shinpokerednote: gbcnote: code from pokemon yellow
 ; a = indexed offset of wGBCBasePalPointers
 	push de
 	;multiply index by 8 since each index represents 8 bytes worth of data
@@ -1146,22 +1208,58 @@ _UpdateGBCPal_BGP:: ;shinpokerednote: gbcnote: code from pokemon yellow
 	;otherwise a partial update (like during a screen whiteout) can be distracting
 	ld hl, hFlagsFFFA
 	set 1, [hl]
-DEF index = 0
-	REPT NUM_ACTIVE_PALS
-		ld a, [wGBCBasePalPointers + index * 2]
-		ld e, a
-		ld a, [wGBCBasePalPointers + index * 2 + 1]
-		ld d, a
-		xor a ; CONVERT_BGP
-		call DMGPalToGBCPal
-		ld a, index
-		call BufferBGPPal	; Copy wGBCPal to palette indexed in wBGPPalsBuffer.
-DEF index = index + 1
-	ENDR
+	ld hl, wGBCBasePalPointers
+	ld b, NUM_ACTIVE_PALS
+	ld c, 0
+.loopBuffer
+	push hl
+	push bc
+	ld d, 0
+	ld e, c
+	add hl, de
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	xor a ; CONVERT_BGP
+	call DMGPalToGBCPal
+	pop bc
+	push bc
+	ld a, c
+	call BufferBGPPal	; Copy wGBCPal to palette indexed in wBGPPalsBuffer.
+	pop bc
+	pop hl
+	inc c
+	dec b
+	jr nz, .loopBuffer
 	call TransferBGPPals	;Transfer wBGPPalsBuffer contents to rBGPD
 	ld hl, hFlagsFFFA	;re-allow BGmap updates
 	res 1, [hl]
 	ret
+
+; d = which one
+;_UpdateSpecificGBCPal_BGP::
+;	ld hl, hFlagsFFFA
+;	set 1, [hl]
+;	ld c, d
+;	ld hl, wGBCBasePalPointers
+;	ld d, 0
+;	ld e, c
+;	add hl, de
+;	add hl, de
+;	ld a, [hli]
+;	ld e, a
+;	ld d, [hl]
+;	xor a ; CONVERT_BGP
+;	push bc
+;	call DMGPalToGBCPal
+;	pop bc
+;	ld a, c
+;	call BufferBGPPal	; Copy wGBCPal to palette indexed in wBGPPalsBuffer.
+;	call TransferBGPPals	;Transfer wBGPPalsBuffer contents to rBGPD
+;	ld hl, hFlagsFFFA	;re-allow BGmap updates
+;	res 1, [hl]
+;	ret
 
 _UpdateGBCPal_OBP:: ;shinpokerednote: gbcnote: code from pokemon yellow
 ; d then c = CONVERT_OBP0 or CONVERT_OBP1
@@ -1238,7 +1336,7 @@ palPacketPointers:
 	dw BlkPacket_StatusScreen
 	dw BlkPacket_Pokedex
 	dw BlkPacket_Slots
-	dw BlkPacket_Titlescreen
+	dw BlkPacket_PureTitlescreen
 	dw BlkPacket_NidorinoIntro
 	dw wPartyMenuBlkPacket
 	dw wTrainerCardBlkPacket

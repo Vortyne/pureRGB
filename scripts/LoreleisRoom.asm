@@ -107,10 +107,14 @@ LoreleisRoomLoreleiEndBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jr z, ResetLoreleiScript
-	call DoEliteFourFacing 
+	ld d, LORELEISROOM_LORELEI
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_LORELEISROOM_LORELEI
 	ldh [hTextID], a
 	call DisplayTextID
+	ld a, LORELEISROOM_LORELEI
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 ;;;;;;;;;; PureRGBnote: ADDED: sound effect for the doors opening
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound
@@ -120,39 +124,6 @@ ResetLoreleiScript:
 	xor a ; SCRIPT_LORELEISROOM_DEFAULT
 	ld [wLoreleisRoomCurScript], a
 	ret
-
-; PureRGBnote: ADDED: this function will make sure the opponent is facing the player after battle. 
-; Sometimes the sprite can update to another direction right after battle ends before fade in.
-DoEliteFourFacing::
-	call .doFacings
-	jp UpdateSprites
-.doFacings:
-	ld hl, wSprite01StateData2MapY
-	ld a, [hli]
-	sub 4
-	ld b, a
-	ld a, [hl]
-	sub 4
-	ld c, a
-	ld a, [wXCoord]
-	cp c
-	jr z, .aboveOrBelow
-	jr nc, .right
-.left
-	ld a, 1
-	jp SetSpriteFacingLeft
-.right
-	ld a, 1
-	jp SetSpriteFacingRight
-.aboveOrBelow
-	ld a, [wYCoord]
-	cp b
-	jr nc, .below
-	ld a, 1
-	jp SetSpriteFacingUp
-.below
-	ld a, 1
-	jp SetSpriteFacingDown
 
 LoreleisRoom_TextPointers:
 	def_text_pointers

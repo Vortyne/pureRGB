@@ -24,8 +24,7 @@ DisplayPCMainMenu::
 	hlcoord 0, 0
 	lb bc, 10, 14
 .next
-	call TextBoxBorder
-	call UpdateSprites
+	call TextBoxBorderUpdateSprites
 	ld a, 3
 	ld [wMaxMenuItem], a
 	CheckEvent EVENT_MET_BILL
@@ -97,8 +96,6 @@ BillsPC_::
 	set BIT_NO_TEXT_DELAY, [hl]
 	xor a
 	ld [wParentMenuItem], a
-	inc a               ; MONSTER_NAME
-	ld [wNameListType], a
 	call LoadHpBarAndStatusTilePatterns
 	ld a, [wListScrollOffset]
 	push af
@@ -413,8 +410,6 @@ DisplayMonListMenu:
 	xor a
 	ld [wPrintItemPrices], a
 	ld [wListMenuID], a
-	inc a                ; MONSTER_NAME
-	ld [wNameListType], a
 	ld a, [wPartyAndBillsPCSavedMenuItem]
 	ld [wCurrentMenuItem], a
 	call DisplayListMenuID
@@ -448,8 +443,7 @@ BillsPCMenuText:
 	;push hl 
 	;push bc
 	;ld hl, HMMoveArray
-	;ld de, 1
-	;call IsInArray
+	;call IsInSingleByteArray
 	;pop bc
 	;pop hl
 	;ret c

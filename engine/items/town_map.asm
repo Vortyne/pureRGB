@@ -27,7 +27,10 @@ DisplayTownMap:
 	ld de, TownMapCursor
 	lb bc, BANK(TownMapCursor), (TownMapCursorEnd - TownMapCursor) / $8
 	call CopyVideoDataDouble
-	xor a
+	ResetEvent FLAG_INTERACTED_WITH_TOWN_MAP
+	ld a, [wCurMap]
+	call GetWildDataTownMapID
+	call GetTownMapOrderFromMapID
 	ld [wWhichTownMapLocation], a
 	pop af
 	jr .enterLoop
@@ -36,12 +39,7 @@ DisplayTownMap:
 	hlcoord 0, 0
 	lb bc, 1, 20
 	call ClearScreenArea
-	ld hl, TownMapOrder
-	ld a, [wWhichTownMapLocation]
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld a, [hl]
+	call GetCurrentTownMap
 .enterLoop
 	ld de, wTownMapCoords
 	call LoadTownMapEntry
@@ -76,10 +74,14 @@ DisplayTownMap:
 	jr z, .inputLoop
 	ld a, SFX_TINK
 	rst _PlaySound
+	bit BIT_A_BUTTON, b
+	jr nz, .pressedA
+	SetEvent FLAG_INTERACTED_WITH_TOWN_MAP
 	bit BIT_D_UP, b
 	jr nz, .pressedUp
 	bit BIT_D_DOWN, b
 	jr nz, .pressedDown
+.exit
 	xor a
 	ld [wTownMapSpriteBlinkingEnabled], a
 	ldh [hJoy7], a
@@ -89,6 +91,20 @@ DisplayTownMap:
 	pop af
 	ld [hl], a
 	ret
+.pressedA
+	CheckEvent EVENT_UPGRADED_TOWN_MAP
+	jr z, .exit
+	CheckEvent FLAG_INTERACTED_WITH_TOWN_MAP
+	jr nz, .currentTownMap
+	ld a, [wCurMap]
+	call GetWildDataTownMapID
+	jr .gotWildDataMap
+.currentTownMap
+	call GetCurrentTownMap
+.gotWildDataMap
+	ld d, a
+	callfar ShowMapWildEncounters
+	jp .townMapLoop
 .pressedUp
 	ld a, [wWhichTownMapLocation]
 	inc a
@@ -138,6 +154,15 @@ LoadTownMap_Nest:
 	pop hl
 	pop af
 	ld [hl], a
+	ret
+
+GetCurrentTownMap:
+	ld hl, TownMapOrder
+	ld a, [wWhichTownMapLocation]
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld a, [hl]
 	ret
 
 ;;;;;;;;;; PureRGBnote: ADDED: using dig to go to another town displays a different sprite in this menu
@@ -243,7 +268,7 @@ LoadTownMap_Fly_Common:
 	jr .pressedB
 .pressedA
 	ld a, SFX_HEAL_AILMENT
-	rst _PlaySound
+	call PlaySoundOverrideCurrent
 	ld a, [hl]
 	ld [wDestinationMap], a
 	ld hl, wStatusFlags6
@@ -377,6 +402,7 @@ ExitTownMap:
 ; clear town map graphics data and load usual graphics data
 	xor a
 	ld [wTownMapSpriteBlinkingEnabled], a
+	ResetEvent FLAG_INTERACTED_WITH_TOWN_MAP
 	;ld hl, wViewingTownMap
 	;res VIEWING_TOWN_MAP, [hl]
 	call GBPalWhiteOut
@@ -533,12 +559,12 @@ FarLoadTownMapEntry:
 	call GetPredefRegisters
 	ld a, b
 
-LoadTownMapEntry:
+LoadTownMapEntry::
 ; in: a = map number
 ; out: lower nybble of [de] = x, upper nybble of [de] = y, hl = address of name
 	cp FIRST_INDOOR_MAP
 	jr c, .external
-	ld bc, 4
+	ld bc, 5
 	ld hl, InternalMapEntries
 .loop
 	cp [hl]
@@ -562,6 +588,44 @@ LoadTownMapEntry:
 	ld h, [hl]
 	ld l, a
 	ret
+
+; c = which map
+; de = where to print it
+FarPrintTownMapEntry::
+	ld a, c
+	push de
+	call LoadTownMapEntry
+	ld d, h
+	ld e, l
+	pop hl ; pop de into hl
+	jp PlaceString
+
+GetWildDataTownMapID:
+	cp FIRST_INDOOR_MAP
+	ret c
+	ld bc, 5
+	ld hl, InternalMapEntries
+.loop
+	cp [hl]
+	jr c, .foundEntry
+	add hl, bc
+	jr .loop
+.foundEntry
+	inc hl
+	inc hl
+	inc hl
+	inc hl
+	ld a, [hl]
+	ret
+
+GetTownMapOrderFromMapID:
+	ld hl, TownMapOrder
+	call IsInSingleByteArray
+	ld a, b
+	ret c
+	xor a
+	ret
+
 
 INCLUDE "data/maps/town_map_entries.asm"
 

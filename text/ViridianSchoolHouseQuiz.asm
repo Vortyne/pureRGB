@@ -48,7 +48,7 @@ _SchoolB1FLeftTeacherFirst::
 _SchoolB1FLeftTeacherNo::
 	text "Don't be cheeky-"
 	line "wot wot!"
-	para "Lets not faff"
+	para "Let's not faff"
 	line "about!"
 	para "Come talk to me"
 	line "again if you've"

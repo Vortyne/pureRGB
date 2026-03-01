@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/front/electabuzz.pic", 0, 1 ; sprite dimensions
 	dw ElectabuzzPicFront, ElectabuzzPicBackSW
 
-	db QUICK_ATTACK, LEER, THUNDERSHOCK, NO_MOVE ; level 1 learnset
+	db QUICK_ATTACK, LEER, THUNDERSHOCK, SCREECH ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

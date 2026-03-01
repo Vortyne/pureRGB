@@ -41,8 +41,8 @@ EvolveMon:
 	ld a, [wEvoOldSpecies]
 	call PlayCry
 	call WaitForSoundToFinish
-	ld c, BANK(Music_SafariZone)
-	ld a, MUSIC_SAFARI_ZONE
+	ld c, BANK(Music_Evolution)
+	ld a, MUSIC_EVOLUTION
 	call PlayMusic
 	ld c, 80
 	rst _DelayFrames

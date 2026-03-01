@@ -1,7 +1,7 @@
 ; PureRGBnote: MOVED: this function was slightly modified and moved outside of home bank for more space in the home bank.
 
 GetTrainerInformation:: 
-	call GetTrainerName
+	callfar GetTrainerName
 	ld a, [wLinkState]
 	and a
 	jr nz, .linkBattle
@@ -30,8 +30,5 @@ GetTrainerInformation::
 	ld [hli], a
 	ld [hl], d
 	ret
-
-GetTrainerName::
-	farjp GetTrainerName_
 
 INCLUDE "data/trainers/pic_pointers_money.asm"

@@ -3,7 +3,7 @@ SECTION "bank1", ROMX
 INCLUDE "data/sprites/facings.asm"
 INCLUDE "engine/events/black_out.asm"
 INCLUDE "engine/battle/safari_zone.asm"
-INCLUDE "engine/movie/title.asm"
+INCLUDE "engine/movie/title3.asm"
 INCLUDE "engine/pokemon/load_mon_data.asm"
 INCLUDE "data/items/prices.asm"
 INCLUDE "data/items/names.asm"
@@ -25,7 +25,6 @@ INCLUDE "engine/items/subtract_paid_money.asm"
 INCLUDE "engine/menus/swap_items.asm"
 INCLUDE "engine/events/pokemart.asm"
 INCLUDE "engine/pokemon/learn_move.asm"
-INCLUDE "engine/events/pokecenter.asm"
 INCLUDE "engine/events/set_blackout_map.asm"
 INCLUDE "engine/menus/display_text_id_init.asm"
 INCLUDE "engine/menus/draw_start_menu.asm"
@@ -37,6 +36,8 @@ INCLUDE "engine/events/display_pokedex.asm"
 INCLUDE "engine/menus/menu_list_tm_name_loader.asm" ; PureRGBnote: ADDED: code for showing TM names in list menus
 INCLUDE "engine/menus/wrap_list_menu.asm" ; PureRGBnote: ADDED: code for wrapping to the bottom and top of lists by pressing dpad left
 INCLUDE "engine/menus/custom_list_menu.asm"
+INCLUDE "engine/gfx/flip_sprite_oam.asm"
+INCLUDE "engine/items/get_item_name.asm"
 
 
 SECTION "bank3", ROMX
@@ -53,7 +54,6 @@ INCLUDE "data/maps/hide_show_data.asm"
 INCLUDE "engine/overworld/field_move_messages.asm"
 INCLUDE "engine/items/inventory.asm"
 INCLUDE "engine/items/item_effects.asm"
-INCLUDE "engine/menus/draw_badges.asm"
 INCLUDE "engine/overworld/update_map.asm"
 INCLUDE "engine/overworld/cut.asm"
 INCLUDE "engine/overworld/missable_objects.asm"
@@ -72,6 +72,7 @@ INCLUDE "engine/events/hidden_objects/book_or_sculpture.asm"
 INCLUDE "engine/events/hidden_objects/elevator.asm"
 INCLUDE "engine/events/hidden_objects/town_map.asm"
 INCLUDE "engine/events/hidden_objects/pokemon_stuff.asm"
+INCLUDE "engine/events/tutor.asm"
 
 
 SECTION "Font Graphics", ROMX
@@ -88,11 +89,11 @@ INCLUDE "gfx/player.asm"
 INCLUDE "engine/overworld/turn_sprite.asm"
 INCLUDE "engine/menus/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
-INCLUDE "engine/battle/end_of_battle.asm"
+; INCLUDE "engine/battle/end_of_battle.asm" ; moved to newCode2
 INCLUDE "engine/battle/wild_encounters.asm"
 ; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9
-INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
+INCLUDE "engine/pokemon/read_tm_learnsets.asm"
 
 
 SECTION "Battle Engine 2", ROMX
@@ -119,7 +120,7 @@ INCLUDE "engine/overworld/ledges.asm"
 
 SECTION "Pokémon Names", ROMX ; PureRGBnote: MOVED: this section was assigned to a later bank
 
-INCLUDE "data/pokemon/names.asm"
+INCLUDE "engine/pokemon/get_mon_name.asm"
 INCLUDE "engine/movie/oak_speech/clear_save.asm"
 INCLUDE "engine/events/elevator.asm"
 
@@ -212,9 +213,10 @@ INCLUDE "engine/menus/pokedex.asm"
 INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
-;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex
+;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex and learnsets
 INCLUDE "engine/menus/movedex.asm"
 INCLUDE "data/moves/movedex_type_palettes.asm"
+INCLUDE "engine/menus/learnsets.asm"
 ;;;;;;;;;;
 
 SECTION "Pokédex Rating", ROMX
@@ -242,7 +244,6 @@ SECTION "Hidden Objects 2", ROMX
 INCLUDE "engine/events/card_key.asm"
 INCLUDE "engine/events/prize_menu.asm"
 INCLUDE "engine/events/hidden_objects/school_notebooks.asm"
-INCLUDE "engine/events/hidden_objects/fighting_dojo.asm"
 INCLUDE "engine/events/hidden_objects/indigo_plateau_hq.asm"
 
 
@@ -302,7 +303,6 @@ SECTION "Hidden Objects 4", ROMX
 
 INCLUDE "engine/events/hidden_objects/gym_statues.asm"
 INCLUDE "engine/events/hidden_objects/bench_guys.asm"
-INCLUDE "engine/events/hidden_objects/blues_room.asm"
 INCLUDE "engine/events/hidden_objects/pokecenter_pc.asm"
 
 
@@ -363,6 +363,8 @@ INCLUDE "engine/pokemon/get_mon_header.asm"
 ; PureRGBnote: MOVED: moved from battle engine 7
 INCLUDE "engine/pokemon/evos_moves.asm"
 INCLUDE "data/pokemon/base_stats.asm"
+INCLUDE "engine/pokemon/read_level_up_learnsets.asm"
+INCLUDE "engine/pokemon/get_move_name.asm"
 
 SECTION "Splash Animation", ROMX
 ; PureRGBnote: MOVED: moved from bank1C
@@ -384,6 +386,12 @@ INCLUDE "engine/gfx/animated_tiles_code.asm"
 INCLUDE "engine/overworld/fly_animation.asm"
 ; moved from audio home code
 INCLUDE "audio/check_bike_surf_music.asm"
+; moved from bank1
+INCLUDE "engine/events/pokecenter.asm"
+; moved from bank3
+INCLUDE "engine/menus/draw_badges.asm"
+; moved from battle core
+INCLUDE "engine/battle/move_effects/sleep.asm"
 
 SECTION "Party Sprites", ROMX, BANK[$34]
 ; PureRGBnote: ADDED: new menu sprite icons raw data
@@ -421,6 +429,7 @@ INCLUDE "engine/menus/front_sprite_options2.asm"
 INCLUDE "engine/menus/front_sprite_options3.asm"
 INCLUDE "engine/menus/front_sprite_options4.asm"
 INCLUDE "engine/menus/front_sprite_options5.asm"
+INCLUDE "engine/menus/options_menu3.asm"
 INCLUDE "engine/gfx/mon_icons2.asm"
 INCLUDE "engine/overworld/select_button_functionality.asm"
 INCLUDE "engine/overworld/use_another_repel.asm"
@@ -457,3 +466,28 @@ INCLUDE "engine/battle/move_effects/defense_curl_effect.asm"
 INCLUDE "engine/battle/remap_move_data.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/overworld/overworld_animation.asm"
+
+SECTION "newCode2", ROMX
+
+INCLUDE "engine/overworld/learnset_scripts.asm"
+INCLUDE "engine/overworld/make_pokemon_appear.asm"
+INCLUDE "data/pokemon/metric_measurements.asm"
+INCLUDE "engine/battle/end_of_battle.asm" ; moved from battle engine 1
+INCLUDE "engine/menus/item_menu_count_box.asm"
+INCLUDE "engine/battle/get_fitness_trainer_party.asm"
+INCLUDE "engine/battle/animations/custom_send_out_mon_ball_poof_animations.asm"
+INCLUDE "engine/menus/ball_customization_menu.asm"
+INCLUDE "engine/events/camera.asm"
+INCLUDE "engine/battle/accuracy_down.asm"
+INCLUDE "engine/events/get_badge_name.asm"
+INCLUDE "engine/events/get_floor_name.asm"
+INCLUDE "engine/items/get_machine_name.asm"
+INCLUDE "engine/battle/get_trainer_name.asm"
+INCLUDE "engine/battle/move_effects/siphon_snag.asm"
+INCLUDE "engine/menus/map_wild_data.asm"
+INCLUDE "engine/battle/move_effects/screech.asm"
+INCLUDE "engine/menus/preview_front_sprite.asm"
+
+SECTION "newCode3", ROMX
+
+INCLUDE "engine/movie/title.asm"

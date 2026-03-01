@@ -2,12 +2,12 @@ _Route23YouDontHaveTheBadgeYetText::
 	text "You can pass here"
 	line "only if you have"
 	cont "the @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 
 	para "You don't have the"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " yet!"
 
 	para "You have to have"
@@ -19,14 +19,14 @@ _Route23OhThatIsTheBadgeText::
 	text "You can pass here"
 	line "only if you have"
 	cont "the @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 
 	para "Oh! That is the"
 	line "@"
-	text_ram wNameBuffer
-	text "!@"
-	text_end
+	text_ram_namebuffer
+	text "!"
+	done
 
 _Route23GoRightAheadText::
 	text_start

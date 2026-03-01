@@ -15,44 +15,52 @@ Mansion1CheckReplaceSwitchDoorBlocks:
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
+	ld hl, Mansion1TileBlockReplacementCoords
+	ld de, Mansion1TileBlockReplacementIDsOnOff
 	CheckEvent EVENT_MANSION_SWITCH_ON
-	jr nz, .switchTurnedOn
-	lb bc, 6, 12
-	call Mansion1LoadEmptyFloorTileBlock
-	lb bc, 3, 8
-	call Mansion1LoadHorizontalGateBlock
-	lb bc, 8, 10
-	call Mansion1LoadHorizontalGateBlock
-	lb bc, 13, 13
-	jp Mansion1LoadHorizontalGateBlock
-.switchTurnedOn
-	lb bc, 6, 12
-	call Mansion1LoadHorizontalGateBlock
-	lb bc, 3, 8
-	call Mansion1LoadEmptyFloorTileBlock
-	lb bc, 8, 10
-	call Mansion1LoadEmptyFloorTileBlock
-	lb bc, 13, 13
-	jp Mansion1LoadEmptyFloorTileBlock
-
-Mansion1LoadHorizontalGateBlock:
-	ld a, $2d
+	jr nz, ReplaceMansionTileBlockList
+	inc de
+ReplaceMansionTileBlockList:
+	ld a, [hl]
+	cp $FF
+	ret z
+	ld b, [hl] ; replacement y coord
+	inc hl
+	ld c, [hl] ; replacement x coord
+	inc hl
+	ld a, [de]
 	ld [wNewTileBlockID], a
-	jr Mansion1ReplaceBlock
+	inc de
+	inc de
+	push hl
+	push de
+	predef ReplaceTileBlock
+	pop de
+	pop hl
+	jr ReplaceMansionTileBlockList
 
-Mansion1LoadEmptyFloorTileBlock:
-	ld a, $e
-	ld [wNewTileBlockID], a
-Mansion1ReplaceBlock:
-	predef_jump ReplaceTileBlock
+Mansion1TileBlockReplacementCoords:
+	db  6, 12
+	db  3,  8
+	db  8, 10 
+	db 13, 13
+	db -1
+
+Mansion1TileBlockReplacementIDsOnOff:
+	db  $2d, $0e
+	db  $0e, $2d 
+	db  $0e, $2d  
+	db  $0e, $2d
 
 Mansion1Script_Switches::
+	ld b, TEXT_POKEMONMANSION1F_SWITCH
+PokemonMansionSwitchScript:
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
 	ret nz
 	xor a
 	ldh [hJoyHeld], a
-	ld a, TEXT_POKEMONMANSION1F_SWITCH
+	ld a, b
 	ldh [hTextID], a
 	jp DisplayTextID
 
@@ -70,7 +78,7 @@ PokemonMansion1F_TextPointers:
 	dw_const Mansion1Text4,                 TEXT_POKEMONMANSION1F_FIREFIGHTER2
 	dw_const PickUpItemText,                TEXT_POKEMONMANSION1F_ITEM1
 	dw_const PickUpItemText,                TEXT_POKEMONMANSION1F_ITEM2
-	dw_const PokemonMansion1FSwitchText,    TEXT_POKEMONMANSION1F_SWITCH
+	dw_const PokemonMansionSwitchText,      TEXT_POKEMONMANSION1F_SWITCH
 
 Mansion1TrainerHeaders:
 	def_trainers
@@ -87,6 +95,22 @@ Mansion1TrainerHeader3:
 PokemonMansion1FScientistText:
 	text_asm
 	ld hl, Mansion1TrainerHeader0
+	jr Mansion1TalkToTrainer
+
+Mansion1Text2:
+	text_asm
+	ld hl, Mansion1TrainerHeader1
+	jr Mansion1TalkToTrainer
+
+Mansion1Text3:
+	text_asm
+	ld hl, Mansion1TrainerHeader2
+	jr Mansion1TalkToTrainer
+
+Mansion1Text4:
+	text_asm
+	ld hl, Mansion1TrainerHeader3
+Mansion1TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
@@ -102,12 +126,6 @@ PokemonMansion1FScientistAfterBattleText:
 	text_far _PokemonMansion1FScientistAfterBattleText
 	text_end
 
-Mansion1Text2:
-	text_asm
-	ld hl, Mansion1TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Mansion1BattleText2:
 	text_far _Mansion1BattleText2
 	text_end
@@ -119,12 +137,6 @@ Mansion1EndBattleText2:
 Mansion1AfterBattleText2:
 	text_far _Mansion1AfterBattleText2
 	text_end
-
-Mansion1Text3:
-	text_asm
-	ld hl, Mansion1TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Mansion1BattleText3:
 	text_far _Mansion1BattleText3
@@ -138,12 +150,6 @@ Mansion1AfterBattleText3:
 	text_far _Mansion1AfterBattleText3
 	text_end
 
-Mansion1Text4:
-	text_asm
-	ld hl, Mansion1TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Mansion1BattleText4:
 	text_far _Mansion1BattleText4
 	text_end
@@ -156,13 +162,11 @@ Mansion1AfterBattleText4:
 	text_far _Mansion1AfterBattleText4
 	text_end
 
-PokemonMansion1FSwitchText:
+PokemonMansionSwitchText:
 	text_asm
 	ld hl, .Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .not_pressed
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a

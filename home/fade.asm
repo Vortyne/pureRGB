@@ -89,6 +89,7 @@ GBFadeInFromWhite::
 	ld hl, FadePal5 + 2
 	lb bc, 1, 1
 	jr z, GBFadeDecCommon.delayset
+GBFadeInFromWhiteForcedOriginal::
 	ld hl, FadePal7 + 2
 	ld b, 3
 

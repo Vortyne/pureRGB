@@ -16,7 +16,7 @@ SpriteOptionsHeader:
 	dw SpriteOptionsSetCursorPositionActions
 	dw SetSpriteOptionsFromCursorPositions
 	dw SpriteOptionsLeftRightFuncs
-	dw DisplayOptionMenu
+	dw DisplayOptions3
 	dw DisplayBattleOptions
 	dw SpriteOptionsAorSelectButton
 	dw SpriteInfoTextJumpTable
@@ -50,9 +50,6 @@ SpritesOptionText:
 	next " BACK:   OG SW97"
 	next " ICONS:  OG OG+"
 	next " FRONT:  @"
-	;next "BOOT OPTIONS" ; TODO: 
-	;next " INTRO:  ON SKIP"
-	;next " TITLE:  OG PURE@"
 
 DrawSpriteOptionsMenu:
 	hlcoord 0, 0
@@ -87,6 +84,12 @@ SpriteOptionsAButton:
 	ld a, SFX_PRESS_AB
 	rst _PlaySound
 	call DisplayFrontSpriteOptions
+	ld a, [wNewInGameFlags]
+	bit IN_GAME, a
+	jr z, .noTilesetReload ; if we're not in game yet, no need to reload
+	CheckAndResetEvent FLAG_RELOAD_TILESET_IN_OPTION_MENU
+	call nz, ReloadMapData
+.noTilesetReload
 	hlcoord 14, PAGE_CONTROLS_Y_COORD
 	ld a, " "
 	ld [hli], a

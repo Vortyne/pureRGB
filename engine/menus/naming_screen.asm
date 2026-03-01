@@ -85,19 +85,10 @@ DisplayNamingScreen:
 	ld a, [wNamingScreenType]
 	cp NAME_MON_SCREEN
 	jr nz, .dontLowerVolume
-  	ld a, [wStatusFlags2]
-  	set BIT_NO_AUDIO_FADE_OUT, a
-  	ld [wStatusFlags2], a
-	ld a, $33 ; 3/7 volume
-	ldh [rNR50], a
+	call HalfVolume
 .dontLowerVolume
 	call DisplayNamingScreenWrap
-	ld a, $77 ; max volume
-	ldh [rNR50], a
-  	ld a, [wStatusFlags2]
-  	res BIT_NO_AUDIO_FADE_OUT, a
-  	ld [wStatusFlags2], a
-	ret
+	jp MaxVolume
 
 DisplayNamingScreenWrap:
 	push hl
@@ -145,7 +136,14 @@ DisplayNamingScreenWrap:
 .inputLoop
 	ld a, [wCurrentMenuItem]
 	push af
+	ld a, [wNamingScreenType]
+	cp NAME_BALL_SCREEN
+	jr z, .getBallColor
 	farcall AnimatePartyMon_ForceSpeed1
+	jr .skipBallColor
+.getBallColor
+	callfar GetCustomBallColor
+.skipBallColor
 	pop af
 	ld [wCurrentMenuItem], a
 	call JoypadLowSensitivity
@@ -247,13 +245,13 @@ DisplayNamingScreenWrap:
 	ld a, [hl]
 	ld [wNamingScreenLetter], a
 	call CalcStringLength
-	ld a, [wNamingScreenLetter]
-	cp "ﾞ"
-	ld de, Dakutens
-	jr z, .dakutensAndHandakutens
-	cp "ﾟ"
-	ld de, Handakutens
-	jr z, .dakutensAndHandakutens
+	;ld a, [wNamingScreenLetter]
+	;cp "ﾞ"
+	;ld de, Dakutens
+	;jr z, .dakutensAndHandakutens
+	;cp "ﾟ"
+	;ld de, Handakutens
+	;jr z, .dakutensAndHandakutens
 	ld a, [wNamingScreenType]
 	cp NAME_MON_SCREEN
 	jr nc, .checkMonNameLength
@@ -267,12 +265,12 @@ DisplayNamingScreenWrap:
 	jr c, .addLetter
 	ret
 
-.dakutensAndHandakutens
-	push hl
-	call DakutensAndHandakutens
-	pop hl
-	ret nc
-	dec hl
+;.dakutensAndHandakutens
+;	push hl
+;	;call DakutensAndHandakutens
+;	pop hl
+;	ret nc
+;	dec hl
 .addLetter
 	ld a, [wNamingScreenLetter]
 	ld [hli], a
@@ -434,21 +432,21 @@ PrintNicknameAndUnderscores:
 	ld [hl], $77 ; raised underscore tile id
 	ret
 
-DakutensAndHandakutens:
-	push de
-	call CalcStringLength
-	dec hl
-	ld a, [hl]
-	pop hl
-	ld de, $2
-	call IsInArray
-	ret nc
-	inc hl
-	ld a, [hl]
-	ld [wNamingScreenLetter], a
-	ret
+;DakutensAndHandakutens:
+;	push de
+;	call CalcStringLength
+;	dec hl
+;	ld a, [hl]
+;	pop hl
+;	ld de, $2
+;	call IsInArray
+;	ret nc
+;	inc hl
+;	ld a, [hl]
+;	ld [wNamingScreenLetter], a
+;	ret
 
-INCLUDE "data/text/dakutens.asm" ; TODO: remove?
+;INCLUDE "data/text/dakutens.asm"
 
 ; calculates the length of the string at wStringBuffer and stores it in c
 CalcStringLength:
@@ -471,7 +469,11 @@ PrintNamingText:
 	ld de, RivalsTextString
 	dec a
 	jr z, .notNickname
+	dec a
 	ld a, [wCurPartySpecies]
+	jr z, .pokemon
+	jr .pokeballName
+.pokemon
 	ld [wMonPartySpriteSpecies], a
 	push af
 	farcall LoadNicknameMonSprite ; mechanicalpennote: CHANGED: new code for choosing which sprite displays on the nicknaming menus
@@ -491,9 +493,14 @@ PrintNamingText:
 	call PlaceString
 	ld l, c
 	ld h, b
+.addNameText
 	ld de, NameTextString
 .placeString
 	jp PlaceString
+.pokeballName
+	hlcoord 3, 3
+	call .addNameText
+	jpfar CustomPokeballRename
 
 YourTextString:
 	db "YOUR @"
@@ -501,8 +508,7 @@ YourTextString:
 RivalsTextString:
 	db "RIVAL's @"
 
+NicknameTextString:
+	db "NICK"
 NameTextString:
 	db "NAME?@"
-
-NicknameTextString:
-	db "NICKNAME?@"

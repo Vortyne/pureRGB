@@ -126,11 +126,29 @@ TestGrassTile2:
 	cp c
 	ret z
 	ld a, [wCurMapTileset]
+	cp PLATEAU
+	jr z, .plateau
 	cp FOREST
 	ret nz
+.back
 	ld a, $34	; check for the extra grass tile in the forest tileset
 	cp c
 	ret
+.plateau
+	ld a, [wCurMap]
+	cp CELADON_BACK_ALLEY
+	ret nz
+	ld a, $43
+	cp c
+	ret z
+	dec a ; $42
+	cp c
+	ret z
+	ld a, $4C
+	cp c
+	ret z
+	jr .back
+
 
 UnusedReadSpriteDataFunction:
 	push bc

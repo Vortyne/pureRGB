@@ -35,8 +35,7 @@ DisplayMonFrontSpriteInBox:
 	ld a, MON_SPRITE_POPUP
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
-	call UpdateSprites
-	call Delay3 ; allow box to finish rendering before setting palette
+	call UpdateSpritesAndDelay3 ; allow box to finish rendering before setting palette
 	ld b, SET_PAL_MIDDLE_SCREEN_MON_BOX
 	call RunPaletteCommand
 	ld a, [wCurPartySpecies]

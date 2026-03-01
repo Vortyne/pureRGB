@@ -94,17 +94,17 @@
 .Drumkit6: ; tcg drumkit 1
 	dw .Drum00
 	dw .Kick3
-	dw .Snare9
+	dw .Drum00 ; unused drum (used to be Snare9 but due to drum_short macro I changed Snare9 to drum 7 below)
 	dw .Snare10
 	dw .Snare11
 	dw .Crash3
 	dw .Crash1
-	dw .Snare9
-	dw .Snare9
-	dw .Snare9
-	dw .Snare9
-	dw .Snare9
-	dw .Snare9
+	dw .Snare9 ; new snare9
+	dw .Drum00
+	dw .Drum00
+	dw .Drum00
+	dw .Drum00
+	dw .Drum00
 
 .Drum00:
 	noise_note 32, 1, 1, 0

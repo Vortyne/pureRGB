@@ -47,4 +47,35 @@ GenericMoveUp::
 GenericMoveRight::
 	db NPC_MOVEMENT_RIGHT
 	db -1
-	
+
+MoveSpriteButAllowAOrBPress::
+	call MoveSprite
+	ld hl, wJoyIgnore
+	res BIT_B_BUTTON, [hl]
+	res BIT_A_BUTTON, [hl]
+	ret
+
+; d = x coord
+; e = y coord
+; return z if at coords nz if not
+IsPlayerAtCoords::
+	ld a, [wXCoord]
+	cp d
+	ret nz
+	ld a, [wYCoord]
+	cp e
+	ret
+
+EnableSpriteUpdates::
+	ld a, 1
+	jr ChangeUpdateSpritesEnabled
+DisableSpriteUpdates::
+	ld a, $FF
+	; fall through
+ChangeUpdateSpritesEnabled:
+	ld [wUpdateSpritesEnabled], a
+	ret
+
+UpdateSpritesAndDelay3::
+	call UpdateSprites
+	jp Delay3

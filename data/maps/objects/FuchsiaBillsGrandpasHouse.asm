@@ -11,6 +11,7 @@ FuchsiaBillsGrandpasHouse_Object:
 	warp_event  3,  7, LAST_MAP, 2
 
 	def_bg_events
+	bg_event 3, 1, TEXT_FUCHSIABILLSGRANDPASHOUSE_TV
 
 	def_object_events
 	object_event  2,  3, SPRITE_MIDDLE_AGED_WOMAN, STAY, RIGHT, TEXT_FUCHSIABILLSGRANDPASHOUSE_MIDDLE_AGED_WOMAN

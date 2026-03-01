@@ -286,6 +286,7 @@ IsBattleMonGhostCubone:
 ; PureRGBnote: ADDED: This function runs when sending out a pokemon, in case we want to trigger a special event or effect when you
 ; send out every mon or a specific mon. Example: Sending out CUBONE vs THE MAW powers up Cubone.
 CheckOnSendOutSpecialEffect::
+	callfar AutoWakeUpSleepScreechPlayer
 	ld a, [wCurMap]
 	cp POKEMON_TOWER_B1F
 	ret nz

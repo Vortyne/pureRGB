@@ -150,23 +150,23 @@ _FrontSpriteText::
 	cont "option menus."
 	prompt
 
-_FrontSpriteGenericText::
-	text "Choose which front"
-	line "sprite to use for"
-	cont "this #MON."
-	para "RG: Japanese"
-	line "RED/GREEN sprite."
-	para "RB: International"
-	line "RED/BLUE sprite."
-	para "Y: YELLOW version"
-	line "sprite."
-	para "SW: Spaceworld 97"
-	line "sprite."
-	para "Some sprites have"
-	line "been tweaked a"
-	cont "bit visually from"
-	cont "their originals."
-	prompt
+;_FrontSpriteGenericText::
+;	text "Choose which front"
+;	line "sprite to use for"
+;	cont "this #MON."
+;	para "RG: Japanese"
+;	line "RED/GREEN sprite."
+;	para "RB: International"
+;	line "RED/BLUE sprite."
+;	para "Y: YELLOW version"
+;	line "sprite."
+;	para "SW: Spaceworld 97"
+;	line "sprite."
+;	para "Some sprites have"
+;	line "been tweaked a"
+;	cont "bit visually from"
+;	cont "their originals."
+;	prompt
 
 _VolcanoInfoText::
 	text "If ON, a new cave"
@@ -183,17 +183,55 @@ _VolcanoInfoText::
 	cont "other new events."
 	prompt
 
-;_MoveMysticInfoText::
-;	text "If ON, a few"
-;	line "#MON will get"
-;	cont "additional power"
-;	cont "or accuracy when"
-;	cont "using specific"
-;	cont "moves."
-;	para "The MOVE MYSTIC"
-;	line "will tell you"
-;	cont "all about these"
-;	cont "signature moves"
-;	cont "at a house in"
-;	cont "SAFFRON CITY."
-;	done
+_LearnsetsInfoText::
+	text "If ON and you"
+	line "have the MOVEDEX,"
+	para "you can unlock"
+	line "learnset info by"
+	cont "raising your"
+	cont "#MON to a high"
+	cont "level or by"
+	cont "talking to other"
+	cont "<TRAINER>s."
+	prompt
+
+_IntroInfoText::
+	text "You can skip the"
+	line "intro animation"
+	cont "when booting up"
+	cont "the game."
+	prompt
+
+_FlashingInfoText::
+	text "If LESS, flashing"
+	line "animations will"
+	cont "be reduced."
+	prompt
+
+_UnitsInfoText::
+	text "Switch between"
+	line "metric / imperial"
+	cont "units used in the"
+	cont "#DEX entries."
+	prompt
+
+_CatchupInfoText::
+	text "If ON, clubs in"
+	line "which you can"
+	cont "train low level"
+	cont "#MON to a set"
+	cont "level limit will"
+	cont "show up in:"
+	para "SAFFRON, CELADON,"
+	line "+ VERMILION CITY."
+	para "Won't really be"
+	line "needed unless you"
+	cont "switch #MON in"
+	cont "your team a lot."
+	prompt
+
+_TitleInfoText::
+	text "You can change the"
+	line "title screen to"
+	cont "an updated one."
+	prompt

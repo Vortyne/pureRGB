@@ -14,15 +14,15 @@ PewterNidoranHouseNidoranText:
 	ld a, NIDORAN_M
 	call PlayCry
 	call WaitForSoundToFinish
+.done
+	ld c, DEX_NIDORAN_M - 1
+	callfar SetMonSeen
 	rst TextScriptEnd
 
 PewterNidoranHouseLittleBoyText:
 	text_far _PewterNidoranHouseLittleBoyText
-	text_end
-
-PewterNidoranHouseMiddleAgedManText:
-	text_far _PewterNidoranHouseMiddleAgedManText
-	text_end
+	text_asm
+	jr PewterNidoranHouseNidoranText.done
 
 ; PureRGBnote: ADDED: new NPC who will talk about alternate color palettes if the feature is enabled.
 PewterNidoranHouseMiddleAgedWomanText:
@@ -36,7 +36,7 @@ PewterNidoranHouseMiddleAgedWomanText:
 	ld hl, .TextColor
 .done
 	rst _PrintText
-	rst TextScriptEnd
+	jr PewterNidoranHouseNidoranText.done
 
 .Text
 	text_far _PewterHouse1Text4
@@ -44,4 +44,8 @@ PewterNidoranHouseMiddleAgedWomanText:
 
 .TextColor::
 	text_far _PewterHouse1Text4Color
+	text_end
+
+PewterNidoranHouseMiddleAgedManText:
+	text_far _PewterNidoranHouseMiddleAgedManText
 	text_end

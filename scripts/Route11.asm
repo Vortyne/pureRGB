@@ -68,7 +68,10 @@ Route11Gambler1EndBattleText:
 
 Route11Gambler1AfterBattleText:
 	text_far _Route11Gambler1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_VULPIX, GAMBLER
+	ld de, LearnsetVulpixLuckyNumber
+	predef_jump LearnsetTrainerScript
 
 Route11Gambler2Text:
 	text_asm
@@ -86,7 +89,10 @@ Route11Gambler2EndBattleText:
 
 Route11Gambler2AfterBattleText:
 	text_far _Route11Gambler2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_BELLSPROUT, GAMBLER
+	ld de, LearnsetBellsprout
+	predef_jump LearnsetTrainerScript
 
 Route11Youngster1Text:
 	text_asm
@@ -122,7 +128,10 @@ Route11SuperNerd1EndBattleText:
 
 Route11SuperNerd1AfterBattleText:
 	text_far _Route11SuperNerd1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MAGNETON, ENGINEER
+	ld de, LearnsetMagneton
+	predef_jump LearnsetTrainerScript
 
 Route11Youngster2Text:
 	text_asm
@@ -194,7 +203,11 @@ Route11Youngster3EndBattleText:
 
 Route11Youngster3AfterBattleText:
 	text_far _Route11Youngster3AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_STARYU, YOUNGSTER
+	ld de, LearnsetStaryu
+	predef_jump LearnsetTrainerScript
+
 
 Route11SuperNerd2Text:
 	text_asm

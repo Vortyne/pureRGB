@@ -118,6 +118,8 @@ SSAnne2FRivalAfterBattleScript:
 	call SSAnne2FSetFacingDirectionScript
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
+	ld d, SSANNE2F_RIVAL
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_SSANNE2F_RIVAL_CUT_MASTER
 	ldh [hTextID], a
 	call DisplayTextID

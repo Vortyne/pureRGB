@@ -124,13 +124,18 @@ ErikSarasHouseNoteText:
 	ld hl, .home
 .printDone
 	rst _PrintText
+.done
 	rst TextScriptEnd
 .notHome
 	text_far _ErikSarasHouseNoteNotHomeText
 	text_end
 .home
 	text_far _ErikSarasHouseNoteHomeText
-	text_end
+	text_asm
+	CheckEvent FLAG_DRAGONITE_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_DRATINI
+	jpfar KeepReadingBookLearnset
 
 ErikSarasHousePhoneText:
 	text_far _ErikSarasHousePhoneText
@@ -200,8 +205,22 @@ ErikSarasHouseRightShelfText:
 	text_far _ErikSarasHouseRightBookText
 	text_far _FlippedToARandomPage
 	text_far _ErikSarasHouseRightBookText2
-	text_end
-
+	text_asm
+	; book will teach you about the pokemon you got the fossil for
+	CheckEvent EVENT_GOT_HELIX_FOSSIL
+	jr nz, .omanyte
+	CheckEvent FLAG_KABUTOPS_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_KABUTO
+	jr z, .read
+.omanyte
+	CheckEvent FLAG_OMASTAR_FAMILY_LEARNSET
+	ld d, DEX_OMANYTE
+	jr nz, .done
+.read
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd
 
 ErikSarasHouseOpenBookText: 
 	text_asm
@@ -344,7 +363,7 @@ ErikSarasHouseSaraText:
 	call DoErikSaraFacings
 	CheckEvent EVENT_ERIK_SARA_EXPLAINED_RESEARCH_ONCE
 	jr z, .noFirstQuestion
-	call .doYesNo
+	call YesNoChoice
 	jr nz, .noResearch
 	jr .skipFirstPrompt
 .noFirstQuestion
@@ -353,7 +372,7 @@ ErikSarasHouseSaraText:
 	SetEvent EVENT_ERIK_SARA_EXPLAINED_RESEARCH_ONCE
 	ld hl, .researchExp
 	rst _PrintText
-	call .doYesNo
+	call YesNoChoice
 	jr z, .noSeafoamInfo
 	ld hl, .seafoamInfo
 	rst _PrintText
@@ -373,7 +392,7 @@ ErikSarasHouseSaraText:
   	jr nc, .done
   	ld hl, .perfectDragonair
   	rst _PrintText
-  	call .doYesNo
+  	call YesNoChoice
   	ld hl, .suitYourself
   	jr nz, .printDone
   	ld a, [wWhichPokemon]
@@ -399,11 +418,6 @@ ErikSarasHouseSaraText:
 	rst _PrintText
 .done
 	rst TextScriptEnd
-.doYesNo
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	ret
 .welcomeSara
 	text_far _SaraHouseIntroText
 	text_end
@@ -543,4 +557,10 @@ ErikSarasHouseAfterEventText:
 
 ErikSarasHouseSecondNoteText:
 	text_far _ErikSarasHouseSecondNoteText
-	text_end
+	text_asm
+	CheckEvent FLAG_DRAGONITE_FAMILY_LEARNSET
+	jr nz, .done
+	ld d, DEX_DRAGONAIR
+	jpfar KeepReadingBookLearnset
+.done
+	rst TextScriptEnd

@@ -19,7 +19,7 @@ ENDM
 	music_const MUSIC_MEET_PROF_OAK,       Music_MeetProfOak
 	music_const MUSIC_MEET_RIVAL,          Music_MeetRival
 	music_const MUSIC_MUSEUM_GUY,          Music_MuseumGuy
-	music_const MUSIC_SAFARI_ZONE,         Music_SafariZone
+	music_const MUSIC_EVOLUTION,           Music_Evolution
 	music_const MUSIC_PKMN_HEALED,         Music_PkmnHealed
 	music_const MUSIC_ROUTES1,             Music_Routes1
 	music_const MUSIC_ROUTES2,             Music_Routes2
@@ -251,3 +251,4 @@ DEF SFX_STOP_ALL_MUSIC EQU $ff
 	const MUSIC_SECRET_LAB1
 	const MUSIC_SECRET_LAB2
 	const MUSIC_HERE_COMES_TEAM_GR
+	const MUSIC_SAFARI_ZONE_EXPANDED

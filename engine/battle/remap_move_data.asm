@@ -1,5 +1,6 @@
 ; PureRGBnote: ADDED: Certain moves get better accuracy, power, or other effects when used by specific pokemon
 ; Also this list can be used to modify a move's data such as power/accuracy after selecting it based on the current state of battle.
+; TODO: make multiple pokemon able to receive remap for the same move
 CheckRemapMoveData::
 	call GetMoveRemapData
 	push de
@@ -12,6 +13,9 @@ CheckRemapMoveData::
 	ld a, [hl]
 	cp -1
 	jr z, .donePokemonCheck
+	; the move has a specific pokemon required (it is a signature move)
+	CheckEvent FLAG_SIGNATURE_MOVES_TURNED_OFF
+	ret nz
 	ld a, d
 	cp VOLCANIC_MAGMAR
 	jr nz, .notVolcanicMagmar
@@ -78,6 +82,10 @@ RemappableMoves::
 	db EXPLOSION, -1, -2, 2
 	db SELFDESTRUCT, -1, -2, 2
 	db KINESIS, -1, -2, 3 ; FIREWALL
+	db TOXIC, -1, -2, 4
+	db SKULL_BASH, -1, -2, 5
+	db SLAM, -1, -2, 6 ; FILTHY SLAM
+	; signature moves start here
 	db POISON_STING, BEEDRILL, 45, 0
 	db TWINEEDLE, BEEDRILL, 65, 0 
 	db ACID, ARBOK, 100, 0
@@ -94,6 +102,9 @@ RemappableMoves::
 	db DIZZY_PUNCH, KANGASKHAN, 130, 0
 	db LICK, LICKITUNG, 70, 0
 	db SPIKE_CANNON, OMASTAR, 70, 0
+	db FIRE_BLAST, ARCANINE, -1, 100 percent
+	db BLIZZARD, DEWGONG, -1, 100 percent
+	db PSYBEAM, GOLDUCK, 105, 0
 	db -1
 
 ModifierFuncs:
@@ -101,8 +112,12 @@ ModifierFuncs:
 	dw SingModifier
 	dw ExplosionSelfdestructModifier
 	dw FirewallModifier
+	dw ToxicModifier
+	dw SkullBashModifier
+	dw FilthySlamModifier
 
 CheckIfAsleep::
+GetOpponentStatus::
 	ldh a, [hWhoseTurn]
 	and a
 	ld bc, wEnemyMonStatus
@@ -133,6 +148,8 @@ DoubleSlapModifierPart2::
 	ret
 
 SingModifier::
+	CheckEvent FLAG_SIGNATURE_MOVES_TURNED_OFF
+	ret nz
 	call GetMoveRemapData
 	ld a, d
 	cp WIGGLYTUFF
@@ -258,4 +275,49 @@ GetRemappedMoveAndPowerFromPokemon::
 	inc hl
 	inc hl
 	ld e, [hl] ; move remapped power
+	ret
+
+GetUserType:
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wBattleMonType1
+	ret z
+	ld hl, wEnemyMonType1
+	ret
+
+ToxicModifier:
+	call GetUserType
+	ld a, [hli]
+	cp POISON
+	jr z, Modifier100Accuracy
+	ld a, [hl]
+	cp POISON
+	ret nz
+	; fall through
+Modifier100Accuracy:
+	call GetMoveRemapData2
+	ld a, 100 percent
+	ld [de], a
+	ret
+
+SkullBashModifier:
+	call GetUserType
+	ld a, [hli]
+	cp ROCK
+	jr z, Modifier100Accuracy
+	cp CRYSTAL
+	jr z, Modifier100Accuracy
+	ld a, [hl]
+	cp ROCK
+	jr z, Modifier100Accuracy
+	cp CRYSTAL
+	ret nz
+	jr Modifier100Accuracy
+
+FilthySlamModifier::
+	call GetOpponentStatus
+	ld a, [bc]
+	bit PSN, a
+	ret z
+	ld [hl], 130 ; increase filthy slam power to 130 if opponent poisoned
 	ret

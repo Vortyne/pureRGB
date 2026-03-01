@@ -153,8 +153,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	call ClearScreenArea
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	call ClearSprites
 	callfar EvolveMon
 	jp c, CancelledEvolution
@@ -165,11 +164,8 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld [wCurSpecies], a
 	ld [wLoadedMonSpecies], a
 	ld [wEvoNewSpecies], a
-	ld a, MONSTER_NAME
-	ld [wNameListType], a
-	ld a, BANK(TrainerNames) ; bank is not used for monster names
-	ld [wPredefBank], a
-	call GetName
+	ld [wNamedObjectIndex], a
+	call GetMonName
 	push hl
 	ld hl, IntoText
 	call PrintText_NoCreatingTextBox
@@ -323,7 +319,8 @@ RenameEvolvedMon:
 	push af
 	ld a, [wMonHIndex]
 	ld [wNameListIndex], a
-	call GetName
+	ld [wNamedObjectIndex], a
+	call GetMonName
 	pop af
 	ld [wCurSpecies], a
 	ld hl, wNameBuffer
@@ -341,7 +338,9 @@ RenameEvolvedMon:
 	ld hl, wPartyMonNicks
 	call AddNTimes
 	push hl
-	call GetName
+	push bc
+	call GetMonName
+	pop bc
 	ld hl, wNameBuffer
 	pop de
 	jp CopyData
@@ -398,7 +397,7 @@ LearnMoveFromLevelUp:
 .learnSetLoop ; loop over the learn set until we reach a move that is learnt at the current level or the end of the list
 	ld a, [hli]
 	and a ; have we reached the end of the learn set?
-	jr z, .done ; if we've reached the end of the learn set, jump
+	jr z, .checkLearnsetUnlock ; if we've reached the end of the learn set, jump
 	ld b, a ; level the move is learnt at
 	ld a, [wCurEnemyLevel]
 	cp b ; is the move learnt at the mon's current level?
@@ -437,12 +436,55 @@ LearnMoveFromLevelUp:
 .movesloop_done
 	pop hl
 	jr .learnSetLoop
-	
-	
+.checkLearnsetUnlock
+;;;;;; PureRGBnote: ADDED: we will check if the pokemon learned its last move, if so, unlock its learnset
+	call .done
+	dec hl
+	dec hl
+	dec hl ; return to level of final move learned in moveset NOTE: assumes last move is highest level move
+	ld b, [hl]
+	ld hl, NoLearnsetMons 
+	ld c, a ; current pokemon's species
+	; some pokemon don't learn anything and are pre-evolutions so "mastering" them right away would be dumb
+	; instead they must evolve before being mastered
+.loopNoLearnsetMons
+	ld a, [hli]
+	cp c
+	jr z, .done
+	cp -1
+	jr nz, .loopNoLearnsetMons
+.continue
+	ld a, [wCurEnemyLevel]
+	cp b
+	jr c, .done
+	predef IndexToPokedex
+	callfar IsPokemonLearnsetUnlockedDirect
+	jr nz, .done ; already unlocked
+	call AreLearnsetsEnabled
+	jr z, .done ; don't print any text if movedex not unlocked, just mark learnset unlocked in case they get the movedex later	
+	callfar SetPokemonLearnsetUnlocked
+	call .done
+	call GetMonName
+	ld hl, YoureAnExpertText
+	rst _PrintText
+	ld hl, LearnsetUnlockedText
+	rst _PrintText
+	call DisplayTextPromptButton
+;;;;;;
 .done
 	ld a, [wCurPartySpecies]
 	ld [wPokedexNum], a
 	ret
+
+NoLearnsetMons:
+	db DITTO
+	db MAGIKARP
+	db CATERPIE
+	db METAPOD
+	db WEEDLE
+	db KAKUNA
+	db ABRA
+	db -1
 
 ; PureRGBnote: ADDED: used to force the eeveelutions to learn a specific move on evolution so this move cannot be missed
 EeveelutionForceLearnMove:
@@ -610,5 +652,14 @@ WriteMonMoves_ShiftMoveData:
 
 Evolution_FlagAction:
 	predef_jump FlagActionPredef
+
+
+YoureAnExpertText:
+	text_far _YoureAnExpertText
+	text_end
+
+LearnsetUnlockedText:
+	text_far _LearnsetUnlockedText
+	text_end
 
 INCLUDE "data/pokemon/evos_moves.asm"

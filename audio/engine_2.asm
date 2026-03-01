@@ -372,10 +372,10 @@ Audio2_StopAllAudio::
 	ldh [rNR44], a
 	ld a, $77
 	ldh [rNR50], a
-	xor a
+	call ResumeMusic
+	; a = 0 after ResumeMusic
 	;ld [wUnusedMusicByte], a
 	ld [wDisableChannelOutputWhenSfxEnds], a
-	ld [wMuteAudioAndPauseMusic], a
 	ld [wMusicTempo + 1], a
 	ld [wSfxTempo + 1], a
 	ld [wMusicWaveInstrument], a

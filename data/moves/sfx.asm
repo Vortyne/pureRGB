@@ -127,7 +127,7 @@ MoveSoundTable:
 	db SFX_BATTLE_2A,          $20, $20 ; SLUDGE
 	db SFX_BATTLE_32,          $00, $80 ; BONE_CLUB
 	db SFX_BATTLE_29,          $1f, $20 ; FIRE_BLAST
-	db SFX_BATTLE_25,          $2f, $80 ; WATERFALL ; unused sfx
+	db SFX_BATTLE_2C,          $ff, $00 ; WATERFALL ; actually used for MIST
 	db SFX_BATTLE_0F,          $1f, $ff ; CLAMP
 	db SFX_BATTLE_2B,          $1f, $60 ; SWIFT
 	db SFX_BATTLE_26,          $1e, $20 ; SKULL_BASH
@@ -142,7 +142,7 @@ MoveSoundTable:
 	db SFX_BATTLE_2E,          $32, $40 ; POISON_GAS
 	db SFX_BATTLE_32,          $08, $e0 ; BARRAGE
 	db SFX_BATTLE_24,          $00, $80 ; LEECH_LIFE
-	db SFX_BATTLE_2C,          $ff, $00 ; LOVELY_KISS ; actually used for MIST
+	db SFX_BATTLE_09,          $00, $80 ; LOVELY_KISS 
 	db SFX_BATTLE_25,          $48, $ff ; SKY_ATTACK
 	db SFX_FAINT_FALL,         $ff, $ff ; TRANSFORM
 	db SFX_BATTLE_24,          $ff, $10 ; BUBBLE

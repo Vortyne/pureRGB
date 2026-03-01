@@ -288,7 +288,10 @@ PlaySpecialFieldMusic3::
 	ld b, 3
 	ld a, MUSIC_OAKS_LAB
 	ld d, BANK(Music_OaksLab)
-	jr PlaySpecialBattleMusic.playSpecialMusic
+	call PlaySpecialBattleMusic.playSpecialMusic
+	ld a, MUSIC_OAKS_LAB
+	ld [wLastMusicSoundID], a
+	ret	
 
 	; input hl = audio header
 	; c = bank the music is in
@@ -296,7 +299,10 @@ PlaySpecialFieldMusic::
 	ld b, 4
 	ld a, MUSIC_CINNABAR_MANSION
 	ld d, BANK(Music_CinnabarMansion)
-	jr PlaySpecialBattleMusic.playSpecialMusic
+	call PlaySpecialBattleMusic.playSpecialMusic
+	ld a, MUSIC_CINNABAR_MANSION
+	ld [wLastMusicSoundID], a
+	ret
 
 	; input hl = audio header
 	; c = bank the music is in
@@ -374,8 +380,7 @@ PlayBattleSFXWhenNotInBattleWithMods::
 ; hl = what code to run while the sound is playing
 ; by definition map music can't be playing while the sound effect is
 PlayBattleSFXWhenNotInBattle::
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK("Audio Engine 2")
@@ -388,8 +393,99 @@ PlayBattleSFXWhenNotInBattle::
 	call WaitForSoundToFinish
 	pop af
 	ld [wAudioROMBank], a
+	jp ResumeMusic
+
+;;;;;;;;;;
+
+HalfVolume::
+  	ld a, [wStatusFlags2]
+  	set BIT_NO_AUDIO_FADE_OUT, a
+  	ld [wStatusFlags2], a
+	ld a, $33 ; 3/7 volume
+	ldh [rNR50], a
+	ret
+
+MaxVolume::
+  	ld a, [wStatusFlags2]
+  	res BIT_NO_AUDIO_FADE_OUT, a
+  	ld [wStatusFlags2], a
+	ld a, $77 ; max volume
+	ldh [rNR50], a
+	ret
+
+StopChannel8:
+	ld de, EndSound
+	call PlayNewSoundChannel8
+	rst _DelayFrame
+
+StopSFXChannels::
+	xor a
+	ld hl, wChannelSoundIDs + CHAN5
+	ld bc, 4
+	jp FillMemory
+
+ResetSFXModifiers::
+	xor a
+	ld [wFrequencyModifier], a
+	ld [wTempoModifier], a
+	ret
+
+PlaySoundResetSFXModifiers::
+	push af
+	call ResetSFXModifiers
+	pop af
+	rst _PlaySound
+	ret
+
+; only call this function, it expected to be called not jumped to
+ResetModifiersMuteAudioAndChangeAudioBank::
+	call ResetSFXModifiers
+; only call this function, it expected to be called not jumped to ; TODO: use this
+MuteAudioAndChangeAudioBank::
+	call PauseMusic
+	ld a, [wAudioROMBank]
+	pop hl
+	push af
+	push hl
+	ld a, b
+	ld [wAudioROMBank], a
+	ret
+
+; only call this function, it expected to be called not jumped to
+UnmuteAudioAndRestoreAudioBank::
+	pop hl
+	pop af
+	ld [wAudioROMBank], a
+	call ResumeMusic
+	push hl
+	ret
+
+PauseMusic::
+	ld a, 1
+	ld [wMuteAudioAndPauseMusic], a
+	ret
+
+ResumeMusic::
 	xor a
 	ld [wMuteAudioAndPauseMusic], a
 	ret
 
-;;;;;;;;;;
+PlaySoundOverrideCurrent::
+	push af
+	push hl
+	push bc
+	call StopSFXChannels
+	pop bc
+	pop hl
+	pop af
+	rst _PlaySound
+	ret
+
+PlayDefaultMusicWithExtraCheck::
+	ld a, [wCurMapConnections]
+	bit BIT_EXTRA_MUSIC_MAP, a
+	jp z, PlayDefaultMusic
+	xor a
+	ld [wReplacedMapMusic], a
+	ld d, 1
+	jpfar TryPlayExtraMusic

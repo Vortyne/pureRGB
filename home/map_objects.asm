@@ -130,9 +130,19 @@ CheckBoulderCoords::
 	pop hl
 	jp CheckCoords
 
+GetFromSpriteStateData1::
+	ld a, c
+	ld h, HIGH(wSpriteStateData1)
+	jr _GetPointerWithinSpriteStateData.next
+
 GetPointerWithinSpriteStateData1::
 	ld h, HIGH(wSpriteStateData1)
 	jr _GetPointerWithinSpriteStateData
+
+GetFromSpriteStateData2::
+	ld a, c
+	ld h, HIGH(wSpriteStateData2)
+	jr _GetPointerWithinSpriteStateData.next
 
 GetPointerWithinSpriteStateData2::
 	ld h, HIGH(wSpriteStateData2)
@@ -141,6 +151,7 @@ _GetPointerWithinSpriteStateData:
 	ldh a, [hSpriteDataOffset]
 	ld b, a
 	ldh a, [hSpriteIndex]
+.next
 	swap a
 	add b
 	ld l, a

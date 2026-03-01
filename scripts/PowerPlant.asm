@@ -131,7 +131,7 @@ PowerPlantCheckStandingOnButton:
 ; when standing close to the electricity a sound effect plays
 PowerPlantOverworldSFX::
 	ld hl, wAudioFlags
-	bit 0, [hl]
+	bit BIT_WAITING_FOR_SOUND_TO_FINISH, [hl]
 	ret nz ; don't play the sound if we're waiting for sounds to finish currently or it'll wait forever
 	CheckBothEventsSet EVENT_PRESSED_POWER_PLANT_SWITCH1, EVENT_PRESSED_POWER_PLANT_SWITCH2
 	jr nz, .notAllDone
@@ -348,8 +348,7 @@ PowerPlantVoltorb6Text:
 PowerPlantZapdosText:
 	text_far _PowerPlantZapdosBattleText
 	text_asm
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, ZAPDOS
 	call PlayCry
 	; zapdos absorbs electricity
@@ -399,6 +398,7 @@ ZapdosAbsorbAnimation:
 	ld a, POWERPLANT_ZAPDOS
 	call SetSpriteFacingDown
 	call UpdateSprites
+	rst _DelayFrame
 	ld de, vNPCSprites tile $0C
 	callfar FarOpenBirdSpriteWings
 	ld a, SFX_BATTLE_25
@@ -520,8 +520,7 @@ ZapdosAbsorbAnimation:
 	lb bc, BANK(PokeBallSprite), 4
 	call CopyVideoData
 	; reset to original script
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld a, TEXT_ZAPDOS_FLEW_AWAY
 	ldh [hTextID], a
 	call DisplayTextID
@@ -659,8 +658,7 @@ MagnetonSuperchargeAnimation:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	ret nz ; wait for player to finish walking
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	; make player face up
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
@@ -694,8 +692,7 @@ MagnetonSuperchargeAnimation:
 	ld a, TEXT_MAGNETON_WAS_SUPERCHARGED
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	ld c, 60
 	rst _DelayFrames
 	call .doBallPoof

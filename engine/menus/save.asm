@@ -1,8 +1,5 @@
 LoadSAV:
 ; if carry, write "the file data is destroyed"
-	call ClearScreen
-	call LoadFontTilePatterns
-	call LoadTextBoxTilePatterns
 	call LoadSAV0
 	jr c, .badsum
 	call LoadSAV1
@@ -157,9 +154,7 @@ SaveSAV:
 	ret nz
 .save
 	call SaveSAVtoSRAM
-	hlcoord 1, 13
-	lb bc, 4, 18
-	call ClearScreenArea
+	call ClearTextBox
 	hlcoord 1, 14
 	ld hl, GameSavedText
 	rst _PrintText
@@ -197,14 +192,6 @@ SaveSAVtoSRAM0:
 	ld a, $1
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamBank], a
-;;;;;;;;;; PureRGBnote: ADDED: duplicates of options variables in SRAM. These are loaded on boot of the game for instant options-efficacy.
-	ld a, [wOptions2]
-	ld [sOptions2], a
-	ld a, [wSpriteOptions]
-	ld [sSpriteOptions], a
-	ld a, [wSpriteOptions3]
-	ld [sSpriteOptions3], a
-;;;;;;;;;;
 	ld hl, wPlayerName
 	ld de, sPlayerName
 	ld bc, NAME_LENGTH
@@ -386,6 +373,9 @@ ChangeBox::
 	call z, EmptyAllSRAMBoxes ; if so, empty all boxes in SRAM
 	callfar DisplayChangeBoxMenu
 	call UpdateSprites
+	ld a, 1
+	ldh [hJoy7], a
+	ld [wMenuWrappingEnabled], a
 	ld hl, hUILayoutFlags
 	set BIT_DOUBLE_SPACED_MENU, [hl]
 	call HandleMenuInput
@@ -393,17 +383,9 @@ ChangeBox::
 	res BIT_DOUBLE_SPACED_MENU, [hl]
 	bit BIT_B_BUTTON, a
 	jr nz, .done
-	call GetBoxSRAMLocation
-	ld e, l
-	ld d, h
-	ld hl, wBoxDataStart
-	call CopyBoxToOrFromSRAM ; copy old box from WRAM to SRAM
 	ld a, [wCurrentMenuItem]
-	set BIT_HAS_CHANGED_BOXES, a
-	ld [wCurrentBoxNum], a
-	call GetBoxSRAMLocation
-	ld de, wBoxDataStart
-	call CopyBoxToOrFromSRAM ; copy new box from SRAM to WRAM
+	ld d, a
+	call ChangeBoxData
 	ld hl, wCurMapTextPtr
 	ld de, wChangeBoxSavedMapTextPointer
 	ld a, [hli]
@@ -419,9 +401,27 @@ ChangeBox::
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 .done
+	xor a
+	ldh [hJoy7], a
 	pop af
 	ld [wStatusFlags5], a
 	ret
+
+ChangeBoxData::
+	push de
+	call GetBoxSRAMLocation
+	ld e, l
+	ld d, h
+	ld hl, wBoxDataStart
+	call CopyBoxToOrFromSRAM ; copy old box from WRAM to SRAM
+	pop de
+	ld a, d
+	set BIT_HAS_CHANGED_BOXES, a
+	ld [wCurrentBoxNum], a
+	call GetBoxSRAMLocation
+	ld de, wBoxDataStart
+	jp CopyBoxToOrFromSRAM ; copy new box from SRAM to WRAM
+
 
 WhenYouChangeBoxText:
 	text_far _WhenYouChangeBoxText

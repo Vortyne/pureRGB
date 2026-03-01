@@ -116,7 +116,6 @@ TestBattle: ; unreferenced except in _DEBUG
 
 	; When the battle ends, do it all again.
 	; There are some graphical quirks in SGB mode.
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	ldh [hAutoBGTransferEnabled], a
 	jr .loop

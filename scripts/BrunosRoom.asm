@@ -105,10 +105,14 @@ BrunosRoomBrunoEndBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jr z, ResetBrunoScript
-	call DoEliteFourFacing
+	ld d, BRUNOSROOM_BRUNO
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_BRUNOSROOM_BRUNO
 	ldh [hTextID], a
 	call DisplayTextID
+	ld a, BRUNOSROOM_BRUNO
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 ;;;;;;;;;; PureRGBnote: ADDED: sound effect for the doors opening
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound

@@ -30,7 +30,7 @@ _CinnabarLabFossilRoomScientist1FossilIsBackToLifeText::
 	line "back to life!"
 
 	para "It was @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text_start
 	line "like I think!"
 	prompt
@@ -38,12 +38,12 @@ _CinnabarLabFossilRoomScientist1FossilIsBackToLifeText::
 _CinnabarLabFossilRoomScientist1SeesFossilText::
 	text "Oh! That is"
 	line "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 
 	para "It is fossil of"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text ", a"
 	cont "#MON that is"
 	cont "already extinct!"
@@ -60,7 +60,7 @@ _CinnabarLabFossilRoomScientist1TakesFossilText::
 
 	para "<PLAYER> handed"
 	line "over @"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	prompt
 

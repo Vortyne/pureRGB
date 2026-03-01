@@ -29,6 +29,7 @@ CeruleanCity_Object:
 	warp_event  15, 11, CERULEAN_OLD_ROD_HOUSE, 3
 	warp_event  15,  9, CERULEAN_OLD_ROD_HOUSE, 1
 	warp_event  37, 11, CERULEAN_ROCKET_HOUSE_1F, 1
+	warp_event  31, 25, CERULEAN_BALL_DESIGNER, 1
 
 	def_bg_events
 	bg_event 23, 19, TEXT_CERULEANCITY_SIGN

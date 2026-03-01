@@ -78,7 +78,6 @@ CheckMonNickNameDefault::
 	ld a, d
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	ld de, wNameBuffer
 	call .getNick
 	push hl
 .loop
@@ -95,7 +94,6 @@ CheckMonNickNameDefault::
 	ld a, [wCurPartySpecies]
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	ld de, wNameBuffer
 	pop hl
 .loop2
 	ld a, [de]

@@ -29,6 +29,8 @@ SaffronGymSabrinaPostBattle:
 	ld [wJoyIgnore], a
 
 SaffronGymSabrinaReceiveTM46Script:
+	ld d, SAFFRONGYM_SABRINA
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_SAFFRONGYM_SABRINA_MARSH_BADGE_INFO
 	ldh [hTextID], a
 	call DisplayTextID
@@ -48,12 +50,13 @@ SaffronGymSabrinaReceiveTM46Script:
 .gymVictory
 	ld hl, wObtainedBadges
 	set BIT_MARSHBADGE, [hl]
-	ld hl, wBeatGymFlags
-	set BIT_MARSHBADGE, [hl]
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6
 
+	ld a, SAFFRONGYM_SABRINA
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp SaffronGymResetScripts
 
 SaffronGym_TextPointers:
@@ -253,6 +256,7 @@ SaffronGymGuideApexChipPsychicText:
 	text_end
 
 SaffronGymGuideChampInMakingText:
+	text_far _GymGuideChampInMakingText
 	text_far _SaffronGymGuideChampInMakingText
 	text_end
 

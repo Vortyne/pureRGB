@@ -4,10 +4,16 @@ _PokemonFanClubPikachuFanNormalText::
 	cont "adorable tail?"
 	done
 
-_PokemonFanClubPikachuFanBetterText::
+_PokemonFanClubPikachuFanYoursText::
 	text "Humph! My PIKACHU"
 	line "is twice as cute"
-	cont "as that one!"
+	cont "as yours!"
+	done
+
+_PokemonFanClubPikachuFanBetterText::
+	text "Pfft, my PIKACHU"
+	line "is way cuter"
+	cont "than her SEEL!"
 	done
 
 _PokemonFanClubSeelFanNormalText::
@@ -19,10 +25,17 @@ _PokemonFanClubSeelFanNormalText::
 	done
 
 _PokemonFanClubSeelFanBetterText::
+	text "His PIKACHU pales"
+	line "in comparison to"
+	cont "my beautiful SEEL!"
+	done
+
+_PokemonFanClubSeelFanYoursText::
 	text "Oh dear!"
 
 	para "My SEEL is far"
-	line "more attractive!"
+	line "more attractive"
+	cont "than yours!"
 	done
 
 _PokemonFanClubPikachuText::
@@ -135,4 +148,17 @@ _PokemonFanClubSign1Text::
 _PokemonFanClubSign2Text::
 	text "If someone brags,"
 	line "brag right back!"
+	done
+
+_PokemonFanClubChairMoreText::
+	text "Oh, <PLAYER>!"
+	para "Want to hear"
+	line "another story"
+	cont "about my RAPIDASH?"
+	done
+
+_PokemonFanClubChairLongOne::
+	text "Okay, get ready!"
+	para "This is a long"
+	line "story!"
 	done

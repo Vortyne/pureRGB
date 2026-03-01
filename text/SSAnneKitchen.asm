@@ -43,7 +43,7 @@ _SSAnneKitchenCook7MainCourseIsText::
 	text "Er-hem! Indeed I"
 	line "am le CHEF!"
 
-	para "Le main course is"
+	para "Le main course is:"
 	prompt
 
 SSAnneKitchenCook7SalmonDuSaladText::

@@ -766,7 +766,6 @@ TradeCenter_Trade:
 	ld bc, wEnemyMon1Flags - wEnemyMon1
 	add hl, bc
 	ld a, [hl]
-	and 1
 	ld [wIsAltPalettePkmnData], a ; should the received pokemon be shown as having an alt palette
 	ld bc, wEnemyMon1OTID - wEnemyMon1Flags
 ;;;;;;;;;;
@@ -817,9 +816,9 @@ TradeCenter_Trade:
 	ld [wTradedEnemyMonSpecies], a
 	ld a, 10
 	ld [wAudioFadeOutControl], a
-	ld a, BANK(Music_SafariZone)
+	ld a, BANK(Music_Evolution)
 	ld [wAudioSavedROMBank], a
-	ld a, MUSIC_SAFARI_ZONE
+	ld a, MUSIC_EVOLUTION
 	; TODO: playmusic?
 	ld [wNewSoundID], a
 	rst _PlaySound

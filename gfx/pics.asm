@@ -332,7 +332,6 @@ TentacoolPicBackSW::  INCBIN "gfx/pokemon/back_sw/tentacoolb.pic"
 GastlyPicFront::      INCBIN "gfx/pokemon/front/gastly.pic"
 GastlyPicBackSW::     INCBIN "gfx/pokemon/back_sw/gastlyb.pic"
 ScytherPicFront::     INCBIN "gfx/pokemon/front/scyther.pic"
-ScytherPicBackSW::    INCBIN "gfx/pokemon/back_sw/scytherb.pic"
 StaryuPicFront::      INCBIN "gfx/pokemon/front/staryu.pic"
 StaryuPicBackSW::     INCBIN "gfx/pokemon/back_sw/staryub.pic"
 BlastoisePicFront::   INCBIN "gfx/pokemon/front/blastoise.pic"
@@ -373,6 +372,7 @@ VaporeonPicFront::    INCBIN "gfx/pokemon/front/vaporeon.pic"
 VaporeonPicBackSW::   INCBIN "gfx/pokemon/back_sw/vaporeonb.pic"
 MukPicFront::          INCBIN "gfx/pokemon/front/muk.pic"
 MukPicBackSW::         INCBIN "gfx/pokemon/back_sw/mukb.pic"
+DragonairPicBackSW::  INCBIN "gfx/pokemon/back_sw/dragonairb.pic"
 
 SECTION "Pics 8", ROMX, BANK[PICS_8]
 
@@ -421,7 +421,7 @@ WeepinbellPicBackSW::  INCBIN "gfx/pokemon/back_sw/weepinbellb.pic"
 VictreebelPicFront::   INCBIN "gfx/pokemon/front/victreebel.pic"
 VictreebelPicBackSW::  INCBIN "gfx/pokemon/back_sw/victreebelb.pic"
 DragonairPicFront::   INCBIN "gfx/pokemon/front/dragonair.pic"
-DragonairPicBackSW::  INCBIN "gfx/pokemon/back_sw/dragonairb.pic"
+ScytherPicBackSW::    INCBIN "gfx/pokemon/back_sw/scytherb.pic"
 
 MissingnoPicFront::    INCBIN "gfx/pokemon/front/missingno.pic"
 MissingnoPicBackSW::   INCBIN "gfx/pokemon/back_sw/missingnob.pic"
@@ -591,6 +591,10 @@ ArmoredMewtwoPicFront:: INCBIN "gfx/pokemon/front/armored_mewtwo.pic"
 ArmoredMewtwoPicBackSW:: INCBIN "gfx/pokemon/back_sw/armored_mewtwob.pic"
 ArmoredMewtwoPicFrontAlt:: INCBIN "gfx/pokemon/front_alt/armored_mewtwo.pic"
 
+WinterDragonairPicBackSW:: INCBIN "gfx/pokemon/back_sw/winter_dragonairb.pic"
+VolcanicMagmarPicBack:: INCBIN "gfx/pokemon/back/volcanic_magmarb.pic"
+WinterDragonairPicBack:: INCBIN "gfx/pokemon/back/winter_dragonairb.pic"
+
 ; used elsewhere
 KidPic::           INCBIN "gfx/unused_prototype_sprites/cool_kid.pic"
 FireFighterPic::   INCBIN "gfx/unused_prototype_sprites/firefighter.pic"
@@ -600,6 +604,9 @@ RookiePic::        INCBIN "gfx/unused_prototype_sprites/rookie.pic"
 SoldierPic::       INCBIN "gfx/unused_prototype_sprites/soldier.pic"
 ChiefPic::         INCBIN "gfx/unused_prototype_sprites/chief.pic"
 GymGuidePic::      INCBIN "gfx/unused_prototype_sprites/gym_guide.pic"
+FitnessGirlPic::   INCBIN "gfx/unused_prototype_sprites/fitness_girl.pic"
+SprinterPic::      INCBIN "gfx/unused_prototype_sprites/sprinter.pic"
+FistFighterPic::   INCBIN "gfx/unused_prototype_sprites/fist_fighter.pic"
 
 SECTION "Pics 11", ROMX
 
@@ -684,4 +691,43 @@ PowerPlantStormTiles:: INCBIN "gfx/overworld/storm.2bpp"
 VerticalPipeTiles:: INCBIN "gfx/overworld/vertical_pipe.2bpp"
 HyperBeamBubble:: INCBIN "gfx/overworld/bubble.2bpp"
 ApexPrompt:: INCBIN "gfx/font/apex.1bpp"
+StatExpPrompt:: INCBIN "gfx/font/stat_exp.1bpp"
 IceCrystalLarge:: INCBIN "gfx/overworld/ice_crystal_large.2bpp"
+LearnsetMenuUI2BPP:: INCBIN "gfx/pokedex/learnset_menu_2bpp.2bpp"
+LearnsetMenuUI1BPP:: INCBIN "gfx/pokedex/learnset_menu_1bpp.1bpp"
+MetricGraphics:: INCBIN "gfx/pokedex/metric.1bpp"
+DojoBetaTiles:: INCBIN "gfx/unused_prototype_sprites/dojo_beta.2bpp"
+BallAnimTiles:: INCBIN "gfx/battle/ball_anim.2bpp"
+WildDataArrows:: INCBIN "gfx/town_map/wild_data_arrows.1bpp"
+WildDataShoe:: INCBIN "gfx/town_map/shoe.2bpp"
+
+GrimerPeekingSprite:: INCBIN "gfx/sprites/grimer_peeking.2bpp"
+
+SECTION "Extra Tiles", ROMX
+
+HouseBetaTiles:: INCBIN "gfx/unused_prototype_sprites/house_beta.2bpp"
+SmallPCPic:: INCBIN "gfx/overworld/small_pc.2bpp"
+MewBubbleTiles:: INCBIN "gfx/overworld/mew_bubble.2bpp"
+SiphonSnagTiles:: INCBIN "gfx/battle/siphon_snag.2bpp"
+
+SECTION "Camera Pics", ROMX
+
+; order of these matters
+CustomPokeballCameraPics::
+PokemonBreederCameraPic:: INCBIN "gfx/camera/pokemon_breeder.2bpp"
+PsyduckCameraPic:: INCBIN "gfx/camera/psyduck.2bpp"
+FlareonCameraPic:: INCBIN "gfx/camera/flareon.2bpp"
+JigglypuffCameraPic:: INCBIN "gfx/camera/jigglypuff.2bpp"
+JolteonCameraPic:: INCBIN "gfx/camera/jolteon.2bpp"
+PorygonCameraPic:: INCBIN "gfx/camera/porygon.2bpp"
+FossilCameraPic:: INCBIN "gfx/camera/fossil.2bpp"
+ArticunoCameraPic:: INCBIN "gfx/camera/articuno.2bpp"
+AbraCameraPic:: INCBIN "gfx/camera/abra.2bpp"
+PidgeotCameraPic:: INCBIN "gfx/camera/pidgeot.2bpp"
+GrimerCameraPic:: INCBIN "gfx/camera/grimer.2bpp"
+GastlyCameraPic:: INCBIN "gfx/camera/gastly.2bpp"
+ScytherCameraPic:: INCBIN "gfx/camera/scyther.2bpp"
+LassCameraPic:: INCBIN "gfx/camera/lass.2bpp"
+MankeyCameraPic:: INCBIN "gfx/camera/mankey.2bpp"
+GamblerCameraPic:: INCBIN "gfx/camera/gambler.2bpp"
+DragonairCameraPic:: INCBIN "gfx/camera/dragonair.2bpp"

@@ -22,14 +22,10 @@ WardensHouseWardenText:
 	ld hl, .Gibberish1Text
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .Gibberish3Text
-	jr nz, .refused
+	jr nz, .printDone
 	ld hl, .Gibberish2Text
-.refused
-	rst _PrintText
-	jr .done
+	jr .printDone
 .have_gold_teeth
 	ld hl, .GaveTheGoldTeethText
 	rst _PrintText
@@ -42,17 +38,19 @@ WardensHouseWardenText:
 	rst _PrintText
 	lb bc, HM_STRENGTH, 1
 	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedHM04Text
-	rst _PrintText
+	ld hl, .HM04NoRoomText
+	jr nc, .printDone
 	SetEvent EVENT_GOT_HM04
-	jr .done
+	ld hl, .ReceivedHM04Text
+	jr .printDone
 .got_item
 	ld hl, .HM04ExplanationText
 	rst _PrintText
-	jr .done
-.bag_full
-	ld hl, .HM04NoRoomText
+	CheckEvent EVENT_GOT_HM03
+	ld hl, .HM03AlreadyText
+	jr nz, .printDone
+	ld hl, .HM03ExplanationText
+.printDone
 	rst _PrintText
 .done
 	rst TextScriptEnd
@@ -72,8 +70,6 @@ WardensHouseWardenText:
 .GaveTheGoldTeethText:
 	text_far _WardensHouseWardenGaveTheGoldTeethText
 	sound_get_item_1
-
-.PoppedInHisTeethText: ; unreferenced
 	text_far _WardensHouseWardenTeethPoppedInHisTeethText
 	text_end
 
@@ -92,6 +88,14 @@ WardensHouseWardenText:
 
 .HM04NoRoomText:
 	text_far _WardensHouseWardenHM04NoRoomText
+	text_end
+
+.HM03ExplanationText:
+	text_far _WardensHouseWardenHM03ExplanationText
+	text_end
+
+.HM03AlreadyText:
+	text_far _WardensHouseWardenHM03AlreadyText
 	text_end
 
 WardensHouseDisplayLeftText:

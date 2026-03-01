@@ -180,6 +180,18 @@ _SecretLabComputer2Text::
 _SecretLabComputer3Text::
 	text "SUBJECT MU"
 	line "STATUS: MISSING"
+	para "The computer"
+	line "screen is showing"
+	cont "lots of info"
+	cont "about a strange"
+	cont "bipedal creature."
+	done
+
+_SecretLabComputer3BText::
+	text "Hold on, is it"
+	line "MEWTWO??"
+	para "This could be"
+	line "useful info!"
 	done
 
 _SecretLabComputer4Text::
@@ -234,6 +246,7 @@ _SecretLabMewtwoReactionText3::
 	cont "open first."
 	done
 
+_GenericWrongMonText::
 _SecretLabMewtwoReactionText4::
 	text "Wrong #MON."
 	done

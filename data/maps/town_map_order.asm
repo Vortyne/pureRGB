@@ -1,5 +1,4 @@
 ; PureRGBnote: CHANGED: this list was reordered a bit to follow the order of the game a bit better.
-
 TownMapOrder:
 	db PALLET_TOWN
 	db ROUTE_1
@@ -25,7 +24,7 @@ TownMapOrder:
 	db ROCK_TUNNEL_1F
 	db ROUTE_10
 	db LAVENDER_TOWN
-	db POKEMON_TOWER_2F
+	db POKEMON_TOWER_3F
 	db ROUTE_8
 	db ROUTE_7
 	db CELADON_CITY
@@ -40,13 +39,15 @@ TownMapOrder:
 	db FUCHSIA_CITY
 	db SAFARI_ZONE_EAST
 	db ROUTE_19
-	db SEAFOAM_ISLANDS_B1F
+	db SEAFOAM_ISLANDS_1F
 	db ROUTE_20
 	db CINNABAR_ISLAND
+	db POKEMON_MANSION_1F
 	db ROUTE_21
 	db CINNABAR_VOLCANO
 	db POWER_PLANT
 	db ROUTE_23
-	db VICTORY_ROAD_3F
+	db VICTORY_ROAD_1F
 	db INDIGO_PLATEAU
 TownMapOrderEnd:
+	db -1

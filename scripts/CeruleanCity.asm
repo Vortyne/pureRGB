@@ -15,22 +15,41 @@ CeruleanCityReplaceCutTile:
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	jr nz, .replaceTile
 	ret
-.replaceTile
-	CheckEvent EVENT_DELETED_CERULEAN_TREE
-	ret z
-	call .loadTile
-	predef_jump ReplaceTileBlock
 .replaceTileNoRedraw
+	SetEvent FLAG_SKIP_MAP_REDRAW
+.replaceTile
+	xor a
+	ld [wTileBlockReplaceCount], a
+	ld de, wTileBlockReplaceData
 	CheckEvent EVENT_DELETED_CERULEAN_TREE
-	ret z
-	; this avoids redrawing the map because when going between areas these tiles are offscreen.
-	call .loadTile
-	predef_jump ReplaceTileBlockNoRedraw
-.loadTile
-	lb bc, 14, 9
-	ld a, $6D
-	ld [wNewTileBlockID], a
+	ld hl, .cutAlcove
+	call nz, .loadTile
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ld hl, .ballDesignersDoor
+	call nz, .loadTile
+	ld a, [wTileBlockReplaceCount]
+	and a
+	jr z, .skipTileReplace
+	ld de, wTileBlockReplaceData
+	callfar ReplaceMultipleTileBlocks
+.skipTileReplace
+	ResetEvent FLAG_SKIP_MAP_REDRAW
 	ret
+.loadTile
+	push hl
+	ld hl, wTileBlockReplaceCount
+	inc [hl]
+	pop hl
+	ld bc, 3
+.copyDataAndTerminate
+	rst _CopyData
+	ld a, -1
+	ld [de], a
+	ret
+.cutAlcove:
+	db 14, 9, $6D
+.ballDesignersDoor:
+	db 12, 15, $09
 
 CeruleanCityClearScripts:
 	xor a ; SCRIPT_CERULEANCITY_DEFAULT
@@ -58,6 +77,8 @@ CeruleanCityRocketDefeatedScript:
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_CERULEAN_ROCKET_THIEF
+	ld d, CERULEANCITY_ROCKET
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_CERULEANCITY_ROCKET
 	ldh [hTextID], a
 	call DisplayTextID
@@ -405,23 +426,24 @@ CeruleanCityGuardText:
 
 CeruleanCityCooltrainerF1Text:
 	text_asm
+	ld c, DEX_SLOWBRO - 1
+	callfar SetMonSeen
 	ldh a, [hRandomAdd]
 	cp 180 ; 76/256 chance of 1st dialogue
 	jr c, .notFirstText
 	ld hl, .SlowbroUseSonicboomText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notFirstText
 	cp 100 ; 80/256 chance of 2nd dialogue
 	jr c, .notSecondText
 	ld hl, .SlowbroPunchText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notSecondText
 	; 100/256 chance of 3rd dialogue
 	ld hl, .SlowbroWithdrawText
 	rst _PrintText
-.end
 	rst TextScriptEnd
 
 .SlowbroUseSonicboomText:
@@ -438,29 +460,30 @@ CeruleanCityCooltrainerF1Text:
 
 CeruleanCitySlowbroText:
 	text_asm
+	ld c, DEX_SLOWBRO - 1
+	callfar SetMonSeen
 	ldh a, [hRandomAdd]
 	cp 180 ; 76/256 chance of 1st dialogue
 	jr c, .notFirstText
 	ld hl, .TookASnoozeText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notFirstText
 	cp 120 ; 60/256 chance of 2nd dialogue
 	jr c, .notSecondText
 	ld hl, .IsLoafingAroundText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notSecondText
 	cp 60 ; 60/256 chance of 3rd dialogue
 	jr c, .notThirdText
 	ld hl, .TurnedAwayText
 	rst _PrintText
-	jr .end
+	rst TextScriptEnd
 .notThirdText
 	; 60/256 chance of 4th dialogue
 	ld hl, .IgnoredOrdersText
 	rst _PrintText
-.end
 	rst TextScriptEnd
 
 .TookASnoozeText:

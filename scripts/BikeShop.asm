@@ -64,8 +64,7 @@ BikeShopClerkText:
 	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 0, 0
 	lb bc, 4, 15
-	call TextBoxBorder
-	call UpdateSprites
+	call TextBoxBorderUpdateSprites
 	hlcoord 2, 2
 	ld de, BikeShopMenuText
 	call PlaceString

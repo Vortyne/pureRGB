@@ -57,4 +57,7 @@ TrainerAIPointers:
 	dbw 3, GenericAI ; soldier
 	dbw 3, GenericAI ; chief
 	dbw 3, GymGuideAI ; gym guide
+	dbw 3, GenericAI ; fitness pro
+	dbw 3, GenericAI ; sprinter
+	dbw 3, GenericAI ; fist fighter
 	assert_table_length NUM_TRAINERS

@@ -23,9 +23,8 @@ CeladonPrizeMenu::
 	call PrintPrizePrice
 	hlcoord 0, 2
 	lb bc, 8, 16
-	call TextBoxBorder
+	call TextBoxBorderUpdateSprites
 	call GetPrizeMenuId
-	call UpdateSprites
 	ld hl, WhichPrizeTextPtr
 	rst _PrintText
 	call HandleMenuInput ; menu choice handler
@@ -139,14 +138,13 @@ INCLUDE "data/events/prizes.asm"
 PrintPrizePrice:
 	hlcoord 11, 0
 	lb bc, 1, 7
-	call TextBoxBorder
-	call UpdateSprites
+	call TextBoxBorderUpdateSprites
 	hlcoord 12, 0
 	ld de, .CoinString
 	call PlaceString
 	hlcoord 13, 1
-	ld de, .SixSpacesString
-	call PlaceString
+	lb bc, 1, 6
+	call ClearScreenArea
 	hlcoord 13, 1
 	ld de, wPlayerCoins
 	ld c, 2 | LEADING_ZEROES
@@ -154,9 +152,6 @@ PrintPrizePrice:
 
 .CoinString:
 	db "COIN@"
-
-.SixSpacesString:
-	db "      @"
 
 LoadCoinsToSubtract:
 	ld a, [wWhichPrize]
@@ -193,8 +188,6 @@ HandlePrizeChoice:
 	ld hl, SoYouWantPrizeTextPtr
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem] ; yes/no answer (Y=0, N=1)
-	and a
 	jr nz, .printOhFineThen
 	call LoadCoinsToSubtract
 	call HasEnoughCoins
@@ -236,7 +229,18 @@ HandlePrizeChoice:
 	ld de, wPlayerCoins + 1
 	ld c, $02 ; how many bytes
 	predef SubBCDPredef
-	jp PrintPrizePrice
+	call PrintPrizePrice
+	ld a, SFX_59
+	call PlaySoundWaitForCurrent
+	call WaitForSoundToFinish
+	ld a, [wWhichPrizeWindow]
+	cp 2
+	ld hl, HereYouGoTextPtr
+	jr z, .gotText
+	ld hl, GoodChoiceText
+.gotText
+	rst _PrintText
+	ret
 .bagFull
 	ld hl, PrizeRoomBagIsFullTextPtr
 	jp PrintText
@@ -247,9 +251,9 @@ HandlePrizeChoice:
 	ld hl, OhFineThenTextPtr
 	jp PrintText
 
-UnknownPrizeData:
+;UnknownPrizeData:
 ; XXX what's this?
-	db $00,$01,$00,$01,$00,$01,$00,$00,$01
+;	db $00,$01,$00,$01,$00,$01,$00,$00,$01
 
 HereYouGoTextPtr:
 	text_far _HereYouGoText
@@ -274,6 +278,17 @@ OhFineThenTextPtr:
 	text_far _OhFineThenText
 	text_waitbutton
 	text_end
+
+GoodChoiceText::
+	text_far _GoodChoice
+	text_waitbutton
+	text_end
+
+IsMonAPrizePokemon::
+	ld a, [wCurPartySpecies]
+	ld hl, PrizeMonLevelDictionary
+	ld de, 2
+	jp IsInArray
 
 GetPrizeMonLevel:
 	ld a, [wCurPartySpecies]

@@ -145,7 +145,10 @@ Route17Biker5EndBattleText:
 
 Route17Biker5AfterBattleText:
 	text_far _Route17Biker5AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_ELECTRODE, BIKER
+	ld de, LearnsetElectrode
+	predef_jump LearnsetTrainerScript
 
 Route17Biker6Text:
 	text_asm

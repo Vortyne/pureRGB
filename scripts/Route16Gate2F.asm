@@ -10,21 +10,19 @@ Route16Gate2F_TextPointers:
 
 Route16Gate2FLittleBoyText:
 	text_asm
-	ld hl, .Text
+	ld hl, .text
 	rst _PrintText
 	rst TextScriptEnd
-
-.Text:
+.text
 	text_far _Route16Gate2FLittleBoyText
 	text_end
 
 Route16Gate2FLittleGirlText:
 	text_asm
-	ld hl, .Text
+	ld hl, .text
 	rst _PrintText
 	rst TextScriptEnd
-
-.Text:
+.text
 	text_far _Route16Gate2FLittleGirlText
 	text_end
 
@@ -34,6 +32,7 @@ Route16Gate2FLeftBinocularsText:
 	jp GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route16Gate2FLeftBinocularsText
 	text_end
 
@@ -43,5 +42,6 @@ Route16Gate2FRightBinocularsText:
 	jp GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route16Gate2FRightBinocularsText
 	text_end

@@ -26,7 +26,7 @@ _CardKeyDoneText::
 	done
 
 _TrainerNameText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text ": @"
 	text_end
 
@@ -77,14 +77,14 @@ _PokeCenterSignText::
 _FoundItemText::
 	text "<PLAYER> found"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
 _FoundMultipleItemText::
 	text "<PLAYER> found"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " ×@"
 	text_ram wTempStore1
 	text "!@"
@@ -192,3 +192,66 @@ _ConversionAlreadyDefenseModeText::
 	cont "DEFENSE mode."
 	prompt
 
+_FuchsiaMeetingRoomOaksAideGreeting::
+	text "Hey <PLAYER>!"
+	line "How's it going?"
+	para "I'm one of PROF."
+	line "OAK's AIDEs!"
+	para "If you've caught 50"
+	line "or more #MON,"
+	para "I'll upgrade"
+	line "your TOWN MAP!"
+	prompt
+
+_FuchsiaMeetingRoomOaksAideHowMany::
+	text "How many #MON"
+	line "have you caught?"
+	prompt
+
+_FuchsiaMeetingRoomOaksAideNotEnough::
+	text "@"
+	text_decimal wNumSetBits, 1, 3
+	text "? Not enough"
+	line "yet! Come on!"
+	para "I believe in you,"
+	line "you can do it!"
+	done
+
+_FuchsiaMeetingRoomOaksAideEnough::
+	text "@"
+	text_decimal wNumSetBits, 1, 3
+	text "? Fantastic!"
+	line "MAP upgrade time!"
+	para "A new function"
+	line "will be added."
+	para "It'll have wild"
+	line "#MON data for"
+	cont "each area!"
+	para "Just press A on an"
+	line "area to check."
+	para "Alright let's see"
+	line "your MAP<...>"
+	done
+
+
+_FuchsiaMeetingRoomOaksAideNoTownmap::
+	text "What?!"
+	para "You don't have a"
+	line "TOWN MAP?"
+	para "Head back to"
+	line "PALLET TOWN and"
+	cont "ask around!"
+	para "I'm sure someone'll"
+	line "give you a MAP!"
+	done
+
+_FuchsiaMeetingRoomOaksAideGoodLuck::
+	text "Good luck on"
+	line "your journey!"
+	para "I'm rooting for"
+	line "you, <PLAYER>!"
+	done
+
+_GenericThereWeGoText::
+	text "There we go!"
+	prompt

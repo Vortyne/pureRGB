@@ -2,14 +2,16 @@
 ; SpecialEffectPointers associates them with effect routines (see data/battle_anims/special_effect_pointers.asm)
 	const_def $C0
 DEF FIRST_SE_ID EQU const_value
-	const_skip $D
+	const_skip $B
 ;;;;;;;;;; PureRGBnote: ADDED: new special effects
+	const SE_CUSTOM_MOVE_SFX           ; $CB used for playing new sound effects during moves
+	const SE_SEND_OUT_MON_POOF_ANIM    ; $CC used for custom pokeball send out animations
 	const SE_LOAD_POKEDOLL             ; $CD used in pokedoll animation
 	const SE_DIVINE_PROTECTION         ; $CE used in THE MAW battle if you switch to CUBONE
 	const SE_CROSSHAIR_SCANS_OPPONENT  ; $CF used in Conversion attack mode anim
 	const SE_LIGHT_SCREEN_FLASH        ; $D0 used in Teleport
 	const SE_SNOWFLAKES_EVERYWHERE     ; $D1 used in Blizzard
-	const SE_STATIC_EVERYWHERE         ; $D2 used in Constrict (Static Snag)
+	const SE_SIPHON_SNAG_ATTACK        ; $D2 used in Constrict (Siphon Snag)
 	const SE_SMOKE_EVERYWHERE          ; $D3 used in Poison Gas 
 	const SE_FIRE_EVERYWHERE           ; $D4 used in Take Down (Heat Rush)
 	const SE_SLIDE_ENEMY_MON_DOWN_AND_HIDE   ; $D5 used in Sludge 

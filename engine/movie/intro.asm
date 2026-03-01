@@ -280,10 +280,10 @@ CopyTileIDsFromList_ZeroBaseTileID:
 	ld c, 0
 	predef_jump CopyTileIDsFromList
 
-PlayIntroMoveSound: ; unreferenced
-	predef GetIntroMoveSound
-	ld a, b
-	jp PlaySound
+;PlayIntroMoveSound: ; unreferenced
+;	predef GetIntroMoveSound
+;	ld a, b
+;	jp PlaySound
 
 LoadIntroGraphics:
 	ld hl, FightIntroBackMon

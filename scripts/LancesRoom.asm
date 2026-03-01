@@ -65,7 +65,7 @@ LancesRoomDefaultScript:
 	ld a, [wCoordIndex]
 	cp $3  ; Is player standing next to Lance's sprite?
 	jr nc, .notStandingNextToLance
-	call DoFacings
+	call LancesRoomDoFacings
 	ld a, TEXT_LANCESROOM_LANCE
 	ldh [hTextID], a
 	jp DisplayTextID
@@ -94,9 +94,13 @@ LancesRoomLanceEndBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, ResetLanceScript
+	call MakeLanceFacePlayer
 	ld a, TEXT_LANCESROOM_LANCE
 	ldh [hTextID], a
-	jp DisplayTextID
+	call DisplayTextID
+	ld a, LANCESROOM_LANCE
+	ldh [hSpriteIndex], a
+	jp SetSpriteMovementBytesToFF
 
 WalkToLance:
 ; Moves the player down the hallway to Lance's room.
@@ -165,18 +169,15 @@ LancesRoomLanceAfterBattleText:
 	SetEvent EVENT_BEAT_LANCE
 	rst TextScriptEnd
 
-DoFacings: ; PureRGBnote: ADDED: when about to fight Lance, lance and the player will face each other properly to talk.
+LancesRoomDoFacings: ; PureRGBnote: ADDED: when about to fight Lance, lance and the player will face each other properly to talk.
 	ld a, [wYCoord]
 	cp 1
+	ld a, PLAYER_DIR_RIGHT
 	jr z, .leftOfLance
 	ld a, PLAYER_DIR_UP
-	ld [wPlayerMovingDirection], a
-	ret
 .leftOfLance
-	ld a, PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
-	ld a, 1
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_LEFT
-  	ldh [hSpriteFacingDirection], a
-  	jp SetSpriteFacingDirection
+	; fall through
+MakeLanceFacePlayer:
+	ld d, LANCESROOM_LANCE
+	jpfar MakeSpriteFacePlayer

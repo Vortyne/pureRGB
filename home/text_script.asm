@@ -175,8 +175,7 @@ DisplayPokemartNoGreeting:: ; PureRGBnote: ADDED: show pokemart without the "wel
 	ret
 
 LoadItemList::
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	ld a, h
 	ld [wItemListPointer], a
 	ld a, l
@@ -191,14 +190,7 @@ LoadItemList::
 	ret
 
 DisplayPokemonCenterDialogue::
-; zeroing these doesn't appear to serve any purpose
-	xor a
-	ldh [hItemPrice], a
-	ldh [hItemPrice + 1], a
-	ldh [hItemPrice + 2], a
-
-	inc hl
-	homecall DisplayPokemonCenterDialogue_
+	callfar DisplayPokemonCenterDialogue_
 	jp AfterDisplayingTextID
 
 DisplaySafariGameOverText::
@@ -230,3 +222,24 @@ DisplayRepelWoreOffText::
 DisplayTextPromptButton::
 	ld hl, TextScriptPromptButton
 	jp TextCommandProcessor
+
+; Clears the box dialog prints in
+ClearTextBox::
+	hlcoord 1, 13
+	lb bc, 4, 18
+	jp ClearScreenArea
+
+TextScriptEndNoButtonPress::
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	rst TextScriptEnd
+
+DisableTextDelay::
+	ld hl, wStatusFlags5
+	set BIT_NO_TEXT_DELAY, [hl]
+	ret
+
+EnableTextDelay::
+	ld hl, wStatusFlags5
+	res BIT_NO_TEXT_DELAY, [hl]
+	ret

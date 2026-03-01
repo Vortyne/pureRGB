@@ -13,8 +13,7 @@ CheckGusGLeaves:
 	ld c, 20
 	rst _DelayFrames
 	call SetDetentionHideShows
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	call GBFadeInFromWhite
 	CheckEvent EVENT_GUS_IN_DETENTION
 	ret z
@@ -193,8 +192,6 @@ SchoolB1FLeftTeacher:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .notReady
 
 	ld c, BANK(Music_MuseumGuy)
@@ -243,8 +240,6 @@ SchoolB1FLeftTeacher:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .faffing
 	ld hl, SchoolB1FLeftTeacherYes
 	rst _PrintText
@@ -333,8 +328,6 @@ SchoolB1FRocker:
 	xor a
 	ld [wCurrentMenuItem], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, SchoolB1FRockerYesText
 	jr z, .yes
 	ld hl, SchoolB1FRockerNoText
@@ -359,8 +352,7 @@ SchoolB1FRocker:
 	call LoadScreenTilesFromBuffer2
 	call StopAllMusic
 	call GBPalNormal
-	ld a, 1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call UpdateSprites
 
 	ld c, BANK(SFX_Safari_Zone_PA)

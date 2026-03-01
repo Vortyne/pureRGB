@@ -13,13 +13,19 @@ DontAbandonLearning:
 	ld bc, wPartyMon2Moves - wPartyMon1Moves
 	ld a, [wWhichPokemon]
 	call AddNTimes
+	ld a, [wMoveNum]
+	ld c, a
 	ld d, h
 	ld e, l
 	ld b, NUM_MOVES
+	; PureRGBnote: CHANGED: also checks at the same time if the move is already learned, and will end the function if so
+	; allows LearnMove to be used for things like tutors without being able to learn the move multiple times
 .findEmptyMoveSlotLoop
 	ld a, [hl]
 	and a
 	jr z, .next
+	cp c
+	jp z, AbandonLearning.alreadyKnowsMove
 	inc hl
 	dec b
 	jr nz, .findEmptyMoveSlotLoop
@@ -89,9 +95,17 @@ AbandonLearning:
 .skipText
 	ld hl, DidNotLearnText
 	rst _PrintText
+.exit
 	ld b, 0
 	ResetEvent FLAG_LEARNING_TM_MOVE
 	ret
+.alreadyKnowsMove
+	ld hl, .alreadyKnowsText
+	rst _PrintText
+	jr .exit
+.alreadyKnowsText
+	text_far _AlreadyKnowsText
+	text_end
 
 ; PureRGBnote: CHANGED: amount of text is reduced in some scenarios
 PrintLearnedMove:
@@ -153,7 +167,11 @@ TryingToLearn:
 	rst _PrintText
 	hlcoord 4, 7
 	lb bc, 4, 14
-	call TextBoxBorder
+	call TextBoxBorderUpdateSprites
+	ld a, [wLetterPrintingDelayFlags]
+	push af
+	xor a
+	ld [wLetterPrintingDelayFlags], a
 	hlcoord 6, 8
 	ld de, wMovesString
 	ldh a, [hUILayoutFlags]
@@ -163,6 +181,8 @@ TryingToLearn:
 	ldh a, [hUILayoutFlags]
 	res BIT_SINGLE_SPACED_LINES, a
 	ldh [hUILayoutFlags], a
+	pop af
+	ld [wLetterPrintingDelayFlags], a
 	ld hl, wTopMenuItemY
 	ld a, 8
 	ld [hli], a ; wTopMenuItemY

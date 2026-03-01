@@ -18,8 +18,6 @@ LavenderTownLittleGirlText:
 	ld hl, .DoYouBelieveInGhostsText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, .HaHaGuessNotText
 	jr nz, .got_text
 	ld hl, .SoThereAreBelieversText

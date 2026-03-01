@@ -74,15 +74,13 @@ _CinnabarVolcanoProspectorLavaExplain::
 	para "It usually flows"
 	line "out underwater."
 	para "If we don't drain"
-	line "some of this lava"
-	cont "the volcano will"
-	cont "erupt soon!"
+	line "out all the lava,"
+	para "the volcano will"
+	line "erupt soon!"
 	para "The lava must be"
-	line "clogged up"
-	cont "somewhere below."
-	para "You've got to"
-	line "clear those"
-	cont "blockages!"
+	line "clogged up below."
+	para "You've got to clear"
+	line "those blockages!"
 	prompt
 
 _CinnabarVolcanoProspectorBlowRocks::
@@ -91,10 +89,10 @@ _CinnabarVolcanoProspectorBlowRocks::
 	cont "create blockages!"
 	para "Find the blockages"
 	line "and blow them up,"
-	cont "smash them, melt"
-	cont "them down-just"
-	cont "do whatever to"
-	cont "get rid of them!"
+	para "smash them, melt"
+	line "them down<...>"
+	para "Just do anything"
+	line "to destroy them!"
 	prompt
 
 _CinnabarVolcanoGiveDrill::
@@ -118,9 +116,9 @@ _CinnabarVolcanoDrill::
 	line "hole down where"
 	cont "you see cracks!"
 	para "But it'll take"
-	line "a fresh DRILL bit"
-	cont "to dig down."
-	para "To make a new one,"
+	line "a lot of fuel to"
+	cont "dig down."
+	para "If you run out,"
 	line "just pop 3 RUBIES"
 	cont "into the DRILL!"
 	para "You should be"
@@ -130,9 +128,8 @@ _CinnabarVolcanoDrill::
 
 _CinnabarVolcanoFriend::
 	text "This guy with his"
-	line "ARCANINE will go"
-	cont "clear the west"
-	cont "side."
+	line "ARCANINE'll clear"
+	cont "the west side."
 	prompt
 
 _CinnabarVolcanoYouClearEast::
@@ -140,46 +137,45 @@ _CinnabarVolcanoYouClearEast::
 	line "east side!"
 	para "Oh and one last"
 	line "thing."
-	para "Since it's so"
-	line "hot, you might"
-	cont "want to stick to"
-	cont "FIRE, GROUND, or"
-	cont "ROCK #MON."
+	para "It's too hot for"
+	line "most #MON!"
+	para "Stick to FIRE,ROCK"
+	line "and GROUND-types."
 	para "They're the only"
 	line "ones who can take"
 	cont "this heat!"
 	prompt
 
 _ExplodeRocksExplosionText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " used"
 	line "EXPLOSION to"
 	cont "blow up the rocks!"
 	done
 
 _ExplodeRocksSelfdestructText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " used"
 	line "SELFDESTRUCT to"
 	cont "blow up the rocks!"
 	done
 
 _ShatteredRocksSkullBashText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " smashed"
 	line "the rocks with"
 	cont "SKULL BASH!"
 	done
 
 _ShatteredRocksText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " smashed"
 	line "the rocks with"
 	cont "a powerful blow!"
 	done
 
 _MeltedRocksText::
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " melted"
 	line "the rocks with"
 	cont "superheated fire!"
@@ -325,9 +321,8 @@ _MagmarFight::
 
 _VolcanoBattleBurnText::
 	text "The volcano's"
-	line "too hot for"
-	cont "@"
-	text_ram wBattleMonNick
+	line "too hot for @"
+	text_ram_cont wBattleMonNick
 	text "!"
 	prompt
 
@@ -376,7 +371,7 @@ _VolcanoBlockagesGone::
 
 _VolcanoGoBackMainFloor::
 	text_start
-	para "Lets see how"
+	para "Let's see how"
 	line "they did back"
 	cont "up at the top."
 	done
@@ -398,7 +393,7 @@ _VolcanoProspectorDone::
 _VolcanoProspectorDone2::
 	text "Well, that should"
 	line "stop an eruption!"
-	para "Lets get out"
+	para "Let's get out"
 	line "of here, kid!"
 	para "I'm sweating like"
 	line "an ODDISH at a"
@@ -487,18 +482,25 @@ _VolcanoGetToIt::
 	text "I'll keep an eye"
 	line "on the amount of"
 	cont "lava up here."
-	para "I'd help, but I"
+	para "I'd join you, but I"
 	line "don't have #MON"
 	cont "to bring with me!"
-	para "Get to it, kid!"
+	prompt
+
+_VolcanoNeedSomeInfo::
+	text "Hmm<...>do you need"
+	line "more info?"
+	done
+
+_VolcanoGetToIt2::
+	text "Get to it, kid!"
 	done
 
 _FailedDrillFloorText::
-	text "The DRILL is too"
-	line "dull to dig down!"
+	text "The DRILL doesn't"
+	line "have enough fuel!"
 	para "Find 3 RUBIES"
-	line "to make a new"
-	cont "DRILL bit!"
+	line "to fuel it up!"
 	done
 
 _CinnabarVolcanoFloor2WarpTilesText::
@@ -538,7 +540,7 @@ _CinnabarVolcanoWestLavaFlowText::
 
 _CinnabarVolcanoWestMagmarTransformText1::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " looks"
 	line "excited for a"
 	cont "lava bath!"
@@ -546,7 +548,7 @@ _CinnabarVolcanoWestMagmarTransformText1::
 
 _CinnabarVolcanoWestMagmarTransformText2::
 	text "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " did a"
 	line "cannonball into"
 	cont "the lava pool!"
@@ -556,7 +558,7 @@ _CinnabarVolcanoWestMagmarTransformText3::
 	text "Volcanic power"
 	line "radiated through"
 	cont "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text "!"
 	done
 
@@ -573,7 +575,7 @@ _CinnabarVolcanoWestMagmarTransformText4::
 	cont "all water near it"
 	cont "will vaporize!"
 	para "@"
-	text_ram wNameBuffer
+	text_ram_namebuffer
 	text " became"
 	line "immune to WATER"
 	cont "and FIRE-type"

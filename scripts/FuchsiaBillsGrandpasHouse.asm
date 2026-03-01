@@ -6,6 +6,7 @@ FuchsiaBillsGrandpasHouse_TextPointers:
 	dw_const FuchsiaBillsGrandpasHouseMiddleAgedWomanText, TEXT_FUCHSIABILLSGRANDPASHOUSE_MIDDLE_AGED_WOMAN
 	dw_const FuchsiaBillsGrandpasHouseBillsGrandpaText,    TEXT_FUCHSIABILLSGRANDPASHOUSE_BILLS_GRANDPA
 	dw_const FuchsiaBillsGrandpasHouseYoungsterText,       TEXT_FUCHSIABILLSGRANDPASHOUSE_YOUNGSTER
+	dw_const FuchsiaBillsGrandpasHouseTVText,              TEXT_FUCHSIABILLSGRANDPASHOUSE_TV
 
 FuchsiaBillsGrandpasHouseMiddleAgedWomanText:
 	text_far _FuchsiaBillsGrandpasHouseMiddleAgedWomanText
@@ -18,3 +19,7 @@ FuchsiaBillsGrandpasHouseBillsGrandpaText:
 FuchsiaBillsGrandpasHouseYoungsterText:
 	text_far _FuchsiaBillsGrandpasHouseYoungsterText
 	text_end
+
+FuchsiaBillsGrandpasHouseTVText::
+	text_asm
+	jpfar PorygonTVScreenText

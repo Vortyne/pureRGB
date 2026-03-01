@@ -71,6 +71,8 @@ Route24AfterRocketBattleScript:
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE24_ROCKET
+	ld d, ROUTE24_COOLTRAINER_M1
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_ROUTE24_COOLTRAINER_M1
 	ldh [hTextID], a
 	call DisplayTextID
@@ -92,6 +94,7 @@ Route24_TextPointers:
 	dw_const Route24Youngster2Text,    TEXT_ROUTE24_YOUNGSTER2
 	dw_const PickUpItemText,           TEXT_ROUTE24_ITEM1
 	dw_const PickUpItemText,           TEXT_ROUTE24_ITEM2 ; PureRGBnote: ADDED: new item on this route.
+	dw_const DoRet,                    TEXT_ROUTE24_ABRA
 
 Route24TrainerHeaders:
 	def_trainers 2

@@ -23,7 +23,7 @@ TrainerNames::
 	li "TAMER"
 	li "BIRD KEEPER"
 	li "BLACKBELT"
-	li "R1" ; rival 1, shortened for some free space
+	li "" ; rival 1, shortened for some free space
 	li "PROF.OAK"
 	li "SCIENTIST"
 	li "GIOVANNI"
@@ -39,8 +39,8 @@ TrainerNames::
 	li "BLAINE"
 	li "SABRINA"
 	li "GENTLEMAN"
-	li "R2" ; rival 2, shortened for some free space
-	li "R3" ; champion rival, shortened for some free space 
+	li "" ; rival 2, shortened for some free space
+	li "" ; champion rival, shortened for some free space 
 	li "LORELEI"
 	li "CHANNELER"
 	li "AGATHA"
@@ -53,4 +53,7 @@ TrainerNames::
 	li "SOLDIER"
 	li "CHIEF"
 	li "GYM GUIDE"
+	li "FITNESS PRO"
+	li "SPRINTER"
+	li "FISTFIGHTER"
 	assert_list_length NUM_TRAINERS

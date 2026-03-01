@@ -1,4 +1,4 @@
-GetTrainerName_::
+GetTrainerName::
 	ld hl, wLinkEnemyTrainerName
 	ld a, [wLinkState]
 	and a
@@ -11,14 +11,28 @@ GetTrainerName_::
 	jr z, .foundName
 	cp RIVAL3
 	jr z, .foundName
-	ld [wNameListIndex], a
-	ld a, TRAINER_NAME
-	ld [wNameListType], a
-	ld a, BANK(TrainerNames)
-	ld [wPredefBank], a
-	call GetName
-	ld hl, wNameBuffer
+	ld hl, TrainerNames
+	dec a
+	jr z, .foundTrainer
+	ld b, a
+.loopFindTrainerName
+	ld a, [hli]
+	cp "@"
+	jr z, .next
+	jr .loopFindTrainerName
+.next
+	dec b
+	jr nz, .loopFindTrainerName
+.foundTrainer
+	ld de, wNameBuffer
+	push de
+	ld bc, ITEM_NAME_LENGTH
+	rst _CopyData
+	pop hl ; pop de into hl
 .foundName
 	ld de, wTrainerName
 	ld bc, ITEM_NAME_LENGTH
-	jp CopyData
+	rst _CopyData
+	ret
+
+INCLUDE "data/trainers/names.asm"

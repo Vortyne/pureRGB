@@ -20,6 +20,7 @@ Route18Gate2FLeftBinocularsText:
 	jp GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route18Gate2FLeftBinocularsText
 	text_end
 
@@ -29,5 +30,6 @@ Route18Gate2FRightBinocularsText:
 	jp GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route18Gate2FRightBinocularsText
 	text_end

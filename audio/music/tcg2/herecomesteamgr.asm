@@ -1953,394 +1953,394 @@ Music_HereComesGR_Ch4:
 	sound_call Branch_1eacf7
 	sound_call Branch_1ead02
 	sound_call Branch_1eacf7
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 1, 10
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 4, 11
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 4, 11
 ;	musicef -3
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef -1
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 4
+	drum_note_short 7, 4
 	sound_call Branch_1eacf7
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 5, 7
-	drum_note 1, 7
-	drum_note 1, 7
-	drum_note 2, 16
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 7
+	drum_note_short 1, 7
+	drum_note_short 1, 7
+	drum_note_short 7, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 2, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 10
 	sound_call Branch_1eacf7
-	drum_note 1, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 2, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 2, 10
+	drum_note_short 1, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 7, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 7, 10
 	sound_call Branch_1eacf7
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 5, 7
-	drum_note 1, 4
-	drum_note 1, 4
-	drum_note 1, 3
-	drum_note 1, 3
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 4
-	drum_note 2, 3
-	drum_note 2, 3
-	drum_note 1, 16
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 7
+	drum_note_short 1, 4
+	drum_note_short 1, 4
+	drum_note_short 1, 3
+	drum_note_short 1, 3
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 4
+	drum_note_short 7, 3
+	drum_note_short 7, 3
+	drum_note_short 1, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 2, 16
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 5
-	drum_note 1, 5
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 2, 4
-	drum_note 2, 3
-	drum_note 2, 3
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 4, 11
-	drum_note 2, 5
-	drum_note 2, 5
+	drum_note_short 4, 11
+	drum_note_short 1, 5
+	drum_note_short 1, 5
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 7, 4
+	drum_note_short 7, 3
+	drum_note_short 7, 3
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 5
+	drum_note_short 7, 5
 	sound_call Branch_1eacf7
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 5, 7
-	drum_note 1, 4
-	drum_note 1, 4
-	drum_note 1, 3
-	drum_note 1, 3
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 4
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 7
+	drum_note_short 1, 4
+	drum_note_short 1, 4
+	drum_note_short 1, 3
+	drum_note_short 1, 3
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 4
 ;	musicef -2
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
-	drum_note 1, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 5
-	drum_note 1, 5
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 2, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 5, 16
+	drum_note_short 7, 3
+	drum_note_short 1, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 5
+	drum_note_short 1, 5
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 7, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 2, 10
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 2, 11
-	drum_note 5, 10
-	drum_note 1, 11
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 7, 10
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 11
+	drum_note_short 5, 10
+	drum_note_short 1, 11
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 1, 11
-	drum_note 2, 10
-	drum_note 5, 11
+	drum_note_short 1, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
 ;	musicef -3
-	drum_note 2, 5
+	drum_note_short 7, 5
 ;	musicef -2
-	drum_note 2, 5
+	drum_note_short 7, 5
 ;	musicef 0
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
 ;	musicef -3
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -2
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
-	drum_note 1, 11
-	drum_note 4, 10
-	drum_note 5, 11
-	drum_note 1, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 2, 16
+	drum_note_short 7, 3
+	drum_note_short 1, 11
+	drum_note_short 4, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 1, 10
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 16
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 2, 11
-	drum_note 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 11
+	drum_note_short 1, 10
 	rest 11
-	drum_note 1, 10
+	drum_note_short 1, 10
 	rest 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 1, 10
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 5, 16
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 2, 10
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 2, 11
-	drum_note 5, 10
-	drum_note 1, 11
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 7, 10
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 11
+	drum_note_short 5, 10
+	drum_note_short 1, 11
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 1, 11
-	drum_note 2, 10
-	drum_note 5, 11
+	drum_note_short 1, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
 ;	musicef -3
-	drum_note 2, 5
+	drum_note_short 7, 5
 ;	musicef -2
-	drum_note 2, 5
+	drum_note_short 7, 5
 ;	musicef 0
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
 ;	musicef -3
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -2
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
-	drum_note 1, 11
-	drum_note 4, 10
-	drum_note 5, 11
-	drum_note 1, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 2, 16
+	drum_note_short 7, 3
+	drum_note_short 1, 11
+	drum_note_short 4, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 2, 11
-	drum_note 2, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 5
-	drum_note 2, 5
-	drum_note 2, 11
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 7, 11
+	drum_note_short 7, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
 ;	musicef -3
-	drum_note 2, 5
+	drum_note_short 7, 5
 ;	musicef 0
-	drum_note 2, 5
-	drum_note 1, 16
+	drum_note_short 7, 5
+	drum_note_short 1, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 4
-	drum_note 4, 3
-	drum_note 4, 3
-	drum_note 5, 11
-	drum_note 2, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 5, 11
+	drum_note_short 4, 11
+	drum_note_short 1, 4
+	drum_note_short 4, 3
+	drum_note_short 4, 3
+	drum_note_short 5, 11
+	drum_note_short 7, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 11
 ;	musicef -3
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -2
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 4, 11
-	drum_note 2, 5
-	drum_note 2, 5
-	drum_note 1, 16
+	drum_note_short 7, 3
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 5
+	drum_note_short 7, 5
+	drum_note_short 1, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 4
-	drum_note 4, 3
-	drum_note 4, 3
-	drum_note 5, 11
-	drum_note 2, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 5, 11
-	drum_note 1, 5
-	drum_note 1, 5
+	drum_note_short 4, 11
+	drum_note_short 1, 4
+	drum_note_short 4, 3
+	drum_note_short 4, 3
+	drum_note_short 5, 11
+	drum_note_short 7, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 5
+	drum_note_short 1, 5
 ;	musicef 1
 	drum_speed 2
-	drum_note 8, 15
+	drum_note_short 7, 15 ; used to be note 8 but since that was Snare9 anyway, no point
 	drum_speed 1
 	rest 1
 ;	musicef -3
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -2
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
-	drum_note 1, 16
+	drum_note_short 7, 3
+	drum_note_short 1, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 4
-	drum_note 4, 3
-	drum_note 4, 3
-	drum_note 5, 11
-	drum_note 2, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 5, 11
+	drum_note_short 4, 11
+	drum_note_short 1, 4
+	drum_note_short 4, 3
+	drum_note_short 4, 3
+	drum_note_short 5, 11
+	drum_note_short 7, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 11
 ;	musicef -3
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -2
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
-	drum_note 2, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 4, 10
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 1, 11
-	drum_note 4, 10
-	drum_note 2, 11
-	drum_note 1, 10
-	drum_note 4, 11
-	drum_note 2, 10
-	drum_note 2, 11
-	drum_note 4, 5
-	drum_note 2, 5
+	drum_note_short 7, 3
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 4, 10
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 1, 11
+	drum_note_short 4, 10
+	drum_note_short 7, 11
+	drum_note_short 1, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 10
+	drum_note_short 7, 11
+	drum_note_short 4, 5
+	drum_note_short 7, 5
 ;	musicef -2
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
 ;	musicef -2
-	drum_note 2, 4
+	drum_note_short 7, 4
 ;	musicef -1
-	drum_note 2, 3
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 3
+	drum_note_short 7, 3
 	sound_loop 0, .MainLoop
 
 Branch_1eacf7:
-	drum_note 1, 16
+	drum_note_short 1, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 2, 16
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 7, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 1, 10
+	drum_note_short 4, 11
+	drum_note_short 1, 10
 	sound_ret
 
 Branch_1ead02:
-	drum_note 4, 11
-	drum_note 1, 10
-	drum_note 5, 11
-	drum_note 1, 5
-	drum_note 1, 5
-	drum_note 2, 16
+	drum_note_short 4, 11
+	drum_note_short 1, 10
+	drum_note_short 5, 11
+	drum_note_short 1, 5
+	drum_note_short 1, 5
+	drum_note_short 7, 16
 ;	tie
 	rest 5
-	drum_note 4, 11
-	drum_note 2, 10
+	drum_note_short 4, 11
+	drum_note_short 7, 10
 	sound_ret

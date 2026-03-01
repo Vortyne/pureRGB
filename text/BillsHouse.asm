@@ -56,7 +56,7 @@ _BillsHouseBillThankYouText::
 _SSTicketReceivedText::
 	text "<PLAYER> received"
 	line "an @"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
@@ -98,3 +98,11 @@ _BillsHouseGardenInfo::
 	para "Just use the"
 	line "doors over there."
 	done
+
+_BillsHousePCInfo::
+	text "The screen is"
+	line "listing tons of"
+	cont "info on @"
+	text_ram_namebuffer
+	text "!"
+	prompt

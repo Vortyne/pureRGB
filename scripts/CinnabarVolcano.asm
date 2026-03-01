@@ -300,7 +300,7 @@ CheckStartVolcanoRumbling:
 LavaFloodReset::
 	CheckEvent EVENT_IN_LAVA_FLOOD_ROOM
 	ret z
-	ld a, 200 ; shorter cooldown in lava flood area
+	ld a, 197 ; shorter cooldown in lava flood area
 	ld [wOverworldAnimationCooldown], a
 LavaFloodResetAlways::
 	; lava flood specific code
@@ -588,8 +588,7 @@ VolcanoBombableRockDone:
 	call CinnabarVolcanoDisplayTextIDEntry
 	CheckEvent EVENT_VOLCANO_BOMBED_FLOOR4
 	jr nz, .done ; skip resuming music if it's the 4th floor
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 .done
 	jp ResumeVolcanoShaking
 
@@ -699,8 +698,7 @@ VolcanoBombableRockCommon:
 	and a
 	ret z
 	push af
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	call PlayCryOfSelectedPartyPokemon
 	call WaitForSoundToFinish
 	pop af
@@ -1029,8 +1027,7 @@ CinnabarVolcanoRubyTextCommon:
 	text_asm
 	ld hl, .gotAllOfThem
 	rst _PrintText
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, SFX_TRADE_MACHINE
 	rst _PlaySound
 	ld c, 30
@@ -1038,8 +1035,7 @@ CinnabarVolcanoRubyTextCommon:
 	ld de, SFX_Drill_PowerUp
 	call PlayNewSoundChannel8
 	call WaitForSoundToFinish
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	call DisplayTextPromptButton
 	ld hl, .drillPoweredUp
 	rst _PrintText
@@ -1079,8 +1075,6 @@ CinnabarVolcanoBombRockText:
 	ld hl, .initialText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .printForgetIt
 	callfar GenericShowPartyMenuSelection
 	jr c, .printForgetIt
@@ -1211,8 +1205,6 @@ CinnabarVolcanoSurfingRhydonText:
 	ld hl, .getOn
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	ld a, RHYDON
 	ld [wNamedObjectIndex], a
@@ -1357,9 +1349,7 @@ VolcanoBlowWallOpen::
 	call CinnabarVolcanoDisplayTextIDEntry
 	ld a, HS_VOLCANO_BLAINE
 	call VolcanoShowSpriteEntry
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 
 VolcanoFloor4TileBlockReplacements:
 	SetFlag FLAG_SKIP_MAP_REDRAW
@@ -1391,6 +1381,8 @@ VolcanoFloor4TileBlockReplacements:
 
 CinnabarVolcanoHungryGravelerText:
 	text_asm
+	ld c, DEX_GRAVELER - 1
+	callfar SetMonSeen
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	jr z, .skipSpriteChange
@@ -1409,8 +1401,6 @@ CinnabarVolcanoHungryGravelerText:
 	ld hl, .giveRockSalts
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CinnabarVolcanoBombRockText.forgetIt
 	jr nz, .done
 	SetEvent EVENT_VOLCANO_SPRITE_MOVING
@@ -1424,11 +1414,17 @@ CinnabarVolcanoHungryGravelerText:
   	ld [wWhichEmotionBubble], a
 	callfar EmotionBubble
 	CheckAndSetEvent EVENT_GAVE_GRAVELER_ROCK_SALTS
-	jr z, .noCry
+	ld hl, .munching
+	jr z, .done
+	push hl
 	ld a, GRAVELER
 	call PlayCry
-.noCry
-	ld hl, .munching
+	pop hl
+	rst _PrintText
+	lb hl, DEX_GRAVELER, $FF
+	ld de, TextNothing
+	ld bc, LearnsetNaturalHabitat
+	predef_jump LearnsetTrainerScriptMain
 .done
 	rst _PrintText
 .noRockSalts
@@ -1445,6 +1441,8 @@ CinnabarVolcanoHungryGravelerText:
 
 CinnabarVolcanoSickRhydonText:
 	text_asm
+	ld c, DEX_RHYDON - 1
+	callfar SetMonSeen
 	CheckEvent EVENT_GAVE_RHYDON_LIMESTONE
 	jp nz, .already
 	ld hl, .itsSickRhydon
@@ -1463,8 +1461,6 @@ CinnabarVolcanoSickRhydonText:
 	ld hl, .giveLimestone
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CinnabarVolcanoBombRockText.forgetIt
 	jr nz, .done
 	ld hl, .grinded
@@ -1500,6 +1496,11 @@ CinnabarVolcanoSickRhydonText:
 	ld a, RHYDON
 	call PlayCry
 	ld hl, .resting
+	rst _PrintText
+	lb hl, DEX_RHYDON, $FF
+	ld de, TextNothing
+	ld bc, LearnsetNaturalHabitat
+	predef_jump LearnsetTrainerScriptMain
 .done
 	rst _PrintText
 .noLimestone
@@ -1536,8 +1537,6 @@ CinnabarVolcanoBossMagmarText:
 	ld hl, .battleQuestion
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	ld hl, CinnabarVolcanoBombRockText.forgetIt
 	jr nz, .done
 	ld a, MAGMAR
@@ -1548,7 +1547,7 @@ CinnabarVolcanoBossMagmarText:
 	SetEvent EVENT_BATTLING_VOLCANO_MAGMAR
 	ld hl, .letsdothis
 	rst _PrintText
-	callfar PlayTrainerMusic
+	callfar PlayDefaultTrainerMusic
 	rst TextScriptEnd
 .done
 	rst _PrintText
@@ -1893,7 +1892,7 @@ MoltresBattleAnimation:
 	ld [wEngagedTrainerSet], a
 	call InitBattleEnemyParameters
 	SetEvent EVENT_BATTLING_MOLTRES
-	callfar PlayTrainerMusic
+	callfar PlayDefaultTrainerMusic
 	ld c, 100
 	rst _DelayFrames
 	jp HideAnimationSprite
@@ -1924,9 +1923,7 @@ VolcanoPlayMusic::
 	CheckEvent EVENT_GOT_LAVA_SUIT
 	ret nz
 	; music is muted in entrance room before getting lava suit for effect
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp PauseMusic
 
 CheckForceTalkToProspector::
 	CheckEvent EVENT_VOLCANO_TALKED_TO_BLAINE
@@ -2296,9 +2293,68 @@ CinnabarVolcanoProspectorText:
 .prospecting
 	text_far _VolcanoProspectorAfterMessage
 	text_end
+.moreInfo
+	text_far _VolcanoNeedSomeInfo
+	text_end
+.getToIt2
+	text_far _VolcanoGetToIt2
+	text_end
 .getToIt
 	text_far _VolcanoGetToIt
-	text_end
+	text_asm
+	ld hl, .moreInfo
+	rst _PrintText
+	hlcoord 8, 5
+	lb bc, 5, 10
+	call TextBoxBorderUpdateSprites
+	call DisableTextDelay
+	hlcoord 10, 6
+	ld de, VolcanoHelpMenu
+	call PlaceString
+	call EnableTextDelay
+	xor a
+	ld [wCurrentMenuItem], a
+.repeatHelp
+	ld a, 9
+	ld [wTopMenuItemX], a
+	ld a, 6
+	ld [wTopMenuItemY], a
+	ld a, 3
+	ld [wMaxMenuItem], a
+	ld a, A_BUTTON | B_BUTTON
+	ld [wMenuWatchedKeys], a
+	call HandleMenuInput
+	ldh a, [hJoy5]
+	bit BIT_B_BUTTON, a
+	ld hl, .getToIt2
+	jr nz, .printDone
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .printDone
+	dec a
+	ld hl, .drillInfo
+	jr z, .printRepeat
+	ld hl, .lavaconefull
+	rst _PrintText
+	ld a, CINNABAR_VOLCANO_PROSPECTOR
+	call SetSpriteFacingLeft
+	ld hl, .blowrocks
+.printRepeat
+	rst _PrintText
+	ld a, CINNABAR_VOLCANO_PROSPECTOR
+	call SetSpriteFacingRight
+	ld hl, .moreInfo
+	rst _PrintText
+	jr .repeatHelp
+	; show list of text options
+.printDone
+	rst _PrintText
+	rst TextScriptEnd
+
+VolcanoHelpMenu:
+	db "Nah."
+	next "DRILL"
+	next "Blockages@"
 
 BlaineWalksOut:
 	db NPC_MOVEMENT_DOWN
@@ -2364,13 +2420,6 @@ PlayerQuickSpin::
 
 PlayerQuickSpinFacings:
 	db PLAYER_DIR_LEFT, PLAYER_DIR_UP, PLAYER_DIR_RIGHT, PLAYER_DIR_DOWN
-
-MoveSpriteButAllowAOrBPress:
-	call MoveSprite
-	ld hl, wJoyIgnore
-	res BIT_B_BUTTON, [hl]
-	res BIT_A_BUTTON, [hl]
-	ret
 
 ; bc = picture id backup in wMapSpriteOriginalPictureIDs
 ; de = tile location for this sprite

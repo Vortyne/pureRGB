@@ -33,8 +33,6 @@ Route15Gate2FOaksAideText:
 	ld hl, Route15GateUpstairsRemoveBoosterText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .noUninstall
 	lb bc, BOOSTER_CHIP, 1
 	call GiveItem
@@ -89,6 +87,7 @@ Route15Gate2FBinocularsText:
 	jp GateUpstairsScript_PrintIfFacingUp
 
 .Text:
+	text_far _GenericLookedIntoTheBinocularsText
 	text_far _Route15Gate2FBinocularsText
 	text_end
 

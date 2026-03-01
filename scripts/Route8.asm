@@ -10,10 +10,18 @@ Route8_Script:
 
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 Route8CheckHideCutTrees:
+
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	ret z
+	call nz, .checkReplaceTiles
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CROSSED_MAP_CONNECTION, [hl]
+	res BIT_CROSSED_MAP_CONNECTION, [hl]
+	call nz, .moveJolteon
+	ret
+.checkReplaceTiles
+	call .moveJolteon
 	ld de, Route8CutAlcove
 	callfar FarArePlayerCoordsInRange
 	jr c, .removeTreeBlockers
@@ -37,6 +45,14 @@ Route8CheckHideCutTrees:
 	ld a, $4C
 	ld [wNewTileBlockID], a
 	predef_jump ReplaceTileBlock
+.moveJolteon
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	lb bc, SPRITESTATEDATA2_MAPY, ROUTE8_JOLTEON
+	call GetFromSpriteStateData2 ; TODO: use this function more
+	ld [hl], 8 + 4
+	ret
+
 
 Route8_ScriptPointers:
 	def_script_pointers
@@ -55,8 +71,10 @@ Route8_TextPointers:
 	dw_const Route8CooltrainerF3Text,   TEXT_ROUTE8_COOLTRAINER_F3
 	dw_const Route8Gambler2Text,        TEXT_ROUTE8_GAMBLER2
 	dw_const Route8CooltrainerF4Text,   TEXT_ROUTE8_COOLTRAINER_F4
+	dw_const Route8JolteonText,         TEXT_ROUTE8_JOLTEON 
 	dw_const PickUp5ItemText,           TEXT_ROUTE8_ITEM1 ; PureRGBnote: ADDED: new item on this route.
 	dw_const Route8UndergroundSignText, TEXT_ROUTE8_UNDERGROUND_SIGN
+	dw_const Route8JolteonRightText,    TEXT_ROUTE8_JOLTEON_RIGHT
 
 Route8TrainerHeaders:
 	def_trainers
@@ -132,7 +150,12 @@ Route8SuperNerd2EndBattleText:
 
 Route8SuperNerd2AfterBattleText:
 	text_far _Route8SuperNerd2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MUK, SUPER_NERD
+	ld de, MukLearnset
+	ld bc, LearnsetMukFade
+	predef_jump LearnsetTrainerScriptMain
+
 
 Route8CooltrainerF1Text:
 	text_asm
@@ -150,7 +173,10 @@ Route8CooltrainerF1EndBattleText:
 
 Route8CooltrainerF1AfterBattleText:
 	text_far _Route8CooltrainerF1AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_NIDORINA, LASS
+	ld de, LearnsetNidorina
+	predef_jump LearnsetTrainerScript
 
 Route8SuperNerd3Text:
 	text_asm
@@ -186,7 +212,10 @@ Route8CooltrainerF2EndBattleText:
 
 Route8CooltrainerF2AfterBattleText:
 	text_far _Route8CooltrainerF2AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_MEOWTH, LASS
+	ld de, MeowthLearnset
+	predef_jump LearnsetTrainerScript
 
 Route8CooltrainerF3Text:
 	text_asm
@@ -240,8 +269,35 @@ Route8CooltrainerF4EndBattleText:
 
 Route8CooltrainerF4AfterBattleText:
 	text_far _Route8CooltrainerF4AfterBattleText
-	text_end
+	text_asm
+	lb hl, DEX_CLEFAIRY, LASS
+	ld de, ClefableLearnset
+	predef_jump LearnsetTrainerScript
 
 Route8UndergroundSignText:
 	text_far _Route8UndergroundSignText
 	text_end
+
+Route8JolteonText:
+	text_far _Route8JolteonText
+	text_end
+
+Route8JolteonRightText:
+	text_far _Route8JolteonCameraAngleText
+	text_end
+
+JolteonRightSide::
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	ld a, TEXT_ROUTE8_JOLTEON_RIGHT
+	jr JolteonLeftSide.displayTextID
+
+JolteonLeftSide::
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	ld c, DEX_JOLTEON - 1
+  	callfar SetMonSeen
+	ld a, TEXT_ROUTE8_JOLTEON
+.displayTextID
+	ldh [hTextID], a
+	jp DisplayTextID

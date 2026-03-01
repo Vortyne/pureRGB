@@ -1573,53 +1573,53 @@ Music_GRChallengeCup_Ch4::
 	octave 1
 	rest 16
 .Loop1
-	drum_note 2, 16
+	drum_note_short 7, 16
 	rest 16
 	rest 13
-	drum_note 2, 5
+	drum_note_short 7, 5
 ;	musicef -2
-	drum_note 2, 5
-	drum_note 2, 5
+	drum_note_short 7, 5
+	drum_note_short 7, 5
 ;	musicef 0
-	drum_note 2, 16
+	drum_note_short 7, 16
 	rest 4
-	drum_note 2, 16
+	drum_note_short 7, 16
 	rest 4
-	drum_note 2, 16
+	drum_note_short 7, 16
 	rest 4
 	sound_loop 3, .Loop1
 	drum_speed 5
-	drum_note 6, 16
+	drum_note_short 6, 16
 	drum_speed 1
 	rest 10
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 1, 15
-	drum_note 2, 7
+	drum_note_short 7, 7
 	sound_call Branch_1f33e9
 .MainLoop
 	sound_call Branch_1f33fd
 	sound_call Branch_1f33e9
 	drum_note_short 1, 8
-	drum_note 2, 7
+	drum_note_short 7, 7
 	drum_note_short 4, 8
 	drum_note_short 1, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 8
-	drum_note 2, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
 	drum_note_short 4, 8
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 8
-	drum_note 2, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
+	drum_note_short 7, 7
+	drum_note_short 7, 8
 	drum_note_short 5, 7
 	sound_call Branch_1f33e9
 	sound_call Branch_1f33fd
@@ -1628,18 +1628,18 @@ Music_GRChallengeCup_Ch4::
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
 	drum_note_short 1, 8
-	drum_note 2, 7
+	drum_note_short 7, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 1, 7
 	drum_note_short 5, 8
-	drum_note 2, 7
+	drum_note_short 7, 7
 	sound_call Branch_1f33e9
 	sound_call Branch_1f33fd
 	sound_call Branch_1f33e9
@@ -1647,21 +1647,21 @@ Music_GRChallengeCup_Ch4::
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
 	drum_note_short 1, 8
-	drum_note 2, 7
+	drum_note_short 7, 7
 	drum_note_short 4, 8
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 8
-	drum_note 2, 7
-	drum_note 2, 8
-	drum_note 2, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
 .Loop2
 	sound_call Branch_1f33e9
 	sound_call Branch_1f33fd
@@ -1671,21 +1671,21 @@ Music_GRChallengeCup_Ch4::
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 ;	musicef -3
-	drum_note 2, 4
-	drum_note 2, 3
+	drum_note_short 7, 4
+	drum_note_short 7, 3
 ;	musicef 0
-	drum_note 2, 8
-	drum_note 2, 7
-	drum_note 2, 8
-	drum_note 2, 7
-	drum_note 2, 8
-	drum_note 2, 7
-	drum_note 2, 8
-	drum_note 2, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
+	drum_note_short 7, 8
+	drum_note_short 7, 7
 	sound_call Branch_1f33e9
 	sound_loop 0, .MainLoop
 
@@ -1696,7 +1696,7 @@ Branch_1f33e9:
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
@@ -1704,7 +1704,7 @@ Branch_1f33e9:
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 1, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 5, 7
@@ -1717,18 +1717,18 @@ Branch_1f33fd:
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
 	drum_note_short 1, 8
-	drum_note 2, 7
+	drum_note_short 7, 7
 	drum_note_short 4, 8
 	drum_note_short 4, 7
-	drum_note 2, 8
+	drum_note_short 7, 8
 	drum_note_short 4, 7
 	drum_note_short 5, 8
-	drum_note 2, 7
+	drum_note_short 7, 7
 	sound_ret
 
 Branch_Bup1:

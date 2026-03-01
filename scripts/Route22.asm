@@ -140,16 +140,8 @@ Route22Rival1AfterBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, Route22SetDefaultScript
-	ld a, [wSpritePlayerStateData1FacingDirection]
-	and a ; cp SPRITE_FACING_DOWN
-	ld a, SPRITE_FACING_RIGHT
-	jr nz, .set_rival_facing
-	ld a, SPRITE_FACING_UP
-.set_rival_facing
-	ldh [hSpriteFacingDirection], a
-	ld a, ROUTE22_RIVAL1
-	ldh [hSpriteIndex], a
-	call SetSpriteFacingDirectionAndDelay
+	ld d, ROUTE22_RIVAL1
+	callfar MakeSpriteFacePlayer
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
@@ -299,22 +291,15 @@ Route22Rival2AfterBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, Route22SetDefaultScript
-	ld a, ROUTE22_RIVAL2
-	ldh [hSpriteIndex], a
 	ld a, [wSavedCoordIndex]
 	cp 1 ; index of second, lower entry in Route22DefaultScript.Route22RivalBattleCoords
-	jr nz, .set_player_direction_left
-	ld a, PLAYER_DIR_DOWN
-	ld [wPlayerMovingDirection], a
-	ld a, SPRITE_FACING_UP
-	jr .set_rival_facing_direction
-.set_player_direction_left
 	ld a, PLAYER_DIR_LEFT
+	jr nz, .set_player_direction
+	ld a, PLAYER_DIR_DOWN
+.set_player_direction
 	ld [wPlayerMovingDirection], a
-	ld a, SPRITE_FACING_RIGHT
-.set_rival_facing_direction
-	ldh [hSpriteFacingDirection], a
-	call SetSpriteFacingDirectionAndDelay
+	ld d, ROUTE22_RIVAL1
+	callfar MakeSpriteFacePlayer
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_2ND_BATTLE

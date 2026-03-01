@@ -62,13 +62,12 @@ DoInGameTradeDialogue:
 	ld a, TRADETEXT_NO_TRADE
 	ld [wInGameTradeTextPointerTableIndex], a
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .printText
 	call InGameTrade_DoTrade
 	jr c, .printText
 	ld hl, TradedForText
 	rst _PrintText
+	call PlayDefaultMusic
 .printText
 	ld hl, wInGameTradeTextPointerTableIndex
 	ld a, [hld] ; wInGameTradeTextPointerTableIndex
@@ -82,7 +81,8 @@ DoInGameTradeDialogue:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	jp PrintText
+	rst _PrintText
+	ret
 
 ; copies name of species a to hl
 InGameTrade_GetMonName:
@@ -133,6 +133,7 @@ InGameTrade_DoTrade:
 	predef FlagActionPredef
 	ld hl, ConnectCableText
 	rst _PrintText
+	call PlayInGameTradeMusic
 	ld a, [wWhichPokemon]
 	push af
 	ld a, [wCurEnemyLevel]
@@ -155,7 +156,7 @@ InGameTrade_DoTrade:
 	ld [wMonDataLocation], a
 	call AddPartyMon
 	call InGameTrade_CopyDataToReceivedMon
-	callfar InGameTrade_CheckForTradeEvo
+	;callfar InGameTrade_CheckForTradeEvo ; PureRGBnote: REMOVED: not needed
 	call ClearScreen
 	call InGameTrade_RestoreScreen
 	farcall RedrawMapView
@@ -170,25 +171,26 @@ InGameTrade_DoTrade:
 	ld [wIsAltPalettePkmnData], a ; PureRGBnote: ADDED: clear any alt palette flags so the next pokemon we deal with won't be alt palette
 	ret
 
+PlayInGameTradeMusic:
+	ld a, [wOptions2]
+	bit BIT_MUSIC, a ; is the MUSIC option set to OG+?
+	jr z, .evoMusic ; if not, don't play anything new
+	ld c, BANK(Music_Route3_Early)
+	ld hl, Music_Route3_Early
+	jp PlaySpecialFieldMusic
+.evoMusic
+	ld a, MUSIC_EVOLUTION
+	ld c, BANK(Music_Evolution)
+	jp PlayMusic
+
 GetTradeMonPalette:
 	ld a, [wWhichTrade]
-	ld hl, TradeMonPalettes
-	cp 8
-	jr c, .firstByte
-	inc hl
-	sub 8 ; PureRGBnote: if you have more than 16 in game trades this code will need to be updated.
-.firstByte
-	and a
-	ld b, a
+	ld hl, TradeMonFlags
+	ld d, 0
+	ld e, a
+	add hl, de
 	ld a, [hl]
-	jr z, .clearAndTestBit
-.loopShiftRight ; keep shifting until the bit we want to test is bit 0
-	srl a
-	dec b
-	jr nz, .loopShiftRight
-.clearAndTestBit
-	and 1 ; zero every other bit than bit 0
-	ld [wIsAltPalettePkmnData], a ; a now contains the flag value for whether the palette is alt or original.
+	ld [wIsAltPalettePkmnData], a ; a now contains alt palette flag and pokeball data for the in-game trade
 	ret
 
 InGameTrade_RestoreScreen::
@@ -215,8 +217,8 @@ InGameTrade_PrepareTradeData:
 	ld de, wTradedPlayerMonOT
 	ld bc, NAME_LENGTH
 	call InGameTrade_CopyData
-	ld hl, InGameTrade_TrainerString
 	ld de, wTradedEnemyMonOT
+	call GetInGameTradeTrainerName
 	call InGameTrade_CopyData
 	ld de, wLinkEnemyTrainerName
 	call InGameTrade_CopyData
@@ -250,8 +252,7 @@ InGameTrade_CopyDataToReceivedMon:
 	ld hl, wPartyMonOT
 	ld bc, NAME_LENGTH
 	call InGameTrade_GetReceivedMonPointer
-	ld hl, InGameTrade_TrainerString
-	ld bc, NAME_LENGTH
+	call GetInGameTradeTrainerName
 	rst _CopyData
 	ld hl, wPartyMon1OTID
 	ld bc, wPartyMon2 - wPartyMon1
@@ -270,8 +271,30 @@ InGameTrade_GetReceivedMonPointer:
 	ld d, h
 	ret
 
-InGameTrade_TrainerString:
-	db "<TRAINER>@@@@@@@@@@"
+GetInGameTradeTrainerName:
+	ld hl, InGameTrade_TrainerStrings
+	ld a, [wWhichTrade]
+	and a
+	ret z
+	ld bc, NAME_LENGTH
+.loop
+	add hl, bc
+	dec a
+	jr nz, .loop
+	ret
+
+InGameTrade_TrainerStrings:
+	db "BOBO@@@@@@@"
+	db "GABE@@@@@@@"
+	db "CROCKET@@@@"
+	db "DRGREEN@@@@"
+	db "MIMI@@@@@@@"
+	db "SHEEN@@@@@@"
+	db "EDMUND@@@@@"
+	db "MIKE@@@@@@@"
+	db "GRACIE@@@@@"
+	db "LILIAN@@@@@"
+
 
 InGameTradeTextPointers:
 ; entries correspond to TRADE_DIALOGSET_* constants
@@ -351,7 +374,13 @@ ConnectCableText:
 
 TradedForText:
 	text_far _TradedForText
-	sound_get_key_item
+	text_asm
+	call WaitForSoundToFinish
+	ld a, SFX_GET_KEY_ITEM
+	rst _PlaySound
+	ld hl, .pause
+	ret
+.pause
 	text_pause
 	text_end
 

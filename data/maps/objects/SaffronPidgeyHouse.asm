@@ -12,6 +12,7 @@ SaffronPidgeyHouse_Object:
 	warp_event  3,  7, LAST_MAP, 4
 
 	def_bg_events
+	bg_event 3, 1, TEXT_SAFFRONPIDGEYHOUSE_TV
 
 	def_object_events
 	object_event  2,  3, SPRITE_BRUNETTE_GIRL, STAY, RIGHT, TEXT_SAFFRONPIDGEYHOUSE_BRUNETTE_GIRL

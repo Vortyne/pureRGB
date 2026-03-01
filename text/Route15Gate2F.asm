@@ -17,10 +17,7 @@ _Route15Gate2FOaksAideBoosterChipText::
 	done
 
 _Route15Gate2FBinocularsText::
-	text "Looked into the"
-	line "binoculars."
-
-	para "It looks like a"
+	text "It looks like a"
 	line "small island!"
 	done
 

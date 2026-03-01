@@ -128,14 +128,3 @@ TimesUpText:
 GameOverText:
 	text_far _GameOverText
 	text_end
-
-; PureRGBnote: ADDED: decrements the number of rangers left once you beat one.
-RangerPostBattle::
-	ld a, [wIsInBattle] 
-	cp $ff ; if you lost the battle don't decrement and return
-	ret z
-	ld hl, wNumRangersLeft
-	dec [hl]
-	xor a
-	ld [wCurMapScript], a
-	ret

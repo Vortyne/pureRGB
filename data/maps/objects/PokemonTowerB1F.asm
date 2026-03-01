@@ -7,7 +7,7 @@
 	const_export POKEMONTOWERB1F_HYPER_BEAM_PROXY
 
 PokemonTowerB1F_Object:
-	db $52 ; border block
+	db $3D ; border block
 
 	def_warp_events
 	warp_event 4,  9, POKEMON_TOWER_1F, 4

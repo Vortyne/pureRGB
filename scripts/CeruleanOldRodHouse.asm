@@ -15,8 +15,6 @@ CeruleanOldRodHouse1Text1:
 	ld hl, .CeruleanOldRodHouseImTheFishingGuruText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .refused
 	lb bc, OLD_ROD, 1
 	call GiveItem
@@ -44,6 +42,7 @@ CeruleanOldRodHouse1Text1:
 
 .CeruleanOldRodHouseGiveRod:
 	text_far _VermilionOldRodHouseFishingGuruTakeThisText
+	text_far _GenericReceivedItemA
 	sound_get_item_1
 	text_far _CeruleanOldRodHouseFishingIsAWayOfLifeText
 	text_end

@@ -10,7 +10,7 @@ ReplaceTileBlock:
 	ret z
 	call IsBCInHLTileBlockMapView
 	ret c
-	jp RedrawMapView 
+	jp RedrawMapView
 
 ReplaceMultipleTileBlocks::
 	ld h, d

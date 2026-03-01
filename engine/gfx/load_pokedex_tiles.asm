@@ -5,6 +5,7 @@ LoadPokedexTilePatterns:
 	ld hl, vChars2 tile $60
 	lb bc, BANK(PokedexTileGraphics), (PokedexTileGraphicsEnd - PokedexTileGraphics) / $10
 	call CopyVideoData
+LoadPokeballTileGraphics::
 	ld de, PokeballTileGraphics
 	ld hl, vChars2 tile $72
 	lb bc, BANK(PokeballTileGraphics), 1

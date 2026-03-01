@@ -49,7 +49,7 @@ JoypadLowSensitivity::
 	xor a
 	ldh [hJoy5], a
 .setShortDelay
-	ld a, 5 ; 1/12 of a second delay
+	ld a, 3 ; 1/20 of a second delay
 	ldh [hFrameCounter], a
 	ret
 

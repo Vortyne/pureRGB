@@ -32,14 +32,15 @@ _WardensHouseWardenTeethPoppedInHisTeethText::
 
 _WardensHouseWardenThanksText::
 	text "WARDEN: Thanks,"
-	line "kid! No one could"
-	cont "understand a word"
+	line "kid!"
+	para "No one could"
+	line "understand a word"
 	cont "that I said."
 
 	para "I couldn't work"
 	line "that way."
-	cont "Let me give you"
-	cont "something for"
+	para "Let me give you"
+	line "something for"
 	cont "your trouble."
 	prompt
 
@@ -51,17 +52,30 @@ _WardensHouseWardenHM04ExplanationText::
 	line "move boulders"
 	cont "when you're out-"
 	cont "side of battle."
+	prompt
 
-; TODO: modify depending on if you already did or not
-	para "Oh yes, did you"
-	line "find SECRET HOUSE"
-	cont "in SAFARI ZONE?"
+_WardensHouseWardenHM03ExplanationText::
+	text "Oh yes,"
+	line "Did you find the"
+	cont "SECRET HOUSE in"
+	cont "the SAFARI ZONE?"
 
 	para "If you do, you"
 	line "win an HM!"
 
 	para "I hear it's the"
 	line "rare SURF HM."
+	done
+
+_WardensHouseWardenHM03AlreadyText::
+	text "Oh! You found the"
+	line "SECRET HOUSE in"
+	cont "the SAFARI ZONE?"
+
+	para "Congratulations!"
+	
+	para "Have fun with"
+	line "that SURF HM too!"
 	done
 
 _WardensHouseWardenHM04NoRoomText::

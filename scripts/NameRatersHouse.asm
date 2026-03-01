@@ -3,10 +3,7 @@ NameRatersHouse_Script:
 
 NameRatersHouseYesNoScript:
 	rst _PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	ret
+	jp YesNoChoice
 
 ;NameRatersHouseCheckMonOTScript: ; PureRGBnote: CHANGED: Name Rater will always allow you to rename pokemon regardless of their OT.
 ;; return carry if mon's OT name or OT ID do not match the player's

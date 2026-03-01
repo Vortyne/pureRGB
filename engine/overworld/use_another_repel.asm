@@ -1,6 +1,6 @@
 ; PureRGBnote: ADDED: code to allow repeated usages of REPEL once one runs out.
 UseAnotherRepel::
-	ld b, REPEL
+	ld b, MAX_REPEL
 	push bc
 	call IsItemInBag
 	pop bc
@@ -10,7 +10,7 @@ UseAnotherRepel::
 	call IsItemInBag
 	pop bc
 	jr nz, .checkUse
-	ld b, MAX_REPEL
+	ld b, REPEL
 	push bc
 	call IsItemInBag
 	pop bc
@@ -21,8 +21,6 @@ UseAnotherRepel::
 	rst _PrintText
 	call YesNoChoice
 	pop bc
-	ld a, [wCurrentMenuItem]
-	and a
 	ret nz
 	ld a, b
 	ld [wCurItem], a	;load item to be used

@@ -23,8 +23,7 @@ VendingMachineMenu::
 	set BIT_NO_TEXT_DELAY, [hl]
 	hlcoord 0, 3
 	lb bc, 8, 12
-	call TextBoxBorder
-	call UpdateSprites
+	call TextBoxBorderUpdateSprites
 	hlcoord 2, 5	
 	ld a, [wCurMap]
 	cp CERULEAN_ROCKET_HOUSE_B1F

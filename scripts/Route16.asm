@@ -13,10 +13,21 @@ Route16CheckHideCutTree:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	ret z ; map wasn't just loaded
+	jr nz, .mapLoadTree ; map wasn't just loaded
+	bit BIT_CROSSED_MAP_CONNECTION, [hl] ; did we load the map from a save/warp/door/battle, etc?
+	res BIT_CROSSED_MAP_CONNECTION, [hl]
+	jr nz, .checkMankey
+	ret
+.mapLoadTree
 	ld de, Route16CutAlcove
 	callfar FarArePlayerCoordsInRange
 	call c, .removeTreeBlocker
+.checkMankey
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	lb bc, SPRITESTATEDATA2_MAPY, ROUTE16_MANKEY
+	call GetFromSpriteStateData2
+	ld [hl], 2 + 4 ; move mankey into place
 	ret
 .removeTreeBlocker
 	; if we're in the cut alcove, remove the tree
@@ -121,6 +132,7 @@ Route16_TextPointers:
 	dw_const Route16Biker5Text,                     TEXT_ROUTE16_BIKER5
 	dw_const Route16Biker6Text,                     TEXT_ROUTE16_BIKER6
 	dw_const SnorlaxText,                           TEXT_ROUTE16_SNORLAX
+	dw_const Route16MankeyText,                     TEXT_ROUTE16_MANKEY
 	dw_const Route16CyclingRoadSignText,            TEXT_ROUTE16_CYCLING_ROAD_SIGN
 	dw_const Route16SignText,                       TEXT_ROUTE16_SIGN
 	dw_const Route12SnorlaxWokeUpText,              TEXT_ROUTE16_SNORLAX_WOKE_UP
@@ -258,3 +270,25 @@ Route16CyclingRoadSignText:
 Route16SignText:
 	text_far _Route16SignText
 	text_end
+
+Route16MankeyText:
+	text_far _Route16MankeyText
+	text_asm
+	ld a, MANKEY
+	call PlayCry
+	call DisplayTextPromptButton
+	ld hl, .glaring
+	rst _PrintText
+	rst TextScriptEnd
+.glaring
+	text_far _Route16MankeyText2
+	text_end
+
+MankeyHiddenObject::
+	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
+	ret nz
+	ld a, TEXT_ROUTE16_MANKEY
+.displayTextID
+	ldh [hTextID], a
+	jp DisplayTextID
+

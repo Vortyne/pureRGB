@@ -56,8 +56,8 @@
 
 	db BANK(VolcanicMagmarPicFront)
 	db 0
-	db BANK(MagmarPicBack)
+	db BANK(VolcanicMagmarPicBack)
 	db BANK(VolcanicMagmarPicBackSW)
 
-	dw 0, MagmarPicBack
+	dw 0, VolcanicMagmarPicBack
 

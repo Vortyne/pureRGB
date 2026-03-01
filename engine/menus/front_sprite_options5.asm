@@ -26,7 +26,7 @@ FrontSpriteOptions5Header:
 	dw FrontSpriteOptions5LeftRightFuncs
 	dw DisplayFrontSpriteOptions
 	dw DisplayFrontSpriteOptions4
-	dw FrontSpriteSelectButtonDefault
+	dw FrontSprite5SelectButton
 	dw OptionsDoNothing
 	; fall through
 DisplayFrontSpriteOptions5:
@@ -88,3 +88,8 @@ SetFrontSpriteOptions5FromCursorPositions:
 SetCursorPositionFromFrontSpriteOptions5:
 	ld hl, FrontSpriteOptions5XPosBitData
 	jp SetGenericCursorPositionFromOptions
+
+
+FrontSprite5SelectButton:
+	ld e, (FRONT_SPRITE_OPTIONS_PAGE_5_NUMBER - 1) * 7
+	jp FrontSpriteSelectButtonDefault

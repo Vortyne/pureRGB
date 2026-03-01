@@ -73,7 +73,7 @@ ViridianCityOldManStartCatchTrainingScript:
 
 ;;;;;;;;;; PureRGBnote: ADDED: enable item duplication "glitch" via this new wram variable
 	ld hl, wNewInGameFlags
-	set 3, [hl] ; each time the game is reset we have to trigger this to allow item duplication from missingno
+	set ITEM_DUPLICATION_ACTIVE, [hl] ; each time the game is reset we have to trigger this to allow item duplication from missingno
 ;;;;;;;;;;
 
 	; set up battle for Old Man
@@ -96,8 +96,7 @@ ViridianCityOldManEndCatchTrainingScript:
 	ld [wSprite03StateData2MapY], a
 	ldh a, [hSpriteMapXCoord]
 	ld [wSprite03StateData2MapX], a
-	call UpdateSprites
-	call Delay3
+	call UpdateSpritesAndDelay3
 	xor a
 	ld [wJoyIgnore], a
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN_YOU_NEED_TO_WEAKEN_THE_TARGET
@@ -178,8 +177,6 @@ ViridianCityYoungster2Text:
 	ld hl, .YouWantToKnowAboutText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .no
 	ld hl, .CaterpieAndWeedleDescriptionText
 	rst _PrintText
@@ -248,16 +245,22 @@ ViridianCityFisherText:
 	ld hl, .ReceivedTM42Text
 	rst _PrintText
 	SetEvent EVENT_GOT_TM42
-	jr .done
+	rst TextScriptEnd
 .bag_full
 	ld hl, .TM42NoRoomText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .got_item
 	ld hl, .TM42ExplanationText
 	rst _PrintText
-.done
-	rst TextScriptEnd
+	ld c, DEX_GASTLY - 1
+	callfar SetMonSeen
+	ld de, SleeperName
+	call CopyTrainerName
+	lb hl, DEX_GASTLY, $FF
+	ld de, GastlyLearnset
+	ld bc, LearnsetFadeOutInDream
+	predef_jump LearnsetTrainerScriptMain
 
 .YouCanHaveThisText:
 	text_far ViridianCityFisherYouCanHaveThisText
@@ -276,6 +279,9 @@ ViridianCityFisherText:
 	text_far _ViridianCityFisherTM42NoRoomText
 	text_end
 
+SleeperName:
+	db "SLEEPY GUY@"
+
 ViridianCityOldManText:
 	text_asm
 	ld hl, .HadMyCoffeeNowText
@@ -283,8 +289,6 @@ ViridianCityOldManText:
 	ld c, 2
 	rst _DelayFrames
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr z, .refused
 	ld hl, .KnowHowToCatchPokemonText
 	rst _PrintText

@@ -65,7 +65,7 @@ _TM21ExplanationText::
 	text_start
 
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "RAZOR LEAF."
 
@@ -96,6 +96,13 @@ _CeladonGymAfterBattleText2::
 	text "Bleaah!"
 	line "I hope ERIKA"
 	cont "wipes you out!"
+	done
+
+_CeladonGymAfterBattleText2GymDefeated::
+	text "Whoa!?"
+	line "You beat ERIKA?!"
+	para "You're cooler than"
+	line "I thought!"
 	done
 
 _CeladonGymBattleText3::

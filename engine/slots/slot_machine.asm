@@ -9,8 +9,6 @@ PromptUserToPlaySlots:
 	ld hl, PlaySlotMachineText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done ; if player chose No
 	dec a
 	ld [wUpdateSpritesEnabled], a
@@ -41,8 +39,7 @@ PromptUserToPlaySlots:
 	xor a
 	ld [wSlotMachineAllowMatchesCounter], a
 	call GBPalWhiteOutWithDelay3
-	ld a, $1
-	ld [wUpdateSpritesEnabled], a
+	call EnableSpriteUpdates
 	call RunDefaultPaletteCommand
 	call ReloadMapSpriteTilePatterns
 	call ReloadTilesetTilePatterns
@@ -409,9 +406,7 @@ SlotMachine_CheckForMatches:
 	ld hl, NotThisTimeText
 	rst _PrintText
 .done
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jp ResumeMusic
 .rollWheel3DownByOneSymbol
 	call SlotMachine_AnimWheel3
 	rst _DelayFrame
@@ -660,8 +655,7 @@ SlotMachine_PrintPayoutCoins:
 	jp PrintNumber
 
 SlotMachine_PayCoinsToPlayer:
-	ld a, TRUE
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	call WaitForSoundToFinish
 
 ; Put 1 in the temp coins variable. This value is added to the player's coins

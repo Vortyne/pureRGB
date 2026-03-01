@@ -153,7 +153,7 @@ _SchoolB1FRockerNo::
 	cont "down a peg!"
 	; fall through
 _SchoolB1FRockerBattleNow::
-	para "Lets battle right"
+	para "Let's battle right"
 	line "here, right now!!"
 	done
 

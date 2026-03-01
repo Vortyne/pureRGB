@@ -1,168 +1,500 @@
-MoveNames::
-	list_start
-	li "POUND"
-	li "KARATE CHOP"
-	li "DOUBLESLAP"
-	li "COMET PUNCH"
-	li "MEGA PUNCH"
-	li "PAY DAY"
-	li "FIRE PUNCH"
-	li "ICE PUNCH"
-	li "THUNDERPUNCH"
-	li "SCRATCH"
-	li "VICEGRIP"
-	li "GUILLOTINE"
-	li "ROOST" ; changed from RAZOR WIND
-	li "SWORDS DANCE"
-	li "CUT"
-	li "GUST"
-	li "WING ATTACK"
-	li "WHIRLWIND"
-	li "FLY"
-	li "BIND"
-	li "FILTHY SLAM" ; changed from SLAM
-	li "VINE WHIP"
-	li "STOMP"
-	li "DOUBLE KICK"
-	li "MEGA KICK"
-	li "JUMP KICK"
-	li "ROLLING KICK"
-	li "SAND-ATTACK"
-	li "HEADBUTT"
-	li "HORN ATTACK"
-	li "FURY ATTACK"
-	li "HORN DRILL"
-	li "TACKLE"
-	li "BODY SLAM"
-	li "WRAP"
-	li "HEAT RUSH" ; changed from TAKE DOWN
-	li "THRASH"
-	li "DOUBLE-EDGE"
-	li "TAIL WHIP"
-	li "POISON STING"
-	li "TWINEEDLE"
-	li "PIN MISSILE"
-	li "LEER"
-	li "BITE"
-	li "GROWL"
-	li "ROAR"
-	li "SING"
-	li "SUPERSONIC"
-	li "SONICBOOM"
-	li "DISABLE"
-	li "ACID"
-	li "EMBER"
-	li "FLAMETHROWER"
-	li "MIST"
-	li "WATER GUN"
-	li "HYDRO PUMP"
-	li "SURF"
-	li "ICE BEAM"
-	li "BLIZZARD"
-	li "PSYBEAM"
-	li "BUBBLEBEAM"
-	li "AURORA BEAM"
-	li "HYPER BEAM"
-	li "PECK"
-	li "DRILL PECK"
-	li "SUBMISSION"
-	li "LOW KICK"
-	li "DRAIN PUNCH" ; changed from COUNTER
-	li "SEISMIC TOSS"
-	li "STRENGTH"
-	li "ABSORB"
-	li "MEGA DRAIN"
-	li "LEECH SEED"
-	li "GROWTH"
-	li "RAZOR LEAF"
-	li "SOLARBEAM"
-	li "POISONPOWDER"
-	li "STUN SPORE"
-	li "SLEEP POWDER"
-	li "PETAL DANCE"
-	li "STRING SHOT"
-	li "DRAGON RAGE"
-	li "FIRE SPIN"
-	li "THUNDERSHOCK"
-	li "THUNDERBOLT"
-	li "THUNDER WAVE"
-	li "THUNDER"
-	li "ROCK THROW"
-	li "EARTHQUAKE"
-	li "FISSURE"
-	li "DIG"
-	li "TOXIC"
-	li "CONFUSION"
-	li "PSYCHIC"
-	li "HYPNOSIS"
-	li "MEDITATE"
-	li "AGILITY"
-	li "QUICK ATTACK"
-	li "RAGE"
-	li "TELEPORT"
-	li "NIGHT SHADE"
-	li "MIMIC"
-	li "SCREECH"
-	li "DOUBLE TEAM"
-	li "RECOVER"
-	li "HARDEN"
-	li "MINIMIZE"
-	li "SMOKESCREEN"
-	li "CONFUSE RAY"
-	li "WITHDRAW"
-	li "DEFENSE CURL"
-	li "BARRIER"
-	li "LIGHT SCREEN"
-	li "HAZE"
-	li "REFLECT"
-	li "FOCUS ENERGY"
-	li "BIDE"
-	li "METRONOME"
-	li "MIRROR MOVE"
-	li "SELFDESTRUCT"
-	li "EGG BOMB"
-	li "LICK"
-	li "SMOG"
-	li "SLUDGE"
-	li "BONE CLUB"
-	li "FIRE BLAST"
-	li "WATERFALL"
-	li "CLAMP"
-	li "SWIFT"
-	li "SKULL BASH"
-	li "SPIKE CANNON"
-	li "STATIC SNAG" ; changed from CONSTRICT
-	li "AMNESIA"
-	li "FIREWALL" ; changed from KINESIS
-	li "SOFTBOILED"
-	li "HI JUMP KICK"
-	li "GLARE"
-	li "DREAM EATER"
-	li "POISON GAS"
-	li "BARRAGE"
-	li "LEECH LIFE"
-	li "LOVELY KISS"
-	li "SKY ATTACK"
-	li "TRANSFORM"
-	li "BUBBLE"
-	li "DIZZY PUNCH"
-	li "SPORE"
-	li "FLASH"
-	li "PSYWAVE"
-	li "SPLASH"
-	li "ACID ARMOR"
-	li "CRABHAMMER"
-	li "EXPLOSION"
-	li "DUST CLAW" ; changed from FURY SWIPES
-	li "BONEMERANG"
-	li "REST"
-	li "ROCK SLIDE"
-	li "HYPER FANG"
-	li "SHARPEN"
-	li "CONVERSION"
-	li "TRI ATTACK"
-	li "SUPER FANG"
-	li "SLASH"
-	li "SUBSTITUTE"
-	li "STRUGGLE"
-	assert_list_length NUM_ATTACKS
+MoveNameJumpTable::
+	table_width 2
+	dw POUNDName
+	dw KARATECHOPName
+	dw DOUBLESLAPName
+	dw COMETPUNCHName
+	dw MEGAPUNCHName
+	dw PAYDAYName
+	dw FIREPUNCHName
+	dw ICEPUNCHName
+	dw THUNDERPUNCHName
+	dw SCRATCHName
+	dw VICEGRIPName
+	dw GUILLOTINEName
+	dw RAZORWINDName
+	dw SWORDSDANCEName
+	dw CUTName
+	dw GUSTName
+	dw WINGATTACKName
+	dw WHIRLWINDName
+	dw FLYName
+	dw BINDName
+	dw SLAMName
+	dw VINEWHIPName
+	dw STOMPName
+	dw DOUBLEKICKName
+	dw MEGAKICKName
+	dw JUMPKICKName
+	dw ROLLINGKICKName
+	dw SANDATTACKName
+	dw HEADBUTTName
+	dw HORNATTACKName
+	dw FURYATTACKName
+	dw HORNDRILLName
+	dw TACKLEName
+	dw BODYSLAMName
+	dw WRAPName
+	dw TAKEDOWNName
+	dw THRASHName
+	dw DOUBLEEDGEName
+	dw TAILWHIPName
+	dw POISONSTINGName
+	dw TWINEEDLEName
+	dw PINMISSILEName
+	dw LEERName
+	dw BITEName
+	dw GROWLName
+	dw ROARName
+	dw SINGName
+	dw SUPERSONICName
+	dw SONICBOOMName
+	dw DISABLEName
+	dw ACIDName
+	dw EMBERName
+	dw FLAMETHROWERName
+	dw MISTName
+	dw WATERGUNName
+	dw HYDROPUMPName
+	dw SURFName
+	dw ICEBEAMName
+	dw BLIZZARDName
+	dw PSYBEAMName
+	dw BUBBLEBEAMName
+	dw AURORABEAMName
+	dw HYPERBEAMName
+	dw PECKName
+	dw DRILLPECKName
+	dw SUBMISSIONName
+	dw LOWKICKName
+	dw COUNTERName
+	dw SEISMICTOSSName
+	dw STRENGTHName
+	dw ABSORBName
+	dw MEGADRAINName
+	dw LEECHSEEDName
+	dw GROWTHName
+	dw RAZORLEAFName
+	dw SOLARBEAMName
+	dw POISONPOWDERName
+	dw STUNSPOREName
+	dw SLEEPPOWDERName
+	dw PETALDANCEName
+	dw STRINGSHOTName
+	dw DRAGONRAGEName
+	dw FIRESPINName
+	dw THUNDERSHOCKName
+	dw THUNDERBOLTName
+	dw THUNDERWAVEName
+	dw THUNDERName
+	dw ROCKTHROWName
+	dw EARTHQUAKEName
+	dw FISSUREName
+	dw DIGName
+	dw TOXICName
+	dw CONFUSIONName
+	dw PSYCHICName
+	dw HYPNOSISName
+	dw MEDITATEName
+	dw AGILITYName
+	dw QUICKATTACKName
+	dw RAGEName
+	dw TELEPORTName
+	dw NIGHTSHADEName
+	dw MIMICName
+	dw SCREECHName
+	dw DOUBLETEAMName
+	dw RECOVERName
+	dw HARDENName
+	dw MINIMIZEName
+	dw SMOKESCREENName
+	dw CONFUSERAYName
+	dw WITHDRAWName
+	dw DEFENSECURLName
+	dw BARRIERName
+	dw LIGHTSCREENName
+	dw HAZEName
+	dw REFLECTName
+	dw FOCUSENERGYName
+	dw BIDEName
+	dw METRONOMEName
+	dw MIRRORMOVEName
+	dw SELFDESTRUCTName
+	dw EGGBOMBName
+	dw LICKName
+	dw SMOGName
+	dw SLUDGEName
+	dw BONECLUBName
+	dw FIREBLASTName
+	dw WATERFALLName
+	dw CLAMPName
+	dw SWIFTName
+	dw SKULLBASHName
+	dw SPIKECANNONName
+	dw CONSTRICTName
+	dw AMNESIAName
+	dw KINESISName
+	dw SOFTBOILEDName
+	dw HIJUMPKICKName
+	dw GLAREName
+	dw DREAMEATERName
+	dw POISONGASName
+	dw BARRAGEName
+	dw LEECHLIFEName
+	dw LOVELYKISSName
+	dw SKYATTACKName
+	dw TRANSFORMName
+	dw BUBBLEName
+	dw DIZZYPUNCHName
+	dw SPOREName
+	dw FLASHName
+	dw PSYWAVEName
+	dw SPLASHName
+	dw ACIDARMORName
+	dw CRABHAMMERName
+	dw EXPLOSIONName
+	dw FURYSWIPESName
+	dw BONEMERANGName
+	dw RESTName
+	dw ROCKSLIDEName
+	dw HYPERFANGName
+	dw SHARPENName
+	dw CONVERSIONName
+	dw TRIATTACKName
+	dw SUPERFANGName
+	dw SLASHName
+	dw SUBSTITUTEName
+	dw STRUGGLEName
+	assert_table_length NUM_ATTACKS
+
+POUNDName:
+	db "POUND@"
+KARATECHOPName:
+	db "KARATE CHOP@"
+DOUBLESLAPName:
+	db "DOUBLESLAP@"
+COMETPUNCHName:
+	db "COMET PUNCH@"
+MEGAPUNCHName:
+	db "MEGA PUNCH@"
+PAYDAYName:
+	db "PAY DAY@"
+FIREPUNCHName:
+	db "FIRE PUNCH@"
+ICEPUNCHName:
+	db "ICE PUNCH@"
+THUNDERPUNCHName:
+	db "THUNDERPUNCH@"
+SCRATCHName:
+	db "SCRATCH@"
+VICEGRIPName:
+	db "VICEGRIP@"
+GUILLOTINEName:
+	db "GUILLOTINE@"
+RAZORWINDName:
+	db "ROOST@" ; changed from RAZOR WIND
+SWORDSDANCEName:
+	db "SWORDS DANCE@"
+CUTName:
+	db "CUT@"
+GUSTName:
+	db "GUST@"
+WINGATTACKName:
+	db "WING ATTACK@"
+WHIRLWINDName:
+	db "WHIRLWIND@"
+FLYName:
+	db "FLY@"
+BINDName:
+	db "BIND@"
+SLAMName:
+	db "FILTHY SLAM@" ; changed from SLAM
+VINEWHIPName:
+	db "VINE WHIP@"
+STOMPName:
+	db "STOMP@"
+DOUBLEKICKName:
+	db "DOUBLE KICK@"
+MEGAKICKName:
+	db "MEGA KICK@"
+JUMPKICKName:
+	db "JUMP KICK@"
+ROLLINGKICKName:
+	db "ROLLING KICK@"
+SANDATTACKName:
+	db "SAND-ATTACK@"
+HEADBUTTName:
+	db "HEADBUTT@"
+HORNATTACKName:
+	db "HORN ATTACK@"
+FURYATTACKName:
+	db "FURY ATTACK@"
+HORNDRILLName:
+	db "HORN DRILL@"
+TACKLEName:
+	db "TACKLE@"
+BODYSLAMName:
+	db "BODY SLAM@"
+WRAPName:
+	db "WRAP@"
+TAKEDOWNName:
+	db "HEAT RUSH@" ; changed from TAKE DOWN
+THRASHName:
+	db "THRASH@"
+DOUBLEEDGEName:
+	db "DOUBLE-EDGE@"
+TAILWHIPName:
+	db "TAIL WHIP@"
+POISONSTINGName:
+	db "POISON STING@"
+TWINEEDLEName:
+	db "TWINEEDLE@"
+PINMISSILEName:
+	db "PIN MISSILE@"
+LEERName:
+	db "LEER@"
+BITEName:
+	db "BITE@"
+GROWLName:
+	db "GROWL@"
+ROARName:
+	db "ROAR@"
+SINGName:
+	db "SING@"
+SUPERSONICName:
+	db "SUPERSONIC@"
+SONICBOOMName:
+	db "SONICBOOM@"
+DISABLEName:
+	db "DISABLE@"
+ACIDName:
+	db "ACID@"
+EMBERName:
+	db "EMBER@"
+FLAMETHROWERName:
+	db "FLAMETHROWER@"
+MISTName:
+	db "MIST@"
+WATERGUNName:
+	db "WATER GUN@"
+HYDROPUMPName:
+	db "HYDRO PUMP@"
+SURFName:
+	db "SURF@"
+ICEBEAMName:
+	db "ICE BEAM@"
+BLIZZARDName:
+	db "BLIZZARD@"
+PSYBEAMName:
+	db "PSYBEAM@"
+BUBBLEBEAMName:
+	db "BUBBLEBEAM@"
+AURORABEAMName:
+	db "AURORA BEAM@"
+HYPERBEAMName:
+	db "HYPER BEAM@"
+PECKName:
+	db "PECK@"
+DRILLPECKName:
+	db "DRILL PECK@"
+SUBMISSIONName:
+	db "SUBMISSION@"
+LOWKICKName:
+	db "LOW KICK@"
+COUNTERName:
+	db "DRAIN PUNCH@" ; changed from COUNTER
+SEISMICTOSSName:
+	db "SEISMIC TOSS@"
+STRENGTHName:
+	db "STRENGTH@"
+ABSORBName:
+	db "ABSORB@"
+MEGADRAINName:
+	db "MEGA DRAIN@"
+LEECHSEEDName:
+	db "LEECH SEED@"
+GROWTHName:
+	db "GROWTH@"
+RAZORLEAFName:
+	db "RAZOR LEAF@"
+SOLARBEAMName:
+	db "SOLARBEAM@"
+POISONPOWDERName:
+	db "POISONPOWDER@"
+STUNSPOREName:
+	db "STUN SPORE@"
+SLEEPPOWDERName:
+	db "SLEEP POWDER@"
+PETALDANCEName:
+	db "PETAL DANCE@"
+STRINGSHOTName:
+	db "STRING SHOT@"
+DRAGONRAGEName:
+	db "DRAGON RAGE@"
+FIRESPINName:
+	db "FIRE SPIN@"
+THUNDERSHOCKName:
+	db "THUNDERSHOCK@"
+THUNDERBOLTName:
+	db "THUNDERBOLT@"
+THUNDERWAVEName:
+	db "THUNDER WAVE@"
+THUNDERName:
+	db "THUNDER@"
+ROCKTHROWName:
+	db "ROCK THROW@"
+EARTHQUAKEName:
+	db "EARTHQUAKE@"
+FISSUREName:
+	db "FISSURE@"
+DIGName:
+	db "DIG@"
+TOXICName:
+	db "TOXIC@"
+CONFUSIONName:
+	db "CONFUSION@"
+PSYCHICName:
+	db "PSYCHIC@"
+HYPNOSISName:
+	db "HYPNOSIS@"
+MEDITATEName:
+	db "MEDITATE@"
+AGILITYName:
+	db "AGILITY@"
+QUICKATTACKName:
+	db "QUICK ATTACK@"
+RAGEName:
+	db "RAGE@"
+TELEPORTName:
+	db "TELEPORT@"
+NIGHTSHADEName:
+	db "NIGHT SHADE@"
+MIMICName:
+	db "MIMIC@"
+SCREECHName:
+	db "SCREECH@"
+DOUBLETEAMName:
+	db "DOUBLE TEAM@"
+RECOVERName:
+	db "RECOVER@"
+HARDENName:
+	db "HARDEN@"
+MINIMIZEName:
+	db "MINIMIZE@"
+SMOKESCREENName:
+	db "SMOKESCREEN@"
+CONFUSERAYName:
+	db "CONFUSE RAY@"
+WITHDRAWName:
+	db "WITHDRAW@"
+DEFENSECURLName:
+	db "DEFENSE CURL@"
+BARRIERName:
+	db "BARRIER@"
+LIGHTSCREENName:
+	db "LIGHT SCREEN@"
+HAZEName:
+	db "HAZE@"
+REFLECTName:
+	db "REFLECT@"
+FOCUSENERGYName:
+	db "FOCUS ENERGY@"
+BIDEName:
+	db "BIDE@"
+METRONOMEName:
+	db "METRONOME@"
+MIRRORMOVEName:
+	db "MIRROR MOVE@"
+SELFDESTRUCTName:
+	db "SELFDESTRUCT@"
+EGGBOMBName:
+	db "EGG BOMB@"
+LICKName:
+	db "LICK@"
+SMOGName:
+	db "SMOG@"
+SLUDGEName:
+	db "SLUDGE@"
+BONECLUBName:
+	db "BONE CLUB@"
+FIREBLASTName:
+	db "FIRE BLAST@"
+WATERFALLName:
+	db "WATERFALL@"
+CLAMPName:
+	db "CLAMP@"
+SWIFTName:
+	db "SWIFT@"
+SKULLBASHName:
+	db "SKULL BASH@"
+SPIKECANNONName:
+	db "SPIKE CANNON@"
+CONSTRICTName:
+	db "SIPHON SNAG@" ; changed from CONSTRICT
+AMNESIAName:
+	db "AMNESIA@"
+KINESISName:
+	db "FIREWALL@" ; changed from KINESIS
+SOFTBOILEDName:
+	db "SOFTBOILED@"
+HIJUMPKICKName:
+	db "HI JUMP KICK@"
+GLAREName:
+	db "GLARE@"
+DREAMEATERName:
+	db "DREAM EATER@"
+POISONGASName:
+	db "POISON GAS@"
+BARRAGEName:
+	db "BARRAGE@"
+LEECHLIFEName:
+	db "LEECH LIFE@"
+LOVELYKISSName:
+	db "LOVELY KISS@"
+SKYATTACKName:
+	db "SKY ATTACK@"
+TRANSFORMName:
+	db "TRANSFORM@"
+BUBBLEName:
+	db "BUBBLE@"
+DIZZYPUNCHName:
+	db "DIZZY PUNCH@"
+SPOREName:
+	db "SPORE@"
+FLASHName:
+	db "FLASH@"
+PSYWAVEName:
+	db "PSYWAVE@"
+SPLASHName:
+	db "SPLASH@"
+ACIDARMORName:
+	db "ACID ARMOR@"
+CRABHAMMERName:
+	db "CRABHAMMER@"
+EXPLOSIONName:
+	db "EXPLOSION@"
+FURYSWIPESName:
+	db "DUST CLAW@" ; changed from FURY SWIPES
+BONEMERANGName:
+	db "BONEMERANG@"
+RESTName:
+	db "REST@"
+ROCKSLIDEName:
+	db "ROCK SLIDE@"
+HYPERFANGName:
+	db "HYPER FANG@"
+SHARPENName:
+	db "SHARPEN@"
+CONVERSIONName:
+	db "CONVERSION@"
+TRIATTACKName:
+	db "TRI ATTACK@"
+SUPERFANGName:
+	db "SUPER FANG@"
+SLASHName:
+	db "SLASH@"
+SUBSTITUTEName:
+	db "SUBSTITUTE@"
+STRUGGLEName:
+	db "STRUGGLE@"
+

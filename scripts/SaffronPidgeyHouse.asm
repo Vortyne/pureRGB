@@ -7,6 +7,7 @@ SaffronPidgeyHouse_TextPointers:
 	dw_const SaffronPidgeyHousePidgeyText,       TEXT_SAFFRONPIDGEYHOUSE_PIDGEY
 	dw_const SaffronPidgeyHouseYoungsterText,    TEXT_SAFFRONPIDGEYHOUSE_YOUNGSTER
 	dw_const SaffronPidgeyHousePaperText,        TEXT_SAFFRONPIDGEYHOUSE_PAPER
+	dw_const SaffronPidgeyHouseTVText,           TEXT_SAFFRONPIDGEYHOUSE_TV
 
 SaffronPidgeyHouseBrunetteGirlText:
 	text_far _SaffronPidgeyHouseBrunetteGirlText
@@ -26,3 +27,7 @@ SaffronPidgeyHouseYoungsterText:
 SaffronPidgeyHousePaperText:
 	text_far _SaffronPidgeyHousePaperText
 	text_end
+
+SaffronPidgeyHouseTVText::
+	text_asm
+	jpfar PorygonTVScreenText

@@ -1,17 +1,4 @@
-CopyDebugName:
-	ld bc, NAME_LENGTH
-	jp CopyData
-
-PrepareTitleScreen::
-	; These debug names are already copied later in PrepareOakSpeech.
-	; Removing the unused copies below has no apparent impact.
-	; CopyDebugName can also be safely deleted afterwards.
-	ld hl, DebugNewGamePlayerName
-	ld de, wPlayerName
-	call CopyDebugName
-	ld hl, DebugNewGameRivalName
-	ld de, wRivalName
-	call CopyDebugName
+_PrepareTitleScreen::
 	xor a
 	ldh [hWY], a
 	ld [wLetterPrintingDelayFlags], a
@@ -25,7 +12,7 @@ PrepareTitleScreen::
 	ld [wAudioROMBank], a
 	ld [wAudioSavedROMBank], a
 
-DisplayTitleScreen:
+_DisplayTitleScreen::
 	call GBPalWhiteOut
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
@@ -59,11 +46,89 @@ DisplayTitleScreen:
 	ld bc, $10 tiles
 	ld a, BANK(PokemonLogoGraphics)
 	call FarCopyData2          ; second chunk
+	call IsPureTitleScreenEnabled
+	jr nz, .skipOGGraphics
+
 	ld hl, Version_GFX
-	ld de, vChars2 tile $60 + (10 tiles - (Version_GFXEnd - Version_GFX) * 2) / 2
+	ld de, vChars1 tile $60
 	ld bc, Version_GFXEnd - Version_GFX
 	ld a, BANK(Version_GFX)
 	call FarCopyDataDouble
+	jr .skipPureGraphics
+
+.skipOGGraphics
+	ld hl, Version_GFX_Pure
+	ld de, vChars1 tile $60
+	ld bc, Version_GFX_PureEnd - Version_GFX_Pure
+	ld a, BANK(Version_GFX_Pure)
+	call FarCopyData2
+IF DEF(_RED)
+	ld hl, MoveAnimationTiles1 tile 4
+	ld de, vSprites tile $40
+	call CopyFromBattleAnim1
+
+	ld hl, MoveAnimationTiles1 tile 20
+	ld de, vSprites tile $42
+	call CopyFromBattleAnim1
+
+	ld hl, MoveAnimationTiles1 tile 65
+	ld de, vSprites tile $44
+	call CopyFromBattleAnim1
+
+	ld hl, CharizardBlinking
+	ld de, vChars2 tile $7A
+	ld bc, 3 tiles
+	ld a, BANK(CharizardBlinking)
+	call FarCopyData2
+ENDC
+IF DEF(_BLUE)
+	ld hl, MoveAnimationTiles0 tile 4
+	ld de, vSprites tile $40
+	call CopyFromBattleAnim0
+
+	ld hl, MoveAnimationTiles0 tile 20
+	ld de, vSprites tile $42
+	call CopyFromBattleAnim0
+
+	ld hl, MoveAnimationTiles0 tile 64
+	ld de, vSprites tile $44
+	ld bc, 3 tiles
+	call CopyFromBattleAnim0_2
+
+	ld a, [wSpriteOptions]
+	bit BIT_BLASTOISE_SPRITE, a
+	ld hl, BlastoiseBlinking1
+	jr z, .gotSprite
+	ld hl, BlastoiseBlinking2
+.gotSprite
+	ld de, vChars2 tile $7A
+	ld bc, 5 tiles
+	ld a, BANK(BlastoiseBlinking1)
+	ASSERT BANK(BlastoiseBlinking1) == BANK(BlastoiseBlinking2)
+	call FarCopyData2
+ENDC
+IF DEF(_GREEN)
+	ld hl, ShineSprites tile 2
+	ld de, vSprites tile $40
+	ld bc, 4 tiles
+	ld a, BANK(ShineSprites)
+	call FarCopyData2
+
+	ld hl, VenusaurBlinking
+	ld de, vChars2 tile $7A
+	ld bc, 3 tiles
+	ld a, BANK(VenusaurBlinking)
+	call FarCopyData2
+ENDC
+
+	ld hl, ShineSprites
+	ld de, vSprites tile $7E
+	ld bc, 2 tiles
+	ld a, BANK(ShineSprites)
+	call FarCopyData2
+
+	;;;;
+.skipPureGraphics
 	call ClearBothBGMaps
 
 ; place tiles for pokemon logo (except for the last row)
@@ -121,14 +186,25 @@ DisplayTitleScreen:
 	call LoadScreenTilesFromBuffer2
 	call EnableLCD
 
+	call IsPureTitleScreenEnabled  
+	; which Pokemon to show first on the title screen
 IF DEF(_RED)
-	ld a, STARTER1 ; which Pokemon to show first on the title screen
+	ld a, STARTER1
+	jr z, .gotFirstMon
+	ld a, CHARIZARD
+.gotFirstMon
 ENDC
 IF DEF(_BLUE)
-	ld a, STARTER2 ; which Pokemon to show first on the title screen
+	ld a, STARTER2
+	jr z, .gotFirstMon
+	ld a, BLASTOISE
+.gotFirstMon
 ENDC
-IF DEF(_GREEN)
-	ld a, STARTER3 ; PureRGBnote: GREENBUILD: which Pokemon to show first on the title screen 
+IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: 
+	ld a, STARTER3
+	jr z, .gotFirstMon
+	ld a, VENUSAUR
+.gotFirstMon
 ENDC
 	ld [wTitleMonSpecies], a
 	call LoadTitleMonSprite
@@ -197,6 +273,18 @@ ENDC
 	call LoadScreenTilesFromBuffer1
 	ld c, 36
 	rst _DelayFrames
+	call IsPureTitleScreenEnabled
+	jr z, .skipNewTitleStuff1
+	ld a, HIGH(vBGMap0)
+	ldh [hAutoBGTransferDest + 1], a
+	ld a, SCREEN_HEIGHT_PX
+	ldh [hWY], a
+	call DrawPlayerCharacterAgainAfterLogoAnimationBGTiles
+	call Delay3
+	call DrawPlayerCharacterAgainAfterLogoAnimationSpritePortion
+	call PureTitleScreenVersionAnimation
+	jr .skipOldTitleStuff1
+.skipNewTitleStuff1
 	ld a, SFX_INTRO_WHOOSH
 	rst _PlaySound
 
@@ -221,14 +309,15 @@ ENDC
 	call TitleScreenCopyTileMapToVRAM
 	call LoadScreenTilesFromBuffer2
 	call PrintGameVersionOnTitleScreen
+.skipOldTitleStuff1
 	call Delay3
 	call WaitForSoundToFinish
 	ld a, MUSIC_TITLE_SCREEN
 	ld [wNewSoundID], a
 	rst _PlaySound
-	xor a
-	ld [wUnusedFlag], a
 
+	call IsPureTitleScreenEnabled
+	jr nz, .skipOldTitleStuff2
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; shinpokerednote: gbcnote: The tiles in the window need to be shifted so that the bottom
 ;half of the title screen is in the top half of the window area.
@@ -238,7 +327,6 @@ ENDC
 	ld a, (vBGMap0 + $300) / $100
 	call TitleScreenCopyTileMapToVRAM
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ; Keep scrolling in new mons indefinitely until the user performs input.
 .awaitUserInterruptionLoop
 	ld c, 200
@@ -252,9 +340,44 @@ ENDC
 	call TitleScreenPickNewMon
 	jr .awaitUserInterruptionLoop
 
+.skipOldTitleStuff2
+	call PureTitleScreenLoop
 .finishedWaiting
+	call IsPureTitleScreenEnabled
+	jr z, .skipNewTitleStuff3
 	ld a, [wTitleMonSpecies]
-	call PlayCry
+	push af
+	hlcoord $0C, $0A
+	lb bc, 7, 4
+	call ClearScreenArea
+	call IsPureTitleScreenEnabled
+	call DrawPlayerCharacterAgain ; temporarily make the player a sprite so they dont disappear for a moment
+	ld hl, wShadowOAMSprite10TileID
+	ld [hl], $6F ; make the duplicate pokeball hidden
+	ld hl, wShadowOAMSprite15TileID
+	ld [hl], $6F ; make the duplicate "hand" hidden
+	call Delay3
+	; load the "player pointing" tiles in
+	ld hl, vChars2 tile $4F
+	ld de, PureTitlePlayerSpritePointing
+	lb bc, BANK(PureTitlePlayerSpritePointing), 7 * 6
+	call CopyVideoData
+	call DrawPlayerPointingSpriteBGTiles
+	call ClearSprites
+	ld a, SFX_INTRO_HOP
+	rst _PlaySound
+	call WaitForSoundToFinish
+	ld c, 10
+	rst _DelayFrames
+	pop af
+	ld [wTitleMonSpecies], a
+
+.skipNewTitleStuff3
+	ld a, [wTitleMonSpecies]
+	call GetCryData
+	rst _PlaySound
+	call IsPureTitleScreenEnabled
+	call nz, MakeTitlePokemonBlink
 	call WaitForSoundToFinish
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
@@ -272,20 +395,7 @@ ENDC
 ;;;;;;; (rock tunnel) and went from title to continue screen twice
 	call GBPalNormal
 ;;;;;;;
-	ldh a, [hJoyHeld]
-	ld b, a
-	and D_UP | SELECT | B_BUTTON
-	cp D_UP | SELECT | B_BUTTON
-	jp z, .doClearSaveDialogue
-IF DEF(_DEBUG)
-	ld a, b
-	bit BIT_SELECT, a
-	jp nz, DebugMenu
-ENDC
-	jp MainMenu
-
-.doClearSaveDialogue
-	farjp DoClearSaveDialogue
+	ret
 
 TitleScreenPickNewMon:
 	ld a, HIGH(vBGMap0)
@@ -343,17 +453,40 @@ ScrollTitleScreenGameVersion:
 	jr z, .wait2
 	ret
 
+DrawPlayerCharacterForceOriginal:
+	xor a
+	jr DrawPlayerCharacter.continue
+
 DrawPlayerCharacter:
+	call IsPureTitleScreenEnabled
+.continue
+	push af
 	ld hl, PlayerCharacterTitleGraphics
 	ld de, vSprites
 	ld bc, PlayerCharacterTitleGraphicsEnd - PlayerCharacterTitleGraphics
 	ld a, BANK(PlayerCharacterTitleGraphics)
 	call FarCopyData2
+	pop af
+	push af
+	jr nz, .newTitle
 	call ClearSprites
+	pop af
+	jr DrawPlayerCharacterAgain
+.newTitle
+	ld hl, PlayerCharacterTitleGraphics tile 1
+	ld de, vChars2 tile $4F
+	ld bc, PlayerCharacterTitleGraphicsEnd - PlayerCharacterTitleGraphics - 2
+	ld a, BANK(PlayerCharacterTitleGraphics)
+	call FarCopyData2
+	pop af
+DrawPlayerCharacterAgain:
+	ld hl, wShadowOAM
+	lb de, $60, $5A
+	jr z, .continue
+	lb de, $60, $60
+.continue
 	xor a
 	ld [wPlayerCharacterOAMTile], a
-	ld hl, wShadowOAM
-	lb de, $60, $5a
 	ld b, 7
 .loop
 	push de
@@ -388,6 +521,68 @@ DrawPlayerCharacter:
 	ld d, a
 	dec b
 	jr nz, .loop
+	ret
+
+DrawPlayerCharacterAgainAfterLogoAnimationSpritePortion:
+	call ClearSprites
+	ld hl, wShadowOAMSprite38
+	ld de, PureTitlePlayerSpritePortionOAMData
+.outerLoop
+	ld b, 3
+.innerLoop
+	ld a, [de]
+	cp -1
+	ret z
+	inc de
+	ld [hli], a
+	dec b
+	jr nz, .innerLoop
+	ld a, 2 ; 2nd palette
+	ld [hli], a
+	jr .outerLoop
+
+DrawPlayerCharacterAgainAfterLogoAnimationBGTiles:
+	lb bc, 7, 4
+	; copy the non-sprite tiles of the player
+	hlcoord $0C, $0A
+	ld a, $4F ; start at tile 4f
+	ld b, 7
+.outerLoop2
+	; 4 background tiles per row in the tilemap
+	ld c, 4
+.innerLoop2
+	ld [hli], a
+	inc a
+	dec c
+	jr nz, .innerLoop2
+	; skip the extra sprite tile
+	inc a
+	; navigate to the next row in the tilemap
+	ld de, SCREEN_WIDTH - 4
+	add hl, de
+	dec b
+	jr nz, .outerLoop2
+	ret
+
+DrawPlayerPointingSpriteBGTiles:
+	lb bc, 7, 6
+	; copy the non-sprite tiles of the player
+	hlcoord $0C, $0A
+	ld a, $4F ; start at tile 4f
+	ld b, 7
+.outerLoop2
+	; 6 background tiles per row in the tilemap
+	ld c, 6
+.innerLoop2
+	ld [hli], a
+	inc a
+	dec c
+	jr nz, .innerLoop2
+	; navigate to the next row in the tilemap
+	ld de, SCREEN_WIDTH - 6
+	add hl, de
+	dec b
+	jr nz, .outerLoop2
 	ret
 
 ClearBothBGMaps:
@@ -443,17 +638,791 @@ PrintGameVersionOnTitleScreen:
 ; these point to special tiles specifically loaded for that purpose and are not usual text
 VersionOnTitleScreenText:
 IF DEF(_RED)
-	db $60,$61,$7F,$65,$66,$67,$68,$69,"@" ; "Red Version"
+	db $E0,$E1,$7F,$E5,$E6,$E7,$E8,$E9,"@" ; "Red Version"
 ENDC
 IF DEF(_BLUE)
-	db $61,$62,$63,$64,$65,$66,$67,$68,"@" ; "Blue Version"
+	db $E0,$E1,$E2,$E3,$E4,$E5,$E6,$E7,"@" ; "Blue Version"
 ENDC
 IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: different title screen subtitle text for green version
-	db $62,$63,$64,$7F,$65,$66,$67,$68,$69,"@" ; "Green Version"
+	db $E2,$E3,$E4,$7F,$E5,$E6,$E7,$E8,$E9,"@" ; "Green Version"
 ENDC
 
-DebugNewGamePlayerName:
-	db "NINTEN@"
+; In the PureRGB title screen, we will make the player's image only partially a sprite to free up space in OAM
+; This prevents sliding pokemon across the screen behind the player at the moment (may change later)
 
-DebugNewGameRivalName:
-	db "SONY@"
+PureTitlePlayerSpritePortionOAMData:
+	db $74, $60, $0A 
+	db $78, $60, $0F 
+	db -1
+
+PureTitleScreenVersionAnimation:
+IF DEF(_RED)
+	ld b, BANK(SFX_Battle_29)
+	call MuteAudioAndChangeAudioBank
+	ld a, $1F
+	ld [wFrequencyModifier], a
+	ld a, $20
+	ld [wTempoModifier], a
+	ld a, SFX_BATTLE_29
+	rst _PlaySound
+	ld hl, PureRedVersionAnimationFireOAM
+	ld de, wShadowOAMSprite00
+	ld bc, 16
+	rst _CopyData
+	lb de, 72, 56
+	ld c, 0
+	callfar LoadSpecificOAMSpriteCoords
+	lb de, 72, 56
+	ld b, 3
+.loopAnimateFire
+	inc e
+	ld c, 0
+	ld a, b
+	and %11
+	call z, .nextFireFrame
+	ld a, b
+	and %111
+	call z, PureTitleDrawNextVersionLogoColumn
+	push de
+	push bc
+	callfar LoadSpecificOAMSpriteCoords
+	pop bc
+	pop de
+	rst _DelayFrame
+	inc b
+	ld a, b
+	cp 59 ; 56 frames of movement
+	jr nz, .loopAnimateFire
+	call PureTitleClearNonPlayerOAM
+	ld c, 22
+	rst _DelayFrames
+	call StopAllMusic
+	call Delay3
+	;callfar PlaySparkleShort
+	call PureTitleShineGoesAcrossVersion
+	call UnmuteAudioAndRestoreAudioBank
+	ret
+.nextFireFrame
+	push bc
+	push de
+	ld a, [wShadowOAMSprite00TileID]
+	cp $40
+	ld hl, PureRedVersionAnimationFireOAMFrame2
+	jr z, .gotSet
+	ld hl, PureRedVersionAnimationFireOAM
+.gotSet
+	ld de, wShadowOAMSprite00
+	ld bc, 16
+	rst _CopyData
+	pop de
+	pop bc
+	ret
+ENDC
+IF DEF(_BLUE)
+	ld b, BANK(SFX_Battle_2A)
+	call MuteAudioAndChangeAudioBank
+	xor a
+	ld [wFrequencyModifier], a
+	ld a, $80
+	ld [wTempoModifier], a
+	ld a, SFX_BATTLE_2A
+	rst _PlaySound
+	lb de, 80, 64
+	ld hl, wShadowOAMSprite08
+	ld [hl], d
+	inc hl
+	ld [hl], e
+	inc hl
+	ld [hl], $45
+	inc hl
+	ld [hl], 1
+	ld hl, PureBlueVersionAnimationPumpOAM
+	ld de, wShadowOAMSprite00
+	ld bc, 16
+	rst _CopyData
+	lb de, 72, 60
+	ld c, 0
+	callfar LoadSpecificOAMSpriteCoords
+	ld b, 7 ; 7 tiles to animate across
+.loopAnimateWater
+	ld c, 10 ; 10 frames per tile
+.innerLoopAnimateWater
+	ld a, c
+	cp 5
+	jr c, .last5Frames
+	; first 5 frames, raise water
+	dec d
+	jr .continue
+.last5Frames
+	; last 5 frames, lower water
+	inc d
+.continue
+	push bc
+	push de
+	ld c, 0
+	callfar LoadSpecificOAMSpriteCoords
+	rst _DelayFrame
+	pop de
+	pop bc
+	dec c
+	jr nz, .innerLoopAnimateWater
+	call .nextWaterFrame
+	ld a, [wShadowOAMSprite08XCoord]
+	add 8
+	ld [wShadowOAMSprite08XCoord], a
+	ld a, e
+	add 8
+	ld e, a
+	ld d, 71
+	call PureTitleDrawNextVersionLogoColumn
+	dec b
+	jr nz, .loopAnimateWater
+	call PureTitleClearNonPlayerOAM
+	call WaitForSoundToFinish
+	;callfar PlaySparkleShort
+	call PureTitleShineGoesAcrossVersion
+	call UnmuteAudioAndRestoreAudioBank
+	ret
+.nextWaterFrame
+	push bc
+	push de
+	ld a, [wShadowOAMSprite00TileID]
+	cp $40
+	ld hl, PureBlueVersionAnimationPumpOAMFrame2
+	ld a, $46
+	jr z, .gotSet
+	ld hl, PureBlueVersionAnimationPumpOAM
+	ld a, $45
+.gotSet
+	ld de, wShadowOAMSprite08TileID
+	ld [de], a
+	ld de, wShadowOAMSprite00
+	ld bc, 16
+	rst _CopyData
+	pop de
+	pop bc
+	ret
+ENDC
+IF DEF(_GREEN)
+	ld b, BANK(SFX_Battle_2E)
+	call MuteAudioAndChangeAudioBank
+	xor a
+	ld [wFrequencyModifier], a
+	ld a, $80
+	ld [wTempoModifier], a
+	ld a, SFX_BATTLE_2E
+	rst _PlaySound
+	ld hl, PureGreenVersionAnimationEnergyOAM
+	ld de, wShadowOAMSprite00
+	ld bc, 48
+	rst _CopyData
+	lb de, 74, 56
+	ld c, 0
+	callfar LoadSpecificOAMSpriteCoords
+	lb de, 74, 56
+	ld c, 4
+	callfar LoadSpecificOAMSpriteCoords
+	call .initSecondaryEnergyBalls
+	ld b, 1
+	lb de, 74, 56
+.loopMoveEnergy
+	ld a, b
+	and %111
+	call z, PureTitleDrawNextVersionLogoColumn
+	inc e
+	push bc
+	push de
+	ld c, 0
+	callfar LoadSpecificOAMSpriteCoords
+	pop de
+	push de
+	ld c, 4
+	callfar LoadSpecificOAMSpriteCoords
+	pop de
+	pop bc
+	call .moveSecondaryEnergyBalls
+	ld a, b
+	and %1111
+	dec a
+	call z, .initSecondaryEnergyBalls
+	rst _DelayFrame
+	inc b
+	ld a, b
+	cp 65
+	jr nz, .loopMoveEnergy
+	call PureTitleClearNonPlayerOAM
+	ld c, 12
+	rst _DelayFrames
+	call StopAllMusic
+	call Delay3
+	;callfar PlaySparkleShort
+	call PureTitleShineGoesAcrossVersion
+	call UnmuteAudioAndRestoreAudioBank
+	ret
+.moveSecondaryEnergyBalls
+	ld hl, wShadowOAMSprite08YCoord
+	inc [hl]
+	inc hl
+	inc [hl]
+	inc [hl]
+	ld hl, wShadowOAMSprite09YCoord
+	inc [hl]
+	ld hl, wShadowOAMSprite10YCoord
+	dec [hl]
+	inc hl
+	inc [hl]
+	inc [hl]
+	ld hl, wShadowOAMSprite11YCoord
+	dec [hl]
+	ret
+.initSecondaryEnergyBalls
+	push de
+	ld hl, wShadowOAMSprite00YCoord
+	ld de, wShadowOAMSprite08YCoord
+	ld a, [hli]
+	sub 8
+	ld [de], a
+	inc de
+	ld a, [hl]
+	sub 8
+	ld [de], a
+	ld hl, wShadowOAMSprite01YCoord
+	ld de, wShadowOAMSprite09YCoord
+	ld a, [hli]
+	sub 8
+	ld [de], a
+	inc de
+	ld a, [hl]
+	add 8
+	ld [de], a
+	ld hl, wShadowOAMSprite02YCoord
+	ld de, wShadowOAMSprite10YCoord
+	ld a, [hli]
+	add 8
+	ld [de], a
+	inc de
+	ld a, [hl]
+	sub 8
+	ld [de], a
+	ld hl, wShadowOAMSprite03YCoord
+	ld de, wShadowOAMSprite11YCoord
+	ld a, [hli]
+	add 8
+	ld [de], a
+	inc de
+	ld a, [hl]
+	add 8
+	ld [de], a
+	pop de
+	ret
+ENDC
+
+PureTitleDrawNextVersionLogoColumn:
+	push bc
+	push de
+IF DEF(_GREEN)
+	ld b, $E8
+ELSE
+	ld b, $E7
+ENDC
+	hlcoord 7, 8
+	ld a, [hli]
+	cp $7F
+	jr z, .firstOne
+.loopFindCurrentLogoColumn
+	inc b
+	ld a, [hli]
+	cp $7F
+	jr nz, .loopFindCurrentLogoColumn
+.firstOne
+	dec hl
+	ld [hl], b
+	ld de, SCREEN_WIDTH
+	ld a, l
+	sub e
+	ld l, a
+	ld a, h
+	sbc d
+	ld h, a
+	ld a, b
+IF DEF(_GREEN)
+	sub 8
+ELSE
+	sub 7
+ENDC
+	ld b, a
+	ld [hl], b
+	pop de
+	pop bc
+	ret
+
+PureTitleShineGoesAcrossVersion:
+	ld a, SFX_HEAL_AILMENT
+	rst _PlaySound
+	ld hl, StartingShineOAM
+	ld de, wShadowOAMSprite00
+	ld bc, 8
+	rst _CopyData
+IF DEF(_RED)
+	ld b, 98 ; x value where shine disappears
+ENDC
+IF DEF(_BLUE)
+	ld b, 100 ; x value where shine disappears
+ENDC
+IF DEF(_GREEN)
+	ld b, 102 ; x value where shine disappears
+ENDC
+	ld c, 0
+	ld hl, wShadowOAMSprite00XCoord
+	ld d, [hl]
+	ld hl, wShadowOAMSprite01XCoord
+	ld e, [hl]
+.loopShineAcross
+	ld hl, wShadowOAMSprite00XCoord
+	ld a, d
+	cp b
+	jr z, .doneShineAcross
+	inc d
+	ld a, c
+	and %1
+	ld [hl], d
+	jr z, .noHide
+	ld [hl], 0
+.noHide
+	ld hl, wShadowOAMSprite01XCoord
+	ld a, e
+	cp b
+	jr nz, .noZeroing
+	ld [hl], 0
+	jr .noHide2
+.noZeroing
+	inc e
+	ld a, c
+	and %1
+	ld [hl], e
+	jr z, .noHide2
+	ld [hl], 0
+.noHide2
+	rst _DelayFrame
+	inc c
+	jr .loopShineAcross
+.doneShineAcross
+	call PureTitleClearNonPlayerOAM
+	ld c, 10
+	rst _DelayFrames
+	jp StopAllMusic
+
+PureTitleClearNonPlayerOAM:
+	ld hl, wShadowOAM
+	ld bc, 38*4
+	xor a
+	jp FillMemory
+
+PureTitleScreenLoop:
+	; wait for the right part of the song to show the particles
+	ld c, 240
+	call CheckForUserInterruption
+	ret c
+	; first load in the particle tile ID and palettes
+IF DEF(_RED)
+	lb de, $44, 1
+ENDC
+IF DEF(_BLUE)
+	lb de, $44, 1
+ENDC
+IF DEF(_GREEN)
+	lb de, $42, 1
+ENDC
+	ld hl, wShadowOAMSprite00TileID
+	ld b, 38
+.loopLoadTileIDAndPalette
+IF DEF(_RED)
+	; red will alternate tile
+	ld a, d
+	cp $44
+	ld d, $45
+	jr z, .next
+	ld d, $44
+.next
+ENDC
+	ld [hl], d
+	inc hl
+	ld [hl], e
+	inc hl
+	inc hl
+	inc hl
+	dec b
+	jr nz, .loopLoadTileIDAndPalette
+	; now initialize their x and y coords
+	ld hl, wShadowOAMSprite00YCoord
+	ld de, ParticleXPositions
+	ld a, 16
+	ld b, 9 ; 9 rows
+.outerLoop
+	ld c, 4 ; 4 particles per row
+.innerLoop
+	ld [hl], a
+	push af
+	inc hl
+	ld a, [de]
+	cp -1
+	jr nz, .gotXPosition
+	ld de, ParticleXPositions
+	ld a, [de]
+.gotXPosition
+	ld [hl], a
+	inc hl
+	inc hl
+	inc hl
+	inc de
+	pop af
+	dec c
+	jr nz, .innerLoop
+	add 16
+	dec b
+	jr nz, .outerLoop
+	ld c, 0
+.loopScroll
+	; two sprites left, manually put them where they look nice
+	ld hl, wShadowOAMSprite36YCoord
+	ld [hl], 0
+	inc hl
+	ld [hl], 16
+	ld hl, wShadowOAMSprite37YCoord
+	ld [hl], 0
+	inc hl
+	ld [hl], 152
+	; sprites are loaded, now scroll them
+	ld b, 38
+	ld hl, wShadowOAMSprite00YCoord
+	call PureTitleScrollingParticleUpdate
+	inc c
+	push bc
+	ld c, 1
+	call CheckForUserInterruption
+	pop bc
+	jr nc, .loopScroll
+	jp PureTitleClearNonPlayerOAM
+
+PureTitleScrollingParticleUpdate:
+IF DEF(_RED)
+.loopUpdateScroll
+	dec [hl]
+	dec [hl]
+	ld a, [hl]
+	cp 8
+	jr nc, .noResetY
+	add 152
+	ld [hl], a
+.noResetY
+	inc hl
+	inc [hl]
+	ld a, [hl]
+	cp 160
+	jr c, .noResetX
+	sub 160
+	ld [hl], a
+.noResetX
+	inc hl
+	; flicker the sprites by switching tile IDs to a blank tile every other frame
+	ld a, c
+	and %1
+	ld a, $7D
+	jr nz, .hide
+	; alternate which fire tile is used when they aren't blank
+	ld a, b
+	and %1
+	ld a, $44
+	jr z, .hide
+	inc a ; $45
+.hide
+	ld [hl], a
+	inc hl
+	inc hl
+	dec b
+	jr nz, .loopUpdateScroll
+	ret
+ENDC
+IF DEF(_BLUE)
+.loopUpdateScroll
+	inc [hl]
+	inc [hl]
+	ld a, [hl]
+	cp 152
+	jr c, .noResetY
+	sub 152
+	ld [hl], a
+.noResetY
+	inc hl
+	dec [hl]
+	ld a, [hl]
+	cp 8
+	jr nc, .noResetX
+	add 160
+	ld [hl], a
+.noResetX
+	inc hl
+	; flicker the sprites by switching tile IDs to a blank tile every other frame
+	ld a, c
+	and %1
+	ld a, $44
+	jr z, .skipHide
+	ld a, $7D
+.skipHide
+	ld [hl], a
+	inc hl
+	inc hl
+	dec b
+	jr nz, .loopUpdateScroll
+	ret
+ENDC
+IF DEF(_GREEN)
+.loopUpdateScroll
+	inc [hl]
+	ld a, [hl]
+	cp 152
+	jr c, .noResetY
+	sub 152
+	ld [hl], a
+.noResetY
+	inc hl
+	inc [hl]
+	inc [hl]
+	ld a, [hl]
+	cp 168
+	jr c, .noResetX
+	sub 168
+	ld [hl], a
+.noResetX
+	inc hl
+	; flicker the sprites by switching tile IDs to a blank tile every other frame
+	ld a, c
+	and %1
+	ld a, $42
+	jr z, .skipHide
+	ld a, $7D
+.skipHide
+	ld [hl], a
+	inc hl
+	inc hl
+	dec b
+	jr nz, .loopUpdateScroll
+	ret
+ENDC
+
+MakeTitlePokemonBlink:
+	ld b, 2
+.loopBlink
+	push bc
+IF DEF(_RED)
+	ld de, CharizardBlinkingTileData
+ENDC
+IF DEF(_BLUE)
+	ld a, [wSpriteOptions]
+	bit BIT_BLASTOISE_SPRITE, a
+	ld de, BlastoiseBlinkingTileData1
+	jr z, .gotSprite
+	ld de, BlastoiseBlinkingTileData2
+.gotSprite
+ENDC
+IF DEF(_GREEN)
+	ld de, VenusaurBlinkingTileData
+ENDC
+	call .loadBlinkingData
+	ld c, 6
+	rst _DelayFrames
+IF DEF(_RED)
+	ld de, CharizardNotBlinkingTileData
+ENDC
+IF DEF(_BLUE)
+	ld a, [wSpriteOptions]
+	bit BIT_BLASTOISE_SPRITE, a
+	ld de, BlastoiseNotBlinkingTileData1
+	jr z, .gotSprite2
+	ld de, BlastoiseNotBlinkingTileData2
+.gotSprite2
+ENDC
+IF DEF(_GREEN)
+	ld de, VenusaurNotBlinkingTileData
+ENDC
+	call .loadBlinkingData
+	ld c, 6
+	rst _DelayFrames
+	pop bc
+	dec b
+	jr nz, .loopBlink
+	ret
+.loadBlinkingData
+	hlcoord 0, 0
+	ld a, [de]
+	cp -1
+	ret z
+	ld b, 0
+	ld c, a
+	add hl, bc ; navigate to x coord
+	inc de
+	ld a, [de]
+	ld bc, SCREEN_WIDTH
+	call AddNTimes
+	inc de
+	ld a, [de]
+	ld [hl], a
+	inc de
+	jr .loadBlinkingData
+
+IsPureTitleScreenEnabled:
+	ld a, [wSpriteOptions2]
+	bit BIT_NEW_TITLE_SCREEN, a
+	ret
+
+
+Version_GFX_Pure:
+IF DEF(_RED)
+	INCBIN "gfx/title/pure_red.2bpp"
+ENDC
+IF DEF(_BLUE)
+	INCBIN "gfx/title/pure_blue.2bpp"
+ENDC
+IF DEF(_GREEN)
+	INCBIN "gfx/title/pure_green.2bpp"
+ENDC
+Version_GFX_PureEnd:
+
+CopyFromBattleAnim0:
+IF DEF(_GREEN)
+	ld bc, 1 tiles
+ELSE
+	ld bc, 2 tiles
+ENDC
+CopyFromBattleAnim0_2:
+	ld a, BANK(MoveAnimationTiles0)
+	jp FarCopyData2
+
+CopyFromBattleAnim1:
+IF DEF(_GREEN)
+	ld bc, 1 tiles
+ELSE
+	ld bc, 2 tiles
+ENDC
+CopyFromBattleAnim1_2:
+	ld a, BANK(MoveAnimationTiles1)
+	jp FarCopyData2
+
+
+IF DEF(_GREEN)
+PureGreenVersionAnimationEnergyOAM:
+	db 0, 0, $43, 4
+	db 0, 0, $43, OAM_HFLIP | 4
+	db 0, 0, $43, OAM_VFLIP | 4
+	db 0, 0, $43, OAM_HFLIP | OAM_VFLIP | 4
+	db 0, 0, $40, 1
+	db 0, 0, $40, OAM_HFLIP | 1
+	db 0, 0, $40, OAM_VFLIP | 1
+	db 0, 0, $40, OAM_HFLIP | OAM_VFLIP | 1
+	db 0, 0, $41, 1
+	db 0, 0, $41, 1
+	db 0, 0, $41, 1
+	db 0, 0, $41, 1
+ELSE
+PureRedVersionAnimationFireOAM:
+PureBlueVersionAnimationPumpOAM:
+	db 0, 0, $40, 1
+	db 0, 0, $40, OAM_HFLIP | 1
+	db 0, 0, $42, 1
+	db 0, 0, $42, OAM_HFLIP | 1
+
+PureRedVersionAnimationFireOAMFrame2:
+PureBlueVersionAnimationPumpOAMFrame2:
+	db 0, 0, $41, 1
+	db 0, 0, $41, OAM_HFLIP | 1
+	db 0, 0, $43, 1
+	db 0, 0, $43, OAM_HFLIP | 1
+ENDC
+
+StartingShineOAM:
+	db 79, 58, $7E, 4
+	db 79, 60, $7F, 4
+
+ParticleXPositions:
+	db 16, 56, 96, 136
+	db 40, 72, 120, 152
+	db -1
+
+
+ShineSprites:
+	INCBIN "gfx/title/shine.2bpp"
+
+PureTitlePlayerSpritePointing:
+	INCBIN "gfx/title/player_pointing.2bpp"
+PureTitlePlayerSpritePointingEnd:
+
+IF DEF(_RED)
+CharizardBlinking:
+	INCBIN "gfx/title/charizard_blinking.2bpp"
+CharizardBlinkingTileData:
+	; x coord, y coord, which tile
+	db $07, $0C, $7A
+	db $06, $0D, $7B
+	db $07, $0D, $7C
+	db -1
+CharizardNotBlinkingTileData:
+	; x coord, y coord, which tile
+	db $07, $0C, $10
+	db $06, $0D, $0A
+	db $07, $0D, $11
+	db -1
+ENDC
+IF DEF(_BLUE)
+BlastoiseBlinking1:
+	INCBIN "gfx/title/blastoise_blinking1.2bpp"
+BlastoiseBlinkingTileData1:
+	; x coord, y coord, which tile
+	db $07, $0A, $7A
+	db $08, $0A, $7B
+	db $06, $0B, $7C
+	db $07, $0B, $7D
+	db $08, $0B, $7E
+	db -1
+BlastoiseNotBlinkingTileData1:
+	; x coord, y coord, which tile
+	db $07, $0A, $0E
+	db $08, $0A, $15
+	db $06, $0B, $08
+	db $07, $0B, $0F
+	db $08, $0B, $16
+	db -1
+BlastoiseBlinking2:
+	INCBIN "gfx/title/blastoise_blinking2.2bpp"	
+BlastoiseBlinkingTileData2:
+	; x coord, y coord, which tile
+	db $06, $0A, $7A
+	db $07, $0A, $7B
+	db $05, $0B, $7C
+	db $06, $0B, $7D
+	db $07, $0B, $7E
+	db -1
+BlastoiseNotBlinkingTileData2:
+	; x coord, y coord, which tile
+	db $06, $0A, $07
+	db $07, $0A, $0E
+	db $05, $0B, $01
+	db $06, $0B, $08
+	db $07, $0B, $0F
+	db -1
+ENDC
+IF DEF(_GREEN)
+VenusaurBlinking:
+	INCBIN "gfx/title/venusaur_blinking.2bpp"
+VenusaurBlinkingTileData:
+	; x coord, y coord, which tile
+	db $05, $0E, $7A
+	db $06, $0E, $7B
+	db $07, $0E, $7C
+	db -1
+VenusaurNotBlinkingTileData:
+	; x coord, y coord, which tile
+	db $05, $0E, $04
+	db $06, $0E, $0B
+	db $07, $0E, $12
+	db -1
+ENDC

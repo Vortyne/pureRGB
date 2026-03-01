@@ -427,6 +427,8 @@ OaksLabRivalEndBattleScript:
 OaksLabRivalStartsExitScript:
 	ld c, 20
 	rst _DelayFrames
+	ld d, OAKSLAB_RIVAL
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_OAKSLAB_RIVAL_SMELL_YOU_LATER
 	ldh [hTextID], a
 	call DisplayTextID
@@ -834,8 +836,7 @@ OaksLabShowPokeBallPokemonScript:
 	ld [hl], SPRITE_FACING_RIGHT
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
-	; TODO: inline StarterDex, it's only used here ever
-	predef StarterDex
+	callfar StarterDex
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	call ReloadMapData
@@ -874,8 +875,6 @@ OaksLabMonChoiceMenu:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	call YesNoChoice ; yes/no menu
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, OaksLabMonChoiceEnd
 	ld a, [wCurPartySpecies]
 	ld [wPlayerStarter], a

@@ -34,7 +34,7 @@ PrepareOAMData::
 	jr nz, .visible
 
 	call GetSpriteScreenXY
-	jr .nextSprite
+	jp .nextSprite
 
 .visible
 	cp $a0 ; is the sprite unchanging like an item ball or boulder?
@@ -128,9 +128,13 @@ PrepareOAMData::
 	ld [de], a ; tile id
 	inc hl
 	inc e
+	ld a, [wCurMap]
+	cp CELADON_BACK_ALLEY
+	jr z, .dontSkipPriority
 	ld a, [hl]
 	bit BIT_SPRITE_UNDER_GRASS, a
 	jr z, .skipPriority
+.dontSkipPriority
 	ldh a, [hSpritePriority]
 	or [hl]
 .skipPriority

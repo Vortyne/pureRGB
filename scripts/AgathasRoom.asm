@@ -105,10 +105,15 @@ AgathasRoomAgathaEndBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jr z, ResetAgathaScript
-	call DoEliteFourFacing
+	ld d, AGATHASROOM_AGATHA
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_AGATHASROOM_AGATHA
 	ldh [hTextID], a
 	call DisplayTextID
+
+	ld a, AGATHASROOM_AGATHA
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 ;;;;;;;;;; PureRGBnote: ADDED: sound effect for the doors opening
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound

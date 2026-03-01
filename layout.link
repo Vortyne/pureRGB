@@ -196,7 +196,6 @@ ROMX $32
 	"Type Icons"
 	"Menu Prompt Graphics"
 	"Tilesets 4"
-	"Trade Graphics"
 ROMX $33
 	"movedCode"
 	"Pokémon Names"
@@ -204,6 +203,7 @@ ROMX $33
 ROMX $34
 	"Party Sprites"
 	"GBC Mode Code"
+	"Extra Tiles"
 ROMX $35
     "newCode"
 ROMX $36
@@ -216,6 +216,16 @@ ROMX $38
 	"Pics 11"
 ROMX $39
 	"Text 13"
+	"Trade Graphics"
+ROMX $3A
+	"newCode2"
+ROMX $3B
+	"Text 14"
+ROMX $3C
+	"Camera Pics"
+	"NPC Sprites 5"
+ROMX $3D
+	"newCode3"
 WRAM0
 	"Audio RAM"
 	org $c100

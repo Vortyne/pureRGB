@@ -11,3 +11,7 @@ CopyString::
 	cp "@"
 	jr nz, CopyString
 	ret
+
+CopyTrainerName::
+	ld hl, wTrainerName
+	jr CopyString

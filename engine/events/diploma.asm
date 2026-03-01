@@ -40,7 +40,7 @@ DisplayDiploma::
 	hlcoord 10, 4
 	ld de, wPlayerName
 	call PlaceString
-	farcall DrawPlayerCharacter
+	farcall DrawPlayerCharacterForceOriginal
 
 ; Move the player 33 pixels right and set the priority bit so he appears
 ; behind the background layer.
@@ -69,6 +69,7 @@ DisplayDiploma::
 	call WaitForTextScrollButtonPress
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
+ReloadEverything::
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
 	call Delay3

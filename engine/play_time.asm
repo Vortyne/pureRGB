@@ -3,9 +3,10 @@ TrackPlayTime::
 	ld a, [wStatusFlags6]
 	bit BIT_GAME_TIMER_COUNTING, a
 	ret z
-	ld a, [wPlayTimeMaxed]
-	and a
-	ret nz
+	; We will stop counting play time when the high byte of the 2-byte hours is $FF, which is a huge number
+	ld a, [wPlayTimeHours]
+	cp $ff
+	ret z
 	ld a, [wPlayTimeFrames]
 	inc a
 	ld [wPlayTimeFrames], a
@@ -27,13 +28,15 @@ TrackPlayTime::
 	ret nz
 	xor a
 	ld [wPlayTimeMinutes], a
-	ld a, [wPlayTimeHours]
-	inc a
-	ld [wPlayTimeHours], a
-	cp $ff
-	ret nz
-	ld a, $ff
-	ld [wPlayTimeMaxed], a
+	; PureRGBnote: CHANGED: PlayTimeHours was made 2 bytes so it can go past 255.
+	push hl
+	ld hl, wPlayTimeHours + 1
+	inc [hl]
+	jr nz, .next
+	dec hl
+	inc [hl]
+.next
+	pop hl
 	ret
 
 CountDownIgnoreInputBitReset:

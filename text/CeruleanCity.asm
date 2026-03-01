@@ -71,7 +71,7 @@ _CeruleanCityRocketText::
 _CeruleanCityRocketReceivedTM28Text::
 	text "<PLAYER> recovered"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 

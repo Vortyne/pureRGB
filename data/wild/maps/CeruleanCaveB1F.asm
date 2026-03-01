@@ -5,8 +5,8 @@ CeruleanCaveB1FWildMons:
 	db 80, CHANSEY
 	db 85, CHANSEY
 	db 90, CHANSEY
-	db 100, CHANSEY
-	db 100, CHANSEY
+	db 99, CHANSEY
+	db 99, CHANSEY
 	db 90, CHANSEY
 	db 80, CLEFABLE
 	db 85, CLEFABLE

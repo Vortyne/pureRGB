@@ -171,8 +171,7 @@ LoadTradingGFXAndMonNames:
 	ld a, " "
 	call FillMemory
 	call ClearSprites
-	ld a, $ff
-	ld [wUpdateSpritesEnabled], a
+	call DisableSpriteUpdates
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wOnSGB]
@@ -365,6 +364,7 @@ Trade_ShowEnemyMon:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	ld a, [wIsAltPalettePkmnData]
+	and 1
 	ld [wIsAltPalettePkmn], a ; PureRGBnote: ADDED: when showing the pokemon received, this flag will make it show alternate palette if set
 	ld a, [wTradedEnemyMonSpecies]
 	call Trade_LoadMonSprite

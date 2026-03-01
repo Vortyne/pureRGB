@@ -76,10 +76,10 @@ MapHeaderPointers::
 	dw Daycare_h
 	dw Route6Gate_h
 	dw UndergroundPathRoute6_h
-	dw UndergroundPathRoute6_h ; UNDERGROUND_PATH_ROUTE_6_COPY
+	dw VermilionFitnessClub_h
 	dw Route7Gate_h
 	dw UndergroundPathRoute7_h
-	dw UndergroundPathRoute7_h ; unused
+	dw CeladonBackAlley_h
 	dw Route8Gate_h
 	dw UndergroundPathRoute8_h
 	dw RockTunnelPokecenter_h
@@ -232,7 +232,7 @@ MapHeaderPointers::
 	dw CeruleanCave1F_h
 	dw NameRatersHouse_h
 	dw CeruleanBadgeHouse_h
-	dw Route16Gate1F_h ; UNUSED_MAP_E7
+	dw CeruleanBallDesigner_h
 	dw RockTunnelB1F_h
 	dw SilphCo9F_h
 	dw SilphCo10F_h

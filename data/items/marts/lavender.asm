@@ -15,5 +15,5 @@ LavenderTMKidShop::
 	script_mart \
 	TM_BUBBLEBEAM, \
 	TM_AURORA_BEAM, \
+	TM_PSYBEAM, \
 	TM_THUNDER_WAVE
-	

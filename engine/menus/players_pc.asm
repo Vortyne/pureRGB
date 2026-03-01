@@ -3,8 +3,6 @@
 PlayerPC::
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
-	ld a, ITEM_NAME
-	ld [wNameListType], a
 	call SaveScreenTilesToBuffer1
 	xor a
 	ld [wBagSavedMenuItem], a
@@ -28,8 +26,7 @@ PlayerPCMenu:
 	call LoadScreenTilesFromBuffer2
 	hlcoord 0, 0
 	lb bc, 10, 14 ; PureRGBnote: CHANGED: increased menu size for WORLD OPTIONS to be added
-	call TextBoxBorder
-	call UpdateSprites
+	call TextBoxBorderUpdateSprites
 	hlcoord 2, 2
 	ld de, PlayersPCMenuEntries
 	call PlaceString
@@ -385,8 +382,6 @@ DepositItemFromItemMenu::
 	call YesNoChoice
 	ld a, 1
 	ld [wListMenuHoverTextType], a ; enable displaying TM names again.
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .done
 .next
 ; do the depositing

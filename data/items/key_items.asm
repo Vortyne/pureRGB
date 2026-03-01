@@ -7,7 +7,7 @@ KeyItemFlags:
 	dbit FALSE ; HYPER_BALL
 	dbit TRUE  ; BICYCLE
 	dbit TRUE  ; SURFBOARD
-	dbit TRUE  ; SAFARI_BALL
+	dbit FALSE ; SAFARI_BALL
 	dbit TRUE  ; POKEDEX
 	dbit FALSE ; MOON_STONE
 	dbit FALSE ; ANTIDOTE
@@ -23,8 +23,8 @@ KeyItemFlags:
 	dbit TRUE  ; SAFARI_BAIT
 	dbit TRUE  ; SAFARI_ROCK
 	dbit FALSE ; OLD_COIN
-	dbit TRUE  ; UNUSED_ITEM2
-	dbit TRUE  ; UNUSED_ITEM3
+	dbit TRUE  ; TOPSECRETKEY
+	dbit TRUE  ; CAMERA
 	dbit TRUE  ; UNUSED_ITEM4
 	dbit TRUE  ; UNUSED_ITEM5
 	dbit TRUE  ; UNUSED_ITEM6

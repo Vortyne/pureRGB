@@ -30,6 +30,7 @@ SaffronCity_Object:
 	warp_event 22, 29, FOSSIL_GUYS_HOUSE, 1
 	warp_event 38,  3, FOSSIL_GUYS_HOUSE, 3
 	warp_event 14, 20, SILPH_CO_1F, 6
+	warp_event 29, 11, MR_PSYCHICS_HOUSE, 3
 
 	def_bg_events
 	bg_event 17,  5, TEXT_SAFFRONCITY_SIGN

@@ -37,7 +37,8 @@ CeladonMartElevatorCopyWarpMapsScript:
 	ld hl, CeladonMartElevatorWarpMaps
 	ld de, wElevatorWarpMaps
 	ld bc, CeladonMartElevatorWarpMaps.End - CeladonMartElevatorWarpMaps
-	jp CopyData
+	rst _CopyData
+	ret
 
 CeladonMartElevatorFloors:
 	db 5 ; #

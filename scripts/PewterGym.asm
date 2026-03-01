@@ -1,11 +1,28 @@
 PewterGym_Script:
 	call EnableAutoTextBoxDrawing
+	; Check if the gym guide should call the player over after beating brock when the player is leaving
+	CheckEvent EVENT_GYM_GUIDE_CALLED_PLAYER_OVER
+	jr nz, .skipCallOverCheck
+	CheckEvent EVENT_BEAT_BROCK
+	jr z, .skipCallOverCheck
+	ld a, [wYCoord]
+	cp 11
+	jr c, .skipCallOverCheck
+	push af
+	SetEvent EVENT_GYM_GUIDE_CALLED_PLAYER_OVER 
+	pop af
+	ld a, TEXT_PEWTERGYM_GYM_GUIDE_CALL_OVER
+	jp z, PewterGymDisplayTextID
+	; if the player warps out after beating brock with the pocket abra, then the gym guide won't call them over
+	; if they re-enter the gym later
+.skipCallOverCheck
 	ld hl, PewterGymTrainerHeaders
 	ld de, PewterGym_ScriptPointers
 	ld a, [wPewterGymCurScript]
 	call ExecuteCurMapScriptInTable
 	ld [wPewterGymCurScript], a
 	ret
+
 
 PewterGymResetScripts:
 	xor a
@@ -29,26 +46,23 @@ PewterGymBrockPostBattle:
 	ld [wJoyIgnore], a
 ; fallthrough
 PewterGymScriptReceiveTM34:
+	ld d, PEWTERGYM_BROCK
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_PEWTERGYM_BROCK_WAIT_TAKE_THIS
-	ldh [hTextID], a
-	call DisplayTextID
+	call PewterGymDisplayTextID
 	SetEvent EVENT_BEAT_BROCK
 	lb bc, TM_BROCK, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, TEXT_PEWTERGYM_RECEIVED_TM34
-	ldh [hTextID], a
-	call DisplayTextID
+	call PewterGymDisplayTextID
 	SetEvent EVENT_GOT_TM34
 	jr .gymVictory
 .BagFull
 	ld a, TEXT_PEWTERGYM_TM34_NO_ROOM
-	ldh [hTextID], a
-	call DisplayTextID
+	call PewterGymDisplayTextID
 .gymVictory
 	ld hl, wObtainedBadges
-	set BIT_BOULDERBADGE, [hl]
-	ld hl, wBeatGymFlags
 	set BIT_BOULDERBADGE, [hl]
 
 	ld a, HS_GYM_GUY
@@ -62,8 +76,14 @@ PewterGymScriptReceiveTM34:
 
 	; deactivate gym trainers
 	SetEvent EVENT_BEAT_PEWTER_GYM_TRAINER_0
-
+	ld a, PEWTERGYM_BROCK
+	ldh [hSpriteIndex], a
+	call SetSpriteMovementBytesToFF
 	jp PewterGymResetScripts
+
+PewterGymDisplayTextID:
+	ldh [hTextID], a
+	jp DisplayTextID
 
 PewterGym_TextPointers:
 	def_text_pointers
@@ -73,6 +93,7 @@ PewterGym_TextPointers:
 	dw_const PewterGymBrockWaitTakeThisText, TEXT_PEWTERGYM_BROCK_WAIT_TAKE_THIS
 	dw_const PewterGymReceivedTM34Text,      TEXT_PEWTERGYM_RECEIVED_TM34
 	dw_const PewterGymTM34NoRoomText,        TEXT_PEWTERGYM_TM34_NO_ROOM
+	dw_const PewterGymGuideCallOverText,     TEXT_PEWTERGYM_GYM_GUIDE_CALL_OVER
 
 PewterGymTrainerHeaders:
 	def_trainers 2
@@ -164,14 +185,12 @@ PewterGymCooltrainerMAfterBattleText:
 
 PewterGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
-	ld a, [wBeatGymFlags]
+	ld a, [wObtainedBadges]
 	bit BIT_BOULDERBADGE, a
 	jr nz, .afterBeat
 	ld hl, PewterGymGuidePreAdviceText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .PewterGymGuideBeginAdviceText
 	ld hl, PewterGymGuideBeginAdviceText
 	rst _PrintText
@@ -239,4 +258,15 @@ ReceivedApexChipsTextPewter:
 
 AlreadyReceivedApexChipsText:
 	text_far _AlreadyReceivedApexChipsText
+	text_end
+
+PewterGymGuideCallOverText:
+	text_asm
+	ld a, PEWTERGYM_GYM_GUIDE
+	call SetSpriteFacingLeft
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
+	text_far _PewterGymGuideCallOverText
 	text_end

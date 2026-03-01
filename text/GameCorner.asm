@@ -105,9 +105,8 @@ _GameCornerGymGuideChampInMakingText::
 	done
 
 _CeladonGameCornerText_gymguide::
-	text "Yo! Champ in"
-	line "making! I hear"
-	cont "you beat ERIKA!"
+	text "I hear you beat"
+	line "ERIKA!"
 	prompt
 
 _CeladonGameCornerGymGuideApexChipGrassText::

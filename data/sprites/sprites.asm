@@ -1,9 +1,15 @@
 ; PureRGBNote: ADDED: some new enhanced sprites were added. They are only used if enhanced sprites is turned on in the options in-game.
 
 MACRO overworld_sprite
-	dw \1
-	db \2 tiles
-	db BANK(\1)
+	IF _NARG == 2
+		dw \1
+		db \2 tiles
+		db BANK(\1)
+	ELSE
+		dw \1
+		db \2 tiles
+		db \3
+	ENDC
 ENDM
 
 SpriteSheetPointerTable:
@@ -101,6 +107,10 @@ SpriteSheetPointerTable:
 	overworld_sprite NothingSprite, 12                 ; SPRITE_NOTHING
 	overworld_sprite GhostSprite, 12                  ; SPRITE_GHOST
 	overworld_sprite SnakeSprite, 12                  ; SPRITE_SNAKE
+	overworld_sprite FitnessGirlSprite, 12            ; SPRITE_FITNESS_GIRL
+	overworld_sprite HooliganSprite, 12               ; SPRITE_HOOLIGAN
+	overworld_sprite CeruleanBallDesignerSprite, 12   ; SPRITE_BALL_DESIGNER
+	overworld_sprite CatSprite, 12                    ; SPRITE_CAT2
 	overworld_sprite PokeBallSprite, 4                ; SPRITE_POKE_BALL
 	overworld_sprite FossilSprite, 4                  ; SPRITE_FOSSIL
 	overworld_sprite BoulderSprite, 4                 ; SPRITE_BOULDER
@@ -116,4 +126,7 @@ SpriteSheetPointerTable:
 	overworld_sprite BoomboxSprite, 4                 ; SPRITE_BOOMBOX
 	overworld_sprite NothingSprite, 4                 ; SPRITE_NOTHING_STILL
 	overworld_sprite ScubaSuitSprite, 4               ; SPRITE_SCUBA_DIVER
+	overworld_sprite CameraSprite, 4                  ; SPRITE_CAMERA
+	overworld_sprite GhostSprite tile 4, 4, BANK(GhostSprite) ; SPRITE_SHADOW
+	overworld_sprite QuadrupedSprite, 4               ; SPRITE_QUADRUPED
 	assert_table_length NUM_SPRITES

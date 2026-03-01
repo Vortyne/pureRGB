@@ -40,10 +40,7 @@ ViridianSchoolNotebook::
 TurnPageSchoolNotebook:
 	ld hl, TurnPageText
 	rst _PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	ret
+	jp YesNoChoice
 
 TurnPageText:
 	text_far _TurnPageText

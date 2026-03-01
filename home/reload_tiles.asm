@@ -9,7 +9,7 @@ ReloadMapData::
 	call LoadCurrentMapView
 	call LoadTilesetTilePatternData
 	call EnableLCD
-	callfar LoadExtraTiles ; PureRGBnote: ADDED: in some maps we overwrite unused tiles for the given map.
+	callfar LoadExtraTiles ; PureRGBnote: ADDED: in some maps we overwrite unused tiles for the given map. ; TODO: do when LCD off
 	pop af
 	jp SetCurBank
 

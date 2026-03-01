@@ -38,7 +38,7 @@ _RedsHouse1FTVWrongSideText::
 
 _DadHealText1::
 	text "DAD: <PLAYER>!"
-	line "Lets sit down and"
+	line "Let's sit down and"
 	cont "talk, maybe play"
 	cont "some SNES."
 	prompt

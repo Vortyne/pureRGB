@@ -68,7 +68,7 @@ DisplayListMenuIDLoop::
 	call PrintListMenuEntries
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a ; enable transfer
-	call Delay3
+	rst _DelayFrame	; PureRGBnote: Reduced delay for faster menu scrolling, we delay in handleMenuInput for 3 frames anyway
 	ld a, [wBattleType]
 	and a ; is it the Old Man battle?
 	jr z, .notOldManBattle
@@ -133,10 +133,8 @@ DisplayListMenuIDLoop::
 	ld [wMaxItemQuantity], a
 .skipGettingQuantity
 	ld a, [wCurItem]
-	ld [wNameListIndex], a
-	ld a, BANK(ItemNames)
-	ld [wPredefBank], a
-	call GetName
+	ld [wNamedObjectIndex], a
+	call GetItemName
 	jr .storeChosenEntry
 .pokemonList
 	ASSERT wCurListMenuItem == wCurPartySpecies
@@ -159,7 +157,7 @@ DisplayListMenuIDLoop::
 	ld [wChosenMenuItem], a
 	xor a
 	ldh [hJoy7], a ; joypad state update flag
-	ld [wListMenuHoverTextShown], a ; PureRGBnote: ADDED: once we pick a list entry, we consider TM text not shown so we will re-render it after finishing
+	ld [wListMenuNewFlags], a ; PureRGBnote: ADDED: once we pick a list entry, we consider TM text not shown so we will re-render it after finishing
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay
 	jp BankswitchBack
@@ -198,6 +196,13 @@ DisplayListMenuIDLoop::
 
 
 DisplayChooseQuantityMenu::
+	ld a, 1
+	ld [wMinItemQuantity], a
+	ld [wInitialItemQuantity], a
+DisplayChooseQuantityMenuMinQuantity::
+	ld a, [wStatusFlags5]
+	push af
+	call DisableTextDelay
 ; text box dimensions/coordinates for just quantity
 	hlcoord 15, 9
 	lb bc, 1, 3 ; height, width
@@ -217,16 +222,19 @@ DisplayChooseQuantityMenu::
 .printInitialQuantity
 	ld de, InitialQuantityText
 	call PlaceString
-	xor a
-	ld [wItemQuantity], a ; initialize current quantity to 0
+	ld a, [wInitialItemQuantity]
+	dec a
+	ld [wItemQuantity], a
 	jp .incrementQuantity
 .waitForKeyPressLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoyPressed] ; newly pressed buttons
 	bit BIT_A_BUTTON, a
-	jp nz, .buttonAPressed
+	ld b, 0
+	jp nz, .exit
 	bit BIT_B_BUTTON, a
-	jp nz, .buttonBPressed
+	ld b, $FF
+	jp nz, .exit
 	bit BIT_D_UP, a
 	jr nz, .incrementQuantity
 	bit BIT_D_DOWN, a
@@ -247,12 +255,16 @@ DisplayChooseQuantityMenu::
 	ld a, [hl]
 	cp b
 	jr nz, .handleNewQuantity
-; wrap to 1 if the player goes above the max quantity
-	ld [hl], 1
+	ld a, [wMinItemQuantity]
+; wrap to min quantity if the player goes above the max quantity
+	ld [hl], a
 	jr .handleNewQuantity
 .decrementQuantity
 	ld hl, wItemQuantity ; current quantity
+	ld a, [wMinItemQuantity]
+	ld b, [hl]
 	dec [hl]
+	cp b
 	jr nz, .handleNewQuantity
 ;;;;;;;;;; PureRGBnote: ADDED: functionality to decrement or increment amounts by 10 when pressing right or left
 ; wrap to the max quantity if the player goes below 1
@@ -270,12 +282,16 @@ DisplayChooseQuantityMenu::
 	cp b
 	jr c, .handleNewQuantity
 ; wrap to 1 if the player goes above the max quantity
-	ld [hl], 1
+	ld a, [wMinItemQuantity]
+	ld [hl], a
 	jr .handleNewQuantity
 .decrementQuantity10
 	ld hl, wItemQuantity ; current quantity
+	ld a, [wMinItemQuantity]
+	add 10
+	ld d, a
 	ld a, [hl]
-	cp 11
+	cp d
 	jr c, .wrapMax
 	sub 10
 	ld [hl], a
@@ -336,15 +352,15 @@ DisplayChooseQuantityMenu::
 	ld de, wItemQuantity ; current quantity
 	lb bc, LEADING_ZEROES | 1, 2 ; 1 byte, 2 digits
 	call PrintNumber
+	call UpdateSprites
+	rst _DelayFrame
 	jp .waitForKeyPressLoop
-.buttonAPressed ; the player chose to make the transaction
+.exit ; made or cancelled the transaction, b = 0 (continued), b = $FF (cancelled)
+	pop af
+	ld [wStatusFlags5], a
 	xor a
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
-	ret
-.buttonBPressed ; the player chose to cancel the transaction
-	xor a
-	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
-	ld a, $ff
+	ld a, b
 	ret
 	
 InitialQuantityText::
@@ -363,7 +379,7 @@ ExitListMenu::
 	res BIT_NO_TEXT_DELAY, [hl]
 	call BankswitchBack
 	xor a
-	ld [wListMenuHoverTextShown], a ; PureRGBnote: ADDED: when we leave a list menu we are no longer displaying any TM text
+	ld [wListMenuNewFlags], a ; PureRGBnote: ADDED: when we leave a list menu we are no longer displaying any TM text
 	ldh [hJoy7], a
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
 	scf

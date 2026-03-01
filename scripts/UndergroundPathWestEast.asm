@@ -20,6 +20,7 @@ UndergroundPathWestEast_TextPointers:
 	dw_const UndergroundPathWestEastTrainer1Text,  TEXT_UNDERGROUNDPATHWESTEAST_GENTLEMAN1
 	dw_const UndergroundPathWestEastTrainer2Text,  TEXT_UNDERGROUNDPATHWESTEAST_GENTLEMAN2
 	dw_const UndergroundPathWestEastTrainer3Text,  TEXT_UNDERGROUNDPATHWESTEAST_COOL_KID
+	dw_const UndergroundPathWestEastBrunetteGirl,  TEXT_UNDERGROUNDPATHWESTEAST_BRUNETTE_GIRL
 
 UndergroundPathWestEastTrainerHeaders:
 	def_trainers 3
@@ -83,4 +84,8 @@ UndergroundPathWestEastEndBattleText3:
 
 UndergroundPathWestEastAfterBattleText3:
 	text_far _UndergroundPathWestEastAfterBattleText3
+	text_end
+
+UndergroundPathWestEastBrunetteGirl:
+	text_far _GrimerEventGirlText
 	text_end

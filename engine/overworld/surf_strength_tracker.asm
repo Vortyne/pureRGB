@@ -34,6 +34,7 @@ SurfRestrictedMapsOnMoveDelete:
 	db POWER_PLANT
 	db CINNABAR_VOLCANO
 	db FUCHSIA_GOOD_ROD_HOUSE
+	db CELADON_CHIEF_HOUSE
 	db -1
 
 CheckResetSurfStrengthFlags::
@@ -41,9 +42,8 @@ CheckResetSurfStrengthFlags::
 	bit BIT_STRENGTH_ACTIVE, a
 	jr z, .onlyCheckSurf
 	ld hl, NoResetStrengthMaps
-	ld de, 1
 	ld a, [wCurMap]
-	call IsInArray
+	call IsInSingleByteArray
 	ld hl, wStatusFlags1
 	jr c, .skipReset
 	res BIT_STRENGTH_ACTIVE, [hl] ; reset strength bit
@@ -56,9 +56,8 @@ CheckResetSurfStrengthFlags::
 	cp SURFING
 	jr z, .skipReset2
 	ld hl, NoResetSurfMaps
-	ld de, 1
 	ld a, [wCurMap]
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .skipReset2
 	; in some places like islands in maps with a lot of water, we avoid resetting the surf bit to prevent softlocks on loading the map
 	call CheckInSurfRestrictedArea

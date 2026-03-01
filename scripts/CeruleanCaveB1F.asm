@@ -21,8 +21,7 @@ CeruleanCaveB1F_TextPointers:
 MewtwoBattleText:
 	text_far _MewtwoBattleText
 	text_asm
-	ld a, 1
-	ld [wMuteAudioAndPauseMusic], a
+	call PauseMusic
 	ld a, MEWTWO
 	call PlayCry
 	call WaitForSoundToFinish
@@ -87,8 +86,7 @@ MewtwoAnimation:
 	call InitBattleEnemyParameters
 	ld a, BANK(Music_Dungeon1)
 	ld [wAudioROMBank], a
-	xor a
-	ld [wMuteAudioAndPauseMusic], a
+	call ResumeMusic
 	callfar PlayTrainerMusic
 	ld c, 90
 	rst _DelayFrames

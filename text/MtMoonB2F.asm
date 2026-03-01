@@ -5,13 +5,13 @@ _MtMoonB2FDomeFossilYouWantText::
 
 _MtMoonB2FHelixFossilYouWantText::
 	text "You want the"
-	line "HELIX FOSSIL?" ; TODO: name buffer
+	line "HELIX FOSSIL?"
 	done
 
 _MtMoonB2FReceivedFossilText::
 	text "<PLAYER> got the"
 	line "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text "!@"
 	text_end
 
@@ -189,3 +189,12 @@ _MtMoonB2FRocket4AfterBattleText::
 	line "here long before"
 	cont "people came."
 	done
+
+_MtMoonB2fRocket4AfterBattleLearnsetText::
+	text "So kid, how'd you"
+	line "like my @"
+	text_ram_namebuffer
+	text "?"
+	para "Pretty scary, huh?"
+	para "@"
+	text_end

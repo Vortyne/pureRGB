@@ -421,13 +421,11 @@ StartMenu_Item::
 	cp HM01
 	jr nc, .useItem_partyMenu
 	ld hl, UsableItems_CloseMenu
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .useItem_closeMenu
 	ld a, [wCurItem]
 	ld hl, UsableItems_PartyMenu
-	ld de, 1
-	call IsInArray
+	call IsInSingleByteArray
 	jr c, .useItem_partyMenu
 	call UseItemWithIndexBackup
 	jp ItemMenuLoop
@@ -616,9 +614,9 @@ DrawTrainerInfo:
 	ld de, wPlayerMoney
 	ld c, 3 | LEADING_ZEROES | LEFT_ALIGN | MONEY_SIGN
 	call PrintBCDNumber
-	hlcoord 9, 6
+	hlcoord 7, 6
 	ld de, wPlayTimeHours ; hours
-	lb bc, LEFT_ALIGN | 1, 3
+	lb bc, LEFT_ALIGN | 2, 5
 	call PrintNumber
 	ld a, $d6 ; colon tile ID
 	ld [hli], a 

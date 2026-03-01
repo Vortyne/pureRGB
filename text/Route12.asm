@@ -32,6 +32,20 @@ _Route12Fisher1AfterBattleText::
 	line "snagged!"
 	done
 
+_LearnsetGoldeen::
+	text "I usually have"
+	line "@"
+	text_ram_namebuffer
+	text " use"
+	cont "SUPERSONIC to"
+	cont "unsnag it."
+	para "Gotta love"
+	line "@"
+	text_ram_namebuffer
+	text "!"
+	para "@"
+	text_end
+
 _Route12Fisher2BattleText::
 	text "Be patient!"
 	line "Fishing is a"
@@ -48,6 +62,19 @@ _Route12Fisher2AfterBattleText::
 	line "I could catch"
 	cont "better #MON!"
 	done
+
+_LearnsetTentacool::
+	text "Not just a bunch"
+	line "of @"
+	text_ram_namebuffer
+	text "!"
+	para "<...>"
+	para "Well actually,"
+	line "I think TENTACOOL"
+	cont "is kind of rad."
+	para "Do you agree?"
+	para "@"
+	text_end
 
 _Route12CooltrainerMBattleText::
 	text "Have you found a"
@@ -95,6 +122,21 @@ _Route12Fisher3AfterBattleText::
 	line "#MON, but I'm"
 	cont "good at fishing!"
 	done
+
+_SeadraLearnset::
+	text "It's not every day"
+	line "you meet someone"
+	cont "who can catch a"
+	cont "@"
+	text_ram_namebuffer
+	text "!"
+	para "They live pretty"
+	line "deep underwater!"
+	para "So elusive!"
+	para "So!" 
+	line "#MON KID,"
+	para "@"
+	text_end
 
 _Route12Fisher4BattleText::
 	text "I'd rather be"
@@ -149,6 +191,18 @@ _Route12AfterBattleText8::
 	line "such a thing?"
 	done
 
+_ShellderLearnset::
+	text "I heard SHELLDER"
+	line "evolves into a"
+	cont "#MON with"
+	cont "monstrously good"
+	cont "stats!"
+	para "That's why I"
+	line "got one!"
+	para "@"
+	text_end
+
+
 _Route12BattleText9::
 	text "Some #MON"
 	line "can breathe"
@@ -183,4 +237,43 @@ _SnorlaxWentBackToSleepText::
 	text "Looking bored,"
 	line "SNORLAX went back"
 	cont "to sleep."
+	done
+
+_Route12MetronomeGamblerText::
+	text "I'll show you the"
+	line "power of my luck!"
+	done
+
+_Route12MetronomeGamblerEndBattleText::
+	text "My luck"
+	line "lost to skill!"
+	para "Hey pal!"
+	para "How about I teach"
+	line "METRONOME to your"
+	cont "#MON?"
+	para "It's fun!"
+	prompt
+
+_Route12MetronomeGamblerMetronomeTeachText::
+	text "A roll of the dice"
+	line "is all it takes"
+	cont "to change a life!"
+	para "So how about it?"
+	para "Shall I teach a"
+	line "#MON METRONOME?"
+	done
+
+_Route12MetronomeGamblerMetronomeTeach2Text::
+	text "Go and spread the"
+	line "METRONOME chaos!"
+	para "And come back if"
+	line "you want me to"
+	cont "teach it again!"
+	done
+
+_Route12MetronomeGamblerNoDitto::
+	text "DITTO?!"
+	para "No need!"
+	para "It's already a"
+	line "randomness master!"
 	done

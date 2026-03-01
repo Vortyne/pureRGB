@@ -1,3 +1,7 @@
+; wAudioFlags
+	const_def
+	const BIT_WAITING_FOR_SOUND_TO_FINISH
+
 ; wSlotMachineFlags
 	const_def 6
 	const BIT_SLOTS_CAN_WIN               ; 6
@@ -60,7 +64,7 @@ DEF BIT_NO_PREVIOUS_MAP EQU 7
 ; wCurrentBoxNum
 DEF BIT_HAS_CHANGED_BOXES EQU 7
 
-; wObtainedBadges, wBeatGymFlags
+; wObtainedBadges
 	const_def
 	const BIT_BOULDERBADGE ; 0
 	const BIT_CASCADEBADGE ; 1
@@ -70,7 +74,6 @@ DEF BIT_HAS_CHANGED_BOXES EQU 7
 	const BIT_MARSHBADGE   ; 5
 	const BIT_VOLCANOBADGE ; 6
 	const BIT_EARTHBADGE   ; 7
-DEF NUM_BADGES EQU const_value
 
 ; wStatusFlags1
 	const_def
@@ -165,7 +168,8 @@ DEF NUM_BADGES EQU const_value
 	const BIT_PLAYER_LOWER_X ; 1
 
 ;;;;;;;;;; PureRGBnote: ADDED: New constants for all the new options that appear in the new options menus. 
-;;;;;;;;;;                     Controls which bits they use in the options wram variables.
+;;;;;;;;;;                     Controls which bits they use in the options wram variables. 
+;;;;;;;;;;                     Some are defined in event constants instead of here.
 
 ; wOptions2
 
@@ -213,8 +217,8 @@ DEF PALETTES_YELLOW2    EQU  %01000011
 	const BIT_MENU_ICON_SPRITES ; 3
 	const BIT_ELECTABUZZ_SPRITE ; 4
 	const BIT_RATICATE_SPRITE   ; 5
-	const BIT_NEW_TITLE_SCREEN ; 6 ; TODO: not implemented yet
-	const BIT_SKIP_INTRO       ; 7 ; TODO: not implemented yet 
+	const BIT_NEW_TITLE_SCREEN ; 6
+	const BIT_SKIP_INTRO       ; 7 
 
 ; wSpriteOptions3
 	const_def
@@ -243,5 +247,7 @@ DEF PALETTES_YELLOW2    EQU  %01000011
 	const_def
 	const IN_GAME
 	const IN_POKEMART_MENU
+	const VIEWED_ITEMFINDER_TEXT_ONCE
+	const ITEM_DUPLICATION_ACTIVE
 
 ;;;;;;;;;;

@@ -19,6 +19,8 @@ SpecialEffects:
 	db BIG_RECOIL_EFFECT ; PureRGBnote: ADDED:
 	db ATTACK_UP_SIDE_EFFECT ; PureRGBnote: ADDED:
 	db EXPLODE_RECOIL_EFFECT ; PureRGBnote: ADDED:
+	db SIPHON_SNAG_EFFECT ; PureRGBnote: ADDED:
+	db HEAT_RUSH_EFFECT ; PureRGBnote: ADDED:
 	; fallthrough
 SpecialEffectsCont:
 ; damaging moves whose effect is executed prior to damage calculation

@@ -345,6 +345,9 @@ CheckPlayerIsInFrontOfSprite:
 	ld [wTrainerSpriteOffset], a
 	ret
 
+PlayDefaultTrainerMusic::
+	xor a
+	ld [wEngagedTrainerClass], a ; used to just play the default trainer music
 ; PureRGBnote: MOVED: this code was in the home bank but didn't need to be, so it was moved for some space.
 PlayTrainerMusic::
 	ld a, [wEngagedTrainerClass]
@@ -415,5 +418,4 @@ INCLUDE "data/trainers/encounter_types.asm"
 IsFemaleTrainer:
 	ld a, [wCurOpponent]
 	ld hl, FemaleTrainerList
-	ld de, 1
-	jp IsInArray
+	jp IsInSingleByteArray

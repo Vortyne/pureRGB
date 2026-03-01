@@ -30,6 +30,19 @@ _CinnabarGymBlainePostBattleAdviceText::
 	line "water #MON!"
 	done
 
+_CinnabarGymBlaineMoltres::
+	text "It can't be<...>"
+	para "You caught the"
+	line "flaming bird"
+	cont "#MON, MOLTRES!"
+	para "A MOLTRES saved"
+	line "my life!"
+	para "It guided me out"
+	line "of a mountain"
+	cont "range when I lost"
+	cont "my way!"
+	done
+
 _CinnabarGymBlaineVolcanoBadgeInfoText::
 	text "Hah!"
 
@@ -45,7 +58,7 @@ _CinnabarGymBlaineVolcanoBadgeInfoText::
 _CinnabarGymBlaineTM38ExplanationText::
 	text_start
 	para "@"
-	text_ram wStringBuffer
+	text_ram_stringbuffer
 	text " contains"
 	line "FIRE BLAST!"
 
@@ -187,10 +200,7 @@ _CinnabarGymFirefighter2AfterBattleText::
 	done
 
 _CinnabarGymGymGuideChampInMakingText::
-	text "Yo! Champ in"
-	line "making!"
-
-	para "The hot-headed"
+	text "The hot-headed"
 	line "BLAINE is a fire"
 	cont "#MON pro!"
 

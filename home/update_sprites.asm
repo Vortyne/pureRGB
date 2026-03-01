@@ -1,3 +1,6 @@
+TextBoxBorderUpdateSprites::
+	call TextBoxBorder
+	; fall through
 UpdateSprites::
 	ld a, [wUpdateSpritesEnabled]
 	dec a

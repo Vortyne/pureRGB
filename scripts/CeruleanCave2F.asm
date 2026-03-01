@@ -21,6 +21,9 @@ CeruleanCave2FAfterOakBattleScript:
 	ld a, [wOptions2]
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
 	jr z, .done ; don't do anything if alt palettes are turned off
+
+	ld d, CERULEANCAVE2F_OAK
+	callfar MakeSpriteFacePlayer
 	ld a, TEXT_CERULEANCAVE2F_OAK_FIRST_DEFEAT
 	ldh [hTextID], a
     call DisplayTextID
@@ -28,7 +31,9 @@ CeruleanCave2FAfterOakBattleScript:
 .done
 	ld a, SCRIPT_CERULEANCAVE2F_DEFAULT
 	ld [wCeruleanCave2FCurScript], a
-	ret
+	ld a, CERULEANCAVE2F_OAK
+	ldh [hSpriteIndex], a
+	jp SetSpriteMovementBytesToFF
 
 CeruleanCave2F_TextPointers:
 	def_text_pointers

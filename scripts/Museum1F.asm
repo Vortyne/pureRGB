@@ -1,8 +1,5 @@
 Museum1F_Script:
-	ld a, 1 << BIT_NO_AUTO_TEXT_BOX
-	ld [wAutoTextBoxDrawingControl], a
-	xor a
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call EnableAutoTextBoxDrawing
 	ld hl, Museum1F_ScriptPointers
 	ld a, [wMuseum1FCurScript]
 	jp CallFunctionInTable
@@ -57,14 +54,15 @@ Museum1FScientist1Text:
 	jr nz, .already_bought_ticket
 	ld hl, .GoToOtherSideText
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
 .check_ticket
 	CheckEvent EVENT_BOUGHT_MUSEUM_TICKET
 	jr z, .no_ticket
 .already_bought_ticket
 	ld hl, .TakePlentyOfTimeText
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
+	
 .no_ticket
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
@@ -74,8 +72,6 @@ Museum1FScientist1Text:
 	ld hl, .WouldYouLikeToComeInText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
 	jr nz, .deny_entry
 	xor a
 	ldh [hMoney], a
@@ -86,7 +82,18 @@ Museum1FScientist1Text:
 	jr nc, .buy_ticket
 	ld hl, .DontHaveEnoughMoneyText
 	rst _PrintText
-	jp .deny_entry
+
+.deny_entry
+	ld hl, .ComeAgainText
+	rst _PrintText
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	ld a, D_DOWN
+	ld [wSimulatedJoypadStatesEnd], a
+	call StartSimulatingJoypadStates
+	call UpdateSprites
+	rst TextScriptEnd
+
 .buy_ticket
 	ld hl, .ThankYouText
 	rst _PrintText
@@ -106,36 +113,21 @@ Museum1FScientist1Text:
 	ld a, SFX_PURCHASE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-	jr .allow_entry
-.deny_entry
-	ld hl, .ComeAgainText
-	rst _PrintText
-	ld a, $1
-	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN
-	ld [wSimulatedJoypadStatesEnd], a
-	call StartSimulatingJoypadStates
-	call UpdateSprites
-	jr .done
+
 .allow_entry
 	ld a, SCRIPT_MUSEUM1F_NOOP
 	ld [wMuseum1FCurScript], a
-	jr .done
+	rst TextScriptEnd
 
 .behind_counter
 	ld hl, .DoYouKnowWhatAmberIsText
 	rst _PrintText
 	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .explain_amber
-	ld hl, .TheresALabSomewhereText
-	rst _PrintText
-	jr .done
-.explain_amber
 	ld hl, .AmberIsFossilizedTreeSapText
+	jr nz, .printDone
+	ld hl, .TheresALabSomewhereText
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .ComeAgainText:
@@ -151,7 +143,7 @@ Museum1FScientist1Text:
 	text_end
 
 .DontHaveEnoughMoneyText:
-	text_far _Museum1FScientist1DontHaveEnoughMoneyText
+	text_far _GenericYouDontHaveEnoughMoneyText
 	text_end
 
 .DoYouKnowWhatAmberIsText:
@@ -175,12 +167,6 @@ Museum1FScientist1Text:
 	text_end
 
 Museum1FGamblerText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
 	text_far _Museum1FGamblerText
 	text_end
 
@@ -192,17 +178,26 @@ Museum1FScientist2Text:
 	rst _PrintText
 	lb bc, OLD_AMBER, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .YouDontHaveSpaceText
+	jr nc, .done
 	SetEvent EVENT_GOT_OLD_AMBER
 	ld a, HS_OLD_AMBER
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	ld hl, .ReceivedOldAmberText
 	jr .done
-.bag_full
-	ld hl, .YouDontHaveSpaceText
-	jr .done
+.checked
+	ld hl, .amberHasBeenChecked
+	rst _PrintText
+	lb hl, DEX_AERODACTYL, SCIENTIST
+	ld de, TextNothing
+	ld bc, LearnsetFadeOutInDetails
+	predef_jump LearnsetTrainerScriptMain
 .got_item
+	CheckEvent EVENT_RECEIVED_AERODACTYL_FROM_SUPER_NERD
+	jr nz, .checked
+	CheckEvent EVENT_CINNABAR_LAB_REVIVED_AERODACTYL
+	jr nz, .checked
 	ld hl, .GetTheOldAmberCheckText
 .done
 	rst _PrintText
@@ -213,7 +208,7 @@ Museum1FScientist2Text:
 	text_end
 
 .ReceivedOldAmberText:
-	text_far _Museum1FScientist2ReceivedOldAmberText
+	text_far _GenericPlayerReceivedText
 	sound_get_item_1
 	text_end
 
@@ -225,22 +220,14 @@ Museum1FScientist2Text:
 	text_far _Museum1FScientist2YouDontHaveSpaceText
 	text_end
 
-Museum1FScientist3Text:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
+.amberHasBeenChecked
+	text_far _Museum1FScientist2GetTheOldAmberRevivedText
+	text_end
 
-.Text:
+Museum1FScientist3Text:
 	text_far _Museum1FScientist3Text
 	text_end
 
 Museum1FOldAmberText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
 	text_far _Museum1FOldAmberText
 	text_end

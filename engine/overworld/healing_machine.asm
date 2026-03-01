@@ -21,10 +21,11 @@ AnimateHealingMachine:
 	ld c, 30
 	ld a, [wUnusedC000]
 	and a
-	jr nz, .noFadeout ; NEW: if you're holding b when you start talking to the nurse, it'll do healing faster
 	ld a, 4
+	jr z, .normalFade ; NEW: if you're holding b when you start talking to the nurse, it'll do healing faster
+	xor a
+.normalFade
 	ld [wAudioFadeOutControl], a
-.noFadeout
 	call StopAllMusic
 .waitLoop
 	ld a, [wAudioFadeOutControl]

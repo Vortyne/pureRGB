@@ -16,6 +16,9 @@ MACRO box_struct
 \1Type2::      db
 ; PureRGBnote: CHANGED: various flags (used to be CatchRate but this was unused) 
 ; bit 0 = flag to use alternate color palette
+; bit 1 = unused
+; bit 2 = unused
+; bit 3 to 8 = which pokeball the mon is in (see ball_anim_constants.asm)
 \1Flags::      db 
 \1Moves::      ds NUM_MOVES
 \1OTID::       dw

@@ -15,11 +15,6 @@ _Museum1FScientist1ThankYouText::
 	line "Thank you!"
 	done
 
-_Museum1FScientist1DontHaveEnoughMoneyText::
-	text "You don't have"
-	line "enough money."
-	prompt
-
 _Museum1FScientist1DoYouKnowWhatAmberIsText::
 	text "You can't sneak"
 	line "in the back way!"
@@ -80,14 +75,19 @@ _Museum1FScientist2TakeThisToAPokemonLabText::
 	cont "get it examined!"
 	prompt
 
-_Museum1FScientist2ReceivedOldAmberText::
-	text "<PLAYER> received"
-	line "OLD AMBER!@" ; TODO: load item name?
-	text_end
-
 _Museum1FScientist2GetTheOldAmberCheckText::
 	text "Ssh! Get the OLD"
 	line "AMBER checked!"
+	done
+
+_Museum1FScientist2GetTheOldAmberRevivedText::
+	text "WOW!"
+	para "You revived the"
+	line "AMBER into a live"
+	cont "AERODACTYL?!"
+	para "I'm gonna go brag"
+	line "to my colleagues"
+	cont "now!"
 	done
 
 _Museum1FScientist2YouDontHaveSpaceText::
