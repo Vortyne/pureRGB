@@ -322,6 +322,7 @@ RenameEvolvedMon:
 	ld [wNamedObjectIndex], a
 	call GetMonName
 	pop af
+	ld [wNamedObjectIndex], a
 	ld [wCurSpecies], a
 	ld hl, wNameBuffer
 	ld de, wStringBuffer
