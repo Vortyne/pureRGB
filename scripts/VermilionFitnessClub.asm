@@ -13,6 +13,13 @@ VermilionFitnessClub_Script:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	jr nz, .afterBattle
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	jr z, .notLoaded
+	ld a, HS_VERMILIONFITNESSCLUB_JANITOR
+	ld [wMissableObjectIndex], a
+	predef HideExtraObject
+.notLoaded
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	jr nz, .noPositionScripts
