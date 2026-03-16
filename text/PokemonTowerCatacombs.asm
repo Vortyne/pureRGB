@@ -245,9 +245,9 @@ _IrradiatedBattleInitText::
 
 _IrradiatedGrowsLarger::
 	text "IRRADIATED twists"
-	line "and contorts as"
-	cont "its body grows"
-	cont "ever larger!"
+	line "and contorts,"
+	para "its body morphing"
+	line "strangely!"
 	prompt
 
 _CatacombsCuboneText::

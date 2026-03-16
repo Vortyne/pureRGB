@@ -1,6 +1,7 @@
 ; PureRGBnote: CHANGED: adjusted to be able to play new songs based on wSpecialBattleMusicID, used in champ arena
 PlayBattleMusic::
 	ResetFlag FLAG_ALTERNATE_BATTLE_WIN_THEME
+	callfar BackupAudioWram
 	xor a
 	ld [wAudioFadeOutControl], a
 	ld [wLowHealthAlarm], a

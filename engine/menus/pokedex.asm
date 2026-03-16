@@ -19,13 +19,7 @@ ShowPokedexMenu:
 	call RunPaletteCommand
 	callfar LoadPokedexTilePatterns
 ;;;;;;;;;;; PureRGBnote: ADDED: load these new button prompt graphics into VRAM
-	CheckEvent FLAG_IMPERIAL_METRIC
-	jr z, .noMetric
-	ld de, MetricGraphics
-	ld hl, vChars2 tile $60
-	lb bc, BANK(MetricGraphics), 2
-	call CopyVideoDataDouble ; load pokeball tile for marking caught mons
-.noMetric
+	call CheckLoadMetricGraphics
 	ld de, PokedexPromptGraphics
 	ld hl, vChars1 tile $40
 	lb bc, BANK(PokedexPromptGraphics), (PokedexPromptGraphicsEnd - PokedexPromptGraphics) / $10
@@ -601,6 +595,7 @@ ShowPokedexData:
 	call ClearScreen
 	call UpdateSprites
 	callfar LoadPokedexTilePatterns ; load pokedex tiles
+	call CheckLoadMetricGraphics
 
 ; function to display pokedex data from inside the pokedex
 ShowPokedexDataCommon:
@@ -1199,6 +1194,14 @@ PrintDexWeight:
 	pop af
 	ldh [hDexWeight], a ; restore original value of [hDexWeight]
 	ret
+
+CheckLoadMetricGraphics:
+	CheckEvent FLAG_IMPERIAL_METRIC
+	ret z
+	ld de, MetricGraphics
+	ld hl, vChars2 tile $60
+	lb bc, BANK(MetricGraphics), 2
+	jp CopyVideoDataDouble ; load pokeball tile for marking caught mons
 
 INCLUDE "data/pokemon/dex_order.asm"
 

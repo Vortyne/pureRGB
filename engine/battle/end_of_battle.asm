@@ -44,6 +44,7 @@ EndOfBattle:
 	ld [wForceEvolution], a
 	predef EvolutionAfterBattle
 .resetVariables
+	ResetEvent EVENT_ALREADY_BACKED_UP_MUSIC_BEFORE_BATTLE
 	xor a
 	ld [wLowHealthAlarm], a ;disable low health alarm
 	ld [wChannelSoundIDs + CHAN5], a

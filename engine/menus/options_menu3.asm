@@ -1,9 +1,11 @@
 ; PureRGBnote: ADDED: Accessed from your PC. This options page changes what areas are in the world. Currently only Volcano can be turned off/on.
-DEF OPTIONS_PAGE_5_COUNT EQU 5 ; number of options on this page
+DEF OPTIONS_PAGE_5_COUNT EQU 6 ; number of options on this page
 DEF OPTIONS_PAGE_5_NUMBER EQU 5 ; must be 1 digit.
 
 ; format: "bit set" x position, "bit not set" x position, which bit it is, pointer to wram variable
 Options3XPosBitData:
+	db 15, 12, FLAG_RESUME_MUSIC % 8
+	dw wEventFlags + (FLAG_RESUME_MUSIC / 8)
 	db 15, 12, FLAG_LEARNSETS_DISABLED % 8
 	dw wEventFlags + (FLAG_LEARNSETS_DISABLED / 8)
 	db 14, 11, BIT_NEW_TITLE_SCREEN
@@ -14,7 +16,6 @@ Options3XPosBitData:
 	dw wEventFlags + (FLAG_FLASHING_REDUCED / 8)
 	db 15, 11, FLAG_IMPERIAL_METRIC % 8
 	dw wEventFlags + (FLAG_IMPERIAL_METRIC / 8)
-
 
 OptionsMenu3Header:
 	dw DrawOptionsMenu3
@@ -39,6 +40,7 @@ Options3CoordOffsetList:
 	db 7, 2
 	db 9, 3
 	db 11, 4
+	db 13, 5
 	db PAGE_CONTROLS_Y_COORD, MAX_OPTIONS_PER_PAGE
 
 OptionsMenu3Data:
@@ -53,9 +55,11 @@ Options3SetCursorPositionActions:
 	dw SetCursorPositionFromOptions3
 	dw SetCursorPositionFromOptions3
 	dw SetCursorPositionFromOptions3
+	dw SetCursorPositionFromOptions3
 
 OptionsMenu3Text:
 	db   "OPTIONS 3"
+	next " REDO SONG: ON OFF"
 	next " LEARNSETS: ON OFF"
 	next " TITLE:    OG Pure"
 	next " INTRO:    ON SKIP"
@@ -71,6 +75,7 @@ DrawOptionsMenu3:
 	jp PlaceString
 
 Options3LeftRightFuncs:
+	dw Options3CursorToggleFunc15
 	dw Options3CursorToggleFunc15
 	dw Options3CursorToggleFunc14
 	dw Options3CursorToggleFunc14
@@ -102,11 +107,16 @@ SetCursorPositionFromOptions3:
 
 
 Options3InfoTextJumpTable:
+	dw PauseMusicInfoText
 	dw LearnsetsInfoText
 	dw TitleInfoText
 	dw IntroInfoText
 	dw FlashingInfoText
 	dw UnitsInfoText
+
+PauseMusicInfoText:
+	text_far _PauseMusicInfoText
+	text_end
 
 LearnsetsInfoText:
 	text_far _LearnsetsInfoText

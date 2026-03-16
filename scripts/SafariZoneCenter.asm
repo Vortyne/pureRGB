@@ -1,6 +1,7 @@
 ; PureRGBnote: ADDED: new trainers in this location
 
 SafariZoneCenter_Script:
+	call CheckModifySafariWildRate
 	call EnableAutoTextBoxDrawing
 	ld hl, SafariZoneCenterTrainerHeaders
 	ld de, SafariZoneCenter_ScriptPointers
@@ -26,6 +27,19 @@ SafariZoneCenter_TextPointers:
 	dw_const PickUpItemText,                      TEXT_SAFARIZONECENTER_ITEM1
 	dw_const SafariZoneCenterRestHouseSignText,   TEXT_SAFARIZONECENTER_REST_HOUSE_SIGN
 	dw_const SafariZoneCenterTrainerTipsSignText, TEXT_SAFARIZONECENTER_TRAINER_TIPS_SIGN
+
+CheckModifySafariWildRate:
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	ret z
+	ld a, [wSafariType]
+	and a
+	ret nz
+	ld a, 30 ; original grass encounter rate in classic mode
+	ld [wGrassRate], a
+	ret
+
 
 RangerPostBattle::
 	call EndTrainerBattle

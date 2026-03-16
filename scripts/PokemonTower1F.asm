@@ -1,6 +1,17 @@
 ; PureRGBnote: ADDED: a stairway downstairs was added, but it is blocked by a new ROCKET who tells you to go away until you save mr fuji.
 
 PokemonTower1F_Script:
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	jr z, .skipHideRocket
+	CheckEvent EVENT_RESCUED_MR_FUJI
+	jr z, .skipHideRocket
+	; to fix save transfers (forgot to conditionally update in save file updater), hide this rocket on map load after rescuing mr fuji
+	ld a, HS_POKEMON_TOWER_1F_ROCKET
+	ld [wMissableObjectIndex], a
+	predef HideExtraObject
+.skipHideRocket
 	jp EnableAutoTextBoxDrawing
 
 PokemonTower1F_TextPointers:

@@ -39,6 +39,11 @@ FadeOutAudio::
 	xor a
 	ld [wAudioFadeOutControl], a
 	call StopAllMusic ; shinpokerednote: MOVED: a common function to do what the 3 lines that used to be here did was created
+	push bc
+	ld d, b
+	callfar RestoreAudioWram
+	pop bc
+	ret nz
 	ld a, [wCurMapConnections]
 	bit BIT_EXTRA_MUSIC_MAP, a ; PureRGbnote: ADDED: does the map have extra music
 	jr z, .noExtraMusic

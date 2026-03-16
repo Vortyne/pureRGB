@@ -874,8 +874,7 @@ CopyGfxToSuperNintendoVRAM:
 
 Wait7000:
 ; Each loop takes 9 cycles so this routine actually waits 63000 cycles.
-	; ld de, 7000
-	ld de, 2400 ; PureRGBnote: Decreased delay. Maybe it's fine to do so. Seems to work.
+	ld de, 7000
 .loop
 	nop
 	nop

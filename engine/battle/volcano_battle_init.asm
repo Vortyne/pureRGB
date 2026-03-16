@@ -33,6 +33,7 @@ CheckPerTurnSpecialBattleEffect::
 	ld [wEnemyMonStatus], a
 	ld hl, .autoPoisonedEnemy
 	rst _PrintText
+	callfar DrawEnemyHUDAndHPBar
 .dontPoisonIrradiated
 	ld a, 1
 	ldh [hWhoseTurn], a
@@ -48,6 +49,7 @@ CheckPerTurnSpecialBattleEffect::
 	ld hl, .autoPoisoned
 	rst _PrintText
 	callfar ReadPlayerMonCurHPAndStatus
+	callfar DrawPlayerHUDAndHPBar
 .noPoison
 	ld hl, .growsLarger
 	rst _PrintText

@@ -193,8 +193,8 @@ ItemUseBall:
 ; Rand1 must be within a certain range according the kind of ball being thrown.
 ; The ranges are as follows.
 ; Poké Ball:         [0, 255]
-; Great Ball:        [0, 200]
-; Ultra/Safari Ball: [0, 150]
+; Great Ball/Safari:        [0, 200]
+; Ultra Ball: [0, 150]
 ; Loop until an acceptable number is found.
 
 .loop
@@ -294,8 +294,10 @@ ItemUseBall:
 	ld b, 8
 	cp GREAT_BALL
 	jr z, .skip1
-;;;;;;;;;;; PureRGBnote: ADDED: hyper ball has the same ballfactor as great ball
+;;;;;;;;;;; PureRGBnote: ADDED: hyper ball and safari ball have the same ballfactor as great ball
 	cp HYPER_BALL
+	jr z, .skip1
+	cp SAFARI_BALL
 	jr z, .skip1
 ;;;;;;;;;;;
 	ld b, 12

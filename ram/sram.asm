@@ -15,6 +15,13 @@ sHallOfFame:: ds HOF_TEAM * HOF_TEAM_CAPACITY
 
 sCustomBallNames:: ds NAME_LENGTH * NUM_CUSTOM_BALLS ; 176
 
+	ds 256 ; extra space in case more custom balls are added later
+
+; used to restore music to previous point after battle
+sAudioRamBackup:: ds wAudioWRAMEnd - wAudioWRAMStart
+
+; still quite a bit of space left here
+
 
 SECTION "Save Data", SRAM
 

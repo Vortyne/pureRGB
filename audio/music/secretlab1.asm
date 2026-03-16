@@ -28,80 +28,79 @@ Music_SecretLab_Ch2::
 	note_type 12, 12, 2
 .mainloop
 	octave 3
-.firstloop
+;.firstloop
 	sound_call SecretLab_MainMelody
-	sound_loop 4, .firstloop
-	rest 4 ; now channel 2 is half a bar offset
-.secondloop
-	sound_call SecretLab_MainMelody
-	sound_loop 3, .secondloop
-	note E_, 8
-	note D#, 8
-	note B_, 8
-	note A#, 8
-	note G_, 8
-	note G#, 8
-	note A_, 8
-	note A#, 4 ; now it's back in line
-.thirdloop
-; TODO: might remove this portion later
-	rest 2
-	octave 2
-	note E_, 2
-	octave 3
-	note E_, 2
-	octave 2
-	note E_, 2
-	rest 2
-	octave 2
-	note D#, 2
-	octave 3
-	note D#, 2
-	octave 2
-	note D#, 2
-	rest 2
-	octave 2
-	note B_, 2
-	octave 3
-	note B_, 2
-	octave 2
-	note B_, 2
-	rest 2
-	octave 2
-	note A#, 2
-	octave 3
-	note A#, 2
-	octave 2
-	note A#, 2
-	rest 2
-	octave 2
-	note G_, 2
-	octave 3
-	note G_, 2
-	octave 2
-	note G_, 2
-	rest 2
-	octave 2
-	note G#, 2
-	octave 3
-	note G#, 2
-	octave 2
-	note G#, 2
-	rest 2
-	octave 2
-	note A_, 2
-	octave 3
-	note A_, 2
-	octave 2
-	note A_, 2
-	rest 2
-	octave 2
-	note A#, 2
-	octave 3
-	note A#, 2
-	octave 2
-	note A#, 2
-	sound_loop 4, .thirdloop
+;	sound_loop 4, .firstloop
+;	rest 4 ; now channel 2 is half a bar offset
+;.secondloop
+;	sound_call SecretLab_MainMelody
+;	sound_loop 3, .secondloop
+;	note E_, 8
+;	note D#, 8
+;	note B_, 8
+;	note A#, 8
+;	note G_, 8
+;	note G#, 8
+;	note A_, 8
+;	note A#, 4 ; now it's back in line
+;.thirdloop
+;	rest 2
+;	octave 2
+;	note E_, 2
+;	octave 3
+;	note E_, 2
+;	octave 2
+;	note E_, 2
+;	rest 2
+;	octave 2
+;	note D#, 2
+;	octave 3
+;	note D#, 2
+;	octave 2
+;	note D#, 2
+;	rest 2
+;	octave 2
+;	note B_, 2
+;	octave 3
+;	note B_, 2
+;	octave 2
+;	note B_, 2
+;	rest 2
+;	octave 2
+;	note A#, 2
+;	octave 3
+;	note A#, 2
+;	octave 2
+;	note A#, 2
+;	rest 2
+;	octave 2
+;	note G_, 2
+;	octave 3
+;	note G_, 2
+;	octave 2
+;	note G_, 2
+;	rest 2
+;	octave 2
+;	note G#, 2
+;	octave 3
+;	note G#, 2
+;	octave 2
+;	note G#, 2
+;	rest 2
+;	octave 2
+;	note A_, 2
+;	octave 3
+;	note A_, 2
+;	octave 2
+;	note A_, 2
+;	rest 2
+;	octave 2
+;	note A#, 2
+;	octave 3
+;	note A#, 2
+;	octave 2
+;	note A#, 2
+;	sound_loop 4, .thirdloop
 	sound_loop 0, .mainloop
 
 Music_SecretLab_Ch3::

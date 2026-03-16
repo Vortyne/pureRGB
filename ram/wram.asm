@@ -3,6 +3,7 @@ SECTION "Audio RAM", WRAM0
 wUnusedC000::
 wUnusedMusicByte:: db ; PureRGBnote: CHANGED: used for various temporary flags
 
+wAudioWRAMStart::
 wSoundID:: db
 
 ; bit 7: whether sound has been muted
@@ -93,6 +94,7 @@ wChannel5Transposition::db
 wChannel6Transposition::db
 	; unused audio wram 4 bytes
 ENDU
+wAudioWRAMEnd::
 
 
 SECTION "Sprite State Data", WRAM0
@@ -1141,7 +1143,9 @@ wSpriteIndex:: db
 ; movement byte 2 of current sprite
 wCurSpriteMovement2:: db
 
-	ds 2 ; unused 2 bytes
+; PureRGBnote: ADDED: used to check whether music should be resumed when the REDO MUSIC option is turned off
+wPausedAudioSoundID:: db
+wPausedAudioBank:: db
 
 ; sprite offset of sprite being controlled by NPC movement script
 wNPCMovementScriptSpriteOffset:: db
@@ -1180,6 +1184,7 @@ wPartyMenuHPBarColors:: ds PARTY_LENGTH
 
 wStatusScreenHPBarColor:: db
 
+; TODO: can reuse this space outside of the lab
 wSecretLabPasswordTracker::	ds 7 ; PureRGBnote: ADDED: in the secret lab this will keep track of the password you enter
 
 wCopyingSGBTileData::

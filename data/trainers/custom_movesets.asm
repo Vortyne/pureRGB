@@ -679,7 +679,7 @@ EliteFourRivalMoveset3:
 	db RAZOR_LEAF
 	db SLEEP_POWDER
 	db GROWTH
-	db FLASH
+	db SLAM ; SIPHON SNAG
 
 MetronomeGamblerMoveset:
 	; meowth

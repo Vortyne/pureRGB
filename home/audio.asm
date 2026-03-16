@@ -1,5 +1,10 @@
 PlayDefaultMusic::
 	call WaitForSoundToFinish
+	ld a, [wIsInBattle]
+	and a
+	jr nz, .skipResetPausedAudio
+	callfar ResetPausedAudioData
+.skipResetPausedAudio
 	xor a
 	ld c, a
 	ld d, a
@@ -489,3 +494,10 @@ PlayDefaultMusicWithExtraCheck::
 	ld [wReplacedMapMusic], a
 	ld d, 1
 	jpfar TryPlayExtraMusic
+
+WaitForAudioFadeToFinish::
+	rst _DelayFrame
+	ld a, [wAudioFadeOutControl]
+	and a
+	ret z
+	jr WaitForAudioFadeToFinish

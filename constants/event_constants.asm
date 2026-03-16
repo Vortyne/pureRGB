@@ -15,7 +15,9 @@
 	const EVENT_HIDE_ALREADY_HAS_FOUR_MOVES_MSG
 	const EVENT_GENERIC_NPC_WALKING_FLAG
 	const EVENT_SAW_LEARNSET_UNLOCK_TEXT_ONCE
-	const_skip 8
+	const EVENT_PAUSED_MUSIC_BEFORE_BATTLE
+	const EVENT_ALREADY_BACKED_UP_MUSIC_BEFORE_BATTLE
+	const_skip 6
 	const EVENT_MET_DAD
 	const EVENT_CALLED_DAD_WAITING
 	const EVENT_GOT_TOWN_MAP
@@ -93,8 +95,9 @@ DEF EVENT_OPTIONS_START1 EQU const_value
 	const FLAG_LEARNSETS_DISABLED
 	const FLAG_FLASHING_REDUCED
 	const FLAG_IMPERIAL_METRIC
+	const FLAG_RESUME_MUSIC
 
-	; pureRGBnote: ~13 bits of unused event space
+	; pureRGBnote: ~12 bits of unused event space
 
 ; Cerulean City events
 	const_next $98

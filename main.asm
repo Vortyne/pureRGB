@@ -491,3 +491,4 @@ INCLUDE "engine/menus/preview_front_sprite.asm"
 SECTION "newCode3", ROMX
 
 INCLUDE "engine/movie/title.asm"
+INCLUDE "audio/pause_resume_music.asm"

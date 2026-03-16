@@ -113,6 +113,11 @@ PowerPlantCheckStandingOnButton:
 	CheckAndSetEvent EVENT_PRESSED_POWER_PLANT_SWITCH3
 	ret nz
 .displayButtonText
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
+	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
+	call nz, GBFadeInFromWhite ; need to fade in if the player encountered a pokemon on this tile
+	call WaitForAudioFadeToFinish ; wait for fading out audio if the player just encountered a pokemon so the below sounds will play correctly
 	ld a, SFX_TELEPORT_ENTER_2
 	rst _PlaySound
 	ld c, 30

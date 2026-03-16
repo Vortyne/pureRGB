@@ -1,6 +1,7 @@
 ; PureRGBnote: ADDED: new trainers in this location
 
 SafariZoneEast_Script:
+	call CheckModifySafariWildRate
 	call EnableAutoTextBoxDrawing
 	ld hl, SafariZoneEastTrainerHeaders
 	ld de, SafariZoneEast_ScriptPointers

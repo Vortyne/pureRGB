@@ -350,6 +350,8 @@ PlayDefaultTrainerMusic::
 	ld [wEngagedTrainerClass], a ; used to just play the default trainer music
 ; PureRGBnote: MOVED: this code was in the home bank but didn't need to be, so it was moved for some space.
 PlayTrainerMusic::
+	callfar BackupAudioWram
+.skipBackup
 	ld a, [wEngagedTrainerClass]
 	cp OPP_RIVAL1
 	ret z

@@ -8,7 +8,7 @@ FightingDojo_Script:
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	jr z, .noMapLoadScript
 	CheckEvent EVENT_OPENED_DOJO_INTERIOR
-	ret z
+	jr z, .noMapLoadScript2
 	call FightingDojoLoadBetaDojoTiles
 	call c, FightingDojoReplaceScrolls
 	ld hl, wCurrentMapScriptFlags
@@ -20,6 +20,7 @@ FightingDojo_Script:
 	ld a, [wXCoord]
 	cp 12
 	ret nc
+.noMapLoadScript2
 	ld hl, FightingDojoTrainerHeaders
 	ld de, FightingDojo_ScriptPointers
 	ld a, [wFightingDojoCurScript]

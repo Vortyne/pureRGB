@@ -343,7 +343,7 @@ RenameEvolvedMon:
 	call GetMonName
 	pop bc
 	ld hl, wNameBuffer
-	pop de
+	pop de ; pop hl into de
 	jp CopyData
 
 CancelledEvolution:
@@ -374,7 +374,8 @@ Evolution_ReloadTilesetTilePatterns:
 	ld a, [wLinkState]
 	cp LINK_STATE_TRADING
 	ret z
-	jp ReloadTilesetTilePatterns
+	call ReloadTilesetTilePatterns
+	jpfar LoadExtraTiles ; PureRGBnote: ADDED: in some maps we overwrite tiles for the given map
 
 ; shinpokerednote: FIXED: supports learning multiple moves at the same level
 LearnMoveFromLevelUp: 

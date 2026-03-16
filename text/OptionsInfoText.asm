@@ -235,3 +235,10 @@ _TitleInfoText::
 	line "title screen to"
 	cont "an updated one."
 	prompt
+
+_PauseMusicInfoText::
+	text "If OFF, resumes"
+	line "area music after"
+	cont "battle instead"
+	cont "of restarting it."
+	prompt
