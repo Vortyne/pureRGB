@@ -196,7 +196,15 @@ PlayAnimation:
 	ldh [hROMBankTemp], a ; it looks like nothing reads this
 	ld [wSubAnimTransform], a
 	ld [wSubAnimStepCounter], a
-	ld a, [wAnimationID] ; get animation number
+	ld a, [wAnimationID]
+	push af
+	cp NUM_ATTACKS + 2
+	ld a, SFX_PAN_TARGET - 1 ; move animations default to panning audio to the target
+	jr c, .defaultPanning
+	ld a, SFX_PAN_CENTER - 1 ; other anims default to center
+.defaultPanning
+	call AnimationPanSFXAudioEntry ; default to audio panned to the target since most attacks will use that
+	pop af ; get animation number
 	dec a
 	ld l, a
 	ld h, 0
@@ -232,6 +240,8 @@ PlayAnimation:
 	cp NO_MOVE - 1 ; is there a sound to play?
 	jr z, .skipPlayingSound
 	ld [wAnimSoundID], a ; store sound
+	cp NUM_ATTACKS + 1
+	jr nc, .skipPlayingSound
 	push hl
 	push de
 	call GetMoveSound
@@ -301,7 +311,7 @@ PlayAnimation:
 	inc a
 	ld [wSubAnimStepCounter], a
 ;;;;;;;;;;
-	jr .animationLoop
+	jp .animationLoop
 
 LoadSubanimation:
 	vc_hook Reduce_move_anim_flashing_Guillotine
@@ -491,6 +501,7 @@ MoveAnimationContent:
 	call z, WaitForSoundToFinish
 .noWaiting
 	xor a
+	ld [wSFXPanning], a
 	ld [wSubAnimSubEntryAddr], a
 	;ld [wUnusedMoveAnimByte], a ; PureRGBnote: this value is unused so we dont need to load it
 	ld [wSubAnimTransform], a
@@ -3217,6 +3228,8 @@ PlayApplyingAttackSound:
 ; play a different sound depending if move is not very effective, neutral, or super-effective
 ; don't play any sound at all if move is ineffective
 	call WaitForSoundToFinish
+	ld a, SFX_PAN_TARGET - 1
+	call AnimationPanSFXAudioEntry
 	ld a, [wDamageMultipliers]
 	and $7f
 	ret z
@@ -3509,3 +3522,28 @@ AnimationSpecialSoundEffect:
 	ld hl, wChannelCommandPointers + CHAN5 * 2
 	ld de, SFX_LovelyKiss_Ch5
 	jp RemapSoundChannel
+
+AnimationPanSfxAudio:
+	ld a, [wAnimSoundID]
+AnimationPanSFXAudioEntry:
+	sub SFX_PAN_CENTER - 1
+	ld b, %11111111
+	jr z, .load
+	dec a ; SFX_PAN_USER
+	ldh a, [hWhoseTurn]
+	ld b, %11110000
+	jr z, .panUser
+	; SFX_PAN_TARGET
+.panTarget
+	and a
+	jr nz, .load
+	jr .right
+.panUser
+	and a
+	jr z, .load
+.right
+	ld b, %00001111
+.load
+	ld a, b
+	ld [wSFXPanning], a
+	ret

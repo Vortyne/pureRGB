@@ -92,7 +92,8 @@ wChannel3Transposition::db
 wAudioFlags::db
 wChannel5Transposition::db
 wChannel6Transposition::db
-	; unused audio wram 4 bytes
+wSFXPanning::db ; TODO: battle animation audio panning
+	; unused audio wram 3 bytes
 ENDU
 wAudioWRAMEnd::
 

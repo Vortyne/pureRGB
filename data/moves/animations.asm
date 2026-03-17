@@ -245,6 +245,7 @@ ZigZagScreenAnim:
 
 PoundAnim:
 StruggleAnim:
+
 	battle_anim POUND, SUBANIM_0_STAR_TWICE, 0, 8
 	db -1 ; end
 
@@ -258,10 +259,12 @@ DoubleSlapAnim:
 	db -1 ; end
 
 CometPunchAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim GLARE, SE_HIDE_MON_PIC
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim COMET_PUNCH, SUBANIM_0_STAR_THRICE, 0, 4
 	battle_anim NO_MOVE, SE_SHOW_MON_PIC
 	db -1 ; end
@@ -307,6 +310,7 @@ GuillotineAnim:
 	db -1 ; end
 
 RazorWindAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim FLY, SE_HIDE_MON_PIC
 	battle_anim NO_MOVE, SE_SLIDE_MON_DOWN
 	battle_anim RECOVER, SE_BLINK_MON
@@ -316,6 +320,7 @@ RazorWindAnim:
 	db -1 ; end
 
 SwordsDanceAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim SWORDS_DANCE, SUBANIM_1_SWORDS_CIRCLING, 1, 6
 	battle_anim SWORDS_DANCE, SUBANIM_1_SWORDS_CIRCLING, 1, 6
 	battle_anim SWORDS_DANCE, SUBANIM_1_SWORDS_CIRCLING, 1, 6
@@ -328,7 +333,9 @@ CutAnim:
 	db -1 ; end
 
 GustAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim GUST, SUBANIM_1_TORNADO, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SUBANIM_0_STAR_THRICE, 0, 6
 	db -1 ; end
 
@@ -337,7 +344,9 @@ WingAttackAnim:
 	db -1 ; end
 
 WhirlwindAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim WHIRLWIND, SUBANIM_1_TORNADO, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim THUNDER, SE_FLASH_SCREEN_LONG
 	battle_anim NO_MOVE, SE_SLIDE_ENEMY_MON_OFF
 	battle_anim NO_MOVE, SE_SHAKE_SCREEN
@@ -382,10 +391,12 @@ MegaKickAnim:
 	db -1 ; end
 
 JumpKickAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_SLIDE_MON_DOWN
 	battle_anim BUBBLE, SE_SHOW_MON_PIC
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim JUMP_KICK, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
@@ -406,11 +417,13 @@ HeadbuttAnim:
 	db -1 ; end
 
 HornAttackAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim HORN_ATTACK, SUBANIM_0_HORN_JAB_TWICE, 0, 6
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG, 1, 6
 	db -1 ; end
 
 FuryAttackAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim FURY_ATTACK, SUBANIM_0_HORN_JAB_THRICE, 0, 2
 	battle_anim NO_MOVE, SUBANIM_0_HORN_JAB_THRICE, 0, 2
 	db -1 ; end
@@ -427,6 +440,7 @@ HornDrillAnim:
 	db -1 ; end
 
 TackleAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
 	db -1 ; end
@@ -448,6 +462,7 @@ TakeDownAnim:
 	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
 	battle_anim TAKE_DOWN, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim FLAMETHROWER, SE_FIRE_EVERYWHERE
 	db -1 ; end
 
@@ -456,21 +471,27 @@ ThrashAnim:
 	db -1 ; end
 
 DoubleEdgeAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_CENTERING, 0, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_MOVE_MON_HORIZONTALLY
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim DOUBLE_EDGE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
 	db -1 ; end
 
 TailWhipAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim AMNESIA, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim AMNESIA, SE_RESET_MON_POSITION
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim AMNESIA, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim AMNESIA, SE_RESET_MON_POSITION
 	db -1 ; end
 
@@ -491,13 +512,16 @@ TwineedleAnim:
 	db -1 ; end
 
 PinMissileAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim POISON_STING, SUBANIM_0_PIN_MISSILE, 0, 1
 	battle_anim POISON_STING, SUBANIM_0_PIN_MISSILE, 0, 1
 	battle_anim PIN_MISSILE, SUBANIM_0_STAR_TWICE, 0, 1
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim PIN_MISSILE, SUBANIM_0_STAR_TWICE, 0, 3
 	db -1 ; end
 
 LeerAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_DARK_SCREEN_PALETTE
 	battle_anim LEER, SE_DARK_SCREEN_FLASH
 	battle_anim LEER, SE_DARK_SCREEN_FLASH
@@ -509,37 +533,47 @@ BiteAnim:
 	db -1 ; end
 
 GrowlAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim GROWL, SUBANIM_0_HEART_1_MUSIC, 1, 6
 	db -1 ; end
 
 RoarAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim ROAR, SUBANIM_1_SHOUT, 1, 6
 	battle_anim ROAR, SUBANIM_1_SHOUT, 1, 6
 	battle_anim ROAR, SUBANIM_1_SHOUT, 1, 6
 	db -1 ; end
 
 SingAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SING, SUBANIM_0_HEART_1_MUSIC, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SUBANIM_1_MUSIC_CIRCLING_ENEMY, 1, 16
 	battle_anim NO_MOVE, SUBANIM_1_MUSIC_CIRCLING_ENEMY, 1, 16
 	db -1 ; end
 
 SupersonicAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SUPERSONIC, SUBANIM_0_SOUND_WAVE, 0, 6
 	db -1 ; end
 
 SonicBoomAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim DIG, SUBANIM_1_SHOUT, 1, 3
 	battle_anim DIG, SUBANIM_1_SHOUT, 1, 6
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SUBANIM_0_SOUND_WAVE_SHOT, 0, 2
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim EGG_BOMB, SUBANIM_1_EXPLOSION_SMALL_ENEMY, 0, 4
 	db -1 ; end
 
 DisableAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim METRONOME, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim METRONOME, SE_RESET_MON_POSITION
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_DARK_SCREEN_PALETTE
 	battle_anim LEER, SE_DARK_SCREEN_FLASH
 	battle_anim LEER, SE_DARK_SCREEN_FLASH
@@ -547,7 +581,9 @@ DisableAnim:
 	db -1 ; end
 
 AcidAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim ACID, SUBANIM_1_BLOB_TOSS, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim ACID, SUBANIM_1_BLOB_DRIP_ENEMY, 1, 6
 	db -1 ; end
 
@@ -556,7 +592,9 @@ EmberAnim:
 	db -1 ; end
 
 FlamethrowerAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_BEAM, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_1, 1, 6
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_2, 1, 6
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
@@ -567,6 +605,7 @@ FlamethrowerAnim:
 	db -1 ; end
 
 MistAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim WATERFALL, SE_SNOWFLAKES_EVERYWHERE
 	battle_anim NO_MOVE, SE_SNOWFLAKES_EVERYWHERE
@@ -579,11 +618,14 @@ WaterGunAnim:
 	db -1 ; end
 
 HydroPumpAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim SCRATCH, SE_MOVE_MON_HORIZONTALLY
 	battle_anim SCRATCH, SE_RESET_MON_POSITION
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SKULL_BASH, SUBANIM_0_BEAM, 0, 3
 	battle_anim SURF, SE_WATER_DROPLETS_EVERYWHERE_FAST
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim HYDRO_PUMP, SUBANIM_0_WATER_COLUMNS, 0, 6
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_FLASH
 	battle_anim HYDRO_PUMP, SUBANIM_0_WATER_COLUMNS, 0, 6
@@ -591,11 +633,13 @@ HydroPumpAnim:
 	db -1 ; end
 
 SurfAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SURF, SE_WATER_DROPLETS_EVERYWHERE
 	battle_anim HYDRO_PUMP, SUBANIM_0_WATER_COLUMNS, 0, 6
 	db -1 ; end
 
 IceBeamAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim CONFUSE_RAY, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -603,13 +647,16 @@ IceBeamAnim:
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim ICE_BEAM, SUBANIM_0_BEAM, 0, 3
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim ROCK_THROW, SUBANIM_0_ICE_RISE, 0, 16
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 BlizzardAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SWORDS_DANCE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_SNOWFLAKES_EVERYWHERE
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim BLIZZARD, SUBANIM_0_ICE_FALL, 0, 4
 	battle_anim HYDRO_PUMP, SUBANIM_0_ICE_FALL, 0, 4
 	battle_anim ROCK_THROW, SUBANIM_0_ICE_RISE, 0, 16
@@ -617,15 +664,18 @@ BlizzardAnim:
 	db -1 ; end
 
 PsyBeamAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim PSYBEAM, SUBANIM_0_BEAM, 0, 3
 	battle_anim NO_MOVE, SE_FLASH_SCREEN_LONG
 	db -1 ; end
 
 BubbleBeamAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim BUBBLEBEAM, SUBANIM_0_WATER_BUBBLES, 0, 18
 	db -1 ; end
 
 AuroraBeamAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim BUBBLE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -638,8 +688,10 @@ AuroraBeamAnim:
 	db -1 ; end
 
 HyperBeamAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_SPIRAL_BALLS_INWARD
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim HYPER_BEAM, SUBANIM_0_BEAM, 0, 2
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
@@ -663,6 +715,7 @@ SubmissionAnim:
 	battle_anim NO_MOVE, SUBANIM_0_STAR_TWICE, 0, 6
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
 	battle_anim REST, SE_SLIDE_MON_DOWN
 	battle_anim NO_MOVE, SE_SHOW_MON_PIC
@@ -681,6 +734,7 @@ LowKickAnim:
 CounterAnim:
 	battle_anim COUNTER, SUBANIM_0_STAR_THRICE, 0, 6
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG_MOVING, 1, 3
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim MEGA_DRAIN, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
@@ -692,6 +746,7 @@ SeismicTossAnim:
 	battle_anim BARRAGE, SUBANIM_1_SPHERE_BIG, 1, 1
 	battle_anim NO_MOVE, SE_HIDE_ENEMY_MON_PIC
 	battle_anim NO_MOVE, SE_SLIDE_MON_OFF
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SEISMIC_TOSS, SUBANIM_1_SPHERE_BIG_RISE, 1, 2
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -708,6 +763,7 @@ StrengthAnim:
 	db -1 ; end
 
 AbsorbAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim ABSORB, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
@@ -715,6 +771,7 @@ AbsorbAnim:
 	db -1 ; end
 
 MegaDrainAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim MEGA_DRAIN, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
@@ -724,11 +781,14 @@ MegaDrainAnim:
 	db -1 ; end
 
 LeechSeedAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SUBANIM_1_SEED_TOSS, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim SLEEP_POWDER, SUBANIM_1_SEED_LAND, 1, 21
 	db -1 ; end
 
 GrowthAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim GROWTH, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_CENTERING, 0, 2
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_CENTERING, 0, 2
@@ -738,12 +798,15 @@ GrowthAnim:
 	db -1 ; end
 
 RazorLeafAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim RAZOR_LEAF, SE_LEAVES_FALLING
 	battle_anim SWIFT, SUBANIM_1_LEAVES_TOSS, 1, 1
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim RAZOR_WIND, SUBANIM_0_SLICE, 0, 1
 	db -1 ; end
 
 SolarBeamAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SOLARBEAM, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_CENTERING, 0, 4
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_CENTERING, 0, 2
@@ -753,6 +816,7 @@ SolarBeamAnim:
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim HYPER_BEAM, SUBANIM_0_BEAM, 0, 3
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG_MOVING, 0, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim SELFDESTRUCT, SE_SHAKE_SCREEN
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
@@ -777,20 +841,24 @@ SleepPowderAnim:
 	db -1 ; end
 
 PetalDanceAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim PETAL_DANCE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_PETALS_FALLING
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 StringShotAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim STRING_SHOT, SUBANIM_0_STRING_SHOT, 0, 8
 	db -1 ; end
 
 DragonRageAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim DRAGON_RAGE, SUBANIM_1_FLAME_BEAM, 1, 3
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_BEAM, 1, 3
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_BEAM, 1, 3
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_BEAM, 1, 3
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_1, 1, 2
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_2, 1, 2
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_3, 1, 2
@@ -807,6 +875,7 @@ ThunderShockAnim:
 	db -1 ; end
 
 ThunderBoltAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SKY_ATTACK, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -826,6 +895,7 @@ ThunderWaveAnim:
 	db -1 ; end
 
 ThunderAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SKY_ATTACK, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -833,6 +903,7 @@ ThunderAnim:
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim THUNDER, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_1_LIGHTNING, 1, 6
@@ -846,6 +917,7 @@ RockThrowAnim:
 	db -1 ; end
 
 EarthquakeAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim EARTHQUAKE, SE_SHAKE_SCREEN
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
@@ -853,6 +925,7 @@ EarthquakeAnim:
 	db -1 ; end
 
 FissureAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim FISSURE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_SHAKE_SCREEN
 	battle_anim FISSURE, SE_DARK_SCREEN_FLASH
@@ -865,24 +938,30 @@ DigAnim:
 	db -1 ; end
 
 ToxicAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SURF, SE_WATER_DROPLETS_EVERYWHERE
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim TOXIC, SUBANIM_1_BLOB_DRIP_ENEMY, 1, 6
 	db -1 ; end
 
 ConfusionAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
 	db -1 ; end
 
 PsychicAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim PSYCHIC_M, SE_FLASH_SCREEN_LONG
 	battle_anim NO_MOVE, SE_WAVY_SCREEN
 	db -1 ; end
 
 HypnosisAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim HYPNOSIS, SE_FLASH_SCREEN_LONG
 	db -1 ; end
 
 MeditateAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim MEDITATE, SUBANIM_0_CIRCLES_CENTERING, 0, 10
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
@@ -891,33 +970,40 @@ MeditateAnim:
 	db -1 ; end
 
 AgilityAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim AGILITY, SE_SHAKE_BACK_AND_FORTH
 	battle_anim BARRIER, SE_SHOW_MON_PIC
 	db -1 ; end
 
 QuickAttackAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim QUICK_ATTACK, SE_SLIDE_MON_OFF
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	battle_anim NO_MOVE, SE_SHOW_MON_PIC
 	db -1 ; end
 
 RageAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim TAIL_WHIP, SUBANIM_2_ANGER_SYMBOL, 2, 16
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim RAGE, SUBANIM_0_STAR_TWICE, 0, 6
 	db -1 ; end
 
 FlyAnimPart1:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim TELEPORT, SE_SQUISH_MON_PIC
 	battle_anim NO_MOVE, SE_SHOOT_BALLS_UPWARD
 	db -1 ; end
 
 TeleportAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim TELEPORT, SE_SQUISH_MON_PIC
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_SPLITTING, 0, 1
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_FLASH
 	db -1 ; end
 
 NightShadeAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
 	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_WAVY_SCREEN
@@ -925,15 +1011,18 @@ NightShadeAnim:
 	db -1 ; end
 
 MimicAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim MIMIC, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 1, 6
 	battle_anim MIMIC, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 1, 6
 	db -1 ; end
 
 ScreechAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SCREECH, SUBANIM_0_HEART_1_MUSIC, 1, 6
 	db -1 ; end
 
 DoubleTeamAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -946,6 +1035,7 @@ DoubleTeamAnim:
 	db -1 ; end
 
 RecoverAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim CONFUSE_RAY, SE_BLINK_MON
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim RECOVER, SE_SPIRAL_BALLS_INWARD
@@ -953,6 +1043,7 @@ RecoverAnim:
 	db -1 ; end
 
 HardenAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim HARDEN, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 1, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
@@ -960,6 +1051,7 @@ HardenAnim:
 	db -1 ; end
 
 MinimizeAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim MINIMIZE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_SPIRAL_BALLS_INWARD
 	battle_anim NO_MOVE, SE_MINIMIZE_MON
@@ -967,6 +1059,7 @@ MinimizeAnim:
 	db -1 ; end
 
 SmokeScreenAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SMOKESCREEN, SUBANIM_1_SAND, 1, 6
 	battle_anim NO_MOVE, SUBANIM_0_BALL_POOF_ENEMY, 0, 4
 	battle_anim NO_MOVE, SE_DARKEN_MON_PALETTE
@@ -985,12 +1078,14 @@ SmokeScreenAnim:
 	db -1 ; end
 
 ConfuseRayAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim CONFUSE_RAY, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG_TOSS, 1, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 WithdrawAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim DEFENSE_CURL, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_SLIDE_MON_DOWN
 	battle_anim RECOVER, SUBANIM_0_SHELL, 0, 6
@@ -999,6 +1094,7 @@ WithdrawAnim:
 	db -1 ; end
 
 DefenseCurlAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim DEFENSE_CURL, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 0, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
@@ -1006,11 +1102,13 @@ DefenseCurlAnim:
 	db -1 ; end
 
 BarrierAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim BARRIER, SUBANIM_1_BARRIER, 1, 6
 	battle_anim BARRIER, SUBANIM_1_BARRIER, 1, 6
 	db -1 ; end
 
 LightScreenAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim LIGHT_SCREEN, SUBANIM_1_BARRIER, 1, 6
 	battle_anim LIGHT_SCREEN, SUBANIM_1_BARRIER, 1, 6
@@ -1018,6 +1116,7 @@ LightScreenAnim:
 	db -1 ; end
 
 HazeAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARKEN_MON_PALETTE
 	battle_anim STRUGGLE, SE_WATER_DROPLETS_EVERYWHERE
 	battle_anim NO_MOVE, SUBANIM_1_SAND, 1, 6
@@ -1025,6 +1124,7 @@ HazeAnim:
 	db -1 ; end
 
 ReflectAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
 	battle_anim REFLECT, SUBANIM_1_BARRIER, 1, 6
 	battle_anim REFLECT, SUBANIM_1_BARRIER, 1, 6
@@ -1032,10 +1132,12 @@ ReflectAnim:
 	db -1 ; end
 
 FocusEnergyAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim FOCUS_ENERGY, SE_SPIRAL_BALLS_INWARD
 	db -1 ; end
 
 BideAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim REST, SE_SLIDE_MON_DOWN
 	battle_anim REST, SE_SLIDE_MON_DOWN
 	battle_anim REFLECT, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 0, 4
@@ -1043,6 +1145,7 @@ BideAnim:
 	db -1 ; end
 
 MetronomeAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim METRONOME, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim METRONOME, SE_RESET_MON_POSITION
@@ -1053,15 +1156,19 @@ MetronomeAnim:
 	db -1 ; end
 
 MirrorMoveAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim CONVERSION, SUBANIM_1_BARRIER, 1, 2
 	db -1 ; end
 
 SelfdestructAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim SELFDESTRUCT, SUBANIM_1_SELFDESTRUCT, 0, 1
 	db -1 ; end
 
 EggBombAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim BARRAGE, SUBANIM_1_CIRCLE_BLACK_TOSS, 1, 4
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim EGG_BOMB, SUBANIM_1_EXPLOSION_SMALL_ENEMY, 1, 4
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	db -1 ; end
@@ -1071,15 +1178,18 @@ LickAnim:
 	db -1 ; end
 
 SmogAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_DARKEN_MON_PALETTE
 	battle_anim SMOG, SUBANIM_1_CLOUD_TOSS, 1, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 SludgeAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARKEN_MON_PALETTE
 	battle_anim SLUDGE, SUBANIM_1_BLOB_TOSS, 1, 6
 	battle_anim SLUDGE, SUBANIM_1_BLOB_DRIP_ENEMY, 1, 6
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim HARDEN, SE_SLIDE_ENEMY_MON_DOWN_AND_HIDE
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
@@ -1092,10 +1202,12 @@ BoneClubAnim:
 	db -1 ; end
 
 FireBlastAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim FIRE_BLAST, SUBANIM_1_FLAME_BEAM, 1, 3
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_1, 1, 3
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_2, 1, 3
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_3, 1, 3
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim SPIKE_CANNON, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_STAR, 1, 6
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_STAR, 1, 6
@@ -1103,7 +1215,9 @@ FireBlastAnim:
 	db -1 ; end
 
 WaterfallAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_SLIDE_MON_DOWN
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim HYDRO_PUMP, SUBANIM_0_WATER_COLUMNS, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_STAR_THRICE, 0, 8
 	battle_anim NO_MOVE, SE_SLIDE_MON_UP
@@ -1116,6 +1230,7 @@ ClampAnim:
 	db -1 ; end
 
 SwiftAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim SWIFT, SUBANIM_1_STARS_SMALL_TOSS, 1, 1
 	battle_anim NO_MOVE, SUBANIM_1_STARS_SMALL_TOSS, 1, 1
@@ -1134,17 +1249,21 @@ SkullBashAnim:
 	db -1 ; end
 
 SpikeCannonAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SWIFT, SUBANIM_0_HORN_JAB_TWICE, 0, 1
 	battle_anim SPIKE_CANNON, SUBANIM_1_STAR_BIG_MOVING, 1, 3
 	battle_anim SWIFT, SUBANIM_0_HORN_JAB_TWICE, 0, 1
 	battle_anim SPIKE_CANNON, SUBANIM_1_STAR_BIG_MOVING, 1, 3
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	db -1 ; end
 
 ConstrictAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim CONSTRICT, SE_SIPHON_SNAG_ATTACK
 	db -1 ; end
 
 AmnesiaAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim MEGA_DRAIN, SUBANIM_AMNESIA1, 1, 2
 	battle_anim KINESIS, SUBANIM_AMNESIA, 0, 16
 	battle_anim DOUBLE_TEAM, SE_SHOOT_MANY_BALLS_UPWARD
@@ -1158,6 +1277,7 @@ KinesisAnim:
 	db -1 ; end
 
 SoftboiledAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_SLIDE_MON_HALF_OFF
 	battle_anim SOFTBOILED, SUBANIM_0_EGG_SHAKING, 0, 8
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
@@ -1167,11 +1287,13 @@ SoftboiledAnim:
 	db -1 ; end
 
 HiJumpKickAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_SQUISH_MON_PIC
 	battle_anim HI_JUMP_KICK, SE_SHOOT_BALLS_UPWARD
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim TAKE_DOWN, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_SLIDE_MON_DOWN
@@ -1179,6 +1301,7 @@ HiJumpKickAnim:
 	db -1 ; end
 
 GlareAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE
 	battle_anim GLARE, SE_LIGHT_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_FLASH
@@ -1186,15 +1309,19 @@ GlareAnim:
 	db -1 ; end
 
 DreamEaterAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim DREAM_EATER, SE_FLASH_SCREEN_LONG
 	battle_anim DREAM_EATER, SE_DARK_SCREEN_PALETTE
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim DREAM_EATER, SUBANIM_0_STAR_THRICE, 0, 8
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 PoisonGasAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim POISON_GAS, SUBANIM_1_SAND, 1, 4
 	battle_anim NO_MOVE, SUBANIM_1_SAND, 1, 4
 	battle_anim NO_MOVE, SUBANIM_1_SAND, 1, 4
@@ -1206,11 +1333,13 @@ PoisonGasAnim:
 	db -1 ; end
 
 BarrageAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim BARRAGE, SUBANIM_1_CIRCLE_BLACK_TOSS, 1, 3
 	battle_anim NO_MOVE, SUBANIM_0_STAR_HIGH, 0, 5
 	db -1 ; end
 
 LeechLifeAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_LIFE, SUBANIM_0_STAR_THRICE, 0, 8
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
@@ -1219,17 +1348,22 @@ LeechLifeAnim:
 	db -1 ; end
 
 LovelyKissAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim METRONOME, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LOVELY_KISS, SE_CUSTOM_MOVE_SFX
 	battle_anim NO_MOVE, SUBANIM_0_HEART_1_MUSIC, 0, 6
 	db -1 ; end
 
 SkyAttackAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SKY_ATTACK, SE_SQUISH_MON_PIC
 	battle_anim NO_MOVE, SE_SHOOT_BALLS_UPWARD
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim GLARE, SUBANIM_1_EXPLOSION_SMALL_ENEMY, 0, 6
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim BARRIER, SE_SHOW_MON_PIC
 	db -1 ; end
 
@@ -1253,10 +1387,12 @@ DizzyPunchAnim:
 
 SporeAnim:
 	battle_anim LEECH_SEED, SUBANIM_0_CIRCLES_FALLING, 0, 6
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SPORE, SE_SMOKE_EVERYWHERE
 	db -1 ; end
 
 FlashAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE
 	battle_anim GLARE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
@@ -1264,15 +1400,18 @@ FlashAnim:
 	db -1 ; end
 
 PsywaveAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SUPERSONIC, SUBANIM_0_SOUND_WAVE, 0, 6
 	battle_anim CONFUSION, SE_WAVY_SCREEN
 	db -1 ; end
 
 SplashAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim SPLASH, SE_BOUNCE_UP_AND_DOWN
 	db -1 ; end
 
 AcidArmorAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim ACID_ARMOR, SE_SLIDE_MON_DOWN_AND_HIDE
 	db -1 ; end
 
@@ -1284,6 +1423,7 @@ CrabHammerAnim:
 	db -1 ; end
 
 ExplosionAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim SKULL_BASH, SUBANIM_1_SELFDESTRUCT, 1, 1
 	db -1 ; end
 
@@ -1293,21 +1433,27 @@ FurySwipesAnim:
 	db -1 ; end
 
 BonemerangAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_MOVE_MON_HORIZONTALLY
 	battle_anim BONEMERANG, SUBANIM_2_BONE_TOSS, 2, 3
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SUBANIM_0_STAR_THRICE, 0, 6
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SUBANIM_2_BONE_RECOVER, 2, 3
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim DOUBLE_KICK, SE_RESET_MON_POSITION
 	db -1 ; end
 
 RestAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim REST, SUBANIM_0_STATUS_SLEEP, 0, 16
 	battle_anim REST, SUBANIM_0_STATUS_SLEEP, 0, 16
 	db -1 ; end
 
 RockSlideAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim ROCK_SLIDE, SUBANIM_0_ROCKS_LIFT, 0, 4
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim ROCK_SLIDE, SUBANIM_0_ROCKS_TOSS, 0, 3
 	battle_anim HYPER_FANG, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
@@ -1318,6 +1464,7 @@ HyperFangAnim:
 	db -1 ; end
 
 SharpenAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim BITE, SE_MOVE_MON_HORIZONTALLY
 	battle_anim BITE, SE_RESET_MON_POSITION
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -1329,6 +1476,7 @@ SharpenAnim:
 	db -1 ; end
 
 ConversionAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim CONVERSION, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 1, 3
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 1, 3
@@ -1339,28 +1487,34 @@ TriAttackAnim:
 	db -1 ; end
 
 TriAttackStartAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim ROCK_SLIDE, SUBANIM_1_TRIANGLE_TOSS, 1, 2
 	db -1
 
 TriAttackTriangleAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SUBANIM_1_TRIANGLE_TOSS, 1, 2
 	db -1
 
 TriAttackFireAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_3, 1, 4
 	db -1 ; end
 
 TriAttackIceAnim:
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim PAY_DAY, SUBANIM_0_ICE_RISE, 0, 2
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 TriAttackThunderAnim:
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
 	battle_anim THUNDER, SUBANIM_1_LIGHTNING, 1, 4
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
@@ -1380,6 +1534,7 @@ SlashAnim:
 	db -1 ; end
 
 SubstituteAnim:
+	battle_anim SFX_PAN_CENTER, SE_PAN_SFX_AUDIO
 	battle_anim SUBSTITUTE, SE_SLIDE_MON_OFF
 	battle_anim NO_MOVE, SUBANIM_0_BALL_POOF, 0, 8
 	battle_anim NO_MOVE, SE_SUBSTITUTE_MON
@@ -1448,6 +1603,7 @@ XStatItemAnim:
 	db -1 ; end
 
 ShrinkingSquareAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_LIGHT_SCREEN_PALETTE
 	battle_anim MIST, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 1, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
@@ -1466,6 +1622,7 @@ ShrinkingSquareBlackAnim:
 	db -1 ; end
 
 BurnAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim EMBER, SUBANIM_BURN, 1, 1
 	battle_anim EMBER, SUBANIM_BURN, 1, 1
 	battle_anim EMBER, SUBANIM_BURN, 1, 4
@@ -1477,26 +1634,31 @@ ParalyzeAnim:
 	db -1 ; end
 
 PoisonAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim BIND, SUBANIM_0_STATUS_POISONED, 0, 8
 	battle_anim BIND, SUBANIM_0_STATUS_POISONED, 0, 8
 	db -1 ; end
 
 SleepPlayerAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim REST, SUBANIM_0_STATUS_SLEEP, 0, 16
 	battle_anim REST, SUBANIM_0_STATUS_SLEEP, 0, 16
 	db -1 ; end
 
 SleepEnemyAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim REST, SUBANIM_0_STATUS_SLEEP_ENEMY, 0, 16
 	battle_anim REST, SUBANIM_0_STATUS_SLEEP_ENEMY, 0, 16
 	db -1 ; end
 
 ConfusedPlayerAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim AMNESIA, SUBANIM_0_STATUS_CONFUSED, 0, 8
 	battle_anim AMNESIA, SUBANIM_0_STATUS_CONFUSED, 0, 8
 	db -1 ; end
 
 ConfusedEnemyAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim AMNESIA, SUBANIM_0_STATUS_CONFUSED_ENEMY, 0, 8
 	battle_anim AMNESIA, SUBANIM_0_STATUS_CONFUSED_ENEMY, 0, 8
 	db -1 ; end
@@ -1506,6 +1668,7 @@ BallBlockAnim:
 	db -1 ; end
 
 SlideDownAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim DIG, SE_SLIDE_MON_DOWN
 	db -1 ; end
 
@@ -1522,22 +1685,26 @@ ThrowBaitAnim:
 	db -1 ; end
 
 AmnesiaEnemyAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim MEGA_DRAIN, SUBANIM_AMNESIA1_ENEMY, 1, 2
 	battle_anim KINESIS, SUBANIM_AMNESIA_ENEMY, 0, 16
 	battle_anim DOUBLE_TEAM, SE_SHOOT_MANY_BALLS_UPWARD
 	db -1 ; end
 
 FirePillarAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim FLAMETHROWER, SE_FIRE_EVERYWHERE
 	battle_anim BARRIER, SUBANIM_0_WATER_1_FIRE_BARRIER, 1, 3
 	db -1
 
 RageEnemyAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim TAIL_WHIP, SUBANIM_2_ANGER_SYMBOL_ENEMY, 2, 16
 	battle_anim RAGE, SUBANIM_0_STAR_TWICE, 0, 6
 	db -1 ; end
 
 ConversionDefenseModeAnim:
+	battle_anim SFX_PAN_USER, SE_PAN_SFX_AUDIO
 	battle_anim BARRIER, SUBANIM_1_BARRIER, 1, 1
 	battle_anim BARRIER, SUBANIM_1_BARRIER, 1, 1
 	battle_anim BARRIER, SUBANIM_1_BARRIER, 1, 1
@@ -1545,6 +1712,7 @@ ConversionDefenseModeAnim:
 	db -1
 
 ConversionAttackModeAnim:
+	battle_anim SFX_PAN_TARGET, SE_PAN_SFX_AUDIO
 	battle_anim NO_MOVE, SE_CROSSHAIR_SCANS_OPPONENT
 	db -1
 

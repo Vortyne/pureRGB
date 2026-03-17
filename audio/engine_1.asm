@@ -498,29 +498,29 @@ Audio1_tempo:
 
 Audio1_stereo_panning:
 	cp stereo_panning_cmd
-	jr nz, Audio1_unknownmusic0xef
+	jr nz, Audio1_duty_cycle_pattern
 	call Audio1_GetNextMusicByte
 	ld [wStereoPanning], a ; store panning
 	jp Audio1_sound_ret
 
 ; this appears to never be used
-Audio1_unknownmusic0xef:
-	cp unknownmusic0xef_cmd
-	jr nz, Audio1_duty_cycle_pattern
-	call Audio1_GetNextMusicByte
-	push bc
-	ld b, a
-	call DetermineAudioFunction
-	pop bc
-	ld a, [wDisableChannelOutputWhenSfxEnds]
-	and a
-	jr nz, .skip
-	ld a, [wChannelSoundIDs + CHAN8]
-	ld [wDisableChannelOutputWhenSfxEnds], a
-	xor a
-	ld [wChannelSoundIDs + CHAN8], a
-.skip
-	jp Audio1_sound_ret
+;Audio1_unknownmusic0xef:
+;	cp unknownmusic0xef_cmd
+;	jr nz, Audio1_duty_cycle_pattern
+;	call Audio1_GetNextMusicByte
+;	push bc
+;	ld b, a
+;	call DetermineAudioFunction
+;	pop bc
+;	ld a, [wDisableChannelOutputWhenSfxEnds]
+;	and a
+;	jr nz, .skip
+;	ld a, [wChannelSoundIDs + CHAN8]
+;	ld [wDisableChannelOutputWhenSfxEnds], a
+;	xor a
+;	ld [wChannelSoundIDs + CHAN8], a
+;.skip
+;	jp Audio1_sound_ret
 
 Audio1_duty_cycle_pattern:
 	cp duty_cycle_pattern_cmd
@@ -948,10 +948,8 @@ Audio1_EnableChannelOutput:
 	or [hl] ; set this channel's bits
 	ld d, a
 	ld a, c
-	cp CHAN8
-	jr z, .noiseChannelOrNoSfx
 	cp CHAN5
-	jr nc, .skip ; if sfx channel
+	jr nc, .sfxChannel ; if sfx channel
 ; If this isn't an SFX channel, try the corresponding SFX channel.
 	ld hl, wChannelSoundIDs + CHAN5
 	add hl, bc
@@ -959,9 +957,10 @@ Audio1_EnableChannelOutput:
 	and a
 	jr nz, .skip
 .noiseChannelOrNoSfx
-; If this is the SFX noise channel or a music channel whose corresponding
+; If this is a music channel whose corresponding
 ; SFX channel is off, apply stereo panning.
 	ld a, [wStereoPanning]
+.next
 	call Audio1_9972
 	add hl, bc
 	and [hl]
@@ -974,8 +973,14 @@ Audio1_EnableChannelOutput:
 	ld d, a
 .skip
 	ld a, d
+.load
 	ldh [rNR51], a
 	ret
+.sfxChannel
+	ld a, [wSFXPanning]
+	and a
+	jr nz, .next
+	jr .skip
 
 Audio1_ApplyDutyCycleAndSoundLength:
 	ld b, 0
@@ -1658,7 +1663,7 @@ Audio1_9972:
 	bit BIT_AUDIO_PAN, a
 	ld a, 0
 	jr z, .panDisabled
-	ld a, %1000
+	ld a, 8
 .panDisabled
 	ld c, a
 	ld b, 0
@@ -1671,7 +1676,7 @@ Audio1_9972:
 Audio1_HWChannelEnableMasks:
 	db HW_CH1_ENABLE_MASK, HW_CH2_ENABLE_MASK, HW_CH3_ENABLE_MASK, HW_CH4_ENABLE_MASK ; channels 0-3
 	db HW_CH1_ENABLE_MASK, HW_CH2_ENABLE_MASK, HW_CH3_ENABLE_MASK, HW_CH4_ENABLE_MASK ; channels 4-7
-	db $01,$20,$44,$88
+	db %00000001,%00100000, HW_CH3_ENABLE_MASK, HW_CH4_ENABLE_MASK ; channel 1 right, channel 2 left, channel 3 center, channel 4 center
 	db $11,$22,$44,$88
 	db $01,$20,$04,$80
 	db $01,$20,$04,$80

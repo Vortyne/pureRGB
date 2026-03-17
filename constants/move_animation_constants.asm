@@ -2,8 +2,9 @@
 ; SpecialEffectPointers associates them with effect routines (see data/battle_anims/special_effect_pointers.asm)
 	const_def $C0
 DEF FIRST_SE_ID EQU const_value
-	const_skip $B
+	const_skip $A
 ;;;;;;;;;; PureRGBnote: ADDED: new special effects
+	const SE_PAN_SFX_AUDIO             ; $CA used for panning audio left or right when doing move SFX
 	const SE_CUSTOM_MOVE_SFX           ; $CB used for playing new sound effects during moves
 	const SE_SEND_OUT_MON_POOF_ANIM    ; $CC used for custom pokeball send out animations
 	const SE_LOAD_POKEDOLL             ; $CD used in pokedoll animation
@@ -502,3 +503,9 @@ DEF NUM_BASECOORDS EQU const_value
 	const FRAMEBLOCKMODE_02
 	const FRAMEBLOCKMODE_03
 	const FRAMEBLOCKMODE_04
+
+; SFX Panning constants
+	const_def NUM_ATTACKS + 2
+	const SFX_PAN_CENTER
+	const SFX_PAN_USER
+	const SFX_PAN_TARGET
