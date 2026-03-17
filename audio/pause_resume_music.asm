@@ -3,11 +3,11 @@ BackupAudioWram::
 	ret z
 	; prevents multiple calls to this from repeatedly backing up data before battle, because trainer encounters need to back it up before
 	; the trainer music plays, while other encounters need to before the battle music starts.
-	CheckEvent EVENT_ALREADY_BACKED_UP_MUSIC_BEFORE_BATTLE
+	CheckAndSetEvent EVENT_ALREADY_BACKED_UP_MUSIC_BEFORE_BATTLE
 	ret nz
 	ld a, [wAudioFadeOutControl]
 	and a
-	ret nz ; don't back up when fading out audio
+	ret nz ; don't back up when fading out audio, if we were fading we will restart the song as normal
 	ld a, 1
 	ld [wMuteAudioAndPauseMusic], a
 	; copy custom ball names from sram to temporary wram space
@@ -19,7 +19,6 @@ BackupAudioWram::
 	ld a, [wLastMusicSoundID]
 	ld [wPausedAudioSoundID], a
 	SetEvent EVENT_PAUSED_MUSIC_BEFORE_BATTLE
-	SetEvent EVENT_ALREADY_BACKED_UP_MUSIC_BEFORE_BATTLE
 	xor a
 	ld [wMuteAudioAndPauseMusic], a
 	ret
