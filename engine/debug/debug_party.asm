@@ -160,6 +160,9 @@ IF DEF(_DEBUG)
 	ld a, HS_SARA_HOUSE
 	ld [wMissableObjectIndex], a
 	predef ShowExtraObject
+	ld hl, wPocketAbraNick
+	ld de, PocketAbraTestName
+	call CopyString
 
 	; Rival chose Squirtle,
 	; Player chose Charmander.
@@ -178,6 +181,9 @@ DebugSetPokedexEntries:
 	dec b
 	jr nz, .loop
 	ret
+
+PocketAbraTestName:
+	db "Snoozer@"
 
 DebugNewGameItemsList:
 	db BICYCLE, 1

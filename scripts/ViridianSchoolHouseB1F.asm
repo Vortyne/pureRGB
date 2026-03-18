@@ -95,6 +95,7 @@ SchoolB1FLittleGirl:
 
 SchoolB1FNerd:
 	text_asm
+	; TODO: optimize
 	ld a, SCHOOLB1F_LITTLE_GIRL
 	ldh [hSpriteIndex], a
 	ld a, SPRITE_FACING_UP
