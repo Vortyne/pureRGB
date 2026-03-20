@@ -2,6 +2,12 @@
 
 Want to leave a review? Go [here](https://github.com/Vortyne/pureRGB/issues/new?assignees=&labels=review&projects=&template=review.yml&title=%5BReview%5D%3A+Summarize+your+review+here).
 
+### Review by sidman1324 on 2.7.1
+
+I just have to say how much I am loving this version of the game! There are so many cool features I am still experiencing and its just so freaking awesome - for example, i just found out my kadabra could evolve when thats not possible in the original version! and the new moves from newer gen here is epic!
+
+thank you so freaking much for this :D I cant go back to playing the game the vanilla way anymore! :)
+
 ### Review by xWildz on v2.6.4
 
 Very great ROM, highly recommend for 151 or just a casual playthrough. Be sure to get the recent versions from this git. 5/5
