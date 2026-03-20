@@ -4399,6 +4399,13 @@ GetDamageVarsForPlayerAttack:
 	and a
 	ld d, a ; d = move power
 	ret z ; return if move power is zero
+	ld a, [wPlayerMoveNum]
+	cp FIRE_PUNCH
+	jr z, .physicalAttack
+	cp ICE_PUNCH
+	jr z, .physicalAttack
+	cp THUNDERPUNCH
+	jr z, .physicalAttack
 	ld a, [hl] ; a = [wPlayerMoveType]
 	cp GHOST
 	jr z, DynamicTypeCheckPlayer
