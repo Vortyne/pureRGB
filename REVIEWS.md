@@ -2,6 +2,14 @@
 
 Want to leave a review? Go [here](https://github.com/Vortyne/pureRGB/issues/new?assignees=&labels=review&projects=&template=review.yml&title=%5BReview%5D%3A+Summarize+your+review+here).
 
+### Review by OmegaHadangeki on 2.7.0
+
+Hello I would like to begin off saying this real quick. I started playing pokemon when I was 3 years old. I am now 33. I also have played and beaten Radical Red once, Blue Kaizo and Crystal Kaizo twice. I also use to play competetive pokemon starting way back in gen 4. So I have much pokemon experience under my belt.
+
+As for Pokemon Pure RGB, I have to say it is indeed the best rom hack for Red, Blue and Green. I just finish the game yesterday 100%. Caught all 151 Pokemon, become champion twice, did all the new side quest stuff and completed the champions tournament. I beat my final rival who ironically used my brother's team back then. It felt awesome, like I got to have that final rematch with my brother before he quit. As for the game itself. Wow its a lot to say so where do I begin.
+
+Ill start here, obtaining a variety of pokemon is way easier. Training is easier with the new movepools. Movepools are straight up better and diverse. The new moves are really cool and very effective. The new areas and updates to the old areas, like the Power Plant were great touches. I got to the volcano and finally found out you have running shoes. All the extra battles. But my 2 favorite things about this mod is the difficulty curve and the champion's tournament. The difficulty curve is perfect. You will have to slightly train here and there as long as you fight every trainer. While the game was challenging, my first hard opponent was Koga. That Weezing literally had me weezing. It was the first closest battle I had to whiting out. The level curve has to be literally perfect in my opinion and trainers are very smart at using their new setups. The Champion's Tournament was amazing. To infintely rematch the leaders, updated elite four and the special quest I wont spoil. Just to find out the Champ has 3 rematch teams. That final battle was great. TM selection was done great. All in all I have to give this mod a solid 5/5. It is a true polish of the original RBY and I highly suggest playing it wheather, your new, experienced or looking for another good play through of Gen 1.
+
 ### Review by ElKabieri on 2.7.1
 
 I caught them all
