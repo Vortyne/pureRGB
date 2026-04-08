@@ -11,6 +11,8 @@ PowerPlantRoof_Object:
 	warp_event 28, 1, POWER_PLANT, 11
 
 	def_bg_events
+	bg_event 3, 3, TEXT_POWER_PLANT_ROOF_SIGN
+
 
 	def_object_events
 	object_event  15,  9, SPRITE_BIRD2, STAY, DOWN, TEXT_POWER_PLANT_ROOF_ZAPDOS, ZAPDOS, 50

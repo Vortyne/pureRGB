@@ -84,7 +84,9 @@ PlayThunderRumbleSound::
 PowerPlantRoof_TextPointers:
 	def_text_pointers
 	dw_const PowerPlantRoofZapdosText,  TEXT_POWER_PLANT_ROOF_ZAPDOS
+	dw_const PowerPlantRoofSignText, TEXT_POWER_PLANT_ROOF_SIGN
 	dw_const PowerPlantRoofDarkCloudsText,  TEXT_POWER_PLANT_ROOF_DARK_CLOUDS
+
 
 PowerPlantRoofDarkCloudsText:
 	text_far _PowerPlantRoofDarkCloudsText
@@ -375,3 +377,6 @@ ZapdosEndBattleScript:
 	ld [wMissableObjectIndex], a
 	predef_jump HideExtraObject
 	
+PowerPlantRoofSignText::
+	text_far _PowerPlantRoofSignText
+	text_end

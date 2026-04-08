@@ -81,11 +81,8 @@ FightingDojoDefaultScript:
 	xor a
 	ldh [hJoyHeld], a
 	ld [wSavedCoordIndex], a
-	ld a, [wYCoord]
-	cp 3
-	ret nz
-	ld a, [wXCoord]
-	cp 4
+	lb de, 4, 3
+	call IsPlayerAtCoords
 	ret nz
 	ld a, 1
 	ld [wSavedCoordIndex], a
@@ -115,6 +112,9 @@ FightingDojoKarateMasterPostBattleScript:
 	SetEventRange EVENT_BEAT_KARATE_MASTER, EVENT_BEAT_FIGHTING_DOJO_TRAINER_3
 	ld d, FIGHTINGDOJO_KARATE_MASTER
 	callfar MakeSpriteFacePlayer
+	ld hl, wCurrentMapScriptFlags
+	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
+	call GBFadeInFromWhite
 	ld a, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
 	ldh [hTextID], a
 	call DisplayTextID

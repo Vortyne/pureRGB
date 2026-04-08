@@ -112,3 +112,9 @@ _MagnetMagnetonText3::
 	line "immune to GROUND"
 	cont "type attacks!"
 	done
+
+_PowerPlantRoofSignText::
+	text "BEWARE OF VOLTAGE"
+	line "HAZARDS FROM ROOF"
+	cont "TRANSFORMERS"
+	done

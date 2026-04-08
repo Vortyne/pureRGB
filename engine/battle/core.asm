@@ -7383,6 +7383,7 @@ InitWildBattle:
 	ld a, [wEnemyMonSpecies2]
 	cp MISSINGNO
 	call z, MissingNoInit ; This handles item duplication code if we encountered missingno
+	callfar PreventInvalidEncounters
 ;;;;;;;;;;
 	ld a, $1
 	ld [wIsInBattle], a
