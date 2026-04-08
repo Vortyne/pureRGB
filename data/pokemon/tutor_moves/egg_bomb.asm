@@ -117,7 +117,7 @@ EggBombLearnset:
 	dbit TRUE  ; TANGELA    ; 114
 	dbit FALSE ; KANGASKHAN ; 115
 	dbit FALSE ; HORSEA     ; 116
-	dbit FALSE ; SEADRA     ; 117
+	dbit FALSE ; SEADRA     ; 117 ; TODO: egg bomb?
 	dbit FALSE ; GOLDEEN    ; 118
 	dbit FALSE ; SEAKING    ; 119
 	dbit FALSE ; STARYU     ; 120
