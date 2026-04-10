@@ -194,8 +194,8 @@ CeladonLaprasGuyGoesThroughDoor:
 	ret nz
 	ld a, SFX_GO_OUTSIDE
 	rst _PlaySound
-	ld a, HS_LAPRAS_GUY_CELADON
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_LAPRAS_GUY_CELADON
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, 4
 	ldh [hSpriteIndex], a

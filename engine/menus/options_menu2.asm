@@ -95,7 +95,7 @@ Options2Text:
 
 OptionsPage2AorSelectButton:
 	ld a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp z, OptionsPageAorSelectButtonDefault
 	; fall through
 OptionsPage2AButton:
@@ -153,7 +153,7 @@ CursorInGBCFade:
 
 GetTwoBitXPosition:
 	ld a, b
-	bit BIT_D_LEFT, b ; did the player press the left button
+	bit B_PAD_LEFT, b ; did the player press the left button
 	ld a, [wOptions1CursorX] ; battle animation cursor X coordinate
 	jr nz, .left
 	ld b, OPTION_COLORS_LEFT_XPOS
@@ -338,15 +338,15 @@ ToggleAltSGBYellowColors:
 PrintSGBYellowOptionNumbers:
 	hlcoord 15, 3
 	cp %01000001
-	ld [hl], "2"
+	ld [hl], '2'
 	jr z, .next
-	ld [hl], "1"
+	ld [hl], '1'
 .next
 	hlcoord 18, 3
 	cp %01000011
-	ld [hl], "2"
+	ld [hl], '2'
 	ret z
-	ld [hl], "1"
+	ld [hl], '1'
 	ret
 
 

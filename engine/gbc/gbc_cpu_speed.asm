@@ -5,7 +5,7 @@ GBCSetCPU1xSpeed::
 	ldh a, [hGBC]
 	and a
 	ret z ; double speed is only a GBC feature
-	ldh a, [rKEY1]
+	ldh a, [rSPD]
 	and %10000000
 	jr nz, ToggleCPUSpeed
 	ret
@@ -14,7 +14,7 @@ GBCSetCPU2xSpeed::
 	ldh a, [hGBC]
 	and a
 	ret z ; double speed is only a GBC feature
-	ldh a, [rKEY1]
+	ldh a, [rSPD]
 	and %10000000
 	ret nz
 	; fall through
@@ -29,7 +29,7 @@ ToggleCPUSpeed:
 	ld a, $30
 	ldh [rJOYP], a
 	ld a, $01
-	ldh [rKEY1], a
+	ldh [rSPD], a
 	stop
 	pop af
 	ldh [rIE], a

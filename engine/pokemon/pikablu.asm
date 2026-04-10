@@ -21,7 +21,7 @@ CopyName:
 	inc de
 	ld [hli], a
 	ld a, [de]
-	cp "@"
+	cp '@'
 	jr nz, .loopName
 	ld [hl], a ; load string terminator
 	ret

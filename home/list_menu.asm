@@ -52,7 +52,7 @@ DisplayListMenuID::
 	ld [wTopMenuItemY], a
 	ld a, 5
 	ld [wTopMenuItemX], a
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_LEFT ; PureRGBnote: ADDED: tracking START and Dpad Left for new functions
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_START | PAD_LEFT ; PureRGBnote: ADDED: tracking START and Dpad Left for new functions
 	ld [wMenuWatchedKeys], a
 ;;;;;;;;;; PureRGBnote: ADDED: code that checks if we need to adjust the offset after changing the size of the list (depositing items/pokemon)
 	ld a, [wBattleType]
@@ -75,6 +75,7 @@ DisplayListMenuIDLoop::
 .oldManBattle
 	; we will be in BANK(DisplayBattleMenu) if old man battle so call a new function in that bank to save space in home
 	call OldManListMenuInit
+	; TODO: add assertion
 	jr .buttonAPressed
 .notOldManBattle
 	call LoadGBPal
@@ -84,7 +85,7 @@ DisplayListMenuIDLoop::
 	pop af
 	call CheckButtonStartPressed ; PureRGBnote: ADDED: start button can trigger depositing items when in the item menu
 	jr nc, DisplayListMenuIDLoop
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jp z, .checkOtherKeys
 .buttonAPressed
 	ld a, [wCurrentMenuItem]
@@ -162,17 +163,17 @@ DisplayListMenuIDLoop::
 	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay
 	jp BankswitchBack
 .checkOtherKeys ; check B, SELECT, Up, and Down keys
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, ExitListMenu ; if so, exit the menu
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
 	ld b, a
-	bit BIT_D_LEFT, b
+	bit B_PAD_LEFT, b
 	jr nz, .handleListSkip ; PureRGBnote: ADDED: when pressing left we will check to skip to the top or bottom of the list
-	bit BIT_D_DOWN, b
+	bit B_PAD_DOWN, b
 	ld hl, wListScrollOffset
 	jr z, .upPressed
-.downPressed
+; Down pressed
 	ld a, [hl]
 	add 3
 	ld b, a
@@ -229,20 +230,20 @@ DisplayChooseQuantityMenuMinQuantity::
 .waitForKeyPressLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoyPressed] ; newly pressed buttons
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	ld b, 0
 	jp nz, .exit
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	ld b, $FF
 	jp nz, .exit
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr nz, .incrementQuantity
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr nz, .decrementQuantity
 ;;;;;;;;;; PureRGBnote: ADDED: functionality to decrement or increment amounts by 10 when pressing right or left
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr nz, .incrementQuantity10
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr nz, .decrementQuantity10
 ;;;;;;;;;;
 	jr .waitForKeyPressLoop
@@ -510,12 +511,12 @@ PrintListMenuEntries::
 	ld a, [wMonDataLocation]
 	and a ; is it a list of party pokemon or box pokemon?
 	jr z, .skipCopyingLevel
-.copyLevel
+; copy level
 	ld a, [wLoadedMonBoxLevel]
 	ld [wLoadedMonLevel], a
 .skipCopyingLevel
 	pop hl
-	ld bc, $1c
+	ld bc, SCREEN_WIDTH + 8 ; 1 row down and 8 columns right
 	add hl, bc
 	call PrintLevel
 	pop af
@@ -539,7 +540,7 @@ PrintListMenuEntries::
 	push hl
 	ld bc, SCREEN_WIDTH + 8 ; 1 row down and 8 columns right
 	add hl, bc
-	ld a, "×"
+	ld a, '×'
 	ld [hli], a
 	ld a, [wNamedObjectIndex]
 	push af
@@ -568,7 +569,7 @@ PrintListMenuEntries::
 	cp c ; is it this item?
 	jr nz, .nextListEntry
 	dec hl
-	ld a, "▷"
+	ld a, '▷'
 	ld [hli], a
 .nextListEntry
 	ld bc, 2 * SCREEN_WIDTH ; 2 rows
@@ -579,7 +580,7 @@ PrintListMenuEntries::
 	jp nz, .loop
 	ld bc, -8
 	add hl, bc
-	ld [hl], "▼"
+	ld [hl], '▼'
 	ret
 .printCancelMenuItem
 	ld de, ListMenuCancelText

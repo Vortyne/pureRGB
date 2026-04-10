@@ -110,8 +110,8 @@ Route16SnorlaxPostBattleScript:
 	jr .done
 .hide_snorlax
 	SetEvent EVENT_BEAT_ROUTE16_SNORLAX
-	ld a, HS_ROUTE_16_SNORLAX
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROUTE_16_SNORLAX
+	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 .done
 	ld a, SCRIPT_ROUTE16_DEFAULT

@@ -16,8 +16,8 @@ VermilionFitnessClub_Script:
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	jr z, .notLoaded
-	ld a, HS_VERMILIONFITNESSCLUB_JANITOR
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VERMILIONFITNESSCLUB_JANITOR
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
 .notLoaded
 	ld a, [wStatusFlags5]
@@ -40,7 +40,7 @@ VermilionFitnessClub_Script:
 	call z, StartVermilionFitnessClubBattle
 .noPositionScripts
 	ldh a, [hJoyPressed]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	ret z
 	callfar _GetTileAndCoordsInFrontOfPlayer
 	ld a, [wTileInFrontOfPlayer]
@@ -129,18 +129,18 @@ VermilionFitnessClubClerk:
 	rst TextScriptEnd
 .startBattle
 	ld hl, wSimulatedJoypadStatesEnd
-	ld [hl], D_RIGHT
+	ld [hl], PAD_RIGHT
 	inc hl
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a
 	call IsPlayerBesideVermilionFitnessClubClerk
 	ld a, 4
 	jr z, .beside
-	ld [hl], D_UP
+	ld [hl], PAD_UP
 	inc hl
-	ld [hl], D_RIGHT
+	ld [hl], PAD_RIGHT
 	inc hl
 	ld a, 6
 .beside
@@ -157,7 +157,7 @@ VermilionFitnessClubClerk:
 	text_end
 
 VermilionFitnessClubForceWalkDown:	
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hl], -1
@@ -408,13 +408,13 @@ VermilionFitnessClubAfterBattleText:
 	call FitnessClubAfterBattleText
 	jr c, .done
 	; if nc, make the player leave
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a
 	ld [hli], a
-	ld a, D_LEFT
+	ld a, PAD_LEFT
 	ld [hli], a
 	ld [hl], -1
 	ld a, 5

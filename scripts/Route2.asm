@@ -124,7 +124,7 @@ Route2AfterBattleText1:
 	rst _PrintText
 	call SaveScreenTilesToBuffer2
 	ld hl, ScytherPinsirMenu
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer2
 	ld a, [wCurrentMenuItem]

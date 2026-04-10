@@ -406,8 +406,8 @@ DiamondMineProspectorText:
 	call EnableSpriteUpdates
 	call LoadScreenTilesFromBuffer2
 	SetEvent EVENT_DIAMOND_MINE_COMPLETED
-	ld a, HS_PROSPECTORS_HOUSE_PROSPECTOR
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_PROSPECTORS_HOUSE_PROSPECTOR
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
 	call DiamondMineReplaceHole
 	call UpdateSpritesAndDelay3
@@ -540,11 +540,11 @@ DiamondMineLoadPlayerDirections:
 	jr .loop
 
 PlayerWalkDownHoleDirectionsBelow:
-	db D_UP
+	db PAD_UP
 PlayerWalkDownHoleDirectionsRight:
-	db D_UP
-	db D_UP
-	db D_LEFT
+	db PAD_UP
+	db PAD_UP
+	db PAD_LEFT
 	db -1
 
 DiamondMineBoombox:

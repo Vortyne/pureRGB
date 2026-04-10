@@ -40,5 +40,5 @@ DisplayMultiChoiceTextBoxNoMenuReset::
 	ld [wMenuWatchedKeys], a
 	callfar DisplayMultiChoiceMenu
 	ldh a, [hJoy5]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	ret

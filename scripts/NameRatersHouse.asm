@@ -6,7 +6,7 @@ NameRatersHouseYesNoScript:
 	jp YesNoChoice
 
 ;NameRatersHouseCheckMonOTScript: ; PureRGBnote: CHANGED: Name Rater will always allow you to rename pokemon regardless of their OT.
-;; return carry if mon's OT name or OT ID do not match the player's
+; return carry if mon's OT name or OT ID do not match the player's
 ;	ld hl, wPartyMonOT
 ;	ld bc, NAME_LENGTH
 ;	ld a, [wWhichPokemon]
@@ -16,7 +16,7 @@ NameRatersHouseYesNoScript:
 ;	call .check_match_loop
 ;	jr c, .no_match
 ;	ld hl, wPartyMon1OTID
-;	ld bc, wPartyMon2 - wPartyMon1
+;	ld bc, PARTYMON_STRUCT_LENGTH
 ;	ld a, [wWhichPokemon]
 ;	call AddNTimes
 ;	ld de, wPlayerID

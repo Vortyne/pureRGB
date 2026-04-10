@@ -51,8 +51,8 @@ GenericMoveRight::
 MoveSpriteButAllowAOrBPress::
 	call MoveSprite
 	ld hl, wJoyIgnore
-	res BIT_B_BUTTON, [hl]
-	res BIT_A_BUTTON, [hl]
+	res B_PAD_B, [hl]
+	res B_PAD_A, [hl]
 	ret
 
 ; d = x coord

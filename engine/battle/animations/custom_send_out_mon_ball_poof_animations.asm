@@ -151,9 +151,9 @@ LoadPokeballOAMLoop:
 
 PokeballOAMList:
 	db $33, 0
-	db $33, OAM_HFLIP
+	db $33, OAM_XFLIP
 	db $43, 0
-	db $43, OAM_HFLIP
+	db $43, OAM_XFLIP
 	db -1
 
 LoadBallPoofTile:
@@ -186,7 +186,7 @@ LoadBallPoofTile:
 	ld h, d
 	ld l, e
 	ld d, 0
-	ld e, LEN_2BPP_TILE
+	ld e, TILE_SIZE
 	ld c, a
 	and a
 .loopFindTile
@@ -1111,13 +1111,13 @@ HyperBallDropAnim:
 	ld [hl], a
 	call GoToNextOAMEntry4
 	ld [hli], a
-	set OAM_X_FLIP, [hl]
+	set B_OAM_XFLIP, [hl]
 	call GoToNextOAMEntry
 	ld [hli], a
-	set OAM_Y_FLIP, [hl]
+	set B_OAM_YFLIP, [hl]
 	call GoToNextOAMEntry
 	ld [hli], a
-	ld [hl], OAM_VFLIP | OAM_HFLIP
+	ld [hl], OAM_YFLIP | OAM_XFLIP
 	ld c, 15
 	call BallPoofDelayFrames
 	jp HideAnimationOAMEntries
@@ -1307,10 +1307,10 @@ BallShakeOAMTiles:
 	db  -1
 
 BallShakeOAMTilesFlipped:
-	db $38, OAM_HFLIP
-	db $37, OAM_HFLIP
-	db $48, OAM_HFLIP
-	db $47, OAM_HFLIP
+	db $38, OAM_XFLIP
+	db $37, OAM_XFLIP
+	db $48, OAM_XFLIP
+	db $47, OAM_XFLIP
 	db -1
 
 RollBallTossAnim:
@@ -1891,13 +1891,13 @@ LoadCircularAttributes:
 .loop
 	push bc
 	dec c
-	ld a, OAM_VFLIP | OAM_HFLIP
+	ld a, OAM_YFLIP | OAM_XFLIP
 	jr z, .gotAttributes
 	dec c
-	ld a, OAM_VFLIP
+	ld a, OAM_YFLIP
 	jr z, .gotAttributes
 	dec c
-	ld a, OAM_HFLIP
+	ld a, OAM_XFLIP
 	jr z, .gotAttributes
 	xor a
 .gotAttributes
@@ -2354,7 +2354,7 @@ BattleAnim_Sine:
 ;	call WaitForTextScrollButtonPress 
 ;	pop hl
 ;	ldh a, [hJoy5]
-;	bit BIT_B_BUTTON, a
+;	bit B_PAD_B, a
 ;	jr nz, .replay
 ;	inc hl
 ;	inc hl
@@ -2396,7 +2396,7 @@ BattleAnim_Sine:
 ;	pop bc
 ;	pop hl
 ;	ldh a, [hJoy5]
-;	bit BIT_B_BUTTON, a
+;	bit B_PAD_B, a
 ;	jr nz, .replay
 ;	inc c
 ;	ld a, c

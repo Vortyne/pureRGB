@@ -40,9 +40,9 @@ FrontSprite1SelectButton:
 	ld e, FRONT_SPRITE_OPTIONS_PAGE_1_NUMBER - 1
 FrontSpriteSelectButtonDefault:
 	ld a, [hJoy5]
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jr nz, .validButton
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	ret z
 .validButton
 	ld a, [wTopMenuItemY]
@@ -95,7 +95,7 @@ DrawChildMenuDigit:
 	add NUMBER_CHAR_OFFSET
 	hlcoord 14, PAGE_CONTROLS_Y_COORD
 	ld [hli], a
-	ld [hl], "→"
+	ld [hl], '→'
 	ret
 
 DrawFrontSpriteOptionsMenu:

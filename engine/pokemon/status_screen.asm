@@ -58,14 +58,12 @@ PlaceHPText:
 	ld de, wLoadedMonHP
 	lb bc, 2, 3
 	call PrintNumber
-	ld a, "/"
+	ld a, '/'
 	ld [hli], a
 	ld de, wLoadedMonMaxHP
 	lb bc, 2, 3
 	jp PrintNumber
 
-
-; Predef 0x37
 StatusScreen:
 	call LoadMonData
 	ld a, [wMonDataLocation]
@@ -78,7 +76,7 @@ StatusScreen:
 	ld hl, wLoadedMonHPExp - 1
 	ld de, wLoadedMonStats
 	ld b, $1
-	call CalcStats ; Recalculate stats
+	call CalcStats
 .DontRecalculate
 	call HalfVolume
 	call GBPalWhiteOutWithDelay3
@@ -123,15 +121,15 @@ StatusScreen:
 	call DrawLineBox ; Draws the box around name, HP and status
 	ld de, -6
 	add hl, de
-	ld a, "<DOT>"
+	ld a, '<DOT>'
 	ld [hld], a
-	ld [hl], "№"
+	ld [hl], '№'
 	hlcoord 19, 9
 	lb bc, 8, 6
 	call DrawLineBox ; Draws the box around types, ID No. and OT
 	hlcoord 10, 9
-	ld de, Type1Text
-	call PlaceString ; "TYPE1/"
+	ld de, TypesIDNoOTText
+	call PlaceString
 	hlcoord 11, 3
 	predef DrawHP
 	ld hl, wStatusScreenHPBarColor
@@ -150,7 +148,7 @@ StatusScreen:
 	ld de, StatusText
 	call PlaceString ; "STATUS/"
 	hlcoord 14, 2
-	call PrintLevel ; Pokémon level
+	call PrintLevel
 	ld a, [wMonHIndex]
 	ld [wPokedexNum], a
 	ld [wCurSpecies], a
@@ -177,7 +175,7 @@ StatusScreen:
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
-	ld d, $0
+	ld d, STATUS_SCREEN_STATS_BOX
 	call PrintStatsBox
 ;;;;; PureRGBnote: ADDED: If the pokemon has max DVs, display the APEX prompt on their status screen.
 	call DoesLoadedMonHaveMaxDVs
@@ -233,20 +231,11 @@ NamePointers2:
 	dw wBoxMonNicks
 	dw wDayCareMonName
 
-Type1Text:
+TypesIDNoOTText:
 	db   "TYPE1/"
-	next ""
-	; fallthrough
-Type2Text:
-	db   "TYPE2/"
-	next ""
-	; fallthrough
-IDNoText:
-	db   "<ID>№/"
-	next ""
-	; fallthrough
-OTText:
-	db   "OT/"
+	next "TYPE2/"
+	next "<ID>№/"
+	next "OT/"
 	next "@"
 
 StatusText:
@@ -277,22 +266,23 @@ PTile: INCBIN "gfx/font/P.1bpp"
 
 PrintStatsBox:
 	ld a, d
+	ASSERT STATUS_SCREEN_STATS_BOX == 0
 	and a
-	jr nz, .DifferentBox
+	jr nz, .LevelUpStatsBox
 	hlcoord 0, 8
 	lb bc, 8, 8
 	call TextBoxBorder ; Draws the box
 .default
 	hlcoord 1, 9 ; Start printing stats from here
-	ld bc, $19 ; Number offset
+	ld bc, SCREEN_WIDTH + 5 ; one row down and 5 columns right
 	jr .PrintStats
-.DifferentBox
+.LevelUpStatsBox
 	push de
 	hlcoord 9, 2
 	lb bc, 8, 9
 	call TextBoxBorder
 	hlcoord 11, 3
-	ld bc, $18
+	ld bc, SCREEN_WIDTH + 4 ; one row down and 4 columns right
 	pop de
 .PrintStats
 	push de
@@ -390,17 +380,17 @@ StatusScreen2:
 	ld a, [wNumMovesMinusOne]
 	inc a
 	ld c, a
-	n_sub_a 4
+	n_sub_a NUM_MOVES
 	ld b, a ; Number of moves ?
 	hlcoord 11, 10
 	ld de, SCREEN_WIDTH * 2
-	ld a, "<BOLD_P>"
+	ld a, '<BOLD_P>'
 	call StatusScreen_PrintPP ; Print "PP"
 	ld a, b
 	and a
 	jr z, .InitPP
 	ld c, a
-	ld a, "-"
+	ld a, '-'
 	call StatusScreen_PrintPP ; Fill the rest with --
 .InitPP
 	ld hl, wLoadedMonMoves
@@ -426,7 +416,7 @@ StatusScreen2:
 	pop de
 	pop hl
 	push hl
-	ld bc, wPartyMon1PP - wPartyMon1Moves - 1
+	ld bc, MON_PP - MON_MOVES - 1
 	add hl, bc
 	ld a, [hl]
 	and PP_MASK
@@ -437,7 +427,7 @@ StatusScreen2:
 	ld de, wStatusScreenCurrentPP
 	lb bc, 1, 2
 	call PrintNumber
-	ld a, "/"
+	ld a, '/'
 	ld [hli], a
 	ld de, wMaxPP
 	lb bc, 1, 2
@@ -451,7 +441,7 @@ StatusScreen2:
 	pop bc
 	inc b
 	ld a, b
-	cp $4
+	cp NUM_MOVES
 	jr nz, .PrintPP
 .PPDone
 	hlcoord 9, 3
@@ -465,7 +455,7 @@ StatusScreen2:
 	ld [wLoadedMonLevel], a ; Increase temporarily if not 100
 .Level100
 	hlcoord 14, 6
-	ld a, "<to>"
+	ld a, '<to>'
 	ld [hli], a
 	inc hl
 	call PrintLevel
@@ -480,8 +470,11 @@ StatusScreen2:
 	hlcoord 7, 6
 	lb bc, 3, 7
 	call PrintNumber ; exp needed to level up
+
+	; unneeded, this clears the diacritic characters in JPN versions
 	hlcoord 9, 0
 	call StatusScreen_ClearName
+
 	hlcoord 9, 1
 	call StatusScreen_ClearName
 	ld a, [wMonHIndex]
@@ -526,8 +519,8 @@ StatusScreenExpText:
 	next "LEVEL UP@"
 
 StatusScreen_ClearName:
-	ld bc, 10
-	ld a, " "
+	ld bc, NAME_LENGTH - 1
+	ld a, ' '
 	jp FillMemory
 
 StatusScreen_PrintPP:
@@ -546,15 +539,15 @@ StatusScreenOriginal:
 	push af
 	call StatusScreen
 .continue
-	ld b, A_BUTTON | B_BUTTON | SELECT
+	ld b, PAD_A | PAD_B | PAD_SELECT
 	call PokedexStatusWaitForButtonPressLoop
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jr nz, ExitStatusScreen.select
 	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, ExitStatusScreen
 	call StatusScreen2
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call PokedexStatusWaitForButtonPressLoop
 ExitStatusScreen:
 	pop af
@@ -576,23 +569,23 @@ StatusScreenLoop:
 .displayNextMon
 	call StatusScreen
 .continue
-	ld a, A_BUTTON | B_BUTTON | SELECT
+	ld a, PAD_A | PAD_B | PAD_SELECT
 	call PokemonStatusWaitForButtonPress
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jr nz, .changeStatData
 	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr nz, .prevMon
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr nz, .nextMon
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .exitStatus
 	call StatusScreen2
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	call PokemonStatusWaitForButtonPress
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr nz, .prevMon
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr nz, .nextMon
 .exitStatus
 	jp ExitStatusScreen
@@ -645,7 +638,7 @@ PokemonStatusWaitForButtonPress:
 	and a
 	jr z, .checkRight
 	ld a, b
-	or D_UP
+	or PAD_UP
 	ld b, a
 .checkRight
 	ld a, [wPartyCount]
@@ -655,7 +648,7 @@ PokemonStatusWaitForButtonPress:
 	cp c
 	jr z, PokedexStatusWaitForButtonPressLoop
 	ld a, b
-	or D_DOWN
+	or PAD_DOWN
 	ld b, a
 PokedexStatusWaitForButtonPressLoop:
 .waitForButtonPress

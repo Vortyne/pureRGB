@@ -183,7 +183,7 @@ _ReadAlotAboutPkmn::
 	push af
 .loopToNextEntry
 	ld a, [hli]
-	cp "<PROMPT>"
+	cp '<PROMPT>'
 	jr nz, .loopToNextEntry
 	pop af
 	dec a

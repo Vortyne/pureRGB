@@ -39,7 +39,7 @@ HiddenItemsInit:
 	call EnableAutoTextBoxDrawing
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld a, [wHiddenObjectFunctionArgument] ; item ID
+	ld a, [wHiddenEventFunctionArgument] ; item ID
 	ld [wNamedObjectIndex], a
 	call GetItemName
 	xor a ; clear z flag and set a = 0
@@ -47,7 +47,7 @@ HiddenItemsInit:
 
 HiddenItemsFinish:
 	ld [wTempStore1], a
-	ld a, "@"
+	ld a, '@'
 	ld [wTempStore2], a
 	tx_pre_jump FoundHiddenItemText
 
@@ -73,7 +73,7 @@ FoundHiddenItemText::
 	rst _PrintText
 	pop bc
 .give
-	ld a, [wHiddenObjectFunctionArgument] ; item ID
+	ld a, [wHiddenEventFunctionArgument] ; item ID
 	ld b, a
 	call GiveItem
 	jr nc, .bagFull
@@ -131,7 +131,7 @@ HiddenCoins:
 	ldh [hUnusedCoinsByte], a
 	ldh [hCoins], a
 	ldh [hCoins + 1], a
-	ld a, [wHiddenObjectFunctionArgument]
+	ld a, [wHiddenEventFunctionArgument]
 	sub COIN
 	cp 10
 	jr z, .bcd10
@@ -193,9 +193,9 @@ DroppedHiddenCoinsText::
 	text_end
 
 FindHiddenItemOrCoinsIndex:
-	ld a, [wHiddenObjectY]
+	ld a, [wHiddenEventY]
 	ld d, a
-	ld a, [wHiddenObjectX]
+	ld a, [wHiddenEventX]
 	ld e, a
 	ld a, [wCurMap]
 	ld b, a

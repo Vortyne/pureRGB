@@ -67,8 +67,8 @@ BillsHousePokemonEntersMachineScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, HS_BILL_POKEMON
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_BILL_POKEMON
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_BILL_SAID_USE_CELL_SEPARATOR
 	ld a, SFX_TRADE_MACHINE
@@ -82,7 +82,7 @@ BillsHousePokemonEntersMachineScript:
 BillsHouseBillExitsMachineScript:
 	CheckEvent EVENT_USED_CELL_SEPARATOR_ON_BILL
 	ret z
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, BILLSHOUSE_BILL_SS_TICKET
 	ld [wSpriteIndex], a
@@ -95,20 +95,20 @@ BillsHouseBillExitsMachineScript:
 	ld a, 5
 	ldh [hSpriteMapXCoord], a
 	call SetSpritePosition1
-	ld a, HS_BILL_1
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_BILL_1
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld c, 8
 	rst _DelayFrames
 	ld a, BILLSHOUSE_BILL_SS_TICKET
 	ldh [hSpriteIndex], a
-	ld de, BillExitMachineMovement
+	ld de, .BillExitMachineMovement
 	call MoveSprite
 	ld a, SCRIPT_BILLSHOUSE_CLEANUP
 	ld [wBillsHouseCurScript], a
 	ret
 
-BillExitMachineMovement:
+.BillExitMachineMovement:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_RIGHT
 	db NPC_MOVEMENT_RIGHT
@@ -189,15 +189,15 @@ BillsHouseBillSSTicketText:
 	ld hl, .SSTicketReceivedText
 	rst _PrintText
 	SetEvent EVENT_GOT_SS_TICKET
-	ld a, HS_CERULEAN_GUARD_1
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_CERULEAN_GUARD_1
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
-	ld a, HS_CERULEAN_GUARD_2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_CERULEAN_GUARD_2
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;; PureRGBnote: MOVED: move this object hiding here since we could teleport out of bills house and miss this being triggered on route 25 instead
-	ld a, HS_NUGGET_BRIDGE_GUY
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_NUGGET_BRIDGE_GUY
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;;
 .got_ss_ticket

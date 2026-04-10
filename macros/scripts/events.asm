@@ -40,7 +40,7 @@ ENDM
 
 MACRO CheckHideShowState
 	DEF hide_show_byte = ((\1) / 8)
-	ld a, [wMissableObjectFlags + hide_show_byte]
+	ld a, [wToggleableObjectFlags + hide_show_byte]
 
 	IF _NARG > 1
 		IF ((\1) % 8) == 7
@@ -57,7 +57,7 @@ ENDM
 
 MACRO CheckExtraHideShowState
 	DEF hide_show_byte = ((\1) / 8)
-	ld a, [wExtraMissableObjectFlags + hide_show_byte]
+	ld a, [wExtraToggleableObjectFlags + hide_show_byte]
 
 	IF _NARG > 1
 		IF ((\1) % 8) == 7
@@ -425,7 +425,7 @@ MACRO ResetEventRange
 		IF event_fill_count > 1
 			ld hl, wEventFlags + event_fill_start
 
-			; force xor a if we just to wrote to it above
+			; force xor a if we just wrote to it above
 			IF (_NARG < 3) || (((\1) % 8) != 0)
 				xor a
 			ENDC

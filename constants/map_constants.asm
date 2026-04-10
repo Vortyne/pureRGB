@@ -9,7 +9,7 @@ ENDM
 ; - MapHeaderBanks (see data/maps/map_header_banks.asm)
 ; - MapHeaderPointers (see data/maps/map_header_pointers.asm)
 ; - MapSongBanks (see data/maps/songs.asm)
-; - MapHSPointers (see data/maps/hide_show_data.asm)
+; - ToggleableObjectMapPointers (see data/maps/toggleable_objects.asm)
 ; - MapSpriteSets (see data/maps/sprite_sets.asm)
 ; - ExternalMapEntries (see data/maps/town_map_entries.asm)
 ; - WildDataPointers (see data/wild/grass_water.asm)
@@ -278,4 +278,6 @@ DEF NUM_MAPS EQU const_value
 
 ; Indoor maps, such as houses, use this as the Map ID in their exit warps
 ; This map ID takes the player back to the last outdoor map they were on, stored in wLastMap
-DEF LAST_MAP EQU -1
+DEF LAST_MAP EQU $ff
+
+ASSERT NUM_MAPS <= LAST_MAP, "map IDs overlap LAST_MAP"

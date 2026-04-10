@@ -150,7 +150,7 @@ SilphCo7FDefaultScript:
 	jp nc, CheckFightingMapTrainers
 	xor a
 	ldh [hJoyHeld], a
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerMovingDirection], a
@@ -223,7 +223,7 @@ SilphCo7FRivalAfterBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, SilphCo7FSetDefaultScript
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_SILPH_CO_RIVAL
 	ld a, PLAYER_DIR_DOWN
@@ -268,8 +268,8 @@ SilphCo7FRivalExitScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, HS_SILPH_CO_7F_RIVAL
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_SILPH_CO_7F_RIVAL
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	xor a
@@ -310,8 +310,8 @@ SilphCo7TrainerHeader3:
 SilphCo7FSilphWorkerM1Text:
 ; lapras guy
 	text_asm
-	ld a, HS_LAPRAS_GUY_CELADON
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_LAPRAS_GUY_CELADON
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	CheckEventHL EVENT_GOT_LAPRAS_EARLY
 	jr nz, .gotLaprasAlready

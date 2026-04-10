@@ -235,7 +235,7 @@ CheckArenaAssistantWalking:
 	ld [wJoyIgnore], a
 	ld a, SFX_GO_OUTSIDE
 	rst _PlaySound
-	ld a, HS_INDIGO_PLATEAU_LOBBY_CHAMP_ARENA_ASSISTANT
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_INDIGO_PLATEAU_LOBBY_CHAMP_ARENA_ASSISTANT
+	ld [wToggleableObjectIndex], a
 	predef_jump HideExtraObject
 

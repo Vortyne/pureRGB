@@ -49,7 +49,7 @@ PlaySfx:
 	add hl, bc
 	ld c, d
 	ld a, [hl]
-	and $f
+	and $f ; TODO: which constant?
 	ld e, a
 	ld d, $0
 	ld hl, wChannelSoundIDs
@@ -254,16 +254,16 @@ Audio2_InitMusicVariables::
 	;call FillAudioRAM2
 	;ld hl, wChannelCutoffs
 	;call FillAudioRAM2
-	ldh [rNR50], a
-	ld a, $8
-	ldh [rNR10], a
+	ldh [rAUDVOL], a
+	ld a, AUD1SWEEP_DOWN
+	ldh [rAUD1SWEEP], a
 	xor a
-	ldh [rNR51], a
-	ldh [rNR30], a
-	ld a, $80
-	ldh [rNR30], a
+	ldh [rAUDTERM], a
+	ldh [rAUD3ENA], a
+	ld a, AUD3ENA_ON
+	ldh [rAUD3ENA], a
 	ld a, $77
-	ldh [rNR50], a
+	ldh [rAUDVOL], a
 	ret
 
 Audio2_InitSFXVariables::
@@ -350,28 +350,28 @@ Audio2_InitSFXVariables::
 	ld a, e
 	cp CHAN5
 	ret nz
-	ld a, $8
-	ldh [rNR10], a
+	ld a, AUD1SWEEP_DOWN
+	ldh [rAUD1SWEEP], a
 	ret
 
 Audio2_StopAllAudio::
-	ld a, $80
-	ldh [rNR52], a
-	ldh [rNR30], a
+	ld a, AUDENA_ON
+	ldh [rAUDENA], a
+	ldh [rAUD3ENA], a
 	xor a
-	ldh [rNR51], a
-	ldh [rNR32], a
-	ld a, $8
-	ldh [rNR10], a
-	ldh [rNR12], a
-	ldh [rNR22], a
-	ldh [rNR42], a
-	ld a, $40
-	ldh [rNR14], a
-	ldh [rNR24], a
-	ldh [rNR44], a
+	ldh [rAUDTERM], a
+	ldh [rAUD3LEVEL], a
+	ld a, AUD1SWEEP_DOWN
+	ldh [rAUD1SWEEP], a
+	ldh [rAUD1ENV], a
+	ldh [rAUD2ENV], a
+	ldh [rAUD4ENV], a
+	ld a, AUD1HIGH_LENGTH_ON
+	ldh [rAUD1HIGH], a
+	ldh [rAUD2HIGH], a
+	ldh [rAUD4GO], a
 	ld a, $77
-	ldh [rNR50], a
+	ldh [rAUDVOL], a
 	call ResumeMusic
 	; a = 0 after ResumeMusic
 	;ld [wUnusedMusicByte], a
@@ -446,3 +446,4 @@ Drumkits_2: INCLUDE "audio/drumkits.asm"
 ;	add hl, bc
 ;	ld [hl], a ; resultant simulated rest
 ;	ret
+

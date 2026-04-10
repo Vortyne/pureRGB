@@ -13,7 +13,6 @@ Audio3_PlaySound::
 	call InitMusicVariables
 	jp PlaySoundCommon_3
 
-
 PlaySfxRemapDrums_3:
 	push af
 	call PlaySfx_3
@@ -174,10 +173,10 @@ PlaySoundCommon_3:
 	ld a, [wSavedVolume]
 	and a
 	ret nz
-	ldh a, [rNR50]
+	ldh a, [rAUDVOL]
 	ld [wSavedVolume], a
 	ld a, $77
-	ldh [rNR50], a
+	ldh [rAUDVOL], a ; full volume
 	ret
 
 Noise3_endchannel:

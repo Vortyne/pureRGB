@@ -20,7 +20,7 @@ VermilionDock_Script:
 	ld hl, wStatusFlags5
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld [hl], a
@@ -72,7 +72,7 @@ VermilionDockSSAnneLeavesScript:
 	ld [wSpritePlayerStateData1ImageIndex], a
 	ld c, 120
 	rst _DelayFrames
-	ld b, $9c
+	ld b, HIGH(vBGMap1)
 	call CopyScreenTileBufferToVRAM
 	hlcoord 0, 10
 	ld bc, SCREEN_WIDTH * 6
@@ -149,7 +149,7 @@ VermilionDock_AnimSmokePuffDriftRight:
 	ld a, [wSSAnneSmokeDriftAmount]
 	swap a
 	ld c, a
-	ld de, 4
+	ld de, OBJ_SIZE
 .drift_loop
 	inc [hl]
 	inc [hl]
@@ -176,10 +176,10 @@ VermilionDock_EmitSmokePuff:
 
 VermilionDockOAMBlock:
 ; tile ID, attributes
-	db $fc, $10
-	db $fd, $10
-	db $fe, $10
-	db $ff, $10
+	db $fc, OAM_PAL1
+	db $fd, OAM_PAL1
+	db $fe, OAM_PAL1
+	db $ff, OAM_PAL1
 
 VermilionDock_SyncScrollWithLY:
 	ld h, d
@@ -381,15 +381,15 @@ BubbleOAMTable:
 	db $44, $30, $C0, $00
 	db $44, $38, $C1, $00
 	db $4C, $30, $C2, $00
-	db $44, $48, $C0, OAM_HFLIP
-	db $44, $40, $C1, OAM_HFLIP
-	db $4C, $48, $C2, OAM_HFLIP
-	db $5C, $30, $C0, OAM_VFLIP
-	db $5C, $38, $C1, OAM_VFLIP
-	db $54, $30, $C2, OAM_VFLIP
-	db $5C, $48, $C0, OAM_HFLIP | OAM_VFLIP
-	db $5C, $40, $C1, OAM_HFLIP | OAM_VFLIP
-	db $54, $48, $C2, OAM_HFLIP | OAM_VFLIP
+	db $44, $48, $C0, OAM_XFLIP
+	db $44, $40, $C1, OAM_XFLIP
+	db $4C, $48, $C2, OAM_XFLIP
+	db $5C, $30, $C0, OAM_YFLIP
+	db $5C, $38, $C1, OAM_YFLIP
+	db $54, $30, $C2, OAM_YFLIP
+	db $5C, $48, $C0, OAM_XFLIP | OAM_YFLIP
+	db $5C, $40, $C1, OAM_XFLIP | OAM_YFLIP
+	db $54, $48, $C2, OAM_XFLIP | OAM_YFLIP
 	db $4A, $40, $C3, $00
 
 TruckOAMTable:
@@ -418,14 +418,14 @@ TruckCheck:
 	jp nz, ChangeTruckTile
 	ld hl, wCurrentMapScriptFlags
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	lb bc, FLAG_TEST, HS_MEW_VERMILION_DOCK
-	ld hl, wMissableObjectFlags
+	lb bc, FLAG_TEST, TOGGLE_MEW_VERMILION_DOCK
+	ld hl, wToggleableObjectFlags
 	predef FlagActionPredef
 	ld a, c
 	and a
 	jr nz, .skiphidingmew
-	ld a, HS_MEW_VERMILION_DOCK
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_MEW_VERMILION_DOCK
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 .skiphidingmew
 	ld a, [wStatusFlags1]
@@ -448,7 +448,7 @@ TruckCheck:
 	set BIT_CUR_MAP_USED_ELEVATOR, [hl] ; wait until the next time the player presses left
 	ret z
 	ldh a, [hJoyHeld]
-	bit BIT_D_LEFT, a ; is player pressing left
+	bit B_PAD_LEFT, a ; is player pressing left
 	ret z
 	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
 	call DisableSpriteUpdates
@@ -500,8 +500,8 @@ TruckCheck:
 
 ShowMew:
 	call EnableSpriteUpdates
-	ld a, HS_MEW_VERMILION_DOCK
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_MEW_VERMILION_DOCK
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowObject
 
 ChangeTruckTile:

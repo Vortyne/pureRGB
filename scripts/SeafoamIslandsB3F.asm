@@ -14,23 +14,23 @@ SeafoamIslandsB3F_Script:
 	cp $1
 	jr nz, .boulder2FellDownHole
 	SetEventReuseHL EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	ld a, HS_SEAFOAM_ISLANDS_B3F_BOULDER_1
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
 	ld [wObjectToHide], a
-	ld a, HS_SEAFOAM_ISLANDS_B4F_BOULDER_1
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1
 	ld [wObjectToShow], a
 	jr .hideAndShowBoulderObjects
 .boulder2FellDownHole
 	SetEventAfterBranchReuseHL EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	ld a, HS_SEAFOAM_ISLANDS_B3F_BOULDER_2
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
 	ld [wObjectToHide], a
-	ld a, HS_SEAFOAM_ISLANDS_B4F_BOULDER_2
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2
 	ld [wObjectToShow], a
 .hideAndShowBoulderObjects
 	ld a, [wObjectToHide]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, [wObjectToShow]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld d, 1
 	callfar BoulderHoleDropEffect
@@ -95,13 +95,13 @@ SeafoamIslandsB3FDefaultScript:
 SeafoamIslandsCurrents:
 	lda_coord 8, 9 ; tile below player
 	cp $30
-	ld b, D_UP
+	ld b, PAD_UP
 	jr z, .forceInput
 	cp $3B
-	ld b, D_RIGHT
+	ld b, PAD_RIGHT
 	jr z, .forceInput
 	cp $42
-	ld b, D_DOWN
+	ld b, PAD_DOWN
 	jr z, .forceInput
 	and a
 	ret

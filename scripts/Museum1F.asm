@@ -88,7 +88,7 @@ Museum1FScientist1Text:
 	rst _PrintText
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
 	call UpdateSprites
@@ -113,7 +113,6 @@ Museum1FScientist1Text:
 	ld a, SFX_PURCHASE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
-
 .allow_entry
 	ld a, SCRIPT_MUSEUM1F_NOOP
 	ld [wMuseum1FCurScript], a
@@ -181,8 +180,8 @@ Museum1FScientist2Text:
 	ld hl, .YouDontHaveSpaceText
 	jr nc, .done
 	SetEvent EVENT_GOT_OLD_AMBER
-	ld a, HS_OLD_AMBER
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_OLD_AMBER
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld hl, .ReceivedOldAmberText
 	jr .done

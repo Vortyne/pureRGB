@@ -224,7 +224,7 @@ FightingBrosRightBroText:
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
 	ld [wMenuWatchMovingOutOfBounds], a
-	ld a, A_BUTTON
+	ld a, PAD_A
 	ld [wMenuWatchedKeys], a
 	ld hl, hUILayoutFlags
 	set BIT_DOUBLE_SPACED_MENU, [hl]

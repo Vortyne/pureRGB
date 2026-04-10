@@ -189,7 +189,7 @@ MoveTutorScript::
 	inc a
 	ld [wMenuWrappingEnabled], a
 	ldh [hJoy7], a ; allow holding down the menu navigation buttons
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld hl, hUILayoutFlags
 	set BIT_DOUBLE_SPACED_MENU, [hl]
@@ -200,7 +200,7 @@ MoveTutorScript::
 	xor a
 	ldh [hJoy7], a
 	ldh a, [hJoy5]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	ld d, 0
 	ret nz
 	; grab the chosen move from the list

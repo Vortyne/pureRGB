@@ -26,7 +26,7 @@ DiglettsCaveCheckStandingOnWarp:
 	call .standingOnBottomWarp
 	jr nz, .loadDigletts
 	SetEvent EVENT_FOUND_SECRET_DIG_TUNNEL
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 .checkStandingOnWarp
 	call .standingOnBottomWarp
@@ -86,29 +86,29 @@ DiglettsCaveLoadDiglettSprites::
 
 HideDigletts:
 	ResetEvent EVENT_DIGLETTS_VISIBLE
-	ld a, HS_DIGLETTS_CAVE_DIGLETT1
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT1
 	call DiglettsCaveHideExtraObjectEntry
-	ld a, HS_DIGLETTS_CAVE_DIGLETT2
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT2
 	call DiglettsCaveHideExtraObjectEntry
-	ld a, HS_DIGLETTS_CAVE_DIGLETT3
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT3
 	call DiglettsCaveHideExtraObjectEntry
-	ld a, HS_DIGLETTS_CAVE_DIGLETT4
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT4
 	; fall through
 DiglettsCaveHideExtraObjectEntry:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideExtraObject
 
 ShowDigletts:
-	ld a, HS_DIGLETTS_CAVE_DIGLETT1
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT1
 	call DiglettsCaveShowExtraObjectEntry
-	ld a, HS_DIGLETTS_CAVE_DIGLETT2
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT2
 	call DiglettsCaveShowExtraObjectEntry
-	ld a, HS_DIGLETTS_CAVE_DIGLETT3
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT3
 	call DiglettsCaveShowExtraObjectEntry
-	ld a, HS_DIGLETTS_CAVE_DIGLETT4
+	ld a, TOGGLE_DIGLETTS_CAVE_DIGLETT4
 	; fall through
 DiglettsCaveShowExtraObjectEntry:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowExtraObject
 
 IsPlayerNearDigletts:

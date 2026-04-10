@@ -71,7 +71,7 @@ DisplayPCMainMenu::
 	ld de, LogOffPCText
 .next3
 	call PlaceString
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 2
 	ld [wTopMenuItemY], a
@@ -129,7 +129,7 @@ BillsPCMenu:
 	inc hl
 	ld a, 4
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON | SELECT
+	ld a, PAD_A | PAD_B | PAD_SELECT
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hli], a ; wLastMenuItem
@@ -147,7 +147,7 @@ BillsPCMenu:
 	call Delay3
 .handleMenuInput
 	call HandleMenuInput
-	bit BIT_SELECT, a
+	bit B_PAD_SELECT, a
 	jr z, .notSelect
 	ld a, [wCurrentMenuItem]
 	and a
@@ -156,7 +156,7 @@ BillsPCMenu:
 	SetFlag FLAG_VIEW_PC_PKMN
 	jp BillsPCWithdraw
 .notSelect
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, ExitBillsPC
 	call PlaceUnfilledArrowMenuCursor
 	ld a, [wCurrentMenuItem]
@@ -226,19 +226,19 @@ BillsPCDeposit:
 	call WaitForSoundToFinish
 	ld hl, wBoxNumString
 	ld a, [wCurrentBoxNum]
-	and $7f
+	and BOX_NUM_MASK
 	cp 9
 	jr c, .singleDigitBoxNum
 	sub 9
-	ld [hl], "1"
+	ld [hl], '1'
 	inc hl
-	add "0"
+	add '0'
 	jr .next
 .singleDigitBoxNum
-	add "1"
+	add '1'
 .next
 	ld [hli], a
-	ld [hl], "@"
+	ld [hl], '@'
 	ld hl, MonWasStoredText
 	rst _PrintText
 	;jp BillsPCMenu
@@ -356,7 +356,7 @@ BillsPCRelease:
 	rst _PrintText
 	xor a
 	ld [wCurrentMenuItem], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 .loopYesNo
 	ld hl, YesNoSmall
@@ -366,9 +366,9 @@ BillsPCRelease:
 	ld [wListPointer + 1], a
 	callfar DisplayMultiChoiceMenu
 	ldh a, [hJoy5]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .doneReleaseDialogBox
-	bit BIT_START, a
+	bit B_PAD_START, a
 	ld a, [wCurrentMenuItem]
 	jr nz, .continue
 	and a
@@ -377,7 +377,7 @@ BillsPCRelease:
 	ld hl, PressStartToReleaseText
 	rst _PrintText
 	ld a, [wMenuWatchedKeys]
-	or START
+	or PAD_START
 	ld [wMenuWatchedKeys], a
 	jr .loopYesNo
 .continue
@@ -429,11 +429,11 @@ BillsPCMenuText:
 ;KnowsHMMove::
 ; returns whether mon with party index [wWhichPokemon] knows an HM move
 ;	ld hl, wPartyMon1Moves
-;	ld bc, wPartyMon2 - wPartyMon1
+;	ld bc, PARTYMON_STRUCT_LENGTH
 ;	jr .next
 ; unreachable
 	;ld hl, wBoxMon1Moves
-	;ld bc, wBoxMon2 - wBoxMon1
+	;ld bc, BOXMON_STRUCT_LENGTH
 ;.next
 ;	ld a, [wWhichPokemon]
 ;	call AddNTimes
@@ -480,7 +480,7 @@ DisplayDepositWithdrawMenu:
 	inc hl
 	ld a, 2
 	ld [hli], a ; wMaxMenuItem
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hl], a ; wLastMenuItem
@@ -490,7 +490,7 @@ DisplayDepositWithdrawMenu:
 	ld [wPlayerMonNumber], a
 .loop
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .exit
 	ld a, [wCurrentMenuItem]
 	and a
@@ -621,6 +621,7 @@ JustAMomentText::
 	text_far _JustAMomentText
 	text_end
 
+UnusedOpenBillsPC: ; unreferenced
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
 	ret nz

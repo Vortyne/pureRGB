@@ -77,7 +77,7 @@ ReplaceDoor:
 .upDoorCheck
 	cp 16
 	ret nz
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 .clearPassword
 	xor a
@@ -136,7 +136,7 @@ CheckOpponentWalkIn:
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld a, 3
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_UP
+	ld a, PAD_UP
 	ld b, 3
 	ld hl, wSimulatedJoypadStatesEnd
 .loop
@@ -146,10 +146,10 @@ CheckOpponentWalkIn:
 	ld a, [wXCoord]
 	cp 4
 	jr z, .done
-	ld c, D_RIGHT
+	ld c, PAD_RIGHT
 	ld d, a
 	jr c, .right
-	ld c, D_LEFT
+	ld c, PAD_LEFT
 	sub 4
 	jr .loop2
 .right
@@ -190,18 +190,18 @@ WaitForWalkFinish:
 	ld a, SFX_GO_OUTSIDE
 	rst _PlaySound
 	CheckEvent EVENT_BEAT_SECRET_LAB_SOLDIER_0
-	ld a, HS_SECRET_LAB_SOLDIER_1
+	ld a, TOGGLE_SECRET_LAB_SOLDIER_1
 	call nz, .hideNPCAction
 	CheckEvent EVENT_BEAT_SECRET_LAB_SOLDIER_1
-	ld a, HS_SECRET_LAB_SOLDIER_2
+	ld a, TOGGLE_SECRET_LAB_SOLDIER_2
 	call nz, .hideNPCAction
 	CheckEvent EVENT_BEAT_SECRET_LAB_CHIEF
-	ld a, HS_SECRET_LAB_CHIEF
+	ld a, TOGGLE_SECRET_LAB_CHIEF
 	call nz, .hideNPCAction
 	ResetEvent EVENT_SECRET_LAB_NPC_WALK_OUT_HAPPENING
 	ret
 .hideNPCAction
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideExtraObject
 
 SoldierLeaveMovementDefault:
@@ -442,10 +442,10 @@ CheckPasswordCorrect:
 	ret
 
 PlayerMoveToDoor:: ; these happen in reverse order
-	db D_LEFT
-	db D_LEFT
-	db D_LEFT
-	db D_DOWN
+	db PAD_LEFT
+	db PAD_LEFT
+	db PAD_LEFT
+	db PAD_DOWN
 
 StoreNoteToPassword:
 	pop af
@@ -699,7 +699,7 @@ SecretLabAfterBattleText3:
 
 SecretLabFailedClonesText:
 	text_asm
-	ld a, [wHiddenObjectFunctionArgument]
+	ld a, [wHiddenEventFunctionArgument]
 	ld hl, SecretLabFailedClonesTextPointers
 	call GetAddressFromPointerArray
 	rst _PrintText
@@ -744,7 +744,7 @@ SecretLabComputersText:
 	text_asm
 	ld a, SFX_ENTER_PC
 	rst _PlaySound
-	ld a, [wHiddenObjectFunctionArgument]
+	ld a, [wHiddenEventFunctionArgument]
 	ld hl, SecretLabComputersTextPointers
 	call GetAddressFromPointerArray
 	rst _PrintText
@@ -845,7 +845,7 @@ SecretLabMewtwoMachineText:
 	jr nz, .startTransform
 	ld a, 6
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_LEFT
+	ld a, PAD_LEFT
 	ld de, wSimulatedJoypadStatesEnd + 5
 	ld [de], a
 .startTransform
@@ -856,11 +856,11 @@ SecretLabMewtwoMachineText:
 	rst TextScriptEnd
 
 PlayerMewtwoTransformMoveScript:: ; these happen in reverse order
-	db D_LEFT
-	db D_DOWN
-	db D_DOWN
-	db D_UP
-	db D_LEFT
+	db PAD_LEFT
+	db PAD_DOWN
+	db PAD_DOWN
+	db PAD_UP
+	db PAD_LEFT
 
 SecretLabMewtwoMachineText1:
 	text_far _SecretLabMewtwoMachineText

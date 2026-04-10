@@ -1096,16 +1096,16 @@ _MoveIsDisabledText::
 	cont "disabled!"
 	prompt
 
-_MonName1Text::
+_ActorNameText::
 	text "<USER>@"
 	text_end
 
-_UsedText::
+_UsedMoveText::
 	text_start
 	line "used @"
 	text_end
 
-_InsteadText::
+_UsedInsteadText::
 	text "instead,"
 	cont "@"
 	text_end

@@ -202,7 +202,7 @@ LeaveMapThroughHoleAnim:
 	ld [wShadowOAMSprite02TileID], a
 	ld a, [wShadowOAMSprite01TileID]
 	ld [wShadowOAMSprite03TileID], a
-	ld a, $a0
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [wShadowOAMSprite00YCoord], a
 	ld [wShadowOAMSprite01YCoord], a
 	ld c, 2
@@ -213,7 +213,7 @@ LeaveMapThroughHoleAnim:
 	call PlayNewSoundChannel5
 ;;;;;;;;;;
 	; hide upper half of player's sprite
-	ld a, $a0
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [wShadowOAMSprite02YCoord], a
 	ld [wShadowOAMSprite03YCoord], a
 	call GBFadeOutToWhite
@@ -237,7 +237,7 @@ InitFacingDirectionList:
 	ld [wSavedPlayerScreenY], a
 	ld hl, PlayerSpinningFacingOrder
 	ld de, wFacingDirectionList
-	ld bc, 4
+	ld bc, OBJ_SIZE
 	rst _CopyData
 	ld a, [wSpritePlayerStateData1ImageIndex] ; (image index is locked to standing images)
 	ld hl, wFacingDirectionList
@@ -261,7 +261,7 @@ SpinPlayerSprite:
 	push hl
 	ld hl, wFacingDirectionList
 	ld de, wFacingDirectionList - 1
-	ld bc, 4
+	ld bc, OBJ_SIZE
 	rst _CopyData
 	ld a, [wFacingDirectionList - 1]
 	ld [wFacingDirectionList + 3], a
@@ -366,7 +366,7 @@ FishingAnim:
 	ld hl, FishingRodOAM
 	add hl, bc
 	ld de, wShadowOAMSprite39
-	ld bc, $4
+	ld bc, OBJ_SIZE
 	rst _CopyData
 ;;;;;;;;;; PureRGBnote: CHANGED: fishing animation wait time is randomized instead of hardcoded 100 frames.
 	call Random
@@ -401,7 +401,7 @@ FishingAnim:
 	ld a, [wSpritePlayerStateData1ImageIndex] ; (image index is locked to standing images)
 	cp SPRITE_FACING_UP
 	jr nz, .skipHidingFishingRod
-	ld a, $a0
+	ld a, SCREEN_HEIGHT_PX + OAM_Y_OFS
 	ld [wShadowOAMSprite39YCoord], a
 
 .skipHidingFishingRod
@@ -450,7 +450,7 @@ FishingRodOAM:
 	dbsprite  9, 11,  4,  3, $c0, 0         ; down
 	dbsprite  9,  8,  4,  4, $c0, 0         ; up
 	dbsprite  8, 10,  0,  0, $c1, 0         ; left
-	dbsprite 11, 10,  0,  0, $c1, OAM_HFLIP ; right
+	dbsprite 11, 10,  0,  0, $c1, OAM_XFLIP ; right
 
 MACRO fishing_gfx
 	dw \1

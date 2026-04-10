@@ -167,9 +167,11 @@ ENDC
 	call GBFadeOutToWhite
 .skipDelay
 	jp ClearScreen
+
 OakSpeechText1:
 	text_far _OakSpeechText1
 	text_end
+
 OakSpeechText2:
 	text_far _OakSpeechText2A
 	; BUG: The cry played does not match the sprite displayed. PureRGBnote: FIXED: Plays nidorino's cry now.
@@ -183,12 +185,15 @@ OakSpeechText2:
 .2b
 	text_far _OakSpeechText2B
 	text_end
+
 IntroducePlayerText:
 	text_far _IntroducePlayerText
 	text_end
+
 IntroduceRivalText:
 	text_far _IntroduceRivalText
 	text_end
+
 OakSpeechText3:
 	text_far _OakSpeechText3
 	text_end
@@ -242,7 +247,7 @@ IntroDisplayPicCenteredOrUpperRight:
 	call UncompressSpriteFromDE
 	ld hl, sSpriteBuffer1
 	ld de, sSpriteBuffer0
-	ld bc, $310
+	ld bc, 2 * SPRITEBUFFERSIZE
 	rst _CopyData
 	ld de, vFrontPic
 	call InterlaceMergeSpriteBuffers
@@ -317,11 +322,11 @@ BackupList:
 	dw wStatusFlags6
 
 CopyOptionsFromSRAM::
-	ld a, SRAM_ENABLE
-	ld [MBC1SRamEnable], a
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
 	ld a, 1
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamBank], a
+	ld [rBMODE], a
+	ld [rRAMB], a
 	; by checking if a name has been saved we can know if a save file was created
 	callfar CheckSaveFileExists
 	jr nc, .doneLoad
@@ -352,8 +357,8 @@ CopyOptionsFromSRAM::
 	jr nz, .loop
 .doneLoad
 	xor a
-	ld [MBC1SRamBankingMode], a
-	ld [MBC1SRamEnable], a
+	ld [rBMODE], a
+	ld [rRAMG], a
 	ret
 
 SRAMCopyList:

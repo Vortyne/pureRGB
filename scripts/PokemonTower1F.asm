@@ -8,8 +8,8 @@ PokemonTower1F_Script:
 	CheckEvent EVENT_RESCUED_MR_FUJI
 	jr z, .skipHideRocket
 	; to fix save transfers (forgot to conditionally update in save file updater), hide this rocket on map load after rescuing mr fuji
-	ld a, HS_POKEMON_TOWER_1F_ROCKET
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_POKEMON_TOWER_1F_ROCKET
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
 .skipHideRocket
 	jp EnableAutoTextBoxDrawing

@@ -128,15 +128,15 @@ ShowMapWildEncounters::
 .loopJoypad
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .exit
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr nz, .goRight
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr nz, .goLeft
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr nz, .goDown
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr nz, .goUp
 	jr .loopJoypad
 .goRight
@@ -432,7 +432,7 @@ PrintWildProbabilities:
 	ld [hli], a
 	ld a, [de]
 	ld [hli], a
-	ld [hl], "%"
+	ld [hl], '%'
 	pop hl
 	ld d, 0
 	ld e, SCREEN_WIDTH

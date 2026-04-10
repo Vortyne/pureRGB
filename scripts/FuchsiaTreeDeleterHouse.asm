@@ -67,7 +67,7 @@ TreeDeleterText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, TreeDeleterOptions
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBoxNoMenuReset
 	ld hl, FuchsiaTreeDeleterDoneText
 	jr nz, .doneList

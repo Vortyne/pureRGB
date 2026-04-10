@@ -1,4 +1,4 @@
-MarkTownVisitedAndLoadMissableObjects::
+MarkTownVisitedAndLoadToggleableObjects::
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown
@@ -7,37 +7,34 @@ MarkTownVisitedAndLoadMissableObjects::
 	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
 	predef FlagActionPredef
 .notInTown
-	ld hl, MapHSPointers
+	ld hl, ToggleableObjectMapPointers
 	ld a, [wCurMap]
 	ld b, $0
 	ld c, a
 	add hl, bc
 	add hl, bc
-	ld a, [hli]                ; load missable objects pointer in hl
+	ld a, [hli] ; load toggleable objects pointer in hl
 	ld h, [hl]
-	; fall through
-
-LoadMissableObjects:
 	ld l, a
 
 	push hl
 ;;;;;;;;;; PureRGBnote: ADDED: when in some maps we use a different set of flags for hiding/showing objects.
-	ld de, ExtraMissableObjects
-	; check if hl address is >= ExtraMissableObjects, if so load ExtraMissableObjects
+	ld de, ExtraToggleableObjectStates
+	; check if hl address is >= ExtraToggleableObjectStates, if so load ExtraToggleableObjectStates
 	ld a, d
 	sub h
-	jr c, .extraMissables
+	jr c, .extraToggleables
 	jr nz, .normal
 	ld a, e
 	sub l
-	jr z, .extraMissables
-	jr c, .extraMissables
+	jr z, .extraToggleables
+	jr c, .extraToggleables
 .normal
-	ResetEventA EVENT_IN_EXTRA_MISSABLE_OBJECTS_MAP
-	ld de, MissableObjects     ; calculate difference between out pointer and the base pointer
+	ResetEventA EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
+	ld de, ToggleableObjectStates     ; calculate difference between out pointer and the base pointer
 	jr .load
-.extraMissables
-	SetEventA EVENT_IN_EXTRA_MISSABLE_OBJECTS_MAP
+.extraToggleables
+	SetEventA EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
 .load
 ;;;;;;;;;;
 	ld a, l
@@ -58,14 +55,14 @@ LoadMissableObjects:
 	ld a, $3
 	ldh [hDivisor], a
 	ld b, $2
-	call Divide                ; divide difference by 3, resulting in the global offset (number of missable items before ours)
+	call Divide
 	ld a, [wCurMap]
 	ld b, a
 	ldh a, [hDividend+3]
 	ld c, a                    ; store global offset in c
-	ld de, wMissableObjectList
+	ld de, wToggleableObjectList
 	pop hl
-.writeMissableObjectsListLoop
+.writeToggleableObjectsListLoop
 	ld a, [hli]
 	cp -1
 	jr z, .done     ; end of list
@@ -77,144 +74,143 @@ LoadMissableObjects:
 	inc de
 	ld a, c
 	inc c
-	ld [de], a                 ; write (global) missable object index
+	ld [de], a                 ; write (global) toggleable object index
 	inc de
-	jr .writeMissableObjectsListLoop
+	jr .writeToggleableObjectsListLoop
 .done
 	ld a, -1
 	ld [de], a                 ; write sentinel
 	ret
 
-
 ; PureRGBnote: ADDED: when in the safari zone we use a different set of flags for hiding/showing objects.
 ; this function initializes these flags.
-InitializeMissableObjectsFlags:
-	ld hl, wMissableObjectFlags
-	ld bc, wMissableObjectFlagsEnd - wMissableObjectFlags
+InitializeToggleableObjectsFlags:
+	ld hl, wToggleableObjectFlags
+	ld bc, wToggleableObjectFlagsEnd - wToggleableObjectFlags
 	xor a
-	call FillMemory ; clear missable objects flags
-	ld hl, MissableObjects
+	call FillMemory ; clear toggleable objects flags
+	ld hl, ToggleableObjectStates
 	xor a
-	ld [wMissableObjectCounter], a
-.missableObjectsLoop
+	ld [wToggleableObjectCounter], a
+.toggleableObjectsLoop
+	ld a, [hli]
+	cp -1 ; end of list
+	ret z
+	push hl
+	inc hl
+	ld a, [hl]
+	cp OFF
+	jr nz, .skip
+	ld hl, wToggleableObjectFlags
+	ld a, [wToggleableObjectCounter]
+	ld c, a
+	ld b, FLAG_SET
+	call ToggleableObjectFlagAction ; set flag if object is toggled off
+.skip
+	ld hl, wToggleableObjectCounter
+	inc [hl]
+	pop hl
+	inc hl
+	inc hl
+	jr .toggleableObjectsLoop
+
+InitializeExtraToggleableObjectsFlags::
+	ld hl, wExtraToggleableObjectFlags
+	ld bc, wExtraToggleableObjectFlagsEnd - wExtraToggleableObjectFlags
+	xor a
+	call FillMemory ; clear toggleable objects flags
+	ld hl, ExtraToggleableObjectStates
+	xor a
+	ld [wToggleableObjectCounter], a
+.toggleableObjectsLoop
 	ld a, [hli]
 	cp -1           ; end of list
 	ret z
 	push hl
 	inc hl
 	ld a, [hl]
-	cp HIDE
+	cp OFF
 	jr nz, .skip
-	ld hl, wMissableObjectFlags
-	ld a, [wMissableObjectCounter]
+	ld hl, wExtraToggleableObjectFlags
+	ld a, [wToggleableObjectCounter]
 	ld c, a
 	ld b, FLAG_SET
-	call MissableObjectFlagAction ; set flag if Item is hidden
+	call ToggleableObjectFlagAction ; set flag if Item is hidden
 .skip
-	ld hl, wMissableObjectCounter
+	ld hl, wToggleableObjectCounter
 	inc [hl]
 	pop hl
 	inc hl
 	inc hl
-	jr .missableObjectsLoop
+	jr .toggleableObjectsLoop
 
-InitializeExtraMissableObjectsFlags::
-	ld hl, wExtraMissableObjectFlags
-	ld bc, wExtraMissableObjectFlagsEnd - wExtraMissableObjectFlags
-	xor a
-	call FillMemory ; clear missable objects flags
-	ld hl, ExtraMissableObjects
-	xor a
-	ld [wMissableObjectCounter], a
-.missableObjectsLoop
-	ld a, [hli]
-	cp -1           ; end of list
-	ret z
-	push hl
-	inc hl
-	ld a, [hl]
-	cp HIDE
-	jr nz, .skip
-	ld hl, wExtraMissableObjectFlags
-	ld a, [wMissableObjectCounter]
-	ld c, a
-	ld b, FLAG_SET
-	call MissableObjectFlagAction ; set flag if Item is hidden
-.skip
-	ld hl, wMissableObjectCounter
-	inc [hl]
-	pop hl
-	inc hl
-	inc hl
-	jr .missableObjectsLoop
-
-; tests if current sprite is a missable object that is hidden/has been removed
+; tests if current object is toggled off/has been hidden
 IsObjectHidden:
 	ldh a, [hCurrentSpriteOffset]
 	swap a
 	ld b, a
-	ld hl, wMissableObjectList
+	ld hl, wToggleableObjectList
 .loop
 	ld a, [hli]
 	cp -1
-	jr z, .notHidden ; not missable -> not hidden
+	jr z, .notHidden ; not toggleable -> not hidden
 	cp b
 	ld a, [hli]
 	jr nz, .loop
 	ld c, a
 	ld b, FLAG_TEST
 ;;;;;;;;;; PureRGBnote: ADDED: when in certain maps we use a different set of flags for hiding/showing objects.
-	CheckEvent EVENT_IN_EXTRA_MISSABLE_OBJECTS_MAP
-	ld hl, wMissableObjectFlags
+	CheckEvent EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
+	ld hl, wToggleableObjectFlags
 	jr z, .doAction
 .extraMap
-	ld hl, wExtraMissableObjectFlags
+	ld hl, wExtraToggleableObjectFlags
 .doAction
 ;;;;;;;;;;
-	call MissableObjectFlagAction
+	call ToggleableObjectFlagAction
 	ld a, c
 	and a
 	jr nz, .hidden
 .notHidden
 	xor a
 .hidden
-	ldh [hIsHiddenMissableObject], a
+	ldh [hIsToggleableObjectOff], a
 	ret
 
-; adds missable object (items, leg. pokemon, etc.) to the map
-; [wMissableObjectIndex]: index of the missable object to be added (global index)
+; adds toggleable object (items, leg. pokemon, etc.) to the map
+; [wToggleableObjectIndex]: index of the toggleable object to be added (global index)
 ShowObject:
-	ld hl, wMissableObjectFlags
+	ld hl, wToggleableObjectFlags
 	jr ShowObjectCommon
 
 ShowExtraObject:
-	ld hl, wExtraMissableObjectFlags
+	ld hl, wExtraToggleableObjectFlags
 	; fall through
 ShowObjectCommon:
-	ld a, [wMissableObjectIndex]
+	ld a, [wToggleableObjectIndex]
 	ld c, a
 	ld b, FLAG_RESET
-	call MissableObjectFlagAction   ; reset "removed" flag
+	call ToggleableObjectFlagAction   ; reset "removed" flag
 	jp UpdateSprites
 
-; removes missable object (items, leg. pokemon, etc.) from the map
-; [wMissableObjectIndex]: index of the missable object to be removed (global index)
+; removes toggleable object (items, leg. pokemon, etc.) from the map
+; [wToggleableObjectIndex]: index of the toggleable object to be removed (global index)
 HideObject:
-	ld hl, wMissableObjectFlags
+	ld hl, wToggleableObjectFlags
 	jr HideObjectCommon
 
 HideExtraObject:
-	ld hl, wExtraMissableObjectFlags
+	ld hl, wExtraToggleableObjectFlags
 	; fall through
 
 HideObjectCommon:
-	ld a, [wMissableObjectIndex]
+	ld a, [wToggleableObjectIndex]
 	ld c, a
 	ld b, FLAG_SET
-	call MissableObjectFlagAction   ; set "removed" flag
+	call ToggleableObjectFlagAction   ; set "removed" flag
 	jp UpdateSprites
 
-MissableObjectFlagAction:
+ToggleableObjectFlagAction:
 ; identical to FlagAction ; TODO: use flagaction instead?
 
 	push hl
@@ -249,10 +245,10 @@ MissableObjectFlagAction:
 	ld a, b
 	and a
 	jr z, .reset
-	cp 2
+	cp FLAG_TEST
 	jr z, .read
 
-.set
+; set
 	ld a, [hl]
 	ld b, a
 	ld a, d
@@ -285,7 +281,7 @@ MissableObjectFlagAction:
 ; input e = which flag it is
 ; output d = what the default state is
 GetObjectDefaultState::
-	ld hl, MissableObjects + 2
+	ld hl, ToggleableObjectStates + 2
 	ld d, 0
 	add hl, de
 	add hl, de
