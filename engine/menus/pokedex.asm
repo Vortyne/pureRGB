@@ -669,23 +669,11 @@ ShowNextPokemonData:
 	call PlaceString
 
 	call IndexToPokedex
-	ld hl, PokedexEntryPointers
-	ld a, [wPokedexNum]
-	dec a
-	ld e, a
-	ld d, 0
-	add hl, de
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl] ; de = address of pokedex entry
-
+	call GetDexPokemonCategory
 	hlcoord 9, 4
 	call PlaceString ; print species name
+	call GetDexEntryData
 	call PokedexToIndex
-
-	ld h, b
-	ld l, c
 	push de
 	ld a, [wPokedexNum]
 	push af
@@ -806,7 +794,6 @@ ShowNextPokemonData:
 	inc de
 	inc de
 	inc de
-	inc de
 	push de
 	push hl
 	call IndexToPokedex
@@ -837,7 +824,6 @@ ShowNextPokemonData:
 	call PrintDexWeight
 	jr .printDescription
 .imperial
-	inc de ; de = address of feet (height)
 	hlcoord 12, 6
 	lb bc, 1, 2
 	call PrintNumber ; print feet (height)
@@ -1115,6 +1101,7 @@ PokedexDataDividerLine:
 	db "@"
 
 INCLUDE "data/pokemon/dex_entries.asm"
+INCLUDE "data/pokemon/dex_pokemon_categories.asm"
 
 PokedexToIndex:
 	; converts the Pokédex number at [wPokedexNum] to an index

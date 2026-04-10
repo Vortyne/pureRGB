@@ -3,6 +3,8 @@
 ; - BaseStats (see data/pokemon/base_stats.asm)
 ; - MonPartyData (see data/pokemon/menu_icons.asm)
 ; - MonsterPalettes (see data/pokemon/palettes.asm)
+; - DexEntryData (see data/pokemon/dex_entries.asm)
+; - PokemonCategoryMapping (see data/pokemon/dex_pokemon_categories.asm)
 	const_def
 	const DEX_MISSINGNO  ; 0
 	const DEX_BULBASAUR  ; 1
