@@ -119,7 +119,7 @@ SilphCo8FSilphWorkerMText:
 	rst TextScriptEnd
 
 .SilphIsFinishedText:
-	text_far __SilphCo8FSilphWorkerMThanksForSavingUsText
+	text_far _SilphCo8FSilphWorkerMSilphIsFinishedText
 	text_end
 
 .ThanksForSavingUsText:
