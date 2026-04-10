@@ -42,7 +42,6 @@ HiddenEventMaps:
 	hidden_event_map COLOSSEUM
 	hidden_event_map VIRIDIAN_FOREST
 	hidden_event_map MT_MOON_B2F
-	hidden_event_map INDIGO_PLATEAU
 	hidden_event_map ROUTE_25
 	hidden_event_map ROUTE_9
 	hidden_event_map SS_ANNE_KITCHEN
@@ -367,11 +366,6 @@ DEF ANY_FACING EQU $d0
 	hidden_event  33,  9, HiddenItems, HIDDEN_ITEM_MT_MOON_LONE_ROCK_DOWN_2ND_LADDER
 	db -1 ; end
 
-	hidden_events_for INDIGO_PLATEAU ; TODO: inaccessible text
-	hidden_event   8, 13, PrintIndigoPlateauHQText, $ff ; inaccessible
-	hidden_event  11, 13, PrintIndigoPlateauHQText, SPRITE_FACING_DOWN ; inaccessible
-	db -1 ; end
-
 	hidden_events_for ROUTE_25
 	hidden_event  38,  5, HiddenItems, HIDDEN_ITEM_ROUTE_25_FENCE_NEAR_EASTMOST_LASS
 	hidden_event  10,  3, HiddenItems, HIDDEN_ITEM_ROUTE_25_ALCOVE_BEHIND_FIRST_HIKER
@@ -484,7 +478,7 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for POKEMON_MANSION_3F
-	hidden_event   1,  9, HiddenItems, HIDDEN_ITEM_MANSION_2F_WEST_ALCOVE ; TODO: correct constant name
+	hidden_event   1,  9, HiddenItems, HIDDEN_ITEM_MANSION_3F_WEST_ALCOVE
 	hidden_event  10,  5, Mansion3Script_Switches, SPRITE_FACING_UP
 	db -1 ; end
 
