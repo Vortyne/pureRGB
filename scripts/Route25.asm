@@ -1,5 +1,5 @@
 Route25_Script:
-	call Route25ShowHideBillScript
+	call Route25ToggleBillsScript
 	call Route25CheckHideCutTree
 	call EnableAutoTextBoxDrawing
 	ld hl, Route25TrainerHeaders
@@ -29,7 +29,7 @@ Route25CheckHideCutTree:
 	ld [wNewTileBlockID], a
 	predef_jump ReplaceTileBlock
 
-Route25ShowHideBillScript:
+Route25ToggleBillsScript:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CUR_MAP_LOADED_2, [hl]
 	res BIT_CUR_MAP_LOADED_2, [hl]
@@ -40,19 +40,19 @@ Route25ShowHideBillScript:
 	jr nz, .met_bill
 	; if we left bills house before helping him with the cell separator, reset pokemon version of him to being shown
 	ResetEventReuseHL EVENT_BILL_SAID_USE_CELL_SEPARATOR
-	ld a, HS_BILL_POKEMON
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_BILL_POKEMON
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowObject
 .met_bill
 	CheckEventAfterBranchReuseHL EVENT_GOT_SS_TICKET, EVENT_MET_BILL_2
 	ret z
 	; if we got the SS ticket and finished his event, show the other version of bill that says slightly different things
 	SetEventReuseHL EVENT_LEFT_BILLS_HOUSE_AFTER_HELPING
-	ld a, HS_BILL_1
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_BILL_1
+	ld [wToggleableObjectIndex], a
 	predef HideObject
-	ld a, HS_BILL_2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_BILL_2
+	ld [wToggleableObjectIndex], a
 	predef_jump ShowObject
 
 Route25_ScriptPointers:

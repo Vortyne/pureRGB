@@ -229,7 +229,7 @@ HandlePartyMenuInput::
 	ld [wPartyMenuAnimMonEnabled], a
 	ld a, [wCurrentMenuItem]
 	ld [wPartyAndBillsPCSavedMenuItem], a
-	bit BIT_SELECT, b
+	bit B_PAD_SELECT, b
 	jr z, .notSelect
 	push af
 	ld a, SFX_PRESS_AB
@@ -251,7 +251,7 @@ HandlePartyMenuInput::
 	jp nz, .swappingPokemon
 	pop af
 	ldh [hTileAnimations], a
-	bit BIT_B_BUTTON, b
+	bit B_PAD_B, b
 	jr nz, .noPokemonChosen
 	ld a, [wPartyCount]
 	and a
@@ -273,7 +273,7 @@ HandlePartyMenuInput::
 	scf
 	ret
 .swappingPokemon
-	bit BIT_B_BUTTON, b
+	bit B_PAD_B, b
 	jr z, .handleSwap ; if not, handle swapping the pokemon
 .cancelSwap ; if the B button was pressed
 	farcall ErasePartyMenuCursors
@@ -317,11 +317,7 @@ PrintStatusCondition::
 	pop de
 	jr nz, PrintStatusConditionNotFainted
 ; if the pokemon's HP is 0, print "FNT"
-	ld a, "F"
-	ld [hli], a
-	ld a, "N"
-	ld [hli], a
-	ld [hl], "T"
+	ld_hli_a_string "FNT"
 	and a
 	ret
 
@@ -334,7 +330,7 @@ PrintStatusConditionNotFainted::
 ; hl = destination address
 ; [wLoadedMonLevel] = level
 PrintLevel::
-	ld a, "<LV>" ; ":L" tile ID
+	ld a, '<LV>' ; ":L" tile ID
 	ld [hli], a
 	ld c, 2 ; number of digits
 	ld a, [wLoadedMonLevel] ; level
@@ -350,7 +346,7 @@ PrintLevel::
 ; hl = destination address
 ; [wLoadedMonLevel] = level
 PrintLevelFull::
-	ld a, "<LV>" ; ":L" tile ID
+	ld a, '<LV>' ; ":L" tile ID
 	ld [hli], a
 	ld c, 3 ; number of digits
 	ld a, [wLoadedMonLevel] ; level

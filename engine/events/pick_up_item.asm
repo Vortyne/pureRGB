@@ -12,19 +12,19 @@ PickUpItemCommon:
 
 	ldh a, [hSpriteIndex]
 	ld b, a
-	ld hl, wMissableObjectList
-.missableObjectsListLoop
+	ld hl, wToggleableObjectList
+.toggleableObjectsListLoop
 	ld a, [hli]
 	cp $ff
 	jr z, .noObject
 	cp b
-	jr z, .isMissable
+	jr z, .isToggleable
 	inc hl
-	jr .missableObjectsListLoop
+	jr .toggleableObjectsListLoop
 
-.isMissable
+.isToggleable
 	ld a, [hl]
-	ldh [hMissableObjectIndex], a
+	ldh [hToggleableObjectIndex], a
 
 	ld hl, wMapSpriteExtraData
 	ldh a, [hSpriteIndex]
@@ -40,10 +40,10 @@ PickUpItemCommon:
 	call GiveItem
 	jr nc, .BagFull
 
-	ldh a, [hMissableObjectIndex]
-	ld [wMissableObjectIndex], a
+	ldh a, [hToggleableObjectIndex]
+	ld [wToggleableObjectIndex], a
 ;;;;;;;;;; PureRGBnote: CHANGED: in certain maps hidable items use a different set of flags than everywhere else, needed more space for flags.
-	CheckEvent EVENT_IN_EXTRA_MISSABLE_OBJECTS_MAP
+	CheckEvent EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
 	jr nz, .hideExtra
 	predef HideObject
 	jr .continue
@@ -61,7 +61,7 @@ PickUpItemCommon:
 .multiItemPickup
 	add NUMBER_CHAR_OFFSET ; index of first number character in charmap (assumes c must be 0-9)
 	ld [wTempStore1], a
-	ld a, "@"
+	ld a, '@'
 	ld [wTempStore2], a
 	ld hl, FoundMultipleItemText
 	jr .print

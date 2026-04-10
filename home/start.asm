@@ -1,6 +1,6 @@
 _Start::
-	cp CGB
-	ld a, 1
+	cp BOOTUP_A_CGB
+	ld a, TRUE
 	jr z, .gbc
 	dec a
 .gbc

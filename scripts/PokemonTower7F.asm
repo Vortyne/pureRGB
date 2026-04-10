@@ -29,7 +29,7 @@ PokemonTower7FEndBattleScript:
 	cp $ff
 	jp z, PokemonTower7FSetDefaultScript
 	call EndTrainerBattle
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wSpriteIndex]
 	ldh [hSpriteIndex], a
@@ -44,15 +44,15 @@ PokemonTower7FHideNPCScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld hl, wMissableObjectList
+	ld hl, wToggleableObjectList
 	ld a, [wSpriteIndex]
 	ld b, a
-.missableObjectsListLoop
+.toggleableObjectsListLoop
 	ld a, [hli]
-	cp b            ; search for sprite ID in missing objects list
+	cp b            ; search for sprite ID in toggleable objects list
 	ld a, [hli]
-	jr nz, .missableObjectsListLoop
-	ld [wMissableObjectIndex], a   ; remove missable object
+	jr nz, .toggleableObjectsListLoop
+	ld [wToggleableObjectIndex], a   ; remove toggleable object
 	predef HideObject
 	xor a
 	ld [wJoyIgnore], a
@@ -65,7 +65,7 @@ PokemonTower7FHideNPCScript:
 	ret
 
 PokemonTower7FWarpToMrFujiHouseScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SPRITE_FACING_UP
 	ld [wSpritePlayerStateData1FacingDirection], a
@@ -221,18 +221,18 @@ PokemonTower7FMrFujiText:
 .print
 	rst _PrintText
 	SetEvent EVENT_RESCUED_MR_FUJI
-	ld a, HS_MR_FUJIS_HOUSE_MR_FUJI
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_MR_FUJIS_HOUSE_MR_FUJI
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
-	ld a, HS_SAFFRON_CITY_E
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_SAFFRON_CITY_E
+	ld [wToggleableObjectIndex], a
 	predef HideObject
-	ld a, HS_SAFFRON_CITY_F
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_SAFFRON_CITY_F
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 ;;;;;;;;;; PureRGBnote: ADDED: hide the new ROCKET on the first floor of the tower
-	ld a, HS_POKEMON_TOWER_1F_ROCKET
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_POKEMON_TOWER_1F_ROCKET
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
 ;;;;;;;;;;
 	ld a, SCRIPT_POKEMONTOWER7F_WARP_TO_MR_FUJI_HOUSE

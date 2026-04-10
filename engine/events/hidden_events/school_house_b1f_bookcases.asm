@@ -16,7 +16,7 @@ SchoolB1FRightBookcaseB:
 	ld a, 3
 	; fall through
 DoBookcaseJump:
-	ld [wHiddenObjectFunctionArgument], a
+	ld [wHiddenEventFunctionArgument], a
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
 	ret nz
@@ -24,7 +24,7 @@ DoBookcaseJump:
 
 ViridianSchoolB1FBookcasesTexts::
 	text_asm
-	ld a, [wHiddenObjectFunctionArgument]
+	ld a, [wHiddenEventFunctionArgument]
 	add a
 	ld d, 0
 	ld e, a

@@ -19,23 +19,23 @@ SeafoamIslands1F_Script:
 	cp $1
 	jr nz, .boulder2FellDownHole
 	SetEventReuseHL EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	ld a, HS_SEAFOAM_ISLANDS_1F_BOULDER_1
+	ld a, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
 	ld [wObjectToHide], a
-	ld a, HS_SEAFOAM_ISLANDS_B1F_BOULDER_1
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1
 	ld [wObjectToShow], a
 	jr .hideAndShowBoulderObjects
 .boulder2FellDownHole
 	SetEventAfterBranchReuseHL EVENT_SEAFOAM1_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	ld a, HS_SEAFOAM_ISLANDS_1F_BOULDER_2
+	ld a, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
 	ld [wObjectToHide], a
-	ld a, HS_SEAFOAM_ISLANDS_B1F_BOULDER_2
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2
 	ld [wObjectToShow], a
 .hideAndShowBoulderObjects
 	ld a, [wObjectToHide]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, [wObjectToShow]
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	jpfar BoulderHoleDropEffectDefault
 .noBoulderWasPushed
@@ -162,7 +162,7 @@ DragonairUnderWaterEventAreaScript:
 	cp 36
 	jr z, .upOne
 	ld hl, wSimulatedJoypadStatesEnd
-	ld a, D_UP
+	ld a, PAD_UP
 	ld [hli], a
 	ld [hli], a
 	ld a, [wBattleResult]
@@ -170,14 +170,14 @@ DragonairUnderWaterEventAreaScript:
 	ld b, 2
 	jr z, .caught
 	inc b
-	ld [hl], D_LEFT
+	ld [hl], PAD_LEFT
 	inc hl
 .caught
 	ld a, b
 	ld [wSimulatedJoypadStatesIndex], a
 	jp StartSimulatingJoypadStates
 .upOne
-	ld d, D_UP
+	ld d, PAD_UP
 	jpfar ForceStepFromDoor
 .forceWalkDown
 	SetEvent EVENT_DRAGONAIR_EVENT_FOUGHT_CLOYSTER_ONCE

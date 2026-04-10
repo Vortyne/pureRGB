@@ -3,7 +3,7 @@ TextBoxBorder::
 
 	; top row
 	push hl
-	ld a, "┌"
+	ld a, '┌'
 	ld [hli], a
 	inc a ; "─"
 	call .PlaceChars
@@ -17,11 +17,11 @@ TextBoxBorder::
 	; middle rows
 .next
 	push hl
-	ld a, "│"
+	ld a, '│'
 	ld [hli], a
-	ld a, " "
+	ld a, ' '
 	call .PlaceChars
-	ld [hl], "│"
+	ld [hl], '│'
 	pop hl
 
 	ld de, SCREEN_WIDTH
@@ -30,11 +30,11 @@ TextBoxBorder::
 	jr nz, .next
 
 	; bottom row
-	ld a, "└"
+	ld a, '└'
 	ld [hli], a
-	ld a, "─"
+	ld a, '─'
 	call .PlaceChars
-	ld [hl], "┘"
+	ld [hl], '┘'
 	ret
 
 .PlaceChars::
@@ -51,7 +51,7 @@ PlaceString::
 
 PlaceNextChar::
 	ld a, [de]
-	cp "@"
+	cp '@'
 	jr nz, .NotTerminator
 	ld b, h
 	ld c, l
@@ -257,7 +257,7 @@ ContText::
 	jp PlaceNextChar
 
 PlaceDexEnd::
-	ld [hl], "."
+	ld [hl], '.'
 	pop hl
 	ret
 
@@ -265,12 +265,12 @@ PromptText::
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jp z, .ok
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 .ok
 	call ProtectedDelay3
 	call ManualTextScroll
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16
 
 DoneText::
@@ -286,7 +286,7 @@ TextScriptEndingText::
 
 Paragraph::
 	push de
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	call ManualTextScroll
@@ -299,7 +299,7 @@ Paragraph::
 
 PageChar::
 	push de
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	call ManualTextScroll
@@ -334,13 +334,13 @@ MultiButtonPageChar::
 
 
 _ContText::
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call ProtectedDelay3
 	push de
 	call ManualTextScroll
 	pop de
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16
 _ContTextNoPause::
 	push de
@@ -352,7 +352,7 @@ _ContTextNoPause::
 
 ; move both rows of text in the normal text box up one row
 ; always called twice in a row
-; first time, copy the two rows of text to the "in between" rows that are usually emtpy
+; first time, copy the two rows of text to the "in between" rows that are usually empty
 ; second time, copy the bottom row of text into the top row of text
 ScrollTextUpOneLine::
 	hlcoord 0, 14 ; top row of text
@@ -365,7 +365,7 @@ ScrollTextUpOneLine::
 	dec b
 	jr nz, .copyText
 	hlcoord 1, 16
-	ld a, " "
+	ld a, ' '
 	ld b, SCREEN_WIDTH - 2
 .clearText
 	ld [hli], a
@@ -484,11 +484,11 @@ TextCommand_RAM_CHECK_CONT::
 	decoord 17, 16
 	call DoesTextPtrHLFitOnBCCoordLine
 	jr nc, .yes
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16
 	call Delay3
 	call ManualTextScroll
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16
 	call ScrollTextUpOneLine
 	call ScrollTextUpOneLine
@@ -573,12 +573,12 @@ TextCommand_PROMPT_BUTTON::
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jp z, TextCommand_WAIT_BUTTON
-	ld a, "▼"
+	ld a, '▼'
 	ldcoord_a 18, 16 ; place down arrow in lower right corner of dialogue text box
 	push bc
 	call ManualTextScroll ; blink arrow and wait for A or B to be pressed
 	pop bc
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16 ; overwrite down arrow with blank space
 	pop hl
 	jp NextTextCommand
@@ -586,7 +586,7 @@ TextCommand_PROMPT_BUTTON::
 TextCommand_SCROLL::
 ; pushes text up two lines and sets the BC cursor to the border tile
 ; below the first character column of the text box.
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 18, 16 ; place blank space in lower right corner of dialogue text box
 	call ScrollTextUpOneLine
 	call ScrollTextUpOneLine
@@ -631,7 +631,7 @@ TextCommand_PAUSE::
 	push bc
 	call Joypad
 	ldh a, [hJoyHeld]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr nz, .done
 	ld c, 30 ; half a second
 	rst _DelayFrames
@@ -693,13 +693,13 @@ TextCommand_DOTS::
 	ld l, c
 
 .loop
-	ld a, "…"
+	ld a, '…'
 	ld [hli], a
 	push de
 	call Joypad
 	pop de
 	ldh a, [hJoyHeld] ; joypad state
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr nz, .next ; if so, skip the delay
 	ld c, 10
 	rst _DelayFrames
@@ -750,7 +750,7 @@ TextCommand_PLURALIZE::
 	ld a, [hl]
 	dec a
 	jr z, .skip
-	ld a, "s"
+	ld a, 's'
 	ld [bc], a
 	inc bc
 .skip
@@ -785,7 +785,7 @@ DoesTextPtrHLFitOnBCCoordLine:
 .loopCount
 	inc b
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr nz, .loopCount
 	ld h, 0
 	ld l, b

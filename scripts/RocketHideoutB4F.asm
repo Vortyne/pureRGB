@@ -80,7 +80,7 @@ RocketHideoutB4FBeatGiovanniScript:
 	jp z, RocketHideoutB4FSetDefaultScript
 	call PlayGiovanniMusic
 	call UpdateSprites
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
 	ld d, ROCKETHIDEOUTB4F_GIOVANNI
@@ -89,11 +89,11 @@ RocketHideoutB4FBeatGiovanniScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	call GBFadeOutToBlack
-	ld a, HS_ROCKET_HIDEOUT_B4F_GIOVANNI
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROCKET_HIDEOUT_B4F_GIOVANNI
+	ld [wToggleableObjectIndex], a
 	predef HideObject
-	ld a, HS_ROCKET_HIDEOUT_B4F_ITEM_4
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROCKET_HIDEOUT_B4F_ITEM_4
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	call UpdateSprites
 	call GBFadeInFromBlack
@@ -226,8 +226,8 @@ RocketHideoutB4FRocket3AfterBattleText:
 	rst _PrintText
 	CheckAndSetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
 	jr nz, .done
-	ld a, HS_ROCKET_HIDEOUT_B4F_ITEM_5
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROCKET_HIDEOUT_B4F_ITEM_5
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 .done
 	rst TextScriptEnd

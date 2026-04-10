@@ -168,7 +168,7 @@ ENDC
 ; place tiles for title screen copyright
 	hlcoord 2, 17
 	ld de, .tileScreenCopyrightTiles
-	ld b, $10
+	ld b, .tileScreenCopyrightTilesEnd - .tileScreenCopyrightTiles
 .tileScreenCopyrightTilesLoop
 	ld a, [de]
 	ld [hli], a
@@ -180,6 +180,7 @@ ENDC
 
 .tileScreenCopyrightTiles
 	db $41,$42,$43,$42,$44,$42,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E ; ©'95.'96.'98 GAME FREAK inc.
+.tileScreenCopyrightTilesEnd
 
 .next
 	call SaveScreenTilesToBuffer2
@@ -393,7 +394,7 @@ ENDC
 	call Delay3
 ;;;;;;; PureRGBnote: FIXED: Prevents colors in the main menu from getting dark if player saved in a dark area 
 ;;;;;;; (rock tunnel) and went from title to continue screen twice
-	call GBPalNormal
+	call GBPalNormal ; TODO: JP to it?
 ;;;;;;;
 	ret
 
@@ -587,8 +588,8 @@ DrawPlayerPointingSpriteBGTiles:
 
 ClearBothBGMaps:
 	ld hl, vBGMap0
-	ld bc, $400 * 2
-	ld a, " "
+	ld bc, 2 * TILEMAP_AREA
+	ld a, ' '
 	jp FillMemory
 
 LoadTitleMonSprite:
@@ -611,7 +612,7 @@ LoadCopyrightAndTextBoxTiles:
 LoadCopyrightTiles:
 	ld de, NintendoCopyrightLogoGraphics
 	ld hl, vChars2 tile $60
-	lb bc, BANK(NintendoCopyrightLogoGraphics), (GameFreakLogoGraphicsEnd - NintendoCopyrightLogoGraphics) / $10
+	lb bc, BANK(NintendoCopyrightLogoGraphics), (GameFreakLogoGraphicsEnd - NintendoCopyrightLogoGraphics) / TILE_SIZE
 	call CopyVideoData
 	hlcoord 2, 7
 	ld de, CopyrightTextString
@@ -1312,13 +1313,13 @@ CopyFromBattleAnim1_2:
 IF DEF(_GREEN)
 PureGreenVersionAnimationEnergyOAM:
 	db 0, 0, $43, 4
-	db 0, 0, $43, OAM_HFLIP | 4
-	db 0, 0, $43, OAM_VFLIP | 4
-	db 0, 0, $43, OAM_HFLIP | OAM_VFLIP | 4
+	db 0, 0, $43, OAM_XFLIP | 4
+	db 0, 0, $43, OAM_YFLIP | 4
+	db 0, 0, $43, OAM_XFLIP | OAM_YFLIP | 4
 	db 0, 0, $40, 1
-	db 0, 0, $40, OAM_HFLIP | 1
-	db 0, 0, $40, OAM_VFLIP | 1
-	db 0, 0, $40, OAM_HFLIP | OAM_VFLIP | 1
+	db 0, 0, $40, OAM_XFLIP | 1
+	db 0, 0, $40, OAM_YFLIP | 1
+	db 0, 0, $40, OAM_XFLIP | OAM_YFLIP | 1
 	db 0, 0, $41, 1
 	db 0, 0, $41, 1
 	db 0, 0, $41, 1
@@ -1327,16 +1328,16 @@ ELSE
 PureRedVersionAnimationFireOAM:
 PureBlueVersionAnimationPumpOAM:
 	db 0, 0, $40, 1
-	db 0, 0, $40, OAM_HFLIP | 1
+	db 0, 0, $40, OAM_XFLIP | 1
 	db 0, 0, $42, 1
-	db 0, 0, $42, OAM_HFLIP | 1
+	db 0, 0, $42, OAM_XFLIP | 1
 
 PureRedVersionAnimationFireOAMFrame2:
 PureBlueVersionAnimationPumpOAMFrame2:
 	db 0, 0, $41, 1
-	db 0, 0, $41, OAM_HFLIP | 1
+	db 0, 0, $41, OAM_XFLIP | 1
 	db 0, 0, $43, 1
-	db 0, 0, $43, OAM_HFLIP | 1
+	db 0, 0, $43, OAM_XFLIP | 1
 ENDC
 
 StartingShineOAM:

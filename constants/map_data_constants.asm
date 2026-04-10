@@ -24,6 +24,15 @@ DEF SPECIAL_ANIMATION_MAP   EQU %1000000
 	shift_const SOUTH  ; 4 %100
 	shift_const NORTH  ; 8 %1000
 
+; wWarpEntries
+DEF MAX_WARP_EVENTS EQU 32
+
+; wNumSigns
+DEF MAX_BG_EVENTS EQU 16
+
+; wMapSpriteData
+DEF MAX_OBJECT_EVENTS EQU 16
+
 ; flower and water tile animations
 	const_def
 	const TILEANIM_NONE          ; 0

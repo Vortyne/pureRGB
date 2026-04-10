@@ -105,7 +105,7 @@ DisplayPokemartDialogue_::
 	;dec a
 	;jr z, .restoreItemIndexSellMenuLoop
 
-.sellItem
+; sell item
 	ld a, [wBoughtOrSoldItemInMart]
 	and a
 	jr nz, .skipSettingFlag1

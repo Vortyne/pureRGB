@@ -78,7 +78,7 @@ INCLUDE "home/reload_sprites.asm"
 INCLUDE "home/give.asm"
 INCLUDE "home/random.asm"
 INCLUDE "home/predef.asm"
-INCLUDE "home/hidden_objects.asm"
+INCLUDE "home/hidden_events.asm"
 INCLUDE "home/predef_text.asm"
 INCLUDE "home/gbc_funcs.asm" ; shinpokerednote: gbcnote: added code from pokemon yellow for showing colors correctly on gbc
 INCLUDE "home/sprite_control.asm"

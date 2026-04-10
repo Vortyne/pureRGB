@@ -43,7 +43,7 @@ VBlank::
 	;shinpokerednote: FIXED: doing this in DelayFrame instead - helps avoid sprites wobbling
 	;ld a, BANK(PrepareOAMData)
 	;ldh [hLoadedROMBank], a
-	;ld [MBC1RomBank], a
+	;ld [rROMB], a
 	;call PrepareOAMData
 
 	; VBlank-sensitive operations end.

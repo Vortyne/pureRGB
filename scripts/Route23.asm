@@ -12,11 +12,11 @@ Route23SetVictoryRoadBoulders:
 	ret z
 	ResetEvents EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1, EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH2
 	ResetEvents EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1, EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH2
-	ld a, HS_VICTORY_ROAD_3F_BOULDER
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VICTORY_ROAD_3F_BOULDER
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
-	ld a, HS_VICTORY_ROAD_2F_BOULDER
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VICTORY_ROAD_2F_BOULDER
+	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 
 Route23_ScriptPointers:
@@ -79,7 +79,7 @@ Route23CopyBadgeTextScript:
 Route23MovePlayerDownScript:
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld [wSimulatedJoypadStatesEnd], a
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a

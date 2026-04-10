@@ -17,7 +17,7 @@ GetTrainerName::
 	ld b, a
 .loopFindTrainerName
 	ld a, [hli]
-	cp "@"
+	cp '@'
 	jr z, .next
 	jr .loopFindTrainerName
 .next
@@ -26,12 +26,12 @@ GetTrainerName::
 .foundTrainer
 	ld de, wNameBuffer
 	push de
-	ld bc, ITEM_NAME_LENGTH
+	ld bc, TRAINER_NAME_LENGTH
 	rst _CopyData
 	pop hl ; pop de into hl
 .foundName
 	ld de, wTrainerName
-	ld bc, ITEM_NAME_LENGTH
+	ld bc, TRAINER_NAME_LENGTH
 	rst _CopyData
 	ret
 

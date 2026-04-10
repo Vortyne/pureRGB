@@ -132,7 +132,7 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
@@ -140,11 +140,11 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	CheckEvent EVENT_GOT_DOME_FOSSIL
-	ld a, HS_MT_MOON_B2F_FOSSIL_1
+	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_1
 	jr z, .continue
-	ld a, HS_MT_MOON_B2F_FOSSIL_2
+	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_2
 .continue
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	; ask the player if they want to give the nerd their fossil right away, and can collect their fossil pokemon in saffron later
 	ld a, 1
@@ -175,13 +175,13 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 
 ;;;;;;;;;; PureRGBnote: ADDED: hide or show the fossil in seafoam islands depending on what you chose
 	CheckEvent EVENT_GOT_DOME_FOSSIL
-	ld a, HS_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL
 	jr nz, .hideObjectSeafoam
 	CheckEvent EVENT_GOT_HELIX_FOSSIL
-	ld a, HS_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL
 	jr z, .done
 .hideObjectSeafoam
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;;
 .done
@@ -284,8 +284,8 @@ MtMoonB2FDomeFossilText:
 	call GiveItem
 	jp nc, MtMoonB2FYouHaveNoRoomText
 	call MtMoonB2FReceivedFossilText
-	ld a, HS_MT_MOON_B2F_FOSSIL_1
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_1
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_DOME_FOSSIL
 	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
@@ -310,8 +310,8 @@ MtMoonB2FHelixFossilText:
 	call GiveItem
 	jp nc, MtMoonB2FYouHaveNoRoomText
 	call MtMoonB2FReceivedFossilText
-	ld a, HS_MT_MOON_B2F_FOSSIL_2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_2
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	SetEvent EVENT_GOT_HELIX_FOSSIL
 	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD

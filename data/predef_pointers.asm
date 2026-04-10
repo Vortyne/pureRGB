@@ -53,7 +53,7 @@ PredefPointers::
 	add_predef UndoBurnParStats
 	add_predef ShowPokedexMenu
 	add_predef EvolutionAfterBattle
-	add_predef SaveSAVtoSRAM0
+	add_predef SaveMainData
 	add_predef InitOpponent
 	add_predef CableClub_Run
 	add_predef DrawBadges
@@ -72,9 +72,9 @@ PredefPointers::
 	add_predef UsedCut
 	add_predef ShowPokedexData
 	add_predef WriteMonMoves
-	add_predef SaveSAV
+	add_predef SaveMenu
 	add_predef LoadSGB
-	add_predef MarkTownVisitedAndLoadMissableObjects
+	add_predef MarkTownVisitedAndLoadToggleableObjects
 	add_predef SetPartyMonTypes
 	add_predef CanLearnTM
 	add_predef TMToMove
@@ -89,10 +89,10 @@ PredefPointers::
 	add_predef SetAttackAnimPal
 	add_predef AskName
 	add_predef PewterGuys
-	add_predef SaveSAVtoSRAM2
+	add_predef SavePartyAndDexData
 	add_predef SaveScreenTileAreaToBuffer3
 	add_predef LoadScreenTileAreaFromBuffer3
-	add_predef SaveSAVtoSRAM1
+	add_predef SaveCurrentBoxData
 	add_predef DoInGameTradeDialogue
 	add_predef HallOfFamePC
 	add_predef DisplayDexRating

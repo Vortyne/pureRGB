@@ -5,15 +5,15 @@ UNION
 vChars0:: ds $80 tiles
 vChars1:: ds $80 tiles
 vChars2:: ds $80 tiles
-vBGMap0:: ds BG_MAP_WIDTH * BG_MAP_HEIGHT
-vBGMap1:: ds BG_MAP_WIDTH * BG_MAP_HEIGHT
+vBGMap0:: ds TILEMAP_AREA
+vBGMap1:: ds TILEMAP_AREA
 
 NEXTU
 ; battle/menu
 vSprites::  ds $80 tiles
 vFont::     ds $80 tiles
-vFrontPic:: ds 7 * 7 tiles
-vBackPic::  ds 7 * 7 tiles
+vFrontPic:: ds PIC_SIZE tiles
+vBackPic::  ds PIC_SIZE tiles
 
 NEXTU
 ; overworld
@@ -25,7 +25,7 @@ NEXTU
 ; title
 	ds $80 tiles
 vTitleLogo::  ds $80 tiles
-	ds 7 * 7 tiles
+	ds PIC_SIZE tiles
 vTitleLogo2:: ds 30 tiles
 
 ENDU

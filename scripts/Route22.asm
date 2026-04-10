@@ -50,7 +50,7 @@ Route22DefaultScript:
 	ld [wSavedCoordIndex], a
 	xor a
 	ldh [hJoyHeld], a
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
@@ -142,7 +142,7 @@ Route22Rival1AfterBattleScript:
 	jp z, Route22SetDefaultScript
 	ld d, ROUTE22_RIVAL1
 	callfar MakeSpriteFacePlayer
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
 	ld a, TEXT_ROUTE22_RIVAL1
@@ -204,8 +204,8 @@ Route22Rival1ExitScript:
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
-	ld a, HS_ROUTE_22_RIVAL_1
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROUTE_22_RIVAL_1
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
@@ -300,7 +300,7 @@ Route22Rival2AfterBattleScript:
 	ld [wPlayerMovingDirection], a
 	ld d, ROUTE22_RIVAL1
 	callfar MakeSpriteFacePlayer
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_2ND_BATTLE
 	ld a, TEXT_ROUTE22_RIVAL2
@@ -347,8 +347,8 @@ Route22Rival2ExitScript:
 	ret nz
 	xor a
 	ld [wJoyIgnore], a
-	ld a, HS_ROUTE_22_RIVAL_2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROUTE_22_RIVAL_2
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
 	ResetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE

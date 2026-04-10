@@ -167,6 +167,8 @@ MoveNameJumpTable::
 	dw STRUGGLEName
 	assert_table_length NUM_ATTACKS
 
+; in-battle "used <move name>!" text can only fit 12 (MOVE_NAME_LENGTH - 2) characters
+
 POUNDName:
 	db "POUND@"
 KARATECHOPName:
@@ -497,4 +499,3 @@ SUBSTITUTEName:
 	db "SUBSTITUTE@"
 STRUGGLEName:
 	db "STRUGGLE@"
-

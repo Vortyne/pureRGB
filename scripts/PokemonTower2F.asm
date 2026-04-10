@@ -132,7 +132,7 @@ PokemonTower2FDefeatedRivalScript:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, PokemonTower2FResetRivalEncounter
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL
 	ld d, POKEMONTOWER2F_RIVAL
@@ -182,8 +182,8 @@ PokemonTower2FRivalExitsScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, HS_POKEMON_TOWER_2F_RIVAL
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_POKEMON_TOWER_2F_RIVAL
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	xor a
 	ld [wJoyIgnore], a

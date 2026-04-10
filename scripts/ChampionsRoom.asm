@@ -25,7 +25,7 @@ ChampionsRoom_ScriptPointers:
 	dw_const ChampionsRoomCleanupScript,                  SCRIPT_CHAMPIONSROOM_CLEANUP_SCRIPT
 
 ChampionsRoomPlayerEntersScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, RivalEntrance_RLEMovement
@@ -38,9 +38,9 @@ ChampionsRoomPlayerEntersScript:
 	ret
 
 RivalEntrance_RLEMovement:
-	db D_UP, 1
-	db D_RIGHT, 1
-	db D_UP, 3
+	db PAD_UP, 1
+	db PAD_RIGHT, 1
+	db PAD_UP, 3
 	db -1 ; end
 
 ChampionsRoomRivalReadyToBattleScript:
@@ -82,7 +82,7 @@ ChampionsRoomRivalDefeatedScript:
 	jp z, ResetRivalScript
 	call UpdateSprites
 	SetEvent EVENT_BEAT_CHAMPION_RIVAL
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld d, CHAMPIONSROOM_RIVAL
 	callfar MakeSpriteFacePlayer
@@ -108,8 +108,8 @@ ChampionsRoomOakArrivesScript:
 	ld a, CHAMPIONSROOM_OAK
 	ldh [hSpriteIndex], a
 	call MoveSprite
-	ld a, HS_CHAMPIONS_ROOM_OAK
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_CHAMPIONS_ROOM_OAK
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	ld a, SCRIPT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
 	ld [wChampionsRoomCurScript], a
@@ -185,15 +185,15 @@ ChampionsRoomOakExitsScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, HS_CHAMPIONS_ROOM_OAK
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_CHAMPIONS_ROOM_OAK
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld a, SCRIPT_CHAMPIONSROOM_PLAYER_FOLLOWS_OAK
 	ld [wChampionsRoomCurScript], a
 	ret
 
 ChampionsRoomPlayerFollowsOakScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, WalkToHallOfFame_RLEMovement
@@ -206,8 +206,8 @@ ChampionsRoomPlayerFollowsOakScript:
 	ret
 
 WalkToHallOfFame_RLEMovement:
-	db D_UP, 4
-	db D_LEFT, 1
+	db PAD_UP, 4
+	db PAD_LEFT, 1
 	db -1 ; end
 
 ChampionsRoomCleanupScript:
@@ -220,10 +220,10 @@ ChampionsRoomCleanupScript:
 	ret
 
 ChampionsRoom_DisplayTextID_AllowABSelectStart:
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ret
 

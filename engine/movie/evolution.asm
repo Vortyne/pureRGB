@@ -30,7 +30,7 @@ EvolveMon:
 	call Evolution_LoadPic
 	ld de, vFrontPic
 	ld hl, vBackPic
-	ld bc, 7 * 7
+	ld bc, PIC_SIZE
 	call CopyVideoData
 	ld a, [wEvoOldSpecies]
 	ld [wCurPartySpecies], a
@@ -145,7 +145,7 @@ Evolution_CheckForCancel:
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
 	pop bc
-	and B_BUTTON
+	and PAD_B
 	jr nz, .pressedB
 .notAllowedToCancel
 	dec c

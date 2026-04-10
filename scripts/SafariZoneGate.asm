@@ -16,7 +16,7 @@ SafariZoneGate_ScriptPointers:
 	dw_const SafariZoneGateLeavingSafariScript,          SCRIPT_SAFARIZONEGATE_LEAVING_SAFARI
 	dw_const SafariZoneGateSetScriptAfterMoveScript,     SCRIPT_SAFARIZONEGATE_SET_SCRIPT_AFTER_MOVE
 	dw_const SafariZoneGateScript7,                      SCRIPT_SAFARIZONEGATE_7
-	EXPORT SCRIPT_SAFARIZONEGATE_LEAVING_SAFARI ; used by engine/events/hidden_objects/safari_game.asm
+	EXPORT SCRIPT_SAFARIZONEGATE_LEAVING_SAFARI ; used by engine/events/hidden_events/safari_game.asm
 
 SafariZoneGateDefaultScript:
 	ld hl, .PlayerNextToSafariZoneWorker1CoordsArray
@@ -25,7 +25,7 @@ SafariZoneGateDefaultScript:
 	ld a, TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_1
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	xor a
 	ldh [hJoyHeld], a
@@ -38,10 +38,10 @@ SafariZoneGateDefaultScript:
 	ld [wSafariZoneGateCurScript], a
 	ret
 .player_not_next_to_worker
-	ld a, D_RIGHT
+	ld a, PAD_RIGHT
 	ld c, 1
 	call SafariZoneEntranceAutoWalk
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_SAFARIZONEGATE_PLAYER_MOVING_RIGHT
 	ld [wSafariZoneGateCurScript], a
@@ -63,7 +63,7 @@ SafariZoneGateWouldYouLikeToJoinScript:
 	ld a, TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_WOULD_YOU_LIKE_TO_JOIN
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ret
 
@@ -83,7 +83,7 @@ SafariZoneGateLeavingSafariScript:
 	jr z, .leaving_early
 	ResetEventReuseHL EVENT_IN_SAFARI_ZONE
 	call UpdateSprites
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld a, [wSafariType]
 	and a
@@ -102,7 +102,7 @@ SafariZoneGateLeavingSafariScript:
 	call DisplayTextID
 	xor a
 	ld [wNumRangersLeft], a
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld c, $2
 	call SafariZoneEntranceAutoWalk
 	ld a, SCRIPT_SAFARIZONEGATE_7
@@ -113,7 +113,7 @@ SafariZoneGateLeavingSafariScript:
 	call DisplayTextID
 	xor a
 	ld [wNumSafariBalls], a
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld c, 3
 	call SafariZoneEntranceAutoWalk
 	ld a, SCRIPT_SAFARIZONEGATE_PLAYER_MOVING_DOWN
@@ -149,7 +149,7 @@ SafariZoneGateScript7:
 	ld a, $9
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld c, $1
 	call SafariZoneEntranceAutoWalk
 	ld a, SCRIPT_SAFARIZONEGATE_PLAYER_MOVING_DOWN
@@ -250,7 +250,7 @@ SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText:
 	rst _PrintText
 	call AskGameType
 	jr c, .PleaseComeAgain ; if we cancelled, don't continue
-	ld a, D_UP
+	ld a, PAD_UP
 	ld c, 3
 	call SafariZoneEntranceAutoWalk
 	SetEvent EVENT_IN_SAFARI_ZONE
@@ -263,7 +263,7 @@ SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText:
 	ld hl, PleaseComeAgainText
 	rst _PrintText
 .CantPayWalkDown
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld c, 1
 	call SafariZoneEntranceAutoWalk
 	ld a, SCRIPT_SAFARIZONEGATE_PLAYER_MOVING_DOWN
@@ -288,7 +288,7 @@ SafariZoneGateSafariZoneWorker1LeavingEarlyText:
 	rst _PrintText
 	xor a
 	ld [wSpritePlayerStateData1FacingDirection], a
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld c, 3
 	call SafariZoneEntranceAutoWalk
 	ResetEvents EVENT_SAFARI_GAME_OVER, EVENT_IN_SAFARI_ZONE
@@ -300,7 +300,7 @@ SafariZoneGateSafariZoneWorker1LeavingEarlyText:
 	rst _PrintText
 	ld a, SPRITE_FACING_UP
 	ld [wSpritePlayerStateData1FacingDirection], a
-	ld a, D_UP
+	ld a, PAD_UP
 	ld c, 1
 	call SafariZoneEntranceAutoWalk
 	ld a, SCRIPT_SAFARIZONEGATE_LEAVING_SAFARI
@@ -370,7 +370,7 @@ AskGameType:
 	ld hl, SafariZoneEntranceWhatGame
 	rst _PrintText
 	ld hl, SafariTypeOptions
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	jr nz, .goodbye
 	ld hl, TextPointers_SafariGames
@@ -501,37 +501,37 @@ HyperBallNoRoomText:
 	text_end
 
 HideShowRangers:
-	db HS_SAFARI_ZONE_NORTH_RANGER_0
-	db HS_SAFARI_ZONE_WEST_RANGER_0
-	db HS_SAFARI_ZONE_WEST_RANGER_1
-	db HS_SAFARI_ZONE_CENTER_RANGER_0
-	db HS_SAFARI_ZONE_EAST_RANGER_0
+	db TOGGLE_SAFARI_ZONE_NORTH_RANGER_0
+	db TOGGLE_SAFARI_ZONE_WEST_RANGER_0
+	db TOGGLE_SAFARI_ZONE_WEST_RANGER_1
+	db TOGGLE_SAFARI_ZONE_CENTER_RANGER_0
+	db TOGGLE_SAFARI_ZONE_EAST_RANGER_0
 	db -1 ; end
 
 HideShowTrainers:
-	db HS_SAFARI_ZONE_EAST_RANGER_0     
-	db HS_SAFARI_ZONE_EAST_TRAINER_0    
-	db HS_SAFARI_ZONE_EAST_TRAINER_1    
-	db HS_SAFARI_ZONE_EAST_TRAINER_2    
-	db HS_SAFARI_ZONE_EAST_TRAINER_3    
-	db HS_SAFARI_ZONE_NORTH_RANGER_0    
-	db HS_SAFARI_ZONE_NORTH_TRAINER_0   
-	db HS_SAFARI_ZONE_NORTH_TRAINER_1   
-	db HS_SAFARI_ZONE_NORTH_TRAINER_2   
-	db HS_SAFARI_ZONE_NORTH_TRAINER_3   
-	db HS_SAFARI_ZONE_NORTH_TRAINER_4   
-	db HS_SAFARI_ZONE_WEST_RANGER_0    
-	db HS_SAFARI_ZONE_WEST_RANGER_1    
-	db HS_SAFARI_ZONE_WEST_TRAINER_0   
-	db HS_SAFARI_ZONE_WEST_TRAINER_1   
-	db HS_SAFARI_ZONE_WEST_TRAINER_2   
-	db HS_SAFARI_ZONE_WEST_TRAINER_3   
-	db HS_SAFARI_ZONE_WEST_TRAINER_4   
-	db HS_SAFARI_ZONE_CENTER_RANGER_0     
-	db HS_SAFARI_ZONE_CENTER_TRAINER_0    
-	db HS_SAFARI_ZONE_CENTER_TRAINER_1    
-	db HS_SAFARI_ZONE_CENTER_TRAINER_2    
-	db HS_SAFARI_ZONE_CENTER_TRAINER_3
+	db TOGGLE_SAFARI_ZONE_EAST_RANGER_0     
+	db TOGGLE_SAFARI_ZONE_EAST_TRAINER_0    
+	db TOGGLE_SAFARI_ZONE_EAST_TRAINER_1    
+	db TOGGLE_SAFARI_ZONE_EAST_TRAINER_2    
+	db TOGGLE_SAFARI_ZONE_EAST_TRAINER_3    
+	db TOGGLE_SAFARI_ZONE_NORTH_RANGER_0    
+	db TOGGLE_SAFARI_ZONE_NORTH_TRAINER_0   
+	db TOGGLE_SAFARI_ZONE_NORTH_TRAINER_1   
+	db TOGGLE_SAFARI_ZONE_NORTH_TRAINER_2   
+	db TOGGLE_SAFARI_ZONE_NORTH_TRAINER_3   
+	db TOGGLE_SAFARI_ZONE_NORTH_TRAINER_4   
+	db TOGGLE_SAFARI_ZONE_WEST_RANGER_0    
+	db TOGGLE_SAFARI_ZONE_WEST_RANGER_1    
+	db TOGGLE_SAFARI_ZONE_WEST_TRAINER_0   
+	db TOGGLE_SAFARI_ZONE_WEST_TRAINER_1   
+	db TOGGLE_SAFARI_ZONE_WEST_TRAINER_2   
+	db TOGGLE_SAFARI_ZONE_WEST_TRAINER_3   
+	db TOGGLE_SAFARI_ZONE_WEST_TRAINER_4   
+	db TOGGLE_SAFARI_ZONE_CENTER_RANGER_0     
+	db TOGGLE_SAFARI_ZONE_CENTER_TRAINER_0    
+	db TOGGLE_SAFARI_ZONE_CENTER_TRAINER_1    
+	db TOGGLE_SAFARI_ZONE_CENTER_TRAINER_2    
+	db TOGGLE_SAFARI_ZONE_CENTER_TRAINER_3
 	db -1 ; end 
 
 ShowAllTrainers:
@@ -542,7 +542,7 @@ ShowAllHl:
 	ld a, [hli]                  ; read move from move table
 	cp -1
 	ret z
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	push hl
 	predef ShowExtraObject
 	pop hl
@@ -561,7 +561,7 @@ HideAllHl:
 	ld a, [hli]                  ; read move from move table
 	cp -1
 	ret z
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	push hl
 	predef HideExtraObject
 	pop hl
@@ -571,7 +571,7 @@ AskGameTypeExplanation:
 	ld hl, SafariZoneHelp
 	rst _PrintText
 	ld hl, SafariTypeOptions
-	ld b, A_BUTTON | B_BUTTON
+	ld b, PAD_A | PAD_B
 	call DisplayMultiChoiceTextBox
 	jr nz, .goodbye
 	ld hl, TextPointers_SafariExplanations

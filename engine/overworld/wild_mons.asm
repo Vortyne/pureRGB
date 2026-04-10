@@ -21,10 +21,10 @@ LoadWildDataCommon::
 	jr z, .NoGrassData ; if no grass data, skip to surfing data
 	push hl
 	ld de, wGrassMons ; otherwise, load grass data
-	ld bc, $14
+	ld bc, WILDDATA_LENGTH - 1
 	rst _CopyData
 	pop hl
-	ld bc, $14
+	ld bc, WILDDATA_LENGTH - 1
 	add hl, bc
 .NoGrassData
 	ld a, [hli]
@@ -32,7 +32,7 @@ LoadWildDataCommon::
 	and a
 	ret z   ; if no water data, no need to load it
 	ld de, wWaterMons  ; otherwise, load surfing data
-	ld bc, $14
+	ld bc, WILDDATA_LENGTH - 1
 	rst _CopyData
 	ret
 

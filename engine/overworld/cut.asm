@@ -103,13 +103,13 @@ InitCutAnimOAM:
 	call LoadCutGrassAnimationTilePattern
 	call WriteCutOrBoulderDustAnimationOAMBlock
 	ld hl, wShadowOAMSprite36Attributes
-	ld de, 4
-	ld a, $30
+	ld de, OBJ_SIZE
+	ld a, OAM_XFLIP | OAM_PAL1
 	ld c, e
 .loop
 	ld [hl], a
 	add hl, de
-	xor $60
+	xor OAM_YFLIP | OAM_XFLIP
 	dec c
 	jr nz, .loop
 	ret
@@ -127,7 +127,7 @@ WriteCutOrBoulderDustAnimationOAMBlock:
 
 .OAMBlock:
 ; tile ID, attributes
-; TODO: update second byte with constants like OAM_OBP1
+; TODO: update second byte with constants like OAM_PAL1
 ; shinpokerednote: gbcnote: updated attributes for GBC
 	db $FC,%00010100
 	db $FD,%00010100

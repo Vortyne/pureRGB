@@ -42,7 +42,7 @@ PewterGymBrockPostBattle:
 	ld a, [wIsInBattle]
 	cp $ff
 	jp z, PewterGymResetScripts
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 ; fallthrough
 PewterGymScriptReceiveTM34:
@@ -65,11 +65,11 @@ PewterGymScriptReceiveTM34:
 	ld hl, wObtainedBadges
 	set BIT_BOULDERBADGE, [hl]
 
-	ld a, HS_GYM_GUY
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_GYM_GUY
+	ld [wToggleableObjectIndex], a
 	predef HideObject
-	ld a, HS_ROUTE_22_RIVAL_1
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ROUTE_22_RIVAL_1
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE

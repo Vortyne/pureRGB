@@ -107,7 +107,7 @@ FightingDojoKarateMasterPostBattleScript:
 	ld a, PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
 .already_facing
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	SetEventRange EVENT_BEAT_KARATE_MASTER, EVENT_BEAT_FIGHTING_DOJO_TRAINER_3
 	ld d, FIGHTINGDOJO_KARATE_MASTER
@@ -201,7 +201,7 @@ FightingDojoKarateMasterText:
 	ld a, [wYCoord]
 	cp 3
 	jr nz, .noDownWalk
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hl], -1
@@ -373,7 +373,7 @@ FightingDojoHitmonleePokeBallText:
 	jr nc, .done
 
 	; once Poké Ball is taken, hide sprite
-	ld a, HS_FIGHTING_DOJO_GIFT_1
+	ld a, TOGGLE_FIGHTING_DOJO_GIFT_1
 	call FightingDojoHideObject
 	SetEvents EVENT_GOT_HITMONLEE, EVENT_DEFEATED_FIGHTING_DOJO
 	SetEvent EVENT_GENERIC_NPC_WALKING_FLAG
@@ -411,7 +411,7 @@ FightingDojoHitmonchanPokeBallText:
 	SetEvents EVENT_GOT_HITMONCHAN, EVENT_DEFEATED_FIGHTING_DOJO
 
 	; once Poké Ball is taken, hide sprite
-	ld a, HS_FIGHTING_DOJO_GIFT_2
+	ld a, TOGGLE_FIGHTING_DOJO_GIFT_2
 	call FightingDojoHideObject
 	SetEvent EVENT_GENERIC_NPC_WALKING_FLAG
 	ld a, FIGHTINGDOJO_KARATE_MASTER
@@ -467,9 +467,9 @@ FightingDojoGoesAroundScrollText::
 
 FightingDojoKarateMasterPostBallText::
 	text_asm
-	ld a, HS_FIGHTING_DOJO_GIFT_1
+	ld a, TOGGLE_FIGHTING_DOJO_GIFT_1
 	call FightingDojoHideObject
-	ld a, HS_FIGHTING_DOJO_GIFT_2
+	ld a, TOGGLE_FIGHTING_DOJO_GIFT_2
 	call FightingDojoHideObject
 	ld c, 30
 	rst _DelayFrames
@@ -507,7 +507,7 @@ KarateMasterGoFightKogaText:
 	text_end
 
 FightingDojoHideObject:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 
 FightingDojoReplaceScrolls:
@@ -557,24 +557,24 @@ FightingDojoExpertBattleClerkText:
 	jr nc, .done
 .startBattle
 	ld hl, wSimulatedJoypadStatesEnd
-	ld [hl], D_UP
+	ld [hl], PAD_UP
 	inc hl
-	ld [hl], D_LEFT
+	ld [hl], PAD_LEFT
 	inc hl
 	ld c, 3
 	ld a, [wYCoord]
 	cp 5
-	ld b, D_LEFT
+	ld b, PAD_LEFT
 	jr z, .next
 	cp 6
-	ld a, D_UP
+	ld a, PAD_UP
 	ld b, a
 	jr z, .next
 	ld [hli], a
 	ld [hli], a
 	inc c
 	inc c
-	ld b, D_LEFT
+	ld b, PAD_LEFT
 .next
 	ld [hl], b
 	inc hl

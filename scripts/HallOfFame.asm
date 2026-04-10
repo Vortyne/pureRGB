@@ -46,7 +46,7 @@ HallOfFameResetEventsAndSaveScript:
 	ld [wHallOfFameCurScript], a
 	ld a, PALLET_TOWN
 	ld [wLastBlackoutMap], a
-	farcall SaveSAVtoSRAM
+	farcall SaveGameData
 	ld b, 5
 .delayLoop
 	ld c, 600 / 5
@@ -57,7 +57,7 @@ HallOfFameResetEventsAndSaveScript:
 	jp Init
 
 HallOfFameDefaultScript:
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wSimulatedJoypadStatesEnd
 	ld de, HallOfFameEntryMovement
@@ -70,7 +70,7 @@ HallOfFameDefaultScript:
 	ret
 
 HallOfFameEntryMovement:
-	db D_UP, 5
+	db PAD_UP, 5
 	db -1 ; end
 
 HallOfFameOakCongratulationsScript:
@@ -93,7 +93,7 @@ HallOfFameOakCongratulationsScript:
 	ld a, TEXT_HALLOFFAME_OAK
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, A_BUTTON | B_BUTTON | SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 ;;;;;;;;;; PureRGBnote: ADDED: hide the third pokeball in oak's lab because he's using it in battle now
 	ld a, [wPlayerStarter]
@@ -101,23 +101,23 @@ HallOfFameOakCongratulationsScript:
 	jr z, .hide3
 	cp STARTER2
 	jr z, .hide1
-	ld a, HS_STARTER_BALL_2
+	ld a, TOGGLE_STARTER_BALL_2
 	jr .hideStarterBall
 .hide3
-	ld a, HS_STARTER_BALL_3
+	ld a, TOGGLE_STARTER_BALL_3
 	jr .hideStarterBall
 .hide1
-	ld a, HS_STARTER_BALL_1
+	ld a, TOGGLE_STARTER_BALL_1
 .hideStarterBall
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;;
-	ld a, HS_CERULEAN_CAVE_GUY
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_CERULEAN_CAVE_GUY
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;; PureRGBnote: ADDED: hide the guy in the first floor of the secret house in cerulean - makes it appear he went downstairs.
-	ld a, HS_CERULEAN_ROCKET_HOUSE_1F_GUY
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_CERULEAN_ROCKET_HOUSE_1F_GUY
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;;
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE

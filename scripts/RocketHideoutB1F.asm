@@ -13,7 +13,7 @@ RocketHideoutB1FDoorCallbackScript:
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
-	CheckEvent EVENT_ROCKET_HIDEOUT_B1F_DOOR_UNLOCKED
+	CheckEvent EVENT_ENTERED_ROCKET_HIDEOUT
 	jr nz, .door_open
 	CheckEventReuseA EVENT_BEAT_ROCKET_HIDEOUT_1_TRAINER_4
 	jr nz, .play_sound_door_open
@@ -22,7 +22,7 @@ RocketHideoutB1FDoorCallbackScript:
 .play_sound_door_open
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound
-	SetEvent EVENT_ROCKET_HIDEOUT_B1F_DOOR_UNLOCKED
+	SetEvent EVENT_ENTERED_ROCKET_HIDEOUT
 .door_open
 	ld a, $e ; Floor Block
 .set_door_block

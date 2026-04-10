@@ -61,8 +61,8 @@ SeafoamIslandsB4FEndArticunoBattleScript:
 	cp $ff ; do nothing if you lost the battle
 	jr z, SeafoamIslandsB4FResetScript
 	SetEvent EVENT_BEAT_ARTICUNO
-	ld a, HS_ARTICUNO
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ARTICUNO
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 SeafoamB4FDefaultScript:
 	ld a, SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
@@ -407,7 +407,7 @@ SeafoamIslandsB4FDragonairEventStartScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	; add more "downs" to the surf auto movement
-	ld a, D_DOWN
+	ld a, PAD_DOWN
 	ld hl, wSimulatedJoypadStatesEnd + 1
 	ld [hli], a
 	ld [hli], a
