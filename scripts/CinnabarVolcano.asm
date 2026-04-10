@@ -15,7 +15,6 @@ CinnabarVolcano_Script:
 	jp EnableAutoTextBoxDrawing
 
 CinnabarVolcanoOnMapLoad:
-	; TODO: remove debug stuff
 	;SetEvent EVENT_GOT_LAVA_SUIT
 	;SetEventReuseHL EVENT_GOT_DRILL
 	;SetEventReuseHL EVENT_VOLCANO_BOMBED_FLOOR1
