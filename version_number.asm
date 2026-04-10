@@ -1,4 +1,4 @@
-db "2.7.1"
+db "2.7.2"
 
 ; wGameInternalVersion values
 	const_def
