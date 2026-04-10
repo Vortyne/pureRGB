@@ -4,7 +4,7 @@
 DisplayPokemonCenterDialogue_::
 	call SaveScreenTilesToBuffer1 ; save screen
 	ldh a, [hJoyHeld]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr z, .notFastWelcome ; NEW: if you're holding b when you start talking to the nurse, it'll skip right to healing.
 .fastWelcome
 	CheckEvent EVENT_DONATED_TO_POKECENTER_CHARITY ; must donate to pokecenter charity at rock tunnel pokecenter to be able to do this

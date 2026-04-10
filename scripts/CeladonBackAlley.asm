@@ -35,7 +35,7 @@ CeladonBackAlley_Script:
 	set BIT_WARP_FROM_CUR_SCRIPT, [hl]
 .notAutoWarp
 	ldh a, [hJoyPressed]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	ret z
 	callfar _GetTileAndCoordsInFrontOfPlayer
 	ld a, [wTileInFrontOfPlayer]
@@ -101,7 +101,7 @@ CeladonBackAlleyHooliganText:
 	call IsPlayerBesideCeladonBackAlleyHooligan
 	jr nz, .done
 	; force player to walk up 1 coord if battle not started and they were beside clerk
-	ld a, D_UP
+	ld a, PAD_UP
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hl], -1
@@ -112,22 +112,22 @@ CeladonBackAlleyHooliganText:
 	rst TextScriptEnd
 .startBattle
 	ld hl, wSimulatedJoypadStatesEnd
-	ld [hl], D_DOWN
+	ld [hl], PAD_DOWN
 	inc hl
 	ld a, [wXCoord]
 	sub 18
 	ld b, 1
 	jr z, .beside 
-	ld [hl], D_DOWN
+	ld [hl], PAD_DOWN
 	inc hl
-	ld [hl], D_LEFT
+	ld [hl], PAD_LEFT
 	inc hl
 	dec a
 	ld b, 3
 	jr z, .beside
-	ld [hl], D_LEFT
+	ld [hl], PAD_LEFT
 	inc hl
-	ld [hl], D_UP
+	ld [hl], PAD_UP
 	inc hl
 	ld b, 5
 .beside
@@ -308,7 +308,7 @@ CeladonBackAlleyAfterBattle:
 	call FitnessClubAfterBattleText
 	jr c, .done
 	; if nc, make the player leave
-	ld a, D_UP
+	ld a, PAD_UP
 	ld hl, wSimulatedJoypadStatesEnd
 	ld [hli], a
 	ld [hli], a

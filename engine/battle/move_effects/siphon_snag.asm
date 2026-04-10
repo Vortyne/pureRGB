@@ -110,7 +110,7 @@ _AnimationSiphonSnagAttack::
 	and a
 	jr z, .next
 	inc hl
-	ld [hl], OAM_HFLIP | OAM_VFLIP
+	ld [hl], OAM_XFLIP | OAM_YFLIP
 .next
 	ld hl, wShadowOAMSprite09TileID
 	ld b, 4
@@ -259,7 +259,7 @@ _AnimationSiphonSnagAttack::
 	ldh a, [hWhoseTurn]
 	and a
 	jr z, .skipTendrilInit
-	ld [hl], OAM_HFLIP | OAM_VFLIP
+	ld [hl], OAM_XFLIP | OAM_YFLIP
 .skipTendrilInit
 	jp GoToNextOAMEntry
 .getTendrilCoordChange
@@ -334,15 +334,15 @@ AnimationSiphonSnagHealParty:
 	call GoToNextOAMEntry4
 	ld [hl], $31
 	inc hl
-	ld [hl], OAM_HFLIP
+	ld [hl], OAM_XFLIP
 	call GoToNextOAMEntry
 	ld [hl], $31
 	inc hl
-	ld [hl], OAM_VFLIP
+	ld [hl], OAM_YFLIP
 	call GoToNextOAMEntry
 	ld [hl], $31
 	inc hl
-	ld [hl], OAM_VFLIP | OAM_HFLIP
+	ld [hl], OAM_YFLIP | OAM_XFLIP
 
 	ld a, $d0
 	ld [wFrequencyModifier], a

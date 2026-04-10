@@ -20,8 +20,8 @@ CheckHideMrFujiInPokemonTower:
 	ret z
 	CheckEvent EVENT_RESCUED_MR_FUJI
 	ret z
-	ld a, HS_POKEMON_TOWER_7F_MR_FUJI
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_POKEMON_TOWER_7F_MR_FUJI
+	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 ;;;;;;;;;;
 

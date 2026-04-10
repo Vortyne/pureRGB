@@ -46,7 +46,7 @@ LoadLearnsetTiles:
 	call PlaceString
 	call FindFirstBlankTile
 	; put 's in this blank tile next to the pokemon's name
-	ld [hl], "'s"
+	ld [hl], '\'s'
 	ret
 
 ShowMonLearnsetMenu:
@@ -73,7 +73,7 @@ ShowMonLearnsetMenu:
 	call ClearScreenArea
 	; clear the page text description tiles
 	hlcoord 11, 2
-	ld [hl], " "
+	ld [hl], ' '
 	hlcoord 12, 1
 	lb bc, 2, 8
 	call ClearScreenArea
@@ -166,7 +166,7 @@ PrepLearnsetList:
 	
 	
 ShowLevelUpLearnset:
-	ld a, D_RIGHT | B_BUTTON | A_BUTTON
+	ld a, PAD_RIGHT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	callfar LoadLevelUpLearnsetIntoWRAM
 	hlcoord 7, 3
@@ -178,7 +178,7 @@ ShowLevelUpLearnset:
 	call DrawNonCurrentLearnsetTab
 	hlcoord 11, 1
 	ld a, [hli]
-	cp " "
+	cp ' '
 	jr z, .notLongName
 	inc hl
 .notLongName
@@ -221,7 +221,7 @@ ShowLevelUpLearnset:
 	cp 10
 	pop hl
 	jr nc, .twoDigit
-	ld [hl], " "
+	ld [hl], ' '
 	inc hl
 	add NUMBER_CHAR_OFFSET
 	ld [hli], a
@@ -269,12 +269,12 @@ ShowLevelUpLearnset:
 	ldh [hAutoBGTransferEnabled], a
 	call GBPalNormal
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, .buttonBPressed
-	bit BIT_A_BUTTON, a 
+	bit B_PAD_A, a 
 	jp nz, .buttonAPressed
 .checkIfUpPressed
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
 .upPressed ; scroll up one row
 	ld a, [wListScrollOffset]
@@ -284,7 +284,7 @@ ShowLevelUpLearnset:
 	ld [wListScrollOffset], a
 	jp .loop
 .checkIfDownPressed
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr z, .checkIfRightPressed
 .downPressed ; scroll down one row
 	ld a, [wDexLearnsetListCount]
@@ -299,7 +299,7 @@ ShowLevelUpLearnset:
 	ld [wListScrollOffset], a
 	jp .loop
 .checkIfRightPressed
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr z, .checkIfLeftPressed
 .rightPressed 
 	ld hl, wLearnsetPage
@@ -308,7 +308,7 @@ ShowLevelUpLearnset:
 	and a
 	ret
 .checkIfLeftPressed
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr z, .buttonAPressed
 .leftPressed
 	ld hl, wLearnsetPage
@@ -352,7 +352,7 @@ TMLearnsetListPrint:
 	jp PrintNumber ; print level
 
 ShowTMLearnset:
-	ld a, D_LEFT | D_RIGHT | B_BUTTON | A_BUTTON
+	ld a, PAD_LEFT | PAD_RIGHT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	hlcoord 7, 3
 	call DrawNonCurrentLearnsetTab
@@ -363,7 +363,7 @@ ShowTMLearnset:
 	call DrawNonCurrentLearnsetTab
 	hlcoord 11, 1
 	ld a, [hli]
-	cp " "
+	cp ' '
 	jr z, .notLongName
 	inc hl
 .notLongName
@@ -440,12 +440,12 @@ ShowTMLearnset:
 	ldh [hAutoBGTransferEnabled], a
 	call GBPalNormal
 	call HandleMenuInput
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, CheckPageLeftRight.buttonBPressed
-	bit BIT_A_BUTTON, a 
+	bit B_PAD_A, a 
 	jp nz, CheckPageLeftRight.buttonAPressed
 .checkIfUpPressed
-	bit BIT_D_UP, a
+	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
 .upPressed ; scroll up one row
 	ld a, [wListScrollOffset]
@@ -455,7 +455,7 @@ ShowTMLearnset:
 	ld [wListScrollOffset], a
 	jp .loop
 .checkIfDownPressed
-	bit BIT_D_DOWN, a
+	bit B_PAD_DOWN, a
 	jr z, CheckPageLeftRight
 .downPressed ; scroll down one row
 	ld a, [wDexLearnsetListCount]
@@ -474,19 +474,19 @@ ShowTMLearnset:
 	ld de, NoneText
 	call PlaceString
 	ld hl, wMenuWatchedKeys
-	res BIT_A_BUTTON, [hl]
+	res B_PAD_A, [hl]
 	jp ShowEvolutions.waitForButtonPress
 
 CheckPageLeftRight:
 .checkIfRightPressed
-	bit BIT_D_RIGHT, a
+	bit B_PAD_RIGHT, a
 	jr z, .checkIfLeftPressed
 .rightPressed 
 	ld hl, wLearnsetPage
 	inc [hl]
 	jr .changedPage
 .checkIfLeftPressed
-	bit BIT_D_LEFT, a
+	bit B_PAD_LEFT, a
 	jr z, .buttonAPressed
 .leftPressed
 	ld hl, wLearnsetPage
@@ -530,7 +530,7 @@ IntoLearnsetText:
 
 
 ShowEvolutions:
-	ld a, D_LEFT | B_BUTTON
+	ld a, PAD_LEFT | PAD_B
 	ld [wMenuWatchedKeys], a
 	hlcoord 7, 3
 	call DrawNonCurrentLearnsetTab
@@ -541,7 +541,7 @@ ShowEvolutions:
 	call DrawLearnsetTab
 	hlcoord 11, 1
 	ld a, [hli]
-	cp " "
+	cp ' '
 	jr z, .notLongName
 	inc hl
 .notLongName
@@ -570,7 +570,7 @@ ShowEvolutions:
 	push de
 	call .printEvolveText
 	call FindFirstBlankTile
-	ld [hl], "s"
+	ld [hl], 's'
 	inc hl
 	inc hl
 	pop de
@@ -641,7 +641,7 @@ ShowEvolutions:
 	ld [wNamedObjectIndex], a
 	; if not dont show its name
 	pop hl
-	ld [hl], "?"
+	ld [hl], '?'
 	jr z, .skipGetName
 	; otherwise show its name
 	call GetMonName
@@ -666,7 +666,7 @@ ShowEvolutions:
 	ldh a, [hJoy5]
 	and c
 	jr z, .waitForButtonPress
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jp nz, CheckPageLeftRight.buttonBPressed
 	jp CheckPageLeftRight
 .doesNotEvolve
@@ -738,7 +738,7 @@ FindFirstBlankTile:
 	; we're still at hlcoord 1,1
 	; after printing the name keep iterating the coord horizontally until we hit a blank space
 	ld a, [hli]
-	cp " "
+	cp ' '
 	jr nz, .loop
 	dec hl
 	ret

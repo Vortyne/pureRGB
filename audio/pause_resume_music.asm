@@ -61,15 +61,15 @@ ResetPausedAudioData::
 	ret
 
 AudioWramSramAction::
-	ld a, SRAM_ENABLE
-  	ld [MBC1SRamEnable], a
+	ld a, RAMG_SRAM_ENABLE
+  	ld [rRAMG], a
   	ld a, $1
-  	ld [MBC1SRamBankingMode], a
+  	ld [rBMODE], a
   	xor a
-	ld [MBC1SRamBank], a
+	ld [rRAMB], a
 	ld bc, wAudioWRAMEnd - wAudioWRAMStart
 	rst _CopyData
    	xor a
-  	ld [MBC1SRamBankingMode], a
-  	ld [MBC1SRamEnable], a
+  	ld [rBMODE], a
+  	ld [rRAMG], a
   	ret

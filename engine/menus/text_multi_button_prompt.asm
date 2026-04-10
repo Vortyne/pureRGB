@@ -1,16 +1,16 @@
 ; PureRGBnote: ADDED: 
 ; A new "next page" function for text scripts that has more functionality
 ; inputs: (required)
-;   wMenuWatchedKeys - which buttons will jump out of the text script. A_BUTTON is an invalid option, it always proceeds the text script.
+;   wMenuWatchedKeys - which buttons will jump out of the text script. PAD_A is an invalid option, it always proceeds the text script.
 ;   wMenuCursorLocation - the tilemap coordinate where the down arrow cursor should flash at.
 
 TextCommandPromptMultiButton::
 	call LoadDownArrowCoord
-	ld [hl], "▼"
+	ld [hl], '▼'
 	call Delay3
 	call ManualTextScrollMultiButton
 	call LoadDownArrowCoord
-	ld [hl], " "
+	ld [hl], ' '
 	ld a, d
 	and a
 	jr nz, .interrupted ; exit if they pressed one of the specified watched buttons
@@ -32,7 +32,7 @@ TextCommandPromptMultiButton::
 ManualTextScrollMultiButton::
 	call WaitForTextScrollSpecificButtonsPress
 	ld a, d
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr nz, .continueText
 	ld d, 1
 	ret
@@ -66,7 +66,7 @@ WaitForTextScrollSpecificButtonsPress::
 	ldh a, [hJoy5]
 	ld d, a
 	ld a, [wMenuWatchedKeys]
-	or A_BUTTON
+	or PAD_A
 	and d 
 	jr z, .loop
 	pop af

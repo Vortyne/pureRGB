@@ -53,11 +53,11 @@ SaveFileUpdateCheck::
 	ld [wCurrentMenuItem], a
 .reload
 	ld hl, SaveFileUpdaterMenu
-	ld b, A_BUTTON | START | B_BUTTON
+	ld b, PAD_A | PAD_START | PAD_B
 	call DisplayMultiChoiceTextBoxNoMenuReset
 	jr nz, .exitSaveUpdater
 	ldh a, [hJoy5]
-	bit BIT_A_BUTTON, a
+	bit B_PAD_A, a
 	jr z, .startPressed
 	ld hl, PressStartToContinueText
 	rst _PrintText
@@ -116,18 +116,18 @@ OriginalGameSaveFileUpdate:
 	; step 6: do any other event constant updates that are necessary from versions earlier than the current one
 	call EarlierVersionEventConstantsUpdate
 	; step 7: initialize the new extra hidden objects flags
-	callfar InitializeExtraMissableObjectsFlags
+	callfar InitializeExtraToggleableObjectsFlags
 	; step 8: shift normal hidden object flags according to current ordering
 	call TransferMovedHideShowFlags
 	ld de, RemovedHideShowFlags
-	ld c, NUM_HS_ORIGINAL_OBJECTS / 8 - 1
-	ld hl, wMissableObjectFlags + NUM_HS_ORIGINAL_OBJECTS / 8
+	ld c, NUM_ORIGINAL_TOGGLEABLE_OBJECTS / 8 - 1
+	ld hl, wToggleableObjectFlags + NUM_ORIGINAL_TOGGLEABLE_OBJECTS / 8
 	call RemoveValuesFromFlagArray
 	ld hl, InsertDefaultValueToHideShowArray
 	call SaveFileUpdaterLoadPointer
 	ld de, AddedHideShowFlags
-	ld c, NUM_HS_OBJECTS / 8
-	ld hl, wMissableObjectFlags
+	ld c, NUM_TOGGLEABLE_OBJECTS / 8
+	ld hl, wToggleableObjectFlags
 	call InsertValuesToFlagArray
 	call UpdateNewHideShowFlagsBasedOnGameProgression
 	; step 9: clear movedex flags since it's in previously bag item memory
@@ -179,7 +179,7 @@ ResetMonFlagsFully:
 	push bc
 	dec d
 	callfar ChangeBoxData
-	callfar SaveSAVtoSRAM
+	callfar SaveGameData
 	pop bc
 	ld hl, wBoxMon1Flags
 	ld a, [wBoxCount]
@@ -198,7 +198,7 @@ ResetMonFlagsFully:
 	pop de
 	dec d
 	jr nz, .loopThroughBoxes
-	callfar SaveSAVtoSRAM
+	callfar SaveGameData
 	ret
 	
 
@@ -243,10 +243,10 @@ EarlierVersionSaveFileUpdate:
 	call EarlierVersionEventConstantsUpdate
 	; step 6: update hide show variables based on events (if possible)
 	CheckEvent EVENT_MET_DAD
-	ld a, HS_REDS_HOUSE_1F_DAD
+	ld a, TOGGLE_REDS_HOUSE_1F_DAD
 	call z, HideExtraObjectEntry
 	CheckEvent EVENT_DIAMOND_MINE_COMPLETED
-	ld a, HS_PROSPECTORS_HOUSE_PROSPECTOR
+	ld a, TOGGLE_PROSPECTORS_HOUSE_PROSPECTOR
 	call z, HideExtraObjectEntry
 	callfar SetDetentionHideShows
 	ld hl, SaveFileUpdater2_6_0_Hides
@@ -264,35 +264,35 @@ HideMultipleExtraObjects:
 	pop hl
 	jr HideMultipleExtraObjects
 HideExtraObjectEntry:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideExtraObject
 
 SaveFileUpdater2_6_0_Hides:
 	; despite the champ arena having been introduced already before 2.6.0, we can reset the values to deal with even earlier versions
-	; since all of the values are supposed to be set to HIDE anyway at every point in time other than during battles in the champ arena.
-	db HS_CHAMP_ARENA_CHALLENGER
-	db HS_CHAMP_ARENA_PROXY_PLAYER
-	db HS_CHAMP_ARENA_TM_KID
-	db HS_CHAMP_ARENA_CROWD_1
-	db HS_CHAMP_ARENA_CROWD_2
-	db HS_CHAMP_ARENA_VARIABLE_CROWD_1
-	db HS_CHAMP_ARENA_VARIABLE_CROWD_2
-	db HS_CHAMP_ARENA_CROWD_3 
-	db HS_CHAMP_ARENA_VARIABLE_CROWD_3 
-	db HS_CHAMP_ARENA_CROWD_4 
-	; new variables for 2.6.0...only necessary to set them if they're by default HIDE
-	db HS_VOLCANO_RUBY_1
-	db HS_VOLCANO_RUBY_2
-	db HS_VOLCANO_RUBY_3
-	db HS_VOLCANO_ANIMATION_PROXY
-	db HS_DIGLETTS_CAVE_DIGLETT1
-	db HS_DIGLETTS_CAVE_DIGLETT2
-	db HS_DIGLETTS_CAVE_DIGLETT3
-	db HS_DIGLETTS_CAVE_DIGLETT4
-	db HS_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
-	db HS_ERIK_HOUSE
-	db HS_SARA_HOUSE
-	db HS_ERIK_SARA_HOUSE_NOTE2
+	; since all of the values are supposed to be set to OFF anyway at every point in time other than during battles in the champ arena.
+	db TOGGLE_CHAMP_ARENA_CHALLENGER
+	db TOGGLE_CHAMP_ARENA_PROXY_PLAYER
+	db TOGGLE_CHAMP_ARENA_TM_KID
+	db TOGGLE_CHAMP_ARENA_CROWD_1
+	db TOGGLE_CHAMP_ARENA_CROWD_2
+	db TOGGLE_CHAMP_ARENA_VARIABLE_CROWD_1
+	db TOGGLE_CHAMP_ARENA_VARIABLE_CROWD_2
+	db TOGGLE_CHAMP_ARENA_CROWD_3 
+	db TOGGLE_CHAMP_ARENA_VARIABLE_CROWD_3 
+	db TOGGLE_CHAMP_ARENA_CROWD_4 
+	; new variables for 2.6.0...only necessary to set them if they're by default OFF
+	db TOGGLE_VOLCANO_RUBY_1
+	db TOGGLE_VOLCANO_RUBY_2
+	db TOGGLE_VOLCANO_RUBY_3
+	db TOGGLE_VOLCANO_ANIMATION_PROXY
+	db TOGGLE_DIGLETTS_CAVE_DIGLETT1
+	db TOGGLE_DIGLETTS_CAVE_DIGLETT2
+	db TOGGLE_DIGLETTS_CAVE_DIGLETT3
+	db TOGGLE_DIGLETTS_CAVE_DIGLETT4
+	db TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
+	db TOGGLE_ERIK_HOUSE
+	db TOGGLE_SARA_HOUSE
+	db TOGGLE_ERIK_SARA_HOUSE_NOTE2
 	db -1
 
 EarlierVersionEventConstantsUpdate:
@@ -319,20 +319,20 @@ RemoveItemFromBagAndBox:
 ; this array is read backwards, just so the order of which flags is a little bit clearer. we need to iterate from the highest removed
 ; flag to the lowest to keep their const values accurate.
 	db -1
-	db HS_ORIGINAL_SILPH_CO_7F_8                 ; AA XXX sprite doesn't exist
-	db HS_ORIGINAL_UNUSED_MAP_F4_1
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_1       ; C3 X
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_2       ; C4 X
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_3       ; C5 X
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_4       ; C6 X
-	db HS_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_1      ; C7 X
-	db HS_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_2      ; C8 X
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_1       ; C9 X
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_2       ; CA X
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_3       ; CB X
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_4       ; CC X
+	db TOGGLE_ORIGINAL_SILPH_CO_7F_8                 ; AA XXX sprite doesn't exist
+	db TOGGLE_ORIGINAL_UNUSED_MAP_F4_1
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_1       ; C3 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_2       ; C4 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_3       ; C5 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_4       ; C6 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_1      ; C7 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_2      ; C8 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_1       ; C9 X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_2       ; CA X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_3       ; CB X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_4       ; CC X
 RemovedHideShowFlags::
-	db HS_ORIGINAL_SAFARI_ZONE_CENTER_ITEM       ; CD X
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_CENTER_ITEM       ; CD X
 
 RemoveValuesFromFlagArray::
 .outerLoopShiftLeft
@@ -398,32 +398,32 @@ RemoveValuesFromFlagArray::
 
 ; flags in the current game but not in the original one
 AddedHideShowFlags:
-	db HS_PEWTER_CITY_ITEM
-	db HS_CERULEAN_ITEM
-	db HS_ROUTE_2_ITEM_3                ; NEW X
-	db HS_ROUTE_4_ITEM_2                ; NEW X
-	db HS_ROUTE_5_ITEM                  ; NEW X
-	db HS_ROUTE_6_ITEM                  ; NEW X
-	db HS_ROUTE_8_ITEM                  ; NEW X
-	db HS_ROUTE_10_ITEM                 ; NEW X
-	db HS_ROUTE_11_ITEM                 ; NEW X
-	db HS_ROUTE_12_ITEM_3               ; NEW X
-	db HS_ROUTE_21_ITEM                 ; NEW X
-	db HS_ROUTE_22_ITEM_1               ; NEW X
-	db HS_ROUTE_22_ITEM_2               ; NEW X
-	db HS_ROUTE_23_ITEM_1               ; NEW X
-	db HS_ROUTE_23_ITEM_2               ; NEW X
-	db HS_ROUTE_24_ITEM_2               ; NEW X
-	db HS_CELADON_MANSION_ROOF_ITEM     ; NEW X
-	db HS_SILPH_CO_1F_TRAINER_1         ; NEW
-	db HS_SILPH_CO_1F_TRAINER_2         ; NEW
-	db HS_SILPH_CO_1F_TRAINER_3         ; NEW
-	db HS_SILPH_CO_1F_TRAINER_4         ; NEW
-	db HS_ROCK_TUNNEL_1F_ITEM           ; NEW X
-	db HS_ROCK_TUNNEL_B1F_ITEM_1        ; NEW X
-	db HS_ROCK_TUNNEL_B1F_ITEM_2        ; NEW X
-	db HS_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL ; E2
-	db HS_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL ; E3
+	db TOGGLE_PEWTER_CITY_ITEM
+	db TOGGLE_CERULEAN_ITEM
+	db TOGGLE_ROUTE_2_ITEM_3                ; NEW X
+	db TOGGLE_ROUTE_4_ITEM_2                ; NEW X
+	db TOGGLE_ROUTE_5_ITEM                  ; NEW X
+	db TOGGLE_ROUTE_6_ITEM                  ; NEW X
+	db TOGGLE_ROUTE_8_ITEM                  ; NEW X
+	db TOGGLE_ROUTE_10_ITEM                 ; NEW X
+	db TOGGLE_ROUTE_11_ITEM                 ; NEW X
+	db TOGGLE_ROUTE_12_ITEM_3               ; NEW X
+	db TOGGLE_ROUTE_21_ITEM                 ; NEW X
+	db TOGGLE_ROUTE_22_ITEM_1               ; NEW X
+	db TOGGLE_ROUTE_22_ITEM_2               ; NEW X
+	db TOGGLE_ROUTE_23_ITEM_1               ; NEW X
+	db TOGGLE_ROUTE_23_ITEM_2               ; NEW X
+	db TOGGLE_ROUTE_24_ITEM_2               ; NEW X
+	db TOGGLE_CELADON_MANSION_ROOF_ITEM     ; NEW X
+	db TOGGLE_SILPH_CO_1F_TRAINER_1         ; NEW
+	db TOGGLE_SILPH_CO_1F_TRAINER_2         ; NEW
+	db TOGGLE_SILPH_CO_1F_TRAINER_3         ; NEW
+	db TOGGLE_SILPH_CO_1F_TRAINER_4         ; NEW
+	db TOGGLE_ROCK_TUNNEL_1F_ITEM           ; NEW X
+	db TOGGLE_ROCK_TUNNEL_B1F_ITEM_1        ; NEW X
+	db TOGGLE_ROCK_TUNNEL_B1F_ITEM_2        ; NEW X
+	db TOGGLE_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL ; E2
+	db TOGGLE_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL ; E3
 	db -1
 
 InsertValuesToFlagArray::
@@ -507,7 +507,7 @@ InsertDefaultValueToHideShowArray:
 	ld e, a
 	callfar GetObjectDefaultState
 	ld a, d
-	cp HIDE
+	cp OFF
 	ld d, $FF
 	ret z
 InsertZeroToFlagArray:
@@ -521,17 +521,17 @@ ENDM
 ; some hide show flags were moved to the extra hide show flags instead due to the map using extra flags instead.
 
 TransferHideShowFlagArray:
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_1, HS_SAFARI_ZONE_EAST_ITEM_1
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_2, HS_SAFARI_ZONE_EAST_ITEM_2
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_3, HS_SAFARI_ZONE_EAST_ITEM_3       
-	db HS_ORIGINAL_SAFARI_ZONE_EAST_ITEM_4, HS_SAFARI_ZONE_EAST_ITEM_4      
-	db HS_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_1, HS_SAFARI_ZONE_NORTH_ITEM_1      
-	db HS_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_2, HS_SAFARI_ZONE_NORTH_ITEM_2      
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_1, HS_SAFARI_ZONE_WEST_ITEM_1      
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_2, HS_SAFARI_ZONE_WEST_ITEM_2      
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_3, HS_SAFARI_ZONE_WEST_ITEM_3
-	db HS_ORIGINAL_SAFARI_ZONE_WEST_ITEM_4, HS_SAFARI_ZONE_WEST_ITEM_4
-	db HS_ORIGINAL_SAFARI_ZONE_CENTER_ITEM, HS_SAFARI_ZONE_CENTER_ITEM
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_1, TOGGLE_SAFARI_ZONE_EAST_ITEM_1
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_2, TOGGLE_SAFARI_ZONE_EAST_ITEM_2
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_3, TOGGLE_SAFARI_ZONE_EAST_ITEM_3       
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_EAST_ITEM_4, TOGGLE_SAFARI_ZONE_EAST_ITEM_4      
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_1, TOGGLE_SAFARI_ZONE_NORTH_ITEM_1      
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_NORTH_ITEM_2, TOGGLE_SAFARI_ZONE_NORTH_ITEM_2      
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_1, TOGGLE_SAFARI_ZONE_WEST_ITEM_1      
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_2, TOGGLE_SAFARI_ZONE_WEST_ITEM_2      
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_3, TOGGLE_SAFARI_ZONE_WEST_ITEM_3
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_WEST_ITEM_4, TOGGLE_SAFARI_ZONE_WEST_ITEM_4
+	db TOGGLE_ORIGINAL_SAFARI_ZONE_CENTER_ITEM, TOGGLE_SAFARI_ZONE_CENTER_ITEM
 	db -1
 
 TransferMovedHideShowFlags:
@@ -540,7 +540,7 @@ TransferMovedHideShowFlags:
 	ld a, [de]
 	cp -1
 	ret z
-	ld hl, wMissableObjectFlags
+	ld hl, wToggleableObjectFlags
 	ld c, a
 	ld b, FLAG_TEST
 	push de
@@ -555,7 +555,7 @@ TransferMovedHideShowFlags:
 	inc de
 	ld a, [de]
 	ld c, a
-	ld hl, wExtraMissableObjectFlags
+	ld hl, wExtraToggleableObjectFlags
 	push de
 	predef FlagActionPredef
 	pop de
@@ -564,10 +564,10 @@ TransferMovedHideShowFlags:
 
 
 HideShowFlagsThatNeedUpdating:
-	db HS_SILPH_CO_1F_TRAINER_1
-	db HS_SILPH_CO_1F_TRAINER_2
-	db HS_SILPH_CO_1F_TRAINER_3
-	db HS_SILPH_CO_1F_TRAINER_4
+	db TOGGLE_SILPH_CO_1F_TRAINER_1
+	db TOGGLE_SILPH_CO_1F_TRAINER_2
+	db TOGGLE_SILPH_CO_1F_TRAINER_3
+	db TOGGLE_SILPH_CO_1F_TRAINER_4
 	db -1
 
 UpdateNewHideShowFlagsBasedOnGameProgression:
@@ -580,32 +580,32 @@ UpdateNewHideShowFlagsBasedOnGameProgression:
 	cp -1
 	jr z, .next
 	push hl
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef ShowObject
 	pop hl
 	jr .loop
 .next
-	ld a, HS_MEW_VERMILION_DOCK
+	ld a, TOGGLE_MEW_VERMILION_DOCK
 	call SaveFileUpdaterHideObjectEntry
 	CheckEvent EVENT_BEAT_CHAMPION_RIVAL
 	jr z, .dontHideRocketHouseGuy
-	ld a, HS_CERULEAN_ROCKET_HOUSE_1F_GUY
+	ld a, TOGGLE_CERULEAN_ROCKET_HOUSE_1F_GUY
 	call SaveFileUpdaterHideObjectEntry
 .dontHideRocketHouseGuy
 	ld a, [wStatusFlags4]
 	bit BIT_GOT_SILPH_CO_LAPRAS_OR_ITEM, a
 	jr z, .dontHideCeladonLaprasGuy
-	ld a, HS_LAPRAS_GUY_CELADON
+	ld a, TOGGLE_LAPRAS_GUY_CELADON
 	call SaveFileUpdaterHideObjectEntry
 .dontHideCeladonLaprasGuy
 	CheckEvent EVENT_GOT_DOME_FOSSIL
-	ld a, HS_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL
 	call nz, SaveFileUpdaterHideObjectEntry
 	CheckEvent EVENT_GOT_HELIX_FOSSIL
 	ret z
-	ld a, HS_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL
+	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL
 SaveFileUpdaterHideObjectEntry:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 
 
@@ -639,16 +639,16 @@ BeforeVersion2_7_0SaveFileUpdate:
 	ret
 
 SaveFileUpdater2_7_0_BeforeCutHides:
-	db HS_VERMILIONFITNESSCLUB_CLERK
-	db HS_VERMILIONFITNESSCLUB_MUSCLE1
-	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD
-	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD2
+	db TOGGLE_VERMILIONFITNESSCLUB_CLERK
+	db TOGGLE_VERMILIONFITNESSCLUB_MUSCLE1
+	db TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD
+	db TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD2
 	db -1
 
 SaveFileUpdater2_7_0_AfterCutHides:
-	db HS_VERMILIONFITNESSCLUB_JANITOR
-	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD
-	db HS_CERULEAN_BALL_DESIGNER_CLIPBOARD2
+	db TOGGLE_VERMILIONFITNESSCLUB_JANITOR
+	db TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD
+	db TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD2
 	db -1
 
 ; Note: if EVENT_RESCUED_MR_FUJI_2 is ever used set it correctly in save updater.

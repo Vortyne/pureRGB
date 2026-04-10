@@ -353,7 +353,7 @@ BillsGardenBlueText:
 
 	call SaveScreenTilesToBuffer1
 	ld hl, BillsGardenBlueThanks
-	ld b, A_BUTTON
+	ld b, PAD_A
 	call DisplayMultiChoiceTextBox
 	call LoadScreenTilesFromBuffer1
 	ld a, [wCurrentMenuItem]
@@ -578,8 +578,8 @@ BillsGardenDadText:
 	text_asm
 	call SaveScreenTilesToBuffer2
 	SetEvent EVENT_MET_DAD
-	ld a, HS_REDS_HOUSE_1F_DAD
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_REDS_HOUSE_1F_DAD
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
 	; make MOM face down
 	ld a, BILLS_GARDEN_VARIABLE_GUEST2

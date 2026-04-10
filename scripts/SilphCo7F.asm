@@ -310,8 +310,8 @@ SilphCo7TrainerHeader3:
 SilphCo7FSilphWorkerM1Text:
 ; lapras guy
 	text_asm
-	ld a, HS_LAPRAS_GUY_CELADON
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_LAPRAS_GUY_CELADON
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 	CheckEventHL EVENT_GOT_LAPRAS_EARLY
 	jr nz, .gotLaprasAlready

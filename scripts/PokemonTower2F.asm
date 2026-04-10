@@ -111,7 +111,7 @@ PokemonTower2FPlayerMovingScript:
 	cp 5
 	jr nz, .doneMoving
 .startMoving
-	ld d, D_LEFT
+	ld d, PAD_LEFT
 	jpfar ForceStepFromDoor
 .doneMoving
 	ld a, PLAYER_DIR_LEFT

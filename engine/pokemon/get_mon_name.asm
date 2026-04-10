@@ -8,7 +8,7 @@ _GetMonName::
 	push de
 	ld bc, NAME_LENGTH - 1
 	rst _CopyData
-	ld a, "@"
+	ld a, '@'
 	ld [de], a
 	pop de
 	ret

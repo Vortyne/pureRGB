@@ -27,11 +27,11 @@ FuchsiaCityDefaultScript:
 	xor a
 	ld [wJoyIgnore], a
 	; hide erik sprite
-	ld a, HS_FUCHSIA_ERIK
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_FUCHSIA_ERIK
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
-	ld a, HS_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
+	ld [wToggleableObjectIndex], a
 	; show erik in safari zone sprite
 	predef_jump ShowExtraObject
 .removeAddCutTiles

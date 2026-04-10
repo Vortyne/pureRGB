@@ -25,7 +25,7 @@ LoadBillsPCExtraTiles::
 DisplayChangeBoxMenu:
 	xor a
 	ldh [hAutoBGTransferEnabled], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	ld a, 11
 	ld [wMaxMenuItem], a
@@ -147,14 +147,14 @@ DrawCurrentBoxPrompt::
 	push hl
 	ld a, $76 ; "No" tile
 	ld [hli], a
-	ld a, "."
+	ld a, '.'
 	ld [hli], a
 	ld a, [wCurrentBoxNum]
 	and $7f
 	cp 9
 	jr c, .singleDigitBoxNum
 	sub 9
-	ld [hl], "1"
+	ld [hl], '1'
 	inc hl
 	add NUMBER_CHAR_OFFSET
 	jr .next

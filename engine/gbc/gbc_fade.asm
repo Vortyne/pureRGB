@@ -442,7 +442,7 @@ DecrementAllColorsGBC:
 
 ;If not in 2x CPU mode, everything updates in less than 144 scanlines
 ;Therefore, normal mode needs an audio update but 60 fps mode does not
-	ldh a, [rKEY1]
+	ldh a, [rSPD]
 	bit 7, a
 	push af
 	call nz, DelayFrame	;Delay a frame in 60 fps mode to get the timing down right for any fades
@@ -559,7 +559,7 @@ IncrementAllColorsGBC:
 
 ;If not in 2x CPU mode, everything updates in less than 144 scanlines
 ;Therefore, normal mode needs an audio update but 60 fps mode does not
-	ldh a, [rKEY1]
+	ldh a, [rSPD]
 	bit 7, a
 	push af
 	call nz, DelayFrame	;Delay a frame in 60 fps mode to get the timing down right for any fades
@@ -808,7 +808,7 @@ CanDoGBCFade:
 	ret
 
 SetFadeDoubleCPUSpeedIfNecessary:
-	ldh a, [rKEY1]
+	ldh a, [rSPD]
 	bit 7, a
 	ld a, $ff
 	ret nz
@@ -847,13 +847,13 @@ ReadBufferColorGBC:
 	ld hl, wGBCFullPalBuffer
 	add hl, de
 	ld a, 2
-	ldh [rSVBK], a ; switch to gbc wram bank 2 (where wGBCFullPalBuffer is stored)
+	ldh [rWBK], a ; switch to gbc wram bank 2 (where wGBCFullPalBuffer is stored)
 	ld a, [hli]		;read high byte
 	ld d, a
 	ld a, [hl]		;read low byte
 	ld e, a
 	xor a
-	ldh [rSVBK], a ; switch bank to default wram bank
+	ldh [rWBK], a ; switch bank to default wram bank
 	ret
 	
 	

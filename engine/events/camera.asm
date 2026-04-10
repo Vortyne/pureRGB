@@ -1266,7 +1266,7 @@ PlayerSnapsPicThenDisplayPicture::
 	; move all sprites down 1 OAM
 	ld hl, wShadowOAMSprite36 - 1
 	ld de, wShadowOAMEnd - 1
-	ld bc, (NUM_SPRITE_OAM_STRUCTS - 1) * 4
+	ld bc, (OAM_COUNT - 1) * 4
 	call CopyDataReverse
 	; put player sprite in first OAM slot
 	ld hl, wBuffer
@@ -1286,12 +1286,12 @@ PlayerSnapsPicThenDisplayPicture::
 	call LoadBallOAMCoords
 	; if player is in grass, make the lower two sprites of the camera in grass too
 	ld a, [wShadowOAMSprite03Attributes]
-	bit OAM_PRIORITY, a
+	bit B_OAM_PRIO, a
 	jr z, .noPriority
 	ld hl, wShadowOAMSprite06Attributes
-	set OAM_PRIORITY, [hl]
+	set B_OAM_PRIO, [hl]
 	ld hl, wShadowOAMSprite07Attributes
-	set OAM_PRIORITY, [hl]
+	set B_OAM_PRIO, [hl]
 .noPriority
 	; make camera face up by loading replacement graphics
 	ld de, CameraSprite tile 4
@@ -1328,8 +1328,8 @@ PlayerSnapsPicThenDisplayPicture::
 	ld a, SFX_TELEPORT_ENTER_1
 	rst _PlaySound
 	ld hl, rLCDC
-	set rLCDC_BG_TILEMAP, [hl]
-	res rLCDC_WINDOW_ENABLE, [hl]
+	set B_LCDC_BG_MAP, [hl]
+	res B_LCDC_WINDOW, [hl]
 	; animate it sliding down
 .loop2
 	ld a, [hSCY]
@@ -1342,10 +1342,10 @@ PlayerSnapsPicThenDisplayPicture::
 	inc b
 	jr nz, .loop2
 	ld hl, rLCDC
-	set rLCDC_WINDOW_ENABLE, [hl]
+	set B_LCDC_WINDOW, [hl]
 	rst _DelayFrame
 	ld hl, rLCDC
-	res rLCDC_BG_TILEMAP, [hl]
+	res B_LCDC_BG_MAP, [hl]
 	CheckAndResetEvent FLAG_PLAYER_TAKING_PICTURE_UPWARDS
 	jr z, .noPlayerReload
 	; reload player sprite with down facing graphics
@@ -1404,7 +1404,7 @@ LoadBGMapSquareData:
 	pop bc
 	pop hl
 	push de
-	ld de, BG_MAP_WIDTH
+	ld de, TILEMAP_WIDTH
 	add hl, de
 	pop de
 	dec c
@@ -1525,7 +1525,7 @@ CopyPicExtraBGPalettes:
 	jr nz, .loopShiftBits
 	pop hl
 	push de
-	ld de, BG_MAP_WIDTH
+	ld de, TILEMAP_WIDTH
 	add hl, de
 	pop de
 	pop bc
@@ -1654,7 +1654,7 @@ ReloadAfterCameraPicNoFadeIn::
 ; Screen must be off to do this
 ClearBGMap:
 	hlbgcoord 0, 0, vBGMap1
-	ld d, " "
+	ld d, ' '
 	lb bc, 32, 32
 	xor a
 	jp LoadBGMapSquareData

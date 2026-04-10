@@ -354,10 +354,10 @@ DisplayTwoOptionMenu:
 	ld c, a
 	add hl, bc
 	; hl = coords of top menu item
-	ld [hl], " "
+	ld [hl], ' '
 	add hl, de ; go down two more lines
 	add hl, de
-	ld [hl], "▶"
+	ld [hl], '▶'
 	pop hl
 .skipRedrawArrow
 	call TwoOptionMenu_RestoreScreenTiles

@@ -267,7 +267,7 @@ ShowBeforeAfterImages:
 	.waitForButtonPress
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	and A_BUTTON | B_BUTTON
+	and PAD_A | PAD_B
 	jr z, .waitForButtonPress
 
 	jp MaxVolume

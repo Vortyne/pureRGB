@@ -17,7 +17,7 @@ GetMachineName::
 	pop af
 ; now get the machine number and convert it to text
 	sub TM01 - 1
-	ld b, "0"
+	ld b, '0'
 .FirstDigit
 	sub 10
 	jr c, .SecondDigit
@@ -30,11 +30,11 @@ GetMachineName::
 	ld [de], a
 	inc de
 	pop af
-	ld b, "0"
+	ld b, '0'
 	add b
 	ld [de], a
 	inc de
-	ld a, "@"
+	ld a, '@'
 	ld [de], a
 	ret
 

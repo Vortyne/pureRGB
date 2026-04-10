@@ -196,8 +196,8 @@ BillsHouseBillSSTicketText:
 	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;; PureRGBnote: MOVED: move this object hiding here since we could teleport out of bills house and miss this being triggered on route 25 instead
-	ld a, HS_NUGGET_BRIDGE_GUY
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_NUGGET_BRIDGE_GUY
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 ;;;;;;;;;;
 .got_ss_ticket

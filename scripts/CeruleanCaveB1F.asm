@@ -138,8 +138,8 @@ MewtwoPostBattle:
 	cp $ff ; do nothing if you lost the battle
 	jr z, CeruleanCaveB1FResetScript
 	SetEvent EVENT_BEAT_MEWTWO
-	ld a, HS_MEWTWO
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_MEWTWO
+	ld [wToggleableObjectIndex], a
 	predef HideObject
 CeruleanCaveB1FResetScript:
 	ld a, SCRIPT_CERULEANCAVEB1F_DEFAULT

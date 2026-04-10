@@ -25,6 +25,7 @@ ENDM
 	toggle_consts_for PEWTER_CITY
 	const TOGGLE_MUSEUM_GUY                    ; 03
 	const TOGGLE_GYM_GUY                       ; 04
+	const TOGGLE_PEWTER_CITY_ITEM                  ; NEW X
 
 	toggle_consts_for CERULEAN_CITY
 	const TOGGLE_CERULEAN_RIVAL                ; 05
@@ -32,6 +33,7 @@ ENDM
 	const TOGGLE_CERULEAN_GUARD_1              ; 07
 	const TOGGLE_CERULEAN_CAVE_GUY             ; 08
 	const TOGGLE_CERULEAN_GUARD_2              ; 09
+	const TOGGLE_CERULEAN_ITEM                     ; NEW X
 
 	toggle_consts_for SAFFRON_CITY
 	const TOGGLE_SAFFRON_CITY_1                ; 0A
@@ -53,17 +55,35 @@ ENDM
 	toggle_consts_for ROUTE_2
 	const TOGGLE_ROUTE_2_ITEM_1                ; 19 X
 	const TOGGLE_ROUTE_2_ITEM_2                ; 1A X
+	const TOGGLE_ROUTE_2_ITEM_3                ; NEW X
 
 	toggle_consts_for ROUTE_4
-	const TOGGLE_ROUTE_4_ITEM                  ; 1B X
+	const TOGGLE_ROUTE_4_ITEM_1                ; 1B X
+	const TOGGLE_ROUTE_4_ITEM_2                ; NEW X
+
+	toggle_consts_for ROUTE_5
+	const TOGGLE_ROUTE_5_ITEM                  ; NEW X
+	
+	toggle_consts_for ROUTE_6
+	const TOGGLE_ROUTE_6_ITEM                  ; NEW X
+	
+	toggle_consts_for ROUTE_8
+	const TOGGLE_ROUTE_8_ITEM                  ; NEW X
 
 	toggle_consts_for ROUTE_9
 	const TOGGLE_ROUTE_9_ITEM                  ; 1C X
+
+	toggle_consts_for ROUTE_10
+	const TOGGLE_ROUTE_10_ITEM                 ; NEW X
+
+	toggle_consts_for ROUTE_11
+	const TOGGLE_ROUTE_11_ITEM                 ; NEW X
 
 	toggle_consts_for ROUTE_12
 	const TOGGLE_ROUTE_12_SNORLAX              ; 1D
 	const TOGGLE_ROUTE_12_ITEM_1               ; 1E X
 	const TOGGLE_ROUTE_12_ITEM_2               ; 1F X
+	const TOGGLE_ROUTE_12_ITEM_3               ; NEW X
 
 	toggle_consts_for ROUTE_15
 	const TOGGLE_ROUTE_15_ITEM                 ; 20 X
@@ -71,13 +91,23 @@ ENDM
 	toggle_consts_for ROUTE_16
 	const TOGGLE_ROUTE_16_SNORLAX              ; 21
 
+	toggle_consts_for ROUTE_21
+	const TOGGLE_ROUTE_21_ITEM                 ; NEW X
+
 	toggle_consts_for ROUTE_22
 	const TOGGLE_ROUTE_22_RIVAL_1              ; 22
 	const TOGGLE_ROUTE_22_RIVAL_2              ; 23
+	const TOGGLE_ROUTE_22_ITEM_1               ; NEW X
+	const TOGGLE_ROUTE_22_ITEM_2               ; NEW X
+
+	toggle_consts_for ROUTE_23
+	const TOGGLE_ROUTE_23_ITEM_1               ; NEW X
+	const TOGGLE_ROUTE_23_ITEM_2               ; NEW X
 
 	toggle_consts_for ROUTE_24
 	const TOGGLE_NUGGET_BRIDGE_GUY             ; 24
-	const TOGGLE_ROUTE_24_ITEM                 ; 25 X
+	const TOGGLE_ROUTE_24_ITEM_1               ; 25 X
+	const TOGGLE_ROUTE_24_ITEM_2               ; NEW X
 
 	toggle_consts_for ROUTE_25
 	const TOGGLE_ROUTE_25_ITEM                 ; 26 X
@@ -136,6 +166,9 @@ ENDM
 	toggle_consts_for MR_FUJIS_HOUSE
 	const TOGGLE_MR_FUJIS_HOUSE_MR_FUJI        ; 44
 
+	toggle_consts_for CELADON_MANSION_ROOF
+	const TOGGLE_CELADON_MANSION_ROOF_ITEM     ; NEW X
+
 	toggle_consts_for CELADON_MANSION_ROOF_HOUSE
 	const TOGGLE_CELADON_MANSION_EEVEE_GIFT    ; 45
 
@@ -154,7 +187,18 @@ ENDM
 	const TOGGLE_FIGHTING_DOJO_GIFT_2          ; 4B
 
 	toggle_consts_for SILPH_CO_1F
+	const TOGGLE_SILPH_CO_1F_TRAINER_1         ; NEW
+	const TOGGLE_SILPH_CO_1F_TRAINER_2         ; NEW
+	const TOGGLE_SILPH_CO_1F_TRAINER_3         ; NEW
+	const TOGGLE_SILPH_CO_1F_TRAINER_4         ; NEW
 	const TOGGLE_SILPH_CO_1F_RECEPTIONIST      ; 4C
+
+	toggle_consts_for ROCK_TUNNEL_1F
+	const TOGGLE_ROCK_TUNNEL_1F_ITEM           ; NEW X
+
+	toggle_consts_for ROCK_TUNNEL_B1F
+	const TOGGLE_ROCK_TUNNEL_B1F_ITEM_1        ; NEW X
+	const TOGGLE_ROCK_TUNNEL_B1F_ITEM_2        ; NEW X
 
 	toggle_consts_for POWER_PLANT
 	const TOGGLE_VOLTORB_1                     ; 4D X
@@ -290,7 +334,6 @@ ENDM
 	const TOGGLE_SILPH_CO_7F_RIVAL             ; A7
 	const TOGGLE_SILPH_CO_7F_ITEM_1            ; A8 X
 	const TOGGLE_SILPH_CO_7F_ITEM_2            ; A9 X
-	const TOGGLE_SILPH_CO_7F_8                 ; AA XXX sprite doesn't exist
 
 	toggle_consts_for SILPH_CO_8F
 	const TOGGLE_SILPH_CO_8F_1                 ; AB
@@ -315,9 +358,6 @@ ENDM
 	const TOGGLE_SILPH_CO_11F_2                ; B8
 	const TOGGLE_SILPH_CO_11F_3                ; B9
 
-	toggle_consts_for UNUSED_MAP_F4
-	const TOGGLE_UNUSED_MAP_F4_1               ; BA XXX sprite doesn't exist
-
 	toggle_consts_for POKEMON_MANSION_2F
 	const TOGGLE_POKEMON_MANSION_2F_ITEM       ; BB X
 
@@ -331,25 +371,6 @@ ENDM
 	const TOGGLE_POKEMON_MANSION_B1F_ITEM_3    ; C0 X
 	const TOGGLE_POKEMON_MANSION_B1F_ITEM_4    ; C1 X
 	const TOGGLE_POKEMON_MANSION_B1F_ITEM_5    ; C2 X
-
-	toggle_consts_for SAFARI_ZONE_EAST
-	const TOGGLE_SAFARI_ZONE_EAST_ITEM_1       ; C3 X
-	const TOGGLE_SAFARI_ZONE_EAST_ITEM_2       ; C4 X
-	const TOGGLE_SAFARI_ZONE_EAST_ITEM_3       ; C5 X
-	const TOGGLE_SAFARI_ZONE_EAST_ITEM_4       ; C6 X
-
-	toggle_consts_for SAFARI_ZONE_NORTH
-	const TOGGLE_SAFARI_ZONE_NORTH_ITEM_1      ; C7 X
-	const TOGGLE_SAFARI_ZONE_NORTH_ITEM_2      ; C8 X
-
-	toggle_consts_for SAFARI_ZONE_WEST
-	const TOGGLE_SAFARI_ZONE_WEST_ITEM_1       ; C9 X
-	const TOGGLE_SAFARI_ZONE_WEST_ITEM_2       ; CA X
-	const TOGGLE_SAFARI_ZONE_WEST_ITEM_3       ; CB X
-	const TOGGLE_SAFARI_ZONE_WEST_ITEM_4       ; CC X
-
-	toggle_consts_for SAFARI_ZONE_CENTER
-	const TOGGLE_SAFARI_ZONE_CENTER_ITEM       ; CD X
 
 	toggle_consts_for CERULEAN_CAVE_2F
 	const TOGGLE_CERULEAN_CAVE_2F_ITEM_1       ; CE X
@@ -385,10 +406,158 @@ ENDM
 	const TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2 ; DE
 	const TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_3 ; DF
 	const TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_4 ; E0
+	const TOGGLE_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL   ; E2
+	const TOGGLE_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL  ; E3
 
 	toggle_consts_for SEAFOAM_ISLANDS_B4F
 	const TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1 ; E1
 	const TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2 ; E2
 	const TOGGLE_ARTICUNO                      ; E3 X
+	const TOGGLE_SEAFOAM_ISLANDS_B4F_ITEM      ; NEW X
 
+	toggle_consts_for VERMILION_DOCK
+	const TOGGLE_MEW_VERMILION_DOCK            ; NEW X
+
+	toggle_consts_for CERULEAN_ROCKET_HOUSE_1F
+	const TOGGLE_CERULEAN_ROCKET_HOUSE_1F_GUY  ; NEW X
+
+	toggle_consts_for CELADON_HOTEL
+	const TOGGLE_LAPRAS_GUY_CELADON  ; NEW X
+	; current length -> 245 (F5)
+	; 9 slots remain
 DEF NUM_TOGGLEABLE_OBJECTS EQU const_value
+
+
+	const_def
+
+	toggle_consts_for SAFARI_ZONE_EAST
+	const TOGGLE_SAFARI_ZONE_EAST_RANGER_0     ; 00 X
+	const TOGGLE_SAFARI_ZONE_EAST_TRAINER_0    ; 01 X
+	const TOGGLE_SAFARI_ZONE_EAST_TRAINER_1    ; 02 X
+	const TOGGLE_SAFARI_ZONE_EAST_TRAINER_2    ; 03 X
+	const TOGGLE_SAFARI_ZONE_EAST_TRAINER_3    ; 04 X
+	const TOGGLE_SAFARI_ZONE_EAST_ITEM_1       ; 05 X
+	const TOGGLE_SAFARI_ZONE_EAST_ITEM_2       ; 06 X
+	const TOGGLE_SAFARI_ZONE_EAST_ITEM_3       ; 07 X
+	const TOGGLE_SAFARI_ZONE_EAST_ITEM_4       ; 08 X
+
+	toggle_consts_for SAFARI_ZONE_NORTH
+	const TOGGLE_SAFARI_ZONE_NORTH_RANGER_0    ; 09 X
+	const TOGGLE_SAFARI_ZONE_NORTH_TRAINER_0   ; 0A X
+	const TOGGLE_SAFARI_ZONE_NORTH_TRAINER_1   ; 0B X
+	const TOGGLE_SAFARI_ZONE_NORTH_TRAINER_2   ; 0C X
+	const TOGGLE_SAFARI_ZONE_NORTH_TRAINER_3   ; 0D X
+	const TOGGLE_SAFARI_ZONE_NORTH_TRAINER_4   ; 0E X
+	const TOGGLE_SAFARI_ZONE_NORTH_ITEM_1      ; 0F X
+	const TOGGLE_SAFARI_ZONE_NORTH_ITEM_2      ; 10 X
+
+	toggle_consts_for SAFARI_ZONE_WEST
+	const TOGGLE_SAFARI_ZONE_WEST_RANGER_0    ; 11 X
+	const TOGGLE_SAFARI_ZONE_WEST_RANGER_1    ; 12 X
+	const TOGGLE_SAFARI_ZONE_WEST_TRAINER_0   ; 13 X
+	const TOGGLE_SAFARI_ZONE_WEST_TRAINER_1   ; 14 X
+	const TOGGLE_SAFARI_ZONE_WEST_TRAINER_2   ; 15 X
+	const TOGGLE_SAFARI_ZONE_WEST_TRAINER_3   ; 16 X
+	const TOGGLE_SAFARI_ZONE_WEST_TRAINER_4   ; 17 X
+	const TOGGLE_SAFARI_ZONE_WEST_ITEM_1       ; 18 X
+	const TOGGLE_SAFARI_ZONE_WEST_ITEM_2       ; 19 X
+	const TOGGLE_SAFARI_ZONE_WEST_ITEM_3       ; 1A X
+	const TOGGLE_SAFARI_ZONE_WEST_ITEM_4       ; 1B X
+
+	toggle_consts_for SAFARI_ZONE_CENTER
+	const TOGGLE_SAFARI_ZONE_CENTER_RANGER_0     ; 1C X
+	const TOGGLE_SAFARI_ZONE_CENTER_TRAINER_0    ; 1D X
+	const TOGGLE_SAFARI_ZONE_CENTER_TRAINER_1    ; 1E X
+	const TOGGLE_SAFARI_ZONE_CENTER_TRAINER_2    ; 1F X
+	const TOGGLE_SAFARI_ZONE_CENTER_TRAINER_3    ; 20 X
+	const TOGGLE_SAFARI_ZONE_CENTER_ITEM       ; 21 X
+
+	toggle_consts_for VIRIDIAN_SCHOOL_HOUSE
+	const TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION ; 22 X
+	const TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION2 ; 23 X\
+
+	toggle_consts_for VIRIDIAN_SCHOOL_HOUSE_B1F
+	const TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION ; 24 X
+	const TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2 ; 25 X
+
+	toggle_consts_for REDS_HOUSE_1F
+	const TOGGLE_REDS_HOUSE_1F_DAD ; 26 X
+
+	toggle_consts_for CERULEAN_ROCKET_HOUSE_B1F
+	const TOGGLE_TOPSECRETKEY ; 27 X
+
+	toggle_consts_for SECRET_LAB
+	const TOGGLE_SECRET_LAB_SOLDIER_1 ; 28 X
+	const TOGGLE_SECRET_LAB_SOLDIER_2 ; 29 X
+	const TOGGLE_SECRET_LAB_CHIEF ; 2A X
+
+	toggle_consts_for POKEMON_TOWER_1F
+	const TOGGLE_POKEMON_TOWER_1F_ROCKET ; 2B X
+
+	toggle_consts_for CHAMP_ARENA
+	const TOGGLE_CHAMP_ARENA_CHALLENGER ; 2C X
+	const TOGGLE_CHAMP_ARENA_PROXY_PLAYER ; 2D X
+	const TOGGLE_CHAMP_ARENA_TM_KID ; 2E X
+	const TOGGLE_CHAMP_ARENA_CROWD_1 ; 2F X
+	const TOGGLE_CHAMP_ARENA_CROWD_2 ; 30 X
+	const TOGGLE_CHAMP_ARENA_VARIABLE_CROWD_1 ; 31 X
+	const TOGGLE_CHAMP_ARENA_VARIABLE_CROWD_2 ; 32 X
+	const TOGGLE_CHAMP_ARENA_CROWD_3 ; 33 X
+	const TOGGLE_CHAMP_ARENA_VARIABLE_CROWD_3 ; 34 X
+	const TOGGLE_CHAMP_ARENA_CROWD_4 ; 35 X
+
+	toggle_consts_for INDIGO_PLATEAU_LOBBY
+	const TOGGLE_INDIGO_PLATEAU_LOBBY_CHAMP_ARENA_ASSISTANT ; 36 X
+
+	toggle_consts_for CELADON_MANSION_2F
+	const TOGGLE_PROSPECTORS_HOUSE_PROSPECTOR ; 37 X
+
+	toggle_consts_for CINNABAR_VOLCANO
+	const TOGGLE_VOLCANO_BLAINE ; 38 X
+	const TOGGLE_VOLCANO_ARCANINE ; 39 X
+	const TOGGLE_VOLCANO_MOLTRES ; 3A X
+	const TOGGLE_VOLCANO_RUBY_1 ; 3B X
+	const TOGGLE_VOLCANO_RUBY_2 ; 3C X
+	const TOGGLE_VOLCANO_RUBY_3 ; 3D X
+	const TOGGLE_VOLCANO_ANIMATION_PROXY ; 3E X
+	const TOGGLE_VOLCANO_ITEM1 ; 3F X
+	const TOGGLE_VOLCANO_ITEM2 ; 40 X
+	const TOGGLE_VOLCANO_SURFING_RHYDON ; 41 X
+	const TOGGLE_VOLCANO_BOSS_MAGMAR ; 42 X
+
+	toggle_consts_for POWER_PLANT_ROOF
+	const TOGGLE_POWER_PLANT_ROOF_ZAPDOS ; 43 X
+
+	toggle_consts_for DIGLETTS_CAVE
+	const TOGGLE_DIGLETTS_CAVE_DIGLETT1 ; 44 X
+	const TOGGLE_DIGLETTS_CAVE_DIGLETT2 ; 45 X
+	const TOGGLE_DIGLETTS_CAVE_DIGLETT3 ; 46 X
+	const TOGGLE_DIGLETTS_CAVE_DIGLETT4 ; 47 X
+
+	toggle_consts_for LAVENDER_CUBONE_HOUSE
+	const TOGGLE_LAVENDER_TOWN_CUBONE ; 48 X
+
+	toggle_consts_for FUCHSIA_CITY
+	const TOGGLE_FUCHSIA_ERIK ; 49
+
+	toggle_consts_for SAFARI_ZONE_CENTER_REST_HOUSE
+	const TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_SARA ; 4A
+	const TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK ; 4B
+
+	toggle_consts_for FUCHSIA_GOOD_ROD_HOUSE
+	const TOGGLE_ERIK_HOUSE ; 4C
+	const TOGGLE_SARA_HOUSE ; 4D
+	const TOGGLE_ERIK_SARA_HOUSE_NOTE2 ; 4E
+
+	toggle_consts_for CERULEAN_BALL_DESIGNER
+	const TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD ; 4F
+	const TOGGLE_CERULEAN_BALL_DESIGNER_CAMERA ; 50
+	const TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD2 ; 51
+
+	toggle_consts_for VERMILION_FITNESS_CLUB
+	const TOGGLE_VERMILIONFITNESSCLUB_CLERK ; 52
+	const TOGGLE_VERMILIONFITNESSCLUB_MUSCLE1 ; 53
+	const TOGGLE_VERMILIONFITNESSCLUB_JANITOR ; 54
+	; max allowed value = 98
+
+DEF NUM_EXTRA_TOGGLEABLE_OBJECTS EQU const_value

@@ -1276,14 +1276,14 @@ FrameBlock7d:
 
 FrameBlock7e:
 	db 4 ; #
-	dbsprite  0,  0,  0,  0, $01, OAM_HFLIP
-	dbsprite  1,  0,  0,  0, $00, OAM_HFLIP
-	dbsprite  0,  1,  0,  0, $04, OAM_HFLIP
-	dbsprite  1,  1,  0,  0, $03, OAM_HFLIP
+	dbsprite  0,  0,  0,  0, $01, OAM_XFLIP
+	dbsprite  1,  0,  0,  0, $00, OAM_XFLIP
+	dbsprite  0,  1,  0,  0, $04, OAM_XFLIP
+	dbsprite  1,  1,  0,  0, $03, OAM_XFLIP
 
 FrameBlock7f:
 	db 4 ; #
 	dbsprite  0,  0,  0,  0, $02, 0
-	dbsprite  1,  0,  0,  0, $02, OAM_HFLIP
-	dbsprite  0,  1,  0,  0, $02, OAM_VFLIP
-	dbsprite  1,  1,  0,  0, $02, OAM_HFLIP | OAM_VFLIP
+	dbsprite  1,  0,  0,  0, $02, OAM_XFLIP
+	dbsprite  0,  1,  0,  0, $02, OAM_YFLIP
+	dbsprite  1,  1,  0,  0, $02, OAM_XFLIP | OAM_YFLIP

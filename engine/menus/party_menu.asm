@@ -317,16 +317,16 @@ GetPartyMenuWatchedKeys::
 	jr nz, .inBattle
 	ld a, [wPartyMenuTypeOrMessageID]
 	and a ; NORMAL_PARTY_MENU
-	ld d, A_BUTTON | B_BUTTON | SELECT
+	ld d, PAD_A | PAD_B | PAD_SELECT
 	ret z
 	cp SWAP_MONS_PARTY_MENU
 	ret z
 .inBattle
 	ld a, [wForcePlayerToChooseMon]
 	and a
-	ld d, A_BUTTON | B_BUTTON
+	ld d, PAD_A | PAD_B
 	ret z
 	xor a
 	ld [wForcePlayerToChooseMon], a
-	ld d, A_BUTTON
+	ld d, PAD_A
 	ret

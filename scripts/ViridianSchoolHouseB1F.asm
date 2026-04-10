@@ -22,32 +22,32 @@ CheckGusGLeaves:
 SetDetentionHideShows::
 	CheckEvent EVENT_GUS_IN_DETENTION
 	jr z, .hideGus
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_DETENTION
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
 	ResetEvent EVENT_GUS_IN_DETENTION
 	ret
 .hideGus
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_DETENTION
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
+	ld [wToggleableObjectIndex], a
 	predef HideExtraObject
-	ld a, HS_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
 	SetEvent EVENT_GUS_IN_DETENTION
 	ret
@@ -493,11 +493,11 @@ SchoolB1FNerdNotebook:
 	ld [wListPointer], a
 	ld a, h
 	ld [wListPointer + 1], a
-	ld a, A_BUTTON | B_BUTTON
+	ld a, PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	callfar DisplayMultiChoiceMenu
 	ldh a, [hJoy5]
-	bit BIT_B_BUTTON, a
+	bit B_PAD_B, a
 	jr nz, .done
 	ld hl, SchoolB1FNerdNotebookTextPointers
 	ld a, [wCurrentMenuItem]
@@ -639,7 +639,7 @@ SchoolB1FMovedexTest:
 DoMoveDexTestQuestion:
 	inc hl
 	inc hl
-	ld a, A_BUTTON
+	ld a, PAD_A
 	ld [wMenuWatchedKeys], a
 	push hl
 	ld a, [hli]

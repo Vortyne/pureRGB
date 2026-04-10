@@ -276,7 +276,7 @@ PlayerPCToss:
 
 ; PureRGBnote: ADDED: happens when pressing start in a list menu - used for facilitating depositing items from the start item menu
 CheckButtonStartPressed::
-	bit BIT_START, a
+	bit B_PAD_START, a
 	jr z, .continue
 	push af
 	ld a, [wListMenuID]

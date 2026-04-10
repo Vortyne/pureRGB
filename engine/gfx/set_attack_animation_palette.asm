@@ -244,7 +244,7 @@ SetAttackAnimPal_resetPalettes:
 	ld b, 4
 .loop2
 	ldh a, [rLCDC]
-	and 1 << rLCDC_ENABLE
+	and LCDC_ON
 	jr z, .lcd_dis
 	;lcd in enabled otherwise
 .wait1

@@ -61,8 +61,8 @@ FuchsiaGoodRodHouseOnMapLoad:
 	call UpdateSprites
 	ld a, $32
 	call .replaceTileBlockEntry
-	ld a, HS_ERIK_SARA_HOUSE_NOTE2
-	ld [wMissableObjectIndex], a
+	ld a, TOGGLE_ERIK_SARA_HOUSE_NOTE2
+	ld [wToggleableObjectIndex], a
 	predef ShowExtraObject
 	jp GBFadeInFromBlack
 .replaceTileBlockEntry
@@ -70,12 +70,12 @@ FuchsiaGoodRodHouseOnMapLoad:
 	lb bc, 5, 10
 	predef_jump ReplaceTileBlock
 .noEndingText
-	ld a, HS_SAFARI_ZONE_CENTER_REST_HOUSE_SARA
+	ld a, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_SARA
 	call FuchsiaGoodRodHouseHideExtraObjectEntry
-	ld a, HS_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
+	ld a, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
 	; fall through
 FuchsiaGoodRodHouseHideExtraObjectEntry:
-	ld [wMissableObjectIndex], a
+	ld [wToggleableObjectIndex], a
 	predef_jump HideExtraObject
 
 FuchsiaGoodRodHouseFishingGuruText:
@@ -112,7 +112,7 @@ FuchsiaGoodRodHouseGarbageText:
 
 ; nz if they're not at home
 AreErikAndSaraAtHome:
-	CheckExtraHideShowState HS_ERIK_HOUSE
+	CheckExtraHideShowState TOGGLE_ERIK_HOUSE
 	ld hl, ErikSaraNoPokingAround
 	ret
 

@@ -84,19 +84,19 @@ HandleLedges::
 	lda_coord 8, 10
 	cp $41 ; down ledge
 	ret nz
-	ld e, D_DOWN
+	ld e, PAD_DOWN
 	jr .noCutTile
 .left
 	lda_coord 7, 9
 	cp $30 ; left ledge
 	ret nz
-	ld e, D_LEFT
+	ld e, PAD_LEFT
 	jr .noCutTile
 .right
 	lda_coord 10, 9
 	cp $40 ; right ledge
 	ret nz
-	ld e, D_RIGHT
+	ld e, PAD_RIGHT
 	jr .noCutTile
 ;;;;;;;;
 
