@@ -70,7 +70,7 @@ PrintBeginningBattleText:
 	ld [wFrequencyModifier], a
 	ld a, $80
 	ld [wTempoModifier], a
-	ld a, SFX_SILPH_SCOPE
+	ld a, SFX_TRAINER_APPEARED
 	rst _PlaySound
 	jp WaitForSoundToFinish
 
