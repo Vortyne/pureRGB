@@ -894,7 +894,7 @@ DoPoofSpecialEffects:
 	ld [wFrequencyModifier], a
 	ld a, $80
 	ld [wTempoModifier], a
-	ld a, SFX_SILPH_SCOPE
+	ld a, SFX_TRAINER_APPEARED
 	call PlaySoundWaitForCurrent
 	jr .done
 .hyperBall
@@ -3357,7 +3357,7 @@ AnimationCrosshairScansOpponent:
 	ld [wFrequencyModifier], a
 	ld a, $80
 	ld [wTempoModifier], a
-	ld a, SFX_SILPH_SCOPE
+	ld a, SFX_TRAINER_APPEARED
 	rst _PlaySound
 	jp AnimationResetScreenPalette
 .functionForEachCrosshairTile
