@@ -215,7 +215,7 @@ SaveMainData:
 	ld bc, wSpriteDataEnd - wSpriteDataStart
 	rst _CopyData
 
-; this part is redundant, SaveCurrentBoxData is always called next ; TODO: remove?
+; this part is redundant, SaveCurrentBoxData is always called next
 	ld hl, wBoxDataStart
 	ld de, sCurBoxData
 	ld bc, wBoxDataEnd - wBoxDataStart
