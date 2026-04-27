@@ -64,7 +64,8 @@ SSAnne1FRoomsCooltrainerFText:
 SSAnne1FRoomsWigglytuffText:
 	text_far _SSAnne1FRoomsWigglytuffText
 	text_asm
-	; TODO: seen wigglytuff?
+	ld c, DEX_WIGGLYTUFF - 1
+  	callfar SetMonSeen
 	ld a, WIGGLYTUFF
 	call PlayCry
 	rst TextScriptEnd
