@@ -6,6 +6,7 @@ SafariZoneWestRestHouse_TextPointers:
 	dw_const SafariZoneWestRestHouseScientistText,    TEXT_SAFARIZONEWESTRESTHOUSE_SCIENTIST
 	dw_const SafariZoneWestRestHouseCooltrainerMText, TEXT_SAFARIZONEWESTRESTHOUSE_COOLTRAINER_M
 	dw_const SafariZoneWestRestHouseSilphWorkerFText, TEXT_SAFARIZONEWESTRESTHOUSE_SILPH_WORKER_F
+	dw_const SafariZoneTiredGuyText,                  TEXT_SAFARIZONEWESTRESTHOUSE_TIRED_GUY
 
 SafariZoneWestRestHouseScientistText:
 ; PureRGBnote: ADDED: this NPC will display different text depending on what type of safari game you're playing
@@ -44,4 +45,8 @@ SafariZoneWestRestHouseCooltrainerMText:
 
 SafariZoneWestRestHouseSilphWorkerFText:
 	text_far _SafariZoneWestRestHouseSilphWorkerFText
+	text_end
+
+SafariZoneTiredGuyText:
+	text_far _SafariZoneTiredGuyText
 	text_end

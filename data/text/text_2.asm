@@ -197,16 +197,7 @@ _RockTunnelPokecenterGuyText::
 	cont "LAVENDER TOWN!"
 	done
 
-; TODO: use these
-_UnusedBenchGuyText1::
-	text "I wish I could"
-	line "catch #MON-"
-	para "but I have no luck"
-	line "with SAFARI BALLs."
-	done
-
-; TODO: use these
-_UnusedBenchGuyText2::
+_SafariZoneTiredGuyText::
 	text "I'm tired from"
 	line "all the fun<...>"
 	done

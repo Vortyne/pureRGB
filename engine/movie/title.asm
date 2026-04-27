@@ -394,7 +394,7 @@ ENDC
 	call Delay3
 ;;;;;;; PureRGBnote: FIXED: Prevents colors in the main menu from getting dark if player saved in a dark area 
 ;;;;;;; (rock tunnel) and went from title to continue screen twice
-	call GBPalNormal ; TODO: JP to it?
+	call GBPalNormal
 ;;;;;;;
 	ret
 

@@ -25,3 +25,24 @@ _SafariZoneNorthRestHouseGentlemanText::
 	cont "a VAPOREON!"
 	cont "I wonder why?"
 	done
+
+_SafariZoneCatchGirl::
+	text "I wish I could"
+	line "catch #MON-"
+	para "but I have no luck"
+	line "with SAFARI BALLs."
+	done
+
+_SafariZoneCatchGirl2::
+	text "Wow!"
+	para "That HYPER BALL"
+	line "I used was great"
+	cont "at catching even"
+	cont "rare #MON!"
+	para "I caught a"
+	line "SCYTHER with it!"
+	para "Green #MON in"
+	line "the green BALL!"
+	para "All is right"
+	line "in the world!"
+	done
