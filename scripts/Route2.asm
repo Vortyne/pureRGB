@@ -18,8 +18,7 @@ Route2ReplaceCutTiles:
 	bit BIT_CROSSED_MAP_CONNECTION, [hl] ; did we enter the map by traversal from another route
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
 	jr nz, .removeAddCutTilesNoRedraw
-	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .removeAddCutTiles
 	ret
 .removeAddCutTiles
@@ -92,8 +91,19 @@ Route2TrainerHeader2:
 Route2BugCatcherText:
 	text_asm
 	ld hl, Route2TrainerHeader0
+Route2TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route2JrTrainerMText:
+	text_asm
+	ld hl, Route2TrainerHeader1
+	jr Route2TalkToTrainer
+
+Route2JrTrainerFText:
+	text_asm
+	ld hl, Route2TrainerHeader2
+	jr Route2TalkToTrainer
 
 Route2BattleText1:
 	text_far _Route2BattleText1
@@ -152,12 +162,6 @@ Route2AfterBattle2Learnset::
 	text_far _Route2AfterBattle2Learnset
 	text_end
 
-Route2JrTrainerMText:
-	text_asm
-	ld hl, Route2TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route2BattleText2:
 	text_far _Route2BattleText2
 	text_end
@@ -172,12 +176,6 @@ Route2AfterBattleText2:
 	lb hl, DEX_DIGLETT, JR_TRAINER_M
 	ld de, LearnsetAppreciator
 	predef_jump LearnsetTrainerScript
-
-Route2JrTrainerFText:
-	text_asm
-	ld hl, Route2TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route2BattleText3:
 	text_far _Route2BattleText3

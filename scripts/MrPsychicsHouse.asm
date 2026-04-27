@@ -1,7 +1,5 @@
 MrPsychicsHouse_Script:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .notFirstLoad
 	call CheckInFightingBrosHouseAfterGiovanni
 	jr nc, .notFirstLoad
@@ -47,7 +45,6 @@ MrPsychicsHouseMrPsychicText:
 	ld hl, .ReceivedTM29Text
 .printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .YouWantedThisText:

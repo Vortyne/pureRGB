@@ -53,8 +53,7 @@ PalletTownOakHeyWaitScript:
 	ld a, TEXT_PALLETTOWN_OAK
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	ld a, TOGGLE_PALLET_TOWN_OAK
 	ld [wToggleableObjectIndex], a
 	predef ShowObject
@@ -86,8 +85,7 @@ PalletTownOakWalksToPlayerScript:
 	ld a, PALLETTOWN_OAK
 	ldh [hSpriteIndex], a
 	call MoveSprite
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 
 	; trigger the next script
 	ld a, SCRIPT_PALLETTOWN_OAK_NOT_SAFE_COME_WITH_ME
@@ -108,8 +106,7 @@ PalletTownOakNotSafeComeWithMeScript:
 	ldh [hTextID], a
 	call DisplayTextID
 ; set up movement script that causes the player to follow Oak to his lab
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	ld a, PALLETTOWN_OAK
 	ld [wSpriteIndex], a
 	xor a
@@ -166,13 +163,11 @@ PalletTownOakText:
 	text_asm
 	ld a, [wOakWalkedToPlayer]
 	and a
-	jr nz, .next
+	ld hl, .ItsUnsafeText
+	jr nz, .done
 	ld a, 1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, .HeyWaitDontGoOutText
-	jr .done
-.next
-	ld hl, .ItsUnsafeText
 .done
 	rst _PrintText
 	rst TextScriptEnd

@@ -10,12 +10,19 @@ _CeruleanBadgeHouseMiddleAgedManText::
 	line "amazing secrets!"
 	prompt
 
-_CeruleanBadgeHouseMiddleAgedManWhichBadgeText::
+_CeruleanBadgeHouseNowThenText::
 	text "Now then<...>"
+	done
 
-	para "Which of the 8"
+_CeruleanBadgeHouseMiddleAgedManWhichBadgeText::
+	text "<PARA>Which of the 8"
 	line "BADGEs should I"
 	cont "describe?"
+	done
+
+_CeruleanBadgeHouseAnyMoreText::
+	text "<PARA>Need info on"
+	line "any other BADGEs?"
 	done
 
 _CeruleanBadgeHouseMiddleAgedManVisitAnyTimeText::
@@ -24,65 +31,29 @@ _CeruleanBadgeHouseMiddleAgedManVisitAnyTimeText::
 	done
 
 _CeruleanBadgeHouseBoulderBadgeText::
-	text "The ATTACK of all"
-	line "#MON increases"
-	cont "a little bit."
-
-	para "It also lets you"
-	line "use FLASH any"
-	cont "time you desire."
-	prompt
+	text "The ATTACK@"
+	text_jump _CeruleanBadgeHouseIncreasesALittleBit
 
 _CeruleanBadgeHouseCascadeBadgeText::
-	text "#MON up to L30"
-	line "will obey you."
-
-	para "Any higher, they"
-	line "become unruly!"
-
-	para "It also lets you"
-	line "use CUT outside"
-	cont "of battle."
-	prompt
+	text_call _CeruleanBadgeHouseUpToLevel
+	text "@"
+	text_jump _CeruleanBadgeHouseAlsoLetsYouUseHM
 
 _CeruleanBadgeHouseThunderBadgeText::
-	text "The SPEED of all"
-	line "#MON increases"
-	cont "a little bit."
-
-	para "It also lets you"
-	line "use FLY outside"
-	cont "of battle."
-	prompt
+	text "The SPEED@"
+	text_jump _CeruleanBadgeHouseIncreasesALittleBit
 
 _CeruleanBadgeHouseRainbowBadgeText::
-	text "#MON up to L50"
-	line "will obey you."
-
-	para "Any higher, they"
-	line "become unruly!"
-
-	para "It also lets you"
-	line "use STRENGTH out-"
-	cont "side of battle."
-	prompt
+	text_call _CeruleanBadgeHouseUpToLevel
+	text "@"
+	text_jump _CeruleanBadgeHouseAlsoLetsYouUseHM
 
 _CeruleanBadgeHouseSoulBadgeText::
-	text "The DEFENSE of all"
-	line "#MON increases"
-	cont "a little bit."
-
-	para "It also lets you"
-	line "use SURF outside"
-	cont "of battle."
-	prompt
+	text "The DEFENSE@"
+	text_jump _CeruleanBadgeHouseIncreasesALittleBit
 
 _CeruleanBadgeHouseMarshBadgeText::
-	text "#MON up to L70"
-	line "will obey you."
-
-	para "Any higher, they"
-	line "become unruly!"
+	text_call _CeruleanBadgeHouseUpToLevel
 	prompt
 
 _CeruleanBadgeHouseVolcanoBadgeText::
@@ -94,6 +65,27 @@ _CeruleanBadgeHouseVolcanoBadgeText::
 _CeruleanBadgeHouseEarthBadgeText::
 	text "All #MON will"
 	line "obey you!"
+	prompt
+
+_CeruleanBadgeHouseUpToLevel::
+	db "#MON up to L@"
+	text_decimal w2CharStringBuffer, 1, 2
+	text "<LINE>will obey you."
+
+	para "Any higher, they"
+	line "become unruly!"
+	done
+
+_CeruleanBadgeHouseIncreasesALittleBit::
+	text "of all"
+	line "#MON increases"
+	cont "a little bit."
+_CeruleanBadgeHouseAlsoLetsYouUseHM::
+	para "Also lets you use"
+	line "@"
+	text_ram wNameBuffer
+	text " outside"
+	cont "of battle."
 	prompt
 
 _GarbageCrumpledUpPaper::

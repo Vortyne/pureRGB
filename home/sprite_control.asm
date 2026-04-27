@@ -79,3 +79,30 @@ ChangeUpdateSpritesEnabled:
 UpdateSpritesAndDelay3::
 	call UpdateSprites
 	jp Delay3
+
+EnableAllJoypad::
+	xor a
+	jr DisableAllJoypad.load
+
+DisableDpad::
+	ld a, PAD_CTRL_PAD
+	jr DisableAllJoypad.load
+
+DisableAllJoypad::
+	ld a, PAD_BUTTONS | PAD_CTRL_PAD
+.load
+	ld [wJoyIgnore], a
+	ret
+
+ResetMapScripts::
+	call EnableAllJoypad
+	; a = 0 from EnableAllJoypad
+	ld [wCurMapScript], a
+	ret
+
+; returns nz if the map has just been loaded
+WasMapJustLoaded::
+	ld hl, wCurrentMapScriptFlags
+	bit BIT_CUR_MAP_LOADED_1, [hl]
+	res BIT_CUR_MAP_LOADED_1, [hl]
+	ret

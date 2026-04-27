@@ -12,16 +12,12 @@ LavenderMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
 	ld hl, TMKidGreet3
 	rst _PrintText
-	CheckEvent EVENT_MET_LAVENDER_TM_KID
-	jr z, .intro
-	ld hl, TMKidQuick3
-	rst _PrintText
-	jr .shop
-.intro
+	CheckAndSetEvent EVENT_MET_LAVENDER_TM_KID
 	ld hl, LavenderMartTMKidFlavor
+	jr z, .gotText
+	ld hl, TMKidQuick3
+.gotText
 	rst _PrintText
-	SetEvent EVENT_MET_LAVENDER_TM_KID
-.shop
 	ld hl, LavenderTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd
@@ -47,14 +43,11 @@ LavenderMartBaldingGuyText:
 LavenderMartCooltrainerMText:
 	text_asm
 	CheckEvent EVENT_RESCUED_MR_FUJI
-	jr nz, .Nugget
-	ld hl, .ReviveText
-	rst _PrintText
-	jr .done
-.Nugget
 	ld hl, .NuggetText
+	jr nz, .gotText
+	ld hl, .ReviveText
+.gotText
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .ReviveText

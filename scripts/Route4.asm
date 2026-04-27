@@ -49,8 +49,24 @@ Route4CooltrainerF1Text:
 Route4CooltrainerF2Text:
 	text_asm
 	ld hl, Route4TrainerHeader0
+Route4TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route4Text3:
+	text_asm
+	ld hl, Route4TrainerHeader1
+	jr Route4TalkToTrainer
+
+Route4Text4:
+	text_asm
+	ld hl, Route4TrainerHeader2
+	jr Route4TalkToTrainer
+
+Route4Text5:
+	text_asm
+	ld hl, Route4TrainerHeader3
+	jr Route4TalkToTrainer
 
 Route4CooltrainerF2BattleText:
 	text_far _Route4CooltrainerF2BattleText
@@ -67,12 +83,6 @@ Route4CooltrainerF2AfterBattleText:
 	ld de, LearnsetLove
 	predef_jump LearnsetTrainerScript
 
-Route4Text3:
-	text_asm
-	ld hl, Route4TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route4BattleText2:
 	text_far _Route4BattleText2
 	text_end
@@ -85,12 +95,6 @@ Route4AfterBattleText2:
 	text_far _Route4AfterBattleText2
 	text_end
 
-Route4Text4:
-	text_asm
-	ld hl, Route4TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route4BattleText3:
 	text_far _Route4BattleText3
 	text_end
@@ -102,12 +106,6 @@ Route4EndBattleText3:
 Route4AfterBattleText3:
 	text_far _Route4AfterBattleText3
 	text_end
-
-Route4Text5:
-	text_asm
-	ld hl, Route4TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route4BattleText4:
 	text_far _Route4BattleText4

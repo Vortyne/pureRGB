@@ -9,9 +9,7 @@ BillsGarden_ScriptPointers:
 	dw_const BillsGardenScript0,  SCRIPT_BILLS_GARDEN_DEFAULT_SCRIPT
 
 BillsGardenScript0:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .checkOverHeard
 	CheckEvent EVENT_IN_BILLS_GARDEN
 	ret nz

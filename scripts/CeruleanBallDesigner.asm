@@ -1,10 +1,6 @@
 CeruleanBallDesigner_Script:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
-	jr z, .mapLoaded
-	call CeruleanBallDesignerLoadExtraTiles
-.mapLoaded
+	call WasMapJustLoaded
+	call nz, CeruleanBallDesignerLoadExtraTiles
 	jp EnableAutoTextBoxDrawing
 
 CeruleanBallDesignerLoadExtraTiles::

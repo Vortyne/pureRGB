@@ -11,42 +11,11 @@ SilphCo10F_Script:
 	ret
 
 SilphCo10FGateCallbackScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
-	ld hl, .GateCoordinates
-	call SilphCo2F_SetCardKeyDoorYScript
-	call SilphCo10F_SetUnlockedSilphCoDoorsScript
+	ld hl, SilphCo10FGateCoords
 	CheckEvent EVENT_SILPH_CO_10_UNLOCKED_DOOR
-	ret nz
-	ld a, $54
-	ld [wNewTileBlockID], a
-	lb bc, 4, 5
-	predef_jump ReplaceTileBlock
-
-.GateCoordinates:
-	dbmapcoord  5,  4
-	db -1 ; end
-
-SilphCo10F_SetUnlockedSilphCoDoorsScript:
-	ldh a, [hUnlockedSilphCoDoors]
-	and a
-	ret z
-	SetEvent EVENT_SILPH_CO_10_UNLOCKED_DOOR
-	callfar CheckAllCardKeyEvents
-	; fall through
-Load10FCheckCardKeyText:
-	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
-	ret z
-	ld a, TEXT_SILPHCO10F_CARD_KEY_DONE
-	ldh [hTextID], a
-	jp DisplayTextID
-
-SilphCo10Text7:
-	text_asm
-	callfar PrintCardKeyDoneText
-	rst TextScriptEnd
+	jp UnlockSilphCoDoor
 
 SilphCo10F_ScriptPointers:
 	def_script_pointers
@@ -62,7 +31,6 @@ SilphCo10F_TextPointers:
 	dw_const PickUpItemText,             TEXT_SILPHCO10F_ITEM1
 	dw_const PickUpItemText,             TEXT_SILPHCO10F_ITEM2
 	dw_const PickUpItemText,             TEXT_SILPHCO10F_ITEM3
-	dw_const SilphCo10Text7,             TEXT_SILPHCO10F_CARD_KEY_DONE
 
 SilphCo10TrainerHeaders:
 	def_trainers
@@ -75,14 +43,14 @@ SilphCo10TrainerHeader1:
 SilphCo10FRocketText:
 	text_asm
 	ld hl, SilphCo10TrainerHeader0
+SilphCo10FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 SilphCo10FScientistText:
 	text_asm
 	ld hl, SilphCo10TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SilphCo10FTalkToTrainer
 
 SilphCo10FSilphWorkerFText:
 	text_asm

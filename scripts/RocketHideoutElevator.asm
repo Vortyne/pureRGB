@@ -1,7 +1,5 @@
 RocketHideoutElevator_Script:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	push hl
 	call nz, RocketHideoutElevatorStoreWarpEntriesScript
 	pop hl
@@ -90,11 +88,10 @@ RocketHideoutElevatorText:
 	call RocketHideoutElevatorScript
 	ld hl, RocketHideoutElevatorWarpMaps
 	predef DisplayElevatorFloorMenu
-	jr .text_script_end
+	rst TextScriptEnd
 .no_key
 	ld hl, .AppearsToNeedKeyText
 	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 .UnlockedElevatorText:

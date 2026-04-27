@@ -111,8 +111,8 @@ DragonairUnderWaterEventAreaScript:
 	ld a, [wYCoord]
 	cp 2
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
+	; a = 0 after EnableAllJoypad
 	ld [wWhichPokemon], a ; reload this, dragonair is guaranteed to be in first slot now
 	call GetPartyMonName2
 	ld a, TEXT_SEAFOAMISLANDS1F_ERIK
@@ -175,7 +175,7 @@ DragonairUnderWaterEventAreaScript:
 .caught
 	ld a, b
 	ld [wSimulatedJoypadStatesIndex], a
-	jp StartSimulatingJoypadStates
+	jp StartSimulatingJoypadStatesNoJoypad
 .upOne
 	ld d, PAD_UP
 	jpfar ForceStepFromDoor

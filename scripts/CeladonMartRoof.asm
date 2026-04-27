@@ -5,26 +5,31 @@ CeladonMartRoof_Script:
 
 CeladonMartRoofScript_GetDrinksInBag:
 ; construct a list of all drinks in the player's bag
+	ld de, CeladonMartRoofDrinkList
+	; fall through
+GetListOfItemsInBag::
+	ld h, d
+	ld l, e
 	xor a
 	ld [wFilteredBagItemsCount], a
 	ld de, wFilteredBagItems
-	ld hl, CeladonMartRoofDrinkList
 .loop
 	ld a, [hli]
 	and a
 	jr z, .done
 	push hl
 	push de
-	ld [wTempByteValue], a
 	ld b, a
+	push bc
 	predef GetQuantityOfItemInBag
+	ld a, b
+	pop bc
 	pop de
 	pop hl
-	ld a, b
 	and a
 	jr z, .loop
-	; A drink is in the bag
-	ld a, [wTempByteValue]
+	; One of the items is in the bag
+	ld a, b
 	ld [de], a
 	inc de
 	push hl
@@ -41,6 +46,12 @@ CeladonMartRoofDrinkList:
 	db FRESH_WATER
 	db SODA_POP
 	db LEMONADE
+	db 0 ; end
+
+FossilsList::
+	db DOME_FOSSIL
+	db HELIX_FOSSIL
+	db OLD_AMBER
 	db 0 ; end
 
 CeladonMartRoofScript_GiveDrinkToGirl:

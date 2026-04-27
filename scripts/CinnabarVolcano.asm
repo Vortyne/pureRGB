@@ -1269,7 +1269,7 @@ CinnabarVolcanoBombRockDoneText:
 	dec b
 	jr nz, .loop
 	SetFlag FLAG_FAST_AUTO_MOVEMENT
-	call StartSimulatingJoypadStates
+	call StartSimulatingJoypadStatesOnlyAOrBPress
 	SetEvent EVENT_VOLCANO_SPRITE_MOVING
 	xor a
 	ld [wOverworldAnimationCooldown], a
@@ -1572,8 +1572,7 @@ CinnabarVolcanoBombRockAfterText:
 CheckWaitForVolcanoSpriteWalk:
 	CheckEvent EVENT_VOLCANO_SPRITE_MOVING
 	ret z
-	ld a, $FF
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	CheckEvent EVENT_GOT_DRILL
 	jr z, .entranceMovement
 	CheckEventReuseA EVENT_VOLCANO_DUG_TO_FLOOR1
@@ -1585,14 +1584,12 @@ CheckWaitForVolcanoSpriteWalk:
 	CheckEvent EVENT_GAVE_RHYDON_LIMESTONE
 	jr nz, .normalWalk
 .graveler
-	ResetEvent EVENT_VOLCANO_SPRITE_MOVING
 	; graveler walking
 	ld a, CINNABAR_VOLCANO_HUNGRY_GRAVELER
 	call SlideSpriteDown
 	ld a, SFX_PUSH_BOULDER
 	rst _PlaySound
-	xor a
-	ld [wJoyIgnore], a
+	call .doneWalkReset
 	jpfar AnimateBoulderDust
 .normalWalk
 	ld a, [wStatusFlags5]
@@ -1600,25 +1597,18 @@ CheckWaitForVolcanoSpriteWalk:
 	ret nz
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	ret nz
-	ResetEvent EVENT_VOLCANO_SPRITE_MOVING
-	xor a
-	ld [wJoyIgnore], a
-	ret
+	jr .doneWalkReset
 .easternWall
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	ret nz
-	ResetEvent EVENT_VOLCANO_SPRITE_MOVING
-	xor a
-	ld [wJoyIgnore], a
+	call .doneWalkReset
 	jp VolcanoBlowWallOpen
 .blaineWalksOut
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ResetEvent EVENT_VOLCANO_SPRITE_MOVING
-	xor a
-	ld [wJoyIgnore], a
+	call .doneWalkReset
 	ld a, TOGGLE_VOLCANO_BLAINE
 	jp VolcanoHideSpriteEntry
 .entranceMovement
@@ -1627,9 +1617,7 @@ CheckWaitForVolcanoSpriteWalk:
 	ret nz
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	ret nz
-	ResetEvent EVENT_VOLCANO_SPRITE_MOVING
-	xor a
-	ld [wJoyIgnore], a
+	call .doneWalkReset
 	ld a, [wYCoord]
 	cp 4
 	jr c, .prospectorWalkingUp
@@ -1640,6 +1628,9 @@ CheckWaitForVolcanoSpriteWalk:
 	call SetSpriteFacingRight
 	ld a, TEXT_CINNABAR_VOLCANO_PROSPECTOR
 	jp CinnabarVolcanoDisplayTextIDEntry
+.doneWalkReset
+	ResetEvent EVENT_VOLCANO_SPRITE_MOVING
+	jp EnableAllJoypad
 .prospectorWalkingUp
 	; prospector walks up from entrance
 	ld a, SFX_GO_OUTSIDE

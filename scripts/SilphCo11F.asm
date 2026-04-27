@@ -12,78 +12,9 @@ SilphCo11F_Script:
 	ret
 
 SilphCo11FGateCallbackScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
-	ld hl, SilphCo11GateCoords
-	call SilphCo11F_SetCardKeyDoorYScript
-	call SilphCo11FSetUnlockedDoorEventScript
-	CheckEvent EVENT_SILPH_CO_11_UNLOCKED_DOOR
-	ret nz
-	ld a, $20
-	ld [wNewTileBlockID], a
-	lb bc, 6, 3
-	predef_jump ReplaceTileBlock
-
-SilphCo11GateCoords:
-	dbmapcoord  3,  6
-	db -1 ; end
-
-SilphCo11F_SetCardKeyDoorYScript:
-	push hl
-	ld hl, wCardKeyDoorY
-	ld a, [hli]
-	ld b, a
-	ld a, [hl]
-	ld c, a
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	pop hl
-.loop_check_doors
-	ld a, [hli]
-	cp $ff
-	jr z, .exit_loop
-	push hl
-	ld hl, hUnlockedSilphCoDoors
-	inc [hl]
-	pop hl
-	cp b
-	jr z, .check_y_coord
-	inc hl
-	jr .loop_check_doors
-.check_y_coord
-	ld a, [hli]
-	cp c
-	jr nz, .loop_check_doors
-	ld hl, wCardKeyDoorY
-	xor a
-	ld [hli], a
-	ld [hl], a
-	ret
-.exit_loop
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	ret
-
-SilphCo11FSetUnlockedDoorEventScript:
-	ldh a, [hUnlockedSilphCoDoors]
-	and a
-	ret z
-	SetEvent EVENT_SILPH_CO_11_UNLOCKED_DOOR
-	callfar CheckAllCardKeyEvents
-	; fall through
-Load11FCheckCardKeyText:
-	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
-	ret z
-	ld a, TEXT_SILPHCO11F_CARD_KEY_DONE
-	ldh [hTextID], a
-	jp DisplayTextID
-
-SilphCo11Text7:
-	text_asm
-	callfar PrintCardKeyDoneText
-	rst TextScriptEnd
+	jpfar SilphCo11FCardKeyMapLoad
 
 SilphCo11FTeamRocketLeavesScript::
 	ld hl, .HideToggleableObjectIDs
@@ -167,15 +98,6 @@ SilphCo11FTeamRocketLeavesScript::
 	db TOGGLE_SILPH_CO_11F_3
 	db -1 ; end
 
-SilphCo11FResetCurScript:
-	xor a
-	ld [wJoyIgnore], a
-; fallthrough
-SilphCo11FSetCurScript:
-	ld [wSilphCo11FCurScript], a
-	ld [wCurMapScript], a
-	ret
-
 SilphCo11F_ScriptPointers:
 	def_script_pointers
 	dw_const SilphCo11FDefaultScript,               SCRIPT_SILPHCO11F_DEFAULT
@@ -200,8 +122,7 @@ ENDC
 	ld [wSavedCoordIndex], a
 	xor a
 	ldh [hJoyHeld], a
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, TEXT_SILPHCO11F_GIOVANNI
 	ldh [hTextID], a
 	call DisplayTextID
@@ -211,7 +132,7 @@ ENDC
 	ld de, .GiovanniMovement
 	call MoveSprite
 	ld a, SCRIPT_SILPHCO11F_GIOVANNI_FACING
-	jp SilphCo11FSetCurScript
+	jr SilphCo11FSetCurScript
 
 .PlayerCoordsArray:
 	dbmapcoord  6, 13
@@ -224,10 +145,18 @@ ENDC
 	db NPC_MOVEMENT_DOWN
 	db -1 ; end
 
+SilphCo11FResetCurScript:
+	call EnableAllJoypad
+; fallthrough
+SilphCo11FSetCurScript:
+	ld [wSilphCo11FCurScript], a
+	ld [wCurMapScript], a
+	ret
+
 SilphCo11FGiovanniAfterBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, SilphCo11FResetCurScript
+	jr z, SilphCo11FResetCurScript
 	ld a, [wSavedCoordIndex]
 	cp 1 ; index of second, upper-right entry in SilphCo11FDefaultScript.PlayerCoordsArray
 	ld a, PLAYER_DIR_UP
@@ -241,8 +170,7 @@ SilphCo11FGiovanniAfterBattleScript:
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	call GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here
 	callfar PlayGiovanniMusic
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld d, SILPHCO11F_GIOVANNI
 	callfar MakeSpriteFacePlayer
 	ld a, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
@@ -254,9 +182,7 @@ SilphCo11FGiovanniAfterBattleScript:
 	call GBFadeInFromBlack
 	SetEvent EVENT_BEAT_SILPH_CO_GIOVANNI
 	callfar PlayDefaultMusicIfMusicBitSet
-	xor a
-	ld [wJoyIgnore], a
-	jp SilphCo11FSetCurScript
+	jr SilphCo11FResetCurScript
 
 SilphCo11FGiovanniBattleFacingScript:
 	ld a, [wStatusFlags5]
@@ -289,8 +215,7 @@ SilphCo11FGiovanniStartBattleScript:
 	ld [wSpriteIndex], a
 	call EngageMapTrainer
 	call InitBattleEnemyParameters
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, SCRIPT_SILPHCO11F_GIOVANNI_AFTER_BATTLE
 	jp SilphCo11FSetCurScript
 
@@ -303,7 +228,6 @@ SilphCo11F_TextPointers:
 	dw_const SilphCo11FRocket2Text,                   TEXT_SILPHCO11F_ROCKET2
 	dw_const SilphCo11FPorygonText,                   TEXT_SILPHCO11F_COMPUTER_MONITOR
 	dw_const SilphCo11FGiovanniYouRuinedOurPlansText, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
-	dw_const SilphCo11Text7,                          TEXT_SILPHCO11F_CARD_KEY_DONE
 
 SilphCo11TrainerHeaders:
 	def_trainers 4
@@ -316,24 +240,18 @@ SilphCo11TrainerHeader1:
 SilphCo11FSilphPresidentText:
 	text_asm
 	CheckEvent EVENT_GOT_MASTER_BALL
-	jp nz, .got_item
+	ld hl, .MasterBallDescriptionText
+	jp nz, .printDone
 	ld hl, .Text
 	rst _PrintText
 	lb bc, ITEM_SILPH_CO_PRESIDENT_REWARD, 1
 	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedMasterBallText
-	rst _PrintText
-	SetEvent EVENT_GOT_MASTER_BALL
-	jr .done
-.bag_full
 	ld hl, .NoRoomText
+	jr nc, .printDone
+	SetEvent EVENT_GOT_MASTER_BALL
+	ld hl, .ReceivedMasterBallText
+.printDone
 	rst _PrintText
-	jr .done
-.got_item
-	ld hl, .MasterBallDescriptionText
-	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .Text:
@@ -372,8 +290,15 @@ SilphCo11FGiovanniYouRuinedOurPlansText:
 SilphCo11FRocket1Text:
 	text_asm
 	ld hl, SilphCo11TrainerHeader0
+	; fall through
+SilphCo11FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+SilphCo11FRocket2Text:
+	text_asm
+	ld hl, SilphCo11TrainerHeader1
+	jr SilphCo11FTalkToTrainer
 
 SilphCo11FRocket1BattleText:
 	text_far _SilphCo11FRocket1BattleText
@@ -386,12 +311,6 @@ SilphCo11FRocket1EndBattleText:
 SilphCo11FRocket1AfterBattleText:
 	text_far _SilphCo11FRocket1AfterBattleText
 	text_end
-
-SilphCo11FRocket2Text:
-	text_asm
-	ld hl, SilphCo11TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
 
 SilphCo11FRocket2BattleText:
 	text_far _SilphCo11FRocket2BattleText

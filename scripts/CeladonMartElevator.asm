@@ -1,8 +1,6 @@
 CeladonMartElevator_Script:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
-	push hl
+	call WasMapJustLoaded
+	push hl ; wCurrentMapScriptFlags
 	call nz, CeladonMartElevatorStoreWarpEntriesScript
 	pop hl
 	bit BIT_CUR_MAP_USED_ELEVATOR, [hl]

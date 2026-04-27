@@ -24,8 +24,7 @@ BikeShopClerkText:
 	CheckEvent EVENT_GOT_BICYCLE
 	jr z, .dontHaveBike
 	ld hl, BikeShopClerkHowDoYouLikeYourBicycleText
-	rst _PrintText
-	jp .Done
+	jr .printDone
 .dontHaveBike
 	ld b, BIKE_VOUCHER
 	call IsItemInBag
@@ -34,21 +33,34 @@ BikeShopClerkText:
 	rst _PrintText
 	lb bc, BICYCLE, 1
 	call GiveItem
-	jr nc, .BagFull
+	ld hl, BikeShopBagFullText
+	jr nc, .printDone
 	ld a, BIKE_VOUCHER
 	ldh [hItemToRemoveID], a
 	farcall RemoveItemByID
 	SetEvent EVENT_GOT_BICYCLE
 	ld hl, BikeShopExchangedVoucherText
-	rst _PrintText
-	jr .Done
-.BagFull
-	ld hl, BikeShopBagFullText
-	rst _PrintText
-	jr .Done
+	jr .printDone
 .dontHaveVoucher
 	ld hl, BikeShopClerkWelcomeText
 	rst _PrintText
+	call .bikeShopMenu
+	bit B_PAD_B, a
+	; BUG: text stays with no delay if you cancel here.
+	jr nz, .cancel
+	ld hl, wStatusFlags5
+	res BIT_NO_TEXT_DELAY, [hl]
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .cancel
+	ld hl, BikeShopCantAffordText
+	rst _PrintText
+.cancel
+	ld hl, BikeShopComeAgainText
+.printDone
+	rst _PrintText
+	rst TextScriptEnd
+.bikeShopMenu
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
@@ -73,21 +85,7 @@ BikeShopClerkText:
 	call PlaceString
 	ld hl, BikeShopClerkDoYouLikeItText
 	rst _PrintText
-	call HandleMenuInput
-	bit B_PAD_B, a
-	jr nz, .cancel
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl]
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .cancel
-	ld hl, BikeShopCantAffordText
-	rst _PrintText
-.cancel
-	ld hl, BikeShopComeAgainText
-	rst _PrintText
-.Done
-	rst TextScriptEnd
+	jp HandleMenuInput
 
 BikeShopMenuText:
 	db   "BICYCLE"

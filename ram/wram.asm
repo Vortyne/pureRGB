@@ -2611,12 +2611,7 @@ wCompletedInGameTradeFlags:: dw
 wWarpedFromWhichWarp:: db
 wWarpedFromWhichMap:: db
 
-	ds 2 ; unused save file 2 bytes
-
-wCardKeyDoorY:: db
-wCardKeyDoorX:: db
-
-	ds 2 ; unused save file 2 bytes
+	ds 6 ; unused save file 6 bytes
 
 wFirstLockTrashCanIndex:: db
 wSecondLockTrashCanIndex:: db

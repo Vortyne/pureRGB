@@ -22,9 +22,7 @@ GameCornerSelectLuckySlotMachine:
 	ret
 
 GameCornerSetRocketHideoutDoorTile:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEvent EVENT_FOUND_ROCKET_HIDEOUT
 	ret nz
@@ -38,25 +36,23 @@ GameCornerSetRocketHideoutDoorTile:
 	ret z
 	jp GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here
 
-GameCornerReenterMapAfterPlayerLoss:
-	xor a ; SCRIPT_GAMECORNER_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wGameCornerCurScript], a
-	ld [wCurMapScript], a
-	ret
-
 GameCorner_ScriptPointers:
 	def_script_pointers
 	dw_const DoRet,                        SCRIPT_GAMECORNER_DEFAULT
 	dw_const GameCornerRocketBattleScript, SCRIPT_GAMECORNER_ROCKET_BATTLE
 	dw_const GameCornerRocketExitScript,   SCRIPT_GAMECORNER_ROCKET_EXIT
 
+GameCornerReenterMapAfterPlayerLoss:
+	call ResetMapScripts
+	; a = 0 from ResetMapScripts
+	ld [wGameCornerCurScript], a ; SCRIPT_GAMECORNER_DEFAULT
+	ret
+
 GameCornerRocketBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, GameCornerReenterMapAfterPlayerLoss
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	jr z, GameCornerReenterMapAfterPlayerLoss
+	call DisableDpad
 	ld d, GAMECORNER_ROCKET
 	callfar MakeSpriteFacePlayer
 	ld a, TEXT_GAMECORNER_ROCKET_AFTER_BATTLE
@@ -107,15 +103,14 @@ GameCornerRocketExitScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TOGGLE_GAME_CORNER_ROCKET
 	ld [wToggleableObjectIndex], a
 	predef HideObject
 	ld hl, wCurrentMapScriptFlags
 	set BIT_CUR_MAP_LOADED_1, [hl]
 	set BIT_CUR_MAP_LOADED_2, [hl]
-	ld a, SCRIPT_GAMECORNER_DEFAULT
+	xor a ; SCRIPT_GAMECORNER_DEFAULT
 	ld [wGameCornerCurScript], a
 	ret
 

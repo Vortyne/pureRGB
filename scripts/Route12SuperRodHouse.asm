@@ -15,20 +15,17 @@ Route12SuperRodHouseFishingGuruText:
 	ld hl, Route12GuruIntro
 	rst _PrintText
 	callfar LastTwoGurusScript
-	jr .done
+	rst TextScriptEnd
 .printEndText
 	ld a, [wOptions2] ; PureRGBnote: ADDED: this NPC will talk about how super rod can catch alternate palette pokemon, but only if the feature is enabled.
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
-	jr z, .noColorText
+	ld hl, Route12GuruEnd
+	jr z, .printDone
 	ld hl, Route12GuruEndColor
 	rst _PrintText
 	ld hl, Route12GuruColorInfo
+.printDone
 	rst _PrintText
-	jr .done
-.noColorText
-	ld hl, Route12GuruEnd
-	rst _PrintText
-.done
 	rst TextScriptEnd
 
 Route12GuruIntro:

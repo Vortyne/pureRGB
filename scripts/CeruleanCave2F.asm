@@ -21,7 +21,6 @@ CeruleanCave2FAfterOakBattleScript:
 	ld a, [wOptions2]
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
 	jr z, .done ; don't do anything if alt palettes are turned off
-
 	ld d, CERULEANCAVE2F_OAK
 	callfar MakeSpriteFacePlayer
 	ld a, TEXT_CERULEANCAVE2F_OAK_FIRST_DEFEAT
@@ -49,18 +48,13 @@ OakCeruleanCaveText:
 	jr z, .challengeOak
 	ld hl, OakBeatenText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .challengeOak
 	ld c, BANK(Music_MeetProfOak)
 	ld a, MUSIC_MEET_PROF_OAK
 	call PlayMusic
 	ld hl, OakBattleStartText
 	rst _PrintText
-	call OakBattle
-.done
-	rst TextScriptEnd
-
-OakBattle:
 	ld hl, OakBattleWinText
 	ld de, OakBattleLoseText
 	call SaveEndBattleTextPointers
@@ -69,14 +63,13 @@ OakBattle:
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld a, OPP_PROF_OAK
 	ld [wCurOpponent], a
-
 	; select which team to use during the encounter
 	ld a, [wPlayerStarter]
 	call StarterToPartyID
 	ld [wTrainerNo], a
 	ld a, SCRIPT_CERULEANCAVE2F_AFTER_OAK_BATTLE
 	ld [wCeruleanCave2FCurScript], a
-	ret
+	rst TextScriptEnd
 
 OakCeruleanCaveFirstDefeatText:
 	text_asm

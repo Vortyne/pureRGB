@@ -64,7 +64,8 @@ WalletKidTrainerHeader:
 Museum2FWalletKid1:
 	text_asm
 	CheckEvent EVENT_MET_POCKET_ABRA_LADY
-	jr z, .intro
+	ld hl, Museum2FWalletKid1Intro
+	jr z, .printDone
 .battle
 	CheckEvent EVENT_BEAT_WALLET_KID
 	jp nz, .giveWallet
@@ -74,21 +75,15 @@ Museum2FWalletKid1:
 	call TalkToTrainer
 	ld a, SCRIPT_MUSEUM2F_WALLET_KID_POST_BATTLE
 	ld [wCurMapScript], a 
-	jr .done
+	rst TextScriptEnd
 .giveWallet
 	CheckEvent EVENT_GOT_LOST_WALLET
-	jr nz, .endText
-	call GiveWallet
-	call DisableWaitingAfterTextDisplay
-	jr .done
-.endText
 	ld hl, Museum2FWalletKidEnd
+	jr nz, .printDone
+	call GiveWallet
+	jp TextScriptEndNoButtonPress
+.printDone
 	rst _PrintText
-	jr .done
-.intro
-	ld hl, Museum2FWalletKid1Intro
-	rst _PrintText
-.done
 	rst TextScriptEnd
 
 ResetScripts:

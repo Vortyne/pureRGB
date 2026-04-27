@@ -10,43 +10,8 @@ CinnabarLabFossilRoom_TextPointers:
 
 Lab4Script_GetFossilsInBag:
 ; construct a list of all fossils in the player's bag
-	xor a
-	ld [wFilteredBagItemsCount], a
-	ld de, wFilteredBagItems
-	ld hl, FossilsList
-.loop
-	ld a, [hli]
-	and a
-	jr z, .done
-	push hl
-	push de
-	ld [wTempByteValue], a
-	ld b, a
-	predef GetQuantityOfItemInBag
-	pop de
-	pop hl
-	ld a, b
-	and a
-	jr z, .loop
-	; A fossil is in the bag
-	ld a, [wTempByteValue]
-	ld [de], a
-	inc de
-	push hl
-	ld hl, wFilteredBagItemsCount
-	inc [hl]
-	pop hl
-	jr .loop
-.done
-	ld a, $ff
-	ld [de], a
-	ret
-
-FossilsList:
-	db DOME_FOSSIL
-	db HELIX_FOSSIL
-	db OLD_AMBER
-	db 0 ; end
+	ld de, FossilsList
+	jpfar GetListOfItemsInBag
 
 CinnabarLabFossilRoomScientist1Text:
 	text_asm

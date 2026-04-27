@@ -47,26 +47,24 @@ SSAnne9TrainerHeader3:
 SSAnne2FRoomsGentleman1Text:
 	text_asm
 	ld hl, SSAnne9TrainerHeader0
+SSAnne2FRoomsTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 SSAnne2FRoomsFisherText:
 	text_asm
 	ld hl, SSAnne9TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnne2FRoomsTalkToTrainer
 
 SSAnne2FRoomsGentleman2Text:
 	text_asm
 	ld hl, SSAnne9TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnne2FRoomsTalkToTrainer
 
 SSAnne2FRoomsCooltrainerFText:
 	text_asm
 	ld hl, SSAnne9TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnne2FRoomsTalkToTrainer
 
 SSAnne2FRoomsGentleman3Text:
 	text_asm

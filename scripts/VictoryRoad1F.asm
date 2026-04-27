@@ -9,9 +9,7 @@ VictoryRoad1F_Script:
 	ret
 
 VictoryRoad1FMapLoadScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEvent EVENT_VICTORY_ROAD_1_BOULDER_ON_SWITCH
 	ret z
@@ -29,7 +27,7 @@ VictoryRoad1F_ScriptPointers:
 VictoryRoad1FDefaultScript:
 	ld a, [wMiscFlags]
 	bit BIT_BOULDER_DUST, a
-	ret nz ; PureRGBnote: ADDED: if a boulder animation is playing forget doing this, helps reduce lag
+	ret nz ; PureRGBnote: ADDED: if a boulder animation is playing forget doing the rest, helps reduce lag
 	CheckEvent EVENT_VICTORY_ROAD_1_BOULDER_ON_SWITCH
 	jp nz, CheckFightingMapTrainers
 	ld hl, Boulder1FSwitchCoords
@@ -83,14 +81,14 @@ VictoryRoad1TrainerHeader1:
 VictoryRoad1FCooltrainerFText:
 	text_asm
 	ld hl, VictoryRoad1TrainerHeader0
+VictoryRoad1FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 VictoryRoad1FCooltrainerMText:
 	text_asm
 	ld hl, VictoryRoad1TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad1FTalkToTrainer
 
 VictoryRoad1FCooltrainerFBattleText:
 	text_far _VictoryRoad1FCooltrainerFBattleText

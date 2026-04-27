@@ -11,27 +11,21 @@ CeruleanOldRodHouse1Text1:
 	text_asm
 	ld a, [wStatusFlags1]
 	bit BIT_GOT_OLD_ROD, a ; got old rod?
-	jr nz, .got_item
+	ld hl, .CeruleanOldRodHouseHowAreFishBiting
+	jr nz, .printDone
 	ld hl, .CeruleanOldRodHouseImTheFishingGuruText
 	rst _PrintText
 	call YesNoChoice
-	jr nz, .refused
+	ld hl, .CeruleanOldRodHouseDisappointing
+	jr nz, .printDone
 	lb bc, OLD_ROD, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .CeruleanOldRodHouseNoRoom
+	jr nc, .printDone
 	ld hl, wStatusFlags1
 	set BIT_GOT_OLD_ROD, [hl] ; got old rod
 	ld hl, .CeruleanOldRodHouseGiveRod
-	jr .done
-.bag_full
-	ld hl, .CeruleanOldRodHouseNoRoom
-	jr .done
-.refused
-	ld hl, .CeruleanOldRodHouseDisappointing
-	jr .done
-.got_item
-	ld hl, .CeruleanOldRodHouseHowAreFishBiting
-.done
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

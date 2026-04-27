@@ -18,9 +18,7 @@ VictoryRoad2FResetBoulderEventScript:
 	ret ; avoids running the below code twice because bit 5 of wCurrentMapScriptFlags is always set when bit 6 is set too
 
 VictoryRoad2FCheckBoulderEventScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEvent EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1
 	jr z, .not_on_switch
@@ -111,38 +109,34 @@ MoltresTrainerHeader:
 VictoryRoad2FHikerText:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader0
+VictoryRoad2FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 VictoryRoad2FSuperNerd1Text:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad2FTalkToTrainer
 
 VictoryRoad2FCooltrainerMText:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad2FTalkToTrainer
 
 VictoryRoad2FSuperNerd2Text:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad2FTalkToTrainer
 
 VictoryRoad2FSuperNerd3Text:
 	text_asm
 	ld hl, VictoryRoad2TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad2FTalkToTrainer
 
 VictoryRoad2FMoltresText:
 	text_asm
 	ld hl, MoltresTrainerHeader
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad2FTalkToTrainer
 
 VictoryRoad2FMoltresBattleText:
 	text_far _VictoryRoad2FMoltresBattleText

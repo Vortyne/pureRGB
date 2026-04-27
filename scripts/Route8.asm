@@ -11,9 +11,7 @@ Route8_Script:
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 Route8CheckHideCutTrees:
 
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	call nz, .checkReplaceTiles
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]
@@ -101,8 +99,80 @@ Route8TrainerHeader8:
 Route8SuperNerd1Text:
 	text_asm
 	ld hl, Route8TrainerHeader0
+Route8TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route8Gambler1Text:
+	text_asm
+	ld hl, Route8TrainerHeader1
+	jr Route8TalkToTrainer
+
+Route8SuperNerd2Text:
+	text_asm
+	ld hl, Route8TrainerHeader2
+	jr Route8TalkToTrainer
+
+Route8CooltrainerF1Text:
+	text_asm
+	ld hl, Route8TrainerHeader3
+	jr Route8TalkToTrainer
+
+Route8SuperNerd3Text:
+	text_asm
+	ld hl, Route8TrainerHeader4
+	jr Route8TalkToTrainer
+
+Route8CooltrainerF2Text:
+	text_asm
+	ld hl, Route8TrainerHeader5
+	jr Route8TalkToTrainer
+
+Route8CooltrainerF3Text:
+	text_asm
+	ld hl, Route8TrainerHeader6
+	jr Route8TalkToTrainer
+
+Route8Gambler2Text:
+	text_asm
+	ld hl, Route8TrainerHeader7
+	jr Route8TalkToTrainer
+
+Route8CooltrainerF4Text:
+	text_asm
+	ld hl, Route8TrainerHeader8
+	jr Route8TalkToTrainer
+
+Route8SuperNerd2AfterBattleText:
+	text_far _Route8SuperNerd2AfterBattleText
+	text_asm
+	lb hl, DEX_MUK, SUPER_NERD
+	ld de, MukLearnset
+	ld bc, LearnsetMukFade
+	predef_jump LearnsetTrainerScriptMain
+
+Route8CooltrainerF1AfterBattleText:
+	text_far _Route8CooltrainerF1AfterBattleText
+	text_asm
+	lb hl, DEX_NIDORINA, LASS
+	ld de, LearnsetNidorina
+	jr Route8LearnsetScript
+
+Route8CooltrainerF2AfterBattleText:
+	text_far _Route8CooltrainerF2AfterBattleText
+	text_asm
+	lb hl, DEX_MEOWTH, LASS
+	ld de, MeowthLearnset
+	jr Route8LearnsetScript
+
+Route8CooltrainerF4AfterBattleText:
+	text_far _Route8CooltrainerF4AfterBattleText
+	text_asm
+	lb hl, DEX_CLEFAIRY, LASS
+	ld de, ClefableLearnset
+	; fall through
+Route8LearnsetScript:
+	predef_jump LearnsetTrainerScript
 
 Route8SuperNerd1BattleText:
 	text_far _Route8SuperNerd1BattleText
@@ -116,12 +186,6 @@ Route8SuperNerd1AfterBattleText:
 	text_far _Route8SuperNerd1AfterBattleText
 	text_end
 
-Route8Gambler1Text:
-	text_asm
-	ld hl, Route8TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route8Gambler1BattleText:
 	text_far _Route8Gambler1BattleText
 	text_end
@@ -134,12 +198,6 @@ Route8Gambler1AfterBattleText:
 	text_far _Route8Gambler1AfterBattleText
 	text_end
 
-Route8SuperNerd2Text:
-	text_asm
-	ld hl, Route8TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route8SuperNerd2BattleText:
 	text_far _Route8SuperNerd2BattleText
 	text_end
@@ -148,21 +206,6 @@ Route8SuperNerd2EndBattleText:
 	text_far _Route8SuperNerd2EndBattleText
 	text_end
 
-Route8SuperNerd2AfterBattleText:
-	text_far _Route8SuperNerd2AfterBattleText
-	text_asm
-	lb hl, DEX_MUK, SUPER_NERD
-	ld de, MukLearnset
-	ld bc, LearnsetMukFade
-	predef_jump LearnsetTrainerScriptMain
-
-
-Route8CooltrainerF1Text:
-	text_asm
-	ld hl, Route8TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route8CooltrainerF1BattleText:
 	text_far _Route8CooltrainerF1BattleText
 	text_end
@@ -170,19 +213,6 @@ Route8CooltrainerF1BattleText:
 Route8CooltrainerF1EndBattleText:
 	text_far _Route8CooltrainerF1EndBattleText
 	text_end
-
-Route8CooltrainerF1AfterBattleText:
-	text_far _Route8CooltrainerF1AfterBattleText
-	text_asm
-	lb hl, DEX_NIDORINA, LASS
-	ld de, LearnsetNidorina
-	predef_jump LearnsetTrainerScript
-
-Route8SuperNerd3Text:
-	text_asm
-	ld hl, Route8TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route8SuperNerd3BattleText:
 	text_far _Route8SuperNerd3BattleText
@@ -196,12 +226,6 @@ Route8SuperNerd3AfterBattleText:
 	text_far _Route8SuperNerd3AfterBattleText
 	text_end
 
-Route8CooltrainerF2Text:
-	text_asm
-	ld hl, Route8TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route8CooltrainerF2BattleText:
 	text_far _Route8CooltrainerF2BattleText
 	text_end
@@ -209,19 +233,6 @@ Route8CooltrainerF2BattleText:
 Route8CooltrainerF2EndBattleText:
 	text_far _Route8CooltrainerF2EndBattleText
 	text_end
-
-Route8CooltrainerF2AfterBattleText:
-	text_far _Route8CooltrainerF2AfterBattleText
-	text_asm
-	lb hl, DEX_MEOWTH, LASS
-	ld de, MeowthLearnset
-	predef_jump LearnsetTrainerScript
-
-Route8CooltrainerF3Text:
-	text_asm
-	ld hl, Route8TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route8CooltrainerF3BattleText:
 	text_far _Route8CooltrainerF3BattleText
@@ -235,12 +246,6 @@ Route8CooltrainerF3AfterBattleText:
 	text_far _Route8CooltrainerF3AfterBattleText
 	text_end
 
-Route8Gambler2Text:
-	text_asm
-	ld hl, Route8TrainerHeader7
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route8Gambler2BattleText:
 	text_far _Route8Gambler2BattleText
 	text_end
@@ -253,12 +258,6 @@ Route8Gambler2AfterBattleText:
 	text_far _Route8Gambler2AfterBattleText
 	text_end
 
-Route8CooltrainerF4Text:
-	text_asm
-	ld hl, Route8TrainerHeader8
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route8CooltrainerF4BattleText:
 	text_far _Route8CooltrainerF4BattleText
 	text_end
@@ -266,13 +265,6 @@ Route8CooltrainerF4BattleText:
 Route8CooltrainerF4EndBattleText:
 	text_far _Route8CooltrainerF4EndBattleText
 	text_end
-
-Route8CooltrainerF4AfterBattleText:
-	text_far _Route8CooltrainerF4AfterBattleText
-	text_asm
-	lb hl, DEX_CLEFAIRY, LASS
-	ld de, ClefableLearnset
-	predef_jump LearnsetTrainerScript
 
 Route8UndergroundSignText:
 	text_far _Route8UndergroundSignText

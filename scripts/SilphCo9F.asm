@@ -11,129 +11,9 @@ SilphCo9F_Script:
 	ret
 
 SilphCo9FGateCallbackScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
-	ld hl, .GateCoordinates
-	call SilphCo9F_SetCardKeyDoorYScript
-	call SilphCo9F_SetUnlockedSilphCoDoorsScript
-	CheckEvent EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	jr nz, .unlock_door1
-	push af
-	ld a, $5f
-	ld [wNewTileBlockID], a
-	lb bc, 4, 1
-	predef ReplaceTileBlock
-	pop af
-.unlock_door1
-	CheckEventAfterBranchReuseA EVENT_SILPH_CO_9_UNLOCKED_DOOR2, EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	jr nz, .unlock_door2
-	push af
-	ld a, $54
-	ld [wNewTileBlockID], a
-	lb bc, 2, 9
-	predef ReplaceTileBlock
-	pop af
-.unlock_door2
-	CheckEventAfterBranchReuseA EVENT_SILPH_CO_9_UNLOCKED_DOOR3, EVENT_SILPH_CO_9_UNLOCKED_DOOR2
-	jr nz, .unlock_door3
-	push af
-	ld a, $54
-	ld [wNewTileBlockID], a
-	lb bc, 5, 9
-	predef ReplaceTileBlock
-	pop af
-.unlock_door3
-	CheckEventAfterBranchReuseA EVENT_SILPH_CO_9_UNLOCKED_DOOR4, EVENT_SILPH_CO_9_UNLOCKED_DOOR3
-	ret nz
-	ld a, $5f
-	ld [wNewTileBlockID], a
-	lb bc, 6, 5
-	predef_jump ReplaceTileBlock
-
-.GateCoordinates:
-	dbmapcoord  1,  4
-	dbmapcoord  9,  2
-	dbmapcoord  9,  5
-	dbmapcoord  5,  6
-	db -1 ; end
-
-SilphCo9F_SetCardKeyDoorYScript:
-	push hl
-	ld hl, wCardKeyDoorY
-	ld a, [hli]
-	ld b, a
-	ld a, [hl]
-	ld c, a
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	pop hl
-.loop_card_key_doors
-	ld a, [hli]
-	cp $ff
-	jr z, .exit_loop
-	push hl
-	ld hl, hUnlockedSilphCoDoors
-	inc [hl]
-	pop hl
-	cp b
-	jr z, .check_door
-	inc hl
-	jr .loop_card_key_doors
-.check_door
-	ld a, [hli]
-	cp c
-	jr nz, .loop_card_key_doors
-	ld hl, wCardKeyDoorY
-	xor a
-	ld [hli], a
-	ld [hl], a
-	ret
-.exit_loop
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	ret
-
-SilphCo9F_SetUnlockedSilphCoDoorsScript:
-	EventFlagAddress hl, EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	ldh a, [hUnlockedSilphCoDoors]
-	and a
-	ret z
-	cp $1
-	jr nz, .unlock_door1
-	SetEventReuseHL EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	jp Load9FCheckCardKeyText
-.unlock_door1
-	cp $2
-	jr nz, .unlock_door2
-	SetEventAfterBranchReuseHL EVENT_SILPH_CO_9_UNLOCKED_DOOR2, EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	jp Load9FCheckCardKeyText
-.unlock_door2
-	cp $3
-	jr nz, .unlock_door3
-	SetEventAfterBranchReuseHL EVENT_SILPH_CO_9_UNLOCKED_DOOR3, EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	jp Load9FCheckCardKeyText
-.unlock_door3
-	cp $4
-	ret nz
-	SetEventAfterBranchReuseHL EVENT_SILPH_CO_9_UNLOCKED_DOOR4, EVENT_SILPH_CO_9_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	; fall through
-Load9FCheckCardKeyText:
-	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
-	ret z
-	ld a, TEXT_SILPHCO9F_CARD_KEY_DONE
-	ldh [hTextID], a
-	jp DisplayTextID
-
-SilphCo9Text5:
-	text_asm
-	callfar PrintCardKeyDoneText
-	rst TextScriptEnd
+	jpfar SilphCo9FCardKeyMapLoad
 
 SilphCo9F_ScriptPointers:
 	def_script_pointers
@@ -147,7 +27,6 @@ SilphCo9F_TextPointers:
 	dw_const SilphCo9FRocket1Text,   TEXT_SILPHCO9F_ROCKET1
 	dw_const SilphCo9FScientistText, TEXT_SILPHCO9F_SCIENTIST
 	dw_const SilphCo9FRocket2Text,   TEXT_SILPHCO9F_ROCKET2
-	dw_const SilphCo9Text5,          TEXT_SILPHCO9F_CARD_KEY_DONE
 
 SilphCo9TrainerHeaders:
 	def_trainers 2
@@ -193,20 +72,19 @@ SilphCo9FNurseText:
 SilphCo9FRocket1Text:
 	text_asm
 	ld hl, SilphCo9TrainerHeader0
+SilphCo9FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 SilphCo9FScientistText:
 	text_asm
 	ld hl, SilphCo9TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SilphCo9FTalkToTrainer
 
 SilphCo9FRocket2Text:
 	text_asm
 	ld hl, SilphCo9TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SilphCo9FTalkToTrainer
 
 SilphCo9FRocket1BattleText:
 	text_far _SilphCo9FRocket1BattleText

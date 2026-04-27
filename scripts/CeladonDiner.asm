@@ -18,13 +18,12 @@ CeladonDinerCookText:
 	jr nz, .noBreak
 	ld hl, CeladonDinerBreakText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .noBreak
 	ld hl, CeladonDinerOpenText
 	rst _PrintText
 	ld hl, CeladonDinerMenu
 	call DisplayPokemartNoGreeting
-.done
 	rst TextScriptEnd
 
 INCLUDE "data/items/marts/celadon_diner.asm"
@@ -50,26 +49,17 @@ CeladonDinerFisherText:
 	text_end
 
 CeladonDinerCoinCaseGuyText:
+; PureRGBnote: CHANGED: COIN_CASE is not an item, it's just an event that lets you use the game corner
 	text_asm
 	CheckEvent EVENT_GOT_COIN_CASE
-	jr nz, .got_item
+	ld hl, .WinItBackText
+	jr nz, .printDone
 	ld hl, .ImFlatOutBustedText
 	rst _PrintText
-	;lb bc, COIN_CASE, 1 ; PureRGBnote: CHANGED: COIN_CASE is not an item, it's just an event that lets you use the game corner
-	;call GiveItem
-	;jr nc, .bag_full
 	SetEvent EVENT_GOT_COIN_CASE
 	ld hl, .ReceivedCoinCaseText
+.printDone
 	rst _PrintText
-	jr .done
-;.bag_full
-;	ld hl, .CoinCaseNoRoomText
-;	rst _PrintText
-;   jr .done
-.got_item
-	ld hl, .WinItBackText
-	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .ImFlatOutBustedText:
@@ -80,10 +70,6 @@ CeladonDinerCoinCaseGuyText:
 	text_far _CeladonDinerCoinCaseGuyReceivedCoinCaseText
 	sound_get_key_item
 	text_end
-
-;.CoinCaseNoRoomText:
-;	text_far _CeladonDinerCoinCaseGuyCoinCaseNoRoomText
-;	text_end
 
 .WinItBackText:
 	text_far _CeladonDinerCoinCaseGuyWinItBackText

@@ -730,27 +730,36 @@ _VermilionGymTrashText::
 _VermilionGymTrashSuccessText1::
 	text "Hey! There's a"
 	line "switch under the"
-	cont "trash!"
-	cont "Turn it on!"
+	cont "trash!@"
+	text_jump _VermilionGymTurnItOn
 
-	para "The 1st electric"
-	line "lock opened!@"
-	text_end
+_VermilionGymTurnItOn::
+	cont "Turn it on!"
+	done
+
+_VermilionGym1stElectricLock::
+	text "The 1st@"
+	text_jump _VermilionTheElectricLockOpened
+
+_VermilionGym2ndElectricLock::
+	text "The 2nd@"
+	text_jump _VermilionTheElectricLockOpened
+
+_VermilionTheElectricLockOpened::
+	db " electric"
+	line "lock opened!"
+	done
 
 _VermilionGymTrashSuccessText2::
 	text "Hey! There's"
 	line "another switch"
-	cont "under the trash!"
-	cont "Turn it on!"
-	prompt
+	cont "under the trash!@"
+	text_jump _VermilionGymTurnItOn
 
 _VermilionGymTrashSuccessText3::
-	text "The 2nd electric"
-	line "lock opened!"
-
-	para "The motorized door"
-	line "opened!@"
-	text_end
+	text "The motorized door"
+	line "opened!"
+	done
 
 ;_VermilionGymTrashFailText::
 ;	text "Nope! There's"

@@ -25,8 +25,7 @@ SafariZoneGateDefaultScript:
 	ld a, TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_1
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	xor a
 	ldh [hJoyHeld], a
 	ld a, SPRITE_FACING_RIGHT
@@ -41,8 +40,7 @@ SafariZoneGateDefaultScript:
 	ld a, PAD_RIGHT
 	ld c, 1
 	call SafariZoneEntranceAutoWalk
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, SCRIPT_SAFARIZONEGATE_PLAYER_MOVING_RIGHT
 	ld [wSafariZoneGateCurScript], a
 	ret
@@ -56,22 +54,18 @@ SafariZoneGatePlayerMovingRightScript:
 	call SafariZoneGateReturnSimulatedJoypadStateScript
 	ret nz
 SafariZoneGateWouldYouLikeToJoinScript:
-	xor a
+	call EnableAllJoypad
 	ldh [hJoyHeld], a
-	ld [wJoyIgnore], a
 	call UpdateSprites
 	ld a, TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_WOULD_YOU_LIKE_TO_JOIN
 	ldh [hTextID], a
 	call DisplayTextID
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
-	ret
+	jp DisableAllJoypad
 
 SafariZoneGatePlayerMovingUpScript:
 	call SafariZoneGateReturnSimulatedJoypadStateScript
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, SCRIPT_SAFARIZONEGATE_LEAVING_SAFARI
 	ld [wSafariZoneGateCurScript], a
 	ret
@@ -83,8 +77,7 @@ SafariZoneGateLeavingSafariScript:
 	jr z, .leaving_early
 	ResetEventReuseHL EVENT_IN_SAFARI_ZONE
 	call UpdateSprites
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, [wSafariType]
 	and a
 	jr nz, .rangerHuntDone
@@ -127,8 +120,7 @@ SafariZoneGateLeavingSafariScript:
 SafariZoneGatePlayerMovingDownScript:
 	call SafariZoneGateReturnSimulatedJoypadStateScript
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, SCRIPT_SAFARIZONEGATE_DEFAULT
 	ld [wSafariZoneGateCurScript], a
 	ret

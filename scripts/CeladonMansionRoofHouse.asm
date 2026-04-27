@@ -1,9 +1,7 @@
 CeladonMansionRoofHouse_Script:
 	ld a, CELADON_CITY
 	ld [wLastMap], a
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	call nz, RunDefaultPaletteCommand
 	jp EnableAutoTextBoxDrawing
 

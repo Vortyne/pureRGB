@@ -5666,7 +5666,8 @@ MoveHitTest::
 	ret z ; Swift never misses
 	call CheckTargetSubstitute
 	jr z, .checkForDigOrFlyStatus
-	; TODO: should the bug be fixed here or leave it?
+	; TODO: should the bug where draining moves should miss on substituted pokemon be fixed here or leave it?
+	; currently fixed
 	ld a, [de]
 	cp DRAIN_HP_EFFECT
 	jp z, .moveMissed

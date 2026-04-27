@@ -51,14 +51,6 @@ CeruleanCityReplaceCutTile:
 .ballDesignersDoor:
 	db 12, 15, $09
 
-CeruleanCityClearScripts:
-	xor a ; SCRIPT_CERULEANCITY_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wCeruleanCityCurScript], a
-	ld a, TOGGLE_CERULEAN_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
-
 CeruleanCity_ScriptPointers:
 	def_script_pointers
 	dw_const CeruleanCityDefaultScript,        SCRIPT_CERULEANCITY_DEFAULT
@@ -67,25 +59,29 @@ CeruleanCity_ScriptPointers:
 	dw_const CeruleanCityRivalCleanupScript,   SCRIPT_CERULEANCITY_RIVAL_CLEANUP
 	dw_const CeruleanCityRocketDefeatedScript, SCRIPT_CERULEANCITY_ROCKET_DEFEATED
 
+CeruleanCityClearScripts:
+	ld a, TOGGLE_CERULEAN_RIVAL
+	call CeruleanCityHideObject
+.noHide
+	call EnableAllJoypad
+	ld [wCeruleanCityCurScript], a ; SCRIPT_CERULEANCITY_DEFAULT
+	ret
+
 CeruleanCityRocketDefeatedScript:
 	ld hl, wCurrentMapScriptFlags
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	call GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, CeruleanCityClearScripts
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	jr z, CeruleanCityClearScripts
+	call DisableDpad
 	SetEvent EVENT_BEAT_CERULEAN_ROCKET_THIEF
 	ld d, CERULEANCITY_ROCKET
 	callfar MakeSpriteFacePlayer
 	ld a, TEXT_CERULEANCITY_ROCKET
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a ; SCRIPT_CERULEANCITY_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wCeruleanCityCurScript], a
-	ret
+	jr CeruleanCityClearScripts.noHide
 
 CeruleanCityDefaultScript:
 IF DEF(_DEBUG)
@@ -130,8 +126,7 @@ ENDC
 	call PlayMusic
 	xor a
 	ldh [hJoyHeld], a
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, [wXCoord]
 	cp 20 ; is the player standing on the right side of the bridge?
 	jr z, .playerOnRightSideOfBridge
@@ -183,8 +178,7 @@ CeruleanCityRivalBattleScript:
 	; reset rival's sprite movement facing byte otherwise he can look around weirdly after battle for a moment
 	ld hl, wMapSpriteData + ((CERULEANCITY_RIVAL - 1) * 2)
 	ld [hl], DOWN
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TEXT_CERULEANCITY_RIVAL
 	ldh [hTextID], a
 	call DisplayTextID
@@ -218,8 +212,7 @@ CeruleanCityRivalDefeatedScript:
 	cp $ff
 	jp z, CeruleanCityClearScripts
 	call CeruleanCityFaceRivalScript
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	SetEvent EVENT_BEAT_CERULEAN_RIVAL
 	ld a, TEXT_CERULEANCITY_RIVAL
 	ldh [hTextID], a
@@ -271,10 +264,8 @@ CeruleanCityRivalCleanupScript:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ld a, TOGGLE_CERULEAN_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	xor a
-	ld [wJoyIgnore], a
+	call CeruleanCityHideObject
+	call EnableAllJoypad
 	call PlayDefaultMusic
 	ld a, SCRIPT_CERULEANCITY_DEFAULT
 	ld [wCeruleanCityCurScript], a
@@ -305,15 +296,12 @@ CeruleanCityRivalText:
 	text_asm
 	CheckEvent EVENT_BEAT_CERULEAN_RIVAL
 	; do pre-battle text
-	jr z, .PreBattle
+	ld hl, .PreBattleText
+	jr z, .printDone
 	; or talk about bill
 	ld hl, CeruleanCityRivalIWentToBillsText
+.printDone
 	rst _PrintText
-	jr .end
-.PreBattle
-	ld hl, .PreBattleText
-	rst _PrintText
-.end
 	rst TextScriptEnd
 
 .PreBattleText:
@@ -365,9 +353,18 @@ CeruleanCityRocketText:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, .ReceivedTM28Text
 	rst _PrintText
-	farcall CeruleanHideRocket
+	call GBFadeOutToBlack
+	ld a, TOGGLE_CERULEAN_GUARD_1
+	ld [wToggleableObjectIndex], a
+	predef ShowObject
+	ld a, TOGGLE_CERULEAN_GUARD_2
+	call CeruleanCityHideObject
+	ld a, TOGGLE_CERULEAN_ROCKET
+	call CeruleanCityHideObject
+	call GBFadeInFromBlack
 .Done
 	rst TextScriptEnd
+
 
 .Text:
 	text_far _CeruleanCityRocketText
@@ -392,6 +389,10 @@ CeruleanCityRocketText:
 	text_far _CeruleanCityRocketIllReturnTheTMText
 	text_end
 
+CeruleanCityHideObject:
+	ld [wToggleableObjectIndex], a
+	predef_jump HideObject
+
 CeruleanCityCooltrainerMText:
 	text_far _CeruleanCityCooltrainerMText
 	text_end
@@ -399,12 +400,10 @@ CeruleanCityCooltrainerMText:
 CeruleanCitySuperNerd1Text:
 	text_asm
 	CheckEvent EVENT_DELETED_CERULEAN_TREE ; PureRGBnote: ADDED: this NPC won't talk about the cut tree if it was deleted permanently
-	jr nz, .deletedTree
-	ld hl, .CeruleanCitySuperNerd1_BeforeTreeDelete
-	jr .done
-.deletedTree
 	ld hl, .CeruleanCitySuperNerd1_AfterTreeDelete ; instead he'll comment on how it was removed
-.done
+	jr nz, .printDone
+	ld hl, .CeruleanCitySuperNerd1_BeforeTreeDelete
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 
@@ -430,19 +429,14 @@ CeruleanCityCooltrainerF1Text:
 	callfar SetMonSeen
 	ldh a, [hRandomAdd]
 	cp 180 ; 76/256 chance of 1st dialogue
-	jr c, .notFirstText
 	ld hl, .SlowbroUseSonicboomText
-	rst _PrintText
-	rst TextScriptEnd
-.notFirstText
+	jr nc, .printDone
 	cp 100 ; 80/256 chance of 2nd dialogue
-	jr c, .notSecondText
 	ld hl, .SlowbroPunchText
-	rst _PrintText
-	rst TextScriptEnd
-.notSecondText
+	jr nc, .printDone
 	; 100/256 chance of 3rd dialogue
 	ld hl, .SlowbroWithdrawText
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 
@@ -464,25 +458,17 @@ CeruleanCitySlowbroText:
 	callfar SetMonSeen
 	ldh a, [hRandomAdd]
 	cp 180 ; 76/256 chance of 1st dialogue
-	jr c, .notFirstText
 	ld hl, .TookASnoozeText
-	rst _PrintText
-	rst TextScriptEnd
-.notFirstText
+	jr nc, .printDone
 	cp 120 ; 60/256 chance of 2nd dialogue
-	jr c, .notSecondText
 	ld hl, .IsLoafingAroundText
-	rst _PrintText
-	rst TextScriptEnd
-.notSecondText
+	jr nc, .printDone
 	cp 60 ; 60/256 chance of 3rd dialogue
-	jr c, .notThirdText
 	ld hl, .TurnedAwayText
-	rst _PrintText
-	rst TextScriptEnd
-.notThirdText
+	jr nc, .printDone
 	; 60/256 chance of 4th dialogue
 	ld hl, .IgnoredOrdersText
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

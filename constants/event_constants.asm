@@ -1272,15 +1272,15 @@ DEF INDIGO_PLATEAU_EVENTS_START EQU const_value
 	const_skip
 	const EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
 	const_skip 4
-	const EVENT_AUTOWALKED_INTO_LORELEIS_ROOM
+	const_skip ;const EVENT_AUTOWALKED_INTO_LORELEIS_ROOM ; no longer used but would need save file updater to use
 	const_skip 2
 	const EVENT_BEAT_BRUNOS_ROOM_TRAINER_0
 	const_skip 4
-	const EVENT_AUTOWALKED_INTO_BRUNOS_ROOM
+	const_skip ;const EVENT_AUTOWALKED_INTO_BRUNOS_ROOM ; no longer used but would need save file updater to use
 	const_skip 2
 	const EVENT_BEAT_AGATHAS_ROOM_TRAINER_0
 	const_skip 4
-	const EVENT_AUTOWALKED_INTO_AGATHAS_ROOM
+	const_skip ;const EVENT_AUTOWALKED_INTO_AGATHAS_ROOM ; no longer used but would need save file updater to use
 	const_skip 2
 	const EVENT_BEAT_LANCES_ROOM_TRAINER_0
 	const_skip 4

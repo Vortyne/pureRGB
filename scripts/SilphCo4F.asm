@@ -11,96 +11,9 @@ SilphCo4F_Script:
 	ret
 
 SilphCo4FGateCallbackScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
-	ld hl, .GateCoordinates
-	call SilphCo4F_SetCardKeyDoorYScript
-	call SilphCo4FUnlockedDoorEventScript
-	CheckEvent EVENT_SILPH_CO_4_UNLOCKED_DOOR1
-	jr nz, .unlock_door1
-	push af
-	ld a, $54
-	ld [wNewTileBlockID], a
-	lb bc, 6, 2
-	predef ReplaceTileBlock
-	pop af
-.unlock_door1
-	CheckEventAfterBranchReuseA EVENT_SILPH_CO_4_UNLOCKED_DOOR2, EVENT_SILPH_CO_4_UNLOCKED_DOOR1
-	ret nz
-	ld a, $54
-	ld [wNewTileBlockID], a
-	lb bc, 4, 6
-	predef_jump ReplaceTileBlock
-
-.GateCoordinates:
-	dbmapcoord  2,  6
-	dbmapcoord  6,  4
-	db -1 ; end
-
-SilphCo4F_SetCardKeyDoorYScript:
-	push hl
-	ld hl, wCardKeyDoorY
-	ld a, [hli]
-	ld b, a
-	ld a, [hl]
-	ld c, a
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	pop hl
-.loop_check_doors
-	ld a, [hli]
-	cp $ff
-	jr z, .exit_loop
-	push hl
-	ld hl, hUnlockedSilphCoDoors
-	inc [hl]
-	pop hl
-	cp b
-	jr z, .check_y_coord
-	inc hl
-	jr .loop_check_doors
-.check_y_coord
-	ld a, [hli]
-	cp c
-	jr nz, .loop_check_doors
-	ld hl, wCardKeyDoorY
-	xor a
-	ld [hli], a
-	ld [hl], a
-	ret
-.exit_loop
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	ret
-
-SilphCo4FUnlockedDoorEventScript:
-	EventFlagAddress hl, EVENT_SILPH_CO_4_UNLOCKED_DOOR1
-	ldh a, [hUnlockedSilphCoDoors]
-	and a
-	ret z
-	cp $1
-	jr nz, .unlock_door1
-	SetEventReuseHL EVENT_SILPH_CO_4_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	jp Load4FCheckCardKeyText
-.unlock_door1
-	SetEventAfterBranchReuseHL EVENT_SILPH_CO_4_UNLOCKED_DOOR2, EVENT_SILPH_CO_4_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	; fall through
-Load4FCheckCardKeyText:
-	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
-	ret z
-	ld a, TEXT_SILPHCO4F_CARD_KEY_DONE
-	ldh [hTextID], a
-	jp DisplayTextID
-
-SilphCo4Text8:
-	text_asm
-	callfar PrintCardKeyDoneText
-	rst TextScriptEnd
-
+	jpfar SilphCo4FCardKeyMapLoad
 
 SilphCo4F_ScriptPointers:
 	def_script_pointers
@@ -117,7 +30,6 @@ SilphCo4F_TextPointers:
 	dw_const PickUp3ItemText,           TEXT_SILPHCO4F_ITEM1
 	dw_const PickUpItemText,            TEXT_SILPHCO4F_ITEM2
 	dw_const PickUpItemText,            TEXT_SILPHCO4F_ITEM3
-	dw_const SilphCo4Text8,             TEXT_SILPHCO4F_CARD_KEY_DONE
 
 SilphCo4TrainerHeaders:
 	def_trainers 2
@@ -147,8 +59,19 @@ SilphCo4FSilphWorkerMText:
 SilphCo4FRocket1Text:
 	text_asm
 	ld hl, SilphCo4TrainerHeader0
+SilphCo4FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+SilphCo4FScientistText:
+	text_asm
+	ld hl, SilphCo4TrainerHeader1
+	jr SilphCo4FTalkToTrainer
+
+SilphCo4FRocket2Text:
+	text_asm
+	ld hl, SilphCo4TrainerHeader2
+	jr SilphCo4FTalkToTrainer
 
 SilphCo4FRocket1BattleText:
 	text_far _SilphCo4FRocket1BattleText
@@ -162,12 +85,6 @@ SilphCo4FRocket1AfterBattleText:
 	text_far _SilphCo4FRocket1AfterBattleText
 	text_end
 
-SilphCo4FScientistText:
-	text_asm
-	ld hl, SilphCo4TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 SilphCo4FScientistBattleText:
 	text_far _SilphCo4FScientistBattleText
 	text_end
@@ -179,12 +96,6 @@ SilphCo4FScientistEndBattleText:
 SilphCo4FScientistAfterBattleText:
 	text_far _SilphCo4FScientistAfterBattleText
 	text_end
-
-SilphCo4FRocket2Text:
-	text_asm
-	ld hl, SilphCo4TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 SilphCo4FRocket2BattleText:
 	text_far _SilphCo4FRocket2BattleText

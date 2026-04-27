@@ -7,13 +7,6 @@ PokemonTower6F_Script:
 	ld [wPokemonTower6FCurScript], a
 	ret
 
-PokemonTower6FSetDefaultScript:
-	xor a
-	ld [wJoyIgnore], a
-	ld [wPokemonTower6FCurScript], a ; SCRIPT_POKEMONTOWER6F_DEFAULT
-	ld [wCurMapScript], a ; SCRIPT_POKEMONTOWER6F_DEFAULT
-	ret
-
 PokemonTower6F_ScriptPointers:
 	def_script_pointers
 	dw_const PokemonTower6FDefaultScript,           SCRIPT_POKEMONTOWER6F_DEFAULT
@@ -26,7 +19,7 @@ PokemonTower6FDefaultScript:
 	CheckEvent EVENT_BEAT_GHOST_MAROWAK
 	jp nz, CheckFightingMapTrainers
 	ld hl, PokemonTower6FMarowakCoords
-	call ArePlayerCoordsInArray
+	call ArePlayerCoordsInArray ; TODO: use simpler check since it's one coord
 	jp nc, CheckFightingMapTrainers
 	xor a
 	ldh [hJoyHeld], a
@@ -42,26 +35,27 @@ PokemonTower6FDefaultScript:
 	ld a, 30
 	ld [wCurEnemyLevel], a
 	ld a, SCRIPT_POKEMONTOWER6F_MAROWAK_BATTLE
-	ld [wPokemonTower6FCurScript], a
-	ld [wCurMapScript], a
-	ret
+	jr PokemonTower6FSetMapScript
 
 PokemonTower6FMarowakCoords:
 	dbmapcoord 10, 16
 	db -1 ; end
 
+PokemonTower6FSetDefaultScript:
+	call ResetMapScripts
+	ld [wPokemonTower6FCurScript], a ; SCRIPT_POKEMONTOWER6F_DEFAULT
+	ret
+
 PokemonTower6FMarowakBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, PokemonTower6FSetDefaultScript
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	jr z, PokemonTower6FSetDefaultScript
+	call DisableAllJoypad
 	ld a, [wStatusFlags3]
 	bit BIT_TALKED_TO_TRAINER, a
 	ret nz
 	call UpdateSprites
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 ;;;;;;;;;; PureRGBnote: ADDED: ghost marowak can be caught and the event will complete if you do so
 	ld hl, wBattleFunctionalFlags
 	bit 1, [hl]
@@ -83,11 +77,7 @@ PokemonTower6FMarowakBattleScript:
 	ld a, TEXT_POKEMONTOWER6F_MAROWAK_DEPARTED
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a ; same as SCRIPT_POKEMONTOWER6F_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wPokemonTower6FCurScript], a
-	ld [wCurMapScript], a
-	ret
+	jr PokemonTower6FSetDefaultScript
 .did_not_defeat
 	ld a, $1
 	ld [wSimulatedJoypadStatesIndex], a
@@ -99,9 +89,7 @@ PokemonTower6FMarowakBattleScript:
 	ld hl, wStatusFlags5
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld a, SCRIPT_POKEMONTOWER6F_PLAYER_MOVING
-	ld [wPokemonTower6FCurScript], a
-	ld [wCurMapScript], a
-	ret
+	jr PokemonTower6FSetMapScript
 
 PokemonTower6FPlayerMovingScript:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -109,6 +97,7 @@ PokemonTower6FPlayerMovingScript:
 	ret nz
 	call Delay3
 	xor a
+PokemonTower6FSetMapScript:
 	ld [wPokemonTower6FCurScript], a
 	ld [wCurMapScript], a
 	ret
@@ -136,20 +125,19 @@ PokemonTower6TrainerHeader2:
 PokemonTower6FChanneler1Text:
 	text_asm
 	ld hl, PokemonTower6TrainerHeader0
+PokemonTower6FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 PokemonTower6FChanneler2Text:
 	text_asm
 	ld hl, PokemonTower6TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonTower6FTalkToTrainer
 
 PokemonTower6FChanneler3Text:
 	text_asm
 	ld hl, PokemonTower6TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonTower6FTalkToTrainer
 
 PokemonTower6FMarowakDepartedText:
 	text_asm
@@ -164,12 +152,10 @@ PokemonTower6FMarowakDepartedText:
 	rst _PrintText
 ;;;;;;;;;; PureRGBnote: ADDED: ghost marowak can be caught and the event will complete if you do so
 	CheckEvent EVENT_CAUGHT_GHOST_MAROWAK
-	jr nz, .caughtGhostMarowak
-	ld hl, PokemonTower2Text_toAfterlife
-	jr .done
-.caughtGhostMarowak
 	ld hl, PokemonTower2Text_CaughtGhostMarowak	
-.done
+	jr nz, .printDone
+	ld hl, PokemonTower2Text_toAfterlife
+.printDone
 	rst _PrintText
 ;;;;;;;;;;
 	rst TextScriptEnd

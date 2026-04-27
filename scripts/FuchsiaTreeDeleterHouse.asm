@@ -153,6 +153,7 @@ FuchsiaTreeDeleterTreeDelete:
 	text_far _FuchsiaTreeDeleterTreeDelete
 	text_end
 
+; TODO: combine these tree deletion functions?
 FuchsiaTreeDeleterRoute2:
 	text_asm
 	CheckEvent EVENT_DELETED_ROUTE2_TREES

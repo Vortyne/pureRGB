@@ -30,9 +30,8 @@ _TMKidQuick::
 
 _CeruleanMartTMKidFlavor::
 	text "<PARA>Me and my dad"
-	line "travel a lot, so"
-	cont "you'll probably"
-	cont "see me at MARTs"
-	cont "in other places"
-	cont "too!@"
+	line "travel a lot!"
+	para "You'll likely see"
+	line "me at MARTs in"
+	cont "other places too!@"
 	text_end

@@ -134,8 +134,7 @@ ENDC
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
 	predef EmotionBubble
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	xor a
 	ldh [hJoyHeld], a
 	call TrainerWalkUpToPlayer_Bank0
@@ -148,15 +147,14 @@ DisplayEnemyTrainerTextAndStartBattle::
 	ld a, [wStatusFlags5]
 	and 1 << BIT_SCRIPTED_NPC_MOVEMENT
 	ret nz ; return if the enemy trainer hasn't finished walking to the player's sprite
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, [wSpriteIndex]
 	ldh [hSpriteIndex], a
 	call DisplayTextID
 	; fall through
 
 StartTrainerBattle::
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	call InitBattleEnemyParameters
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
@@ -177,7 +175,7 @@ EndTrainerBattle::
 	res BIT_SEEN_BY_TRAINER, [hl] ; player is no longer engaged by any trainer
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, ResetButtonPressedAndMapScript
+	jr z, ResetButtonPressedAndMapScript
 	ld b, FLAG_SET
 	call TrainerFlagAction   ; flag trainer as fought
 	ld a, [wEnemyMonOrTrainerClass]
@@ -200,8 +198,8 @@ EndTrainerBattle::
 	ret nz
 
 ResetButtonPressedAndMapScript::
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
+	; a = 0 from EnableAllJoypad
 	ldh [hJoyHeld], a
 	ldh [hJoyPressed], a
 	ldh [hJoyReleased], a

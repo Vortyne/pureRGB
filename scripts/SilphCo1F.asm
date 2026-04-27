@@ -14,9 +14,7 @@ SilphCo1F_Script:
 	ret
 
 SilphCo1FOnMapLoad:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld a, [wXCoord]
 	cp 30
@@ -108,8 +106,24 @@ SilphCo1FTrainerHeader3:
 SilphCo1FTrainer1Text:
 	text_asm
 	ld hl, SilphCo1FTrainerHeader0
+SilphCo1FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+SilphCo1FTrainer2Text:
+	text_asm
+	ld hl, SilphCo1FTrainerHeader1
+	jr SilphCo1FTalkToTrainer
+
+SilphCo1FTrainer3Text:
+	text_asm
+	ld hl, SilphCo1FTrainerHeader2
+	jr SilphCo1FTalkToTrainer
+	
+SilphCo1FTrainer4Text:
+	text_asm
+	ld hl, SilphCo1FTrainerHeader3
+	jr SilphCo1FTalkToTrainer
 
 SilphCo1FBattleText1:
 	text_far _SilphCo1FBattleText1
@@ -123,12 +137,6 @@ SilphCo1FAfterBattleText1:
 	text_far _SilphCo1FAfterBattleText1
 	text_end
 
-SilphCo1FTrainer2Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 SilphCo1FBattleText2:
 	text_far _SilphCo1FBattleText2
 	text_end
@@ -141,12 +149,6 @@ SilphCo1FAfterBattleText2:
 	text_far _SilphCo1FAfterBattleText2
 	text_end
 
-SilphCo1FTrainer3Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 SilphCo1FBattleText3:
 	text_far _SilphCo1FBattleText3
 	text_end
@@ -158,12 +160,6 @@ SilphCo1FEndBattleText3:
 SilphCo1FAfterBattleText3:
 	text_far _SilphCo1FAfterBattleText3
 	text_end
-
-SilphCo1FTrainer4Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
 
 SilphCo1FBattleText4:
 	text_far _SilphCo1FBattleText4

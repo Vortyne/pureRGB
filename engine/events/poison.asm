@@ -49,8 +49,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	call EnableAutoTextBoxDrawing
 	ld a, TEXT_MON_FAINTED
 	ldh [hTextID], a

@@ -29,9 +29,7 @@ VermilionDock_Script:
 	xor a
 	ld [wSpritePlayerStateData2MovementByte1], a
 	ld [wOverrideSimulatedJoypadStatesMask], a
-	dec a
-	ld [wJoyIgnore], a
-	ret
+	jp DisableAllJoypad
 .walking_out_of_dock
 	CheckEventAfterBranchReuseHL EVENT_WALKED_OUT_OF_DOCK, EVENT_STARTED_WALKING_OUT_OF_DOCK
 	ret nz
@@ -60,8 +58,9 @@ VermilionDockSSAnneLeavesScript:
 ;;;;;;;;;; we need to reset the palette here or the screen will be black
 	call GBPalNormal
 ;;;;;;;;;; 
-	ld a, SFX_STOP_ALL_MUSIC
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
+	ASSERT SFX_STOP_ALL_MUSIC == $FF 
+	; a = SFX_STOP_ALL_MUSIC = $FF due to DisableAllJoypad
 	ld [wNewSoundID], a
 	rst _PlaySound
 	ld c, BANK(Music_Surfing)
@@ -493,8 +492,7 @@ TruckCheck:
 	call ShowMew
 	ld c, 20
 	rst _DelayFrames
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	SetEvent EVENT_FOUND_MEW
 	ret
 

@@ -75,7 +75,7 @@ DisplayListMenuIDLoop::
 .oldManBattle
 	; we will be in BANK(DisplayBattleMenu) if old man battle so call a new function in that bank to save space in home
 	call OldManListMenuInit
-	; TODO: add assertion
+	ASSERT BANK(OldManListMenuInit) == BANK("Battle Core")
 	jr .buttonAPressed
 .notOldManBattle
 	call LoadGBPal

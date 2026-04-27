@@ -14,9 +14,7 @@ PokemonMansionB1F_Script:
 	ret
 
 MansionB1FCheckReplaceSwitchDoorBlocks:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEvent EVENT_UNLOCKED_SECRET_LAB
 	call nz, UnlockLab

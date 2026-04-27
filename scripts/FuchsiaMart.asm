@@ -12,16 +12,11 @@ FuchsiaMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
 	ld hl, TMKidGreet5
 	rst _PrintText
-	CheckEvent EVENT_MET_FUCHSIA_TM_KID
-	jr z, .intro
-	ld hl, TMKidQuick5
-	rst _PrintText
-	jr .shop
-.intro
+	CheckAndSetEvent EVENT_MET_FUCHSIA_TM_KID
 	ld hl, FuchsiaMartTMKidFlavor
-	rst _PrintText
-	SetEvent EVENT_MET_FUCHSIA_TM_KID
-.shop
+	jr z, .gotText
+	ld hl, TMKidQuick5
+.gotText
 	ld hl, FuchsiaTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd

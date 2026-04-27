@@ -34,9 +34,9 @@ CinnabarIslandDefaultScript:
 	ld a, PAD_DOWN
 	ld [wSimulatedJoypadStatesEnd], a
 	call StartSimulatingJoypadStates
-	xor a
+	call EnableAllJoypad
+	; a = 0 from EnableAllJoypad
 	ld [wSpritePlayerStateData1FacingDirection], a
-	ld [wJoyIgnore], a
 	ld a, SCRIPT_CINNABARISLAND_PLAYER_MOVING
 	ld [wCinnabarIslandCurScript], a
 	ret

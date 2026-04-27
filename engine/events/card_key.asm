@@ -24,7 +24,12 @@ PrintCardKeyText:
 .cardKeyDoorInFrontOfPlayer
 	ld b, CARD_KEY
 	call IsItemInBag
-	jr z, .noCardKey
+	jr nz, .continue
+	; no card key
+	tx_pre_id CardKeyFailText
+	ldh [hTextID], a
+	jp PrintPredefTextID
+.continue
 	call GetCoordsInFrontOfPlayer
 	push de
 	tx_pre_id CardKeySuccessText
@@ -32,13 +37,9 @@ PrintCardKeyText:
 	call PrintPredefTextID
 	pop de
 	srl d
-	ld a, d
-	ld b, a
-	ld [wCardKeyDoorY], a
+	ld b, d
 	srl e
-	ld a, e
-	ld c, a
-	ld [wCardKeyDoorX], a
+	ld c, e
 	ld a, [wCurMap]
 	cp SILPH_CO_11F
 	ld a, $e
@@ -46,16 +47,28 @@ PrintCardKeyText:
 	ld a, $3
 .replaceCardKeyDoorTileBlock
 	ld [wNewTileBlockID], a
+	push bc
 	predef ReplaceTileBlock
-	ld hl, wCurrentMapScriptFlags
-	set BIT_CUR_MAP_LOADED_1, [hl]
+	pop de ; pop bc into de
+	callfar RunMapCardKeyEvent
 	ld a, SFX_GO_INSIDE
-	jp PlaySound
-.noCardKey
-	tx_pre_id CardKeyFailText
+	rst _PlaySound
+	call CheckAllCardKeyEvents
+	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
+	ret z
+	ld b, CARD_KEY
+	predef GetIndexOfItemInBag
+	ld a, b
+	ld [wWhichPokemon], a ; load item index to be removed
+	ld hl, wNumBagItems
+	ld a, 1 ; one item
+	ld [wItemQuantity], a
+	call RemoveItemFromInventory
+	tx_pre_id CardKeyDoneText
 	ldh [hTextID], a
 	jp PrintPredefTextID
 
+; PureRGBnote: ADDED: text that displays when the card key will be consumed.
 CheckAllCardKeyEvents::
 	; PureRGBnote: ADDED: FIXED: when every card key door has been opened, the CARD KEY is removed from inventory.
 	CheckBothEventsSet EVENT_SILPH_CO_2_UNLOCKED_DOOR1, EVENT_SILPH_CO_2_UNLOCKED_DOOR2
@@ -87,20 +100,6 @@ CheckAllCardKeyEvents::
 	; if we reached here, every card key door has been opened.
 	SetEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
 	ret
-
-; PureRGBnote: ADDED: text that displays when the card key will be consumed.
-PrintCardKeyDoneText::
-	ld b, CARD_KEY
-	predef GetIndexOfItemInBag
-	ld a, b
-	ld [wWhichPokemon], a ; load item index to be removed
-	ld hl, wNumBagItems
-	ld a, 1 ; one item
-	ld [wItemQuantity], a
-	call RemoveItemFromInventory
-	ld hl, CardKeyDoneText
-	rst _PrintText
-	rst TextScriptEnd
 
 INCLUDE "data/events/card_key_maps.asm"
 

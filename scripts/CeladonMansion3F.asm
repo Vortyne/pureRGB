@@ -31,12 +31,10 @@ CeladonMansion3FGameDesignerText:
 	call CountSetBits
 	ld a, [wNumSetBits]
 	cp NUM_POKEMON - 2 ; PureRGBnote: CHANGED: discount Mew and Missingno when checking for if the player has caught everything
-	jr nc, .completed_dex
-	ld hl, .Text
-	jr .done
-.completed_dex
 	ld hl, .CompletedDexText
-.done
+	jr nc, .printDone
+	ld hl, .Text
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

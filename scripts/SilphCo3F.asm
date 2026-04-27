@@ -11,59 +11,13 @@ SilphCo3F_Script:
 	ret
 
 SilphCo3FGateCallbackScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
-	ld hl, .GateCoordinates
-	call SilphCo2F_SetCardKeyDoorYScript
-	call SilphCo3F_UnlockedDoorEventScript
+	ld hl, SilphCo3FGateCoords
 	CheckEvent EVENT_SILPH_CO_3_UNLOCKED_DOOR1
-	jr nz, .unlock_door1
-	push af
-	ld a, $5f
-	ld [wNewTileBlockID], a
-	lb bc, 4, 4
-	predef ReplaceTileBlock
-	pop af
-.unlock_door1
-	CheckEventAfterBranchReuseA EVENT_SILPH_CO_3_UNLOCKED_DOOR2, EVENT_SILPH_CO_3_UNLOCKED_DOOR1
-	ret nz
-	ld a, $5f
-	ld [wNewTileBlockID], a
-	lb bc, 4, 8
-	predef_jump ReplaceTileBlock
-
-.GateCoordinates:
-	dbmapcoord  4,  4
-	dbmapcoord  8,  4
-	db -1 ; end
-
-SilphCo3F_UnlockedDoorEventScript:
-	EventFlagAddress hl, EVENT_SILPH_CO_3_UNLOCKED_DOOR1
-	ldh a, [hUnlockedSilphCoDoors]
-	and a
-	ret z
-	cp $1
-	jr nz, .unlock_door1
-	SetEventReuseHL EVENT_SILPH_CO_3_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	jp Load3FCheckCardKeyText
-.unlock_door1
-	SetEventAfterBranchReuseHL EVENT_SILPH_CO_3_UNLOCKED_DOOR2, EVENT_SILPH_CO_3_UNLOCKED_DOOR1
-	callfar CheckAllCardKeyEvents
-	; fall through
-Load3FCheckCardKeyText:
-	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
-	ret z
-	ld a, TEXT_SILPHCO3F_CARD_KEY_DONE
-	ldh [hTextID], a
-	jp DisplayTextID
-
-SilphCo3Text5:
-	text_asm
-	callfar PrintCardKeyDoneText
-	rst TextScriptEnd
+	call UnlockSilphCoDoor
+	CheckEvent EVENT_SILPH_CO_3_UNLOCKED_DOOR2
+	jp UnlockSilphCoDoor
 
 SilphCo3F_ScriptPointers:
 	def_script_pointers
@@ -77,7 +31,6 @@ SilphCo3F_TextPointers:
 	dw_const SilphCo3FRocketText,       TEXT_SILPHCO3F_ROCKET
 	dw_const SilphCo3FScientistText,    TEXT_SILPHCO3F_SCIENTIST
 	dw_const PickUp3ItemText,           TEXT_SILPHCO3F_ITEM1
-	dw_const SilphCo3Text5,             TEXT_SILPHCO3F_CARD_KEY_DONE
 
 SilphCo3TrainerHeaders:
 	def_trainers 2
@@ -108,8 +61,14 @@ SilphCo3FSilphWorkerMText:
 SilphCo3FRocketText:
 	text_asm
 	ld hl, SilphCo3TrainerHeader0
+SilphCo3FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+SilphCo3FScientistText:
+	text_asm
+	ld hl, SilphCo3TrainerHeader1
+	jr SilphCo3FTalkToTrainer
 
 SilphCo3FRocketBattleText:
 	text_far _SilphCo3FRocketBattleText
@@ -122,12 +81,6 @@ SilphCo3FRocketEndBattleText:
 SilphCo3FRocketAfterBattleText:
 	text_far _SilphCo3FRocketAfterBattleText
 	text_end
-
-SilphCo3FScientistText:
-	text_asm
-	ld hl, SilphCo3TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
 
 SilphCo3FScientistBattleText:
 	text_far _SilphCo3FScientistBattleText

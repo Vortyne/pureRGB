@@ -15,10 +15,8 @@ CheckRemoveVolcano:
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
 	jr nz, .replaceTiles
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
-	jr nz, .checkRemoveLavaSuit
-	ret
+	call WasMapJustLoaded
+	ret z
 .checkRemoveLavaSuit
 	; if we just exited the volcano, remove lava suit
 	ld a, [wWalkBikeSurfState]
@@ -84,56 +82,49 @@ Route21TrainerHeader8:
 Route21Fisher1Text:
 	text_asm
 	ld hl, Route21TrainerHeader0
+Route21TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 Route21Fisher2Text:
 	text_asm
 	ld hl, Route21TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Swimmer1Text:
 	text_asm
 	ld hl, Route21TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Swimmer2Text:
 	text_asm
 	ld hl, Route21TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Swimmer3Text:
 	text_asm
 	ld hl, Route21TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Swimmer4Text:
 	text_asm
 	ld hl, Route21TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Swimmer5Text:
 	text_asm
 	ld hl, Route21TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Fisher3Text:
 	text_asm
 	ld hl, Route21TrainerHeader7
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Fisher4Text:
 	text_asm
 	ld hl, Route21TrainerHeader8
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route21TalkToTrainer
 
 Route21Fisher1BattleText:
 	text_far _Route21Fisher1BattleText

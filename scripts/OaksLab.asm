@@ -125,9 +125,13 @@ OaksLabFollowedOakScript:
 	ld [wOaksLabCurScript], a
 	ret
 
-OaksLabOakChooseMonSpeechScript:
+OaksLabDisableAllJoypadExceptAorB:
 	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
+	ret
+
+OaksLabOakChooseMonSpeechScript:
+	call OaksLabDisableAllJoypadExceptAorB
 	ld a, TEXT_OAKSLAB_RIVAL_FED_UP_WITH_WAITING
 	ldh [hTextID], a
 	call DisplayTextID
@@ -144,8 +148,7 @@ OaksLabOakChooseMonSpeechScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_OAK_ASKED_TO_CHOOSE_MON
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 
 	ld a, SCRIPT_OAKSLAB_PLAYER_DONT_GO_AWAY_SCRIPT
 	ld [wOaksLabCurScript], a
@@ -293,8 +296,7 @@ OaksLabRivalChoosesStarterScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call OaksLabDisableAllJoypadExceptAorB
 	ld a, OAKSLAB_RIVAL
 	ldh [hSpriteIndex], a
 	ld a, SPRITE_FACING_UP
@@ -330,8 +332,7 @@ OaksLabRivalChoosesStarterScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_GOT_STARTER
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 
 	ld a, SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER
 	ld [wOaksLabCurScript], a
@@ -395,8 +396,7 @@ OaksLabRivalStartBattleScript:
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	ld a, SCRIPT_OAKSLAB_RIVAL_END_BATTLE
@@ -404,8 +404,7 @@ OaksLabRivalStartBattleScript:
 	ret
 
 OaksLabRivalEndBattleScript:
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
@@ -466,8 +465,7 @@ OaksLabPlayerWatchRivalExitScript:
 	ld a, TOGGLE_OAKS_LAB_RIVAL
 	ld [wToggleableObjectIndex], a
 	predef HideObject
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	call PlayDefaultMusic ; reset to map music
 	ld a, SCRIPT_OAKSLAB_NOOP
 	ld [wOaksLabCurScript], a
@@ -544,8 +542,7 @@ OaksLabOakGivesPokedexScript:
 	ret nz
 	call EnableAutoTextBoxDrawing
 	call PlayDefaultMusic
-	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call OaksLabDisableAllJoypadExceptAorB
 	call OaksLabRivalFaceUpOakFaceDownScript
 	ld a, TEXT_OAKSLAB_RIVAL_WHAT_DID_YOU_CALL_ME_FOR
 	ldh [hTextID], a
@@ -628,8 +625,7 @@ OaksLabRivalLeavesWithPokedexScript:
 	predef ShowObject
 	ld a, SCRIPT_PALLETTOWN_DAISY
 	ld [wPalletTownCurScript], a
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 
 	ld a, SCRIPT_OAKSLAB_NOOP
 	ld [wOaksLabCurScript], a
@@ -909,8 +905,7 @@ OaksLabMonChoiceMenu:
 	call AddPartyMon
 	ld hl, wStatusFlags4
 	set BIT_GOT_STARTER, [hl]
-	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call OaksLabDisableAllJoypadExceptAorB
 	ld a, SCRIPT_OAKSLAB_CHOSE_STARTER_SCRIPT
 	ld [wOaksLabCurScript], a
 OaksLabMonChoiceEnd:

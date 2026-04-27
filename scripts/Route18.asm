@@ -43,8 +43,29 @@ Route18TrainerHeader4:
 Route18CooltrainerM1Text:
 	text_asm
 	ld hl, Route18TrainerHeader0
+Route18TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route18CooltrainerM2Text:
+	text_asm
+	ld hl, Route18TrainerHeader1
+	jr Route18TalkToTrainer
+
+Route18CooltrainerM3Text:
+	text_asm
+	ld hl, Route18TrainerHeader2
+	jr Route18TalkToTrainer
+
+Route18Text4:
+	text_asm
+	ld hl, Route18TrainerHeader3
+	jr Route18TalkToTrainer
+
+Route18Text5:
+	text_asm
+	ld hl, Route18TrainerHeader4
+	jr Route18TalkToTrainer
 
 Route18CooltrainerM1BattleText:
 	text_far _Route18CooltrainerM1BattleText
@@ -57,12 +78,6 @@ Route18CooltrainerM1EndBattleText:
 Route18CooltrainerM1AfterBattleText:
 	text_far _Route18CooltrainerM1AfterBattleText
 	text_end
-
-Route18CooltrainerM2Text:
-	text_asm
-	ld hl, Route18TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route18CooltrainerM2BattleText:
 	text_far _Route18CooltrainerM2BattleText
@@ -79,12 +94,6 @@ Route18CooltrainerM2AfterBattleText:
 	ld de, Route18AerodactylLearnsetText
 	predef_jump LearnsetTrainerScript
 
-Route18CooltrainerM3Text:
-	text_asm
-	ld hl, Route18TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route18CooltrainerM3BattleText:
 	text_far _Route18CooltrainerM3BattleText
 	text_end
@@ -97,12 +106,6 @@ Route18CooltrainerM3AfterBattleText:
 	text_far _Route18CooltrainerM3AfterBattleText
 	text_end
 
-Route18Text4:
-	text_asm
-	ld hl, Route18TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route18BattleText4:
 	text_far _Route18BattleText4
 	text_end
@@ -114,12 +117,6 @@ Route18EndBattleText4:
 Route18AfterBattleText4:
 	text_far _Route18AfterBattleText4
 	text_end
-
-Route18Text5:
-	text_asm
-	ld hl, Route18TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route18BattleText5:
 	text_far _Route18BattleText5

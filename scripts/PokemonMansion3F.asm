@@ -13,9 +13,7 @@ PokemonMansion3F_Script:
 	ret
 
 Mansion3CheckReplaceSwitchDoorBlocks:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld hl, Mansion3TileBlockReplacementCoords
 	ld de, Mansion3TileBlockReplacementIDsOnOff

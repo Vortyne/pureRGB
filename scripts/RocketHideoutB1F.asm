@@ -9,9 +9,7 @@ RocketHideoutB1F_Script:
 	ret
 
 RocketHideoutB1FDoorCallbackScript:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEvent EVENT_ENTERED_ROCKET_HIDEOUT
 	jr nz, .door_open
@@ -63,43 +61,36 @@ RocketHideout1TrainerHeader4:
 RocketHideoutB1FRocket1Text:
 	text_asm
 	ld hl, RocketHideout1TrainerHeader0
+RocketHideoutB1FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 RocketHideoutB1FRocket2Text:
 	text_asm
 	ld hl, RocketHideout1TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr RocketHideoutB1FTalkToTrainer
 
 RocketHideoutB1FRocket3Text:
 	text_asm
 	ld hl, RocketHideout1TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr RocketHideoutB1FTalkToTrainer
 
 RocketHideoutB1FRocket4Text:
 	text_asm
 	ld hl, RocketHideout1TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr RocketHideoutB1FTalkToTrainer
 
 RocketHideoutB1FRocket5Text:
 	text_asm
 	ld hl, RocketHideout1TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr RocketHideoutB1FTalkToTrainer
 
 RocketHideoutB1FRocket5EndBattleText:
 	text_far _RocketHideoutB1FRocket5EndBattleText
 	text_asm
 	SetEvent EVENT_BEAT_ROCKET_HIDEOUT_1_TRAINER_4
-	ld hl, .prompt_end
-	ret
-
-.prompt_end:
-	text_promptbutton
-	text_end
+	call DisplayTextPromptButton
+	rst TextScriptEnd
 
 RocketHideoutB1FRocket1BattleText:
 	text_far _RocketHideoutB1FRocket1BattleText

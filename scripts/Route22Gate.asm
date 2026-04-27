@@ -46,11 +46,10 @@ Route22GatePlayerMovingScript:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	call Delay3
-	ld a, SCRIPT_ROUTE22GATE_DEFAULT
-	ld [wRoute22GateCurScript], a
+	xor a
+	ld [wRoute22GateCurScript], a ; SCRIPT_ROUTE22GATE_DEFAULT
 	ret
 
 Route22Gate_TextPointers:

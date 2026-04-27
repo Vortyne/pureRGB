@@ -162,19 +162,18 @@ _ApexChipExplanationText::
 	
 	para "You install it"
 	line "onto a #MON's"
-	cont "Poké Ball."
+	cont "# Ball."
 
 	para "It simulates the"
 	line "natural wild"
 	cont "environment of"
-	cont "the #MON"
-	cont "inside its Poké"
-	cont "Ball!"
+	cont "a #MON inside"
+	cont "its # Ball!"
 
 	para "It makes #MON"
-	line "happy and helps"
-	cont "achieve their"
-	cont "max potential!"
+	line "happy,"
+	para "and helps achieve"
+	line "max potential!"
 
 	para "Use them on your"
 	line "best #MON!"
@@ -190,8 +189,9 @@ _ApexChipExplanationText::
 
 _AlreadyReceivedApexChipsText::
 	text "Talk to me at"
-	line "the next GYM if"
-	cont "you defeat the"
-	cont "LEADER for more"
-	cont "APEX CHIPs!"
+	line "the next GYM!"
+	para "If you defeat the"
+	line "GYM LEADER,"
+	para "I'll give you more"
+	line "APEX CHIPs!"
 	done

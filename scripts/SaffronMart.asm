@@ -12,16 +12,12 @@ SaffronMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
 	ld hl, TMKidGreet6
 	rst _PrintText
-	CheckEvent EVENT_MET_SAFFRON_TM_KID
-	jr z, .intro
-	ld hl, TMKidQuick6
-	rst _PrintText
-	jr .shop
-.intro
+	CheckAndSetEvent EVENT_MET_SAFFRON_TM_KID
 	ld hl, SaffronMartTMKidFlavor
+	jr z, .gotText
+	ld hl, TMKidQuick6
+.gotText
 	rst _PrintText
-	SetEvent EVENT_MET_SAFFRON_TM_KID
-.shop
 	ld hl, SaffronTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd

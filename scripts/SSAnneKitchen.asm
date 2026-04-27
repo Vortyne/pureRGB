@@ -14,8 +14,7 @@ SSAnneKitchen_Script:
 .notLoaded
 	CheckEvent EVENT_GENERIC_NPC_WALKING_FLAG
 	ret z
-	ld a, $FF
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
@@ -44,8 +43,6 @@ SSAnneKitchen_Script:
 	jpfar MoveSprite
 .done
 	ResetEvent EVENT_GENERIC_NPC_WALKING_FLAG
-	xor a
-	ld [wJoyIgnore], a
 	; Waiter done walking
 	ld d, SSANNEKITCHEN_WAITER
 	callfar FarNPCSpriteQuickSpin
@@ -60,6 +57,7 @@ SSAnneKitchen_Script:
 	call PlaySoundWaitForCurrent
 	ld c, 60
 	rst _DelayFrames
+	call EnableAllJoypad
 	ld a, TEXT_SSANNEKITCHEN_WAITER_RETURNS
 	ldh [hTextID], a
 	jp DisplayTextID

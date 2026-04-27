@@ -7,13 +7,6 @@ Route24_Script:
 	ld [wRoute24CurScript], a
 	ret
 
-Route24SetDefaultScript:
-	xor a ; SCRIPT_ROUTE24_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wRoute24CurScript], a
-	ld [wCurMapScript], a
-	ret
-
 Route24_ScriptPointers:
 	def_script_pointers
 	dw_const Route24DefaultScript,                  SCRIPT_ROUTE24_DEFAULT
@@ -63,25 +56,26 @@ Route24PlayerMovingScript:
 	ld [wCurMapScript], a
 	ret
 
+
+
+Route24SetDefaultScript:
+	call ResetMapScripts
+	ld [wRoute24CurScript], a ; SCRIPT_ROUTE24_DEFAULT
+	ret
+
 Route24AfterRocketBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, Route24SetDefaultScript
+	jr z, Route24SetDefaultScript
 	call UpdateSprites
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	SetEvent EVENT_BEAT_ROUTE24_ROCKET
 	ld d, ROUTE24_COOLTRAINER_M1
 	callfar MakeSpriteFacePlayer
 	ld a, TEXT_ROUTE24_COOLTRAINER_M1
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a
-	ld [wJoyIgnore], a
-	ld a, SCRIPT_ROUTE24_DEFAULT
-	ld [wRoute24CurScript], a
-	ld [wCurMapScript], a
-	ret
+	jr Route24SetDefaultScript
 
 Route24_TextPointers:
 	def_text_pointers
@@ -116,12 +110,17 @@ Route24CooltrainerM1Text:
 	text_asm
 	ResetEvent EVENT_NUGGET_REWARD_AVAILABLE
 	CheckEvent EVENT_GOT_NUGGET
-	jr nz, .got_item
+	ld hl, .YouCouldBecomeATopLeaderText
+	jr nz, .printDone
 	ld hl, .YouBeatOurContestText
 	rst _PrintText
 	lb bc, ITEM_NUGGET_BRIDGE_REWARD, 1
 	call GiveItem
-	jr nc, .bag_full
+	jr c, .continue
+	SetEvent EVENT_NUGGET_REWARD_AVAILABLE
+	ld hl, .NoRoomText
+	jr .printDone
+.continue
 	SetEvent EVENT_GOT_NUGGET
 	ld hl, .ReceivedNuggetText
 	rst _PrintText
@@ -143,14 +142,8 @@ Route24CooltrainerM1Text:
 	ld [wRoute24CurScript], a
 	ld [wCurMapScript], a
 	rst TextScriptEnd
-.got_item
-	ld hl, .YouCouldBecomeATopLeaderText
+.printDone
 	rst _PrintText
-	rst TextScriptEnd
-.bag_full
-	ld hl, .NoRoomText
-	rst _PrintText
-	SetEvent EVENT_NUGGET_REWARD_AVAILABLE
 	rst TextScriptEnd
 
 .YouBeatOurContestText:
@@ -184,38 +177,34 @@ Route24CooltrainerM1Text:
 Route24CooltrainerM2Text:
 	text_asm
 	ld hl, Route24TrainerHeader0
+Route24TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 Route24CooltrainerM3Text:
 	text_asm
 	ld hl, Route24TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route24TalkToTrainer
 
 Route24CooltrainerF1Text:
 	text_asm
 	ld hl, Route24TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route24TalkToTrainer
 
 Route24Youngster1Text:
 	text_asm
 	ld hl, Route24TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route24TalkToTrainer
 
 Route24CooltrainerF2Text:
 	text_asm
 	ld hl, Route24TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route24TalkToTrainer
 
 Route24Youngster2Text:
 	text_asm
 	ld hl, Route24TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route24TalkToTrainer
 
 Route24CooltrainerM2BattleText:
 	text_far _Route24CooltrainerM2BattleText

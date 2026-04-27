@@ -6,14 +6,6 @@ PokemonTower2F_Script:
 	ld a, [wPokemonTower2FCurScript]
 	jp CallFunctionInTable
 
-PokemonTower2FResetRivalEncounter:
-	xor a ; SCRIPT_POKEMONTOWER2F_DEFAULT
-	ld [wJoyIgnore], a
-PokemonTower2FLoadMapScript::
-	ld [wPokemonTower2FCurScript], a
-	ld [wCurMapScript], a
-	ret
-
 PokemonTower2F_ScriptPointers:
 	def_script_pointers
 	dw_const PokemonTower2FDefaultScript,       SCRIPT_POKEMONTOWER2F_DEFAULT
@@ -24,9 +16,7 @@ PokemonTower2F_ScriptPointers:
 PokemonTower2FDefaultScript:
 	CheckEvent EVENT_RESCUED_MR_FUJI
 	jr z, .default
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .notFirstLoad
 	SetEvent EVENT_CHANNELER_WANTS_TO_TELL_PLAYER
 	jr .default
@@ -59,7 +49,7 @@ PokemonTower2FDefaultScript:
 	ld a, TEXT_POKEMONTOWER2F_CHANNELER_WAIT
 	call PokemonTower2FDisplayTextID
 	ld a, SCRIPT_POKEMONTOWER2F_PLAYER_MOVING
-	jr PokemonTower2FLoadMapScript
+	jp PokemonTower2FLoadMapScript
 .default
 IF DEF(_DEBUG)
 	call DebugPressedOrHeldB
@@ -116,7 +106,7 @@ PokemonTower2FPlayerMovingScript:
 .doneMoving
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
-	call PokemonTower2FResetRivalEncounter ; resets scripts and enables joypad
+	call PokemonTower2FResetScripts
 	ld a, TEXT_POKEMONTOWER2F_CHANNELER
 	; fall through
 PokemonTower2FDisplayTextID:
@@ -126,14 +116,21 @@ PokemonTower2FDisplayTextID:
 PokemonTower2FRivalEncounterEventCoords:
 	dbmapcoord 15,  5
 	dbmapcoord 14,  6
-	db $0F ; end? (should be $ff?)
+	db $FF
+
+PokemonTower2FResetScripts:
+	call EnableAllJoypad
+	; a = SCRIPT_POKEMONTOWER2F_DEFAULT
+PokemonTower2FLoadMapScript::
+	ld [wPokemonTower2FCurScript], a
+	ld [wCurMapScript], a
+	ret
 
 PokemonTower2FDefeatedRivalScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, PokemonTower2FResetRivalEncounter
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	jr z, PokemonTower2FResetScripts
+	call DisableDpad
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL
 	ld d, POKEMONTOWER2F_RIVAL
 	callfar MakeSpriteFacePlayer
@@ -152,9 +149,17 @@ PokemonTower2FDefeatedRivalScript:
 	rst _PlaySound
 	farcall Music_RivalAlternateStart
 	ld a, SCRIPT_POKEMONTOWER2F_RIVAL_EXITS
-	ld [wPokemonTower2FCurScript], a
-	ld [wCurMapScript], a
-	ret
+	jr PokemonTower2FLoadMapScript
+
+PokemonTower2FRivalExitsScript:
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
+	ret nz
+	ld a, TOGGLE_POKEMON_TOWER_2F_RIVAL
+	ld [wToggleableObjectIndex], a
+	predef HideObject
+	call PlayDefaultMusic
+	jr PokemonTower2FResetScripts
 
 PokemonTower2FRivalRightThenDownMovement:
 	db NPC_MOVEMENT_RIGHT
@@ -178,21 +183,6 @@ PokemonTower2FRivalDownThenRightMovement:
 	db NPC_MOVEMENT_DOWN
 	db -1 ; end
 
-PokemonTower2FRivalExitsScript:
-	ld a, [wStatusFlags5]
-	bit BIT_SCRIPTED_NPC_MOVEMENT, a
-	ret nz
-	ld a, TOGGLE_POKEMON_TOWER_2F_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	xor a
-	ld [wJoyIgnore], a
-	call PlayDefaultMusic
-	ld a, SCRIPT_POKEMONTOWER2F_DEFAULT
-	ld [wPokemonTower2FCurScript], a
-	ld [wCurMapScript], a
-	ret
-
 PokemonTower2F_TextPointers:
 	def_text_pointers
 	dw_const PokemonTower2FRivalText,     TEXT_POKEMONTOWER2F_RIVAL
@@ -205,7 +195,7 @@ PokemonTower2FRivalText:
 	jr z, .do_battle
 	ld hl, .HowsYourDexText
 	rst _PrintText
-	jr .text_script_end
+	rst TextScriptEnd
 .do_battle
 	ld hl, .WhatBringsYouHereText
 	rst _PrintText
@@ -225,9 +215,7 @@ PokemonTower2FRivalText:
 	ld [wTrainerNo], a
 
 	ld a, SCRIPT_POKEMONTOWER2F_DEFEATED_RIVAL
-	ld [wPokemonTower2FCurScript], a
-	ld [wCurMapScript], a
-.text_script_end
+	call PokemonTower2FLoadMapScript
 	rst TextScriptEnd
 
 .WhatBringsYouHereText:

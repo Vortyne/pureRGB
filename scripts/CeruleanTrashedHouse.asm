@@ -12,14 +12,11 @@ CeruleanTrashedHouseFishingGuruText:
 	ld b, TM_CERULEAN_ROCKET_TM_THIEF
 	predef GetQuantityOfItemInBag
 	and b
-	jr z, .no_dig_tm
-	ld hl, .WhatsLostIsLostText
-	rst _PrintText
-	jr .done
-.no_dig_tm
 	ld hl, .TheyStoleATMText
+	jr z, .printDone
+	ld hl, .WhatsLostIsLostText
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .TheyStoleATMText:

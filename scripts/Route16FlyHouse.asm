@@ -10,18 +10,16 @@ Route16FlyHouseBrunetteGirlText:
 	text_asm
 	CheckEvent EVENT_GOT_HM02
 	ld hl, .HM02ExplanationText
-	jr nz, .got_item
+	jr nz, .printDone
 	ld hl, .Text
 	rst _PrintText
 	lb bc, HM_FLY, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .HM02NoRoomText
+	jr nc, .printDone
 	SetEvent EVENT_GOT_HM02
 	ld hl, .ReceivedHM02Text
-	jr .got_item
-.bag_full
-	ld hl, .HM02NoRoomText
-.got_item
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

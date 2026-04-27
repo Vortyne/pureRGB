@@ -146,7 +146,7 @@ VermilionFitnessClubClerk:
 .beside
 	ld [hl], -1
 	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
+	call StartSimulatingJoypadStatesOnlyAOrBPress
 	rst TextScriptEnd
 
 .intro
@@ -419,7 +419,7 @@ VermilionFitnessClubAfterBattleText:
 	ld [hl], -1
 	ld a, 5
 	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
+	call StartSimulatingJoypadStatesOnlyAOrBPress
 	ld hl, VermilionFitnessClubHideOpponents
 	call FitnessClubHideOpponents
 .done

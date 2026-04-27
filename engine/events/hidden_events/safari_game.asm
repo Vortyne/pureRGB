@@ -80,16 +80,14 @@ SafariZoneGameOver:
 	ld [wSafariZoneGameOver], a
 	ret
 
-PrintSafariGameOverText::
-	xor a
-	ld [wJoyIgnore], a
-	ld hl, SafariGameOverText
-	jp PrintText
-
 PrintRangerSafariGameOverText::
-	xor a
-	ld [wJoyIgnore], a
 	ld hl, SafariRangerHuntSuccessText
+	jr PrintSafariGameOverText.next
+
+PrintSafariGameOverText::
+	ld hl, SafariGameOverText
+.next
+	call EnableAllJoypad
 	jp PrintText
 
 SafariGameOverText:

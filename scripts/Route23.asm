@@ -81,9 +81,9 @@ Route23MovePlayerDownScript:
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, PAD_DOWN
 	ld [wSimulatedJoypadStatesEnd], a
-	xor a
+	call EnableAllJoypad
+	; a = 0 due to EnableAllJoypad
 	ld [wSpritePlayerStateData1FacingDirection], a
-	ld [wJoyIgnore], a
 	jp StartSimulatingJoypadStates
 
 Route23PlayerMovingScript:

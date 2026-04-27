@@ -1,10 +1,6 @@
 NameRatersHouse_Script:
 	jp EnableAutoTextBoxDrawing
 
-NameRatersHouseYesNoScript:
-	rst _PrintText
-	jp YesNoChoice
-
 ;NameRatersHouseCheckMonOTScript: ; PureRGBnote: CHANGED: Name Rater will always allow you to rename pokemon regardless of their OT.
 ; return carry if mon's OT name or OT ID do not match the player's
 ;	ld hl, wPartyMonOT
@@ -43,8 +39,9 @@ NameRatersHouseNameRaterText:
 	text_asm
 	call SaveScreenTilesToBuffer2
 	ld hl, .WantMeToRateText
-	call NameRatersHouseYesNoScript
-	jr nz, .did_not_rename
+	rst _PrintText
+	call YesNoChoice
+	jr nz, .comeAnyTime
 	ld hl, .WhichPokemonText
 	rst _PrintText
 	xor a
@@ -57,25 +54,25 @@ NameRatersHouseNameRaterText:
 	call RestoreScreenTilesAndReloadTilePatterns
 	call LoadGBPal
 	pop af
-	jr c, .did_not_rename
+	jr c, .comeAnyTime
 	call GetPartyMonName2
 	; call NameRatersHouseCheckMonOTScript
 	; ld hl, .ATrulyImpeccableNameText
 	; jr c, .done
 	ld hl, .GiveItANiceNameText
-	call NameRatersHouseYesNoScript
-	jr nz, .did_not_rename
+	rst _PrintText
+	call YesNoChoice
+	jr nz, .comeAnyTime
 	ld hl, .WhatShouldWeNameItText
 	rst _PrintText
 	farcall DisplayNameRaterScreen
-	jr c, .did_not_rename
 	ld hl, .PokemonHasBeenRenamedText
-.done
+	jr nc, .printDone
+.comeAnyTime
+	ld hl, .ComeAnyTimeYouLikeText
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
-.did_not_rename
-	ld hl, .ComeAnyTimeYouLikeText
-	jr .done
 
 .WantMeToRateText:
 	text_far _NameRatersHouseNameRaterWantMeToRateText

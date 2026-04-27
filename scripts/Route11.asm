@@ -55,8 +55,54 @@ Route11TrainerHeader9:
 Route11Gambler1Text:
 	text_asm
 	ld hl, Route11TrainerHeader0
+Route11TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route11Gambler2Text:
+	text_asm
+	ld hl, Route11TrainerHeader1
+	jr Route11TalkToTrainer
+
+Route11Youngster1Text:
+	text_asm
+	ld hl, Route11TrainerHeader2
+	jr Route11TalkToTrainer
+
+Route11SuperNerd1Text:
+	text_asm
+	ld hl, Route11TrainerHeader3
+	jr Route11TalkToTrainer
+
+Route11Youngster2Text:
+	text_asm
+	ld hl, Route11TrainerHeader4
+	jr Route11TalkToTrainer
+
+Route11Gambler3Text:
+	text_asm
+	ld hl, Route11TrainerHeader5
+	jr Route11TalkToTrainer
+
+Route11Gambler4Text:
+	text_asm
+	ld hl, Route11TrainerHeader6
+	jr Route11TalkToTrainer
+
+Route11Youngster3Text:
+	text_asm
+	ld hl, Route11TrainerHeader7
+	jr Route11TalkToTrainer
+
+Route11SuperNerd2Text:
+	text_asm
+	ld hl, Route11TrainerHeader8
+	jr Route11TalkToTrainer
+
+Route11Youngster4Text:
+	text_asm
+	ld hl, Route11TrainerHeader9
+	jr Route11TalkToTrainer
 
 Route11Gambler1BattleText:
 	text_far _Route11Gambler1BattleText
@@ -73,12 +119,6 @@ Route11Gambler1AfterBattleText:
 	ld de, LearnsetVulpixLuckyNumber
 	predef_jump LearnsetTrainerScript
 
-Route11Gambler2Text:
-	text_asm
-	ld hl, Route11TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route11Gambler2BattleText:
 	text_far _Route11Gambler2BattleText
 	text_end
@@ -94,12 +134,6 @@ Route11Gambler2AfterBattleText:
 	ld de, LearnsetBellsprout
 	predef_jump LearnsetTrainerScript
 
-Route11Youngster1Text:
-	text_asm
-	ld hl, Route11TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route11Youngster1BattleText:
 	text_far _Route11Youngster1BattleText
 	text_end
@@ -111,12 +145,6 @@ Route11Youngster1EndBattleText:
 Route11Youngster1AfterBattleText:
 	text_far _Route11Youngster1AfterBattleText
 	text_end
-
-Route11SuperNerd1Text:
-	text_asm
-	ld hl, Route11TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route11SuperNerd1BattleText:
 	text_far _Route11SuperNerd1BattleText
@@ -133,12 +161,6 @@ Route11SuperNerd1AfterBattleText:
 	ld de, LearnsetMagneton
 	predef_jump LearnsetTrainerScript
 
-Route11Youngster2Text:
-	text_asm
-	ld hl, Route11TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route11Youngster2BattleText:
 	text_far _Route11Youngster2BattleText
 	text_end
@@ -150,12 +172,6 @@ Route11Youngster2EndBattleText:
 Route11Youngster2AfterBattleText:
 	text_far _Route11Youngster2AfterBattleText5
 	text_end
-
-Route11Gambler3Text:
-	text_asm
-	ld hl, Route11TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route11Gambler3BattleText:
 	text_far _Route11Gambler3BattleText
@@ -169,12 +185,6 @@ Route11Gambler3AfterBattleText:
 	text_far _Route11Gambler3AfterBattleText
 	text_end
 
-Route11Gambler4Text:
-	text_asm
-	ld hl, Route11TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route11Gambler4BattleText:
 	text_far _Route11Gambler4BattleText
 	text_end
@@ -186,12 +196,6 @@ Route11Gambler4EndBattleText:
 Route11Gambler4AfterBattleText:
 	text_far _Route11Gambler4AfterBattleText
 	text_end
-
-Route11Youngster3Text:
-	text_asm
-	ld hl, Route11TrainerHeader7
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route11Youngster3BattleText:
 	text_far _Route11Youngster3BattleText
@@ -208,13 +212,6 @@ Route11Youngster3AfterBattleText:
 	ld de, LearnsetStaryu
 	predef_jump LearnsetTrainerScript
 
-
-Route11SuperNerd2Text:
-	text_asm
-	ld hl, Route11TrainerHeader8
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route11SuperNerd2BattleText:
 	text_far _Route11SuperNerd2BattleText
 	text_end
@@ -226,12 +223,6 @@ Route11SuperNerd2EndBattleText:
 Route11SuperNerd2AfterBattleText:
 	text_far _Route11SuperNerd2AfterBattleText
 	text_end
-
-Route11Youngster4Text:
-	text_asm
-	ld hl, Route11TrainerHeader9
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route11Youngster4BattleText:
 	text_far _Route11Youngster4BattleText

@@ -332,9 +332,7 @@ ENDU
 
 	ds 1 ; unused hram byte
 
-hBackupGymGateIndex::
-hUnlockedSilphCoDoors::
-	db
+hBackupGymGateIndex:: db
 
 ; the first tile ID in a sequence of tile IDs that increase by 1 each step
 hStartTileID:: db

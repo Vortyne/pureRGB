@@ -18,14 +18,12 @@ FuchsiaCityDefaultScript:
 	; check if ERIK is walking away
 	CheckEventHL EVENT_ERIK_LEAVING
 	ret z
-	ld a, $FF
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ResetEventReuseHL EVENT_ERIK_LEAVING
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	; hide erik sprite
 	ld a, TOGGLE_FUCHSIA_ERIK
 	ld [wToggleableObjectIndex], a
@@ -102,14 +100,13 @@ FuchsiaCityYoungster1Text:
 	text_asm
 	ld a, [wOptions2]
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
-	jr nz, .altPalettes
 	ld hl, .didYouTrySafariText
-	jr .done
+	jr z, .printDone
 .altPalettes
 	ld hl, .didYouTrySafariPromptText
 	rst _PrintText
 	ld hl, .manyHaveUniqueColorsText
-.done
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

@@ -51,44 +51,40 @@ MtMoon1TrainerHeader6:
 MtMoon1FHikerText:
 	text_asm
 	ld hl, MtMoon1TrainerHeader0
+	; fall through
+MtMoon1FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 MtMoon1FYoungster1Text:
 	text_asm
 	ld hl, MtMoon1TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr MtMoon1FTalkToTrainer
 
 MtMoon1FCooltrainerF1Text:
 	text_asm
 	ld hl, MtMoon1TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr MtMoon1FTalkToTrainer
 
 MtMoon1FSuperNerdText:
 	text_asm
 	ld hl, MtMoon1TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr MtMoon1FTalkToTrainer
 
 MtMoon1FCooltrainerF2Text:
 	text_asm
 	ld hl, MtMoon1TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr MtMoon1FTalkToTrainer
 
 MtMoon1FYoungster2Text:
 	text_asm
 	ld hl, MtMoon1TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr MtMoon1FTalkToTrainer
 
 MtMoon1FYoungster3Text:
 	text_asm
 	ld hl, MtMoon1TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr MtMoon1FTalkToTrainer
 
 MtMoon1FHikerBattleText:
 	text_far _MtMoon1FHikerBattleText

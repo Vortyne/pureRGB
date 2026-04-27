@@ -135,8 +135,16 @@ VermilionGymTrashSuccessText1::
 	text_asm
 	ld a, SFX_SWITCH
 	call PlaySoundWaitForCurrent
+	call DisplayTextPromptButton
+	ld hl, .lockOpened
+	rst _PrintText
+	ld a, SFX_TELEPORT_ENTER_2
+	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	rst TextScriptEnd
+.lockOpened
+	text_far _VermilionGym1stElectricLock
+	text_end
 
 ; unused
 ;VermilionGymTrashSuccessText2::
@@ -153,12 +161,27 @@ VermilionGymTrashSuccessText1::
 
 VermilionGymTrashSuccessText3::
 	text_far _VermilionGymTrashSuccessText2
-	text_far _VermilionGymTrashSuccessText3
 	text_asm
+	ld a, SFX_SWITCH
+	call PlaySoundWaitForCurrent
+	call DisplayTextPromptButton
+	ld hl, .lockOpened
+	rst _PrintText
+	ld a, SFX_TELEPORT_ENTER_2
+	call PlaySoundWaitForCurrent
+	call DisplayTextPromptButton
+	ld hl, .motorizedDoorOpened
+	rst _PrintText
 	ld a, SFX_GO_INSIDE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	rst TextScriptEnd
+.lockOpened
+	text_far _VermilionGym2ndElectricLock
+	text_end
+.motorizedDoorOpened
+	text_far _VermilionGymTrashSuccessText3
+	text_end
 
 ;VermilionGymTrashFailText::
 ;	text_far _VermilionGymTrashFailText

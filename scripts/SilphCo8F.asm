@@ -11,78 +11,11 @@ SilphCo8F_Script:
 	ret
 
 SilphCo8FGateCallbackScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
-	ld hl, .GateCoordinates
-	call SilphCo8F_SetCardKeyDoorYScript
-	call SilphCo8F_UnlockedDoorEventScript
+	ld hl, SilphCo8FGateCoords
 	CheckEvent EVENT_SILPH_CO_8_UNLOCKED_DOOR
-	ret nz
-	ld a, $5f
-	ld [wNewTileBlockID], a
-	lb bc, 4, 3
-	predef_jump ReplaceTileBlock
-
-.GateCoordinates:
-	dbmapcoord  3,  4
-	db -1 ; end
-
-SilphCo8F_SetCardKeyDoorYScript:
-	push hl
-	ld hl, wCardKeyDoorY
-	ld a, [hli]
-	ld b, a
-	ld a, [hl]
-	ld c, a
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	pop hl
-.loop_check_doors
-	ld a, [hli]
-	cp $ff
-	jr z, .exit_loop
-	push hl
-	ld hl, hUnlockedSilphCoDoors
-	inc [hl]
-	pop hl
-	cp b
-	jr z, .check_y_coord
-	inc hl
-	jr .loop_check_doors
-.check_y_coord
-	ld a, [hli]
-	cp c
-	jr nz, .loop_check_doors
-	ld hl, wCardKeyDoorY
-	xor a
-	ld [hli], a
-	ld [hl], a
-	ret
-.exit_loop
-	xor a
-	ldh [hUnlockedSilphCoDoors], a
-	ret
-
-SilphCo8F_UnlockedDoorEventScript:
-	ldh a, [hUnlockedSilphCoDoors]
-	and a
-	ret z
-	SetEvent EVENT_SILPH_CO_8_UNLOCKED_DOOR
-	callfar CheckAllCardKeyEvents
-	; fall through
-Load8FCheckCardKeyText:
-	CheckEvent EVENT_ALL_CARD_KEY_DOORS_OPENED
-	ret z
-	ld a, TEXT_SILPHCO8F_CARD_KEY_DONE
-	ldh [hTextID], a
-	jp DisplayTextID
-
-SilphCo8Text5:
-	text_asm
-	callfar PrintCardKeyDoneText
-	rst TextScriptEnd
+	jp UnlockSilphCoDoor
 
 SilphCo8F_ScriptPointers:
 	def_script_pointers
@@ -96,7 +29,6 @@ SilphCo8F_TextPointers:
 	dw_const SilphCo8FRocket1Text,      TEXT_SILPHCO8F_ROCKET1
 	dw_const SilphCo8FScientistText,    TEXT_SILPHCO8F_SCIENTIST
 	dw_const SilphCo8FRocket2Text,      TEXT_SILPHCO8F_ROCKET2
-	dw_const SilphCo8Text5,             TEXT_SILPHCO8F_CARD_KEY_DONE
 
 SilphCo8TrainerHeaders:
 	def_trainers 2
@@ -129,20 +61,19 @@ SilphCo8FSilphWorkerMText:
 SilphCo8FRocket1Text:
 	text_asm
 	ld hl, SilphCo8TrainerHeader0
+SilphCo8FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 SilphCo8FScientistText:
 	text_asm
 	ld hl, SilphCo8TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SilphCo8FTalkToTrainer
 
 SilphCo8FRocket2Text:
 	text_asm
 	ld hl, SilphCo8TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SilphCo8FTalkToTrainer
 
 SilphCo8FRocket1BattleText:
 	text_far _SilphCo8FRocket1BattleText

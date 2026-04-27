@@ -9,9 +9,7 @@ VictoryRoad3F_Script:
 	ret
 
 VictoryRoad3FCheckBoulderEventScript::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEventHL EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1
 	ret z
@@ -108,26 +106,24 @@ VictoryRoad3TrainerHeader3:
 VictoryRoad3FCooltrainerM1Text:
 	text_asm
 	ld hl, VictoryRoad3TrainerHeader0
+VictoryRoad3FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 VictoryRoad3FCooltrainerF1Text:
 	text_asm
 	ld hl, VictoryRoad3TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad3FTalkToTrainer
 
 VictoryRoad3FCooltrainerM2Text:
 	text_asm
 	ld hl, VictoryRoad3TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad3FTalkToTrainer
 
 VictoryRoad3FCooltrainerF2Text:
 	text_asm
 	ld hl, VictoryRoad3TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr VictoryRoad3FTalkToTrainer
 
 VictoryRoad3FCooltrainerM1BattleText:
 	text_far _VictoryRoad3FCooltrainerM1BattleText

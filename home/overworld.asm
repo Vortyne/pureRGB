@@ -1,7 +1,6 @@
 EnterMap::
 ; Load a new map.
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	call LoadMapData
 	farcall ClearVariablesOnEnterMap
 	ld hl, wStatusFlags4
@@ -24,8 +23,7 @@ EnterMap::
 .didNotEnterUsingFlyWarpOrDungeonWarp
 	farcall CheckForceBikeOrSurf ; handle currents in SF islands and forced bike riding in cycling road
 	call UpdateSprites
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 
 OverworldLoop::
 	rst _DelayFrame
@@ -1825,10 +1823,10 @@ JoypadOverworld::
 ; if done simulating button presses
 .doneSimulating
 	ResetFlag FLAG_FAST_AUTO_MOVEMENT ; PureRGBnote: ADDED: when done auto movement always turn off fast auto movement. Must be enabled per script.
-	xor a
+	call EnableAllJoypad
+	; a = 0 from EnableAllJoypad
 	ld [wSimulatedJoypadStatesIndex], a
 	ld [wSimulatedJoypadStatesEnd], a
-	ld [wJoyIgnore], a
 	ldh [hJoyHeld], a
 	ld hl, wMovementFlags
 	ld a, [hl]

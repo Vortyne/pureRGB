@@ -11,9 +11,7 @@ Route25_Script:
 
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 Route25CheckHideCutTree:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z ; map wasn't just loaded
 	ld a, [wSprite03StateData2MapY] ; guy who can move to not block us leaving the cut alcove
 	cp 12 ; guy is blocking us if his Y value is lower than this
@@ -101,56 +99,49 @@ Route25TrainerHeader8:
 Route25Youngster1Text:
 	text_asm
 	ld hl, Route25TrainerHeader0
+Route25TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 Route25Youngster2Text:
 	text_asm
 	ld hl, Route25TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25CooltrainerMText:
 	text_asm
 	ld hl, Route25TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25CooltrainerF1Text:
 	text_asm
 	ld hl, Route25TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25Youngster3Text:
 	text_asm
 	ld hl, Route25TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25CooltrainerF2Text:
 	text_asm
 	ld hl, Route25TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25Hiker1Text:
 	text_asm
 	ld hl, Route25TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25Hiker2Text:
 	text_asm
 	ld hl, Route25TrainerHeader7
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25Hiker3Text:
 	text_asm
 	ld hl, Route25TrainerHeader8
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr Route25TalkToTrainer
 
 Route25Youngster1BattleText:
 	text_far _Route25Youngster1BattleText

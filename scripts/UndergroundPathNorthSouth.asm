@@ -12,9 +12,7 @@ UndergroundPathNorthSouth_Script:
 	ret
 
 UndergroundPathNorthSouthOnMapLoad:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld a, ROUTE_5
 	ld [wLastMap], a
@@ -50,8 +48,19 @@ UndergroundPathNorthSouthTrainerHeader2:
 UndergroundPathNorthSouthTrainer1Text:
 	text_asm
 	ld hl, UndergroundPathNorthSouthTrainerHeader0
+UndergroundPathNorthSouthTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+UndergroundPathNorthSouthTrainer2Text:
+	text_asm
+	ld hl, UndergroundPathNorthSouthTrainerHeader1
+	jr UndergroundPathNorthSouthTalkToTrainer
+
+UndergroundPathNorthSouthTrainer3Text:
+	text_asm
+	ld hl, UndergroundPathNorthSouthTrainerHeader2
+	jr UndergroundPathNorthSouthTalkToTrainer
 
 UndergroundPathNorthSouthBattleText1:
 	text_far _UndergroundPathNorthSouthBattleText1
@@ -65,12 +74,6 @@ UndergroundPathNorthSouthAfterBattleText1:
 	text_far _UndergroundPathNorthSouthAfterBattleText1
 	text_end
 
-UndergroundPathNorthSouthTrainer2Text:
-	text_asm
-	ld hl, UndergroundPathNorthSouthTrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 UndergroundPathNorthSouthBattleText2:
 	text_far _UndergroundPathNorthSouthBattleText2
 	text_end
@@ -82,12 +85,6 @@ UndergroundPathNorthSouthEndBattleText2:
 UndergroundPathNorthSouthAfterBattleText2:
 	text_far _UndergroundPathNorthSouthAfterBattleText2
 	text_end
-
-UndergroundPathNorthSouthTrainer3Text:
-	text_asm
-	ld hl, UndergroundPathNorthSouthTrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 UndergroundPathNorthSouthBattleText3:
 	text_far _UndergroundPathNorthSouthBattleText3

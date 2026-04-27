@@ -10,20 +10,16 @@ Route1_TextPointers:
 Route1Youngster1Text:
 	text_asm
 	CheckAndSetEvent EVENT_GOT_POTION_SAMPLE
-	jr nz, .got_item
+	ld hl, .AlsoGotPokeballsText
+	jr nz, .printDone
 	ld hl, .MartSampleText
 	rst _PrintText
 	lb bc, ITEM_ROUTE_1_MART_SAMPLE, 1
 	call GiveItem
-	jr nc, .bag_full
-	ld hl, .GotPotionText
-	jr .done
-.bag_full
 	ld hl, .NoRoomText
-	jr .done
-.got_item
-	ld hl, .AlsoGotPokeballsText
-.done
+	jr nc, .printDone
+	ld hl, .GotPotionText
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

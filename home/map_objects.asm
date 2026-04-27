@@ -22,6 +22,15 @@ TextScript_PokemonCenterPC::
 	ld hl, ActivatePC
 	jr BankswitchAndContinue
 
+StartSimulatingJoypadStatesOnlyAOrBPress::
+	ld a, PAD_START | PAD_SELECT | PAD_CTRL_PAD
+	jr StartSimulatingJoypadStatesNoJoypad.load
+	
+StartSimulatingJoypadStatesNoJoypad::
+	xor a
+.load
+	ld [wJoyIgnore], a
+	; fall through
 StartSimulatingJoypadStates::
 	xor a
 	ld [wOverrideSimulatedJoypadStatesMask], a

@@ -15,9 +15,6 @@ ClearVariablesOnEnterMap::
 	ld [wIsAltPalettePkmn], a
 	ld [wIsAltPalettePkmnData], a
 	ld [wOverworldAnimationCounter], a
-	ld hl, wCardKeyDoorY
-	ld [hli], a
-	ld [hl], a
 	ld hl, wSavedY
 	ld bc, wStandingOnWarpPadOrHole - wSavedY
 	call FillMemory

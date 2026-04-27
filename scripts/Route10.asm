@@ -2,9 +2,7 @@
 
 Route10_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .mapLoad
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
@@ -67,8 +65,39 @@ Route10TrainerHeader6:
 Route10SuperNerd1Text:
 	text_asm
 	ld hl, Route10TrainerHeader0
+Route10TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route10Hiker1Text:
+	text_asm
+	ld hl, Route10TrainerHeader1
+	jr Route10TalkToTrainer
+
+Route10SuperNerd2Text:
+	text_asm
+	ld hl, Route10TrainerHeader2
+	jr Route10TalkToTrainer
+
+Route10CooltrainerF1Text:
+	text_asm
+	ld hl, Route10TrainerHeader3
+	jr Route10TalkToTrainer
+
+Route10Hiker2Text:
+	text_asm
+	ld hl, Route10TrainerHeader4
+	jr Route10TalkToTrainer
+
+Route10CooltrainerF2Text:
+	text_asm
+	ld hl, Route10TrainerHeader5
+	jr Route10TalkToTrainer
+
+Route10Text7:
+	text_asm
+	ld hl, Route10TrainerHeader6
+	jr Route10TalkToTrainer
 
 Route10SuperNerd1BattleText:
 	text_far _Route10SuperNerd1BattleText
@@ -85,12 +114,6 @@ Route10SuperNerd1AfterBattleText:
 	ld de, ElectabuzzLearnsetText
 	predef_jump LearnsetTrainerScript
 
-Route10Hiker1Text:
-	text_asm
-	ld hl, Route10TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route10Hiker1BattleText:
 	text_far _Route10Hiker1BattleText
 	text_end
@@ -102,12 +125,6 @@ Route10Hiker1EndBattleText:
 Route10Hiker1AfterBattleText:
 	text_far _Route10Hiker1AfterBattleText
 	text_end
-
-Route10SuperNerd2Text:
-	text_asm
-	ld hl, Route10TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route10SuperNerd2BattleText:
 	text_far _Route10SuperNerd2BattleText
@@ -121,12 +138,6 @@ Route10SuperNerd2AfterBattleText:
 	text_far _Route10SuperNerd2AfterBattleText
 	text_end
 
-Route10CooltrainerF1Text:
-	text_asm
-	ld hl, Route10TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route10CooltrainerF1BattleText:
 	text_far _Route10CooltrainerF1BattleText
 	text_end
@@ -138,12 +149,6 @@ Route10CooltrainerF1EndBattleText:
 Route10CooltrainerF1AfterBattleText:
 	text_far _Route10CooltrainerF1AfterBattleText
 	text_end
-
-Route10Hiker2Text:
-	text_asm
-	ld hl, Route10TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route10Hiker2BattleText:
 	text_far _Route10Hiker2BattleText
@@ -157,12 +162,6 @@ Route10Hiker2AfterBattleText:
 	text_far _Route10Hiker2AfterBattleText
 	text_end
 
-Route10CooltrainerF2Text:
-	text_asm
-	ld hl, Route10TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route10CooltrainerF2BattleText:
 	text_far _Route10CooltrainerF2BattleText
 	text_end
@@ -174,12 +173,6 @@ Route10CooltrainerF2EndBattleText:
 Route10CooltrainerF2AfterBattleText:
 	text_far _Route10CooltrainerF2AfterBattleText
 	text_end
-
-Route10Text7:
-	text_asm
-	ld hl, Route10TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route10BattleText7:
 	text_far _Route10BattleText7

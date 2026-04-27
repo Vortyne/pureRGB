@@ -15,9 +15,7 @@ TypeGuysHouse_TextPointers:
 	dw_const TypeGuysHouseComputer.text,            TEXT_TYPE_GUYS_HOUSE_COMPUTER
 
 TypeGuysHouseCheckTurnOffLights:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld a, [wXCoord]
 	cp 8

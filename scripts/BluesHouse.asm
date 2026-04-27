@@ -267,13 +267,13 @@ BluesHouseTeaEvent:
 	swap a
 	set 0, a ; go back to script #1
 	ld [wBluesHouseCurScript], a
-	sla e ; multiply e by 2
 	ld d, 0
 	ld hl, TeaTextPointers
+	ld b, 5 ; size of each entry
+.loop
 	add hl, de
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a ; hl = which text to print
+	dec b
+	jr nz, .loop
 	rst _PrintText
 	ret
 
@@ -307,9 +307,15 @@ DaisyBlink:
 
 
 TeaTextPointers:
-	dw DaisyTeaBarley
-	dw DaisyTeaPeppermint
-	dw DaisyTeaChai
+DaisyTeaBarley:
+	text_far _DaisyTeaBarley
+	text_end
+DaisyTeaPeppermint:
+	text_far _DaisyTeaPeppermint
+	text_end
+DaisyTeaChai:
+	text_far _DaisyTeaChai
+	text_end
 
 BluesHouseDaisyRivalAtLabText:
 	text_far _BluesHouseDaisyRivalAtLabText
@@ -350,18 +356,6 @@ DaisyTeaEvent:
 	
 DaisyTeaEventNo:
 	text_far _DaisyTeaEventNo
-	text_end
-
-DaisyTeaBarley:
-	text_far _DaisyTeaBarley
-	text_end
-
-DaisyTeaPeppermint:
-	text_far _DaisyTeaPeppermint
-	text_end
-
-DaisyTeaChai:
-	text_far _DaisyTeaChai
 	text_end
 
 DaisyTeaSitDown:

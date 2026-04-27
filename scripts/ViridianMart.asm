@@ -98,28 +98,22 @@ ViridianMartCooltrainerMText:
 
 ViridianMartTMKid: ; PureRGBnote: ADDED: new NPC who will talk about TMs
 	text_asm
-	CheckEvent EVENT_BEAT_BLAINE
-	jr nz, .beforeGiovanni
+	; if we haven't beat misty yet, tm kid is yet to start selling anything
 	CheckEvent EVENT_BEAT_MISTY
-	jr nz, .afterMisty
-.beforeMisty
 	ld hl, ViridianMartTMKidBefore
-	rst _PrintText
-	rst TextScriptEnd
-.tmkidgreet
+	jr z, .printDone
+	; if we have, they will greet the player as the tm kid
 	ld hl, TMKidGreet8
 	rst _PrintText
-	ret
-.afterMisty
-	call .tmkidgreet
 	ld hl, TMKidStockingUp
-	rst _PrintText
-	rst TextScriptEnd
-.beforeGiovanni
+	; if we haven't beat blaine yet, or have encountered the tm kid at indigo plateau, he'll say a generic line about restocking tms
 	CheckEvent EVENT_MET_GYM_GUIDE_SON
-	jr nz, .afterMisty
-	call .tmkidgreet
+	jr nz, .printDone
+	CheckEvent EVENT_BEAT_BLAINE
+	jr z, .printDone
+	; if we beat blaine and haven't met the tm kid at indigo plateau yet, the tm kid will say he's stocking up for indigo plateau
 	ld hl, TMKidBigStockIndigo
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 

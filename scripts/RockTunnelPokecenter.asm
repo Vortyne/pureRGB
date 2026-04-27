@@ -34,17 +34,16 @@ RockTunnelCharityNurseText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	call YesNoChoice
-	jr nz, .no
+	ld hl, RockTunnelCharityNurseFarewellText
+	jr nz, .printDone
 	xor a
 	ldh [hMoney], a
 	ldh [hMoney + 2], a
 	ld a, $30
 	ldh [hMoney + 1], a
 	call HasEnoughMoney
-	jr nc, .success
 	ld hl, RockTunnelCharityNurseNotEnoughMoneyText
-	rst _PrintText
-	jr .done
+	jr c, .printDone
 .success
 	SetEvent EVENT_DONATED_TO_POKECENTER_CHARITY
 	xor a
@@ -60,12 +59,8 @@ RockTunnelCharityNurseText:
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, RockTunnelCharityNurseText2
+.printDone
 	rst _PrintText
-	jr .done
-.no
-	ld hl, RockTunnelCharityNurseFarewellText
-	rst _PrintText
-.done		
 	rst TextScriptEnd
 
 RockTunnelCharityNurseText1:

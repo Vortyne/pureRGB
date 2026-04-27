@@ -493,3 +493,7 @@ SECTION "newCode3", ROMX
 INCLUDE "engine/movie/title.asm"
 INCLUDE "audio/pause_resume_music.asm"
 INCLUDE "engine/battle/prevent_invalid_encounters.asm"
+
+SECTION "Silph Card Key Scripts", ROMX
+
+INCLUDE "engine/events/silph_card_key_scripts.asm"

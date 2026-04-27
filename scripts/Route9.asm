@@ -14,8 +14,7 @@ Route9ReplaceCutTile:
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
 	jr nz, .replaceTileNoRedraw
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .replaceTile
 	ret
 .replaceTile
@@ -137,6 +136,35 @@ Route9CooltrainerF1AfterBattleText:
 	text_asm
 	lb hl, DEX_GLOOM, JR_TRAINER_F
 	ld de, LearnsetGloom
+	jr Route9LearnsetScript
+
+Route9CooltrainerM1AfterBattleText:
+	text_far _Route9CooltrainerM1AfterBattleText
+	text_asm
+	lb hl, DEX_RHYHORN, JR_TRAINER_M
+	ld de, RhyhornLearnset
+	jr Route9LearnsetScript
+
+Route9Hiker1AfterBattleText:
+	text_far _Route9Hiker1AfterBattleText
+	text_asm
+	lb hl, DEX_SANDSLASH, HIKER
+	ld de, LearnsetSandslash
+	jr Route9LearnsetScript
+
+Route9Hiker2AfterBattleText:
+	text_far _Route9Hiker2AfterBattleText
+	text_asm
+	lb hl, DEX_GEODUDE, HIKER
+	ld de, GeodudeLearnset
+	jr Route9LearnsetScript
+
+Route9Youngster2AfterBattleText:
+	text_far _Route9Youngster2AfterBattleText
+	text_asm	
+	lb hl, DEX_BEEDRILL, BUG_CATCHER
+	ld de, LearnsetBoring
+Route9LearnsetScript:
 	predef_jump LearnsetTrainerScript
 
 Route9CooltrainerM1BattleText:
@@ -146,13 +174,6 @@ Route9CooltrainerM1BattleText:
 Route9CooltrainerM1EndBattleText:
 	text_far _Route9CooltrainerM1EndBattleText
 	text_end
-
-Route9CooltrainerM1AfterBattleText:
-	text_far _Route9CooltrainerM1AfterBattleText
-	text_asm
-	lb hl, DEX_RHYHORN, JR_TRAINER_M
-	ld de, RhyhornLearnset
-	predef_jump LearnsetTrainerScript
 
 Route9CooltrainerM2BattleText:
 	text_far _Route9CooltrainerM2BattleText
@@ -186,13 +207,6 @@ Route9Hiker1EndBattleText:
 	text_far _Route9Hiker1EndBattleText
 	text_end
 
-Route9Hiker1AfterBattleText:
-	text_far _Route9Hiker1AfterBattleText
-	text_asm
-	lb hl, DEX_SANDSLASH, HIKER
-	ld de, LearnsetSandslash
-	predef_jump LearnsetTrainerScript
-
 Route9Hiker2BattleText:
 	text_far _Route9Hiker2BattleText
 	text_end
@@ -200,13 +214,6 @@ Route9Hiker2BattleText:
 Route9Hiker2EndBattleText:
 	text_far _Route9Hiker2EndBattleText
 	text_end
-
-Route9Hiker2AfterBattleText:
-	text_far _Route9Hiker2AfterBattleText
-	text_asm
-	lb hl, DEX_GEODUDE, HIKER
-	ld de, GeodudeLearnset
-	predef_jump LearnsetTrainerScript
 
 Route9Youngster1BattleText:
 	text_far _Route9Youngster1BattleText
@@ -239,13 +246,6 @@ Route9Youngster2BattleText:
 Route9Youngster2EndBattleText:
 	text_far _Route9Youngster2EndBattleText
 	text_end
-
-Route9Youngster2AfterBattleText:
-	text_far _Route9Youngster2AfterBattleText
-	text_asm	
-	lb hl, DEX_BEEDRILL, BUG_CATCHER
-	ld de, LearnsetBoring
-	predef_jump LearnsetTrainerScript
 
 Route9SignText:
 	text_far _Route9SignText

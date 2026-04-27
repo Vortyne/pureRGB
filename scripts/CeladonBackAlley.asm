@@ -134,7 +134,7 @@ CeladonBackAlleyHooliganText:
 	ld a, b
 	ld [hl], -1
 	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
+	call StartSimulatingJoypadStatesOnlyAOrBPress
 	ld a, CELADONBACKALLEY_HOOLIGAN
 	call SetSpriteFacingDown
 	rst TextScriptEnd
@@ -315,7 +315,7 @@ CeladonBackAlleyAfterBattle:
 	ld [hl], -1
 	ld a, 2
 	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
+	call StartSimulatingJoypadStatesOnlyAOrBPress
 	ld hl, CeladonBackAlleyHideOpponent
 	call FitnessClubHideOpponents
 .done

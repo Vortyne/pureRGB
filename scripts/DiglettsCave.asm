@@ -19,9 +19,7 @@ CheckAutoHideDigletts:
 	jp HideDigletts
 
 DiglettsCaveCheckStandingOnWarp:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .checkStandingOnWarp
 	call .standingOnBottomWarp
 	jr nz, .loadDigletts

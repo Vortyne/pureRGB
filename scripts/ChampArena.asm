@@ -149,8 +149,7 @@ ChampArenaWaitForOpponentWalkToFinish:
 	ret nz
 
 	ResetEvent EVENT_ARENA_OPPONENT_WALKING
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 
 	; check if they were leaving or entering
 	ld a, [wSprite02StateData2MapY]

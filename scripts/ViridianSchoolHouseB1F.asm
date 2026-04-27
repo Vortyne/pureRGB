@@ -5,10 +5,9 @@ ViridianSchoolHouseB1F_Script:
 	jp EnableAutoTextBoxDrawing
 
 CheckGusGLeaves:
-	CheckEvent EVENT_DETENTION_TOGGLER
+	CheckAndResetEvent EVENT_DETENTION_TOGGLER
 	ret z
-	ResetEvent EVENT_DETENTION_TOGGLER
-	; show jen
+	; show jen or gus
 	call GBFadeOutToWhite
 	ld c, 20
 	rst _DelayFrames
@@ -20,37 +19,38 @@ CheckGusGLeaves:
 	jp PlayDefaultMusic
 
 SetDetentionHideShows::
-	CheckEvent EVENT_GUS_IN_DETENTION
-	jr z, .hideGus
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION
+	ld hl, DetentionHideList
+	ToggleEvent EVENT_GUS_IN_DETENTION
+	ld b, 0
+	jr z, .hideShowLoop
+	inc b
+.hideShowLoop
+	ld a, [hli]
+	cp -1
+	ret z
 	ld [wToggleableObjectIndex], a
+	ld a, b
+	xor 1
+	ld b, a
+	push hl
+	push bc
+	jr z, .dohide
+.doShow
 	predef ShowExtraObject
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
-	ld [wToggleableObjectIndex], a
+	jr .next
+.dohide
 	predef HideExtraObject
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
-	ResetEvent EVENT_GUS_IN_DETENTION
-	ret
-.hideGus
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
-	ld a, TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
-	SetEvent EVENT_GUS_IN_DETENTION
-	ret
+.next
+	pop bc
+	pop hl
+	jr .hideShowLoop
+
+DetentionHideList:
+	db TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION
+	db TOGGLE_VIRIDIAN_SCHOOL_HOUSE_DETENTION2
+	db TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION
+	db TOGGLE_VIRIDIAN_SCHOOL_HOUSE_B1F_DETENTION2
+	db -1
 
 ViridianSchoolHouseB1F_TextPointers:
 	def_text_pointers
@@ -95,19 +95,12 @@ SchoolB1FLittleGirl:
 
 SchoolB1FNerd:
 	text_asm
-	; TODO: optimize
 	ld a, SCHOOLB1F_LITTLE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingUp
 	ld hl, SchoolB1FNerdText
 	rst _PrintText
 	ld a, SCHOOLB1F_LITTLE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_LEFT
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingLeft
   	ld a, [wOptions3]
   	bit BIT_GHOST_PSYCHIC, a
   	ld hl, SchoolB1FLittleGirlRetort2Text
@@ -116,36 +109,21 @@ SchoolB1FNerd:
  .ghostWeak
   	rst _PrintText
 	ld a, SCHOOLB1F_NERD
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingUp
   	ld c, 20
   	rst _DelayFrames
 	ld a, SCHOOLB1F_NERD
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_RIGHT
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingRight
 	ld a, SCHOOLB1F_LITTLE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingUp
   	ld hl, SchoolB1FNerdSilence
   	rst _PrintText
 	ld a, SCHOOLB1F_LITTLE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_LEFT
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingLeft
   	ld hl, SchoolB1FLittleGirlBro
   	rst _PrintText
 	ld a, SCHOOLB1F_NERD
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingUp
   	ld hl, SchoolB1FNerdAck
   	rst _PrintText
   	rst TextScriptEnd
@@ -173,8 +151,6 @@ SchoolB1FLittleGirlBro:
 SchoolB1FNerdAck:
 	text_far _SchoolB1FNerdAck
 	text_end
-
-
 
 SchoolB1FLeftTeacher:
 	text_asm
@@ -318,9 +294,6 @@ SchoolB1FTuteeRight:
 	text_far _SchoolB1FRightTuteeText
 	text_end
 
-
-
-
 SchoolB1FRocker:
 	text_asm
 	call SaveScreenTilesToBuffer2
@@ -392,18 +365,12 @@ SchoolB1FBrunetteGirl:
 .loop
 	push bc
 	ld a, SCHOOLB1F_BRUNETTE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_LEFT
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingLeft
   	call UpdateSprites
   	ld c, 20
   	rst _DelayFrames
 	ld a, SCHOOLB1F_BRUNETTE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingUp
   	call UpdateSprites
   	ld c, 20
   	rst _DelayFrames
@@ -412,10 +379,7 @@ SchoolB1FBrunetteGirl:
   	jr nz, .loop
 
 	ld a, SCHOOLB1F_BRUNETTE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_LEFT
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingLeft
 
   	ld hl, SchoolB1FBrunetteGirlText
   	rst _PrintText
@@ -432,10 +396,7 @@ SchoolB1FBrunetteGirl:
 	ld hl, SchoolB1FDetention2Text
 	rst _PrintText
 	ld a, SCHOOLB1F_BRUNETTE_GIRL
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_UP
-  	ldh [hSpriteFacingDirection], a
-  	call SetSpriteFacingDirection
+	call SetSpriteFacingUp
 	ld hl, SchoolB1FNotAgainText
 	rst _PrintText
 	SetEvent EVENT_DETENTION_TOGGLER

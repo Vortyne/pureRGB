@@ -15,6 +15,7 @@ CeladonMart1FReceptionistText:
 	text_end
 
 ; PureRGBnote: CHANGED: this function was changed to reduce the amount of text data needed for duplicate text.
+; TODO: change it to a list with hover text for less wasted time?
 CeladonMart1FDirectorySignText:
 	text_far _CeladonMart1FCurrentFloorSignText
 	text_promptbutton

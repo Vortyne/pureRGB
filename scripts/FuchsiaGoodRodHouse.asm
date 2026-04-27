@@ -27,9 +27,7 @@ FuchsiaGoodRodHouse_TextPointers:
 	dw_const ErikSarasHouseAfterEventText,       TEXT_ERIKSARASHOUSE_AFTER_EVENT
 
 FuchsiaGoodRodHouseOnMapLoad:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld a, [wXCoord]
 	cp 12

@@ -496,9 +496,7 @@ HandleMidJump::
 	res BIT_LEDGE_OR_FISHING, [hl]
 	ld hl, wStatusFlags5
 	res BIT_SCRIPTED_MOVEMENT_STATE, [hl]
-	xor a
-	ld [wJoyIgnore], a
-	ret
+	jp EnableAllJoypad
 
 Ledge60fps:
 	push hl

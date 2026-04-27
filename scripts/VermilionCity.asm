@@ -3,11 +3,8 @@ VermilionCity_Script:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CUR_MAP_LOADED_2, [hl]
 	res BIT_CUR_MAP_LOADED_2, [hl]
-	push hl
 	call nz, VermilionCityLeftSSAnneCallbackScript
-	pop hl
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	call nz, .setFirstLockTrashCanIndexAndCheckTileReplacements
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
@@ -151,33 +148,19 @@ VermilionCityPlayerAllowedToPassScript:
 	ld hl, SSAnneTicketCheckCoords
 	call ArePlayerCoordsInArray
 	ret c
-	ld a, SCRIPT_VERMILIONCITY_DEFAULT
-	ld [wVermilionCityCurScript], a
-	ret
-
-VermilionCityPlayerExitShipScript:
-	ld a, PAD_BUTTONS | PAD_CTRL_PAD
-	ld [wJoyIgnore], a
-	ld a, PAD_UP
-	ld [wSimulatedJoypadStatesEnd], a
-	ld [wSimulatedJoypadStatesEnd + 1], a
-	ld a, 2
-	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
-	ld a, SCRIPT_VERMILIONCITY_PLAYER_MOVING_UP2
-	ld [wVermilionCityCurScript], a
+ResetVermilionMapScript:
+	xor a
+	ld [wVermilionCityCurScript], a ; SCRIPT_VERMILIONCITY_DEFAULT
 	ret
 
 VermilionCityPlayerMovingUp2Script:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
+	; a = 0 from EnableAllJoypad
 	ldh [hJoyHeld], a
-	ld a, SCRIPT_VERMILIONCITY_DEFAULT
-	ld [wVermilionCityCurScript], a
-	ret
+	jr ResetVermilionMapScript
 
 VermilionCityPlayerMovingUp1Script:
 	ld a, [wSimulatedJoypadStatesIndex]
@@ -185,7 +168,16 @@ VermilionCityPlayerMovingUp1Script:
 	ret nz
 	ld c, 10
 	rst _DelayFrames
-	ld a, SCRIPT_VERMILIONCITY_DEFAULT
+	jr ResetVermilionMapScript
+
+VermilionCityPlayerExitShipScript:
+	ld a, PAD_UP
+	ld [wSimulatedJoypadStatesEnd], a
+	ld [wSimulatedJoypadStatesEnd + 1], a
+	ld a, 2
+	ld [wSimulatedJoypadStatesIndex], a
+	call StartSimulatingJoypadStatesNoJoypad
+	ld a, SCRIPT_VERMILIONCITY_PLAYER_MOVING_UP2
 	ld [wVermilionCityCurScript], a
 	ret
 

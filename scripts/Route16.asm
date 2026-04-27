@@ -10,9 +10,7 @@ Route16_Script:
 
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 Route16CheckHideCutTree:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .mapLoadTree ; map wasn't just loaded
 	bit BIT_CROSSED_MAP_CONNECTION, [hl] ; did we load the map from a save/warp/door/battle, etc?
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
@@ -35,13 +33,6 @@ Route16CheckHideCutTree:
 	ld a, $6E
 	ld [wNewTileBlockID], a
 	predef_jump ReplaceTileBlock
-
-Route16ResetScripts:
-	xor a ; SCRIPT_ROUTE16_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wRoute16CurScript], a
-	ld [wCurMapScript], a
-	ret
 
 Route16_ScriptPointers:
 	def_script_pointers
@@ -74,7 +65,7 @@ Route16SnorlaxPostBattleScript:
 	ResetEvent EVENT_FIGHT_ROUTE16_SNORLAX
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, Route16ResetScripts
+	jr z, .done
 	ld hl, wCurrentMapScriptFlags
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl] ; indicates we loaded the map after battle, since we went to a script need to reset here to prevent a double fade
 	call UpdateSprites
@@ -114,9 +105,8 @@ Route16SnorlaxPostBattleScript:
 	ld [wToggleableObjectIndex], a
 	predef_jump HideObject
 .done
-	ld a, SCRIPT_ROUTE16_DEFAULT
-	ld [wRoute16CurScript], a
-	ld [wCurMapScript], a
+	call ResetMapScripts
+	ld [wRoute16CurScript], a ; SCRIPT_ROUTE16_DEFAULT
 	ret
 .goBackToSleep
 	ld a, TEXT_ROUTE16_SNORLAX_WENT_BACK_TO_SLEEP
@@ -158,8 +148,34 @@ Route16TrainerHeader5:
 Route16Biker1Text:
 	text_asm
 	ld hl, Route16TrainerHeader0
+Route16TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route16Biker2Text:
+	text_asm
+	ld hl, Route16TrainerHeader1
+	jr Route16TalkToTrainer
+
+Route16Biker3Text:
+	text_asm
+	ld hl, Route16TrainerHeader2
+	jr Route16TalkToTrainer
+
+Route16Biker4Text:
+	text_asm
+	ld hl, Route16TrainerHeader3
+	jr Route16TalkToTrainer
+
+Route16Biker5Text:
+	text_asm
+	ld hl, Route16TrainerHeader4
+	jr Route16TalkToTrainer
+
+Route16Biker6Text:
+	text_asm
+	ld hl, Route16TrainerHeader5
+	jr Route16TalkToTrainer
 
 Route16Biker1BattleText:
 	text_far _Route16Biker1BattleText
@@ -173,12 +189,6 @@ Route16Biker1AfterBattleText:
 	text_far _Route16Biker1AfterBattleText
 	text_end
 
-Route16Biker2Text:
-	text_asm
-	ld hl, Route16TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route16Biker2BattleText:
 	text_far _Route16Biker2BattleText
 	text_end
@@ -190,12 +200,6 @@ Route16Biker2EndBattleText:
 Route16Biker2AfterBattleText:
 	text_far _Route16Biker2AfterBattleText
 	text_end
-
-Route16Biker3Text:
-	text_asm
-	ld hl, Route16TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route16Biker3BattleText:
 	text_far _Route16Biker3BattleText
@@ -209,12 +213,6 @@ Route16Biker3AfterBattleText:
 	text_far _Route16Biker3AfterBattleText
 	text_end
 
-Route16Biker4Text:
-	text_asm
-	ld hl, Route16TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route16biker4BattleText:
 	text_far _Route16biker4BattleText
 	text_end
@@ -227,12 +225,6 @@ Route16Biker4AfterBattleText:
 	text_far _Route16Biker4AfterBattleText
 	text_end
 
-Route16Biker5Text:
-	text_asm
-	ld hl, Route16TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route16Biker5BattleText:
 	text_far _Route16Biker5BattleText
 	text_end
@@ -244,12 +236,6 @@ Route16Biker5EndBattleText:
 Route16Biker5AfterBattleText:
 	text_far _Route16Biker5AfterBattleText
 	text_end
-
-Route16Biker6Text:
-	text_asm
-	ld hl, Route16TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route16Biker6BattleText:
 	text_far _Route16Biker6BattleText

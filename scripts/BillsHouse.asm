@@ -9,9 +9,7 @@ BillsHouse_Script:
 	jp CallFunctionInTable
 
 BillsHouseAddDoors:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ResetEvent EVENT_IN_BILLS_GARDEN
 	CheckEvent EVENT_BECAME_CHAMP
@@ -73,8 +71,7 @@ BillsHousePokemonEntersMachineScript:
 	SetEvent EVENT_BILL_SAID_USE_CELL_SEPARATOR
 	ld a, SFX_TRADE_MACHINE
 	rst _PlaySound
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, SCRIPT_BILLSHOUSE_BILL_EXITS_MACHINE
 	ld [wBillsHouseCurScript], a
 	ret
@@ -82,8 +79,7 @@ BillsHousePokemonEntersMachineScript:
 BillsHouseBillExitsMachineScript:
 	CheckEvent EVENT_USED_CELL_SEPARATOR_ON_BILL
 	ret z
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, BILLSHOUSE_BILL_SS_TICKET
 	ld [wSpriteIndex], a
 	ld a, $c
@@ -120,8 +116,7 @@ BillsHouseCleanupScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	SetEvent EVENT_MET_BILL_2 ; this event seems redundant
 	SetEvent EVENT_MET_BILL
 	ld a, SCRIPT_BILLSHOUSE_DEFAULT
@@ -151,18 +146,14 @@ BillsHouseBillPokemonText:
 	ld hl, .ImNotAPokemonText
 	rst _PrintText
 	call YesNoChoice
-	jr nz, .answered_no
-.use_machine
-	ld hl, .UseSeparationSystemText
-	rst _PrintText
-	ld a, SCRIPT_BILLSHOUSE_POKEMON_WALK_TO_MACHINE
-	ld [wBillsHouseCurScript], a
-	jr .text_script_end
-.answered_no
+	jr z, .use_machine
 	ld hl, .NoYouGottaHelpText
 	rst _PrintText
-	jr .use_machine
-.text_script_end
+.use_machine
+	ld a, SCRIPT_BILLSHOUSE_POKEMON_WALK_TO_MACHINE
+	ld [wBillsHouseCurScript], a
+	ld hl, .UseSeparationSystemText
+	rst _PrintText
 	rst TextScriptEnd
 
 .ImNotAPokemonText:
@@ -185,7 +176,8 @@ BillsHouseBillSSTicketText:
 	rst _PrintText
 	lb bc, S_S_TICKET, 1
 	call GiveItem
-	jr nc, .bag_full
+	ld hl, .SSTicketNoRoomText
+	jr nc, .printDone
 	ld hl, .SSTicketReceivedText
 	rst _PrintText
 	SetEvent EVENT_GOT_SS_TICKET
@@ -202,12 +194,8 @@ BillsHouseBillSSTicketText:
 ;;;;;;;;;;
 .got_ss_ticket
 	ld hl, .WhyDontYouGoInsteadOfMeText
+.printDone
 	rst _PrintText
-	jr .text_script_end
-.bag_full
-	ld hl, .SSTicketNoRoomText
-	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 .ThankYouText:

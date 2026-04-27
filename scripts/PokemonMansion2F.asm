@@ -14,9 +14,7 @@ PokemonMansion2F_Script:
 	ret
 
 Mansion2CheckReplaceSwitchDoorBlocks:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld hl, Mansion2TileBlockReplacementCoords
 	ld de, Mansion2TileBlockReplacementIDsOnOff

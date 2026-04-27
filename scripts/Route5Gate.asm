@@ -9,56 +9,70 @@ Route5Gate_ScriptPointers:
 	dw_const Route5GateDefaultScript,      SCRIPT_ROUTE5GATE_DEFAULT
 	dw_const Route5GatePlayerMovingScript, SCRIPT_ROUTE5GATE_PLAYER_MOVING
 
-Route5GateMovePlayerUpScript:
-	ld a, PAD_UP
-	ld [wSimulatedJoypadStatesEnd], a
-	ld a, $1
-	ld [wSimulatedJoypadStatesIndex], a
-	jp StartSimulatingJoypadStates
-
 Route5GateDefaultScript:
-	ld a, [wStatusFlags1]
-	bit BIT_GAVE_SAFFRON_GUARDS_DRINK, a
-	ret nz
 	ld hl, .PlayerInCoordsArray
-	call ArePlayerCoordsInArray
-	ret nc
-	ld a, PLAYER_DIR_LEFT
-	ld [wPlayerMovingDirection], a
-	xor a
-	ldh [hJoyHeld], a
-	farcall RemoveGuardDrink
-	ldh a, [hItemToRemoveID]
-	and a
-	jr nz, .have_drink
-	ld a, TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY
-	ldh [hTextID], a
-	call DisplayTextID
-	call Route5GateMovePlayerUpScript
-	ld a, SCRIPT_ROUTE5GATE_PLAYER_MOVING
-	ld [wRoute5GateCurScript], a
-	ret
-.have_drink
-	ld a, TEXT_ROUTE5GATE_GUARD_GIVE_DRINK
-	ldh [hTextID], a
-	call DisplayTextID
-	ld hl, wStatusFlags1
-	set BIT_GAVE_SAFFRON_GUARDS_DRINK, [hl]
-	ret
+	lb de, PLAYER_DIR_LEFT, PAD_UP
+	jr SaffronGatesDefaultScript
 
 .PlayerInCoordsArray:
 	dbmapcoord  3,  3
 	dbmapcoord  4,  3
 	db -1 ; end
 
+SaffronGatesDefaultScript:
+	ld a, [wStatusFlags1]
+	bit BIT_GAVE_SAFFRON_GUARDS_DRINK, a
+	ret nz
+	call ArePlayerCoordsInArray
+	ret nc
+	ld a, d
+	ld [wPlayerMovingDirection], a
+	xor a
+	ldh [hJoyHeld], a
+	push de
+	farcall RemoveGuardDrink
+	pop de
+	ldh a, [hItemToRemoveID]
+	and a
+	jr nz, .have_drink
+	ld a, TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY
+	ASSERT TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY == TEXT_ROUTE6GATE_GUARD_GEE_IM_THIRSTY
+	ASSERT TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY == TEXT_ROUTE7GATE_GUARD_GEE_IM_THIRSTY
+	ASSERT TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY == TEXT_ROUTE8GATE_GUARD_GEE_IM_THIRSTY
+	ldh [hTextID], a
+	push de
+	call DisplayTextID
+	pop de
+	ld a, SCRIPT_ROUTE5GATE_PLAYER_MOVING
+	ASSERT SCRIPT_ROUTE5GATE_PLAYER_MOVING == SCRIPT_ROUTE6GATE_PLAYER_MOVING
+	ASSERT SCRIPT_ROUTE5GATE_PLAYER_MOVING == SCRIPT_ROUTE7GATE_PLAYER_MOVING
+	ASSERT SCRIPT_ROUTE5GATE_PLAYER_MOVING == SCRIPT_ROUTE8GATE_PLAYER_MOVING
+	ld [wRoute5GateCurScript], a
+	ld a, e
+	ld [wSimulatedJoypadStatesEnd], a
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	jp StartSimulatingJoypadStates
+.have_drink
+	ld a, TEXT_ROUTE5GATE_GUARD_GIVE_DRINK
+	ASSERT TEXT_ROUTE5GATE_GUARD_GIVE_DRINK == TEXT_ROUTE6GATE_GUARD_GIVE_DRINK
+	ASSERT TEXT_ROUTE5GATE_GUARD_GIVE_DRINK == TEXT_ROUTE7GATE_GUARD_GIVE_DRINK
+	ASSERT TEXT_ROUTE5GATE_GUARD_GIVE_DRINK == TEXT_ROUTE8GATE_GUARD_GIVE_DRINK
+	ldh [hTextID], a
+	call DisplayTextID
+	ld hl, wStatusFlags1
+	set BIT_GAVE_SAFFRON_GUARDS_DRINK, [hl]
+	ret
+
 Route5GatePlayerMovingScript:
+	ld hl, wRoute5GateCurScript
+SaffronGatesPlayerMovingScript:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
 	call Delay3
-	xor a
-	ld [wJoyIgnore], a
-	ld [wRoute5GateCurScript], a
+	call EnableAllJoypad
+	ld [hl], a
 	ret
 
 Route5Gate_TextPointers:
@@ -66,34 +80,6 @@ Route5Gate_TextPointers:
 	dw_const SaffronGateGuardText,             TEXT_ROUTE5GATE_GUARD
 	dw_const SaffronGateGuardGeeImThirstyText, TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY
 	dw_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE5GATE_GUARD_GIVE_DRINK
-
-SaffronGateGuardText:
-	text_asm
-	ld a, [wStatusFlags1]
-	bit BIT_GAVE_SAFFRON_GUARDS_DRINK, a
-	jr nz, .thanks_for_drink
-	farcall RemoveGuardDrink
-	ldh a, [hItemToRemoveID]
-	and a
-	jr nz, .have_drink
-	ld hl, SaffronGateGuardGeeImThirstyText
-	rst _PrintText
-	call Route5GateMovePlayerUpScript
-	ld a, SCRIPT_ROUTE5GATE_PLAYER_MOVING
-	ld [wRoute5GateCurScript], a
-	rst TextScriptEnd
-
-.have_drink
-	ld hl, SaffronGateGuardGiveDrinkText
-	rst _PrintText
-	ld hl, wStatusFlags1
-	set BIT_GAVE_SAFFRON_GUARDS_DRINK, [hl]
-	rst TextScriptEnd
-
-.thanks_for_drink
-	ld hl, SaffronGateGuardThanksForTheDrinkText
-	rst _PrintText
-	rst TextScriptEnd
 
 SaffronGateGuardGeeImThirstyText:
 	text_far _SaffronGateGuardGeeImThirstyText
@@ -105,6 +91,7 @@ SaffronGateGuardGiveDrinkText:
 	text_far _SaffronGateGuardYouCanGoOnThroughText
 	text_end
 
+SaffronGateGuardText:
 SaffronGateGuardThanksForTheDrinkText:
 	text_far _SaffronGateGuardThanksForTheDrinkText
 	text_end

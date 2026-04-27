@@ -161,6 +161,8 @@ OriginalGameSaveFileUpdate:
 ResetMonFlagsFully:
 	; step 13: Update party pokemon to have their flags set to 0 (used to be catch rate, now it's for alt palette pokemon and pokeball type)
 	ld a, [wPartyCount]
+	and a
+	ret z ; if your party is empty, you are at the beginning of the game, so don't do anything
 	ld b, a
 	ld hl, wPartyMon1Flags
 	ld de, wPartyMon2Flags - wPartyMon1Flags
@@ -183,7 +185,9 @@ ResetMonFlagsFully:
 	pop bc
 	ld hl, wBoxMon1Flags
 	ld a, [wBoxCount]
-	and a
+	and a 
+	jr z, .nextBox
+	cp $FF ; box never used
 	jr z, .nextBox
 	ld b, a
 	ld de, wBoxMon2Flags - wBoxMon1Flags

@@ -25,35 +25,27 @@ Route15Gate2FOaksAideText:
 	predef OaksAideScript
 	ldh a, [hOaksAideResult]
 	cp OAKS_AIDE_GOT_ITEM
-	jr nz, .no_item
+	jr nz, .done
 	SetEvent EVENT_GOT_BOOSTER_CHIP
 .got_item
 	CheckEvent EVENT_BOOSTER_CHIP_ACTIVE
-	jr z, .boosterChipNotActive
+	ld hl, BoosterChipText
+	jr z, .printDone
 	ld hl, Route15GateUpstairsRemoveBoosterText
 	rst _PrintText
 	call YesNoChoice
-	jr nz, .noUninstall
+	ld hl, Route15GateUpstairsNoUninstallText
+	jr nz, .printDone
 	lb bc, BOOSTER_CHIP, 1
 	call GiveItem
-	jr nc, .bagFull
+	ld hl, Route15GateUpstairsNoRoomText
+	jr nc, .printDone
 	ResetEvent EVENT_BOOSTER_CHIP_ACTIVE
 	call RemoveBoosterChipSounds
 	ld hl, Route15GateUpstairsDoneText
+.printDone
 	rst _PrintText
-	jr .no_item
-.bagFull
-	ld hl, Route15GateUpstairsNoRoomText
-	rst _PrintText
-	jr .no_item
-.noUninstall
-	ld hl, Route15GateUpstairsNoUninstallText
-	rst _PrintText
-	jr .no_item
-.boosterChipNotActive
-	ld hl, BoosterChipText
-	rst _PrintText
-.no_item
+.done
 	rst TextScriptEnd
 
 RemoveBoosterChipSounds:

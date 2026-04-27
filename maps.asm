@@ -1183,8 +1183,6 @@ CeruleanRocketHouseB1F_Blocks: INCBIN "maps/CeruleanRocketHouseB1F.blk"
 
 SECTION "Maps 20", ROMX
 
-INCLUDE "scripts/CeruleanCity_2.asm"
-
 INCLUDE "data/maps/headers/ViridianGym.asm"
 INCLUDE "scripts/ViridianGym.asm"
 INCLUDE "data/maps/objects/ViridianGym.asm"

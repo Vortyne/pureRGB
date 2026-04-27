@@ -90,8 +90,54 @@ Route13TrainerHeader9:
 Route13CooltrainerM1Text:
 	text_asm
 	ld hl, Route13TrainerHeader0
+Route13TalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+Route13CooltrainerF1Text:
+	text_asm
+	ld hl, Route13TrainerHeader1
+	jr Route13TalkToTrainer
+
+Route13CooltrainerF2Text:
+	text_asm
+	ld hl, Route13TrainerHeader2
+	jr Route13TalkToTrainer
+
+Route13CooltrainerF3Text:
+	text_asm
+	ld hl, Route13TrainerHeader3
+	jr Route13TalkToTrainer
+
+Route13CooltrainerF4Text:
+	text_asm
+	ld hl, Route13TrainerHeader4
+	jr Route13TalkToTrainer
+
+Route13CooltrainerM2Text:
+	text_asm
+	ld hl, Route13TrainerHeader5
+	jr Route13TalkToTrainer
+
+Route13Beauty1Text:
+	text_asm
+	ld hl, Route13TrainerHeader6
+	jr Route13TalkToTrainer
+
+Route13Beauty2Text:
+	text_asm
+	ld hl, Route13TrainerHeader7
+	jr Route13TalkToTrainer
+
+Route13BikerText:
+	text_asm
+	ld hl, Route13TrainerHeader8
+	jr Route13TalkToTrainer
+
+Route13CooltrainerM3Text:
+	text_asm
+	ld hl, Route13TrainerHeader9
+	jr Route13TalkToTrainer
 
 Route13CooltrainerM1BattleText:
 	text_far _Route13CooltrainerM1BattleText
@@ -105,12 +151,6 @@ Route13CooltrainerM1AfterBattleText:
 	text_far _Route13CooltrainerM1AfterBattleText
 	text_end
 
-Route13CooltrainerF1Text:
-	text_asm
-	ld hl, Route13TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route13CooltrainerF1BattleText:
 	text_far _Route13CooltrainerF1BattleText
 	text_end
@@ -122,12 +162,6 @@ Route13CooltrainerF1EndBattleText:
 Route13CooltrainerF1AfterBattleText:
 	text_far _Route13CooltrainerF1AfterBattleText
 	text_end
-
-Route13CooltrainerF2Text:
-	text_asm
-	ld hl, Route13TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route13CooltrainerF2BattleText:
 	text_far _Route13CooltrainerF2BattleText
@@ -141,12 +175,6 @@ Route13CooltrainerF2AfterBattleText:
 	text_far _Route13CooltrainerF2AfterBattleText
 	text_end
 
-Route13CooltrainerF3Text:
-	text_asm
-	ld hl, Route13TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route13CooltrainerF3BattleText:
 	text_far _Route13CooltrainerF3BattleText
 	text_end
@@ -158,12 +186,6 @@ Route13CooltrainerF3EndBattleText:
 Route13CooltrainerF3AfterBattleText:
 	text_far _Route13CooltrainerF3AfterBattleText
 	text_end
-
-Route13CooltrainerF4Text:
-	text_asm
-	ld hl, Route13TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route13CooltrainerF4BattleText:
 	text_far _Route13CooltrainerF4BattleText
@@ -177,12 +199,6 @@ Route13CooltrainerF4AfterBattleText:
 	text_far _Route13CooltrainerF4AfterBattleText
 	text_end
 
-Route13CooltrainerM2Text:
-	text_asm
-	ld hl, Route13TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route13CooltrainerM2BattleText:
 	text_far _Route13CooltrainerM2BattleText
 	text_end
@@ -194,12 +210,6 @@ Route13CooltrainerM2EndBattleText:
 Route13CooltrainerM2AfterBattleText:
 	text_far _Route13CooltrainerM2AfterBattleText
 	text_end
-
-Route13Beauty1Text:
-	text_asm
-	ld hl, Route13TrainerHeader6
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route13Beauty1BattleText:
 	text_far _Route13Beauty1BattleText
@@ -213,12 +223,6 @@ Route13Beauty1AfterBattleText:
 	text_far _Route13Beauty1AfterBattleText
 	text_end
 
-Route13Beauty2Text:
-	text_asm
-	ld hl, Route13TrainerHeader7
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route13Beauty2BattleText:
 	text_far _Route13Beauty2BattleText
 	text_end
@@ -231,12 +235,6 @@ Route13Beauty2AfterBattleText:
 	text_far _Route13Beauty2AfterBattleText
 	text_end
 
-Route13BikerText:
-	text_asm
-	ld hl, Route13TrainerHeader8
-	call TalkToTrainer
-	rst TextScriptEnd
-
 Route13BikerBattleText:
 	text_far _Route13BikerBattleText
 	text_end
@@ -248,12 +246,6 @@ Route13BikerEndBattleText:
 Route13BikerAfterBattleText:
 	text_far _Route13BikerAfterBattleText
 	text_end
-
-Route13CooltrainerM3Text:
-	text_asm
-	ld hl, Route13TrainerHeader9
-	call TalkToTrainer
-	rst TextScriptEnd
 
 Route13CooltrainerM3BattleText:
 	text_far _Route13CooltrainerM3BattleText

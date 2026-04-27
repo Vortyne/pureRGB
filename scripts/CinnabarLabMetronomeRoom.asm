@@ -18,13 +18,11 @@ CinnabarLabMetronomeRoomScientist1Text:
 	rst _PrintText
 	lb bc, TM_CINNABAR_LAB_CENTER_ROOM, 1
 	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedTM35Text
-	rst _PrintText
-	SetEvent EVENT_GOT_TM35
-	rst TextScriptEnd
-.bag_full
 	ld hl, .TM35NoRoomText
+	jr nc, .printDone
+	SetEvent EVENT_GOT_TM35
+	ld hl, .ReceivedTM35Text
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 .got_item
@@ -36,8 +34,6 @@ CinnabarLabMetronomeRoomScientist1Text:
 	ld de, LearnsetKinglerGuy
 	ld bc, LearnsetFadeOutInDetails
 	predef_jump LearnsetTrainerScriptMain
-.done
-	rst TextScriptEnd
 
 .Text:
 	text_far _CinnabarLabMetronomeRoomScientist1Text

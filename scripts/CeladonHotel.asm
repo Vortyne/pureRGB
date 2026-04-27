@@ -95,17 +95,16 @@ CeladonHotelSuperNerdText:
 CeladonLaprasGuyText:
 	text_asm
 	CheckEventHL EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
-	jr nz, .celadonRocketsGone
 	ld hl, CeladonLaprasGuyIntro
-	rst _PrintText
-	jr .done
+	jr z, .printDone
 .celadonRocketsGone
 	ld hl, CeladonLaprasGuyReady
 	rst _PrintText
 	lb bc, LAPRAS, 30
 	ld a, BALL_DATA_GREAT << 3
 	call GivePokemonCommon
-	jr nc, .noBoxRoom
+	ld hl, CeladonLaprasGuyNoBoxRoom
+	jr nc, .printDone
 	ld a, [wSimulatedJoypadStatesEnd]
 	and a
 	call z, WaitForTextScrollButtonPress
@@ -115,15 +114,11 @@ CeladonLaprasGuyText:
 	ld a, [wSimulatedJoypadStatesEnd]
 	and a
 	call z, WaitForTextScrollButtonPress
-	ld hl, CeladonLaprasGuyAfter
-	rst _PrintText
-	ld a, 3
+	ld a, SCRIPT_CELADONHOTEL_LAPRAS_GUY_LEAVES
 	ld [wCeladonHotelCurScript], a
-	jr .done
-.noBoxRoom
-	ld hl, CeladonLaprasGuyNoBoxRoom
+	ld hl, CeladonLaprasGuyAfter
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 CeladonLaprasGuyLeaves:
@@ -140,7 +135,7 @@ CeladonLaprasGuyLeaves:
 	ld a, 4
 	ldh [hSpriteIndex], a
 	call MoveSprite
-	ld a, 5
+	ld a, SCRIPT_CELADONHOTEL_LAPRAS_GUY_WAITING_FOR_LOSER_TO_MOVE
 	ld [wCeladonHotelCurScript], a
 	ld [wCurMapScript], a
 	ret
@@ -160,7 +155,7 @@ CeladonLaprasGuyLeaves:
 	ld a, 5
 	ldh [hSpriteIndex], a
 	call MoveSprite
-	ld a, 4
+	ld a, SCRIPT_CELADONHOTEL_LAPRAS_GUY_LEAVES_THROUGH_DOOR
 	ld [wCeladonHotelCurScript], a
 	ld [wCurMapScript], a
 	ret
@@ -203,17 +198,15 @@ CeladonLaprasGuyGoesThroughDoor:
 	ld [hl], WALK
 	call GetSpriteMovementByte2Pointer
 	ld [hl], LEFT_RIGHT
-	xor a
-	ld [wJoyIgnore], a
-	ld [wCeladonHotelCurScript], a
-	ld [wCurMapScript], a
+	call ResetMapScripts
+	ld [wCeladonHotelCurScript], a ; SCRIPT_CELADONHOTEL_DEFAULT
 	ret	
 
 CeladonLaprasGuyWaitingForLoserToMove:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, 3
+	ld a, SCRIPT_CELADONHOTEL_LAPRAS_GUY_LEAVES
 	ld [wCeladonHotelCurScript], a
 	ld [wCurMapScript], a
 	ret

@@ -15,12 +15,6 @@ Route22_ScriptPointers:
 	dw_const Route22Rival2ExitScript,        SCRIPT_ROUTE22_RIVAL2_EXIT
 	dw_const DoRet,                          SCRIPT_ROUTE22_NOOP
 
-Route22SetDefaultScript:
-	xor a ; SCRIPT_ROUTE22_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wRoute22CurScript], a
-	ret
-
 Route22MoveRivalRightScript:
 	ld de, Route22RivalMovementData
 	ld a, [wSavedCoordIndex]
@@ -50,8 +44,7 @@ Route22DefaultScript:
 	ld [wSavedCoordIndex], a
 	xor a
 	ldh [hJoyHeld], a
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
 	CheckEvent EVENT_1ST_ROUTE22_RIVAL_BATTLE
@@ -103,20 +96,17 @@ Route22Rival1StartBattleScript:
 	ld [hl], a
 	ld a, [wSavedCoordIndex]
 	cp 1 ; index of second, lower entry in Route22DefaultScript.Route22RivalBattleCoords
-	jr nz, .set_rival_facing_right
+	ld a, SPRITE_FACING_RIGHT
+	jr nz, .set_rival_facing_direction
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerMovingDirection], a
 	ld a, SPRITE_FACING_UP
-	jr .set_rival_facing_direction
-.set_rival_facing_right
-	ld a, SPRITE_FACING_RIGHT
 .set_rival_facing_direction
 	ldh [hSpriteFacingDirection], a
 	ld a, ROUTE22_RIVAL1
 	ldh [hSpriteIndex], a
 	call SetSpriteFacingDirectionAndDelay
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TEXT_ROUTE22_RIVAL1
 	ldh [hTextID], a
 	call DisplayTextID
@@ -136,14 +126,18 @@ Route22Rival1StartBattleScript:
 	ld [wRoute22CurScript], a
 	ret
 
+Route22SetDefaultScript:
+	call EnableAllJoypad
+	ld [wRoute22CurScript], a ; SCRIPT_ROUTE22_DEFAULT
+	ret
+
 Route22Rival1AfterBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, Route22SetDefaultScript
+	jr z, Route22SetDefaultScript
 	ld d, ROUTE22_RIVAL1
 	callfar MakeSpriteFacePlayer
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
 	ld a, TEXT_ROUTE22_RIVAL1
 	ldh [hTextID], a
@@ -202,8 +196,7 @@ Route22Rival1ExitScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TOGGLE_ROUTE_22_RIVAL_1
 	ld [wToggleableObjectIndex], a
 	predef HideObject
@@ -266,8 +259,7 @@ Route22Rival2StartBattleScript:
 .set_rival_facing_direction
 	ldh [hSpriteFacingDirection], a
 	call SetSpriteFacingDirectionAndDelay
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TEXT_ROUTE22_RIVAL2
 	ldh [hTextID], a
 	call DisplayTextID
@@ -300,8 +292,7 @@ Route22Rival2AfterBattleScript:
 	ld [wPlayerMovingDirection], a
 	ld d, ROUTE22_RIVAL1
 	callfar MakeSpriteFacePlayer
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	SetEvent EVENT_BEAT_ROUTE22_RIVAL_2ND_BATTLE
 	ld a, TEXT_ROUTE22_RIVAL2
 	ldh [hTextID], a
@@ -345,8 +336,7 @@ Route22Rival2ExitScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TOGGLE_ROUTE_22_RIVAL_2
 	ld [wToggleableObjectIndex], a
 	predef HideObject
@@ -368,27 +358,21 @@ Route22_TextPointers:
 Route22Rival1Text:
 	text_asm
 	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_1ST_BATTLE
-	jr z, .before_battle
-	ld hl, Route22RivalAfterBattleText1
-	rst _PrintText
-	jr .text_script_end
-.before_battle
 	ld hl, Route22RivalBeforeBattleText1
+	jr z, .printDone
+	ld hl, Route22RivalAfterBattleText1
+.printDone
 	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 Route22Rival2Text:
 	text_asm
 	CheckEvent EVENT_BEAT_ROUTE22_RIVAL_2ND_BATTLE
-	jr z, .before_battle
-	ld hl, Route22RivalAfterBattleText2
-	rst _PrintText
-	jr .text_script_end
-.before_battle
 	ld hl, Route22RivalBeforeBattleText2
+	jr z, .printDone
+	ld hl, Route22RivalAfterBattleText2
+.printDone
 	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 Route22RivalBeforeBattleText1:

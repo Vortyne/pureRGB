@@ -35,8 +35,14 @@ RocketHideout3TrainerHeader1:
 RocketHideoutB3FRocket1Text:
 	text_asm
 	ld hl, RocketHideout3TrainerHeader0
+RocketHideoutB3FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+RocketHideoutB3FRocket2Text:
+	text_asm
+	ld hl, RocketHideout3TrainerHeader1
+	jr RocketHideoutB3FTalkToTrainer
 
 RocketHideoutB3FRocket1BattleText:
 	text_far _RocketHideoutB3FRocket1BattleText
@@ -49,12 +55,6 @@ RocketHideoutB3FRocket1EndBattleText:
 RocketHideoutB3FRocket1AfterBattleText:
 	text_far _RocketHideoutB3FRocket1AfterBattleText
 	text_end
-
-RocketHideoutB3FRocket2Text:
-	text_asm
-	ld hl, RocketHideout3TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
 
 RocketHideoutB3FRocket2BattleText:
 	text_far _RocketHideout3BattleText

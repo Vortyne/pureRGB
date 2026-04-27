@@ -54,7 +54,7 @@ FossilGuysHouseFossilGuyText:
 .noFossil
 	ld hl, FossilGuyWhereFossilText
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
 .checkHelix
 	ld b, HELIX_FOSSIL
 	jr .checkItemFossil
@@ -83,11 +83,11 @@ FossilGuysHouseFossilGuyText:
 	SetEvents EVENT_GAVE_FOSSIL_TO_SUPER_NERD, EVENT_SUPER_NERD_GOING_TO_CINNABAR, EVENT_SKIP_FOSSIL_GUY_GREETING
 	ld hl, FossilGuyGaveFossil
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
 .suitYourself
 	ld hl, FossilGuyDenied
 	rst _PrintText
-	jp .done
+	rst TextScriptEnd
 .doneRevivedFossil
 	ld hl, FossilGuyCameBackFossil
 	rst _PrintText
@@ -99,10 +99,11 @@ FossilGuysHouseFossilGuyText:
 	ld b, a
 	ld c, 24
 	call GivePokemon
-	jp nc, .done
+	jr nc, .finishGiveFossilEnd
 	SetEvent EVENT_RECEIVED_FOSSIL_PKMN_FROM_SUPER_NERD
 	ResetEvent EVENT_SKIP_FOSSIL_GUY_GREETING
-	jp .done
+.finishGiveFossilEnd
+	rst TextScriptEnd
 .stageTwoStart
 	ld b, OLD_AMBER
 	predef GetIndexOfItemInBag
@@ -127,22 +128,23 @@ FossilGuysHouseFossilGuyText:
 	SetEvents EVENT_GAVE_OLD_AMBER_TO_SUPER_NERD, EVENT_SUPER_NERD_GOING_TO_CINNABAR
 	ld hl, FossilGuyGaveAmber
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .doneRevivedAmber
 	ld hl, FossilGuyCameBackAmber
 	rst _PrintText
 	lb bc, AERODACTYL, 24
 	call GivePokemon
-	jr nc, .done
+	jr nc, .doneRevivedAmberEnd
 	SetEvent EVENT_RECEIVED_AERODACTYL_FROM_SUPER_NERD
-	jr .done
+.doneRevivedAmberEnd
+	rst TextScriptEnd
 .stageThreeStart
 	CheckEvent EVENT_SEAFOAM_FOUND_OTHER_FOSSIL
 	jr nz, .goToCinnabar
 .endText
 	ld hl, FossilGuyEndText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .goToCinnabar
 	CheckEvent EVENT_GOT_HELIX_FOSSIL
 	jr nz, .checkDome2
@@ -158,19 +160,18 @@ FossilGuysHouseFossilGuyText:
 	jr z, .endText
 	ld hl, FossilGuyGoToCinnabarText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .greetingEnd
 	ld hl, FossilGuyGreetingEnd
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .comeBackLater
 	ld hl, FossilGuyComeBackLater
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .neverMet
 	ld hl, FossilGuyNeverMet
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 ; Conversation text

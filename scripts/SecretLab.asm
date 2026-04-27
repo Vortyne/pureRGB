@@ -179,8 +179,7 @@ WaitForWalkFinish:
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
 	ret nz
 	ResetEvent EVENT_SECRET_LAB_NPC_WALK_IN_HAPPENING
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	CheckEvent EVENT_SECRET_LAB_NPC_WALK_OUT_HAPPENING
 	jr nz, .hideNPC
 	ld a, TEXT_SECRETLAB_ENGAGE_TRAINER
@@ -486,8 +485,7 @@ CheckWalkingToDoor:
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	SetEvent EVENT_OPENED_SECRET_LAB_BARRICADE
 	call SecretLabShakeScreen
 	lb bc, 11, 2
@@ -574,8 +572,7 @@ CheckMewtwoTransform:
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TEXT_SECRETLAB_MEWTWO_TRANSFORMATION
 	ldh [hTextID], a
 	jp DisplayTextID

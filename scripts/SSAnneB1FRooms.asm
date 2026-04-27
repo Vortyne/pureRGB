@@ -46,38 +46,34 @@ SSAnne10TrainerHeader5:
 SSAnneB1FRoomsSailor1Text:
 	text_asm
 	ld hl, SSAnne10TrainerHeader0
+SSAnneB1FRoomsTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 
 SSAnneB1FRoomsSailor2Text:
 	text_asm
 	ld hl, SSAnne10TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnneB1FRoomsTalkToTrainer
 
 SSAnneB1FRoomsSailor3Text:
 	text_asm
 	ld hl, SSAnne10TrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnneB1FRoomsTalkToTrainer
 
 SSAnneB1FRoomsSailor4Text:
 	text_asm
 	ld hl, SSAnne10TrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnneB1FRoomsTalkToTrainer
 
 SSAnneB1FRoomsSailor5Text:
 	text_asm
 	ld hl, SSAnne10TrainerHeader4
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnneB1FRoomsTalkToTrainer
 
 SSAnneB1FRoomsFisherText:
 	text_asm
 	ld hl, SSAnne10TrainerHeader5
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr SSAnneB1FRoomsTalkToTrainer
 
 SSAnneB1FRoomsMachokeText:
 	text_far _SSAnneB1FRoomsMachokeText

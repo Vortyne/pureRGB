@@ -9,26 +9,12 @@ LoreleisRoom_Script:
 	ret
 
 LoreleiShowOrHideExitBlock:
-; Blocks or clears the exit to the next room.
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld hl, wElite4Flags
 	set BIT_STARTED_ELITE_4, [hl]
 	CheckEvent EVENT_BEAT_LORELEIS_ROOM_TRAINER_0
-	ld a, $24
-	jr z, .setExitBlock
-	ld a, $5
-.setExitBlock
-	ld [wNewTileBlockID], a
-	lb bc, 0, 2
-	predef ReplaceTileBlock
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
-	res BIT_MAP_LOADED_AFTER_BATTLE, [hl] 
-	ret z
-	jp GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here
+	jp EliteFourOnMapLoad
 
 LoreleisRoom_ScriptPointers:
 	def_script_pointers
@@ -36,99 +22,25 @@ LoreleisRoom_ScriptPointers:
 	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_LORELEISROOM_LORELEI_START_BATTLE
 	dw_const LoreleisRoomLoreleiEndBattleScript,    SCRIPT_LORELEISROOM_LORELEI_END_BATTLE
 	dw_const LoreleisRoomPlayerIsMovingScript,      SCRIPT_LORELEISROOM_PLAYER_IS_MOVING
-	dw_const DoRet,                                 SCRIPT_LORELEISROOM_NOOP
-
-LoreleiScriptWalkIntoRoom:
-; Walk six steps upward.
-	ld hl, wSimulatedJoypadStatesEnd
-	ld a, PAD_UP
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hl], a
-	ld a, $6
-	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
-	ld a, SCRIPT_LORELEISROOM_PLAYER_IS_MOVING
-	ld [wLoreleisRoomCurScript], a
-	ld [wCurMapScript], a
-	ret
 
 LoreleisRoomDefaultScript:
-	ld hl, LoreleiEntranceCoords
-	call ArePlayerCoordsInArray
-	jp nc, CheckFightingMapTrainers
-	xor a
-	ldh [hJoyPressed], a
-	ldh [hJoyHeld], a
-	ld [wSimulatedJoypadStatesEnd], a
-	ld [wSimulatedJoypadStatesIndex], a
-	ld a, [wCoordIndex]
-	cp $3  ; Is player standing one tile above the exit?
-	jr c, .stopPlayerFromLeaving
-	CheckAndSetEvent EVENT_AUTOWALKED_INTO_LORELEIS_ROOM
-	jr z, LoreleiScriptWalkIntoRoom
-.stopPlayerFromLeaving
-	ld a, TEXT_LORELEISROOM_DONT_RUN_AWAY
-	ldh [hTextID], a
-	call DisplayTextID  ; "Don't run away!"
-	ld a, PAD_UP
-	ld [wSimulatedJoypadStatesEnd], a
-	ld a, $1
-	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
-	ld a, SCRIPT_LORELEISROOM_PLAYER_IS_MOVING
-	ld [wLoreleisRoomCurScript], a
-	ld [wCurMapScript], a
-	ret
-
-LoreleiEntranceCoords:
-	dbmapcoord  4, 10
-	dbmapcoord  5, 10
-	dbmapcoord  4, 11
-	dbmapcoord  5, 11
-	db -1 ; end
+	lb bc, TEXT_LORELEISROOM_DONT_RUN_AWAY, SCRIPT_LORELEISROOM_PLAYER_IS_MOVING
+	ld hl, wLoreleisRoomCurScript
+	jp EliteFourDefaultScript
 
 LoreleisRoomPlayerIsMovingScript:
-	ld a, [wSimulatedJoypadStatesIndex]
-	and a
-	ret nz
-	call Delay3
-	xor a
-	ld [wJoyIgnore], a
-	ld [wLoreleisRoomCurScript], a
-	ld [wCurMapScript], a
-	ret
+	ld hl, wLoreleisRoomCurScript
+	jp EliteFourIsPlayerMovingScript
 
 LoreleisRoomLoreleiEndBattleScript:
-	call EndTrainerBattle
-	ld a, [wIsInBattle]
-	cp $ff
-	jr z, ResetLoreleiScript
-	ld d, LORELEISROOM_LORELEI
-	callfar MakeSpriteFacePlayer
-	ld a, TEXT_LORELEISROOM_LORELEI
-	ldh [hTextID], a
-	call DisplayTextID
-	ld a, LORELEISROOM_LORELEI
-	ldh [hSpriteIndex], a
-	call SetSpriteMovementBytesToFF
-;;;;;;;;;; PureRGBnote: ADDED: sound effect for the doors opening
-	ld a, SFX_GO_INSIDE
-	rst _PlaySound
-	ret
-;;;;;;;;;;
-ResetLoreleiScript:
-	xor a ; SCRIPT_LORELEISROOM_DEFAULT
-	ld [wLoreleisRoomCurScript], a
-	ret
+	ld hl, wLoreleisRoomCurScript
+	lb de, LORELEISROOM_LORELEI, TEXT_LORELEISROOM_LORELEI
+	jp EliteFourEndTrainerBattleScript
 
 LoreleisRoom_TextPointers:
 	def_text_pointers
 	dw_const LoreleisRoomLoreleiText,            TEXT_LORELEISROOM_LORELEI
-	dw_const LoreleisRoomLoreleiDontRunAwayText, TEXT_LORELEISROOM_DONT_RUN_AWAY
+	dw_const EliteFourDontRunAwayText, 			 TEXT_LORELEISROOM_DONT_RUN_AWAY
 
 LoreleisRoomTrainerHeaders:
 	def_trainers
@@ -140,11 +52,9 @@ LoreleisRoomLoreleiText:
 	text_asm
 ;;;;;;;;;; PureRGBnote: ADDED: makes the battle music the gym leader theme
 	ld a, 9
-	ld [wGymLeaderNo], a
 ;;;;;;;;;;
 	ld hl, LoreleisRoomTrainerHeader0
-	call TalkToTrainer
-	rst TextScriptEnd
+	jp EliteFourTalkToTrainer
 
 LoreleisRoomLoreleiBeforeBattleText:
 	text_far _LoreleisRoomLoreleiBeforeBattleText
@@ -156,8 +66,4 @@ LoreleisRoomLoreleiEndBattleText:
 
 LoreleisRoomLoreleiAfterBattleText:
 	text_far _LoreleisRoomLoreleiAfterBattleText
-	text_end
-
-LoreleisRoomLoreleiDontRunAwayText:
-	text_far _LoreleisRoomLoreleiDontRunAwayText
 	text_end

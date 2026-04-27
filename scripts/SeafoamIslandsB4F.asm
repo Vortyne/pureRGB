@@ -9,9 +9,7 @@ SeafoamIslandsB4F_Script:
 	jp CallFunctionInTable
 
 SeafoamIslandsB4FOnMapLoad::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	SetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
 	CheckEvent EVENT_SEAFOAM_DRAGONAIR_PRESENT
@@ -42,12 +40,6 @@ SeafoamReplaceTileBlockEntry:
 	ld [wNewTileBlockID], a
 	predef_jump ReplaceTileBlock
 
-SeafoamIslandsB4FResetScript:
-	xor a
-	ld [wSeafoamIslandsB4FCurScript], a
-	ld [wJoyIgnore], a
-	ret
-
 SeafoamIslandsB4F_ScriptPointers:
 	def_script_pointers
 	dw_const SeafoamIslandsB4FDefaultScript,       SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
@@ -55,6 +47,11 @@ SeafoamIslandsB4F_ScriptPointers:
 	dw_const SeafoamIslandsB4FArticunoIntroAnimation, SCRIPT_SEAFOAMISLANDSB4F_ARTICUNO_INTRO_ANIMATION
 	dw_const SeafoamIslandsB4FEndArticunoBattleScript, SCRIPT_SEAFOAMISLANDSB4F_ARTICUNO_BATTLE_END
 	dw_const SeafoamIslandsB4FDragonairEventStartScript, SCRIPT_SEAFOAMISLANDSB4F_DRAGONAIR_EVENT_START
+
+SeafoamIslandsB4FResetScript:
+	call EnableAllJoypad
+	ld [wSeafoamIslandsB4FCurScript], a
+	ret
 
 SeafoamIslandsB4FEndArticunoBattleScript:
 	ld a, [wIsInBattle]
@@ -89,8 +86,7 @@ SeafoamIslandsB4FObjectMoving1Script:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, [wYCoord]
 	cp 12
 	jr nz, SeafoamB4FDefaultScript
@@ -367,8 +363,7 @@ SeafoamIslandsB4FDragonairEventStartScript:
 	ld a, [wYCoord]
 	cp 5
 	jr z, .initialText
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld c, 60
 	rst _DelayFrames
 	; play a splash sound

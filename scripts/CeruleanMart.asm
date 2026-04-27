@@ -12,16 +12,12 @@ CeruleanMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
 	ld hl, TMKidGreet1
 	rst _PrintText
-	CheckEvent EVENT_MET_CERULEAN_TM_KID
-	jr z, .intro
-	ld hl, TMKidQuick1
-	rst _PrintText
-	jr .shop
-.intro
+	CheckAndSetEvent EVENT_MET_CERULEAN_TM_KID
 	ld hl, CeruleanMartTMKidFlavor
+	jr z, .gotText
+	ld hl, TMKidQuick1
+.gotText
 	rst _PrintText
-	SetEvent EVENT_MET_CERULEAN_TM_KID
-.shop
 	ld hl, CeruleanTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd

@@ -181,9 +181,7 @@ CheckStartStopSpinning::
 	ret nz ; if we're already spinning don't replay the sound or reload joyignore
 	ld a, SFX_ARROW_TILES
 	rst _PlaySound
-	ld a, PAD_CTRL_PAD | PAD_BUTTONS
-	ld [wJoyIgnore], a
-	ret
+	jp DisableAllJoypad
 .next
 	inc hl
 .next2
@@ -194,8 +192,7 @@ CheckStartStopSpinning::
 	bit BIT_SPINNING, [hl]
 	res BIT_SPINNING, [hl]
 	ret z ; if we're already stopped, don't do the below stuff again
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ResetFlag FLAG_SPINNER_TOGGLER
 	jp ForceLoadSpinnerArrowTiles ; reset to default spinner tile
 

@@ -3,9 +3,7 @@ FightingDojo_Script:
 	ld hl, wCurrentMapScriptFlags
 	CheckEvent EVENT_GENERIC_NPC_WALKING_FLAG
 	jr nz, .MasterWalking
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .noMapLoadScript
 	CheckEvent EVENT_OPENED_DOJO_INTERIOR
 	jr z, .noMapLoadScript2
@@ -32,8 +30,7 @@ FightingDojo_Script:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	ResetEvent EVENT_GENERIC_NPC_WALKING_FLAG
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TEXT_FIGHTINGDOJO_KARATE_MASTER_POST_BALL
 	ldh [hTextID], a
 	jp DisplayTextID
@@ -53,13 +50,6 @@ FightingDojo_Script:
 	jp DisplayTextID
 .reset
 	ResetEvent EVENT_IN_FIGHTING_DOJO_EXPERT_CLUB_BATTLE_LOOP
-	ret
-
-FightingDojoResetScripts:
-	xor a ; SCRIPT_FIGHTINGDOJO_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wFightingDojoCurScript], a
-	ld [wCurMapScript], a
 	ret
 
 FightingDojo_ScriptPointers:
@@ -97,18 +87,22 @@ FightingDojoDefaultScript:
 	ldh [hTextID], a
 	jp DisplayTextID
 
+FightingDojoResetScripts:
+	call ResetMapScripts
+	ld [wFightingDojoCurScript], a ; SCRIPT_FIGHTINGDOJO_DEFAULT
+	ret
+
 FightingDojoKarateMasterPostBattleScript:
 	ld a, [wIsInBattle]
 	cp $ff
-	jp z, FightingDojoResetScripts
+	jr z, FightingDojoResetScripts
 	ld a, [wSavedCoordIndex]
 	and a ; nz if the player was at (4, 3), left of the Karate Master
 	jr z, .already_facing
 	ld a, PLAYER_DIR_RIGHT
 	ld [wPlayerMovingDirection], a
 .already_facing
-	ld a, PAD_CTRL_PAD
-	ld [wJoyIgnore], a
+	call DisableDpad
 	SetEventRange EVENT_BEAT_KARATE_MASTER, EVENT_BEAT_FIGHTING_DOJO_TRAINER_3
 	ld d, FIGHTINGDOJO_KARATE_MASTER
 	callfar MakeSpriteFacePlayer
@@ -118,11 +112,7 @@ FightingDojoKarateMasterPostBattleScript:
 	ld a, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a ; SCRIPT_FIGHTINGDOJO_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wFightingDojoCurScript], a
-	ld [wCurMapScript], a
-	ret
+	jr FightingDojoResetScripts
 
 FightingDojo_TextPointers:
 	def_text_pointers
@@ -276,8 +266,25 @@ FightingDojoKarateMasterText:
 FightingDojoBlackbelt1Text:
 	text_asm
 	ld hl, FightingDojoTrainerHeader0
+	; fall through
+FightingDojoTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
+
+FightingDojoBlackbelt2Text:
+	text_asm
+	ld hl, FightingDojoTrainerHeader1
+	jr FightingDojoTalkToTrainer
+
+FightingDojoBlackbelt3Text:
+	text_asm
+	ld hl, FightingDojoTrainerHeader2
+	jr FightingDojoTalkToTrainer
+
+FightingDojoBlackbelt4Text:
+	text_asm
+	ld hl, FightingDojoTrainerHeader3
+	jr FightingDojoTalkToTrainer
 
 FightingDojoBlackbelt1BattleText:
 	text_far _FightingDojoBlackbelt1BattleText
@@ -290,12 +297,6 @@ FightingDojoBlackbelt1EndBattleText:
 FightingDojoBlackbelt1AfterBattleText:
 	text_far _FightingDojoBlackbelt1AfterBattleText
 	text_end
-
-FightingDojoBlackbelt2Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
 
 FightingDojoBlackbelt2BattleText:
 	text_far _FightingDojoBlackbelt2BattleText
@@ -312,12 +313,6 @@ FightingDojoBlackbelt2AfterBattleText:
 	ld de, MachokeLearnsetText2
 	predef_jump LearnsetTrainerScript
 
-FightingDojoBlackbelt3Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader2
-	call TalkToTrainer
-	rst TextScriptEnd
-
 FightingDojoBlackbelt3BattleText:
 	text_far _FightingDojoBlackbelt3BattleText
 	text_end
@@ -332,12 +327,6 @@ FightingDojoBlackbelt3AfterBattleText:
 	lb hl, DEX_PRIMEAPE, BLACKBELT
 	ld de, PrimeapeLearnsetText
 	predef_jump LearnsetTrainerScript
-
-FightingDojoBlackbelt4Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader3
-	call TalkToTrainer
-	rst TextScriptEnd
 
 FightingDojoBlackbelt4BattleText:
 	text_far _FightingDojoBlackbelt4BattleText
@@ -581,7 +570,7 @@ FightingDojoExpertBattleClerkText:
 	ld [hl], -1
 	ld a, c
 	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
+	call StartSimulatingJoypadStatesOnlyAOrBPress
 	SetEvent EVENT_IN_FIGHTING_DOJO_EXPERT_CLUB_BATTLE_LOOP
 .done
 	rst TextScriptEnd

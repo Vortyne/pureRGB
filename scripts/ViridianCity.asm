@@ -24,32 +24,23 @@ ViridianCityCheckGymOpenScript:
 	SetEvent EVENT_VIRIDIAN_GYM_OPEN
 	ret
 .gym_closed
-	ld a, [wYCoord]
-	cp 8
-	ret nz
-	ld a, [wXCoord]
-	cp 32
-	ret nz
-	ld a, TEXT_VIRIDIANCITY_GYM_LOCKED
-	ldh [hTextID], a
-	call DisplayTextID
-	xor a
-	ldh [hJoyHeld], a
-	call ViridianCityMovePlayerDownScript
-	ld a, SCRIPT_VIRIDIANCITY_PLAYER_MOVING_DOWN
-	ld [wViridianCityCurScript], a
-	ret
+	lb bc, 8, 32
+	ld d, TEXT_VIRIDIANCITY_GYM_LOCKED
+	jr ViridianCityCheckTriggerMoveDownScript
 
 ViridianCityCheckGotPokedexScript:
 	CheckEvent EVENT_GOT_POKEDEX
 	ret nz
+	lb bc, 9, 19
+	ld d, TEXT_VIRIDIANCITY_OLD_MAN_SLEEPY
+ViridianCityCheckTriggerMoveDownScript:
 	ld a, [wYCoord]
-	cp 9
+	cp b
 	ret nz
 	ld a, [wXCoord]
-	cp 19
+	cp c
 	ret nz
-	ld a, TEXT_VIRIDIANCITY_OLD_MAN_SLEEPY
+	ld a, d
 	ldh [hTextID], a
 	call DisplayTextID
 	xor a
@@ -60,14 +51,10 @@ ViridianCityCheckGotPokedexScript:
 	ret
 
 ViridianCityOldManStartCatchTrainingScript:
-	ld a, [wSprite03StateData1YPixels]
-	ldh [hSpriteScreenYCoord], a
-	ld a, [wSprite03StateData1XPixels]
-	ldh [hSpriteScreenXCoord], a
-	ld a, [wSprite03StateData2MapY]
-	ldh [hSpriteMapYCoord], a
-	ld a, [wSprite03StateData2MapX]
-	ldh [hSpriteMapXCoord], a
+	ld hl, wSprite03StateData1YPixels
+	ld de, hSpriteScreenYCoord
+	ld bc, 4
+	rst _CopyData
 	xor a
 	ld [wListScrollOffset], a
 
@@ -88,34 +75,28 @@ ViridianCityOldManStartCatchTrainingScript:
 	ret
 
 ViridianCityOldManEndCatchTrainingScript:
-	ldh a, [hSpriteScreenYCoord]
-	ld [wSprite03StateData1YPixels], a
-	ldh a, [hSpriteScreenXCoord]
-	ld [wSprite03StateData1XPixels], a
-	ldh a, [hSpriteMapYCoord]
-	ld [wSprite03StateData2MapY], a
-	ldh a, [hSpriteMapXCoord]
-	ld [wSprite03StateData2MapX], a
+	ld hl, hSpriteScreenYCoord
+	ld de, wSprite03StateData1YPixels
+	ld bc, 4
+	rst _CopyData
 	call UpdateSpritesAndDelay3
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	ld a, TEXT_VIRIDIANCITY_OLD_MAN_YOU_NEED_TO_WEAKEN_THE_TARGET
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a
+	call EnableAllJoypad
+	; a = 0 from EnableAllJoypad
 	ld [wBattleType], a
-	ld [wJoyIgnore], a
-	ld a, SCRIPT_VIRIDIANCITY_DEFAULT
-	ld [wViridianCityCurScript], a
-	ret
+	jr ViridianCityPlayerMovingDownScript.resetScript
 
 ViridianCityPlayerMovingDownScript:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
 	call Delay3
-	ld a, SCRIPT_VIRIDIANCITY_DEFAULT
-	ld [wViridianCityCurScript], a
+	xor a
+.resetScript
+	ld [wViridianCityCurScript], a  ; SCRIPT_VIRIDIANCITY_DEFAULT
 	ret
 
 ViridianCityMovePlayerDownScript:
@@ -124,9 +105,8 @@ ViridianCityMovePlayerDownScript:
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, PAD_DOWN
 	ld [wSimulatedJoypadStatesEnd], a
-	xor a
+	call EnableAllJoypad
 	ld [wSpritePlayerStateData1FacingDirection], a
-	ld [wJoyIgnore], a
 	ret
 
 ViridianCity_TextPointers:
@@ -177,14 +157,11 @@ ViridianCityYoungster2Text:
 	ld hl, .YouWantToKnowAboutText
 	rst _PrintText
 	call YesNoChoice
-	jr nz, .no
-	ld hl, .CaterpieAndWeedleDescriptionText
-	rst _PrintText
-	jr .text_script_end
-.no
 	ld hl, .OkThenText
+	jr nz, .printDone
+	ld hl, .CaterpieAndWeedleDescriptionText
+.printDone
 	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 .YouWantToKnowAboutText:
@@ -202,14 +179,11 @@ ViridianCityYoungster2Text:
 ViridianCityGirlText:
 	text_asm
 	CheckEvent EVENT_GOT_POKEDEX
-	jr nz, .got_pokedex
-	ld hl, .HasntHadHisCoffeeYetText
-	rst _PrintText
-	jr .text_script_end
-.got_pokedex
 	ld hl, .WhenIGoShopText
+	jr nz, .printDone
+	ld hl, .HasntHadHisCoffeeYetText
+.printDone
 	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 .HasntHadHisCoffeeYetText:
@@ -241,13 +215,11 @@ ViridianCityFisherText:
 	rst _PrintText
 	lb bc, TM_VIRIDIAN_CITY_SLEEPING_GUY, 1
 	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedTM42Text
-	rst _PrintText
-	SetEvent EVENT_GOT_TM42
-	rst TextScriptEnd
-.bag_full
 	ld hl, .TM42NoRoomText
+	jr nc, .printDone
+	SetEvent EVENT_GOT_TM42
+	ld hl, .ReceivedTM42Text
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 .got_item
@@ -289,16 +261,13 @@ ViridianCityOldManText:
 	ld c, 2
 	rst _DelayFrames
 	call YesNoChoice
-	jr z, .refused
+	ld hl, .TimeIsMoneyText
+	jr z, .printDone
 	ld hl, .KnowHowToCatchPokemonText
-	rst _PrintText
 	ld a, SCRIPT_VIRIDIANCITY_OLD_MAN_START_CATCH_TRAINING
 	ld [wViridianCityCurScript], a
-	jr .done
-.refused
-	ld hl, .TimeIsMoneyText
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .HadMyCoffeeNowText:

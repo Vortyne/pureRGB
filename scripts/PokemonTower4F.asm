@@ -35,18 +35,17 @@ PokemonTower4TrainerHeader2:
 PokemonTower4FChanneler1Text:
 	text_asm
 	ld hl, PokemonTower4TrainerHeader0
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonTower4FTalkToTrainer
 
 PokemonTower4FChanneler2Text:
 	text_asm
 	ld hl, PokemonTower4TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
+	jr PokemonTower4FTalkToTrainer
 
 PokemonTower4FChanneler3Text:
 	text_asm
 	ld hl, PokemonTower4TrainerHeader2
+PokemonTower4FTalkToTrainer:
 	call TalkToTrainer
 	rst TextScriptEnd
 

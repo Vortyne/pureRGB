@@ -105,7 +105,7 @@ DoBoulderDustAnimation::
 	ret nz
 	callfar AnimateBoulderDust
 	call DiscardButtonPresses
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	call ResetBoulderPushFlags
 	set BIT_PUSHED_BOULDER, [hl]
 	ld a, [wBoulderSpriteIndex]

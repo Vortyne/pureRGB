@@ -1,3 +1,6 @@
+ASSERT BANK(AgathasRoom_Script) == BANK(BrunosRoom_Script)
+ASSERT BANK(AgathasRoom_Script) == BANK(LoreleisRoom_Script)
+
 AgathasRoom_Script:
 	call AgathaShowOrHideExitBlock
 	call EnableAutoTextBoxDrawing
@@ -9,15 +12,18 @@ AgathasRoom_Script:
 	ret
 
 AgathaShowOrHideExitBlock:
-; Blocks or clears the exit to the next room.
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	CheckEvent EVENT_BEAT_AGATHAS_ROOM_TRAINER_0
-	ld a, $3b
+	lb bc, $3b, $e
+	jr EliteFourOnMapLoad.gotExitBlockIDs
+
+EliteFourOnMapLoad:
+	lb bc, $24, $5
+.gotExitBlockIDs
+	ld a, b
 	jr z, .setExitBlock
-	ld a, $e
+	ld a, c
 .setExitBlock
 	ld [wNewTileBlockID], a
 	lb bc, 0, 2
@@ -34,9 +40,47 @@ AgathasRoom_ScriptPointers:
 	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_AGATHASROOM_AGATHA_START_BATTLE
 	dw_const AgathasRoomAgathaEndBattleScript,      SCRIPT_AGATHASROOM_AGATHA_END_BATTLE
 	dw_const AgathasRoomPlayerIsMovingScript,       SCRIPT_AGATHASROOM_PLAYER_IS_MOVING
-	dw_const DoRet,                                 SCRIPT_AGATHASROOM_NOOP
 
-AgathaScriptWalkIntoRoom:
+AgathasRoomDefaultScript:
+	lb bc, TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY, SCRIPT_AGATHASROOM_PLAYER_IS_MOVING
+	ld hl, wAgathasRoomCurScript
+	; fall through
+EliteFourDefaultScript:
+	ld a, [wYCoord]
+	cp 7
+	jr z, .standingOnExit
+	ld a, [wYCoord]
+	cp 11
+	jr z, .justEntered
+	call CheckFightingMapTrainers
+	xor a
+	ldh [hJoyPressed], a
+	ldh [hJoyHeld], a
+	ld [wSimulatedJoypadStatesEnd], a
+	ld [wSimulatedJoypadStatesIndex], a
+	ret
+.standingOnExit
+	push hl
+	ld a, b
+	ldh [hTextID], a ; don't run away text script id
+	push bc
+	call DisplayTextID  ; "Don't run away!"
+	ld a, PAD_UP
+	ld [wSimulatedJoypadStatesEnd], a
+	ld a, $1
+	ld [wSimulatedJoypadStatesIndex], a
+	call StartSimulatingJoypadStates
+	pop bc
+	ld a, c ; player is moving script
+	pop hl
+	ld [hl], a
+	ld [wCurMapScript], a
+	ret
+.justEntered
+	ld a, c ; player is moving script
+	; fall through
+	ld [hl], a
+	ld [wCurMapScript], a
 ; Walk six steps upward.
 	ld hl, wSimulatedJoypadStatesEnd
 	ld a, PAD_UP
@@ -48,89 +92,61 @@ AgathaScriptWalkIntoRoom:
 	ld [hl], a
 	ld a, $6
 	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
-	ld a, SCRIPT_AGATHASROOM_PLAYER_IS_MOVING
-	ld [wAgathasRoomCurScript], a
-	ld [wCurMapScript], a
-	ret
-
-AgathasRoomDefaultScript:
-	ld hl, AgathaEntranceCoords
-	call ArePlayerCoordsInArray
-	jp nc, CheckFightingMapTrainers
-	xor a
-	ldh [hJoyPressed], a
-	ldh [hJoyHeld], a
-	ld [wSimulatedJoypadStatesEnd], a
-	ld [wSimulatedJoypadStatesIndex], a
-	ld a, [wCoordIndex]
-	cp $3  ; Is player standing one tile above the exit?
-	jr c, .stopPlayerFromLeaving
-	CheckAndSetEvent EVENT_AUTOWALKED_INTO_AGATHAS_ROOM
-	jr z, AgathaScriptWalkIntoRoom
-.stopPlayerFromLeaving
-	ld a, TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY
-	ldh [hTextID], a
-	call DisplayTextID
-	ld a, PAD_UP
-	ld [wSimulatedJoypadStatesEnd], a
-	ld a, $1
-	ld [wSimulatedJoypadStatesIndex], a
-	call StartSimulatingJoypadStates
-	ld a, SCRIPT_AGATHASROOM_PLAYER_IS_MOVING
-	ld [wAgathasRoomCurScript], a
-	ld [wCurMapScript], a
-	ret
-
-AgathaEntranceCoords:
-	dbmapcoord  4, 10
-	dbmapcoord  5, 10
-	dbmapcoord  4, 11
-	dbmapcoord  5, 11
-	db -1 ; end
+	jp StartSimulatingJoypadStates
 
 AgathasRoomPlayerIsMovingScript:
+	ld hl, wAgathasRoomCurScript
+	; fall through
+EliteFourIsPlayerMovingScript:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
 	call Delay3
-	xor a
-	ld [wJoyIgnore], a
-	ld [wAgathasRoomCurScript], a
-	ld [wCurMapScript], a
+	call ResetMapScripts
+	ld [hl], a ; reset map script to default
 	ret
 
 AgathasRoomAgathaEndBattleScript:
+	ld hl, wAgathasRoomCurScript
+	lb de, AGATHASROOM_AGATHA, TEXT_AGATHASROOM_AGATHA
+	call EliteFourEndTrainerBattleScript
+	ld a, SCRIPT_CHAMPIONSROOM_PLAYER_ENTERS
+	ld [wChampionsRoomCurScript], a
+	ret
+
+EliteFourEndTrainerBattleScript:
+	push de
+	push hl
 	call EndTrainerBattle
+	pop hl
+	pop de
 	ld a, [wIsInBattle]
 	cp $ff
-	jr z, ResetAgathaScript
-	ld d, AGATHASROOM_AGATHA
+	jr nz, .continue
+	xor a ; default script
+	ld [hl], a
+	ret
+.continue
+	; d = which sprite
 	callfar MakeSpriteFacePlayer
-	ld a, TEXT_AGATHASROOM_AGATHA
+	ld a, e
 	ldh [hTextID], a
+	push de
 	call DisplayTextID
-
-	ld a, AGATHASROOM_AGATHA
+	pop de
+	ld a, d
 	ldh [hSpriteIndex], a
 	call SetSpriteMovementBytesToFF
 ;;;;;;;;;; PureRGBnote: ADDED: sound effect for the doors opening
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound
 ;;;;;;;;;;
-	ld a, SCRIPT_CHAMPIONSROOM_PLAYER_ENTERS
-	ld [wChampionsRoomCurScript], a
-	ret
-
-ResetAgathaScript:
-	xor a ; SCRIPT_AGATHASROOM_DEFAULT
-	ld [wAgathasRoomCurScript], a
 	ret
 
 AgathasRoom_TextPointers:
 	def_text_pointers
-	dw_const AgathasRoomAgathaText,            TEXT_AGATHASROOM_AGATHA
-	dw_const AgathasRoomAgathaDontRunAwayText, TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY
+	dw_const AgathasRoomAgathaText,         TEXT_AGATHASROOM_AGATHA
+	dw_const EliteFourDontRunAwayText,		TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY
 
 AgathasRoomTrainerHeaders:
 	def_trainers
@@ -142,9 +158,11 @@ AgathasRoomAgathaText:
 	text_asm
 ;;;;;;;;;; PureRGBnote: ADDED: makes the battle music the gym leader theme
 	ld a, 11
-	ld [wGymLeaderNo], a
 ;;;;;;;;;;
 	ld hl, AgathasRoomTrainerHeader0
+	; fall through
+EliteFourTalkToTrainer:
+	ld [wGymLeaderNo], a
 	call TalkToTrainer
 	rst TextScriptEnd
 
@@ -160,6 +178,6 @@ AgathaAfterBattleText:
 	text_far _AgathaAfterBattleText
 	text_end
 
-AgathasRoomAgathaDontRunAwayText:
-	text_far _AgathasRoomAgathaDontRunAwayText
+EliteFourDontRunAwayText:
+	text_far _EliteFourDontRunAwayText
 	text_end

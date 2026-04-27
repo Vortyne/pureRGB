@@ -19,14 +19,11 @@ PewterSpeechHouseYoungsterText:
 PewterSpeechHouseLostWalletBeautyText: 
 	text_asm
 		CheckEvent EVENT_RETURNED_LOST_WALLET
-		jr nz, .howsAbra
+		ld hl, PewterHouse2Text3HowsAbra
+		jr nz, .printDone
 		ld b, LOST_WALLET
 		call IsItemInBag
-		jr nz, .have_lost_wallet
-		ld hl, PewterHouse2Text3Intro
-		rst _PrintText
-		SetEvent EVENT_MET_POCKET_ABRA_LADY
-		rst TextScriptEnd
+		jr z, .intro
 	.have_lost_wallet
 		ld hl, PewterHouse2Text3Found
 		rst _PrintText
@@ -51,8 +48,10 @@ PewterSpeechHouseLostWalletBeautyText:
 		predef AskName
 		call DisableWaitingAfterTextDisplay
 		rst TextScriptEnd
-	.howsAbra
-		ld hl, PewterHouse2Text3HowsAbra
+	.intro
+		SetEvent EVENT_MET_POCKET_ABRA_LADY
+		ld hl, PewterHouse2Text3Intro
+	.printDone
 		rst _PrintText
 		rst TextScriptEnd
 

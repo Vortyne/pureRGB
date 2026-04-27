@@ -21,16 +21,14 @@ PewterMartYoungsterText:
 PewterMartTMKid: ; PureRGBnote: ADDED: new NPC who will talk about selling TMs
 	text_asm
 	CheckEvent EVENT_BEAT_MISTY
-	jr nz, .afterMisty
 	ld hl, .Text
-	rst _PrintText
-	jr .done
+	jr z, .printDone
 .afterMisty
 	ld hl, .Text3
 	rst _PrintText
 	ld hl, .Text2
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .Text

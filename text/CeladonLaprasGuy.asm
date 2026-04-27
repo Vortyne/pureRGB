@@ -17,9 +17,8 @@ _CeladonLaprasGuyIntro::
 _CeladonLaprasGuyReady::
 	text "So you were the" 
 	line "one who kicked"
-	cont "<TEAM><ROCKET>'s"
-	cont "butt in their"
-	cont "hideout?"
+	cont "<TEAM><ROCKET>'s butt"
+	cont "in their hideout?"
 
 	para "The <ROCKET>s are"
 	line "all moping around"

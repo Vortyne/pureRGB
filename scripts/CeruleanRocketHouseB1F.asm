@@ -45,8 +45,7 @@ CeruleanRocketHouseB1FRocketText:
 	rst TextScriptEnd
 
 CeruleanRocketHouseMissingnoScript:
-	ld a, $FF
-	ld [wJoyIgnore], a
+	call DisableAllJoypad
 	ld a, SFX_STOP_ALL_MUSIC
 	rst _PlaySound
 	ld b, 100
@@ -92,8 +91,7 @@ CeruleanRocketHouseMissingnoScript:
 	ld [wCurEnemyLevel], a
 	ld a, MISSINGNO
 	ld [wCurOpponent], a
-	xor a
-	ld [wJoyIgnore], a
+	call EnableAllJoypad
 	call GBPalNormal
 	predef InitOpponent
 	xor a

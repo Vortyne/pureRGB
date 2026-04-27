@@ -72,9 +72,7 @@ DiamondMineLeaveHoleCoords:
 	db -1
 
 DiamondMineCheckHandleHole:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret nz
 	ld a, DIAMOND_MINE
 	ld [wDungeonWarpDestinationMap], a

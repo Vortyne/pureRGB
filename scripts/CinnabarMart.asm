@@ -12,16 +12,12 @@ CinnabarMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
 	ld hl, .TMKidGreet
 	rst _PrintText
-	CheckEvent EVENT_MET_CINNABAR_TM_KID
-	jr z, .intro
-	ld hl, .TMKidQuick
-	rst _PrintText
-	jr .shop
-.intro
+	CheckAndSetEvent EVENT_MET_CINNABAR_TM_KID
 	ld hl, .TMKidFlavor
+	jr z, .gotText
+	ld hl, .TMKidQuick
+.gotText
 	rst _PrintText
-	SetEvent EVENT_MET_CINNABAR_TM_KID
-.shop
 	ld hl, CinnabarTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd
