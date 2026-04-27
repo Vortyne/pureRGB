@@ -31,7 +31,7 @@ PokemonTower5FDefaultScript:
 	set BIT_NO_BATTLES, [hl]
 	predef HealParty
 	call GBFadeOutToWhite
-	ld a, 6
+	ld c, 6
 	rst _DelayFrames
 	call GBFadeInFromWhite
 	ld a, TEXT_POKEMONTOWER5F_PURIFIEDZONE

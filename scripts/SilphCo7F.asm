@@ -160,11 +160,46 @@ SilphCo7FRivalExitScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
+	; PureRGBnote: ADDED: make rival teleport away
+	ld a, SILPHCO7F_RIVAL
+	call SetSpriteFacingDown
+	call UpdateSpritesAndDelay3
+	ld a, SFX_TELEPORT_EXIT_1
+	rst _PlaySound
+	call DisableSpriteUpdates
+.loopTeleportAway
+	ld hl, wShadowOAMSprite08YCoord
+	ld b, 0
+	ld d, [hl]
+	inc hl
+	; we will move up 3 pixels per frame, but the sprite hits pixel 0 (off top of screen), we will end the animation
+	dec d
+	jr z, .lastLoop
+	dec d
+	jr z, .lastLoop
+	dec d
+	jr z, .lastLoop
+.next
+	ld e, [hl]
+	ld c, 8
+	push bc
+	callfar LoadSpecificOAMSpriteCoords
+	pop bc
+	dec b
+	inc b
+	jr nz, .done
+	rst _DelayFrame
+	jr .loopTeleportAway
+.lastLoop
+	inc b
+	jr .next
+.done
+	call EnableSpriteUpdates
 	ld a, TOGGLE_SILPH_CO_7F_RIVAL
 	ld [wToggleableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
-	jr SilphCo7FSetDefaultScript
+	jp SilphCo7FSetDefaultScript
 
 SilphCo7F_TextPointers:
 	def_text_pointers

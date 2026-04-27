@@ -17,6 +17,7 @@ FuchsiaMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	jr z, .gotText
 	ld hl, TMKidQuick5
 .gotText
+	rst _PrintText
 	ld hl, FuchsiaTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd

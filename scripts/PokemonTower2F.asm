@@ -158,7 +158,13 @@ PokemonTower2FRivalExitsScript:
 	ld a, TOGGLE_POKEMON_TOWER_2F_RIVAL
 	ld [wToggleableObjectIndex], a
 	predef HideObject
+;;;;; PureRGBnote: ADDED: play a sound effect when he goes downstairs
+	call UpdateSpritesAndDelay3
 	call PlayDefaultMusic
+	ld a, SFX_GO_OUTSIDE
+	rst _PlaySound
+	call WaitForSoundToFinish
+;;;;;
 	jr PokemonTower2FResetScripts
 
 PokemonTower2FRivalRightThenDownMovement:

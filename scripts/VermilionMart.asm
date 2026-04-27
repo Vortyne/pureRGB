@@ -17,6 +17,7 @@ VermilionMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	jr z, .gotText
 	ld hl, TMKidQuick2
 .gotText
+	rst _PrintText
 	ld hl, VermilionTMKidShop
 	call DisplayPokemartNoGreeting
 	rst TextScriptEnd

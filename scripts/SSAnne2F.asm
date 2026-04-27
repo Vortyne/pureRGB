@@ -65,8 +65,8 @@ ENDC
 SSAnne2FSetFacingDirectionScript:
 	ld a, [wXCoord]
 	cp 37
-	ld a, SPRITE_FACING_DOWN ; SPRITE_FACING_DOWN
-	jr z, .set_facing_direction
+	ld a, SPRITE_FACING_DOWN
+	jr nz, .set_facing_direction
 	ld a, PLAYER_DIR_LEFT
 	ld [wPlayerMovingDirection], a
 	ld a, SPRITE_FACING_RIGHT

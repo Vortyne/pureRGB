@@ -1835,6 +1835,11 @@ _CantDepositSSTicketText::
 	cont "on the S.S.ANNE!"
 	prompt
 
+_CantDepositBikeText::
+	text "You're riding it!"
+	line "Can't deposit now!"
+	prompt
+
 _SpiritAppearedNextLine::
 	text_end
 	text " spirit@"

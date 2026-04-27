@@ -339,11 +339,9 @@ DepositItemFromItemMenu::
 	jr .notSSTicket
 .checkYCoord
 	ld a, [wYCoord]
-	cp 30
-	jr z, .blockSSTicket
-	cp 31
-	jr z, .blockSSTicket
-	jr .notSSTicket
+	cp 32
+	jr c, .notSSTicket
+	jr .blockSSTicket
 .notVermilionCity
 	; also block it inside the ss anne areas
 	cp SS_ANNE_B1F_ROOMS + 1 ; last SS ANNE room
@@ -351,9 +349,9 @@ DepositItemFromItemMenu::
 	cp VERMILION_DOCK ; first SS ANNE room
 	jr c, .notSSTicket
 .blockSSTicket
+	ld hl, .cantDeposit
 	ld a, SFX_DENIED
 	rst _PlaySound
-	ld hl, .cantDeposit
 	rst _PrintText
 	ret
 .notSSTicket
@@ -372,7 +370,7 @@ DepositItemFromItemMenu::
 	call DisplayChooseQuantityMenu
 	cp $ff
 	jr z, .done
-	jp .next
+	jr .next
 .keyItem
 ; if it is a key item, ask whether to deposit first
 	xor a
@@ -400,6 +398,15 @@ DepositItemFromItemMenu::
 	call WaitForSoundToFinish
 	ld hl, ItemWasStoredText
 	rst _PrintText
+
+	ld a, [wCurItem]
+	cp BICYCLE
+	jr nz, .done
+	ld a, [wWalkBikeSurfState]
+	cp BIKING
+	jr nz, .done
+	ld a, WALKING
+	ld [wWalkBikeSurfState], a
 .done
 	call RestoreItemListIndex
 	; wCurrentMenuItem's new value still currently loaded in a
@@ -407,6 +414,9 @@ DepositItemFromItemMenu::
 	ret
 .cantDeposit
 	text_far _CantDepositSSTicketText
+	text_end
+.depositBikeWhileRidingIt
+	text_far _CantDepositBikeText
 	text_end
 
 WorldOptions:

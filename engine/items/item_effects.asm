@@ -2148,6 +2148,9 @@ PlayedFluteHadEffectText:
 	ld a, [wIsInBattle]
 	and a
 	jr nz, .done
+	call WaitForSoundToFinish ; wait for text ding sound to finish
+	; a battle will be triggered, so back up the currently playing song before stopping it if we have pause/resume music enabled
+	callfar BackupAudioWram
 ; play out-of-battle pokeflute music
 	call StopAllMusic
 	ld a, SFX_POKEFLUTE
