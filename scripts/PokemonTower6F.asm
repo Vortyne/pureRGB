@@ -18,9 +18,9 @@ PokemonTower6F_ScriptPointers:
 PokemonTower6FDefaultScript:
 	CheckEvent EVENT_BEAT_GHOST_MAROWAK
 	jp nz, CheckFightingMapTrainers
-	ld hl, PokemonTower6FMarowakCoords
-	call ArePlayerCoordsInArray ; TODO: use simpler check since it's one coord
-	jp nc, CheckFightingMapTrainers
+	lb de, 10, 16
+	call IsPlayerAtCoords
+	jp nz, CheckFightingMapTrainers
 	xor a
 	ldh [hJoyHeld], a
 	ld a, TEXT_POKEMONTOWER6F_BEGONE
@@ -36,10 +36,6 @@ PokemonTower6FDefaultScript:
 	ld [wCurEnemyLevel], a
 	ld a, SCRIPT_POKEMONTOWER6F_MAROWAK_BATTLE
 	jr PokemonTower6FSetMapScript
-
-PokemonTower6FMarowakCoords:
-	dbmapcoord 10, 16
-	db -1 ; end
 
 PokemonTower6FSetDefaultScript:
 	call ResetMapScripts
