@@ -2,8 +2,7 @@
 
 CeladonMansion2F_Script:
 	call EnableAutoTextBoxDrawing
-	call CheckBoomboxPlaying
-	jp CheckJiggleBoombox
+	jp CheckBoomboxPlaying
 
 CeladonMansion2F_TextPointers:
 	def_text_pointers
@@ -67,7 +66,7 @@ ProspectorsHouseProspectorText:
 	sound_get_item_2
 	text_end
 
-CheckJiggleBoombox:
+CheckJiggleProspectorsHouseBoombox::
 	ld a, [wYCoord]
 	cp 12
 	ret c
@@ -85,6 +84,7 @@ CheckBoomboxPlaying::
 	ret nc
 	CheckEvent EVENT_PROSPECTORS_HOUSE_BOOMBOX_TURNED_ON
 	ret z
+	SetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
 	jpfar DiamondMinePlayMusic.playBoomboxMusic
 
 ProspectorsHouseBoomboxText:

@@ -5,7 +5,7 @@
 CheckOverworldAnimation::
 	ld a, [wCurMap]
 	cp CINNABAR_VOLCANO
-	jr nz, .notVolcano
+	jp nz, .notVolcano
 	ld a, [wOverworldAnimationCooldown]
 	and a
 	jr z, .noCooldown
@@ -49,27 +49,6 @@ CheckOverworldAnimation::
 	inc a
 	ld [wOverworldAnimationCooldown], a
 	jpfar LavaFloodReset
-.notVolcano
-	cp DIGLETTS_CAVE
-	jr nz, .notDiglettsCave
-	jpfar DiglettsCaveDiglettAnimation
-.notDiglettsCave
-	cp SEAFOAM_ISLANDS_B4F
-	jr nz, .notSeafoamB4F
-	jpfar SeafoamWaveSFXB4F
-.notSeafoamB4F
-	cp SEAFOAM_ISLANDS_B3F
-	jr nz, .notSeafoamB3F
-	jpfar SeafoamWaveSFXB3F
-.notSeafoamB3F
-	cp ROUTE_6
-	jr nz, .notRoute6
-	jpfar PsyduckShadowFlicker
-.notRoute6
-	xor a
-	ld [wOverworldAnimationCounter], a
-	ResetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
-	ret
 .lava_flood
 	ld a, [wOverworldAnimationCounter]
 	cp 125
@@ -97,6 +76,36 @@ CheckOverworldAnimation::
 	ld hl, wStatusFlags3
 	set BIT_WARP_FROM_CUR_SCRIPT, [hl]
 	ret
+.notVolcano
+	cp DIGLETTS_CAVE
+	jr z, .animationDiglettsCave
+	cp SEAFOAM_ISLANDS_B4F
+	jr z, .animationSeafoamB4F
+	cp SEAFOAM_ISLANDS_B3F
+	jr z, .animationSeafoamB3F
+	cp ROUTE_6
+	jr z, .animationRoute6
+	cp DIAMOND_MINE
+	jr z, .animationDiamondMine
+	cp CELADON_MANSION_2F
+	jr z, .animationProspectorsHouse
+	; no animation
+	xor a
+	ld [wOverworldAnimationCounter], a
+	ResetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
+	ret
+.animationDiglettsCave
+	jpfar DiglettsCaveDiglettAnimation
+.animationSeafoamB4F
+	jpfar SeafoamWaveSFXB4F
+.animationSeafoamB3F
+	jpfar SeafoamWaveSFXB3F
+.animationRoute6
+	jpfar PsyduckShadowFlicker
+.animationDiamondMine
+	jpfar DiamondMineJiggleBoomBox
+.animationProspectorsHouse
+	jpfar CheckJiggleProspectorsHouseBoombox
 
 CinnabarVolcanoCheckLoadCustomTiles::
 	CheckEvent EVENT_LAVA_FLOOD_ACTIVE
