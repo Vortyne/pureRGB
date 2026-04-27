@@ -24,6 +24,7 @@ CeladonHotel_TextPointers:
 	dw_const CeladonHotelBeautyText,    TEXT_CELADONHOTEL_BEAUTY
 	dw_const CeladonHotelSuperNerdText, TEXT_CELADONHOTEL_SUPER_NERD
 	dw_const CeladonLaprasGuyText,      TEXT_CELADONHOTEL_LAPRAS_GUY
+	dw_const CeladonHotelBenchGuyText,  TEXT_CELADONHOTEL_BENCH_GUY
 
 CeladonHotelTrainerHeaders:
 	def_trainers 2
@@ -229,4 +230,8 @@ CeladonLaprasGuyNoBoxRoom:
 
 CeladonLaprasGuyAfter:
 	text_far _CeladonLaprasGuyAfter
+	text_end
+
+CeladonHotelBenchGuyText:
+	text_far _CeladonCityHotelText
 	text_end

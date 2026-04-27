@@ -12,6 +12,7 @@ LavenderPokecenter_Object:
 	warp_event  4,  7, LAST_MAP, 1
 
 	def_bg_events
+	bg_event 0, 4, TEXT_LAVENDERPOKECENTER_BENCH_GUY
 
 	def_object_events
 	object_event  3,  1, SPRITE_NURSE, STAY, DOWN, TEXT_LAVENDERPOKECENTER_NURSE

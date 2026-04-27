@@ -10,13 +10,9 @@ ENDM
 
 
 HiddenEventMaps:
-	hidden_event_map REDS_HOUSE_2F
-	hidden_event_map OAKS_LAB
 	hidden_event_map VIRIDIAN_POKECENTER
 	hidden_event_map VIRIDIAN_MART
-	hidden_event_map VIRIDIAN_SCHOOL_HOUSE
 	hidden_event_map VIRIDIAN_GYM
-	hidden_event_map MUSEUM_1F
 	hidden_event_map PEWTER_GYM
 	hidden_event_map PEWTER_MART
 	hidden_event_map PEWTER_POKECENTER
@@ -68,12 +64,6 @@ HiddenEventMaps:
 	hidden_event_map VICTORY_ROAD_2F
 	hidden_event_map BILLS_HOUSE
 	hidden_event_map VIRIDIAN_CITY
-	hidden_event_map SAFARI_ZONE_WEST_REST_HOUSE
-	hidden_event_map SAFARI_ZONE_EAST_REST_HOUSE
-	hidden_event_map SAFARI_ZONE_NORTH_REST_HOUSE
-	hidden_event_map ROUTE_15_GATE_2F
-	hidden_event_map MR_FUJIS_HOUSE
-	hidden_event_map CELADON_MANSION_ROOF_HOUSE
 	hidden_event_map ROUTE_10
 	hidden_event_map INDIGO_PLATEAU_LOBBY
 	hidden_event_map CINNABAR_LAB_FOSSIL_ROOM
@@ -99,7 +89,6 @@ HiddenEventMaps:
 	hidden_event_map ROUTE_18
 	hidden_event_map PEWTER_CITY
 	hidden_event_map SAFARI_ZONE_NORTH
-	hidden_event_map CERULEAN_ROCKET_HOUSE_1F
 	hidden_event_map CERULEAN_ROCKET_HOUSE_B1F
 	hidden_event_map DAYCARE
 	hidden_event_map VIRIDIAN_SCHOOL_HOUSE_B1F
@@ -150,39 +139,16 @@ DEF ANY_FACING EQU $d0
 	hidden_event   4,  4, CableClubLeftGameboy, ANY_FACING
 	db -1 ; end
 
-	hidden_events_for REDS_HOUSE_2F
-	hidden_event   0,  1, OpenRedsPC, SPRITE_FACING_UP
-	hidden_event   3,  5, PrintRedSNESText, ANY_FACING
-	db -1 ; end
-
-	hidden_events_for OAKS_LAB
-	hidden_event   4,  0, DisplayOakLabLeftPoster, SPRITE_FACING_UP
-	hidden_event   5,  0, DisplayOakLabRightPoster, SPRITE_FACING_UP
-	hidden_event   0,  1, DisplayOakLabEmailText, SPRITE_FACING_UP
-	hidden_event   1,  1, DisplayOakLabEmailText, SPRITE_FACING_UP
-	db -1 ; end
-
 	hidden_events_for VIRIDIAN_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for VIRIDIAN_MART ; TODO: remove pointless event pointer?
 	db -1 ; end
 
-	hidden_events_for VIRIDIAN_SCHOOL_HOUSE
-	hidden_text_predef  3,  4, PrintNotebookText, ViridianSchoolNotebook
-	hidden_text_predef  3,  0, PrintBlackboardLinkCableText, ViridianSchoolBlackboard
-	db -1 ; end
-
 	hidden_events_for VIRIDIAN_GYM
 	hidden_event  15, 15, GymStatues, SPRITE_FACING_UP
 	hidden_event  18, 15, GymStatues, SPRITE_FACING_UP
-	db -1 ; end
-
-	hidden_events_for MUSEUM_1F
-	hidden_event   2,  3, AerodactylFossil, SPRITE_FACING_UP
-	hidden_event   2,  6, KabutopsFossil, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for PEWTER_GYM
@@ -194,12 +160,10 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for PEWTER_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for CERULEAN_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
@@ -212,13 +176,11 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for LAVENDER_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for VERMILION_POKECENTER
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for VERMILION_GYM
@@ -249,7 +211,6 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for CELADON_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
@@ -313,12 +274,10 @@ DEF ANY_FACING EQU $d0
 
 	hidden_events_for CELADON_HOTEL
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	db -1 ; end
 
 	hidden_events_for FUCHSIA_POKECENTER
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for FUCHSIA_GYM
@@ -338,7 +297,6 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for CINNABAR_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_UP
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
@@ -347,12 +305,10 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for MT_MOON_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
 	hidden_events_for ROCK_TUNNEL_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
@@ -377,8 +333,6 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for SS_ANNE_KITCHEN
-	hidden_event  13,  5, PrintTrashText, SPRITE_FACING_DOWN
-	hidden_event  13,  7, PrintTrashText, SPRITE_FACING_DOWN
 	hidden_event  13,  9, HiddenItems, HIDDEN_ITEM_SS_ANNE_KITCHEN_TRASH_CAN
 	db -1 ; end
 
@@ -405,7 +359,6 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for SAFFRON_POKECENTER
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_UP
 	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
 	db -1 ; end
 
@@ -506,37 +459,6 @@ DEF ANY_FACING EQU $d0
 
 	hidden_events_for VIRIDIAN_CITY
 	hidden_event  14,  4, HiddenItems, HIDDEN_ITEM_VIRIDIAN_CITY_CUT_TREE
-	db -1 ; end
-
-	hidden_events_for SAFARI_ZONE_WEST_REST_HOUSE
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
-	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
-	db -1 ; end
-
-	hidden_events_for SAFARI_ZONE_EAST_REST_HOUSE
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
-	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
-	db -1 ; end
-
-	hidden_events_for SAFARI_ZONE_NORTH_REST_HOUSE
-	hidden_event   0,  4, PrintBenchGuyText, SPRITE_FACING_LEFT
-	hidden_event  13,  3, OpenPokemonCenterPC, SPRITE_FACING_UP
-	db -1 ; end
-
-	hidden_events_for ROUTE_15_GATE_2F
-	hidden_event   1,  2, Route15GateLeftBinoculars, SPRITE_FACING_UP
-	db -1 ; end
-
-	hidden_events_for MR_FUJIS_HOUSE
-	hidden_event   0,  1, PrintMagazinesText, SPRITE_FACING_DOWN
-	hidden_event   1,  1, PrintMagazinesText, SPRITE_FACING_DOWN
-	hidden_event   7,  1, PrintMagazinesText, SPRITE_FACING_DOWN
-	db -1 ; end
-
-	hidden_events_for CELADON_MANSION_ROOF_HOUSE
-	hidden_text_predef  3,  0, PrintBlackboardLinkCableText, LinkCableHelp
-	hidden_text_predef  4,  0, PrintBlackboardLinkCableText, LinkCableHelp
-	hidden_text_predef  3,  4, PrintNotebookText, TMNotebook
 	db -1 ; end
 
 	hidden_events_for INDIGO_PLATEAU_LOBBY
@@ -645,33 +567,21 @@ DEF ANY_FACING EQU $d0
 	hidden_event   7, 13, HiddenItems3, HIDDEN_ITEM_SAFARI_ZONE_NORTH_NORTHWEST_NEW ; NEW
 	db -1 ; end
 
-	hidden_events_for CERULEAN_ROCKET_HOUSE_1F
-	hidden_event  3, 3, PrintRocketSNESText, ANY_FACING
-	db -1 ; end	
-
 	hidden_events_for CERULEAN_ROCKET_HOUSE_B1F
-	hidden_event  1, 10,  PrintRocketBasementLeftComputerText, SPRITE_FACING_UP
-	hidden_event  0, 10,  PrintRocketBasementLeftComputerText, SPRITE_FACING_UP
-	hidden_event  4, 10,  PrintRocketBasementCenterComputerText, SPRITE_FACING_UP
-	hidden_event  5, 10,  PrintRocketBasementCenterComputerText, SPRITE_FACING_UP
-	hidden_event  6, 10,  PrintRocketBasementLeftPaperText, SPRITE_FACING_UP
-	hidden_event  8, 10,  PrintRocketBasementRightComputerText, SPRITE_FACING_UP
-	hidden_event  9, 10,  PrintRocketBasementRightComputerText, SPRITE_FACING_UP
-	hidden_event  10, 10, PrintRocketBasementRightPaperText, SPRITE_FACING_UP
-	hidden_event  2,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  3,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  4,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  5,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  6,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  7,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  8,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  9,  5,  PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  10,  5, PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  11,  5, PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  12,  5, PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  13,  5, PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  14,  5, PrintRocketBasementMachineText, SPRITE_FACING_UP
-	hidden_event  15,  5, PrintRocketBasementMachineText, SPRITE_FACING_UP
+	hidden_event  2,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  3,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  4,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  5,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  6,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  7,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  8,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  9,  5,  RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  10,  5, RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  11,  5, RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  12,  5, RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  13,  5, RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  14,  5, RocketBasementMachine, SPRITE_FACING_UP
+	hidden_event  15,  5, RocketBasementMachine, SPRITE_FACING_UP
 	db -1 ; end	
 
 	hidden_events_for DAYCARE
@@ -679,10 +589,10 @@ DEF ANY_FACING EQU $d0
 	db -1 ; end
 
 	hidden_events_for VIRIDIAN_SCHOOL_HOUSE_B1F
-	hidden_event   0,  1, SchoolB1FLeftBookcaseA, SPRITE_FACING_UP
-	hidden_event   1,  1, SchoolB1FLeftBookcaseB, SPRITE_FACING_UP
-	hidden_event  16,  1, SchoolB1FRightBookcaseA, SPRITE_FACING_UP
-	hidden_event  17,  1, SchoolB1FRightBookcaseB, SPRITE_FACING_UP
+	hidden_event   0,  1, ViridianSchoolHouseB1FBookCases, 0
+	hidden_event   1,  1, ViridianSchoolHouseB1FBookCases, 13
+	hidden_event  16,  1, ViridianSchoolHouseB1FBookCases, 26
+	hidden_event  17,  1, ViridianSchoolHouseB1FBookCases, 39
 	db -1 ; end
 
 	hidden_events_for SECRET_LAB

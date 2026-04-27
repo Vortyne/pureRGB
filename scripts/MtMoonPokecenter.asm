@@ -11,6 +11,7 @@ MtMoonPokecenter_TextPointers:
 	dw_const MtMoonPokecenterMagikarpSalesmanText, TEXT_MTMOONPOKECENTER_MAGIKARP_SALESMAN
 	dw_const MtMoonPokecenterClipboardText,        TEXT_MTMOONPOKECENTER_CLIPBOARD
 	dw_const MtMoonPokecenterLinkReceptionistText, TEXT_MTMOONPOKECENTER_LINK_RECEPTIONIST
+	dw_const MtMoonPokecenterBenchGuyText,         TEXT_MTMOONPOKECENTER_BENCH_GUY
 
 MtMoonPokecenterNurseText:
 	script_pokecenter_nurse
@@ -105,3 +106,7 @@ SalesManName:
 
 MtMoonPokecenterLinkReceptionistText:
 	script_cable_club_receptionist
+
+MtMoonPokecenterBenchGuyText:
+	text_far _MtMoonPokecenterBenchGuyText
+	text_end

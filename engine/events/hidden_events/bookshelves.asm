@@ -55,6 +55,7 @@ NoBookCaseTextMaps:
 	db CERULEAN_ROCKET_HOUSE_1F
 	db CELADON_MANSION_1F
 	db CELADON_CHIEF_HOUSE
+	db MR_FUJIS_HOUSE
 	db -1
 
 INCLUDE "data/tilesets/bookshelf_tile_ids.asm"

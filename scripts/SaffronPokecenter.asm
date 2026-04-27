@@ -9,6 +9,7 @@ SaffronPokecenter_TextPointers:
 	dw_const SaffronPokecenterBeautyText,           TEXT_SAFFRONPOKECENTER_BEAUTY
 	dw_const SaffronPokecenterGentlemanText,        TEXT_SAFFRONPOKECENTER_GENTLEMAN
 	dw_const SaffronPokecenterLinkReceptionistText, TEXT_SAFFRONPOKECENTER_LINK_RECEPTIONIST
+	dw_const SaffronPokecenterBenchGuyText,         TEXT_SAFFRONPOKECENTER_BENCH_GUY
 
 SaffronPokecenterNurseText:
 	script_pokecenter_nurse
@@ -23,3 +24,21 @@ SaffronPokecenterGentlemanText:
 
 SaffronPokecenterLinkReceptionistText:
 	script_cable_club_receptionist
+
+SaffronPokecenterBenchGuyText:
+	text_asm
+	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
+	ld hl, .afterSilphGone
+	jr nz, .printText
+	ld hl, .beforeSilphGone
+.printText
+	rst _PrintText
+	rst TextScriptEnd
+
+.beforeSilphGone
+	text_far _SaffronCityPokecenterGuyText1
+	text_end
+
+.afterSilphGone:
+	text_far _SaffronCityPokecenterGuyText2
+	text_end

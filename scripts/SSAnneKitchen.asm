@@ -73,6 +73,7 @@ SSAnneKitchen_TextPointers:
 	dw_const SSAnneKitchenCook6Text, TEXT_SSANNEKITCHEN_COOK6
 	dw_const SSAnneKitchenCook7Text, TEXT_SSANNEKITCHEN_COOK7
 	dw_const SSAnneKitchenWaiterText, TEXT_SSANNEKITCHEN_WAITER
+	dw_const SSAnneKitchenOnlyTrashHereText, TEXT_SSANNEKITCHEN_ONLY_TRASH_HERE
 	dw_const SSAnneKitchenWaiterReturnsText, TEXT_SSANNEKITCHEN_WAITER_RETURNS
 
 SSAnneKitchenCook1Text:
@@ -233,3 +234,7 @@ GetMapSpriteLocation::
 	sub 4
 	ld e, a
 	ret
+
+SSAnneKitchenOnlyTrashHereText:
+	text_far _VermilionGymTrashText
+	text_end

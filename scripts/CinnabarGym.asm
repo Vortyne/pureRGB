@@ -163,6 +163,7 @@ CinnabarGym_TextPointers:
 	dw_const CinnabarGymBlaineVolcanoBadgeInfoText, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
 	dw_const CinnabarGymBlaineReceivedTM38Text,     TEXT_CINNABARGYM_BLAINE_RECEIVED_TM38
 	dw_const CinnabarGymBlaineTM38NoRoomText,       TEXT_CINNABARGYM_BLAINE_TM38_NO_ROOM
+	dw_const CinnabarGymQuiz,                       TEXT_CINNABARGYM_QUIZ
 
 CinnabarGymStartBattleScript:
 	ldh a, [hSpriteIndex]
@@ -453,3 +454,200 @@ CinnabarGymGuidePostBattleTextPrompt:
 	text_far _CinnabarGymGymGuideBeatBlaineText
 	text_promptbutton
 	text_end
+
+PrintCinnabarQuiz::
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	ret nz
+	call EnableAutoTextBoxDrawing
+	ld a, TEXT_CINNABARGYM_QUIZ
+	ldh [hTextID], a
+	jp DisplayTextID
+
+CinnabarGymQuiz::
+	text_asm
+	xor a
+	ld [wOpponentAfterWrongAnswer], a
+	ld a, [wHiddenEventFunctionArgument]
+	push af
+	and $f
+	ldh [hGymGateIndex], a
+	pop af
+	and $f0
+	swap a
+	ldh [hGymGateAnswer], a
+	CheckEvent EVENT_SAW_CINNABAR_GYM_QUIZ_INTRO ; PureRGBnote: FIXED: Only show the long intro text once because it's annoying to see it repeatedly
+	jr nz, .skipIntro
+	ld hl, CinnabarGymQuizIntroText
+	rst _PrintText
+	SetEvent EVENT_SAW_CINNABAR_GYM_QUIZ_INTRO
+	jr .doneIntro
+.skipIntro
+	ld hl, CinnabarGymQuizStartText
+	rst _PrintText
+.doneIntro
+	ldh a, [hGymGateIndex]
+	dec a
+	ld hl, CinnabarQuizQuestions
+	ld bc, 5
+	call AddNTimes
+	rst _PrintText
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call CinnabarGymQuiz_AskQuestion
+	rst TextScriptEnd
+
+CinnabarGymQuizStartText:
+	text_far _CinnabarGymQuizStartText
+	text_end
+
+CinnabarGymQuizIntroText:
+	text_far _CinnabarGymQuizIntroText
+	text_end
+
+CinnabarQuizQuestions:
+CinnabarQuizQuestionsText1:
+	text_far _CinnabarQuizQuestionsText1
+	text_end
+CinnabarQuizQuestionsText2:
+	text_far _CinnabarQuizQuestionsText2
+	text_end
+CinnabarQuizQuestionsText3:
+	text_far _CinnabarQuizQuestionsText3
+	text_end
+CinnabarQuizQuestionsText4:
+	text_far _CinnabarQuizQuestionsText4
+	text_end
+CinnabarQuizQuestionsText5:
+	text_far _CinnabarQuizQuestionsText5
+	text_end
+CinnabarQuizQuestionsText6:
+	text_far _CinnabarQuizQuestionsText6
+	text_end
+
+CinnabarGymGateFlagAction:
+	EventFlagAddress hl, EVENT_CINNABAR_GYM_GATE0_UNLOCKED
+	predef_jump FlagActionPredef
+
+CinnabarGymQuiz_AskQuestion:
+	call YesNoChoice
+	ldh a, [hGymGateAnswer]
+	ld c, a
+	ld a, [wCurrentMenuItem]
+	cp c
+	jr nz, .wrongAnswer
+	ld hl, wCurrentMapScriptFlags
+	set BIT_CUR_MAP_LOADED_1, [hl]
+	ldh a, [hGymGateIndex]
+	ldh [hBackupGymGateIndex], a
+	ld hl, CinnabarGymQuizCorrectText
+	rst _PrintText
+	ldh a, [hBackupGymGateIndex]
+	AdjustEventBit EVENT_CINNABAR_GYM_GATE0_UNLOCKED, 0
+	ld c, a
+	ld b, FLAG_SET
+	call CinnabarGymGateFlagAction
+	jp UpdateCinnabarGymGateTileBlocks_
+.wrongAnswer
+	call WaitForSoundToFinish
+	ld a, SFX_DENIED
+	rst _PlaySound
+	call WaitForSoundToFinish
+	ld hl, CinnabarGymQuizIncorrectText
+	rst _PrintText
+	ldh a, [hGymGateIndex]
+	add $2
+	AdjustEventBit EVENT_BEAT_CINNABAR_GYM_TRAINER_0, 2
+	ld c, a
+	ld b, FLAG_TEST
+	EventFlagAddress hl, EVENT_BEAT_CINNABAR_GYM_TRAINER_0
+	predef FlagActionPredef
+	ld a, c
+	and a
+	ret nz
+	ldh a, [hGymGateIndex]
+	add $2
+	ld [wOpponentAfterWrongAnswer], a
+	ret
+
+CinnabarGymQuizCorrectText:
+	sound_get_item_1
+	text_far _CinnabarGymQuizCorrectText
+	text_promptbutton
+	text_asm
+
+	ldh a, [hBackupGymGateIndex]
+	AdjustEventBit EVENT_CINNABAR_GYM_GATE0_UNLOCKED, 0
+	ld c, a
+	ld b, FLAG_TEST
+	call CinnabarGymGateFlagAction
+	ld a, c
+	and a
+	jr nz, .done
+	call WaitForSoundToFinish
+	ld a, SFX_GO_INSIDE
+	rst _PlaySound
+	call WaitForSoundToFinish
+.done
+	rst TextScriptEnd
+
+CinnabarGymQuizIncorrectText:
+	text_far _CinnabarGymQuizIncorrectText
+	text_end
+
+UpdateCinnabarGymGateTileBlocks_::
+; Update the overworld map with open floor blocks or locked gate blocks
+; depending on event flags.
+	ld a, 6
+	ldh [hGymGateIndex], a
+.loop
+	ldh a, [hGymGateIndex]
+	dec a
+	add a
+	add a
+	ld d, 0
+	ld e, a
+	ld hl, CinnabarGymGateCoords
+	add hl, de
+	ld a, [hli]
+	ld b, [hl]
+	ld c, a
+	inc hl
+	ld a, [hl]
+	ld [wGymGateTileBlock], a
+	push bc
+	ldh a, [hGymGateIndex]
+	ldh [hBackupGymGateIndex], a
+	AdjustEventBit EVENT_CINNABAR_GYM_GATE0_UNLOCKED, 0
+	ld c, a
+	ld b, FLAG_TEST
+	call CinnabarGymGateFlagAction
+	ld a, c
+	and a
+	ld a, $e
+	jr nz, .next
+	ld a, [wGymGateTileBlock]
+.next
+	pop bc
+	ld [wNewTileBlockID], a
+	predef ReplaceTileBlock
+	ld hl, hGymGateIndex
+	dec [hl]
+	jr nz, .loop
+	ret
+
+MACRO gym_gate_coord
+	db \1, \2, \3, 0
+ENDM
+
+DEF HORIZONTAL_GATE_BLOCK EQU $54
+DEF VERTICAL_GATE_BLOCK   EQU $5f
+
+CinnabarGymGateCoords:
+	; x coord, y coord, block id
+	gym_gate_coord 9, 3, HORIZONTAL_GATE_BLOCK
+	gym_gate_coord 6, 3, HORIZONTAL_GATE_BLOCK
+	gym_gate_coord 6, 6, HORIZONTAL_GATE_BLOCK
+	gym_gate_coord 3, 8, VERTICAL_GATE_BLOCK
+	gym_gate_coord 2, 6, HORIZONTAL_GATE_BLOCK
+	gym_gate_coord 2, 3, HORIZONTAL_GATE_BLOCK

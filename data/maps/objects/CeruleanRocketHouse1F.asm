@@ -11,6 +11,7 @@ CeruleanRocketHouse1F_Object:
 
 	def_bg_events
 	bg_event  1,  1, TEXT_CERULEANROCKETHOUSE1F_BOOKCASE
+	bg_event  3,  3, TEXT_CERULEANROCKETHOUSE1F_SNES
 
 	def_object_events
 	object_event  4,  3, SPRITE_ROCKET, STAY, LEFT, TEXT_CERULEANROCKETHOUSE1F_ROCKET

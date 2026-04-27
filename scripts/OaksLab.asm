@@ -710,6 +710,9 @@ OaksLab_TextPointers:
 	dw_const OaksLabGirlText,                     TEXT_OAKSLAB_GIRL
 	dw_const OaksLabScientistText,                TEXT_OAKSLAB_SCIENTIST1
 	dw_const OaksLabScientistText,                TEXT_OAKSLAB_SCIENTIST2
+	dw_const DisplayOakLabLeftPoster,             TEXT_OAKSLAB_LEFT_POSTER
+	dw_const DisplayOakLabRightPoster,            TEXT_OAKSLAB_RIGHT_POSTER
+	dw_const OakLabEmailText,                     TEXT_OAKSLAB_COMPUTER
 	dw_const OaksLabOakDontGoAwayYetText,         TEXT_OAKSLAB_OAK_DONT_GO_AWAY_YET
 	dw_const OaksLabRivalIllTakeThisOneText,      TEXT_OAKSLAB_RIVAL_ILL_TAKE_THIS_ONE
 	dw_const OaksLabRivalReceivedMonText,         TEXT_OAKSLAB_RIVAL_RECEIVED_MON
@@ -1202,4 +1205,45 @@ OaksLabScientistText:
 
 .Text:
 	text_far _OaksLabScientistText
+	text_end
+
+DisplayOakLabLeftPoster::
+	text_asm
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
+	text_far _PushStartText
+	text_end
+
+DisplayOakLabRightPoster:
+	text_asm
+	ld hl, wPokedexOwned
+	ld b, wPokedexOwnedEnd - wPokedexOwned
+	call CountSetBits
+	ld a, [wNumSetBits]
+	cp 2
+	ld hl, .saveOption
+	jr c, .ownLessThanTwo
+	ld hl, .strengths
+.ownLessThanTwo
+	rst _PrintText
+	rst TextScriptEnd
+
+.saveOption
+	text_far _SaveOptionText
+	text_end
+
+.strengths
+	text_far _StrengthsAndWeaknessesText
+	text_end
+
+OakLabEmailText::
+	text_asm
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
+	text_far _EmailHereText
+	text_far _OakLabEmailText
 	text_end

@@ -15,6 +15,8 @@ SSAnneKitchen_Object:
 	warp_event  6,  0, SS_ANNE_1F, 11
 
 	def_bg_events
+	bg_event  13,  5, TEXT_SSANNEKITCHEN_ONLY_TRASH_HERE
+	bg_event  13,  7, TEXT_SSANNEKITCHEN_ONLY_TRASH_HERE
 
 	def_object_events
 	object_event  1,  8, SPRITE_COOK, WALK, UP_DOWN, TEXT_SSANNEKITCHEN_COOK1

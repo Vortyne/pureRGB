@@ -20,4 +20,12 @@ RedsHouse2FDefaultScript:
 
 RedsHouse2F_TextPointers:
 	def_text_pointers
-	
+	dw_const  RedBedroomPCText, TEXT_REDSHOUSE2F_PLAYERS_PC
+	dw_const  RedBedroomSNESText, TEXT_REDSHOUSE2F_SNES
+
+RedBedroomSNESText::
+	text_far _RedBedroomSNESText
+	text_end
+
+RedBedroomPCText::
+	script_players_pc

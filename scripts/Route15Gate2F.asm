@@ -5,6 +5,7 @@ Route15Gate2F_TextPointers:
 	def_text_pointers
 	dw_const Route15Gate2FOaksAideText,   TEXT_ROUTE15GATE2F_OAKS_AIDE
 	dw_const Route15Gate2FBinocularsText, TEXT_ROUTE15GATE2F_BINOCULARS
+	dw_const Route15GateLeftBinocularsText, TEXT_ROUTE15GATE2F_BINOCULARS_ARTICUNO
 
 ; PureRGBnote: CHANGED: oak's aide here will give you the BOOSTER CHIP instead of EXP.ALL, and it requires 80 pokemon caught to obtain.
 ; Once you install it, you must talk to him to get it removed. This removes the need for it taking up an item slot when in use.
@@ -72,6 +73,28 @@ RemoveBoosterChipSounds:
 BoosterChipText:
 	text_far _Route15Gate2FOaksAideBoosterChipText
 	text_end
+
+;;;;;;;; PureRGBnote: FIXED: Articuno cry is played within the DisplayMonFrontSpriteInBox code now
+Route15GateLeftBinocularsText:
+	text_asm
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	jr nz, .done
+	call SaveScreenTilesToBuffer1
+	ld hl, .text
+	rst _PrintText
+	call LoadScreenTilesFromBuffer1
+	ld a, ARTICUNO
+	ld [wCurPartySpecies], a
+	callfar DisplayMonFrontSpriteInBox
+.done
+	jp TextScriptEndNoButtonPress
+;;;;;;;;
+.text::
+	text_far _GenericLookedIntoTheBinocularsText
+	text_far _Route15UpstairsBinocularsText
+	text_end
+
 
 Route15Gate2FBinocularsText:
 	text_asm

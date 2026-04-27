@@ -30,7 +30,6 @@ BillsHouse_ScriptPointers:
 	dw_const BillsHousePokemonEntersMachineScript, SCRIPT_BILLSHOUSE_POKEMON_ENTERS_MACHINE
 	dw_const BillsHouseBillExitsMachineScript,     SCRIPT_BILLSHOUSE_BILL_EXITS_MACHINE
 	dw_const BillsHouseCleanupScript,              SCRIPT_BILLSHOUSE_CLEANUP
-	dw_const BillsHousePCScript,                   SCRIPT_BILLSHOUSE_PC
 
 BillsHousePokemonWalkToMachineScript:
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -138,9 +137,6 @@ BillsHouse_TextPointers:
 	dw_const BillsHouseBillCheckOutMyRarePokemonText, TEXT_BILLSHOUSE_BILL_CHECK_OUT_MY_RARE_POKEMON
 	dw_const BillsHouseActivatePCScript,              TEXT_BILLSHOUSE_ACTIVATE_PC
 
-BillsHouseActivatePCScript:
-	script_bills_pc
-
 BillsHouseBillPokemonText:
 	text_asm
 	ld hl, .ImNotAPokemonText
@@ -233,3 +229,151 @@ BillsHouseBillCheckOutMyRarePokemonText:
 BillsHouseGardenInfo:
 	text_far _BillsHouseGardenInfo
 	text_end
+
+BillsHousePC::
+	call EnableAutoTextBoxDrawing
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	ret nz
+	ld a, TEXT_BILLSHOUSE_ACTIVATE_PC
+	ldh [hTextID], a
+	jp DisplayTextID
+
+BillsHouseActivatePCScript:
+	text_asm
+	CheckEvent EVENT_LEFT_BILLS_HOUSE_AFTER_HELPING
+	jr nz, .displayBillsHousePokemonList
+	CheckEventReuseA EVENT_USED_CELL_SEPARATOR_ON_BILL
+	jr nz, .displayBillsHousePokemonList
+	CheckEventReuseA EVENT_BILL_SAID_USE_CELL_SEPARATOR
+	jr nz, .doCellSeparator
+.displayBillsHouseMonitorText
+	ld hl, .cellOnMonitor
+	jr .printDone
+.doCellSeparator
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	ld hl, .cellSeparationInitiated
+	rst _PrintText
+	ld c, 32
+	ld a, SFX_TINK
+	call .playSoundWithDelay
+	ld c, 80
+	ld a, SFX_SHRINK
+	call .playSoundWithDelay
+	ld c, 48
+	ld a, SFX_TINK
+	call .playSoundWithDelay
+	ld c, 32
+	ld a, SFX_GET_ITEM_1
+	call .playSoundWithDelay
+	call PlayDefaultMusic
+	SetEvent EVENT_USED_CELL_SEPARATOR_ON_BILL
+	rst TextScriptEnd
+.displayBillsHousePokemonList
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	ld hl, .pokemonList
+.printDone
+	rst _PrintText
+	rst TextScriptEnd
+.playSoundWithDelay
+	push af
+	rst _DelayFrames
+	pop af
+	rst _PlaySound
+	jp WaitForSoundToFinish
+.cellOnMonitor
+	text_far _BillsHouseMonitorText
+	text_end
+.cellSeparationInitiated
+	text_far _BillsHouseInitiatedText
+	text_promptbutton
+	text_asm
+	ld a, SFX_STOP_ALL_MUSIC
+	ld [wNewSoundID], a
+	rst _PlaySound
+	ld c, 16
+	ld a, SFX_SWITCH
+	call .playSoundWithDelay
+	ld c, 60
+	rst _DelayFrames
+	rst TextScriptEnd
+
+.pokemonList
+	text_asm
+	call SaveScreenTilesToBuffer1
+	ld hl, .favoritePokemon
+	rst _PrintText
+	xor a
+	ld [wMenuItemOffset], a ; not used
+	ld [wCurrentMenuItem], a
+	ld [wLastMenuItem], a
+	ld a, 4
+	ld [wMaxMenuItem], a
+	ld a, 2
+	ld [wTopMenuItemY], a
+	ld a, 1
+	ld [wTopMenuItemX], a
+.billsPokemonLoop
+;;;;;;;;;; PureRGBnote: MOVED: moved here because opening a pokedex entry changes wMenuWatchedKeys now and this needs to be repeated every menu loop.
+	ld a, PAD_A | PAD_B
+	ld [wMenuWatchedKeys], a
+;;;;;;;;;;
+	ld hl, wStatusFlags5
+	set BIT_NO_TEXT_DELAY, [hl]
+	hlcoord 0, 0
+	lb bc, 10, 9
+	call TextBoxBorder
+	hlcoord 2, 2
+	ld de, BillsMonListText
+	call PlaceString
+	ld hl, .whichPokemonInfo
+	rst _PrintText
+	call SaveScreenTilesToBuffer2
+	call HandleMenuInput
+	bit B_PAD_B, a
+	jr nz, .cancel
+	ld a, [wCurrentMenuItem]
+	add EEVEE
+	cp VAPOREON + 1
+	jr z, .cancel
+.displayPokedex
+	call DisplayPokedex
+	; dex number still stored in wPokedexNum
+	callfar IsPokemonLearnsetUnlockedDirect
+	jr nz, .noFurtherText
+	call AreLearnsetsEnabled
+	jr z, .noFurtherText
+	callfar SetPokemonLearnsetUnlocked
+	ld hl, .listingTonsOfInfo
+	rst _PrintText
+	; wNameBuffer still contains pokemon name
+	callfar LearnsetUnlockedScript
+	call DisplayTextPromptButton
+.noFurtherText
+	call LoadScreenTilesFromBuffer2
+	jr .billsPokemonLoop
+.cancel
+	ld hl, wStatusFlags5
+	res BIT_NO_TEXT_DELAY, [hl]
+	call LoadScreenTilesFromBuffer2
+	rst TextScriptEnd
+.favoritePokemon:
+	text_far _BillsHousePokemonListText1
+	text_end
+
+.whichPokemonInfo:
+	text_far _BillsHousePokemonListText2
+	text_end
+
+.listingTonsOfInfo::
+	text_far _BillsHousePCInfo
+	text_end
+
+BillsMonListText:
+	db   "EEVEE"
+	next "FLAREON"
+	next "JOLTEON"
+	next "VAPOREON"
+	next "CANCEL@"

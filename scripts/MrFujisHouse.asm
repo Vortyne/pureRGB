@@ -11,6 +11,7 @@ MrFujisHouse_TextPointers:
 	dw_const MrFujisHouseNidorinoText,      TEXT_MRFUJISHOUSE_NIDORINO
 	dw_const MrFujisHouseMrFujiText,        TEXT_MRFUJISHOUSE_MR_FUJI
 	dw_const MrFujisHouseMrFujiPokedexText, TEXT_MRFUJISHOUSE_POKEDEX
+	dw_const MagazinesText,                 TEXT_MRFUJISHOUSE_MAGAZINES
 
 ;;;;;;;;;; PureRGBnote: MOVED: moved this hiding routine here because it looks weird that mr fuji gets hidden before we warp to his house
 CheckHideMrFujiInPokemonTower:
@@ -145,4 +146,8 @@ MrFujisHouseMrFujiText:
 
 MrFujisHouseMrFujiPokedexText:
 	text_far _MrFujisHouseMrFujiPokedexText
+	text_end
+
+MagazinesText::
+	text_far _MagazinesText
 	text_end

@@ -1,5 +1,5 @@
 Museum1F_Script:
-	call EnableAutoTextBoxDrawing
+	call DisableAutoTextBoxDrawing
 	ld hl, Museum1F_ScriptPointers
 	ld a, [wMuseum1FCurScript]
 	jp CallFunctionInTable
@@ -33,6 +33,8 @@ Museum1F_TextPointers:
 	dw_const Museum1FScientist2Text, TEXT_MUSEUM1F_SCIENTIST2
 	dw_const Museum1FScientist3Text, TEXT_MUSEUM1F_SCIENTIST3
 	dw_const Museum1FOldAmberText,   TEXT_MUSEUM1F_OLD_AMBER
+	dw_const Museum1FAerodactylFossilText, TEXT_MUSEUM1F_AERODACTYL_FOSSIL
+	dw_const Museum1FKabutopsFossilText, TEXT_MUSEUM1F_KABUTOPS_FOSSIL
 
 Museum1FScientist1Text:
 	text_asm
@@ -166,6 +168,11 @@ Museum1FScientist1Text:
 	text_end
 
 Museum1FGamblerText:
+	text_asm
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
 	text_far _Museum1FGamblerText
 	text_end
 
@@ -224,9 +231,90 @@ Museum1FScientist2Text:
 	text_end
 
 Museum1FScientist3Text:
+	text_asm
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
 	text_far _Museum1FScientist3Text
 	text_end
 
 Museum1FOldAmberText:
+	text_asm
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
 	text_far _Museum1FOldAmberText
 	text_end
+
+Museum1FAerodactylFossilText:
+	text_asm
+	ld a, AERODACTYL
+	ld b, FOSSIL_AERODACTYL
+.fossil
+	push bc
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	pop bc
+	ld a, b
+	ld [wCurPartySpecies], a
+	call DisplayMonFrontSpriteInBox
+	xor a
+	ldh [hWY], a
+	call LoadFontTilePatterns
+	ld hl, .text
+	rst _PrintText
+	rst TextScriptEnd
+.text
+	text_far _AerodactylKabutopsFossilText
+	text_end
+
+Museum1FKabutopsFossilText:
+	text_asm
+	ld a, KABUTOPS
+	ld b, FOSSIL_KABUTOPS
+	jr Museum1FAerodactylFossilText.fossil
+
+;;;;;;;; PureRGBnote: FIXED: Updated function to display the correct pokemon palette
+DisplayMonFrontSpriteInBox::
+; Displays a pokemon's front sprite in a pop-up window.
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	call Delay3
+	xor a
+	ldh [hWY], a
+	call SaveScreenTilesToBuffer1
+	ld a, MON_SPRITE_POPUP
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	call UpdateSpritesAndDelay3 ; allow box to finish rendering before setting palette
+	ld b, SET_PAL_MIDDLE_SCREEN_MON_BOX
+	call RunPaletteCommand
+	ld a, [wCurPartySpecies]
+	ld [wCurSpecies], a
+	call GetMonHeader
+	ld de, vChars1 tile $31
+	call LoadMonFrontSprite
+	ld a, $80
+	ldh [hStartTileID], a
+	hlcoord 10, 11
+	predef AnimateSendingOutMon
+	ld a, [wCurPartySpecies]
+	cp FOSSIL_KABUTOPS
+	jr z, .skipCry
+	cp FOSSIL_AERODACTYL
+	call nz, PlayCry
+.skipCry
+	call WaitForTextScrollButtonPress
+	ld a, MON_SPRITE_POPUP
+	ld [wTextBoxID], a
+	call DisplayTextBoxID ; redisplay the box to clear the pokemon sprite out
+	call Delay3 ; allow box to finish clearing 
+	call RunDefaultPaletteCommand ; reset palette to what it was before displaying this box
+	call LoadScreenTilesFromBuffer1 ; close the box
+	call Delay3 ; allow box to finish closing before resetting hWY
+	ld a, $90
+	ldh [hWY], a
+	ret
+;;;;;;;;

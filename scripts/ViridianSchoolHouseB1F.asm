@@ -80,6 +80,7 @@ ViridianSchoolHouseB1F_TextPointers:
 	dw_const SchoolB1FRightClassroomSign,    TEXT_SCHOOLB1F_RIGHT_CLASSROOM_SIGN
 	dw_const SchoolB1FLeftPoster,            TEXT_SCHOOLB1F_LEFT_POSTER
 	dw_const SchoolB1FRightPoster,           TEXT_SCHOOLB1F_RIGHT_POSTER
+	dw_const SchoolB1FBookcasesText,         TEXT_SCHOOLB1F_BOOKCASES
 
 SchoolB1FGuyNearStairs:
 	text_far _SchoolB1FGuyNearStairs
@@ -695,3 +696,42 @@ SchoolB1FLeftTeacherEnd:
 	text_far _SchoolB1FLeftTeacherEnd
 	text_end
 
+ViridianSchoolHouseB1FBookCases::
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	ret nz
+	ld a, TEXT_SCHOOLB1F_BOOKCASES
+	ldh [hTextID], a
+	jp DisplayTextID
+
+SchoolB1FBookcasesText:
+	text_asm
+	ld a, [wHiddenEventFunctionArgument]
+	ld b, 0
+	ld c, a
+	ld hl, SchoolB1FBookCaseTextData
+	add hl, bc
+	rst _PrintText
+	rst TextScriptEnd
+
+SchoolB1FBookCaseTextData:
+SchoolB1FLeftBookcaseAText:
+	text_far _SchoolB1FLeftBookcaseA
+	text_far _FlippedToARandomPage
+	text_far _SchoolB1FLeftBookcaseA2
+	text_end
+SchoolB1FLeftBookcaseBText:
+	text_far _SchoolB1FLeftBookcaseB
+	text_far _FlippedToARandomPage
+	text_far _SchoolB1FLeftBookcaseB2
+	text_end
+SchoolB1FRightBookcaseAText:
+	text_far _SchoolB1FRightBookcaseA
+	text_far _FlippedToARandomPage
+	text_far _SchoolB1FRightBookcaseA2
+	text_end
+SchoolB1FRightBookcaseBText:
+	text_far _SchoolB1FRightBookcaseB
+	text_far _FlippedToARandomPage
+	text_far _SchoolB1FRightBookcaseB2
+	text_end

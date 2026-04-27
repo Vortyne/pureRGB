@@ -9,6 +9,7 @@ VermilionPokecenter_TextPointers:
 	dw_const VermilionPokecenterFishingGuruText,      TEXT_VERMILIONPOKECENTER_FISHING_GURU
 	dw_const VermilionPokecenterSailorText,           TEXT_VERMILIONPOKECENTER_SAILOR
 	dw_const VermilionPokecenterLinkReceptionistText, TEXT_VERMILIONPOKECENTER_LINK_RECEPTIONIST
+	dw_const VermilionPokecenterBenchGuyText,         TEXT_VERMILIONPOKECENTER_BENCH_GUY
 
 VermilionPokecenterNurseText:
 	script_pokecenter_nurse
@@ -23,3 +24,7 @@ VermilionPokecenterSailorText:
 
 VermilionPokecenterLinkReceptionistText:
 	script_cable_club_receptionist
+
+VermilionPokecenterBenchGuyText:
+	text_far _VermilionPokecenterGuyText
+	text_end

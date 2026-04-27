@@ -12,6 +12,7 @@ CeruleanPokecenter_Object:
 	warp_event  4,  7, LAST_MAP, 3
 
 	def_bg_events
+	bg_event 0, 4, TEXT_CERULEANPOKECENTER_BENCH_GUY
 
 	def_object_events
 	object_event  3,  1, SPRITE_NURSE, STAY, DOWN, TEXT_CERULEANPOKECENTER_NURSE

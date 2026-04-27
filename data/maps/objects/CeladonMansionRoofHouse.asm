@@ -15,8 +15,11 @@ CeladonMansionRoofHouse_Object:
 	warp_event 17,  7, CELADON_CITY, 16
 	warp_event 19,  0, CELADON_BACK_ALLEY, 4
 
-	def_bg_events
-
+	def_bg_events	
+	bg_event  3,  4, TEXT_CELADONMANSION_ROOF_HOUSE_NOTEBOOK
+	bg_event  3,  0, TEXT_CELADONMANSION_ROOF_HOUSE_BLACKBOARD
+	bg_event  4,  0, TEXT_CELADONMANSION_ROOF_HOUSE_BLACKBOARD
+	
 	def_object_events
 	object_event  2,  2, SPRITE_HIKER, STAY, DOWN, TEXT_CELADONMANSION_ROOF_HOUSE_HIKER
 	object_event 14,  3, SPRITE_HOOLIGAN, STAY, RIGHT, TEXT_CELADON_RUFFIAN_HOUSE_HOOLIGAN

@@ -9,6 +9,7 @@ CeladonPokecenter_TextPointers:
 	dw_const CeladonPokecenterGentlemanText,        TEXT_CELADONPOKECENTER_GENTLEMAN
 	dw_const CeladonPokecenterBeautyText,           TEXT_CELADONPOKECENTER_BEAUTY
 	dw_const CeladonPokecenterLinkReceptionistText, TEXT_CELADONPOKECENTER_LINK_RECEPTIONIST
+	dw_const CeladonPokecenterBenchGuyText,         TEXT_CELADONPOKECENTER_BENCH_GUY
 
 CeladonPokecenterLinkReceptionistText:
 	script_cable_club_receptionist
@@ -22,4 +23,8 @@ CeladonPokecenterGentlemanText:
 
 CeladonPokecenterBeautyText:
 	text_far _CeladonPokecenterBeautyText
+	text_end
+
+CeladonPokecenterBenchGuyText:
+	text_far _CeladonCityPokecenterGuyText
 	text_end

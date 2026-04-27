@@ -809,8 +809,7 @@ wSlotMachineRerollCounter:: db
 wSlotMachineBet:: db
 
 NEXTU
-wCanPlaySlots:: db
-	ds 8
+	ds 9
 ; PureRGBnote: CHANGED: temporary variable used to add payout amount to the player's coins, also used in vending machine code
 wTempFlag0::
 wTempCoins1:: dw

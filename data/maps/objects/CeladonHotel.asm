@@ -13,6 +13,7 @@ CeladonHotel_Object:
 	warp_event  4,  7, LAST_MAP, 13
 
 	def_bg_events
+	bg_event 0, 4, TEXT_CELADONHOTEL_BENCH_GUY
 
 	def_object_events
 	object_event 11,  7, SPRITE_CHANNELER, WALK, UP_DOWN, TEXT_CELADONHOTEL_CHANNELER, OPP_CHANNELER, 1 

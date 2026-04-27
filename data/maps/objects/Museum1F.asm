@@ -16,6 +16,8 @@ Museum1F_Object:
 	warp_event  7,  7, MUSEUM_2F, 1
 
 	def_bg_events
+	bg_event 2, 3, TEXT_MUSEUM1F_AERODACTYL_FOSSIL
+	bg_event 2, 6, TEXT_MUSEUM1F_KABUTOPS_FOSSIL
 
 	def_object_events
 	object_event 12,  4, SPRITE_SCIENTIST, STAY, LEFT, TEXT_MUSEUM1F_SCIENTIST1

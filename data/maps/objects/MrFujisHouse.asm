@@ -14,6 +14,9 @@ MrFujisHouse_Object:
 	warp_event  3,  7, LAST_MAP, 3
 
 	def_bg_events
+	bg_event   0,  1, TEXT_MRFUJISHOUSE_MAGAZINES
+	bg_event   1,  1, TEXT_MRFUJISHOUSE_MAGAZINES
+	bg_event   7,  1, TEXT_MRFUJISHOUSE_MAGAZINES
 
 	def_object_events
 	object_event  3,  5, SPRITE_SUPER_NERD, STAY, NONE, TEXT_MRFUJISHOUSE_SUPER_NERD 

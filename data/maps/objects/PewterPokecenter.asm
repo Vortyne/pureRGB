@@ -12,6 +12,7 @@ PewterPokecenter_Object:
 	warp_event  4,  7, LAST_MAP, 7
 
 	def_bg_events
+	bg_event 0, 4, TEXT_PEWTERPOKECENTER_BENCH_GUY
 
 	def_object_events
 	object_event  3,  1, SPRITE_NURSE, STAY, DOWN, TEXT_PEWTERPOKECENTER_NURSE

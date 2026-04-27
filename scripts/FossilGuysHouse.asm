@@ -24,6 +24,7 @@ FossilGuysHouse_TextPointers:
 	dw_const FossilGuysHouseTeleporterText,  TEXT_FOSSILGUYSHOUSE_TELEPORTER2
 	dw_const FossilGuysHousePosterText,      TEXT_FOSSILGUYSHOUSE_POSTER
 	dw_const FossilGuysHouseDeskText,        TEXT_FOSSILGUYSHOUSE_DESK
+	dw_const FossilGuysComputerText,         TEXT_FOSSILGUYSHOUSE_COMPUTER
 
 FossilGuysHouseFossilGuyText:
 	text_asm
@@ -341,6 +342,33 @@ FossilGuysHousePosterText:
 
 FossilGuysHouseDeskText:
 	text_far _FossilGuysDesk
+	text_end
+
+FossilGuysPC::
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	ret nz
+	ld a, TEXT_FOSSILGUYSHOUSE_COMPUTER
+	ldh [hTextID], a
+	jp DisplayTextID
+
+FossilGuysComputerText::
+	text_asm
+	ld hl, .text1
+	rst _PrintText
+	ld a, 1
+	ldh [hSpriteIndex], a
+	ld a, SPRITE_FACING_RIGHT
+  	ldh [hSpriteFacingDirection], a
+  	call SetSpriteFacingDirection
+	ld hl, .text2
+	rst _PrintText
+	rst TextScriptEnd
+.text1
+	text_far _FossilGuysComputer1
+	text_end
+.text2
+	text_far _FossilGuysComputer2
 	text_end
 	
 MoveMysticCrystalBallText:

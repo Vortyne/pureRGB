@@ -197,11 +197,15 @@ _RockTunnelPokecenterGuyText::
 	cont "LAVENDER TOWN!"
 	done
 
+; TODO: use these
 _UnusedBenchGuyText1::
 	text "I wish I could"
-	line "catch #MON."
+	line "catch #MON-"
+	para "but I have no luck"
+	line "with SAFARI BALLs."
 	done
 
+; TODO: use these
 _UnusedBenchGuyText2::
 	text "I'm tired from"
 	line "all the fun<...>"
@@ -493,14 +497,15 @@ _TurnPageText::
 	done
 
 _ViridianSchoolNotebookText5::
-	text "GIRL: Hey! Don't"
+	text "GIRL" ; fall through
+_ViridianSchoolHeyDontLookAtNotes::
+	db ": Hey! Don't"
 	line "look at my notes!@"
 	text_end
 
 _ViridianSchoolNotebookTextGus::
-	text "GUS: Hey! Don't"
-	line "look at my notes!@"
-	text_end
+	text "GUS@"
+	text_jump _ViridianSchoolHeyDontLookAtNotes
 
 _ViridianSchoolNotebookText1::
 	text "Looked at the"
@@ -577,11 +582,6 @@ _FightingDojoText::
 	text "FIGHTING DOJO"
 	done
 
-_IndigoPlateauHQText::
-	text "INDIGO PLATEAU"
-	line "#MON LEAGUE HQ"
-	done
-
 _RedBedroomSNESText::
 	text "<PLAYER> is"
 	line "playing the SNES!"
@@ -593,16 +593,12 @@ _Route15UpstairsBinocularsText::
 	text "A large, shining"
 	line "bird is flying"
 	cont "toward the sea."
-	done
+	prompt
 
-_AerodactylFossilText::
-	text "AERODACTYL Fossil"
-	line "A primitive and"
-	cont "rare #MON."
-	done
-
-_KabutopsFossilText::
-	text "KABUTOPS Fossil"
+_AerodactylKabutopsFossilText::
+	text "@"
+	text_ram wNameBuffer
+	text " Fossil"
 	line "A primitive and"
 	cont "rare #MON."
 	done

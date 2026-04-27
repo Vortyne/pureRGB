@@ -9,6 +9,7 @@ FuchsiaPokecenter_TextPointers:
 	dw_const FuchsiaPokecenterRockerText,           TEXT_FUCHSIAPOKECENTER_ROCKER
 	dw_const FuchsiaPokecenterCooltrainerFText,     TEXT_FUCHSIAPOKECENTER_COOLTRAINER_F
 	dw_const FuchsiaPokecenterLinkReceptionistText, TEXT_FUCHSIAPOKECENTER_LINK_RECEPTIONIST
+	dw_const FuchsiaPokecenterBenchGuyText,         TEXT_FUCHSIAPOKECENTER_BENCH_GUY
 
 FuchsiaPokecenterNurseText:
 	script_pokecenter_nurse
@@ -23,3 +24,7 @@ FuchsiaPokecenterCooltrainerFText:
 
 FuchsiaPokecenterLinkReceptionistText:
 	script_cable_club_receptionist
+
+FuchsiaPokecenterBenchGuyText:
+	text_far _FuchsiaCityPokecenterGuyText
+	text_end

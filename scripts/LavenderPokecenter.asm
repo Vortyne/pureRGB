@@ -9,6 +9,7 @@ LavenderPokecenter_TextPointers:
 	dw_const LavenderPokecenterGentlemanText,        TEXT_LAVENDERPOKECENTER_GENTLEMAN
 	dw_const LavenderPokecenterLittleGirlText,       TEXT_LAVENDERPOKECENTER_LITTLE_GIRL
 	dw_const LavenderPokecenterLinkReceptionistText, TEXT_LAVENDERPOKECENTER_LINK_RECEPTIONIST
+	dw_const LavenderPokecenterBenchGuyText,         TEXT_LAVENDERPOKECENTER_BENCH_GUY
 
 LavenderPokecenterLinkReceptionistText:
 	script_cable_club_receptionist
@@ -22,4 +23,8 @@ LavenderPokecenterGentlemanText:
 
 LavenderPokecenterLittleGirlText:
 	text_far _LavenderPokecenterLittleGirlText
+	text_end
+
+LavenderPokecenterBenchGuyText:
+	text_far _LavenderPokecenterGuyText
 	text_end

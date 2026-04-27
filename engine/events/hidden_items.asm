@@ -166,31 +166,20 @@ HiddenCoins:
 	ld b, FLAG_SET
 	predef FlagActionPredef
 	call EnableAutoTextBoxDrawing
+	ld b, TEXT_GAMECORNER_FOUND_HIDDEN_COINS
 	ld a, [wPlayerCoins]
 	cp $99
 	jr nz, .roomInCoinCase
 	ld a, [wPlayerCoins + 1]
 	cp $99
 	jr nz, .roomInCoinCase
-	tx_pre_id DroppedHiddenCoinsText
-	jr .done
+	ld b, TEXT_GAMECORNER_DROPPED_HIDDEN_COINS
 .roomInCoinCase
-	tx_pre_id FoundHiddenCoinsText
-.done
-	jp PrintPredefTextID
+	ld a, b
+	ldh [hTextID], a
+	jp DisplayTextID
 
 INCLUDE "data/events/hidden_coins.asm"
-
-FoundHiddenCoinsText::
-	text_far _FoundHiddenCoinsText
-	sound_get_item_2
-	text_end
-
-DroppedHiddenCoinsText::
-	text_far _FoundHiddenCoins2Text
-	sound_get_item_2
-	text_far _DroppedHiddenCoinsText
-	text_end
 
 FindHiddenItemOrCoinsIndex:
 	ld a, [wHiddenEventY]

@@ -6,50 +6,36 @@ GymStatues:
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	cp SPRITE_FACING_UP
 	ret nz
-	ld hl, MapBadgeFlags
-	ld a, [wCurMap]
-	ld b, a
-.loop
-	ld a, [hli]
-	cp $ff
-	ret z
-	cp b
-	jr z, .match
-	inc hl
-	jr .loop
-.match
-	ld b, [hl]
-	ld a, [wObtainedBadges]
-	and b
-	cp b
-	tx_pre_id GymStatueText2
-	jr z, .haveBadge
-	tx_pre_id GymStatueText1
-.haveBadge
+	tx_pre_id GymStatueTextScript
 	jp PrintPredefTextID
 
 INCLUDE "data/maps/badge_maps.asm"
 
-GymStatueText1::
+GymStatueTextScript::
 	text_asm
 	call GetStatueNames
-	ld hl, GymStatueText1Text
+	ld hl, MapBadgeFlags
+	ld a, [wCurMap]
+	ld de, 2
+	call IsInArray
+	jr nc, .done
+	inc hl
+	ld b, [hl]
+	ld a, [wObtainedBadges]
+	and b
+	cp b
+	ld hl, .text2
+	jr z, .haveBadge
+	ld hl, .text1
+.haveBadge
 	rst _PrintText
+.done
 	rst TextScriptEnd
-
-GymStatueText1Text::
+.text1
 	text_far _GymStatueText
 	text_far _GymStatueRival
 	text_end
-
-GymStatueText2::
-	text_asm
-	call GetStatueNames
-	ld hl, GymStatueText2Text
-	rst _PrintText
-	rst TextScriptEnd
-
-GymStatueText2Text::
+.text2
 	text_far _GymStatueText
 	text_far _GymStatueRivalPlayer
 	text_end

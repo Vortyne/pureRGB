@@ -19,6 +19,9 @@ OaksLab_Object:
 	warp_event  5, 11, LAST_MAP, 3
 
 	def_bg_events
+	bg_event 4, 0, TEXT_OAKSLAB_LEFT_POSTER
+	bg_event 5, 0, TEXT_OAKSLAB_RIGHT_POSTER
+	bg_event 0, 1, TEXT_OAKSLAB_COMPUTER
 
 	def_object_events
 	object_event  4,  3, SPRITE_BLUE, STAY, NONE, TEXT_OAKSLAB_RIVAL, OPP_RIVAL1, 1
