@@ -34,7 +34,7 @@ PlaySfx:
 	ld a, l
 	ld [wSfxHeaderPointer + 1], a
 	ld a, [hl]
-	and $c0
+	and %11000000
 	rlca
 	rlca
 	ld c, a
@@ -49,7 +49,7 @@ PlaySfx:
 	add hl, bc
 	ld c, d
 	ld a, [hl]
-	and $f ; TODO: which constant?
+	and %1111
 	ld e, a
 	ld d, $0
 	ld hl, wChannelSoundIDs
@@ -101,10 +101,10 @@ PlaySoundCommon_2:
 	ld b, a
 	rlca
 	rlca
-	and $3
+	and %11
 	ld c, a
 	ld a, b
-	and $f
+	and %1111
 	ld b, c
 	inc b
 	inc de
