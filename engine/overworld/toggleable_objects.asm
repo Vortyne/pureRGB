@@ -207,71 +207,15 @@ HideObjectCommon:
 	ld a, [wToggleableObjectIndex]
 	ld c, a
 	ld b, FLAG_SET
-	call ToggleableObjectFlagAction   ; set "removed" flag
+	call ToggleableObjectFlagAction
 	jp UpdateSprites
 
 ToggleableObjectFlagAction:
-; identical to FlagAction ; TODO: use flagaction instead?
-
 	push hl
 	push de
 	push bc
-
-	; bit
+	predef FlagActionPredef
 	ld a, c
-	ld d, a
-	and 7
-	ld e, a
-
-	; byte
-	ld a, d
-	srl_a_3x
-	add l
-	ld l, a
-	jr nc, .ok
-	inc h
-.ok
-
-	; d = 1 << e (bitmask)
-	inc e
-	ld d, 1
-.shift
-	dec e
-	jr z, .shifted
-	sla d
-	jr .shift
-.shifted
-
-	ld a, b
-	and a
-	jr z, .reset
-	cp FLAG_TEST
-	jr z, .read
-
-; set
-	ld a, [hl]
-	ld b, a
-	ld a, d
-	or b
-	ld [hl], a
-	jr .done
-
-.reset
-	ld a, [hl]
-	ld b, a
-	ld a, d
-	cpl
-	and b
-	ld [hl], a
-	jr .done
-
-.read
-	ld a, [hl]
-	ld b, a
-	ld a, d
-	and b
-
-.done
 	pop bc
 	pop de
 	pop hl
