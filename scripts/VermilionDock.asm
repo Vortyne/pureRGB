@@ -503,9 +503,7 @@ ShowMew:
 	predef_jump ShowObject
 
 ChangeTruckTile:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
 	ret z
 	ld bc, $9

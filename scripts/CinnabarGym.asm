@@ -6,10 +6,8 @@ CinnabarGym_Script:
 	jp CallFunctionInTable
 
 CinnabarGymSetMapAndTiles:
-	ld hl, wCurrentMapScriptFlags
+	call WasMapJustLoaded
 	res BIT_CUR_MAP_LOADED_2, [hl]
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
 	call nz, UpdateCinnabarGymGateTileBlocks
 	;ResetEvent EVENT_2A7
 	ret

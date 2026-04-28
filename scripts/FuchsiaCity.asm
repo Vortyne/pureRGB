@@ -11,8 +11,7 @@ FuchsiaCityDefaultScript:
 	bit BIT_CROSSED_MAP_CONNECTION, [hl] ; did we enter the map by traversal from another route
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
 	jr nz, .removeAddCutTilesNoRedraw
-	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .removeAddCutTiles
 ; PureRGBnote: ADDED: ERIK can walk away after you tell him where SARA is.
 	; check if ERIK is walking away

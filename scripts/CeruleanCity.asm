@@ -11,8 +11,7 @@ CeruleanCityReplaceCutTile:
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]
 	res BIT_CROSSED_MAP_CONNECTION, [hl]
 	jr nz, .replaceTileNoRedraw
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .replaceTile
 	ret
 .replaceTileNoRedraw

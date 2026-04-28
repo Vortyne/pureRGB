@@ -53,7 +53,6 @@ LearnsetFadeOutInStory::
 LearnsetFadeOutInPkmnCenter::
 	ld hl, WhileGoingBackToPkmnCenter
 	call LearnsetFadeOutIn
-	;predef HealParty ; TODO: bring back?
 	rst TextScriptEnd
 
 LearnsetFadeOutInfirmary::

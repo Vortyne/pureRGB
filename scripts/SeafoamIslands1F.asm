@@ -60,9 +60,7 @@ SeafoamIslands1F_TextPointers:
 	dw_const DragonairEventDragonairText2, TEXT_SEAFOAMISLANDS1F_DRAGONAIR2
 
 DragonairUnderWaterEventAreaScript:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .defaultScript
 	bit 3, [hl]
 	res 3, [hl]

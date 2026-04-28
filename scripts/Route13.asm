@@ -10,9 +10,7 @@ Route13_Script:
 
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 Route13CheckHideCutTree:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl] ; did we load the map from a save/warp/door/battle, etc?
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr nz, .next 
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_CROSSED_MAP_CONNECTION, [hl]

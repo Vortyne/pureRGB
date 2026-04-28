@@ -2091,9 +2091,7 @@ PlayChampCrowdSFX:
 	ret
 
 CheckResetDoorEvent:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ResetEvent EVENT_OPENED_ARENA_DOOR ; when loading the arena ensure the door resets to being closed.
 	; if we loaded the map while on top of the door, open it.

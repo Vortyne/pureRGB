@@ -21,9 +21,7 @@ PokemonTowerB1F_TextPointers:
 	dw_const PokemonTowerB1FTheMawGraveText, TEXT_POKEMONTOWERB1F_THE_MAW_GRAVE
 
 PokemonTowerB1FOnMapLoad:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ld a, [wYCoord]
 	cp 18

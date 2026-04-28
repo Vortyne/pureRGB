@@ -1,9 +1,7 @@
 ; PureRGBnote: ADDED: You can now eat in the SS Anne Kitchen.
 SSAnneKitchen_Script:
 	call EnableAutoTextBoxDrawing
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .notLoaded
 .reroll
 	; get a random value which will decide what text the randomized text chef will say first.

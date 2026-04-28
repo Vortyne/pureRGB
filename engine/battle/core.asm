@@ -1027,7 +1027,7 @@ ReplaceFaintedEnemyMon:
 	inc a ; reset Z flag
 	ret
 
-; TODO: below music-related functions could be moved into another bank probably
+; TODO: Need more battle core space? below music-related functions could be moved into another bank probably
 
 TrainerBattleVictory:
 	call EndLowHealthAlarm

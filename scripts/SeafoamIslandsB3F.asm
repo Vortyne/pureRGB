@@ -49,9 +49,7 @@ SeafoamIslandsB3F_Script:
 	jp CallFunctionInTable
 
 SeafoamIslandsB3FOnMapLoad::
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	SetFlag FLAG_MAP_HAS_OVERWORLD_ANIMATION
 	; script constants were changed from older save file versions so potentially need to update them here to remove invalid values

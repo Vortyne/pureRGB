@@ -13,8 +13,7 @@ VermilionFitnessClub_Script:
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	jr nz, .afterBattle
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	jr z, .notLoaded
 	ld a, TOGGLE_VERMILIONFITNESSCLUB_JANITOR
 	ld [wToggleableObjectIndex], a

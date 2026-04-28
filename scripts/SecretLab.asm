@@ -62,9 +62,7 @@ PlayEnhancedSecretLabMusic:
 	jp PlayMusic
 
 ReplaceDoor:
-	ld hl, wCurrentMapScriptFlags
-	bit BIT_CUR_MAP_LOADED_1, [hl]
-	res BIT_CUR_MAP_LOADED_1, [hl]
+	call WasMapJustLoaded
 	ret z
 	ResetEvent EVENT_OPENED_MACHINE_DOOR
 	CheckEvent EVENT_OPENED_SECRET_LAB_BARRICADE
