@@ -325,8 +325,17 @@ RestoreItemListIndex:
 DepositItemFromItemMenu::
 ;;;;; PureRGBnote: CHANGED: cannot deposit SS TICKET while you're on the SS ANNE.
 	ld a, [wCurItem]
+	cp BICYCLE
+	jr nz, .notBicycle
+	ld hl, wStatusFlags6
+	bit 5, [hl]
+	jr z, .noDepositBlock
+	ld hl, .cantGetOffHere
+	rst _PrintText
+	ret
+.notBicycle
 	cp S_S_TICKET
-	jr nz, .notSSTicket
+	jr nz, .noDepositBlock
 	; block depositing the SS ticket when past the vermilion guard
 	ld a, [wCurMap]
 	cp VERMILION_CITY
@@ -336,25 +345,25 @@ DepositItemFromItemMenu::
 	jr z, .checkYCoord
 	cp 19
 	jr z, .checkYCoord
-	jr .notSSTicket
+	jr .noDepositBlock
 .checkYCoord
 	ld a, [wYCoord]
 	cp 32
-	jr c, .notSSTicket
+	jr c, .noDepositBlock
 	jr .blockSSTicket
 .notVermilionCity
 	; also block it inside the ss anne areas
 	cp SS_ANNE_B1F_ROOMS + 1 ; last SS ANNE room
-	jr nc, .notSSTicket
+	jr nc, .noDepositBlock
 	cp VERMILION_DOCK ; first SS ANNE room
-	jr c, .notSSTicket
+	jr c, .noDepositBlock
 .blockSSTicket
 	ld hl, .cantDeposit
 	ld a, SFX_DENIED
 	rst _PlaySound
 	rst _PrintText
 	ret
-.notSSTicket
+.noDepositBlock
 ;;;;;
 	call IsKeyItem
 	ld a, 1
@@ -417,6 +426,9 @@ DepositItemFromItemMenu::
 	text_end
 .depositBikeWhileRidingIt
 	text_far _CantDepositBikeText
+	text_end
+.cantGetOffHere
+	text_far _CannotGetOffHereText
 	text_end
 
 WorldOptions:
