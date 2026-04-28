@@ -12,46 +12,143 @@ CeladonMart1F_TextPointers:
 
 CeladonMart1FReceptionistText:
 	text_far _CeladonMart1FReceptionistText
-	text_end
-
-; PureRGBnote: CHANGED: this function was changed to reduce the amount of text data needed for duplicate text.
-; TODO: change it to a list with hover text for less wasted time?
-CeladonMart1FDirectorySignText:
-	text_far _CeladonMart1FCurrentFloorSignText
-	text_promptbutton
 	text_asm
-	ld hl, .2f
-	rst _PrintText
-	ld hl, .3f
-	rst _PrintText
-	ld hl, .4f
-	rst _PrintText
-	ld hl, .5f
-	rst _PrintText
-	ld hl, .roof
+	call YesNoChoice
+	jr nz, .done
+	ld b, 6
+	ld de, CeladonDirectoryClerkText
+	ld hl, CeladonMart1FCurrentFloorClerkText
+	call CeladonMartDirectoryMenu
+.done
+	ld hl, .atYourService
 	rst _PrintText
 	rst TextScriptEnd
+.atYourService
+	text_far _CeladonMart1FReceptionistText2
+	text_end
+
+
+; PureRGBnote: CHANGED: this was made into a menu because it's just nicer that way
+CeladonMart1FDirectorySignText:
+	text_asm
+	ld b, 5
+	ld de, CeladonDirectoryText
+	ld hl, CeladonMart1FCurrentFloorSignText
+	call CeladonMartDirectoryMenu
+	jp TextScriptEndNoButtonPress
+
+CeladonMartDirectoryMenu:
+	push bc
+	push hl
+	push de
+	call DisableTextDelay
+	hlcoord 0, 0
+	lb bc, 11, 5
+	call TextBoxBorder
+	hlcoord 7, 0
+	lb bc, 1, 10
+	call TextBoxBorderUpdateSprites
+	hlcoord 2, 1
+	ld de, CeladonDirectoryMenu
+	call PlaceString
+	hlcoord 8, 1
+	pop de
+	call PlaceString
+	pop hl
+	rst _PrintText
+	pop bc
+	ld a, [wCurrentMenuItem]
+	push af
+	xor a
+	ld [wCurrentMenuItem], a
+	ld a, b
+	ld [wListMenuHoverTextType], a
+	ld a, 5
+	ld [wMaxMenuItem], a
+	ld a, 1
+	ld [wTopMenuItemX], a
+	ld a, 1
+	ld [wTopMenuItemY], a
+	xor a
+	ld [wLastMenuItem], a
+	ld [wMenuWatchMovingOutOfBounds], a
+	inc a
+	ldh [hJoy7], a ; allow holding down the menu navigation buttons
+	ld a, PAD_B
+	ld [wMenuWatchedKeys], a
+	callfar HandleMenuInputFromBank1
+	call EnableTextDelay
+	xor a
+	ldh [hJoy7], a
+	ld [wListMenuHoverTextType], a
+	pop af
+	ld [wCurrentMenuItem], a
+	ret
+
+CeladonDirectoryMenu:
+	db "1F"
+	next "2F"
+	next "3F"
+	next "4F"
+	next "5F"
+	next "ROOF@"
+
+CeladonDirectoryText:
+	db "STORE INFO@"
+
+CeladonDirectoryClerkText:
+	db "I'll help!@"
+
+ShowDeptStoreFloorInfo::
+	ld hl, ShowDeptStoreTextEntry.floorTextData
+ShowDeptStoreTextEntry:
+	ld bc, 5
+	ld a, [wCurrentMenuItem]
+	call AddNTimes
+	rst _PrintText
+	ret
+.floorTextData
+CeladonMart1FCurrentFloorSignText:
+	text_far _CeladonMart1FCurrentFloorSignText
+	text_end
 .2f
 	text_far _CeladonMart2FDirectorySignText
-	text_promptbutton
 	text_end
 .3f
 	text_far _CeladonMart3FCurrentFloorSignText
-	text_promptbutton
 	text_end
 .4f
 	text_far _CeladonMart4FDirectorySignText
 	text_end
 .5f
 	text_far _CeladonMart5FCurrentFloorSignText
-	text_promptbutton
 	text_end
 .roof
 	text_far _CeladonMartRoofCurrentFloorSignText
 	text_end
 
-CeladonMart1FCurrentFloorSignText:
-	text_far _CeladonMart1FCurrentFloorSignText
+ShowDeptStoreFloorInfoClerk::
+	ld hl, .floorTextData
+	jr ShowDeptStoreTextEntry
+.floorTextData
+CeladonMart1FCurrentFloorClerkText:
+.1f
+	text_far _CeladonMart1FCurrentFloorClerkText
+	text_end
+.2f
+	text_far _CeladonMart2FDirectoryClerkText
+	text_end
+.3f
+	text_far _CeladonMart3FCurrentFloorClerkText
+	text_end
+.4f
+	text_far _CeladonMart4FDirectoryClerkText
+	text_end
+.5f
+	text_far _CeladonMart5FCurrentFloorClerkText
+	text_end
+.roof
+	text_far _CeladonMartRoofCurrentFloorClerkText
 	text_end
 
 CeladonMart1PhoneLeft:

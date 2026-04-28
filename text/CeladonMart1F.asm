@@ -6,6 +6,13 @@ _CeladonMart1FReceptionistText::
 	para "The board on the"
 	line "right describes"
 	cont "the store layout."
+
+	para "I'd love to help"
+	line "you out too!"
+	done
+
+_CeladonMart1FReceptionistText2::
+	text "At your service!"
 	done
 
 _CeladonMart1FCurrentFloorSignText::
@@ -29,7 +36,7 @@ _CeladonMart3FCurrentFloorSignText::
 
 _CeladonMart4FDirectorySignText::
 	text "4F: WISEMAN GIFTS"
-	prompt
+	done
 
 _CeladonMart5FCurrentFloorSignText::
 	text "5F: DRUG STORE"
@@ -38,6 +45,36 @@ _CeladonMart5FCurrentFloorSignText::
 _CeladonMartRoofCurrentFloorSignText::
 	text "ROOFTOP SQUARE:"
 	line "VENDING MACHINES"
+	done
+
+_CeladonMart1FCurrentFloorClerkText::
+	text "Where I work!"
+	line "You're here now!"
+	done
+
+_CeladonMart2FDirectoryClerkText::
+	text "So many great TMs!"
+	line "What a steal!"
+	done
+
+_CeladonMart3FCurrentFloorClerkText::
+	text "The floor for"
+	line "video game lovers!"
+	done
+
+_CeladonMart4FDirectoryClerkText::
+	text "Buy a gift for"
+	line "your sweetie here!"
+	done
+
+_CeladonMart5FCurrentFloorClerkText::
+	text "Vitamins for your"
+	line "cute #MON here!"
+	done
+
+_CeladonMartRoofCurrentFloorClerkText::
+	text "Relax seeing the"
+	line "CELADON skyline!"
 	done
 
 _CeladonMartUsePhoneText::
@@ -229,38 +266,3 @@ _CeladonMartCallMomGoodbyeSweetSon::
 _CeladonMartCallMomGoodbyeComplete::
 	text "Bye bye!"
 	prompt
-
-_CeladonMartCallDadText::
-	text "DAD: Who is it?"
-	para "<PLAYER>?"
-	para "You left without"
-	line "even saying bye"
-	cont "to your old man!"
-	para "Haha, I know you"
-	line "were eager to go"
-	cont "catch #MON."
-	para "I heard you chose"
-	line "@"
-	text_ram_namebuffer
-	text "!"
-	prompt
-
-_CeladonMartCallDadText2::
-	text "So you have @"
-	text_ram w2CharStringBuffer
-	text " "
-	line "badges<...>"
-	para "I'm impressed!"
-	para "You're doing"
-	line "very well!"
-	para "Keep at it!"
-	para "I'm at home right"
-	line "now, why don't"
-	cont "you come say hi?"
-	para "We can play some"
-	line "KIRBY SUPER STAR"
-	cont "on the SNES."
-	para "I'll be waiting!"
-	line "Bye now!"
-	prompt
-

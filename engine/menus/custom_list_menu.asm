@@ -55,6 +55,8 @@ CustomListMenuHoverTextMethods:
 	dw CheckLoadTypes
 	dw _ChangeCustomBallTile
 	dw _ChangeCustomBallColor
+	dw _ShowDeptStoreFloorInfo
+	dw _ShowDeptStoreFloorInfoClerk
 
 GetListEntryID:
 	ld a, [wListCount]
@@ -192,3 +194,8 @@ _ChangeCustomBallTile:
 _ChangeCustomBallColor:
 	jpfar ChangeCustomBallColor
 
+_ShowDeptStoreFloorInfo:
+	jpfar ShowDeptStoreFloorInfo
+
+_ShowDeptStoreFloorInfoClerk:
+	jpfar ShowDeptStoreFloorInfoClerk
