@@ -122,7 +122,7 @@ DEF BOX_NUM_MASK EQU %01111111
 	const BIT_UNKNOWN_5_4             ; 4
 	const BIT_DISABLE_JOYPAD          ; 5
 	const BIT_NO_TEXT_DELAY           ; 6
-	const BIT_SCRIPTED_MOVEMENT_STATE ; 7 ; TODO: check if it's set when scripting NPC movement but not player
+	const BIT_SCRIPTED_MOVEMENT_STATE ; 7 
 
 ; wStatusFlags6
 	const_def

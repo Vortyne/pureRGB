@@ -23,7 +23,6 @@ GetDexPokemonCategory:
 	ret
 
 ; PureRGBnote: CHANGED: Since many pokemon categories are the same strings, we can group them into constants to save space
-; TODO: adjust: BLASTOISE, ZAPDOS, ELECTABUZZ?
 PokemonCategoryMapping:
 	table_width 1
 	db DEX_CATEGORY_SEED       ;  DEX_BULBASAUR  ; 1
@@ -170,8 +169,8 @@ PokemonCategoryMapping:
 	db DEX_CATEGORY_FOSSIL     ;  DEX_AERODACTYL ; 142
 	db DEX_CATEGORY_SLEEPING   ;  DEX_SNORLAX    ; 143
 	db DEX_CATEGORY_FREEZE     ;  DEX_ARTICUNO   ; 144
-	db DEX_CATEGORY_ELECTRIC   ;  DEX_ZAPDOS     ; 145
-	db DEX_CATEGORY_FLAME      ;  DEX_MOLTRES    ; 146
+	db DEX_CATEGORY_STORM      ;  DEX_ZAPDOS     ; 145
+	db DEX_CATEGORY_INFERNO    ;  DEX_MOLTRES    ; 146
 	db DEX_CATEGORY_DRAGON     ;  DEX_DRATINI    ; 147
 	db DEX_CATEGORY_DRAGON     ;  DEX_DRAGONAIR  ; 148
 	db DEX_CATEGORY_DRAGON     ;  DEX_DRAGONITE  ; 149
@@ -182,7 +181,7 @@ PokemonCategoryMapping:
 DexCategoryStrings:
 	db "SEED@"
 	db "LIZARD@"
-	db "FLAME@"   
+	db "FLAME@"
 	db "TINYTURTLE@"
 	db "TURTLE@"
 	db "SHELLFISH@"
@@ -258,7 +257,7 @@ DexCategoryStrings:
 	db "BARRIER@"
 	db "MANTIS@"
 	db "HUMANSHAPE@"
-	db "ELECTRIC@"
+	db "SHOCK@"
 	db "SPITFIRE@"
 	db "STAGBEETLE@"
 	db "WILD BULL@"
@@ -276,3 +275,5 @@ DexCategoryStrings:
 	db "FREEZE@"
 	db "GENETIC@"
 	db "NEW SPECIE@"
+	db "STORM@"
+	db "INFERNO@"
