@@ -94,7 +94,7 @@ LeaguePCShowMon:
 	ld de, wNameBuffer
 	ld bc, NAME_LENGTH
 	rst _CopyData
-	lb bc, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, 0
+	lb de, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, 0
 	call RunPaletteCommand
 	hlcoord 12, 5
 	call GetMonHeader
@@ -120,9 +120,7 @@ CheckMonAltPaletteLeaguePC:
 	ld c, b
 	ld b, FLAG_TEST
 	ld hl, wHallOfFamePalettes
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	ld a, 1
 	jr nz, .set
 	dec a

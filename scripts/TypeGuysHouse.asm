@@ -220,15 +220,13 @@ TypeGuysHouseTypeGuyText:
 	ld b, FLAG_TEST
 	push bc
 	ld hl, wPkmnTypeRemapFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	pop bc
 	ld b, FLAG_RESET
 	jr nz, .reset
 	ld b, FLAG_SET
 .reset
-	predef FlagActionPredef ; set or reset the flag
+	call FlagAction ; set or reset the flag
 	call LoadScreenTilesFromBuffer2 ; restore screen tiles from before displaying list
 	jr .loop
 .done

@@ -128,6 +128,7 @@ MovementData_PewterMuseumGuyExit:
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
 	db -1 ; end
 
 MovementData_PewterGymGuyExit:
@@ -149,11 +150,10 @@ PewterCityHideNPCScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, b
-	ld [wToggleableObjectIndex], a
 	ld a, c
 	ld [wPewterCityCurScript], a
-	predef_jump HideObject
+	ld c, b
+	jp HideObject
 
 PewterCityResetSuperNerd1Script:
 	lb bc, PEWTERCITY_SUPER_NERD1, TOGGLE_MUSEUM_GUY
@@ -161,10 +161,10 @@ PewterCityResetSuperNerd1Script:
 PewterCityResetNPCScript:
 	ld a, b
 	ld [wSpriteIndex], a
-	ld a, c
-	ld [wToggleableObjectIndex], a
+	push bc
 	call SetSpritePosition2
-	predef ShowObject
+	pop bc ; c = which to hide
+	call ShowObject
 	; fall through
 ResetPewterScripts:
 	call EnableAllJoypad

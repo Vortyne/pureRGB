@@ -53,8 +53,8 @@ PokemonTower7FHideNPCScript:
 	cp b            ; search for sprite ID in toggleable objects list
 	ld a, [hli]
 	jr nz, .toggleableObjectsListLoop
-	ld [wToggleableObjectIndex], a   ; remove toggleable object
-	predef HideObject
+	ld c, a
+	call HideObject
 ;;;;;; PureRGBnote: ADDED: play a sound effect when the rockets leave
 	ld a, SFX_GO_OUTSIDE
 	rst _PlaySound
@@ -174,19 +174,15 @@ PokemonTower7FMrFujiText:
 .print
 	rst _PrintText
 	SetEvent EVENT_RESCUED_MR_FUJI
-	ld a, TOGGLE_MR_FUJIS_HOUSE_MR_FUJI
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_SAFFRON_CITY_E
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_SAFFRON_CITY_F
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_MR_FUJIS_HOUSE_MR_FUJI
+	call ShowObject
+	ld c, TOGGLE_SAFFRON_CITY_E
+	call HideObject
+	ld c, TOGGLE_SAFFRON_CITY_F
+	call ShowObject
 ;;;;;;;;;; PureRGBnote: ADDED: hide the new ROCKET on the first floor of the tower
-	ld a, TOGGLE_POKEMON_TOWER_1F_ROCKET
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
+	ld c, TOGGLE_POKEMON_TOWER_1F_ROCKET
+	call HideExtraObject
 ;;;;;;;;;;
 	ld a, SCRIPT_POKEMONTOWER7F_WARP_TO_MR_FUJI_HOUSE
 	call PokemonTower7FSetMapScript

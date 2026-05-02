@@ -8,7 +8,7 @@ PrintCardKeyText:
 	ret z
 	cp b
 	jr nz, .silphCoMapListLoop
-	predef GetTileAndCoordsInFrontOfPlayer
+	call GetTileAndCoordsInFrontOfPlayer
 	ld a, [wTileInFrontOfPlayer]
 	cp $18
 	jr z, .cardKeyDoorInFrontOfPlayer
@@ -48,7 +48,7 @@ PrintCardKeyText:
 .replaceCardKeyDoorTileBlock
 	ld [wNewTileBlockID], a
 	push bc
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	pop de ; pop bc into de
 	callfar RunMapCardKeyEvent
 	ld a, SFX_GO_INSIDE

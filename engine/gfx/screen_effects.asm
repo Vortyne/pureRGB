@@ -1,21 +1,7 @@
-; b = new color for BG color 0 (usually white) for 4 frames
-ChangeBGPalColor0_4Frames:
-	call GetPredefRegisters
-	ldh a, [rBGP]
-	or b
-	ldh [rBGP], a
-	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color code from pokemon yellow
-	ld c, 4
-	rst _DelayFrames
-	ldh a, [rBGP]
-	and %11111100
-	ldh [rBGP], a
-	jp UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color code from pokemon yellow
-
 PredefShakeScreenVertically:
 ; Moves the window down and then back in a sequence of progressively smaller
 ; numbers of pixels, starting at b.
-	call GetPredefRegisters
+	ld b, d
 	ld a, 1
 	ld [wDisableVBlankWYUpdate], a
 	xor a
@@ -41,7 +27,7 @@ PredefShakeScreenVertically:
 PredefShakeScreenHorizontally:
 ; Moves the window right and then back in a sequence of progressively smaller
 ; numbers of pixels, starting at b.
-	call GetPredefRegisters
+	ld b, d
 	xor a
 .loop
 	ldh [hMutateWX], a

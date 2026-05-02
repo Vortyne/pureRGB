@@ -333,7 +333,7 @@ DisplayChooseQuantityMenuMinQuantity::
 	ldh [hDivideBCDDivisor + 1], a
 	ld a, $02
 	ldh [hDivideBCDDivisor + 2], a
-	predef DivideBCDPredef3 ; halves the price
+	callfar DivideBCD
 ; store the halved price
 	ldh a, [hDivideBCDQuotient]
 	ldh [hMoney], a

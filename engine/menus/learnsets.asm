@@ -190,7 +190,7 @@ ShowLevelUpLearnset:
 	call PlaceString
 	ld a, PAL_CERULEAN
 	ld [wGenericPaletteOverride], a
-	ld b, SET_PAL_GENERIC
+	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 	call Delay3
 .loop
@@ -375,7 +375,7 @@ ShowTMLearnset:
 	call PlaceString
 	ld a, PAL_CINNABAR
 	ld [wGenericPaletteOverride], a
-	ld b, SET_PAL_GENERIC
+	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 	callfar LoadTMLearnsetIntoWram
 	ld a, [wDexLearnsetListCount]
@@ -551,7 +551,7 @@ ShowEvolutions:
 	call .printEvolveText
 	ld a, PAL_LAVENDER
 	ld [wGenericPaletteOverride], a
-	ld b, SET_PAL_GENERIC
+	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 	callfar LoadEvosIntoWram
 	ld a, [wDexLearnsetListCount]
@@ -785,7 +785,4 @@ LearnsetFlagAction:
 	ld a, [hl] ; a = pokedex family number
 	ld hl, wLearnsetFlags
 	ld c, a
-	predef FlagActionPredef
-	ld a, c
-	and a ; has pokemon learnset been unlocked?
-	ret
+	jp FlagAction

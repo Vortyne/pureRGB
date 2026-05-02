@@ -108,7 +108,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld a, $31
 	ldh [hStartTileID], a
 	hlcoord 1, 5
-	predef CopyUncompressedPicToTilemap
+	call CopyUncompressedPicToTilemap
 
 	xor a
 	ldh [hWY], a
@@ -128,7 +128,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 ;;;;;;;;;;
 
 	call Delay3
-	ld b, SET_PAL_BATTLE
+	ld d, SET_PAL_BATTLE
 	call RunPaletteCommand
 	call HideSprites
 	jpfar PrintBeginningBattleText
@@ -273,10 +273,10 @@ StartBattle:
 	ld b, FLAG_SET
 	push bc
 	ld hl, wPartyGainExpFlags
-	predef FlagActionPredef
+	call FlagAction
 	ld hl, wPartyFoughtCurrentEnemyFlags
 	pop bc
-	predef FlagActionPredef
+	call FlagAction
 	call LoadBattleMonFromParty
 	call LoadScreenTilesFromBuffer1
 	call SendOutMon
@@ -775,7 +775,7 @@ UpdateCurMonHPBar::
 	xor 1
 	push bc
 	ld [wHPBarType], a
-	predef UpdateHPBar2
+	predef UpdateHPBar
 	pop bc
 	ret
 
@@ -1162,7 +1162,7 @@ RemoveFaintedPlayerMon:
 	ld c, a
 	ld hl, wPartyGainExpFlags
 	ld b, FLAG_RESET
-	predef FlagActionPredef ; clear gain exp flag for fainted mon
+	call FlagAction ; clear gain exp flag for fainted mon
 	ld hl, wEnemyBattleStatus1
 	res ATTACKING_MULTIPLE_TIMES, [hl]
 	ld a, [wLowHealthAlarm]
@@ -1291,10 +1291,10 @@ ChooseNextMon:
 	ld hl, wPartyGainExpFlags
 	ld b, FLAG_SET
 	push bc
-	predef FlagActionPredef
+	call FlagAction
 	pop bc
 	ld hl, wPartyFoughtCurrentEnemyFlags
-	predef FlagActionPredef
+	call FlagAction
 	call LoadBattleMonFromParty
 	call GBPalWhiteOut
 	call LoadHudTilePatterns
@@ -1338,7 +1338,7 @@ HandlePlayerBlackOut:
 	cp OAKS_LAB
 	ret z            ; starter battle in oak's lab: don't black out
 .noLossText
-	ld b, SET_PAL_BATTLE_BLACK
+	ld d, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
 	ld hl, PlayerBlackedOutText2
 	ld a, [wLinkState]
@@ -1468,12 +1468,12 @@ EnemySendOut:
 	ld c, a
 	ld b, FLAG_SET
 	push bc
-	predef FlagActionPredef
+	call FlagAction
 	ld hl, wPartyFoughtCurrentEnemyFlags
 	xor a
 	ld [hl], a
 	pop bc
-	predef FlagActionPredef
+	call FlagAction
 
 ; don't change wPartyGainExpFlags or wPartyFoughtCurrentEnemyFlags
 EnemySendOutFirstMon:
@@ -1606,7 +1606,7 @@ EnemySendOutFirstMon:
 	hlcoord 0, 0
 	lb bc, 4, 11
 	call ClearScreenArea
-	ld b, SET_PAL_BATTLE
+	ld d, SET_PAL_BATTLE
 	call RunPaletteCommand
 	call GBPalNormal
 	ld hl, TrainerSentOutText
@@ -1620,7 +1620,7 @@ EnemySendOutFirstMon:
 	ld a, -$31
 	ldh [hStartTileID], a
 	hlcoord 15, 6
-	predef AnimateSendingOutMon
+	call AnimateSendingOutMon
 	ld a, [wEnemyMonSpecies2]
 	call PlayCry
 	call DrawEnemyHUDAndHPBar
@@ -1939,7 +1939,7 @@ SendOutMon:
 	or [hl] ; is enemy mon HP zero?
 	call nz, DrawEnemyHUDAndHPBar ; if HP is zero, skip drawing the HUD and HP bar
 	call DrawPlayerHUDAndHPBar
-	predef LoadMonBackPic
+	call LoadMonBackPic
 	xor a
 	ldh [hStartTileID], a
 	ld hl, wBattleAndStartSavedMenuItem
@@ -1976,14 +1976,14 @@ SendOutMon:
 	and a
 	call z, .palette
 	hlcoord 4, 11
-	predef AnimateSendingOutMon
+	call AnimateSendingOutMon
 	ld a, [wCurPartySpecies]
 	call PlayCry
 	call PrintEmptyString
 	call SaveScreenTilesToBuffer1
 	jpfar CheckOnSendOutSpecialEffect
 .palette
-	ld b, SET_PAL_BATTLE
+	ld d, SET_PAL_BATTLE
 	jp RunPaletteCommand
 
 ; show 2 stages of the player mon getting smaller before disappearing
@@ -2078,8 +2078,9 @@ DrawPlayerHUDAndHPBar::
 	call z, PrintLevel
 	ld a, [wLoadedMonSpecies]
 	ld [wCurPartySpecies], a
-	hlcoord 10, 9
-	predef DrawHP
+	decoord 10, 9
+	ld c, 1
+	callfar DrawHP
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	ld hl, wPlayerHPBarColor
@@ -2206,7 +2207,7 @@ GetBattleHealthBarColor:
 	ld a, [hl]
 	cp b
 	ret z
-	ld b, SET_PAL_BATTLE
+	ld d, SET_PAL_BATTLE
 	jp RunPaletteCommand
 
 ; center's mon's name on the battle screen
@@ -2616,7 +2617,7 @@ PartyMenuOrRockOrRun:
 	ld hl, wPartyMon1
 	call ClearSprites
 ; display the two status screens
-	predef StatusScreenLoop
+	callfar StatusScreenLoop
 ; now we need to reload the enemy mon pic
 	callfar ReloadEnemyMonPicAfterStatusScreen
 	jp .partyMenuWasSelected
@@ -2672,10 +2673,10 @@ SwitchPlayerMon:
 	ld b, FLAG_SET
 	push bc
 	ld hl, wPartyGainExpFlags
-	predef FlagActionPredef
+	call FlagAction
 	pop bc
 	ld hl, wPartyFoughtCurrentEnemyFlags
-	predef FlagActionPredef
+	call FlagAction
 	call LoadBattleMonFromParty
 	call SendOutMon
 	call SaveScreenTilesToBuffer1
@@ -3162,8 +3163,8 @@ PrintMenuItem:
 	lb bc, 1, 2
 	call PrintNumber
 	call GetCurrentMove
-	hlcoord 2, 10
-	predef PrintMoveType
+	decoord 2, 10
+	callfar PrintMoveType
 .moveDisabled
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
@@ -4036,8 +4037,8 @@ PrintMoveFailureText:
 .applyRecoil
 	ld hl, KeptGoingAndCrashedText
 	rst _PrintText
-	ld b, $4
-	predef PredefShakeScreenHorizontally
+	ld d, 4
+	callfar PredefShakeScreenHorizontally
 	ldh a, [hWhoseTurn]
 	and a
 	jp z, ApplyDamageToPlayerPokemon
@@ -4969,7 +4970,7 @@ ApplyDamageToEnemyPokemon:
 	hlcoord 2, 2
 	xor a
 	ld [wHPBarType], a
-	predef UpdateHPBar2 ; animate the HP bar shortening
+	predef UpdateHPBar ; animate the HP bar shortening
 ApplyAttackToEnemyPokemonDone:
 	jp DrawHUDsAndHPBars
 
@@ -5073,7 +5074,7 @@ ApplyDamageToPlayerPokemon:
 	hlcoord 10, 9
 	ld a, $01
 	ld [wHPBarType], a
-	predef UpdateHPBar2 ; animate the HP bar shortening
+	predef UpdateHPBar ; animate the HP bar shortening
 ApplyAttackToPlayerPokemonDone:
 	jp DrawHUDsAndHPBars
 
@@ -6589,7 +6590,7 @@ ENDC
 	rst _CopyData
 	ld a, [wEnemyMonSpecies2]
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 ;;;;;;;;;; PureRGBnote: FIXED: missingno addition code
 	and a
@@ -6599,7 +6600,7 @@ ENDC
 	ld c, a
 	ld b, FLAG_SET
 	ld hl, wPokedexSeen
-	predef FlagActionPredef ; mark this mon as seen in the pokedex
+	call FlagAction ; mark this mon as seen in the pokedex
 .missingnoSkip
 	ld hl, wEnemyMonLevel
 	ld de, wEnemyMonUnmodifiedLevel
@@ -6641,7 +6642,7 @@ DoBattleTransitionAndInitBattleVariables:
 	call ClearScreen
 .next
 	rst _DelayFrame
-	predef BattleTransition
+	callfar BattleTransition
 	callfar LoadHudAndHpBarAndStatusTilePatterns
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
@@ -7080,7 +7081,7 @@ InitBattle::
 	and a
 	jr z, DetermineWildOpponent
 
-InitOpponent:
+InitOpponent::
 	ld a, [wCurOpponent]
 	ld [wCurPartySpecies], a
 	ld [wEnemyMonSpecies2], a
@@ -7125,7 +7126,7 @@ InitBattleCommon:
 	dec a
 	ld [wAICount], a
 	hlcoord 12, 0
-	predef CopyUncompressedPicToTilemap
+	call CopyUncompressedPicToTilemap
 	ld a, $ff
 	ld [wEnemyMonPartyPos], a
 	ld a, $2
@@ -7163,12 +7164,12 @@ InitWildBattle:
 	ld [wTrainerClass], a
 	ldh [hStartTileID], a
 	hlcoord 12, 0
-	predef CopyUncompressedPicToTilemap
+	call CopyUncompressedPicToTilemap
 
 ; common code that executes after init battle code specific to trainer or wild battles
 _InitBattleCommon:
 	callfar GBCSetCPU1xSpeed	; shinpokerednote: ADDED: deactivate gbc 2x cpu speed during battle as it causes visual bugs
-	ld b, SET_PAL_BATTLE_BLACK
+	ld d, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
 	call SlidePlayerAndEnemySilhouettesOnScreen
 	xor a
@@ -7240,9 +7241,11 @@ _LoadTrainerPic:
 ;	ld [wTempoModifier], a
 ;	jp PlaySound
 
+FarAnimateSendingOutMon::
+	ld h, d
+	ld l, e
 ; animates the mon "growing" out of the pokeball
 AnimateSendingOutMon:
-	hl_deref_reverse wPredefHL
 	ldh a, [hStartTileID]
 	ldh [hBaseTileID], a
 	ld b, $4c
@@ -7278,8 +7281,10 @@ AnimateSendingOutMon:
 	add $31
 	jr CopyUncompressedPicToHL
 
+FarCopyUncompressedPicToTilemap::
+	ld h, d
+	ld l, e
 CopyUncompressedPicToTilemap:
-	hl_deref_reverse wPredefHL
 	ldh a, [hStartTileID]
 CopyUncompressedPicToHL::
 	lb bc, 7, 7
@@ -7328,7 +7333,7 @@ CopyUncompressedPicToHL::
 	jr nz, .flippedLoop
 	ret
 
-LoadMonBackPic:
+LoadMonBackPic::
 ; Assumes the monster's attributes have
 ; been loaded with GetMonHeader.
 	ld a, [wBattleMonSpecies2]
@@ -7341,13 +7346,11 @@ LoadMonBackPicCommon:
 ;;;;;;;;;; PureRGBnote: ADDED: code to switch between original and larged back sprites
 	ld a, [wSpriteOptions2]
 	bit BIT_BACK_SPRITES, a
+	ld hl,  wMonHBackSprite - wMonHeader
 	jr nz, .swSpriteHeader
 .ogSpriteHeader
 	ld hl,  wMonHAltBackSprite - wMonHeader
-	jr .next
 .swSpriteHeader
-	ld hl,  wMonHBackSprite - wMonHeader
-.next
 	call UncompressMonBackSprite
 	ld a, [wSpriteOptions2]
 	bit BIT_BACK_SPRITES, a
@@ -7369,7 +7372,7 @@ LoadMonBackPicCommon:
 
 ;;;;;;;;;; PureRGBnote: ADDED: code to switch between original and larger back sprites
 LoadBackSpriteZoomed:
-	predef ScaleSpriteByTwo
+	callfar ScaleSpriteByTwo
 	call GetBackSpriteTarget
 	jp InterlaceMergeSpriteBuffers ; combine the two buffers to a single 2bpp sprite
 
@@ -7439,9 +7442,7 @@ AISentOutFlagAction:
 	inc a
 	ld c, a
 	ld hl, wAIWhichPokemonSentOutAlready
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	pop hl
 	pop de
 	pop bc

@@ -11,7 +11,7 @@ PreviewFrontSprite::
 	ld a, [hl] ; which pokemon to show the sprite of
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
-	ld b, SET_PAL_MIDDLE_SCREEN_MON_BOX
+	ld d, SET_PAL_MIDDLE_SCREEN_MON_BOX
 	call RunPaletteCommand
 	; check which text will display in the popup by looking at the tiles currently displaying on the screen
 	; have to do this before displaying the image textbox

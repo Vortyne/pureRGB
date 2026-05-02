@@ -570,8 +570,35 @@ InitializeSpriteScreenPosition:
 
 ; tests if sprite is off screen or otherwise unable to do anything
 CheckSpriteAvailability:
-	predef IsObjectHidden
-	ldh a, [hIsToggleableObjectOff]
+;;;; IsObjectHidden: ; tests if current object is toggled off/has been hidden ; was moved here because it was only used once anyway
+	ldh a, [hCurrentSpriteOffset]
+	swap a
+	ld b, a
+	ld hl, wToggleableObjectList
+.loop
+	ld a, [hli]
+	cp -1
+	jr z, .notHidden ; not toggleable -> not hidden
+	cp b
+	ld a, [hli]
+	jr nz, .loop
+	ld c, a
+	ld b, FLAG_TEST
+;;;;;;;;;; PureRGBnote: ADDED: when in certain maps we use a different set of flags for hiding/showing objects.
+	CheckEvent EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
+	ld hl, wToggleableObjectFlags
+	jr z, .doAction
+.extraMap
+	ld hl, wExtraToggleableObjectFlags
+.doAction
+;;;;;;;;;;
+	call FlagAction
+	and a
+	jr nz, .hidden
+.notHidden
+	xor a
+.hidden
+;;;;
 	and a
 	jp nz, .spriteInvisible
 	ld h, HIGH(wSpriteStateData2)

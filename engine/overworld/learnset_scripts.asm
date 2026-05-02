@@ -180,7 +180,7 @@ PlaySoundOnAudio3Engine:
 SetMonSeen::
 	ld hl, wPokedexSeen
 	ld b, FLAG_SET
-	predef_jump FlagActionPredef
+	jp FlagAction
 
 WhileGoingBackToPkmnCenter::
 	text_far _WhileGoingBackToPkmnCenter

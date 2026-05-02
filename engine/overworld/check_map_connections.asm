@@ -3,7 +3,7 @@
 CheckWestMap::
 	ld a, [wXCoord]
 	cp $ff
-	jp nz, CheckEastMap
+	jr nz, CheckEastMap
 	ld a, [wWestConnectedMap]
 	ld [wCurMap], a
 	ld a, [wWestConnectedMapXAlignment] ; new X coordinate upon entering west map
@@ -38,7 +38,7 @@ CheckEastMap:
 	ld b, a
 	ld a, [wCurrentMapWidth2] ; map width
 	cp b
-	jp nz, CheckNorthMap
+	jr nz, CheckNorthMap
 	ld a, [wEastConnectedMap]
 	ld [wCurMap], a
 	ld a, [wEastConnectedMapXAlignment] ; new X coordinate upon entering east map
@@ -72,7 +72,7 @@ CheckEastMap:
 CheckNorthMap:
 	ld a, [wYCoord]
 	cp $ff
-	jp nz, CheckSouthMap
+	jr nz, CheckSouthMap
 	ld a, [wNorthConnectedMap]
 	ld [wCurMap], a
 	ld a, [wNorthConnectedMapYAlignment] ; new Y coordinate upon entering north map

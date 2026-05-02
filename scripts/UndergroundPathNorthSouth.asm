@@ -21,7 +21,7 @@ UndergroundPathNorthSouthOnMapLoad:
 	lb bc, 11, 0
 	ld a, 13
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 UndergroundPathNorthSouth_ScriptPointers:
 	def_script_pointers

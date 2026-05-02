@@ -76,12 +76,10 @@ CeruleanBallDesignerCameraText:
 	call GiveItem
 	ld hl, .noMoreRoom
 	jr nc, .printDone
-	ld a, TOGGLE_CERULEAN_BALL_DESIGNER_CAMERA
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
-	ld a, TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_CERULEAN_BALL_DESIGNER_CAMERA
+	call HideExtraObject
+	ld c, TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD
+	call ShowExtraObject
 	SetEvent EVENT_CERULEAN_BALL_DESIGNER_GOT_CAMERA
 	ld hl, CeruleanBallDesignerDesignerText.received
 .printDone
@@ -201,9 +199,8 @@ CeruleanBallDesignerDesignerText:
 	ld a, CAMERA
 	ldh [hItemToRemoveID], a
 	farcall RemoveItemByID
-	ld a, TOGGLE_CERULEAN_BALL_DESIGNER_CAMERA
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_CERULEAN_BALL_DESIGNER_CAMERA
+	call ShowExtraObject
 	ld hl, .thanksBorrowCameraAgain
 	rst _PrintText
 	rst TextScriptEnd
@@ -246,15 +243,14 @@ CeruleanBallDesignerDesignerText:
 	callfar CopyFullCustomBallNameToStringBuffer
 	ld hl, .designedBall
 	rst _PrintText
-	ld a, TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD2
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_CERULEAN_BALL_DESIGNER_CLIPBOARD2
+	call ShowExtraObject
 	SetEvent EVENT_UNLOCKED_AT_LEAST_ONE_CUSTOM_BALL
 	pop af
 	ld b, FLAG_SET
 	ld c, a
 	ld hl, wCustomBallUnlockFlags
-	predef FlagActionPredef
+	call FlagAction
 	rst TextScriptEnd
 .checkForBallUnlockEvent
 	; compare unlocked custom balls to snapped pictures, if we've snapped one but not unlocked it, do the associated unlock event
@@ -263,16 +259,12 @@ CeruleanBallDesignerDesignerText:
 .loopTestBallUnlocks
 	push bc
 	ld hl, wCustomBallPhotoSnappedFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	pop bc
 	jr z, .goToNextBall
 	push bc
 	ld hl, wCustomBallUnlockFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	pop bc
 	jr z, .foundNotUnlockedBall
 .goToNextBall
@@ -1180,9 +1172,7 @@ IsBallPropertyUnlocked::
 	ld c, b
 	ld b, FLAG_TEST
 	ld hl, wCustomBallUnlockFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	pop bc
 	pop hl
 	jr z, .continue

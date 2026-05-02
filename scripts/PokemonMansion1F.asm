@@ -32,7 +32,7 @@ ReplaceMansionTileBlockList:
 	inc de
 	push hl
 	push de
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	pop de
 	pop hl
 	jr ReplaceMansionTileBlockList

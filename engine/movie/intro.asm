@@ -5,7 +5,7 @@
 
 DEF ANIMATION_END EQU 80
 
-PlayIntro:
+PlayIntro::
 	xor a
 	ldh [hJoyHeld], a
 	inc a
@@ -21,7 +21,7 @@ PlayIntro:
 	ret
 
 PlayIntroScene:
-	ld b, SET_PAL_NIDORINO_INTRO
+	ld d, SET_PAL_NIDORINO_INTRO
 	call RunPaletteCommand
 	ldpal a, SHADE_BLACK, SHADE_DARK, SHADE_LIGHT, SHADE_WHITE
 	ldh [rBGP], a
@@ -308,7 +308,7 @@ LoadIntroGraphics:
 	jp FarCopyData2
 
 PlayShootingStar:
-	ld b, SET_PAL_GAME_FREAK_INTRO
+	ld d, SET_PAL_GAME_FREAK_INTRO
 	call RunPaletteCommand
 	farcall LoadCopyrightAndTextBoxTiles
 	ldpal a, SHADE_BLACK, SHADE_DARK, SHADE_LIGHT, SHADE_WHITE

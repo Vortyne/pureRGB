@@ -3,7 +3,7 @@ AlreadyOnThatFloor:
 	rst _PrintText
 	jr DisplayElevatorFloorMenu.menuDisplayLoop
 
-DisplayElevatorFloorMenu:
+DisplayElevatorFloorMenu::
 	ld a, [wListScrollOffset]
 	push af ; preserve the list scroll offset so our item list offset is remembered
 	xor a

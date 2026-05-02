@@ -16,7 +16,7 @@ VictoryRoad3FCheckBoulderEventScript::
 	ld a, $1d
 	ld [wNewTileBlockID], a
 	lb bc, 5, 3
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 VictoryRoad3F_ScriptPointers:
 	def_script_pointers
@@ -31,8 +31,9 @@ VictoryRoad3FDefaultScript:
 	bit BIT_PUSHED_BOULDER, [hl]
 	res BIT_PUSHED_BOULDER, [hl]
 	jp z, .check_switch_hole
-	ld hl, .SwitchOrHoleCoords
-	call CheckBoulderCoords
+	ld de, VictoryRoad3FHoleAndSwitchCoords
+	ld c, BANK(VictoryRoad3FHoleAndSwitchCoords)
+	callfar CheckBoulderCoords
 	jp nc, .check_switch_hole
 	ld a, [wCoordIndex]
 	cp $1
@@ -46,23 +47,16 @@ VictoryRoad3FDefaultScript:
 .handle_hole
 	CheckAndSetEvent EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH2
 	jr nz, .check_switch_hole
-	ld a, TOGGLE_VICTORY_ROAD_3F_BOULDER
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_VICTORY_ROAD_2F_BOULDER
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_VICTORY_ROAD_3F_BOULDER
+	call HideObject
+	ld c, TOGGLE_VICTORY_ROAD_2F_BOULDER
+	call ShowObject
 	jpfar BoulderHoleDropEffectDefault
-
-.SwitchOrHoleCoords:
-	dbmapcoord  3,  5 ; switch
-	dbmapcoord 23, 15 ; hole
-	db -1 ; end
 
 .check_switch_hole
 	ld a, VICTORY_ROAD_2F
 	ld [wDungeonWarpDestinationMap], a
-	ld hl, .SwitchOrHoleCoords
+	ld hl, VictoryRoad3FHoleAndSwitchCoords
 	call IsPlayerOnDungeonWarp
 	ld a, [wCoordIndex]
 	cp $1
@@ -77,6 +71,11 @@ VictoryRoad3FDefaultScript:
 	bit BIT_ON_DUNGEON_WARP, a
 	jp z, CheckFightingMapTrainers
 	ret
+
+VictoryRoad3FHoleAndSwitchCoords:
+	dbmapcoord  3,  5 ; switch
+	dbmapcoord 23, 15 ; hole
+	db -1 ; end
 
 VictoryRoad3F_TextPointers:
 	def_text_pointers

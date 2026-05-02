@@ -180,7 +180,7 @@ PokemonTowerB1FOnMapLoad:
 	ld a, $38
 .replaceTileBlockEntry
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 
 PokemonTowerB1FPlayMusic::
@@ -282,9 +282,8 @@ PokemonTowerB1FDarkChannelerText:
 	ld a, 1 ; second warp
 	call PrepareScriptedCatacombsWarp
 	; hide the cubone in lavender town since it will be in the catacombs
-	ld a, TOGGLE_LAVENDER_TOWN_CUBONE
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
+	ld c, TOGGLE_LAVENDER_TOWN_CUBONE
+	call HideExtraObject
 	ld hl, PokemonTowerB1FDarkChannelerLowerText.yes
 .printDone1
 	rst _PrintText
@@ -1288,7 +1287,7 @@ PokemonTowerB1FMarowakBlockedHyperBeamText:
 .markOff
 	ld c, DEX_CUBONE - 1
 	ld b, FLAG_SET
-	predef_jump FlagActionPredef
+	jp FlagAction
 .joinedParty
 	text_far _PokemonTowerB1FMarowakBuffedCubone
 	text_end

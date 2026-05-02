@@ -1,4 +1,5 @@
 ; PureRGBnote: MOVED: a bunch of code was moved from this file to other banks or commented out since it was unused.
+; TODO: probably stuff in here that can be moved to another bank
 
 ; stores hl in [wTrainerHeaderPtr]
 StoreTrainerHeaderPointer::
@@ -133,7 +134,7 @@ ENDC
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
-	predef EmotionBubble
+	callfar EmotionBubble
 	call DisableDpad
 	xor a
 	ldh [hJoyHeld], a
@@ -188,9 +189,8 @@ EndTrainerBattle::
 	ld a, [wSpriteIndex]
 	call IsInArray ; search for sprite ID
 	inc hl
-	ld a, [hl]
-	ld [wToggleableObjectIndex], a ; load corresponding toggleable object index and remove it
-	predef HideObject
+	ld c, [hl] ; load corresponding toggleable object index and remove it
+	call HideObject
 .skipRemoveSprite
 	ld hl, wStatusFlags5
 	bit BIT_UNKNOWN_5_4, [hl]
@@ -271,7 +271,7 @@ CheckForEngagingTrainers::
 	ld a, [wSpriteIndex]
 	swap a
 	ld [wTrainerSpriteOffset], a
-	predef TrainerEngage
+	callfar TrainerEngage
 	pop de
 	pop hl
 	ld a, [wTrainerSpriteOffset]
@@ -361,5 +361,4 @@ TrainerFlagAction::
 	call ReadTrainerHeaderInfo     ; read flag's byte ptr (does not change b register)
 	ld a, [wTrainerHeaderFlagBit]
 	ld c, a
-	predef_jump FlagActionPredef
-
+	jp FlagAction

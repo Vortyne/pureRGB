@@ -27,7 +27,7 @@ UnlockSilphCoDoor::
 	ld a, [hli]
 	ld [wNewTileBlockID], a
 	push hl
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	pop hl
 	ret
 .skip

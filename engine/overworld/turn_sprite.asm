@@ -18,6 +18,7 @@
 ;	sub SPRITESTATEDATA1_INTRAANIMFRAMECOUNTER - SPRITESTATEDATA1_IMAGEINDEX
 ;	ld l, a
 ;	ld a, [hl] ; x#SPRITESTATEDATA1_IMAGEINDEX
+;   and $f0
 ;	or b ; or in the facing direction
 ;	ld [hld], a
 ;	ld [hl], 2 ; x#SPRITESTATEDATA1_MOVEMENTSTATUS = delayed movement status

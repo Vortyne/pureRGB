@@ -1,4 +1,4 @@
-DisplayDexRating:
+DisplayDexRating::
 	ld hl, wPokedexSeen
 	ld b, wPokedexSeenEnd - wPokedexSeen
 	call CountSetBits

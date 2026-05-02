@@ -196,7 +196,7 @@ LoadPlayerBackPic::
 	bit BIT_BACK_SPRITES, a
 	jr nz, .uncompressed
 .doubleSpriteSize
-	predef ScaleSpriteByTwo
+	callfar ScaleSpriteByTwo
 	jr .next
 .uncompressed
 	callfar LoadBackSpriteUnzoomed
@@ -258,8 +258,8 @@ LoadPlayerBackPic::
 	ld [rRAMG], a
 	ld a, $31
 	ldh [hStartTileID], a
-	hlcoord 1, 5
-	predef_jump CopyUncompressedPicToTilemap
+	decoord 1, 5
+	jpfar FarCopyUncompressedPicToTilemap
 
 SpaceworldBackPicTable:
 	dwb RedPicBackSW, BANK(RedPicBackSW)

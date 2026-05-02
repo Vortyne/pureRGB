@@ -145,7 +145,7 @@ TryLoadSaveFileIgnoreChecksum: ; unreferenced
 	jp LoadPartyAndDexData
 
 ; PureRGBnote: CHANGED: remove "now saving" text because saving is near-instant now.
-SaveMenu:
+SaveMenu::
 	farcall PrintSaveScreenText
 	ld hl, WouldYouLikeToSaveText
 	call SaveTheGame_YesOrNo
@@ -252,7 +252,7 @@ SaveCurrentBoxData:
 	ld [rRAMG], a
 	ret
 
-SavePartyAndDexData:
+SavePartyAndDexData::
 	ld a, RAMG_SRAM_ENABLE
 	ld [rRAMG], a
 	ld a, BMODE_ADVANCED

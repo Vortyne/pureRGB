@@ -1,12 +1,6 @@
 ; divide hMoney by hDivideBCDDivisor
 ; return output in hDivideBCDQuotient (same as hDivideBCDDivisor)
 ; used only to halve player money upon losing a fight
-DivideBCDPredef::
-DivideBCDPredef2::
-DivideBCDPredef3:: ; only used function
-DivideBCDPredef4::
-	call GetPredefRegisters
-
 DivideBCD::
 	xor a
 	ldh [hDivideBCDBuffer], a

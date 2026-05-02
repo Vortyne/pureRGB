@@ -647,11 +647,9 @@ FormulateMoveMysticMonList:
 	dec c
 	ld hl, wPokedexSeen
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
+	call FlagAction
 	pop bc
 	pop hl
-	and a
 	ld a, [hl]
 	jr z, .skipSeen
 .seen

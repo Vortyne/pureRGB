@@ -4,8 +4,7 @@
 ; and redraws the map view if necessary
 ; b = Y
 ; c = X
-ReplaceTileBlock:
-	call GetPredefRegisters
+_ReplaceTileBlock::
 	call ReplaceTileBlockCommon
 	ret z
 	call IsBCInHLTileBlockMapView
@@ -153,8 +152,9 @@ ReplaceTileBlockAndCheckForRedraw:
 
 INCLUDE "engine/overworld/tile_block_replacements.asm"
 
-ReplaceTileBlockNoRedraw:
-	call GetPredefRegisters
+ReplaceTileBlockNoRedraw::
+	ld b, d
+	ld c, e
 	; fall through
 
 ReplaceTileBlockCommon:

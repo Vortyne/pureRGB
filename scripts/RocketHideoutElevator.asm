@@ -86,8 +86,7 @@ RocketHideoutElevatorText:
 .startLift
 ;;;;;;;;;;
 	call RocketHideoutElevatorScript
-	ld hl, RocketHideoutElevatorWarpMaps
-	predef DisplayElevatorFloorMenu
+	callfar DisplayElevatorFloorMenu
 	rst TextScriptEnd
 .no_key
 	ld hl, .AppearsToNeedKeyText

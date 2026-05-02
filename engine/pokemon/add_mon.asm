@@ -102,7 +102,7 @@ ENDC
 	ld a, [wCurPartySpecies]
 	ld [wPokedexNum], a
 	push de
-	predef IndexToPokedex
+	call IndexToPokedex
 	pop de
 	ld a, [wPokedexNum]
 	and a
@@ -383,7 +383,7 @@ _AddEnemyMonToPlayerParty::
 	rst _CopyData    ; write new mon's nickname (from an enemy mon)
 	ld a, [wCurPartySpecies]
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	dec a
 	ld c, a

@@ -206,7 +206,7 @@ SSAnneKitchenWaiterReturnsText:
 KitchenReplaceFoodTileBlock:
 	lb bc, 7, 0
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 MovementWaiterWalksRight:
 	db NPC_MOVEMENT_RIGHT, 5

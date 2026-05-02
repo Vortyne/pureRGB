@@ -1,4 +1,4 @@
-HallOfFamePC:
+HallOfFamePC::
 	farcall AnimateHallOfFame
 	call ClearScreen
 	ld c, 100

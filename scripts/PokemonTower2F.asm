@@ -155,9 +155,8 @@ PokemonTower2FRivalExitsScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, TOGGLE_POKEMON_TOWER_2F_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_POKEMON_TOWER_2F_RIVAL
+	call HideObject
 ;;;;; PureRGBnote: ADDED: play a sound effect when he goes downstairs
 	call UpdateSpritesAndDelay3
 	call PlayDefaultMusic

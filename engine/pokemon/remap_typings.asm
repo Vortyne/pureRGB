@@ -67,10 +67,8 @@ IsMonTypeRemapped:
 	ld c, b ; b = which index in the flag array to check
 	ld hl, wPkmnTypeRemapFlags
 	ld b, FLAG_TEST
-	predef FlagActionPredef
+	call FlagAction
 	pop hl
-	ld a, c
-	and a
 	jr z, .noRemap
 	pop de
 	inc hl

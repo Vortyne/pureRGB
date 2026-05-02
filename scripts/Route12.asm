@@ -28,7 +28,7 @@ Route12CheckHideCutTree:
 .removeTreeBlocker
 	; if we're in the cut alcove, remove the tree
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 Route12_ScriptPointers:
 	def_script_pointers
@@ -140,9 +140,8 @@ Route12SnorlaxPostBattleScript:
 	jr .done
 .hide_snorlax
 	SetEvent EVENT_BEAT_ROUTE12_SNORLAX
-	ld a, TOGGLE_ROUTE_12_SNORLAX
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
+	ld c, TOGGLE_ROUTE_12_SNORLAX
+	jp HideObject
 .done
 	call ResetMapScripts
 	ld [wRoute12CurScript], a
@@ -269,7 +268,7 @@ Route12PrepareEmotionBubble:
   	ld a, ROUTE16_SNORLAX
 .load
 	ld [wEmotionBubbleSpriteIndex], a
-	predef_jump EmotionBubble
+	jpfar EmotionBubble
 
 Route12SnorlaxWokeUpText: ; PureRGBnote: CHANGED: now also used by route 16's snorlax
 	text_asm

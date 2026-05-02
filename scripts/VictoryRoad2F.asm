@@ -34,7 +34,7 @@ VictoryRoad2FCheckBoulderEventScript::
 	lb bc, 7, 11
 VictoryRoad2FReplaceTileBlockScript:
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 VictoryRoad2F_ScriptPointers:
 	def_script_pointers
@@ -46,8 +46,9 @@ VictoryRoad2FDefaultScript:
 	ld a, [wMiscFlags]
 	bit BIT_BOULDER_DUST, a
 	ret nz ; PureRGBnote: ADDED: if a boulder animation is playing forget doing this, helps reduce lag
-	ld hl, .SwitchCoords
-	call CheckBoulderCoords
+	ld de, VictoryRoad2FBoulderSwitchCoords
+	ld c, BANK(VictoryRoad2FBoulderSwitchCoords)
+	callfar CheckBoulderCoords
 	jp nc, CheckFightingMapTrainers
 	EventFlagAddress hl, EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1
 	ld a, [wCoordIndex]
@@ -69,7 +70,7 @@ VictoryRoad2FDefaultScript:
 	set BIT_CUR_MAP_LOADED_1, [hl]
 	ret
 
-.SwitchCoords:
+VictoryRoad2FBoulderSwitchCoords:
 	dbmapcoord  1, 16
 	dbmapcoord  9, 16
 	db -1 ; end

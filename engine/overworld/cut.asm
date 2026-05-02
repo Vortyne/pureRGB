@@ -1,4 +1,4 @@
-UsedCut:
+UsedCut::
 	xor a
 	ld [wActionResultOrTookBattleTurn], a ; initialise to failure value
 	ld a, [wCurMapTileset]

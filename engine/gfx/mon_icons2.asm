@@ -95,7 +95,7 @@ PreparePartyMonSpriteCopy:
 
 GetPartyMonSpriteID:
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	; missingno is allowed here, 0 is a valid value
 	ld b, a

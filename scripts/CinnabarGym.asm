@@ -60,9 +60,6 @@ CinnabarGymGetOpponentTextScript:
 	ldh [hTextID], a
 	jp DisplayTextID
 
-CinnabarGymFlagAction:
-	predef_jump FlagActionPredef
-
 CinnabarGymResetScripts:
 	call ResetMapScripts
 	; a = 0 after ResetMapScripts
@@ -80,7 +77,7 @@ CinnabarGymOpenGateScript:
 	ld c, a
 	ld b, FLAG_TEST
 	EventFlagAddress hl, EVENT_BEAT_CINNABAR_GYM_TRAINER_0
-	call CinnabarGymFlagAction
+	call FlagAction
 	ld a, c
 	and a
 	jr nz, .no_sound
@@ -95,14 +92,14 @@ CinnabarGymOpenGateScript:
 	ld c, a
 	ld b, FLAG_SET
 	EventFlagAddress hl, EVENT_BEAT_CINNABAR_GYM_TRAINER_0
-	call CinnabarGymFlagAction
+	call FlagAction
 	ld a, [wTrainerHeaderFlagBit]
 	sub $2
 	AdjustEventBit EVENT_CINNABAR_GYM_GATE0_UNLOCKED, 0
 	ld c, a
 	ld b, FLAG_SET
 	EventFlagAddress hl, EVENT_CINNABAR_GYM_GATE0_UNLOCKED
-	call CinnabarGymFlagAction
+	call FlagAction
 	call UpdateCinnabarGymGateTileBlocks
 	jr CinnabarGymResetScripts
 
@@ -525,7 +522,7 @@ CinnabarQuizQuestionsText6:
 
 CinnabarGymGateFlagAction:
 	EventFlagAddress hl, EVENT_CINNABAR_GYM_GATE0_UNLOCKED
-	predef_jump FlagActionPredef
+	jp FlagAction
 
 CinnabarGymQuiz_AskQuestion:
 	call YesNoChoice
@@ -545,7 +542,7 @@ CinnabarGymQuiz_AskQuestion:
 	ld c, a
 	ld b, FLAG_SET
 	call CinnabarGymGateFlagAction
-	jp UpdateCinnabarGymGateTileBlocks_
+	jp UpdateCinnabarGymGateTileBlocks
 .wrongAnswer
 	call WaitForSoundToFinish
 	ld a, SFX_DENIED
@@ -559,9 +556,7 @@ CinnabarGymQuiz_AskQuestion:
 	ld c, a
 	ld b, FLAG_TEST
 	EventFlagAddress hl, EVENT_BEAT_CINNABAR_GYM_TRAINER_0
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	ret nz
 	ldh a, [hGymGateIndex]
 	add $2
@@ -593,7 +588,7 @@ CinnabarGymQuizIncorrectText:
 	text_far _CinnabarGymQuizIncorrectText
 	text_end
 
-UpdateCinnabarGymGateTileBlocks_::
+UpdateCinnabarGymGateTileBlocks::
 ; Update the overworld map with open floor blocks or locked gate blocks
 ; depending on event flags.
 	ld a, 6
@@ -612,23 +607,25 @@ UpdateCinnabarGymGateTileBlocks_::
 	ld c, a
 	inc hl
 	ld a, [hl]
-	ld [wGymGateTileBlock], a
+	ld d, a
 	push bc
+	push de
 	ldh a, [hGymGateIndex]
 	ldh [hBackupGymGateIndex], a
 	AdjustEventBit EVENT_CINNABAR_GYM_GATE0_UNLOCKED, 0
 	ld c, a
 	ld b, FLAG_TEST
 	call CinnabarGymGateFlagAction
+	pop de
 	ld a, c
 	and a
 	ld a, $e
 	jr nz, .next
-	ld a, [wGymGateTileBlock]
+	ld a, d ; gym gate tile block
 .next
 	pop bc
 	ld [wNewTileBlockID], a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	ld hl, hGymGateIndex
 	dec [hl]
 	jr nz, .loop

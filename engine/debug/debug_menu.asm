@@ -112,7 +112,7 @@ TestBattle: ; unreferenced except in _DEBUG
 	ld a, RHYDON
 	ld [wCurOpponent], a
 
-	predef InitOpponent
+	callfar InitOpponent
 
 	; When the battle ends, do it all again.
 	; There are some graphical quirks in SGB mode.

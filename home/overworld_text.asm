@@ -10,7 +10,7 @@
 PickUpItemText::
 	text_asm
 PickupItemTextBody::
-	predef PickUpItem
+	callfar PickUpItem
 	rst TextScriptEnd
 
 ;;;;;;;;;; PureRGBnote: ADDED: text used when picking up multiple items at once
@@ -31,7 +31,7 @@ PickUp5ItemText::
 	; fall through
 
 DoMultiItemPickup:
-	predef PickUpItemQuantity
+	callfar PickUpItemQuantity
 	rst TextScriptEnd
 
 ;;;;;;;;;;

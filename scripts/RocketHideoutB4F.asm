@@ -55,7 +55,7 @@ RocketHideoutB4FDoorCallbackScript:
 .set_block
 	ld [wNewTileBlockID], a
 	lb bc, 5, 12
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
@@ -88,12 +88,10 @@ RocketHideoutB4FBeatGiovanniScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	call GBFadeOutToBlack
-	ld a, TOGGLE_ROCKET_HIDEOUT_B4F_GIOVANNI
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_ROCKET_HIDEOUT_B4F_ITEM_4
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_ROCKET_HIDEOUT_B4F_GIOVANNI
+	call HideObject
+	ld c, TOGGLE_ROCKET_HIDEOUT_B4F_ITEM_4
+	call ShowObject
 	call UpdateSprites
 	call GBFadeInFromBlack
 	ld hl, wCurrentMapScriptFlags
@@ -220,9 +218,8 @@ RocketHideoutB4FRocket3AfterBattleText:
 	rst _PrintText
 	CheckAndSetEvent EVENT_ROCKET_DROPPED_LIFT_KEY
 	jr nz, .done
-	ld a, TOGGLE_ROCKET_HIDEOUT_B4F_ITEM_5
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_ROCKET_HIDEOUT_B4F_ITEM_5
+	call ShowObject
 .done
 	rst TextScriptEnd
 

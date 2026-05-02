@@ -107,7 +107,7 @@ StoreHoFAltPaletteFlag:
 	ld a, [wHoFPartyMonIndex]
 	ld c, a
 	ld hl, wHallOfFamePalettes
-	predef FlagActionPredef
+	call FlagAction
 	pop af
 	ret
 
@@ -138,9 +138,9 @@ HoFShowMonOrPlayer:
 	hlcoord 12, 5
 	call GetMonHeader
 	call LoadFrontSpriteByMonIndex
-	predef LoadMonBackPic
+	callfar LoadMonBackPic
 .next1
-	lb bc, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, 0
+	lb de, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, 0
 	call RunPaletteCommand
 	ld a, %11100100
 	ldh [rBGP], a
@@ -192,8 +192,8 @@ HoFDisplayMonInfo:
 	call PrintLevelCommon
 	ld a, [wHoFMonSpecies]
 	ld [wCurSpecies], a
-	hlcoord 3, 9
-	predef PrintMonType
+	decoord 3, 9
+	callfar PrintMonType
 	ld a, [wHoFMonSpecies]
 	jp PlayCry
 
@@ -220,7 +220,7 @@ HoFLoadPlayerPics:
 	ld de, RedPicBack
 	ld a, BANK(RedPicBack)
 	call UncompressSpriteFromDE
-	predef ScaleSpriteByTwo
+	callfar ScaleSpriteByTwo
 	ld de, vBackPic
 	call InterlaceMergeSpriteBuffers
 	ld c, $1
@@ -239,7 +239,7 @@ HoFLoadMonPlayerPicTileIDs:
 
 HoFDisplayPlayerStats:
 	SetEvent EVENT_HALL_OF_FAME_DEX_RATING
-	predef DisplayDexRating
+	callfar DisplayDexRating
 	hlcoord 0, 4
 	lb bc, 6, 10
 	call TextBoxBorder
@@ -256,7 +256,7 @@ HoFDisplayPlayerStats:
 	ld de, wPlayTimeHours
 	lb bc, 2, 5
 	call PrintNumber
-	ld a, $6d
+	ld a, '<COLON>'
 	ld [hli], a
 	ld de, wPlayTimeMinutes
 	lb bc, LEADING_ZEROES | 1, 2

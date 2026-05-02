@@ -28,9 +28,7 @@ GainExperience:
 	ld a, [wWhichPokemon]
 	ld c, a
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a ; is mon's gain exp flag set?
+	call FlagAction
 	pop hl
 	jp z, .nextMon ; if mon's gain exp flag not set, go to next mon
 	ld de, (MON_HP_EXP + 1) - (MON_HP + 1)
@@ -344,7 +342,7 @@ GainExperience:
 	ld a, [wWhichPokemon]
 	ld c, a
 	ld b, FLAG_SET
-	predef FlagActionPredef
+	call FlagAction
 .noEvos
 	pop hl
 	pop af
@@ -370,12 +368,12 @@ GainExperience:
 	ld c, a
 	ld b, FLAG_SET
 	push bc
-	predef FlagActionPredef ; set the gain exp flag for the mon that is currently out
+	call FlagAction ; set the gain exp flag for the mon that is currently out
 	ld hl, wPartyFoughtCurrentEnemyFlags
 	xor a
 	ld [hl], a
 	pop bc
-	predef_jump FlagActionPredef ; set the fought current enemy flag for the mon that is currently out
+	jp FlagAction ; set the fought current enemy flag for the mon that is currently out
 
 ; divide enemy base stats, catch rate, and base exp by the number of mons gaining exp
 DivideExpDataByNumMonsGainingExp:

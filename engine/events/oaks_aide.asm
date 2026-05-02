@@ -1,4 +1,4 @@
-OaksAideScript:
+OaksAideScript::
 	ld hl, OaksAideHiText
 	rst _PrintText
 	call YesNoChoice

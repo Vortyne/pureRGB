@@ -36,7 +36,7 @@ Route2ReplaceCutTiles:
 	lb bc, 11, 7
 	ld a, $6D
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 .removeAddCutTilesNoRedraw
 	CheckEvent EVENT_DELETED_ROUTE2_TREES
 	ret z
@@ -145,7 +145,7 @@ Route2AfterBattleText1:
 .useMon
 	ld [wNamedObjectIndex], a
 	call GetMonName
-	predef IndexToPokedex
+	call IndexToPokedex
 	callfar SetPokemonLearnsetUnlocked
 	ld hl, Route2AfterBattle2Learnset
 	rst _PrintText

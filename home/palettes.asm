@@ -39,12 +39,12 @@ UpdatePal:: ; shinpokerednote: gbcnote: gbc color code from pokeyellow
 
 
 RunDefaultPaletteCommand::
-	ld b, SET_PAL_DEFAULT
+	ld d, SET_PAL_DEFAULT
 RunPaletteCommand::
 	ld a, [wOnSGB]
 	and a
 	ret z
-	predef_jump _RunPaletteCommand
+	jpfar _RunPaletteCommand
 
 GetHealthBarColor::
 ; Return at hl the palette of

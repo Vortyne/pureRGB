@@ -1,4 +1,4 @@
-FindPathToPlayer:
+FindPathToPlayer::
 	xor a
 	ld hl, hFindPathNumSteps
 	ld [hli], a ; hFindPathNumSteps
@@ -70,7 +70,7 @@ FindPathToPlayer:
 	ld [hl], $ff
 	ret
 
-CalcPositionOfPlayerRelativeToNPC:
+CalcPositionOfPlayerRelativeToNPC::
 	xor a
 	ldh [hNPCPlayerRelativePosFlags], a
 	ld a, [wSpritePlayerStateData1YPixels]
@@ -192,3 +192,24 @@ NPCMovementDirectionsToJoypadMasksTable:
 	db NPC_MOVEMENT_LEFT, PAD_LEFT
 	db NPC_MOVEMENT_RIGHT, PAD_RIGHT
 	db $ff
+
+; divides [hDividend2] by [hDivisor2] and stores the quotient in [hQuotient2]
+DivideBytes::
+	push hl
+	ld hl, hQuotient2
+	xor a
+	ld [hld], a
+	ld a, [hld]
+	and a
+	jr z, .done
+	ld a, [hli]
+.loop
+	sub [hl]
+	jr c, .done
+	inc hl
+	inc [hl]
+	dec hl
+	jr .loop
+.done
+	pop hl
+	ret

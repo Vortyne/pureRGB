@@ -534,9 +534,8 @@ ShowAllHl:
 	ld a, [hli]                  ; read move from move table
 	cp -1
 	ret z
-	ld [wToggleableObjectIndex], a
 	push hl
-	predef ShowExtraObject
+	call ShowExtraObject
 	pop hl
 	jr .loop
 
@@ -553,9 +552,9 @@ HideAllHl:
 	ld a, [hli]                  ; read move from move table
 	cp -1
 	ret z
-	ld [wToggleableObjectIndex], a
+	ld c, a
 	push hl
-	predef HideExtraObject
+	call HideExtraObject
 	pop hl
 	jr .loop
 

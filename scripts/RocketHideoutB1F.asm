@@ -26,7 +26,7 @@ RocketHideoutB1FDoorCallbackScript:
 .set_door_block
 	ld [wNewTileBlockID], a
 	lb bc, 8, 12
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 RocketHideoutB1F_ScriptPointers:
 	def_script_pointers

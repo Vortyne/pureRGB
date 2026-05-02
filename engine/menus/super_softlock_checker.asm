@@ -150,7 +150,7 @@ IsMoveLearnableByParty:
 	ld a, [hl]
 	ld [wCurPartySpecies], a
 	push de
-	predef CanLearnTM
+	callfar CanLearnTM
 	pop de
 	ld a, c
 	and a ; can the pokemon learn the move?

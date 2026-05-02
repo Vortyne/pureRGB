@@ -81,7 +81,16 @@ ShakeElevatorRedrawRow:
 	pop hl
 	ld [hli], a
 	ld [hl], d
-	call ScheduleNorthRowRedraw
+;;;;; ScheduleNorthRowRedraw, used to be in overworld but wanted that to be optimized cycle wise so copied here
+	hlcoord 0, 0
+	call CopyToRedrawRowOrColumnSrcTiles
+	ld a, [wMapViewVRAMPointer]
+	ldh [hRedrawRowOrColumnDest], a
+	ld a, [wMapViewVRAMPointer + 1]
+	ldh [hRedrawRowOrColumnDest + 1], a
+	ld a, REDRAW_ROW
+	ldh [hRedrawRowOrColumnMode], a
+;;;;;
 	pop hl
 	pop af
 	ld [hli], a

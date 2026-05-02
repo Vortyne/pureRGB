@@ -142,7 +142,7 @@ TownMapCursor:
 	INCBIN "gfx/town_map/town_map_cursor.1bpp"
 TownMapCursorEnd:
 
-LoadTownMap_Nest:
+LoadTownMap_Nest::
 	call LoadTownMap
 	ld hl, wUpdateSpritesEnabled
 	ld a, [hl]
@@ -383,7 +383,7 @@ LoadTownMap:
 	ld [hl], $6C
 .noVolcanoMarker
 	call EnableLCD
-	ld b, SET_PAL_TOWN_MAP
+	ld d, SET_PAL_TOWN_MAP
 	call RunPaletteCommand
 	call Delay3
 	call GBPalNormal

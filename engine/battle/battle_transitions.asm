@@ -1,4 +1,4 @@
-BattleTransition:
+BattleTransition::
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3

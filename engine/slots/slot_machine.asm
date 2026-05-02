@@ -16,11 +16,11 @@ PromptUserToPlaySlots::
 	xor a
 	ld [hli], a
 	ld [hl], SMILE_BUBBLE
-	predef EmotionBubble
+	callfar EmotionBubble
 	call GBPalWhiteOutWithDelay3
 	call LoadSlotMachineTiles
 	call LoadFontTilePatterns
-	ld b, SET_PAL_SLOTS
+	ld d, SET_PAL_SLOTS
 	call RunPaletteCommand
 	call GBPalNormal
 	ld a, $e4

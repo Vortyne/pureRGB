@@ -9,7 +9,7 @@ HandleLedges::
 	jr z, .volcano
 	ret
 .overworld
-	predef GetTileAndCoordsInFrontOfPlayer
+	call GetTileAndCoordsInFrontOfPlayer
 	ld hl, LedgeTiles
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	ld b, a

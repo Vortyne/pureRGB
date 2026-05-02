@@ -54,9 +54,8 @@ PalletTownOakHeyWaitScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	call DisableAllJoypad
-	ld a, TOGGLE_PALLET_TOWN_OAK
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_PALLET_TOWN_OAK
+	call ShowObject
 
 	; trigger the next script
 	ld a, SCRIPT_PALLETTOWN_OAK_WALKS_TO_PLAYER
@@ -77,10 +76,10 @@ PalletTownOakWalksToPlayerScript:
 	ld a, 1
 	swap a
 	ldh [hNPCSpriteOffset], a
-	predef CalcPositionOfPlayerRelativeToNPC
+	callfar CalcPositionOfPlayerRelativeToNPC
 	ld hl, hNPCPlayerYDistance
 	dec [hl]
-	predef FindPathToPlayer ; load Oak's movement into wNPCMovementDirections2
+	callfar FindPathToPlayer ; load Oak's movement into wNPCMovementDirections2
 	ld de, wNPCMovementDirections2
 	ld a, PALLETTOWN_OAK
 	ldh [hSpriteIndex], a
@@ -137,12 +136,10 @@ PalletTownDaisyScript:
 	CheckBothEventsSet EVENT_GOT_TOWN_MAP, EVENT_ENTERED_BLUES_HOUSE, 1
 	jr nz, .next
 	SetEvent EVENT_DAISY_WALKING
-	ld a, TOGGLE_DAISY_SITTING
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_DAISY_WALKING
-	ld [wToggleableObjectIndex], a
-	predef_jump ShowObject
+	ld c, TOGGLE_DAISY_SITTING
+	call HideObject
+	ld c, TOGGLE_DAISY_WALKING
+	jp ShowObject
 .next
 	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
 	ret z
@@ -180,7 +177,7 @@ PalletTownOakText:
 	xor a
 	ld [wEmotionBubbleSpriteIndex], a ; player's sprite
 	ld [wWhichEmotionBubble], a ; EXCLAMATION_BUBBLE
-	predef EmotionBubble
+	callfar EmotionBubble
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerMovingDirection], a
 	rst TextScriptEnd
@@ -209,7 +206,7 @@ PalletTownPlayersHouseSignText:
 IF DEF(_DEBUG)
 	text_asm
 	callfar GBCSetCPU1xSpeed
-	predef HallOfFamePC
+	callfar HallOfFamePC
 	jp SoftReset
 ELSE
 	text_far _PalletTownPlayersHouseSignText

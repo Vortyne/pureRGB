@@ -64,9 +64,8 @@ BillsHousePokemonEntersMachineScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, TOGGLE_BILL_POKEMON
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_BILL_POKEMON
+	call HideObject
 	SetEvent EVENT_BILL_SAID_USE_CELL_SEPARATOR
 	ld a, SFX_TRADE_MACHINE
 	rst _PlaySound
@@ -90,9 +89,8 @@ BillsHouseBillExitsMachineScript:
 	ld a, 5
 	ldh [hSpriteMapXCoord], a
 	call SetSpritePosition1
-	ld a, TOGGLE_BILL_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_BILL_1
+	call ShowObject
 	ld c, 8
 	rst _DelayFrames
 	ld a, BILLSHOUSE_BILL_SS_TICKET
@@ -177,16 +175,13 @@ BillsHouseBillSSTicketText:
 	ld hl, .SSTicketReceivedText
 	rst _PrintText
 	SetEvent EVENT_GOT_SS_TICKET
-	ld a, TOGGLE_CERULEAN_GUARD_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_CERULEAN_GUARD_2
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_CERULEAN_GUARD_1
+	call ShowObject
+	ld c, TOGGLE_CERULEAN_GUARD_2
+	call HideObject
 ;;;;;;;;;; PureRGBnote: MOVED: move this object hiding here since we could teleport out of bills house and miss this being triggered on route 25 instead
-	ld a, TOGGLE_NUGGET_BRIDGE_GUY
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_NUGGET_BRIDGE_GUY
+	call HideObject
 ;;;;;;;;;;
 .got_ss_ticket
 	ld hl, .WhyDontYouGoInsteadOfMeText

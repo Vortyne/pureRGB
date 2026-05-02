@@ -19,9 +19,8 @@ CheckHideMrFujiInPokemonTower:
 	ret z
 	CheckEvent EVENT_RESCUED_MR_FUJI
 	ret z
-	ld a, TOGGLE_POKEMON_TOWER_7F_MR_FUJI
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
+	ld c, TOGGLE_POKEMON_TOWER_7F_MR_FUJI
+	jp HideObject
 ;;;;;;;;;;
 
 MrFujisHouseSuperNerdText:

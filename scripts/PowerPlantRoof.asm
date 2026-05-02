@@ -371,9 +371,8 @@ ZapdosEndBattleScript:
 	cp $ff ; do nothing if you lost the battle
 	ret z
 	SetEvent EVENT_BEAT_ZAPDOS
-	ld a, TOGGLE_POWER_PLANT_ROOF_ZAPDOS
-	ld [wToggleableObjectIndex], a
-	predef_jump HideExtraObject
+	ld c, TOGGLE_POWER_PLANT_ROOF_ZAPDOS
+	jp HideExtraObject
 	
 PowerPlantRoofSignText::
 	text_far _PowerPlantRoofSignText

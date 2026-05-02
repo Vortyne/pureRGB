@@ -82,5 +82,7 @@ INCLUDE "home/hidden_events.asm"
 INCLUDE "home/predef_text.asm"
 INCLUDE "home/gbc_funcs.asm" ; shinpokerednote: gbcnote: added code from pokemon yellow for showing colors correctly on gbc
 INCLUDE "home/sprite_control.asm"
+INCLUDE "home/flag_action.asm"
+INCLUDE "home/toggleable_objects.asm"
 ;INCLUDE "home/test.asm"
 

@@ -57,11 +57,11 @@
 	charmap "<COLON>",   $6d ; colon with tinier dots than ":"
 	charmap "ぃ",         $6e ; hiragana small i, unused
 	charmap "ぅ",         $6f ; hiragana small u, unused
-	charmap "‘",         $70 ; opening single quote
-	charmap "’",         $71 ; closing single quote
-	charmap "<EXTRAOPENQUOTE>",         $72 ; opening quote ; PureRGBnote: CHANGED: crappier quotation mark
-	charmap "<EXTRACLOSEQUOTE>",         $73 ; closing quote ; PureRGBnote: CHANGED: crappier quotation mark 2
-	charmap "·",         $74 ; middle dot, unused
+	charmap "‘",         $70 ; opening single quote ; unused?
+	charmap "’",         $71 ; closing single quote ; unused?
+	charmap "<EXTRAOPENQUOTE>",         $72 ; opening quote ; PureRGBnote: CHANGED: crappier quotation mark (unused)
+	charmap "<EXTRACLOSEQUOTE>",         $73 ; closing quote ; PureRGBnote: CHANGED: crappier quotation mark 2 (unused)
+	charmap "·",         $74 ; middle dot
 	charmap "…",         $75 ; ellipsis
 	charmap "ぁ",         $76 ; hiragana small a, unused
 	charmap "ぇ",         $77 ; hiragana small e, unused

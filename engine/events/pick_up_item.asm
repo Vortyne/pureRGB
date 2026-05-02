@@ -1,10 +1,9 @@
 ; PureRGBnote: ADDED: CHANGED: a bunch of this code was modified to allow for multiple items to be picked up at once from an item ball.
 
-PickUpItemQuantity:
-	call GetPredefRegisters
-	jp PickUpItemCommon
+PickUpItemQuantity::
+	jr PickUpItemCommon
 
-PickUpItem:
+PickUpItem::
 	ld c, 1 ; default quantity
 PickUpItemCommon:
 	push bc
@@ -24,7 +23,8 @@ PickUpItemCommon:
 
 .isToggleable
 	ld a, [hl]
-	ldh [hToggleableObjectIndex], a
+	pop bc ; obtain c which is either set to 1 if we called PickUpItem, or an arbitrary quantity otherwise
+	ld b, a
 
 	ld hl, wMapSpriteExtraData
 	ldh a, [hSpriteIndex]
@@ -33,22 +33,21 @@ PickUpItemCommon:
 	ld d, 0
 	ld e, a
 	add hl, de
-	ld a, [hl]
-	pop bc ; obtain c which is either set to 1 if we called PickUpItem, or an arbitrary quantity otherwise
-	ld b, a ; item
 	push bc
+	ld b, [hl]
 	call GiveItem
-	jr nc, .BagFull
-
-	ldh a, [hToggleableObjectIndex]
-	ld [wToggleableObjectIndex], a
+	pop bc
+	ld hl, NoMoreRoomForItemText
+	jr nc, .print
+	push bc
+	ld c, b
 ;;;;;;;;;; PureRGBnote: CHANGED: in certain maps hidable items use a different set of flags than everywhere else, needed more space for flags.
 	CheckEvent EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
 	jr nz, .hideExtra
-	predef HideObject
+	call HideObject
 	jr .continue
 .hideExtra
-	predef HideExtraObject
+	call HideExtraObject
 .continue
 ;;;;;;;;;;
 	ld a, 1
@@ -57,20 +56,14 @@ PickUpItemCommon:
 	pop bc
 	ld a, c
 	cp 1
-	jr z, .singleItemPickup
+	ld hl, FoundItemText
+	jr z, .print
 .multiItemPickup
 	add NUMBER_CHAR_OFFSET ; index of first number character in charmap (assumes c must be 0-9)
 	ld [wTempStore1], a
 	ld a, '@'
 	ld [wTempStore2], a
 	ld hl, FoundMultipleItemText
-	jr .print
-.singleItemPickup
-	ld hl, FoundItemText
-	jr .print
-.BagFull
-	pop bc
-	ld hl, NoMoreRoomForItemText
 .print
 	rst _PrintText
 	ret

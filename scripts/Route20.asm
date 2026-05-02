@@ -18,17 +18,17 @@ Route20_Script:
 Route20BoulderScript:
 	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
 	jr z, .next_boulder_check
-	ld a, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
-	call Route20ShowObjectScript
-	ld a, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
-	call Route20ShowObjectScript
+	ld c, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
+	call ShowObject
+	ld c, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
+	call ShowObject
 	ld hl, .ToggleableObjectIDs
 .hide_toggleable_objects
 	ld a, [hli]
 	cp $ff
 	jr z, .next_boulder_check
 	push hl
-	call Route20HideObjectScript
+	call HideObject
 	pop hl
 	jr .hide_toggleable_objects
 
@@ -44,21 +44,14 @@ Route20BoulderScript:
 .next_boulder_check
 	CheckBothEventsSet EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
 	ret z
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
-	call Route20ShowObjectScript
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
-	call Route20ShowObjectScript
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1
-	call Route20HideObjectScript
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2
-	; fall through
-Route20HideObjectScript:
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
-
-Route20ShowObjectScript:
-	ld [wToggleableObjectIndex], a
-	predef_jump ShowObject
+	ld c, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
+	call HideObject
+	ld c, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
+	call HideObject
+	ld c, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1
+	call HideObject
+	ld c, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2
+	jp HideObject
 
 Route20_ScriptPointers:
 	def_script_pointers

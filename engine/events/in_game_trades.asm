@@ -48,9 +48,7 @@ DoInGameTradeDialogue:
 	ld a, [wWhichTrade]
 	ld c, a
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	ld a, TRADETEXT_AFTER_TRADE
 	ld [wInGameTradeTextPointerTableIndex], a
 	jr nz, .printText
@@ -130,7 +128,7 @@ InGameTrade_DoTrade:
 	ld a, [wWhichTrade]
 	ld c, a
 	ld b, FLAG_SET
-	predef FlagActionPredef
+	call FlagAction
 	ld hl, ConnectCableText
 	rst _PrintText
 	call PlayInGameTradeMusic
@@ -141,7 +139,7 @@ InGameTrade_DoTrade:
 	call GetTradeMonPalette ; PureRGBnote: ADDED: stores whether mon you receive via trade has an alternate palette into wIsAltPalettePkmnData
 	call LoadHpBarAndStatusTilePatterns
 	call InGameTrade_PrepareTradeData
-	predef InternalClockTradeAnim
+	callfar InternalClockTradeAnim
 	pop af
 	ld [wCurEnemyLevel], a
 	pop af

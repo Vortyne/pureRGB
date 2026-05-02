@@ -17,9 +17,7 @@ ChooseCustomBallMenu::
 	push hl
 	ld hl, wCustomBallUnlockFlags
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	pop hl
 	jr nz, .loopPlaceString
 	ld de, LockedText
@@ -67,9 +65,7 @@ ChooseCustomBallMenu::
 	ld c, a
 	ld b, FLAG_TEST
 	ld hl, wCustomBallUnlockFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	jr z, .notUnlocked
 	ld a, d
 	inc a
@@ -1341,10 +1337,7 @@ CeruleanBallDesignerPhotoHintMenu::
 .checkPhotoEventSetC
 	ld b, FLAG_TEST
 	ld hl, wCustomBallUnlockFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
-	ret
+	jp FlagAction
 .printHintText
 	push af
 	cp 15

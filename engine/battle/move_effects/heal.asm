@@ -153,7 +153,7 @@ HealEffectCommon:
 	xor a
 .updateHPBar
 	ld [wHPBarType], a
-	predef UpdateHPBar2
+	predef UpdateHPBar
 	ld hl, DrawHUDsAndHPBars
 	call EffectCallBattleCore
 	ld hl, RegainedHealthText

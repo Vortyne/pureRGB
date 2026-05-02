@@ -6,16 +6,16 @@ DrawStartMenu::
 	lb bc, 14, 8
 	jr nz, .drawTextBoxBorder
 ; shorter menu if the player doesn't have the pokedex
-	ld b, $0c
+	ld b, 12
 .drawTextBoxBorder
 	call TextBoxBorder
 	; PureRGBnote: CHANGED: now SELECT button is tracked on this menu. Used in the new box-switching anywhere functionality.
-	ld a, PAD_DOWN | PAD_UP | PAD_START | PAD_B | PAD_A | PAD_SELECT
+	ld a, PAD_START | PAD_B | PAD_A | PAD_SELECT
 	ld [wMenuWatchedKeys], a
-	ld a, $02
-	ld [wTopMenuItemY], a ; Y position of first menu choice
-	ld a, $0b
-	ld [wTopMenuItemX], a ; X position of first menu choice
+	ld hl, wTopMenuItemY
+	ld [hl], 2 ; Y position of first menu choice
+	inc hl
+	ld [hl], 11 ; X position of first menu choice
 	call CheckSavedStartMenuIndex
 	xor a
 	ld [wMenuWatchMovingOutOfBounds], a
@@ -24,36 +24,36 @@ DrawStartMenu::
 	hlcoord 12, 2
 	CheckEvent EVENT_GOT_POKEDEX
 ; case for not having pokedex
-	ld a, $06
+	ld a, 5
+	ld de, StartMenuWithoutPokedexText
+	bccoord 12, 6
 	jr z, .storeMenuItemCount
-; case for having pokedex
-	ld de, StartMenuPokedexText
-	call PrintStartMenuItem
-	ld a, $07
+	inc a
+	ld de, StartMenuWithPokedexText
+	bccoord 12, 8
 .storeMenuItemCount
 	ld [wMaxMenuItem], a ; number of menu items
-	ld de, StartMenuPokemonText
-	call PrintStartMenuItem
-	ld de, StartMenuItemText
-	call PrintStartMenuItem
+	push bc
+	call PlaceString
+	pop hl ; pop bc into hl
 	ld de, wPlayerName ; player's name
-	call PrintStartMenuItem
+	push hl
+	call PlaceString
+	pop hl
 	ld a, [wStatusFlags4]
 	bit BIT_LINK_CONNECTED, a
-; case for not using link feature
-	ld de, StartMenuSaveText
-	jr z, .printSaveOrResetText
-; case for using link feature
+	jr z, .skipResetText
+	ld bc, SCREEN_WIDTH * 2
+	add hl, bc
 	ld de, StartMenuResetText
-.printSaveOrResetText
-	call PrintStartMenuItem
-	ld de, StartMenuOptionText
-	call PrintStartMenuItem
-	ld de, StartMenuExitText
 	call PlaceString
+.skipResetText
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
-	ret
+	call GetStartMenuPrompt
+	callfar PrintSafariZoneSteps ; print Safari Zone info, if in Safari Zone
+	call LoadGBPal ; shinpokerednote: gbcnote: moved to redisplaystartmenu for better visual effect
+	jp UpdateSprites
 
 ; PureRGBnote: ADDED: this code will remember the start menu's last selection in specific scenarios where it's usually cleared.
 ;                     Example: after going into a wild battle caused by fishing.
@@ -75,31 +75,17 @@ CheckSavedStartMenuIndex:
 	ld [wLastMenuItem], a
 	ret
 
-StartMenuPokedexText:
-	db "POKéDEX@"
-
-StartMenuPokemonText:
-	db "POKéMON@"
-
-StartMenuItemText:
-	db "ITEM@"
-
-StartMenuSaveText:
-	db "SAVE@"
+; TODO: use line and print once?
+StartMenuWithPokedexText:
+	db "#DEX"
+	next
+StartMenuWithoutPokedexText:
+	db "#MON"
+	next "ITEM"
+	next ; leave this row blank for the character name
+	next "SAVE"
+	next "OPTION"
+	next "EXIT@"
 
 StartMenuResetText:
 	db "RESET@"
-
-StartMenuExitText:
-	db "EXIT@"
-
-StartMenuOptionText:
-	db "OPTION@"
-
-PrintStartMenuItem:
-	push hl
-	call PlaceString
-	pop hl
-	ld de, SCREEN_WIDTH * 2
-	add hl, de
-	ret

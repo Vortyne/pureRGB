@@ -25,9 +25,8 @@ CeladonMansionRoofHouseEeveePokeballText:
 	ld a, BALL_DATA_ULTRA << 3 | TRUE
 	call GivePokemonCommon ; PureRGBnote: ADDED: this eevee uses alternate palette to be different than the ones you can catch at route 1
 	jr nc, .party_full
-	ld a, TOGGLE_CELADON_MANSION_EEVEE_GIFT
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_CELADON_MANSION_EEVEE_GIFT
+	call c, HideObject
 .party_full
 	rst TextScriptEnd
 

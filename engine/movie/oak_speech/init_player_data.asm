@@ -1,4 +1,4 @@
-InitPlayerData:
+InitPlayerData::
 
 	call Random
 	ldh a, [hRandomSub]

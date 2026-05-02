@@ -72,9 +72,8 @@ BluesHouseDaisySittingText:
 ;	lb bc, TOWN_MAP, 1
 ;	call GiveItem ; PureRGBnote: CHANGED: TOWN MAP is not treated as a bag item, pressing SELECT in the pokedex will open it after having received it from daisy.
 ;	jr nc, .bag_full
-	ld a, TOGGLE_TOWN_MAP
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_TOWN_MAP
+	call HideObject
 	ld hl, GotMapText
 	rst _PrintText
 	SetEvent EVENT_GOT_TOWN_MAP

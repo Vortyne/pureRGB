@@ -1,4 +1,4 @@
-PrintStrengthText:
+PrintStrengthText::
 	ld hl, wStatusFlags1
 	set BIT_STRENGTH_ACTIVE, [hl]
 	ld hl, UsedStrengthText

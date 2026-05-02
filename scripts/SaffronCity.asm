@@ -8,7 +8,7 @@ SaffronCity_Script:
 	xor a ; block 0
 	ld [wNewTileBlockID], a
 	lb bc, 1, 19
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 .notFirstLoad
 	jp EnableAutoTextBoxDrawing
 

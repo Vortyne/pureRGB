@@ -1,13 +1,10 @@
-FlagActionPredef:
-	call GetPredefRegisters
-
-FlagAction:
+FlagAction::
 ; Perform action b on bit c
 ; in the bitfield at hl.
 ;  0: reset
 ;  1: set
 ;  2: read
-; Return the result in c.
+; Return the result in c and a
 
 	push hl
 	push de
@@ -68,4 +65,5 @@ FlagAction:
 	pop de
 	pop hl
 	ld c, a
+	and a
 	ret

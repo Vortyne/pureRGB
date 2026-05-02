@@ -67,6 +67,5 @@ CeladonMartElevator_TextPointers:
 CeladonMartElevatorText:
 	text_asm
 	call CeladonMartElevatorCopyWarpMapsScript
-	ld hl, CeladonMartElevatorWarpMaps
-	predef DisplayElevatorFloorMenu
+	callfar DisplayElevatorFloorMenu
 	rst TextScriptEnd

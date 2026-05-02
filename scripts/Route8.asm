@@ -34,7 +34,7 @@ Route8CheckHideCutTrees:
 	lb bc, 6, 14
 	ld a, $4C
 	ld [wNewTileBlockID], a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 .rightTreeCheck
 	CheckEvent EVENT_CUT_DOWN_ROUTE8_RIGHT_TREE
 	ret z
@@ -42,7 +42,7 @@ Route8CheckHideCutTrees:
 	lb bc, 5, 20
 	ld a, $4C
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 .moveJolteon
 	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF
 	ret nz

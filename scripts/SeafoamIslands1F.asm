@@ -1,4 +1,5 @@
 ; PureRGBnote: ADDED: This map is also used for the "Bottom of the seafoam cave lake" underwater area you see in the dragonair event.
+; TODO: merge these between seafoam boulder things?
 SeafoamIslands1F_Script:
 	call EnableAutoTextBoxDrawing
 	ld a, [wXCoord]
@@ -11,32 +12,26 @@ SeafoamIslands1F_Script:
 	bit BIT_PUSHED_BOULDER, [hl]
 	res BIT_PUSHED_BOULDER, [hl]
 	jr z, .noBoulderWasPushed
-	ld hl, Seafoam1HolesCoords
-	call CheckBoulderCoords
+	ld de, Seafoam1HolesCoords
+	ld c, BANK(Seafoam1HolesCoords)
+	callfar CheckBoulderCoords
 	ret nc
 	EventFlagAddress hl, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
 	ld a, [wCoordIndex]
 	cp $1
 	jr nz, .boulder2FellDownHole
 	SetEventReuseHL EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	ld a, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
-	ld [wObjectToHide], a
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1
-	ld [wObjectToShow], a
+	lb bc, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
 	jr .hideAndShowBoulderObjects
 .boulder2FellDownHole
 	SetEventAfterBranchReuseHL EVENT_SEAFOAM1_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	ld a, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
-	ld [wObjectToHide], a
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2
-	ld [wObjectToShow], a
+	lb bc, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
 .hideAndShowBoulderObjects
-	ld a, [wObjectToHide]
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, [wObjectToShow]
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	push bc
+	call HideObject
+	pop bc
+	ld c, b
+	call ShowObject
 	jpfar BoulderHoleDropEffectDefault
 .noBoulderWasPushed
 	ld a, SEAFOAM_ISLANDS_B1F

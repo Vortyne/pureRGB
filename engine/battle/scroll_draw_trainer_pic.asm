@@ -4,7 +4,7 @@ _ScrollTrainerPicAfterBattle:
 ; TODO: optional trainer colors
 	xor a
 	ld [wEnemyMonSpecies2], a
-	ld b, SET_PAL_BATTLE
+	ld d, SET_PAL_BATTLE
 	call RunPaletteCommand
 	callfar _LoadTrainerPic
 	hlcoord 19, 0

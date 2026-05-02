@@ -65,7 +65,6 @@ CheckForceBikeOrSurf::
 	set BIT_ALWAYS_ON_BIKE, [hl]
 	ld a, BIKING
 	ld [wWalkBikeSurfState], a
-	ld [wWalkBikeSurfStateCopy], a
 	jp ForceBikeOrSurf
 .incorrectMap
 	inc hl
@@ -75,7 +74,6 @@ CheckForceBikeOrSurf::
 .forceSurfing
 	ld a, SURFING
 	ld [wWalkBikeSurfState], a
-	ld [wWalkBikeSurfStateCopy], a
 	jp ForceBikeOrSurf
 
 INCLUDE "data/maps/force_bike_surf.asm"
@@ -283,9 +281,6 @@ RangersLeftText:
 RangersLeftText2:
 	db "Left: @"
 
-GetTileAndCoordsInFrontOfPlayer:
-	call GetPredefRegisters
-
 _GetTileAndCoordsInFrontOfPlayer::
 	ld a, [wYCoord]
 	ld d, a
@@ -378,7 +373,7 @@ GetTileTwoStepsInFrontOfPlayer:
 	ld [wTileInFrontOfPlayer], a
 	ret
 
-CheckForCollisionWhenPushingBoulder:
+CheckForCollisionWhenPushingBoulder::
 	call GetTileTwoStepsInFrontOfPlayer
 ;;;;;;;;;; PureRGBnote: CHANGED: unified code for checking if a tile is passable
 	push bc

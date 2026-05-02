@@ -110,7 +110,7 @@ OverworldLoopLessDelay::
 	and a
 	jp z, OverworldLoop
 .displayDialogue
-	predef GetTileAndCoordsInFrontOfPlayer
+	call GetTileAndCoordsInFrontOfPlayer
 	call UpdateSprites
 	ld a, [wMiscFlags]
 	;bit BIT_TURNING, a
@@ -120,23 +120,6 @@ OverworldLoopLessDelay::
 	lda_coord 8, 9
 	ld [wTilePlayerStandingOn], a ; checked when using Surf for forbidden tile pairs
 	call DisplayTextID ; display either the start menu or the NPC/sign text
-	ld a, [wEnteringCableClub]
-	and a
-	jr z, .checkForOpponent
-	xor a
-	ld [wEnteringCableClub], a
-; XXX can this code be reached?
-;	jr z, .changeMap
-;	predef TryLoadSaveFile
-;	ld a, [wCurMap]
-;	ld [wDestinationMap], a
-;	call PrepareForSpecialWarp
-;	ld a, [wCurMap]
-;	call SwitchToMapRomBank ; switch to the ROM bank of the current map
-;	ld hl, wCurMapTileset
-;	set BIT_NO_PREVIOUS_MAP, [hl]
-.changeMap
-	jp EnterMap
 .checkForOpponent
 	ld a, [wCurOpponent]
 	and a
@@ -360,7 +343,7 @@ OverworldLoopLessDelay::
 	ld a, [wIsInBattle]
 	and a
 	jp nz, CheckWarpsNoCollision
-	predef ApplyOutOfBattlePoisonDamage ; also increment daycare mon exp
+	homecall ApplyOutOfBattlePoisonDamage ; also increment daycare mon exp
 	ld a, [wOutOfBattleBlackout]
 	and a
 	jp nz, HandleBlackOut ; if all pokemon fainted
@@ -605,7 +588,14 @@ WarpFound2::
 .done
 	ld hl, wMovementFlags
 	set BIT_STANDING_ON_DOOR, [hl] ; have the player's sprite step out from the door (if there is one)
-	call IgnoreInputForHalfSecond
+;;;; IgnoreInputForHalfSecond ; didn't need to be a call since it's only ever used once
+	ld a, 30
+	ld [wIgnoreInputCounter], a
+	ld hl, wStatusFlags5
+	ld a, [hl]
+	or (1 << BIT_DISABLE_JOYPAD) | (1 << BIT_UNKNOWN_5_2) | (1 << BIT_UNKNOWN_5_1)
+	ld [hl], a ; set ignore input bit
+;;;;
 	jp EnterMap
 
 ContinueCheckWarpsNoCollisionLoop::
@@ -623,7 +613,7 @@ CheckMapConnections::
 	set BIT_CROSSED_MAP_CONNECTION, [hl] ; PureRGBnote: ADDED: flag to indicate we crossed between maps by walking in the overworld
 	call LoadMapHeader
 	call PlayDefaultMusicFadeOutCurrent
-	ld b, SET_PAL_OVERWORLD
+	ld d, SET_PAL_OVERWORLD
 	call RunPaletteCommand
 ; Since the sprite set shouldn't change, this will just update VRAM slots at
 ; x#SPRITESTATEDATA2_IMAGEBASEOFFSET without loading any tile patterns.
@@ -813,7 +803,6 @@ LoadPlayerSpriteGraphics::
 .startWalking
 	xor a
 	ld [wWalkBikeSurfState], a
-	ld [wWalkBikeSurfStateCopy], a
 	jp LoadWalkingPlayerSpriteGraphics
 
 .determineGraphics
@@ -1042,7 +1031,7 @@ IsSpriteOrSignInFrontOfPlayer::
 	and a
 	jr z, .extendRangeOverCounter
 ; if there are signs
-	predef GetTileAndCoordsInFrontOfPlayer ; get the coordinates in front of the player in de
+	call GetTileAndCoordsInFrontOfPlayer ; get the coordinates in front of the player in de
 	ld hl, wSignCoords
 	ld a, [wNumSigns]
 	ld b, a
@@ -1075,7 +1064,7 @@ IsSpriteOrSignInFrontOfPlayer::
 	jr nz, .signLoop
 ; check if the player is front of a counter in a pokemon center, pokemart, etc. and if so, extend the range at which he can talk to the NPC
 .extendRangeOverCounter
-	predef GetTileAndCoordsInFrontOfPlayer ; get the tile in front of the player in c
+	call GetTileAndCoordsInFrontOfPlayer ; get the tile in front of the player in c
 	ld hl, wTilesetTalkingOverTiles ; list of tiles that extend talking range (counter tiles)
 	ld b, 3
 	ld d, $20 ; talking range in pixels (long range)
@@ -1220,7 +1209,7 @@ CollisionCheckOnLand::
 ; function that checks if the tile in front of the player is passable
 ; clears carry if it is, sets carry if not
 CheckTilePassable::
-	predef GetTileAndCoordsInFrontOfPlayer ; get tile in front of player
+	call GetTileAndCoordsInFrontOfPlayer ; get tile in front of player
 	ld a, [wTileInFrontOfPlayer] ; tile in front of player
 ;;;;;;;;;; PureRGBnote: CHANGED: unified code for checking if a tile is passable
 	ld d, a
@@ -1239,7 +1228,7 @@ CheckTilePassable::
 ; sets carry if there is a collision and unsets carry if not
 CheckForJumpingAndTilePairCollisions::
 	push hl
-	predef GetTileAndCoordsInFrontOfPlayer
+	call GetTileAndCoordsInFrontOfPlayer
 	push de
 	push bc
 	farcall HandleLedges ; check if the player is trying to jump a ledge
@@ -1308,7 +1297,8 @@ LoadCurrentMapView::
 	ldh a, [hLoadedROMBank]
 	push af
 	ld a, [wTilesetBank] ; tile data ROM bank
-	call SetCurBank ; switch to ROM bank that contains tile data
+	ldh [hLoadedROMBank], a
+	ld [rROMB], a ; we are not calling SetCurBank here for less cycles needed
 	ld a, [wCurrentTileBlockMapViewPointer] ; address of upper left corner of current map view
 	ld e, a
 	ld a, [wCurrentTileBlockMapViewPointer + 1]
@@ -1325,7 +1315,41 @@ LoadCurrentMapView::
 	push hl
 	ld a, [de]
 	ld c, a ; tile block number
-	call DrawTileBlock
+;;;; this function was only called once so move it to where it was called for better performance
+; function to write the tiles that make up a tile block to memory
+; Input: c = tile block ID, hl = destination address
+;;;; DrawTileBlock::
+	push hl
+	hl_deref wTilesetBlocksPtr ; pointer to tiles
+	ld a, c
+	swap a
+	ld b, a
+	and $f0
+	ld c, a
+	ld a, b
+	and $0f
+	ld b, a ; bc = tile block ID * 0x10
+	add hl, bc
+	ld d, h
+	ld e, l ; de = address of the tile block's tiles
+	pop hl
+	ld c, BLOCK_HEIGHT ; 4 loop iterations
+.drawTileBlockLoop ; each loop iteration, write 4 tile numbers
+	push bc
+REPT BLOCK_WIDTH - 1
+	ld a, [de]
+	ld [hli], a
+	inc de
+ENDR
+	ld a, [de]
+	ld [hl], a
+	inc de
+	ld bc, SURROUNDING_WIDTH - (BLOCK_WIDTH - 1)
+	add hl, bc
+	pop bc
+	dec c
+	jr nz, .drawTileBlockLoop
+;;;;
 	pop hl
 	pop de
 	pop bc
@@ -1389,7 +1413,9 @@ LoadCurrentMapView::
 	dec b
 	jr nz, .rowLoop2
 	pop af
-	jp SetCurBank ; restore previous ROM bank
+	ldh [hLoadedROMBank], a  ; restore previous ROM bank
+	ld [rROMB], a ; we are not calling SetCurBank here for less cycles needed
+	ret
 
 AdvancePlayerSprite::
 	ld a, [wSpritePlayerStateData1YStepVector]
@@ -1486,7 +1512,16 @@ AdvancePlayerSprite::
 	ld hl, wXOffsetSinceLastSpecialWarp
 	inc [hl]
 	ld de, wCurrentTileBlockMapViewPointer
-	call MoveTileBlockMapPointerEast
+;;;; MoveTileBlockMapPointerEast ; copied here since nothing else calls it
+	ld a, [de]
+	add 1
+	ld [de], a
+	jr nc, .updateMapView
+	inc de
+	ld a, [de]
+	inc a
+	ld [de], a
+;;;;
 	jr .updateMapView
 .checkForMoveToWestBlock
 	cp $ff
@@ -1496,7 +1531,16 @@ AdvancePlayerSprite::
 	ld hl, wXOffsetSinceLastSpecialWarp
 	dec [hl]
 	ld de, wCurrentTileBlockMapViewPointer
-	call MoveTileBlockMapPointerWest
+;;;; MoveTileBlockMapPointerWest ; copied here since nothing else calls it
+	ld a, [de]
+	sub 1
+	ld [de], a
+	jr nc, .updateMapView
+	inc de
+	ld a, [de]
+	dec a
+	ld [de], a
+;;;; 
 	jr .updateMapView
 .adjustYCoordWithinBlock
 	ld hl, wYBlockCoord
@@ -1512,7 +1556,18 @@ AdvancePlayerSprite::
 	inc [hl]
 	ld de, wCurrentTileBlockMapViewPointer
 	ld a, [wCurMapWidth]
-	call MoveTileBlockMapPointerSouth
+;;;; MoveTileBlockMapPointerSouth ; copied here since nothing else calls it
+	add MAP_BORDER * 2
+	ld b, a
+	ld a, [de]
+	add b
+	ld [de], a
+	jr nc, .updateMapView
+	inc de
+	ld a, [de]
+	inc a
+	ld [de], a
+;;;;
 	jr .updateMapView
 .checkForMoveToNorthBlock
 	cp $ff
@@ -1523,35 +1578,92 @@ AdvancePlayerSprite::
 	dec [hl]
 	ld de, wCurrentTileBlockMapViewPointer
 	ld a, [wCurMapWidth]
-	call MoveTileBlockMapPointerNorth
+;;;; MoveTileBlockMapPointerNorth ; copied here since nothing else calls it
+	add MAP_BORDER * 2
+	ld b, a
+	ld a, [de]
+	sub b
+	ld [de], a
+	jr nc, .updateMapView
+	inc de
+	ld a, [de]
+	dec a
+	ld [de], a
+;;;;
 .updateMapView
 	call LoadCurrentMapView
 	ld a, [wSpritePlayerStateData1YStepVector]
 	cp $01
 	jr nz, .checkIfMovingNorth2
 ; if moving south
-	call ScheduleSouthRowRedraw
+;;;; ScheduleSouthRowRedraw ; copied here since it's only called here once
+	hlcoord 0, 16
+	call CopyToRedrawRowOrColumnSrcTiles
+	hl_deref wMapViewVRAMPointer
+	ld bc, $200
+	add hl, bc
+	ld a, h
+	and $03
+	or $98
+	ldh [hRedrawRowOrColumnDest + 1], a
+	ld a, l
+	ldh [hRedrawRowOrColumnDest], a
+	ld a, REDRAW_ROW
+	ldh [hRedrawRowOrColumnMode], a
+;;;;
 	jr .scrollBackgroundAndSprites
 .checkIfMovingNorth2
 	cp $ff
 	jr nz, .checkIfMovingEast2
 ; if moving north
-	call ScheduleNorthRowRedraw
+;;;; ScheduleNorthRowRedraw ; moved here since it's only called here once
+	hlcoord 0, 0
+	call CopyToRedrawRowOrColumnSrcTiles
+	ld a, [wMapViewVRAMPointer]
+	ldh [hRedrawRowOrColumnDest], a
+	ld a, [wMapViewVRAMPointer + 1]
+	ldh [hRedrawRowOrColumnDest + 1], a
+	ld a, REDRAW_ROW
+	ldh [hRedrawRowOrColumnMode], a
+;;;;
 	jr .scrollBackgroundAndSprites
 .checkIfMovingEast2
 	ld a, [wSpritePlayerStateData1XStepVector]
 	cp $01
 	jr nz, .checkIfMovingWest2
 ; if moving east
-	call ScheduleEastColumnRedraw
+;;;; ScheduleEastColumnRedraw ; moved here since it's only called here once
+	hlcoord 18, 0
+	call ScheduleColumnRedrawHelper
+	ld a, [wMapViewVRAMPointer]
+	ld c, a
+	and $e0
+	ld b, a
+	ld a, c
+	add 18
+	and $1f
+	or b
+	ldh [hRedrawRowOrColumnDest], a
+	ld a, [wMapViewVRAMPointer + 1]
+	ldh [hRedrawRowOrColumnDest + 1], a
+	ld a, REDRAW_COL
+	ldh [hRedrawRowOrColumnMode], a
+;;;;
 	jr .scrollBackgroundAndSprites
 .checkIfMovingWest2
 	cp $ff
-; PureRGBnote: OPTIMIZED
-	call z, ScheduleWestColumnRedraw
-	;jr nz, .scrollBackgroundAndSprites
+	jr nz, .scrollBackgroundAndSprites
 ; if moving west
-	;call ScheduleWestColumnRedraw
+;;;; ScheduleWestColumnRedraw ; moved here since it's only called here once
+	hlcoord 0, 0
+	call ScheduleColumnRedrawHelper
+	ld a, [wMapViewVRAMPointer]
+	ldh [hRedrawRowOrColumnDest], a
+	ld a, [wMapViewVRAMPointer + 1]
+	ldh [hRedrawRowOrColumnDest + 1], a
+	ld a, REDRAW_COL
+	ldh [hRedrawRowOrColumnMode], a
+;;;;
 .scrollBackgroundAndSprites
 	ld a, [wSpritePlayerStateData1YStepVector]
 	ld b, a
@@ -1588,71 +1700,6 @@ AdvancePlayerSprite::
 ;.done
 	ret
 
-; the following four functions are used to move the pointer to the upper left
-; corner of the tile block map in the direction of motion
-
-MoveTileBlockMapPointerEast::
-	ld a, [de]
-	add 1
-	ld [de], a
-	ret nc
-	inc de
-	ld a, [de]
-	inc a
-	ld [de], a
-	ret
-
-MoveTileBlockMapPointerWest::
-	ld a, [de]
-	sub 1
-	ld [de], a
-	ret nc
-	inc de
-	ld a, [de]
-	dec a
-	ld [de], a
-	ret
-
-MoveTileBlockMapPointerSouth::
-	add MAP_BORDER * 2
-	ld b, a
-	ld a, [de]
-	add b
-	ld [de], a
-	ret nc
-	inc de
-	ld a, [de]
-	inc a
-	ld [de], a
-	ret
-
-MoveTileBlockMapPointerNorth::
-	add MAP_BORDER * 2
-	ld b, a
-	ld a, [de]
-	sub b
-	ld [de], a
-	ret nc
-	inc de
-	ld a, [de]
-	dec a
-	ld [de], a
-	ret
-
-; the following 6 functions are used to tell the V-blank handler to redraw
-; the portion of the map that was newly exposed due to the player's movement
-
-ScheduleNorthRowRedraw::
-	hlcoord 0, 0
-	call CopyToRedrawRowOrColumnSrcTiles
-	ld a, [wMapViewVRAMPointer]
-	ldh [hRedrawRowOrColumnDest], a
-	ld a, [wMapViewVRAMPointer + 1]
-	ldh [hRedrawRowOrColumnDest + 1], a
-	ld a, REDRAW_ROW
-	ldh [hRedrawRowOrColumnMode], a
-	ret
-
 CopyToRedrawRowOrColumnSrcTiles::
 	ld de, wRedrawRowOrColumnSrcTiles
 	ld c, 2 * SCREEN_WIDTH
@@ -1662,40 +1709,6 @@ CopyToRedrawRowOrColumnSrcTiles::
 	inc de
 	dec c
 	jr nz, .loop
-	ret
-
-ScheduleSouthRowRedraw::
-	hlcoord 0, 16
-	call CopyToRedrawRowOrColumnSrcTiles
-	hl_deref wMapViewVRAMPointer
-	ld bc, $200
-	add hl, bc
-	ld a, h
-	and $03
-	or $98
-	ldh [hRedrawRowOrColumnDest + 1], a
-	ld a, l
-	ldh [hRedrawRowOrColumnDest], a
-	ld a, REDRAW_ROW
-	ldh [hRedrawRowOrColumnMode], a
-	ret
-
-ScheduleEastColumnRedraw::
-	hlcoord 18, 0
-	call ScheduleColumnRedrawHelper
-	ld a, [wMapViewVRAMPointer]
-	ld c, a
-	and $e0
-	ld b, a
-	ld a, c
-	add 18
-	and $1f
-	or b
-	ldh [hRedrawRowOrColumnDest], a
-	ld a, [wMapViewVRAMPointer + 1]
-	ldh [hRedrawRowOrColumnDest + 1], a
-	ld a, REDRAW_COL
-	ldh [hRedrawRowOrColumnMode], a
 	ret
 
 ScheduleColumnRedrawHelper::
@@ -1714,52 +1727,6 @@ ScheduleColumnRedrawHelper::
 	jr nc, .noCarry
 	inc h
 .noCarry
-	dec c
-	jr nz, .loop
-	ret
-
-ScheduleWestColumnRedraw::
-	hlcoord 0, 0
-	call ScheduleColumnRedrawHelper
-	ld a, [wMapViewVRAMPointer]
-	ldh [hRedrawRowOrColumnDest], a
-	ld a, [wMapViewVRAMPointer + 1]
-	ldh [hRedrawRowOrColumnDest + 1], a
-	ld a, REDRAW_COL
-	ldh [hRedrawRowOrColumnMode], a
-	ret
-
-; function to write the tiles that make up a tile block to memory
-; Input: c = tile block ID, hl = destination address
-DrawTileBlock::
-	push hl
-	hl_deref wTilesetBlocksPtr ; pointer to tiles
-	ld a, c
-	swap a
-	ld b, a
-	and $f0
-	ld c, a
-	ld a, b
-	and $0f
-	ld b, a ; bc = tile block ID * 0x10
-	add hl, bc
-	ld d, h
-	ld e, l ; de = address of the tile block's tiles
-	pop hl
-	ld c, BLOCK_HEIGHT ; 4 loop iterations
-.loop ; each loop iteration, write 4 tile numbers
-	push bc
-REPT BLOCK_WIDTH - 1
-	ld a, [de]
-	ld [hli], a
-	inc de
-ENDR
-	ld a, [de]
-	ld [hl], a
-	inc de
-	ld bc, SURROUNDING_WIDTH - (BLOCK_WIDTH - 1)
-	add hl, bc
-	pop bc
 	dec c
 	jr nz, .loop
 	ret
@@ -1859,7 +1826,7 @@ CollisionCheckOnWater::
 	ld hl, TilePairCollisionsWater
 	call CheckForJumpingAndTilePairCollisions
 	jr c, .collision
-	predef GetTileAndCoordsInFrontOfPlayer ; get tile in front of player (puts it in c and [wTileInFrontOfPlayer])
+	call GetTileAndCoordsInFrontOfPlayer ; get tile in front of player (puts it in c and [wTileInFrontOfPlayer])
 	ld d, c ; put the tile in front of the player into d so the callfar after this doesn't affect the register
 	callfar WaterTileSetIsNextTileShoreOrWater
 	jr nc, .noCollision
@@ -1897,18 +1864,7 @@ CollisionCheckOnWater::
 
 ; function to run the current map's script
 RunMapScript::
-	push hl
-	push de
-	push bc
-	farcall TryPushingBoulder
-	ld a, [wMiscFlags]
-	bit BIT_BOULDER_DUST, a
-	jr z, .afterBoulderEffect
-	farcall DoBoulderDustAnimation
-.afterBoulderEffect
-	pop bc
-	pop de
-	pop hl
+	homecall BoulderMapScript
 	call RunNPCMovementScript
 	ld a, [wCurMap] ; current map number
 	call SwitchToMapRomBank ; change to the ROM bank the map's data is in
@@ -1979,8 +1935,6 @@ LoadPlayerSpriteGraphicsArbitrary::
 ; function to load data from the map header
 LoadMapHeader::
 	farcall MarkTownVisitedAndLoadToggleableObjects
-	;ld a, [wCurMapTileset]
-	;ld [wUnusedCurMapTilesetCopy], a
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
 	ld a, [wCurMapTileset]
@@ -2042,11 +1996,7 @@ LoadMapHeader::
 	ld de, wEastConnectionHeader
 	call CopyMapConnectionHeader
 .getObjectDataPointer
-	ld a, [hli]
-	ld [wObjectDataPointerTemp], a
-	ld a, [hli]
-	ld [wObjectDataPointerTemp + 1], a
-	hl_deref wObjectDataPointerTemp
+	hl_deref
 	; hl = base of object data
 	ld de, wMapBackgroundTile
 	ld a, [hli]
@@ -2233,6 +2183,8 @@ LoadMapHeader::
 	dec b
 	jp nz, .loadSpriteLoop
 .finishUp
+	ldh a, [hLoadedROMBank]
+	ld b, a
 	predef LoadTilesetHeader
 	callfar LoadWildData
 	ld a, [wCurMapHeight] ; map height in 4x4 tile blocks
@@ -2288,8 +2240,6 @@ LoadMapData::
 	ldh [hSCY], a
 	ldh [hSCX], a
 	ld [wWalkCounter], a
-	;ld [wUnusedCurMapTilesetCopy], a
-	ld [wWalkBikeSurfStateCopy], a
 	ld [wSpriteSetID], a
 	call LoadTextBoxTilePatterns
 	call LoadMapHeader
@@ -2302,6 +2252,7 @@ LoadMapData::
 	call LoadTileBlockMap
 	call LoadTilesetTilePatternData
 	call LoadCurrentMapView
+
 ; copy current map view to VRAM
 	hlcoord 0, 0
 	ld de, vBGMap0
@@ -2324,7 +2275,7 @@ LoadMapData::
 	;call EnableLCD
 	ld hl, hFlagsFFFA
 	res 3, [hl]
-	ld b, SET_PAL_OVERWORLD
+	ld d, SET_PAL_OVERWORLD
 	call RunPaletteCommand
 	call LoadPlayerSpriteGraphics
 	ld a, [wStatusFlags6]
@@ -2358,15 +2309,6 @@ SwitchToMapRomBank::
 	call SetCurBank
 	pop bc
 	pop hl
-	ret
-
-IgnoreInputForHalfSecond:
-	ld a, 30
-	ld [wIgnoreInputCounter], a
-	ld hl, wStatusFlags5
-	ld a, [hl]
-	or (1 << BIT_DISABLE_JOYPAD) | (1 << BIT_UNKNOWN_5_2) | (1 << BIT_UNKNOWN_5_1)
-	ld [hl], a ; set ignore input bit
 	ret
 
 ResetUsingStrengthSurfOutOfBattleBits:
@@ -2415,13 +2357,14 @@ ENDC
 ; function to load position data for destination warp when switching maps
 ; INPUT:
 ; a = ID of destination warp within destination map
+; b = map bank
 LoadDestinationWarpPosition::
-	ld b, a
+	ld d, a
 	ldh a, [hLoadedROMBank]
 	push af
-	ld a, [wPredefParentBank]
-	call SetCurBank
 	ld a, b
+	call SetCurBank
+	ld a, d
 	add a
 	add a
 	ld c, a

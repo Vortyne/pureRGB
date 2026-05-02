@@ -12,12 +12,10 @@ Route23SetVictoryRoadBoulders:
 	ret z
 	ResetEvents EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH1, EVENT_VICTORY_ROAD_2_BOULDER_ON_SWITCH2
 	ResetEvents EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH1, EVENT_VICTORY_ROAD_3_BOULDER_ON_SWITCH2
-	ld a, TOGGLE_VICTORY_ROAD_3F_BOULDER
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_VICTORY_ROAD_2F_BOULDER
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
+	ld c, TOGGLE_VICTORY_ROAD_3F_BOULDER
+	call ShowObject
+	ld c, TOGGLE_VICTORY_ROAD_2F_BOULDER
+	jp HideObject
 
 Route23_ScriptPointers:
 	def_script_pointers
@@ -51,9 +49,7 @@ Route23DefaultScript:
 	ld [wWhichBadge], a
 	ld b, FLAG_TEST
 	EventFlagAddress hl, EVENT_PASSED_CASCADEBADGE_CHECK
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	ret nz
 	call Route23CopyBadgeTextScript
 	call DisplayTextID
@@ -158,9 +154,7 @@ Route23CheckForBadgeScript:
 	ld c, a
 	ld b, FLAG_TEST
 	ld hl, wObtainedBadges
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	jr nz, .have_badge
 	ld hl, Route23YouDontHaveTheBadgeYetText
 	rst _PrintText
@@ -175,7 +169,7 @@ Route23CheckForBadgeScript:
 	ld c, a
 	ld b, FLAG_SET
 	EventFlagAddress hl, EVENT_PASSED_CASCADEBADGE_CHECK
-	predef FlagActionPredef
+	call FlagAction
 	ld a, SCRIPT_ROUTE23_RESET_TO_DEFAULT
 	ld [wRoute23CurScript], a
 	ret

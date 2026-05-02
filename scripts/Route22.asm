@@ -63,7 +63,7 @@ Route22FirstRivalBattleScript:
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
-	predef EmotionBubble
+	callfar EmotionBubble
 	ld a, [wWalkBikeSurfState]
 	and a
 	jr z, .walking
@@ -197,9 +197,8 @@ Route22Rival1ExitScript:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call EnableAllJoypad
-	ld a, TOGGLE_ROUTE_22_RIVAL_1
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_ROUTE_22_RIVAL_1
+	call HideObject
 	call PlayDefaultMusic
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 	ld a, SCRIPT_ROUTE22_DEFAULT
@@ -211,7 +210,7 @@ Route22SecondRivalBattleScript:
 	ld [wEmotionBubbleSpriteIndex], a
 	xor a ; EXCLAMATION_BUBBLE
 	ld [wWhichEmotionBubble], a
-	predef EmotionBubble
+	callfar EmotionBubble
 	ld a, [wWalkBikeSurfState]
 	and a
 	jr z, .walking
@@ -337,9 +336,8 @@ Route22Rival2ExitScript:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call EnableAllJoypad
-	ld a, TOGGLE_ROUTE_22_RIVAL_2
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_ROUTE_22_RIVAL_2
+	call HideObject
 	call PlayDefaultMusic
 	ResetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 	ld a, SCRIPT_ROUTE22_NOOP

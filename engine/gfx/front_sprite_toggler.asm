@@ -24,9 +24,7 @@ CheckSpriteOptions::
 	ld h, [hl]
 	ld l, a ; hl = options wram variable
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a ; was the bit set?
+	call FlagAction
 	ld hl, wMonHAltFrontSprite - wMonHeader
 	ld a, [wMonHAltPicBank]
 	jr nz, .done

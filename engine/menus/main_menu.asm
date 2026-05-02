@@ -150,6 +150,20 @@ MainMenu:
 	ld c, 5
 	rst _DelayFrames
 	ret
+	; fixes an issue with the shaking visually in cinnabar volcano after loading into the map
+	ld a, [wCurMap]
+	cp CINNABAR_VOLCANO
+	jr z, .volcanoOrRoute21
+	cp ROUTE_21
+	jr z, .volcanoOrRoute21
+	ret
+.volcanoOrRoute21
+	call DisableLCD
+	ld a, $10
+	ld hl, vBGMap0
+	ld bc, TILEMAP_AREA
+	call FillMemory
+	jp EnableLCD
 .saveUpdateWarp
 	call .getReadyToLoad
 	jr .palletTownWarp
@@ -484,7 +498,7 @@ PrintPlayTime:
 	lb bc, 2, 5
 .noPlayTimeHourUpdateYet
 	call PrintNumber
-	ld a, $6d
+	ld a, '<COLON>'
 	ld [hli], a
 	ld de, wPlayTimeMinutes
 	lb bc, LEADING_ZEROES | 1, 2

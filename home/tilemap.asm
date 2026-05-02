@@ -90,3 +90,6 @@ LoadScreenTilesCommon:
 	rst _CopyData
 	ret
 	
+ReplaceTileBlock::
+	homecall _ReplaceTileBlock
+	ret

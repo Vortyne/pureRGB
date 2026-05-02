@@ -6,11 +6,11 @@ TryEvolvingMon:
 	ld a, [wWhichPokemon]
 	ld c, a
 	ld b, FLAG_SET
-	call Evolution_FlagAction
+	call FlagAction
 
 ; this is only called after battle
 ; it is supposed to do level up evolutions, though there is a bug that allows item evolutions to occur
-EvolutionAfterBattle:
+EvolutionAfterBattle::
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -51,9 +51,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld c, a
 	ld hl, wCanEvolveFlags
 	ld b, FLAG_TEST
-	call Evolution_FlagAction
-	ld a, c
-	and a ; is the mon's bit set?
+	call FlagAction
 	jp z, Evolution_PartyMonLoop ; if not, go to the next mon
 	ld a, [wEvoOldSpecies]
 	dec a
@@ -180,7 +178,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	push af
 	ld a, [wCurSpecies]
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 ;;;;;;;;;; FIXME: ? code that requires BaseStats to be in the same bank as evos_moves
 	ld a, [wPokedexNum]
 	; missingno or mew can't evolve so this is never reached for them and their base stats aren't important here
@@ -262,11 +260,25 @@ Evolution_PartyMonLoop: ; loop over party mons
 .skipfix_end
 ;;;;;;;;;;
 	pop hl
-	predef SetPartyMonTypes
+;;;;; updates the types of a party mon (pointed to in hl) to the ones of the mon specified in [wPokedexNum]
+;;;; SetPartyMonTypes ; only ever used here, so just paste it in here
+	ld bc, MON_TYPE
+	add hl, bc
+	ld a, [wPokedexNum]
+	ld [wCurSpecies], a
+	push hl
+	call GetMonHeader
+	pop hl
+	ld a, [wMonHType1]
+	ld [hli], a
+	ld a, [wMonHType2]
+	ld [hl], a
+;;;;
+
 	ld a, [wIsInBattle]
 	and a
 	call z, Evolution_ReloadTilesetTilePatterns
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	; missingno or mew can't evolve so this is never reached for them and their base stats aren't important here
 	dec a
@@ -274,10 +286,10 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld b, FLAG_SET
 	ld hl, wPokedexOwned
 	push bc
-	call Evolution_FlagAction
+	call FlagAction
 	pop bc
 	ld hl, wPokedexSeen
-	call Evolution_FlagAction
+	call FlagAction
 	pop de
 	pop hl
 	ld a, [wLoadedMonSpecies]
@@ -459,7 +471,7 @@ LearnMoveFromLevelUp:
 	ld a, [wCurEnemyLevel]
 	cp b
 	jr c, .done
-	predef IndexToPokedex
+	call IndexToPokedex
 	callfar IsPokemonLearnsetUnlockedDirect
 	jr nz, .done ; already unlocked
 	call AreLearnsetsEnabled
@@ -651,10 +663,6 @@ WriteMonMoves_ShiftMoveData:
 	dec c
 	jr nz, .loop
 	ret
-
-Evolution_FlagAction:
-	predef_jump FlagActionPredef
-
 
 YoureAnExpertText:
 	text_far _YoureAnExpertText

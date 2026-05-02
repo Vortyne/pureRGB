@@ -156,7 +156,13 @@ CloseTextDisplayPart2:
 	call LoadCurrentMapView
 	pop af
 	call SetCurBank
-	jp UpdateSprites
+	call UpdateSprites
+	ld a, [wEnteringCableClub]
+	and a
+	ret z
+	xor a
+	ld [wEnteringCableClub], a
+	jp EnterMap
 
 DisplayPokemartDialogue::
 	push hl

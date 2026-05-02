@@ -229,7 +229,6 @@ CheckArenaAssistantWalking:
 	call EnableAllJoypad
 	ld a, SFX_GO_OUTSIDE
 	rst _PlaySound
-	ld a, TOGGLE_INDIGO_PLATEAU_LOBBY_CHAMP_ARENA_ASSISTANT
-	ld [wToggleableObjectIndex], a
-	predef_jump HideExtraObject
+	ld c, TOGGLE_INDIGO_PLATEAU_LOBBY_CHAMP_ARENA_ASSISTANT
+	jp HideExtraObject
 

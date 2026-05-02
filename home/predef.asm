@@ -6,11 +6,7 @@ Predef::
 	; Save the predef id for GetPredefPointer.
 	ld [wPredefID], a
 
-	; A hack for LoadDestinationWarpPosition.
-	; See LoadTilesetHeader (predef $19).
 	ldh a, [hLoadedROMBank]
-	ld [wPredefParentBank], a
-
 	push af
 	ld a, BANK(GetPredefPointer)
 	call SetCurBank

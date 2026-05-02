@@ -1,5 +1,7 @@
 LoadTilesetHeader:
 	call GetPredefRegisters
+	ld a, b
+	push bc
 	push hl
 	ld d, 0
 	ld a, [wCurMapTileset]
@@ -34,11 +36,12 @@ LoadTilesetHeader:
 	call IsInSingleByteArray
 	pop de
 	pop hl
+	pop bc
 	jr c, .dungeon
 	ld a, [wCurMapTileset]
-	ld b, a
+	ld d, a
 	ldh a, [hPreviousTileset]
-	cp b
+	cp d
 	ret z
 .dungeon
 	ld a, [wDestinationWarpID]

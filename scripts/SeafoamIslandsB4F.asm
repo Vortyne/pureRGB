@@ -38,7 +38,7 @@ SeafoamB4FReplaceEastCurrentBlock:
 	lb bc, 8, 10
 SeafoamReplaceTileBlockEntry:
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 SeafoamIslandsB4F_ScriptPointers:
 	def_script_pointers
@@ -58,9 +58,8 @@ SeafoamIslandsB4FEndArticunoBattleScript:
 	cp $ff ; do nothing if you lost the battle
 	jr z, SeafoamIslandsB4FResetScript
 	SetEvent EVENT_BEAT_ARTICUNO
-	ld a, TOGGLE_ARTICUNO
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_ARTICUNO
+	call HideObject
 SeafoamB4FDefaultScript:
 	ld a, SCRIPT_SEAFOAMISLANDSB4F_DEFAULT
 	ld [wSeafoamIslandsB4FCurScript], a
@@ -98,7 +97,6 @@ SeafoamIslandsB4FObjectMoving1Script:
 SeafoamDoneForcedSurfMovementLeft:
 	xor a
 	ld [wWalkBikeSurfState], a
-	ld [wWalkBikeSurfStateCopy], a
 	jp ForceBikeOrSurf
 
 SeafoamIslandsB4F_TextPointers:

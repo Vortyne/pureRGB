@@ -15,9 +15,8 @@ VermilionFitnessClub_Script:
 	jr nz, .afterBattle
 	call WasMapJustLoaded
 	jr z, .notLoaded
-	ld a, TOGGLE_VERMILIONFITNESSCLUB_JANITOR
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
+	ld c, TOGGLE_VERMILIONFITNESSCLUB_JANITOR
+	call HideExtraObject
 .notLoaded
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
@@ -41,7 +40,7 @@ VermilionFitnessClub_Script:
 	ldh a, [hJoyPressed]
 	bit B_PAD_A, a
 	ret z
-	callfar _GetTileAndCoordsInFrontOfPlayer
+	call GetTileAndCoordsInFrontOfPlayer
 	ld a, [wTileInFrontOfPlayer]
 	cp $5B
 	ld b, TEXT_VERMILIONFITNESSCLUB_BIKES

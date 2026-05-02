@@ -30,6 +30,8 @@ PlayerPCMenu:
 	hlcoord 2, 2
 	ld de, PlayersPCMenuEntries
 	call PlaceString
+	; place the "sort" prompt
+	callfar DrawSortPromptInPC
 	ld hl, wTopMenuItemY
 	ld a, 2
 	ld [hli], a ; wTopMenuItemY
@@ -39,7 +41,12 @@ PlayerPCMenu:
 	inc hl
 	ld a, 4 ; PureRGBnote: CHANGED: increased menu length for WORLD OPTIONS to be added
 	ld [hli], a ; wMaxMenuItem
+	ld a, [wNumBoxItems]
+	cp 2
 	ld a, PAD_A | PAD_B
+	jr c, .noSelect ; can't sort items when less than 2 in pc
+	ld a, PAD_A | PAD_B | PAD_SELECT
+.noSelect
 	ld [hli], a ; wMenuWatchedKeys
 	xor a
 	ld [hl], a
@@ -53,14 +60,16 @@ PlayerPCMenu:
 	rst _PrintText
 	call HandleMenuInput
 	bit B_PAD_B, a
-	jp nz, ExitPlayerPC
+	jr nz, ExitPlayerPC
+	bit B_PAD_SELECT, a
+	jr nz, PressedSelectPlayerPC
 	call PlaceUnfilledArrowMenuCursor
 	ld a, [wCurrentMenuItem]
 	ld [wParentMenuItem], a
 	and a
 	jp z, PlayerPCWithdraw
 	dec a
-	jp z, PlayerPCDeposit
+	jr z, PlayerPCDeposit
 	dec a
 	jp z, PlayerPCToss
 	dec a
@@ -86,6 +95,16 @@ ExitPlayerPC:
 	xor a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ret
+
+PressedSelectPlayerPC:
+	ld a, [wNumBoxItems]
+
+	ld a, SFX_PRESS_AB
+	rst _PlaySound
+	ld a, [wCurrentMenuItem]
+	ld [wParentMenuItem], a
+	callfar SortPCItems
+	jp PlayerPCMenu
 
 PlayerPCDeposit:
 	xor a

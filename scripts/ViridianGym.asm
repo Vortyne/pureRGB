@@ -65,9 +65,8 @@ ViridianGymReceiveTM27:
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
 
-	ld a, TOGGLE_ROUTE_22_RIVAL_2
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_ROUTE_22_RIVAL_2
+	call ShowObject
 	SetEvents EVENT_2ND_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 	callfar PlayDefaultMusicIfMusicBitSet
 	
@@ -129,9 +128,8 @@ ViridianGymGiovanniText:
 	ld hl, .PostBattleAdviceText
 	rst _PrintText
 	call GBFadeOutToBlack
-	ld a, TOGGLE_VIRIDIAN_GYM_GIOVANNI
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_VIRIDIAN_GYM_GIOVANNI
+	call HideObject
 	call UpdateSpritesAndDelay3
 	CheckEvent EVENT_CAUGHT_GHOST_MAROWAK
 	jr z, .dontMoveKarateKing

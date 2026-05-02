@@ -37,7 +37,7 @@ CeladonBackAlley_Script:
 	ldh a, [hJoyPressed]
 	bit B_PAD_A, a
 	ret z
-	callfar _GetTileAndCoordsInFrontOfPlayer
+	call GetTileAndCoordsInFrontOfPlayer
 	ld a, [wTileInFrontOfPlayer]
 	cp $03
 	jr z, .maybeGraffiti

@@ -24,13 +24,11 @@ FuchsiaCityDefaultScript:
 	ResetEventReuseHL EVENT_ERIK_LEAVING
 	call EnableAllJoypad
 	; hide erik sprite
-	ld a, TOGGLE_FUCHSIA_ERIK
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
-	ld a, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
-	ld [wToggleableObjectIndex], a
+	ld c, TOGGLE_FUCHSIA_ERIK
+	call HideExtraObject
+	ld c, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
 	; show erik in safari zone sprite
-	predef_jump ShowExtraObject
+	jp ShowExtraObject
 .removeAddCutTiles
 	CheckEvent EVENT_DELETED_FUCHSIA_TREES
 	jr z, .firstLoadCommon

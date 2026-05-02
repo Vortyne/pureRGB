@@ -218,7 +218,7 @@ ENDC
 	call LoadScreenTilesFromBuffer2
 	ld a, HIGH(vBGMap0)
 	call TitleScreenCopyTileMapToVRAM
-	ld b, SET_PAL_TITLE_SCREEN
+	ld d, SET_PAL_TITLE_SCREEN
 	call RunPaletteCommand
 	call GBPalNormal
 	ld a, %11100100

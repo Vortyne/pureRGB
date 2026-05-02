@@ -96,7 +96,7 @@ PalletMovementScript_PlayerMoveLeft:
 	ld a, [wNumStepsToTake]
 	ld [wSimulatedJoypadStatesIndex], a
 	ldh [hNPCMovementDirections2Index], a
-	predef ConvertNPCMovementDirectionsToJoypadMasks
+	callfar ConvertNPCMovementDirectionsToJoypadMasks
 	call StartSimulatingJoypadStates
 	ld a, $2
 	ld [wNPCMovementScriptFunctionNum], a
@@ -152,9 +152,8 @@ PalletMovementScript_Done:
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz
-	ld a, TOGGLE_PALLET_TOWN_OAK
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_PALLET_TOWN_OAK
+	call HideObject
 	ld hl, wStatusFlags5
 	res BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld hl, wStatusFlags4
@@ -183,8 +182,8 @@ PewterMovementScript_WalkToMuseum:
 	dec a
 	ld [wSimulatedJoypadStatesIndex], a
 	xor a
-	ld [wWhichPewterGuy], a
-	predef PewterGuys
+	ld d, a ; which pewter guy
+	callfar PewterGuys
 	ld hl, wNPCMovementDirections2
 	ld de, RLEList_PewterMuseumGuy
 	call DecodeRLEList
@@ -241,8 +240,8 @@ PewterMovementScript_WalkToGym:
 	dec a
 	ld [wSimulatedJoypadStatesIndex], a
 	ld a, 1
-	ld [wWhichPewterGuy], a
-	predef PewterGuys
+	ld d, a ; which pewter guy
+	callfar PewterGuys
 	ld hl, wNPCMovementDirections2
 	ld de, RLEList_PewterGymGuy
 	call DecodeRLEList

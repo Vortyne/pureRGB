@@ -17,7 +17,7 @@ ShowMovedexMenu:
 	ld c, TACKLE - 1
 	ld b, FLAG_SET
 	ld hl, wMovedexSeen
-	predef FlagActionPredef ; mark this move as seen in the movedex
+	call FlagAction ; mark this move as seen in the movedex
 .hasMoves
 	ld a, [wListScrollOffset]
 	push af
@@ -30,7 +30,7 @@ ShowMovedexMenu:
 	ld [wMovedexMoveID], a
 	ldh [hJoy7], a
 .setUpGraphics
-	ld b, SET_PAL_TOWN_MAP
+	ld d, SET_PAL_TOWN_MAP
 	call RunPaletteCommand
 	callfar LoadPokedexTilePatterns
 
@@ -312,10 +312,7 @@ IsMoveBitSet:
 	dec a
 	ld c, a
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
-	ret
+	jp FlagAction
 
 ; displays data about the move, first we have to load up a bunch of data to display this screen
 ShowMoveData:
@@ -383,7 +380,7 @@ ShowNextMoveData:
 	call LoadTypeIcon
 	ld a, [wPlayerMoveType]
 	ld [wCurPartySpecies], a
-	ld b, SET_PAL_MOVEDEX
+	ld d, SET_PAL_MOVEDEX
 	call RunPaletteCommand
 	pop af
 	ld [wMovedexMoveID], a
@@ -787,10 +784,8 @@ SeekToNext:
 .dontConvertValue
 	ld c, d
 	ld b, FLAG_TEST
-	predef FlagActionPredef
+	call FlagAction
 	pop de
-	ld a, c
-	and a
 	jr z, .loop ; if c = 0 keep searching
 	ld a, d
 	inc a ; now a = the desired move ID
@@ -841,10 +836,8 @@ SeekToPrevious:
 .dontConvertValue
 	ld c, d
 	ld b, FLAG_TEST
-	predef FlagActionPredef
+	call FlagAction
 	pop de
-	ld a, c
-	and a
 	jr z, .loop ; if c = 0 keep searching
 	ld a, d
 	inc a ; now a = desired move ID
@@ -921,8 +914,7 @@ GetLowestSeenMove:
 	ld c, a
 	ld b, FLAG_TEST
 	ld hl, wMovedexSeen
-	predef FlagActionPredef
-	ld a, c
+	call FlagAction
 	pop bc
 	pop hl
 	inc b
@@ -966,8 +958,7 @@ GetHighestSeenMove:
 	ld c, a
 	ld b, FLAG_TEST
 	ld hl, wMovedexSeen
-	predef FlagActionPredef
-	ld a, c
+	call FlagAction
 	pop bc
 	pop hl
 	dec b

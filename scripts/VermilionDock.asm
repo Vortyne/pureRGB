@@ -106,7 +106,24 @@ VermilionDockSSAnneLeavesScript:
 	ld [wMapViewVRAMPointer + 1], a
 	push hl
 	push de
-	call ScheduleEastColumnRedraw
+; ScheduleEastColumnRedraw was un-functioned in overworld so it was copied here
+	
+	hlcoord 18, 0
+	call ScheduleColumnRedrawHelper
+	ld a, [wMapViewVRAMPointer]
+	ld c, a
+	and $e0
+	ld b, a
+	ld a, c
+	add 18
+	and $1f
+	or b
+	ldh [hRedrawRowOrColumnDest], a
+	ld a, [wMapViewVRAMPointer + 1]
+	ldh [hRedrawRowOrColumnDest + 1], a
+	ld a, REDRAW_COL
+	ldh [hRedrawRowOrColumnMode], a
+
 	call VermilionDock_EmitSmokePuff
 	pop de
 	ld b, $10
@@ -419,13 +436,10 @@ TruckCheck:
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	lb bc, FLAG_TEST, TOGGLE_MEW_VERMILION_DOCK
 	ld hl, wToggleableObjectFlags
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	jr nz, .skiphidingmew
-	ld a, TOGGLE_MEW_VERMILION_DOCK
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_MEW_VERMILION_DOCK
+	call HideObject
 .skiphidingmew
 	ld a, [wStatusFlags1]
 	bit BIT_STRENGTH_ACTIVE, a ; using Strength?
@@ -466,7 +480,7 @@ TruckCheck:
 	ld a, $c
 	ld [wNewTileBlockID], a ; used to be wd09f
 	ld bc, $a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	; moving the truck
 	ld a, SFX_PUSH_BOULDER
 	rst _PlaySound
@@ -487,7 +501,7 @@ TruckCheck:
 	ld a, $3
 	ld [wNewTileBlockID], a ; used to be wd09f
 	ld bc, $9
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	callfar AnimateBoulderDust
 	call ShowMew
 	ld c, 20
@@ -498,9 +512,8 @@ TruckCheck:
 
 ShowMew:
 	call EnableSpriteUpdates
-	ld a, TOGGLE_MEW_VERMILION_DOCK
-	ld [wToggleableObjectIndex], a
-	predef_jump ShowObject
+	ld c, TOGGLE_MEW_VERMILION_DOCK
+	jp ShowObject
 
 ChangeTruckTile:
 	call WasMapJustLoaded

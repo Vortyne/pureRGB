@@ -99,7 +99,7 @@ CeruleanRocketHouseMissingnoScript:
 	ld [wCurOpponent], a
 	call EnableAllJoypad
 	call GBPalNormal
-	predef InitOpponent
+	callfar InitOpponent
 	xor a
 	ld [wCeruleanRocketHouseCurScript], a
 	jp BattleOccurred

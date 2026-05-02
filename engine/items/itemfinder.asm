@@ -21,8 +21,7 @@ HiddenItemNear:
 .gotFlagArray
 	ld c, b
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
+	call FlagAction
 	pop hl
 	pop bc
 	inc b

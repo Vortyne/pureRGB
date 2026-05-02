@@ -57,6 +57,7 @@ CustomListMenuHoverTextMethods:
 	dw _ChangeCustomBallColor
 	dw _ShowDeptStoreFloorInfo
 	dw _ShowDeptStoreFloorInfoClerk
+	dw GetStartMenuPrompt
 
 GetListEntryID:
 	ld a, [wListCount]
@@ -114,8 +115,8 @@ CheckLoadTypes:
 	hlcoord 5, 14
 	ld de, MenuType1Text
 	call PlaceString
-	hlcoord 11, 14
-	predef PrintMonType
+	decoord 11, 14
+	callfar PrintMonType
 	hlcoord 11, 16
 	ld a, [hl]
 	cp ' '
@@ -184,6 +185,21 @@ CheckBadOffset::
 	dec [hl] ; decs once because it is assumed only 1 item can be removed from the list at a time
 	ret
 
+HandleInputForStartMenu::
+	ld a, 7
+	ld [wListMenuHoverTextType], a
+	ld a, 1
+	ld [wMenuWrappingEnabled], a
+	call HandleMenuInput
+	ld d, a ; hJoy5 into d, which will be unchanged by callfar return
+	xor a
+	ld [wListMenuHoverTextType], a
+	ld [wMenuWrappingEnabled], a
+	ld a, [wCurrentMenuItem]
+	ld [wBattleAndStartSavedMenuItem], a ; save current menu selection
+	ret
+
+	; fall through
 HandleMenuInputFromBank1::
 	; to get hover text when doing HandleMenuInput it expects bank 1 to be loaded
 	jp HandleMenuInput
@@ -199,3 +215,60 @@ _ShowDeptStoreFloorInfo:
 
 _ShowDeptStoreFloorInfoClerk:
 	jpfar ShowDeptStoreFloorInfoClerk
+
+GetStartMenuPrompt::
+	ld a, [wLinkState]
+	and a
+	ret nz ; can't change boxes or use items when linked
+	ld a, [wCurrentMenuItem]
+.gotMenuIndex
+	CheckEventHL EVENT_GOT_POKEDEX
+	decoord 12, 15
+	jr nz, .next1
+	decoord 12, 13
+	inc a
+.next1
+	cp 2
+	jr z, .item
+	cp 4
+	jr z, .save
+.hidePrompt
+	ld h, d
+	ld l, e
+	lb bc, $7A, 6
+	ld de, 1
+	jp DrawTileLine
+.item
+	ld a, [wBagItems] ; if less than 2 items, no prompt to sort
+	cp 2
+	jr c, .hidePrompt
+	ld hl, StartItemSortPrompt
+	jr .copy
+.save
+	CheckEvent EVENT_GOT_POKEDEX
+	ret z ; no change box prompt when no pokedex, cant catch pokemon yet anyway
+	ld hl, StartSaveBoxPrompt
+.copy
+	ld bc, 6
+	rst _CopyData
+	ret
+
+ClearStartMenuPrompt::
+	xor a
+	jr GetStartMenuPrompt.gotMenuIndex
+
+DrawSortPromptInPC::
+	ld a, [wNumBoxItems]
+	cp 2
+	ret c ; no prompt if less than 2 items in pc
+	ld hl, StartItemSortPrompt
+	decoord 9, 11
+	ld bc, 6
+	rst _CopyData
+	ret
+
+StartSaveBoxPrompt:
+	db $60, $69, $6A, $70, $71, $72
+
+StartItemSortPrompt:
+	db $60, $69, $6A, $6B, $6E, $6F

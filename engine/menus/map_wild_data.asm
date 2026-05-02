@@ -40,7 +40,7 @@ ShowMapWildEncounters::
 	inc hl
 	ld a, [hl]
 	ld [wGenericPaletteOverride], a
-	ld b, SET_PAL_GENERIC
+	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 .noSpecialPalette
 	; interface arrows
@@ -171,7 +171,7 @@ ShowMapWildEncounters::
 	call ClearScreen
 	call Delay3
 	call LoadScreenTilesFromBuffer1
-	ld b, SET_PAL_TOWN_MAP
+	ld d, SET_PAL_TOWN_MAP
 	call RunPaletteCommand
 	ld hl, wTownMapSavedOAM + (wShadowOAMSprite36 - wShadowOAMSprite00)
 	ld de, wShadowOAMSprite36
@@ -486,15 +486,13 @@ WildMonCheckFlags::
 	push bc
 	push hl
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	pop hl
 	dec a
 	ld c, a
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	jr z, .done
 	scf
 .done

@@ -37,9 +37,8 @@ OaksLabDefaultScript:
 	ld a, [wNPCMovementScriptFunctionNum]
 	and a
 	ret nz
-	ld a, TOGGLE_OAKS_LAB_OAK_2
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_OAKS_LAB_OAK_2
+	call ShowObject
 	ld hl, wStatusFlags4
 	res BIT_NO_BATTLES, [hl]
 
@@ -67,12 +66,10 @@ OaksLabToggleOaksScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, TOGGLE_OAKS_LAB_OAK_2
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_OAKS_LAB_OAK_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_OAKS_LAB_OAK_2
+	call HideObject
+	ld c, TOGGLE_OAKS_LAB_OAK_1
+	call ShowObject
 
 	ld a, SCRIPT_OAKSLAB_PLAYER_ENTERS_LAB
 	ld [wOaksLabCurScript], a
@@ -306,17 +303,15 @@ OaksLabRivalChoosesStarterScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	ld a, [wRivalStarterBallSpriteIndex]
-	ld b, TOGGLE_STARTER_BALL_1
+	ld c, TOGGLE_STARTER_BALL_1
 	cp OAKSLAB_CHARMANDER_POKE_BALL
 	jr z, .hideBallAndContinue
-	inc b ; TOGGLE_STARTER_BALL_2
+	inc c ; TOGGLE_STARTER_BALL_2
 	cp OAKSLAB_SQUIRTLE_POKE_BALL
 	jr z, .hideBallAndContinue
-	inc b ; TOGGLE_STARTER_BALL_3
+	inc c ; TOGGLE_STARTER_BALL_3
 .hideBallAndContinue
-	ld a, b
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	call HideObject
 	call Delay3
 	ld a, [wRivalStarterTemp]
 	ld [wRivalStarter], a
@@ -360,11 +355,11 @@ OaksLabRivalChallengesPlayerScript:
 	ld a, $1
 	swap a
 	ldh [hNPCSpriteOffset], a
-	predef CalcPositionOfPlayerRelativeToNPC
+	callfar CalcPositionOfPlayerRelativeToNPC
 	ldh a, [hNPCPlayerYDistance]
 	dec a
 	ldh [hNPCPlayerYDistance], a
-	predef FindPathToPlayer
+	callfar FindPathToPlayer
 	ld de, wNPCMovementDirections2
 	ld a, OAKSLAB_RIVAL
 	ldh [hSpriteIndex], a
@@ -462,9 +457,8 @@ OaksLabPlayerWatchRivalExitScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	jr nz, .checkRivalPosition
-	ld a, TOGGLE_OAKS_LAB_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_OAKS_LAB_RIVAL
+	call HideObject
 	call EnableAllJoypad
 	call PlayDefaultMusic ; reset to map music
 	ld a, SCRIPT_OAKSLAB_NOOP
@@ -504,9 +498,8 @@ OaksLabRivalArrivesAtOaksRequestScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	call OaksLabCalcRivalMovementScript
-	ld a, TOGGLE_OAKS_LAB_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_OAKS_LAB_RIVAL
+	call ShowObject
 	ld a, [wNPCMovementDirections2Index]
 	ld [wSavedNPCMovementDirections2Index], a
 	ld b, 0
@@ -562,12 +555,10 @@ OaksLabOakGivesPokedexScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	call Delay3
-	ld a, TOGGLE_POKEDEX_1
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_POKEDEX_2
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_POKEDEX_1
+	call HideObject
+	ld c, TOGGLE_POKEDEX_2
+	call HideObject
 	call OaksLabRivalFaceUpOakFaceDownScript
 	ld a, TEXT_OAKSLAB_OAK_THAT_WAS_MY_DREAM
 	ldh [hTextID], a
@@ -583,12 +574,10 @@ OaksLabOakGivesPokedexScript:
 	call DisplayTextID
 	SetEvent EVENT_GOT_POKEDEX
 	SetEvent EVENT_OAK_GOT_PARCEL
-	ld a, TOGGLE_LYING_OLD_MAN
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_OLD_MAN
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_LYING_OLD_MAN
+	call HideObject
+	ld c, TOGGLE_OLD_MAN
+	call ShowObject
 	ld a, [wSavedNPCMovementDirections2Index]
 	ld b, 0
 	ld c, a
@@ -614,15 +603,13 @@ OaksLabRivalLeavesWithPokedexScript:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call PlayDefaultMusic
-	ld a, TOGGLE_OAKS_LAB_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_OAKS_LAB_RIVAL
+	call HideObject
 	SetEvent EVENT_1ST_ROUTE22_RIVAL_BATTLE
 	ResetEventReuseHL EVENT_2ND_ROUTE22_RIVAL_BATTLE
 	SetEventReuseHL EVENT_ROUTE22_RIVAL_WANTS_BATTLE
-	ld a, TOGGLE_ROUTE_22_RIVAL_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_ROUTE_22_RIVAL_1
+	call ShowObject
 	ld a, SCRIPT_PALLETTOWN_DAISY
 	ld [wPalletTownCurScript], a
 	call EnableAllJoypad
@@ -746,20 +733,14 @@ OaksLab_TextPointers2:
 OaksLabRivalText:
 	text_asm
 	CheckEvent EVENT_FOLLOWED_OAK_INTO_LAB_2
-	jr nz, .beforeChooseMon
 	ld hl, .GrampsIsntAroundText
-	rst _PrintText
-	jr .done
-.beforeChooseMon
+	jr z, .printDone
 	CheckEventReuseA EVENT_GOT_STARTER
-	jr nz, .afterChooseMon
 	ld hl, .GoAheadAndChooseText
-	rst _PrintText
-	jr .done
-.afterChooseMon
+	jr z, .printDone
 	ld hl, .MyPokemonLooksStrongerText
+.printDone
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .GrampsIsntAroundText:
@@ -776,36 +757,31 @@ OaksLabRivalText:
 
 OaksLabCharmanderPokeBallText:
 	text_asm
-	ld a, STARTER2
-	ld [wRivalStarterTemp], a
-	ld a, OAKSLAB_SQUIRTLE_POKE_BALL
-	ld [wRivalStarterBallSpriteIndex], a
+	lb de, OAKSLAB_SQUIRTLE_POKE_BALL, STARTER2
 	ld a, STARTER1
 	ld b, OAKSLAB_CHARMANDER_POKE_BALL
 	jr OaksLabSelectedPokeBallScript
 
 OaksLabSquirtlePokeBallText:
 	text_asm
-	ld a, STARTER3
-	ld [wRivalStarterTemp], a
-	ld a, OAKSLAB_BULBASAUR_POKE_BALL
-	ld [wRivalStarterBallSpriteIndex], a
+	lb de, OAKSLAB_BULBASAUR_POKE_BALL, STARTER3
 	ld a, STARTER2
 	ld b, OAKSLAB_SQUIRTLE_POKE_BALL
 	jr OaksLabSelectedPokeBallScript
 
 OaksLabBulbasaurPokeBallText:
 	text_asm
-	ld a, STARTER1
-	ld [wRivalStarterTemp], a
-	ld a, OAKSLAB_CHARMANDER_POKE_BALL
-	ld [wRivalStarterBallSpriteIndex], a
+	lb de, OAKSLAB_CHARMANDER_POKE_BALL, STARTER1 
 	ld a, STARTER3
 	ld b, OAKSLAB_BULBASAUR_POKE_BALL
 
 OaksLabSelectedPokeBallScript:
 	ld [wCurPartySpecies], a
 	ld [wPokedexNum], a
+	ld a, e
+	ld [wRivalStarterTemp], a
+	ld a, d
+	ld [wRivalStarterBallSpriteIndex], a
 	ld a, b
 	ld [wSpriteIndex], a
 	CheckEvent EVENT_GOT_STARTER
@@ -880,17 +856,15 @@ OaksLabMonChoiceMenu:
 	ld [wNamedObjectIndex], a
 	call GetMonName
 	ld a, [wSpriteIndex]
-	ld b, TOGGLE_STARTER_BALL_1
+	ld c, TOGGLE_STARTER_BALL_1
 	cp OAKSLAB_CHARMANDER_POKE_BALL
 	jr z, .continue
-	inc b ; TOGGLE_STARTER_BALL_2
+	inc c ; TOGGLE_STARTER_BALL_2
 	cp OAKSLAB_SQUIRTLE_POKE_BALL
 	jr z, .continue
-	inc b ; TOGGLE_STARTER_BALL_3
+	inc c ; TOGGLE_STARTER_BALL_3
 .continue
-	ld a, b
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	call HideObject
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, OaksLabMonEnergeticText
@@ -955,8 +929,8 @@ OaksLabOak1Text:
 	rst _PrintText
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	predef DisplayDexRating
-	jp .done
+	callfar DisplayDexRating
+	rst TextScriptEnd
 .check_for_poke_balls
 	ld b, POKE_BALL
 	call IsItemInBag
@@ -972,29 +946,29 @@ OaksLabOak1Text:
 	jr nz, .already_got_pokemon
 	ld hl, .WhichPokemonDoYouWantText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .already_got_pokemon
 	ld hl, .YourPokemonCanFightText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .check_got_parcel
 	ld b, OAKS_PARCEL
 	call IsItemInBag
 	jr nz, .got_parcel
 	ld hl, .RaiseYourYoungPokemonText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .got_parcel
 	ld hl, .DeliverParcelText
 	rst _PrintText
 	call OaksLabScript_RemoveParcel
 	ld a, SCRIPT_OAKSLAB_RIVAL_ARRIVES_AT_OAKS_REQUEST
 	ld [wOaksLabCurScript], a
-	jr .done
+	rst TextScriptEnd
 .mon_around_the_world
 	ld hl, .PokemonAroundTheWorldText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .give_poke_balls
 	CheckAndSetEvent EVENT_GOT_POKEBALLS_FROM_OAK
 	jr nz, .come_see_me_sometimes
@@ -1002,11 +976,10 @@ OaksLabOak1Text:
 	call GiveItem
 	ld hl, .GivePokeballsText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .come_see_me_sometimes
 	ld hl, .ComeSeeMeSometimesText
 	rst _PrintText
-.done
 	rst TextScriptEnd
 
 .WhichPokemonDoYouWantText:

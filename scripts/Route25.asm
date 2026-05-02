@@ -25,7 +25,7 @@ Route25CheckHideCutTree:
 	lb bc, 2, 13
 	ld a, $6E
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 Route25ToggleBillsScript:
 	ld hl, wCurrentMapScriptFlags
@@ -38,20 +38,17 @@ Route25ToggleBillsScript:
 	jr nz, .met_bill
 	; if we left bills house before helping him with the cell separator, reset pokemon version of him to being shown
 	ResetEventReuseHL EVENT_BILL_SAID_USE_CELL_SEPARATOR
-	ld a, TOGGLE_BILL_POKEMON
-	ld [wToggleableObjectIndex], a
-	predef_jump ShowObject
+	ld c, TOGGLE_BILL_POKEMON
+	jp ShowObject
 .met_bill
 	CheckEventAfterBranchReuseHL EVENT_GOT_SS_TICKET, EVENT_MET_BILL_2
 	ret z
 	; if we got the SS ticket and finished his event, show the other version of bill that says slightly different things
 	SetEventReuseHL EVENT_LEFT_BILLS_HOUSE_AFTER_HELPING
-	ld a, TOGGLE_BILL_1
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_BILL_2
-	ld [wToggleableObjectIndex], a
-	predef_jump ShowObject
+	ld c, TOGGLE_BILL_1
+	call HideObject
+	ld c, TOGGLE_BILL_2
+	jp ShowObject
 
 Route25_ScriptPointers:
 	def_script_pointers

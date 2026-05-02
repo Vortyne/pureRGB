@@ -64,7 +64,7 @@ GameCornerPrizeRoomPrizeKingText:
 	inc hl
 	hl_deref
 	rst _PrintText
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	ld h, a
 	ld l, $FF

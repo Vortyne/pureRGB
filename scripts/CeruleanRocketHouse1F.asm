@@ -19,7 +19,7 @@ CeruleanRocketHouse1F_AddStairs:
 	lb bc, 0, 1
 	ld a, $08 ; stair block
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 CeruleanRocketHouse1FRocketText:
 	text_far _CeruleanRocketHouse1FRocketText

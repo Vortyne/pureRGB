@@ -68,33 +68,31 @@ ArenaHideAllhl:
 	ld a, [hli]
 	cp -1
 	jr z, .gymGuideCheck
-	ld [wToggleableObjectIndex], a
+	ld c, a
 	push hl
-	predef HideExtraObject
+	call HideExtraObject
 	pop hl
 	jr .loop
 .gymGuideCheck
-	ld a, TOGGLE_CHAMP_ARENA_TM_KID
-	ld [wToggleableObjectIndex], a
-	predef_jump HideExtraObject
+	ld c, TOGGLE_CHAMP_ARENA_TM_KID
+	jp HideExtraObject
 
 ArenaShowAllhl:
 .loop
 	ld a, [hli]
 	cp -1
 	jr z, .gymGuideCheck
-	ld [wToggleableObjectIndex], a
+	ld c, a
 	push hl
-	predef ShowExtraObject
+	call ShowExtraObject
 	pop hl
 	jr .loop
 .gymGuideCheck
 	ld a, [wChampArenaChallenger]
 	cp 11 ; gym guide
 	ret nz
-	ld a, TOGGLE_CHAMP_ARENA_CROWD_4 ; in the case of the gym guide since there are 2 challengers we can't have a full crowd on screen at once
-	ld [wToggleableObjectIndex], a
-	predef_jump HideExtraObject
+	ld c, TOGGLE_CHAMP_ARENA_CROWD_4 ; in the case of the gym guide since there are 2 challengers we can't have a full crowd on screen at once
+	jp HideExtraObject
 
 HideShowArenaSprites:
 	db TOGGLE_CHAMP_ARENA_CHALLENGER 
@@ -155,9 +153,8 @@ ChampArenaWaitForOpponentWalkToFinish:
 	ld a, [wSprite02StateData2MapY]
 	cp 12 ; y = 8 (+4 MapY offset)
 	jr z, .entering
-	ld a, TOGGLE_CHAMP_ARENA_CHALLENGER
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject ; hide the challenger to make it look like they left
+	ld c, TOGGLE_CHAMP_ARENA_CHALLENGER
+	call HideExtraObject ; hide the challenger to make it look like they left
 	call CloseDoor
 	; they were leaving, ask the player if they want to continue battling
 	ld a, TEXT_CHAMP_ARENA_CONTINUE
@@ -200,9 +197,8 @@ ChampArenaWaitForOpponentWalkToFinish:
 	ld a, [wChampArenaChallenger]
 	cp 11 ; gym guide
 	jr nz, .noTMKid
-	ld a, TOGGLE_CHAMP_ARENA_TM_KID
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_CHAMP_ARENA_TM_KID
+	call ShowExtraObject
 	; make TM kid appear to walk down a step
 	xor a ; down
 	call TMKidWalks
@@ -254,9 +250,8 @@ ChampArenaCheckBattleComplete:
 	jr nz, .noTMKid
 	ld a, 1
 	call TMKidWalks
-	ld a, TOGGLE_CHAMP_ARENA_TM_KID
-	ld [wToggleableObjectIndex], a
-	predef HideExtraObject
+	ld c, TOGGLE_CHAMP_ARENA_TM_KID
+	call HideExtraObject
 .noTMKid
 	; make the opponent leave
 	SetEvent EVENT_ARENA_OPPONENT_WALKING
@@ -319,7 +314,7 @@ OpenDoor:
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound
 	lb bc, 6, 3
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 ; puts the remaining number of opponents into w2CharStringBuffer
 ChampArenaGetRemainingOpponentCount:

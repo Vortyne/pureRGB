@@ -37,7 +37,7 @@ LanceShowOrHideEntranceBlocks:
 	ret z
 	jp GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here
 .SetEntranceBlock:
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 ResetLanceScript:
 	xor a ; SCRIPT_LANCESROOM_DEFAULT

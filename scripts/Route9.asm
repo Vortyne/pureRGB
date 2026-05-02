@@ -21,13 +21,15 @@ Route9ReplaceCutTile:
 	CheckEvent EVENT_DELETED_ROUTE9_TREE
 	ret z
 	call .loadTile
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 .replaceTileNoRedraw
 	CheckEvent EVENT_DELETED_ROUTE9_TREE
 	ret z
 	; this avoids redrawing the map because when going between areas these tiles are offscreen.
 	call .loadTile
-	predef_jump ReplaceTileBlockNoRedraw
+	ld d, b
+	ld e, c
+	jpfar ReplaceTileBlockNoRedraw
 .loadTile
 	lb bc, 4, 3
 	ld a, $4C

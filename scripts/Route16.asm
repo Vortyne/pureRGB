@@ -32,7 +32,7 @@ Route16CheckHideCutTree:
 	lb bc, 4, 17
 	ld a, $6E
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 Route16_ScriptPointers:
 	def_script_pointers
@@ -101,9 +101,8 @@ Route16SnorlaxPostBattleScript:
 	jr .done
 .hide_snorlax
 	SetEvent EVENT_BEAT_ROUTE16_SNORLAX
-	ld a, TOGGLE_ROUTE_16_SNORLAX
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
+	ld c, TOGGLE_ROUTE_16_SNORLAX
+	jp HideObject
 .done
 	call ResetMapScripts
 	ld [wRoute16CurScript], a ; SCRIPT_ROUTE16_DEFAULT

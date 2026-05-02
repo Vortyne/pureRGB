@@ -362,8 +362,8 @@ FightingDojoHitmonleePokeBallText:
 	jr nc, .done
 
 	; once Poké Ball is taken, hide sprite
-	ld a, TOGGLE_FIGHTING_DOJO_GIFT_1
-	call FightingDojoHideObject
+	ld c, TOGGLE_FIGHTING_DOJO_GIFT_1
+	call HideObject
 	SetEvents EVENT_GOT_HITMONLEE, EVENT_DEFEATED_FIGHTING_DOJO
 	SetEvent EVENT_GENERIC_NPC_WALKING_FLAG
 	ld a, FIGHTINGDOJO_KARATE_MASTER
@@ -400,8 +400,8 @@ FightingDojoHitmonchanPokeBallText:
 	SetEvents EVENT_GOT_HITMONCHAN, EVENT_DEFEATED_FIGHTING_DOJO
 
 	; once Poké Ball is taken, hide sprite
-	ld a, TOGGLE_FIGHTING_DOJO_GIFT_2
-	call FightingDojoHideObject
+	ld c, TOGGLE_FIGHTING_DOJO_GIFT_2
+	call HideObject
 	SetEvent EVENT_GENERIC_NPC_WALKING_FLAG
 	ld a, FIGHTINGDOJO_KARATE_MASTER
 	ldh [hSpriteIndex], a
@@ -456,10 +456,10 @@ FightingDojoGoesAroundScrollText::
 
 FightingDojoKarateMasterPostBallText::
 	text_asm
-	ld a, TOGGLE_FIGHTING_DOJO_GIFT_1
-	call FightingDojoHideObject
-	ld a, TOGGLE_FIGHTING_DOJO_GIFT_2
-	call FightingDojoHideObject
+	ld c, TOGGLE_FIGHTING_DOJO_GIFT_1
+	call HideObject
+	ld c, TOGGLE_FIGHTING_DOJO_GIFT_2
+	call HideObject
 	ld c, 30
 	rst _DelayFrames
 	ld a, [wXCoord]
@@ -495,17 +495,13 @@ KarateMasterGoFightKogaText:
 	text_far _FightingDojoMasterJustATest2
 	text_end
 
-FightingDojoHideObject:
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
-
 FightingDojoReplaceScrolls:
 	CheckEvent FLAG_CATCHUP_CLUBS_TURNED_OFF
 	ret nz
 	lb bc, 0, 2
 	ld a, $05
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 FightingDojoLoadBetaDojoTiles::
 	ld a, [wXCoord]

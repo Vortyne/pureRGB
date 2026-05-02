@@ -1413,7 +1413,7 @@ AIPrintItemUseAndUpdateHPBar:
 	hlcoord 2, 2
 	xor a
 	ld [wHPBarType], a
-	predef UpdateHPBar2
+	predef UpdateHPBar
 	jp DrawHudDecrementAICount
 
 AISwitchIfEnoughMons:

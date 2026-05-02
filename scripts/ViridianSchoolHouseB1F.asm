@@ -28,7 +28,7 @@ SetDetentionHideShows::
 	ld a, [hli]
 	cp -1
 	ret z
-	ld [wToggleableObjectIndex], a
+	ld c, a
 	ld a, b
 	xor 1
 	ld b, a
@@ -36,10 +36,10 @@ SetDetentionHideShows::
 	push bc
 	jr z, .dohide
 .doShow
-	predef ShowExtraObject
+	call ShowExtraObject
 	jr .next
 .dohide
-	predef HideExtraObject
+	call HideExtraObject
 .next
 	pop bc
 	pop hl
@@ -320,7 +320,7 @@ SchoolB1FRocker:
 	ld a, MUSIC_TRAINER_BATTLE
 	call PlayMusic
 
-	predef BattleTransition
+	callfar BattleTransition
 
 	ld c, 120
 	rst _DelayFrames

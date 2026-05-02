@@ -324,7 +324,6 @@ hItemToRemoveIndex:: db
 NEXTU
 hItemCounter::
 hSavedCoordIndex::
-hToggleableObjectIndex::
 hGymTrashCanRandNumMask::
 hInteractedWithBookshelf::
 	db

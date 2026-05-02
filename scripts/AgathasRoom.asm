@@ -27,7 +27,7 @@ EliteFourOnMapLoad:
 .setExitBlock
 	ld [wNewTileBlockID], a
 	lb bc, 0, 2
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl] 

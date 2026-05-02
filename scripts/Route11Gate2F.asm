@@ -30,7 +30,7 @@ Route11Gate2FOaksAideText:
 	ld de, wOaksAideRewardItemName
 	ld bc, ITEM_NAME_LENGTH
 	rst _CopyData
-	predef OaksAideScript
+	callfar OaksAideScript
 	ldh a, [hOaksAideResult]
 	dec a ; OAKS_AIDE_GOT_ITEM?
 	jr nz, .no_item

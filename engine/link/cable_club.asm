@@ -274,11 +274,11 @@ CableClub_DoBattleOrTradeAgain:
 	ld [wCurOpponent], a
 	call ClearScreen
 	call Delay3
-	ld b, SET_PAL_OVERWORLD
+	ld d, SET_PAL_OVERWORLD
 	call RunPaletteCommand ;shinpokerednote: gbcnote: refresh pal
 	ld hl, wOptions
 	res BIT_BATTLE_ANIMATION, [hl]
-	predef InitOpponent
+	callfar InitOpponent
 	predef HealParty
 	jp ReturnToCableClubRoom
 .trading
@@ -307,7 +307,7 @@ CallCurrentTradeCenterFunction:
 TradeCenter_SelectMon:
 	call ClearScreen
 	call Delay3
-	ld b, SET_PAL_OVERWORLD
+	ld d, SET_PAL_OVERWORLD
 	call RunPaletteCommand ;shinpokerednote: gbcnote: refresh pal
 	call LoadTrainerInfoTextBoxTiles
 	call TradeCenter_DrawPartyLists
@@ -602,9 +602,9 @@ TradeCenter_PlaceSelectedEnemyMonMenuCursor:
 TradeCenter_DisplayStats:
 	ld a, [wCurrentMenuItem]
 	ld [wWhichPokemon], a
-	predef StatusScreenOriginal
+	callfar StatusScreenOriginal
 	call Delay3
-	ld b, SET_PAL_OVERWORLD
+	ld d, SET_PAL_OVERWORLD
 	call RunPaletteCommand ;shinpokerednote: gbcnote: refresh pal
 	call GBPalNormal
 	call LoadTrainerInfoTextBoxTiles
@@ -831,16 +831,16 @@ TradeCenter_Trade:
 	ldh a, [hSerialConnectionStatus]
 	cp USING_EXTERNAL_CLOCK
 	jr z, .usingExternalClock
-	predef InternalClockTradeAnim
+	callfar InternalClockTradeAnim
 	jr .tradeCompleted
 .usingExternalClock
-	predef ExternalClockTradeAnim
+	callfar ExternalClockTradeAnim
 .tradeCompleted
 	callfar TryEvolvingMon
 	call ClearScreen
 	call LoadTrainerInfoTextBoxTiles
 	call Delay3
-	ld b, SET_PAL_OVERWORLD
+	ld d, SET_PAL_OVERWORLD
 	call RunPaletteCommand ;shinpokerednote: gbcnote: refresh pal
 	call Serial_PrintWaitingTextAndSyncAndExchangeNybble
 	ld c, 40
@@ -851,7 +851,7 @@ TradeCenter_Trade:
 	hlcoord 1, 14
 	ld de, TradeCompleted
 	call PlaceString
-	predef SavePartyAndDexData ; this allows reset into Pokecenter
+	callfar SavePartyAndDexData ; this allows reset into Pokecenter
 	vc_hook Trade_save_game_end
 	ld c, 50
 	rst _DelayFrames
@@ -880,7 +880,7 @@ TradeCenterPointerTable:
 	dw TradeCenter_SelectMon
 	dw TradeCenter_Trade
 
-CableClub_Run:
+CableClub_Run::
 	ld a, [wLinkState]
 	cp LINK_STATE_START_TRADE
 	jr z, .doBattleOrTrade
@@ -922,8 +922,9 @@ CableClub_Run:
 ;	ret
 
 Diploma_TextBoxBorder:
-	call GetPredefRegisters
-
+	hlcoord 0, 0
+	lb bc, 16, 18
+	; fall through
 ; b = height
 ; c = width
 CableClub_TextBoxBorder:

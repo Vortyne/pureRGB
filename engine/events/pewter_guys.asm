@@ -1,4 +1,6 @@
 PewterGuys:
+	ld a, d
+	push af
 	ld hl, wSimulatedJoypadStatesIndex
 	dec [hl] ; this decrement causes it to overwrite the last byte before $FF in the list
 	ld a, [hl]
@@ -9,7 +11,7 @@ PewterGuys:
 	ld d, h
 	ld e, l
 	ld hl, PewterGuysCoordsTable
-	ld a, [wWhichPewterGuy]
+	pop af
 	add a
 	ld b, 0
 	ld c, a

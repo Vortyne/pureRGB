@@ -1,5 +1,7 @@
 PrepareForSpecialWarp::
 	call LoadSpecialWarpData
+	ldh a, [hLoadedROMBank]
+	ld b, a
 	predef LoadTilesetHeader
 	ld hl, wStatusFlags6
 	bit BIT_FLY_OR_DUNGEON_WARP, [hl]
@@ -86,8 +88,6 @@ LoadSpecialWarpData:
 	ld c, a
 	ld hl, DungeonWarpList
 	ld de, 0
-	ld a, 6
-	ld [wDungeonWarpDataEntrySize], a
 .dungeonWarpListLoop
 	ld a, [hli]
 	cp b
@@ -99,7 +99,7 @@ LoadSpecialWarpData:
 	cp c
 	jr z, .matchedDungeonWarpID
 .nextDungeonWarp
-	ld a, [wDungeonWarpDataEntrySize]
+	ld a, 6
 	add e
 	ld e, a
 	jr .dungeonWarpListLoop

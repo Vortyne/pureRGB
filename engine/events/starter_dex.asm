@@ -9,7 +9,7 @@ StarterDex::
 	call .markInPokedex
 	pop af
 	ld [wPokedexNum], a
-	predef ShowPokedexData
+	callfar ShowPokedexData
 	ld b, FLAG_RESET
 	; fall through
 .markInPokedex
@@ -21,7 +21,7 @@ StarterDex::
 	push hl
 	push bc
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	; a = pokemon dex constant, now either set it or reset the pokedex flag for this mon \
 	; based on what was loaded into b before calling .markInPokedex
@@ -30,7 +30,7 @@ StarterDex::
 	pop bc
 	push bc
 	ld c, a
-	predef FlagActionPredef
+	call FlagAction
 	pop bc
 	pop hl
 	dec c

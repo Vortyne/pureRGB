@@ -47,7 +47,6 @@ GetHPBarLength:
 
 ; predef $48
 UpdateHPBar:
-UpdateHPBar2:
 	push hl
 	ld hl, wHPBarOldHP
 	ld a, [hli]

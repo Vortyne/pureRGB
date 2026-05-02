@@ -214,7 +214,7 @@ DoesPlayerHaveLegendaryBird::
 	rst _PrintText
 	ld hl, .learnset2
 	rst _PrintText
-	predef IndexToPokedex
+	call IndexToPokedex
 	scf
 	ret
 .whatYouHaveBirdA

@@ -69,7 +69,7 @@ PowerPlantReplaceBottomGateBlock:
 PowerPlantReplaceTileBlockEntry:
 	push de
 	ld [wNewTileBlockID], a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	pop de
 	ret
 
@@ -417,12 +417,10 @@ ZapdosAbsorbAnimation:
 	lb bc, BANK(MoveAnimationTiles0), 1
 	call CopyVideoData
 	; show two voltorb sprites that have to be hidden at this point and move them into view visually
-	ld a, TOGGLE_ELECTRODE_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_VOLTORB_4
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_ELECTRODE_1
+	call ShowObject
+	ld c, TOGGLE_VOLTORB_4
+	call ShowObject
 	ld hl, wSprite04StateData2MapY
 	ld a, [wYCoord]
 	add 4 
@@ -470,10 +468,10 @@ ZapdosAbsorbAnimation:
 	ld a, BANK(Music_Dungeon1)
 	ld [wAudioROMBank], a
 
-	ld a, TOGGLE_ELECTRODE_1
-	call PowerPlantHideSpriteEntry
-	ld a, TOGGLE_VOLTORB_4
-	call PowerPlantHideSpriteEntry
+	ld c, TOGGLE_ELECTRODE_1
+	call HideObject
+	ld c, TOGGLE_VOLTORB_4
+	call HideObject
 	call GBPalWhiteOut
 	rst _DelayFrame
 	ld a, 3
@@ -515,8 +513,8 @@ ZapdosAbsorbAnimation:
 	rst _DelayFrame
 	dec b
 	jr nz, .loopFliesAway
-	ld a, TOGGLE_ZAPDOS
-	call PowerPlantHideSpriteEntry
+	ld c, TOGGLE_ZAPDOS
+	call HideObject
 	; bring back original pokeball sprite
 	ld hl, vNPCSprites tile $78
 	ld de, PokeBallSprite
@@ -531,10 +529,6 @@ ZapdosAbsorbAnimation:
 	ld [wPowerPlantCurScript], a
 	ld [wCurMapScript], a
 	ret
-
-PowerPlantHideSpriteEntry:
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
 
 PowerPlantZapdosFlewAwayText:
 	text_far _ZapdosFlewAway
@@ -667,9 +661,8 @@ MagnetonSuperchargeAnimation:
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
 	; show magneton sprite by reusing a hidden electrode NPC, then make it float up a bit
-	ld a, TOGGLE_ELECTRODE_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_ELECTRODE_1
+	call ShowObject
 	ld hl, wSprite04StateData2MapY
 	ld a, [wYCoord]
 	add 3 
@@ -699,8 +692,8 @@ MagnetonSuperchargeAnimation:
 	ld c, 60
 	rst _DelayFrames
 	call .doBallPoof
-	ld a, TOGGLE_ELECTRODE_1
-	call PowerPlantHideSpriteEntry
+	ld c, TOGGLE_ELECTRODE_1
+	call HideObject
 	; bring back original pokeball sprite
 	call .loadPokeballSprite
 	; reset script

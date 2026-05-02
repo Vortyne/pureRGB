@@ -554,12 +554,12 @@ AnimationTypePointerTable:
 
 ShakeScreenVertically:
 	call PlayApplyingAttackSound
-	ld b, 8
+	ld d, 8
 	jp AnimationShakeScreenVertically
 
 ShakeScreenHorizontallyHeavy:
 	call PlayApplyingAttackSound
-	ld b, 8
+	ld d, 8
 	jp AnimationShakeScreenHorizontallyFast
 
 ShakeScreenHorizontallySlow:
@@ -572,7 +572,7 @@ BlinkEnemyMonSprite:
 
 ShakeScreenHorizontallyLight:
 	call PlayApplyingAttackSound
-	ld b, 2
+	ld d, 2
 	jp AnimationShakeScreenHorizontallyFast
 
 ShakeScreenHorizontallySlow2:
@@ -929,10 +929,10 @@ DoRockSlideSpecialEffects:
 	ret
 ; if the subanimation counter is between 8 and 11, shake the screen horizontally and vertically
 .shakeScreen
-	ld b, 1
-	predef PredefShakeScreenHorizontally ; shake horizontally
-	ld b, 1
-	predef_jump PredefShakeScreenVertically ; shake vertically
+	ld d, 1
+	call AnimationShakeScreenHorizontallyFast ; shake horizontally
+	ld d, 1
+	jp AnimationShakeScreenVertically ; shake vertically
 
 FlashScreenEveryEightFrameBlocks:
 	ld a, [wSubAnimCounter]
@@ -1374,14 +1374,14 @@ SetAnimationBGPalette:
 	jp UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
 
 AnimationShakeScreenVertically:
-	predef_jump PredefShakeScreenVertically
+	jpfar PredefShakeScreenVertically
 
 AnimationShakeScreen:
 ; Shakes the screen for a while. Used in Earthquake/Fissure/etc. animations.
-	ld b, $8
+	ld d, $8
 
 AnimationShakeScreenHorizontallyFast:
-	predef_jump PredefShakeScreenHorizontally
+	jpfar PredefShakeScreenHorizontally
 
 ;AnimationPoisonEverywhere: 
 ;	ld a, 1
@@ -2468,39 +2468,47 @@ AnimationSubstitute:
 	and a
 	jr z, .playerTurn
 	ld hl, MonsterSprite tile 0 ; facing down sprite
-	ld de, wTempPic + $120
-	call CopyMonsterSpriteData
-	ld hl, MonsterSprite tile 1
-	ld de, wTempPic + $120 + $70
-	call CopyMonsterSpriteData
-	ld hl, MonsterSprite tile 2
-	ld de, wTempPic + $120 + $10
-	call CopyMonsterSpriteData
-	ld hl, MonsterSprite tile 3
-	ld de, wTempPic + $120 + $10 + $70
-	call CopyMonsterSpriteData
-	jr .next
+	ld de, SubstituteDownSpriteLocations
+	jr .copyToTempPic
 .playerTurn
 	ld hl, MonsterSprite tile 4 ; facing up sprite
-	ld de, wTempPic + $120 + $70
-	call CopyMonsterSpriteData
-	ld hl, MonsterSprite tile 5
-	ld de, wTempPic + $120 + $e0
-	call CopyMonsterSpriteData
-	ld hl, MonsterSprite tile 6
-	ld de, wTempPic + $120 + $80
-	call CopyMonsterSpriteData
-	ld hl, MonsterSprite tile 7
-	ld de, wTempPic + $120 + $f0
-	call CopyMonsterSpriteData
+	ld de, SubstituteUpSpriteLocations
+	; fall through
+.copyToTempPic
+	ld b, 4 ; number of tiles to be copied
+.copyToTempPicLoop
+	push bc
+	push de
+	ld a, [de]
+	inc de
+	ld b, a
+	ld a, [de]
+	ld d, a
+	ld e, b
+	ld bc, TILE_SIZE
+	ld a, BANK(MonsterSprite)
+	call FarCopyData2
+	pop de
+	inc de
+	inc de
+	pop bc
+	dec b
+	jr nz, .copyToTempPicLoop
 .next
 	call CopyTempPicToMonPic
 	jp AnimationShowMonPic
 
-CopyMonsterSpriteData:
-	ld bc, TILE_SIZE
-	ld a, BANK(MonsterSprite)
-	jp FarCopyData2
+SubstituteDownSpriteLocations:
+	dw wTempPic + $120
+	dw wTempPic + $120 + $70
+	dw wTempPic + $120 + $10
+	dw wTempPic + $120 + $10 + $70
+
+SubstituteUpSpriteLocations:
+	dw wTempPic + $120 + $70
+	dw wTempPic + $120 + $e0
+	dw wTempPic + $120 + $80
+	dw wTempPic + $120 + $f0
 
 HideSubstituteShowMonAnim:
 	ldh a, [hWhoseTurn]
@@ -2572,7 +2580,7 @@ ChangeMonPic:
 	ld [wBattleMonSpecies2], a
 	ld [wCurSpecies], a
 	call GetMonHeader
-	predef LoadMonBackPic
+	callfar LoadMonBackPic
 	xor a ; TILEMAP_MON_PIC
 	call GetTileIDList
 	call GetMonSpriteTileMapPointerFromRowCount
@@ -2580,7 +2588,7 @@ ChangeMonPic:
 	pop af
 	ld [wBattleMonSpecies2], a
 .done
-	ld b, SET_PAL_BATTLE
+	ld d, SET_PAL_BATTLE
 	jp RunPaletteCommand
 
 AnimationHideEnemyMonPic:
@@ -3245,7 +3253,7 @@ SetMoveDexSeen:
 	ld c, a
 	ld b, FLAG_SET
 	ld hl, wMovedexSeen
-	predef FlagActionPredef ; mark this move as seen in the movedex
+	call FlagAction ; mark this move as seen in the movedex
 	ld hl, wBattleFunctionalFlags
 	res 0, [hl]
 	ret

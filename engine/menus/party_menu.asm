@@ -74,7 +74,10 @@ RedrawPartyMenu_::
 	set BIT_PARTY_MENU_HP_BAR, a
 	ldh [hUILayoutFlags], a
 	add hl, bc
-	predef DrawHP2 ; draw HP bar and prints current / max HP
+	ld d, h
+	ld e, l
+	ld c, 2
+	callfar DrawHP ; draw HP bar and prints current / max HP
 	ldh a, [hUILayoutFlags]
 	res BIT_PARTY_MENU_HP_BAR, a
 	ldh [hUILayoutFlags], a
@@ -83,13 +86,13 @@ RedrawPartyMenu_::
 	jr .printLevel
 .teachMoveMenu
 	push hl
-	predef CanLearnTM ; check if the pokemon can learn the move
+	callfar CanLearnTM ; check if the pokemon can learn the move
 	pop hl
-	ld de, .ableToLearnMoveText
+	ld de, .ableToLearnMoveOrEvolveText
 	ld a, c
 	and a
 	jr nz, .placeMoveLearnabilityString
-	ld de, .notAbleToLearnMoveText
+	ld de, .notAbleToLearnMoveOrEvolveText
 .placeMoveLearnabilityString
 	ld bc, SCREEN_WIDTH + 9 ; 1 row down and 9 columns right
 	push hl
@@ -108,9 +111,9 @@ RedrawPartyMenu_::
 	pop bc
 	inc c
 	jp .loop
-.ableToLearnMoveText
+.ableToLearnMoveOrEvolveText
 	db "ABLE@"
-.notAbleToLearnMoveText
+.notAbleToLearnMoveOrEvolveText
 	db "NOT ABLE@"
 .evolutionStoneMenu
 	push hl
@@ -135,7 +138,7 @@ RedrawPartyMenu_::
 	ld bc, wEvoDataBufferEnd - wEvoDataBuffer
 	call FarCopyData
 	ld hl, wEvoDataBuffer
-	ld de, .notAbleToEvolveText
+	ld de, .notAbleToLearnMoveOrEvolveText
 ; loop through the pokemon's evolution entries
 .checkEvolutionsLoop
 	ld a, [hli]
@@ -156,7 +159,7 @@ RedrawPartyMenu_::
 	cp b ; does the player's stone match this evolution entry's stone?
 	jr nz, .checkEvolutionsLoop
 ; if it does match
-	ld de, .ableToEvolveText
+	ld de, .ableToLearnMoveOrEvolveText
 .placeEvolutionStoneString
 	ld bc, 20 + 9 ; down 1 row and right 9 columns
 	pop hl
@@ -165,12 +168,8 @@ RedrawPartyMenu_::
 	call PlaceString
 	pop hl
 	jr .printLevel
-.ableToEvolveText
-	db "ABLE@"
-.notAbleToEvolveText
-	db "NOT ABLE@"
 .afterDrawingMonEntries
-	ld b, SET_PAL_PARTY_MENU
+	ld d, SET_PAL_PARTY_MENU
 	call RunPaletteCommand
 .printMessage
 	ld hl, wStatusFlags5
@@ -305,7 +304,7 @@ SetPartyMenuHPBarColor:
 	ld b, 0
 	add hl, bc
 	call GetHealthBarColor
-	ld b, SET_PAL_PARTY_MENU_HP_BARS
+	ld d, SET_PAL_PARTY_MENU_HP_BARS
 	call RunPaletteCommand
 	ld hl, wWhichPartyMenuHPBar
 	inc [hl]

@@ -576,9 +576,8 @@ BillsGardenDadText:
 	text_asm
 	call SaveScreenTilesToBuffer2
 	SetEvent EVENT_MET_DAD
-	ld a, TOGGLE_REDS_HOUSE_1F_DAD
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_REDS_HOUSE_1F_DAD
+	call ShowExtraObject
 	; make MOM face down
 	ld a, BILLS_GARDEN_VARIABLE_GUEST2
 	ld b, SPRITE_FACING_DOWN

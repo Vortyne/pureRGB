@@ -16,7 +16,7 @@ VictoryRoad1FMapLoadScript::
 	ld a, $1d
 	ld [wNewTileBlockID], a
 	lb bc, 6, 4
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 VictoryRoad1F_ScriptPointers:
 	def_script_pointers
@@ -30,8 +30,9 @@ VictoryRoad1FDefaultScript:
 	ret nz ; PureRGBnote: ADDED: if a boulder animation is playing forget doing the rest, helps reduce lag
 	CheckEvent EVENT_VICTORY_ROAD_1_BOULDER_ON_SWITCH
 	jp nz, CheckFightingMapTrainers
-	ld hl, Boulder1FSwitchCoords
-	call CheckBoulderCoords
+	ld de, Boulder1FSwitchCoords
+	ld c, BANK(Boulder1FSwitchCoords)
+	callfar CheckBoulderCoords
 	jp nc, CheckFightingMapTrainers
 	ld hl, wCurrentMapScriptFlags
 	set BIT_CUR_MAP_LOADED_1, [hl]

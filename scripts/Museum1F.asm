@@ -187,9 +187,8 @@ Museum1FScientist2Text:
 	ld hl, .YouDontHaveSpaceText
 	jr nc, .done
 	SetEvent EVENT_GOT_OLD_AMBER
-	ld a, TOGGLE_OLD_AMBER
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_OLD_AMBER
+	call HideObject
 	ld hl, .ReceivedOldAmberText
 	jr .done
 .checked
@@ -289,7 +288,7 @@ DisplayMonFrontSpriteInBox::
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	call UpdateSpritesAndDelay3 ; allow box to finish rendering before setting palette
-	ld b, SET_PAL_MIDDLE_SCREEN_MON_BOX
+	ld d, SET_PAL_MIDDLE_SCREEN_MON_BOX
 	call RunPaletteCommand
 	ld a, [wCurPartySpecies]
 	ld [wCurSpecies], a
@@ -298,8 +297,8 @@ DisplayMonFrontSpriteInBox::
 	call LoadMonFrontSprite
 	ld a, $80
 	ldh [hStartTileID], a
-	hlcoord 10, 11
-	predef AnimateSendingOutMon
+	decoord 10, 11
+	callfar FarAnimateSendingOutMon
 	ld a, [wCurPartySpecies]
 	cp FOSSIL_KABUTOPS
 	jr z, .skipCry

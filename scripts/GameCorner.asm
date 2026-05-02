@@ -29,7 +29,7 @@ GameCornerSetRocketHideoutDoorTile:
 	ld a, $2a
 	ld [wNewTileBlockID], a
 	lb bc, 2, 8
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
@@ -104,9 +104,8 @@ GameCornerRocketExitScript:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call EnableAllJoypad
-	ld a, TOGGLE_GAME_CORNER_ROCKET
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_GAME_CORNER_ROCKET
+	call HideObject
 	ld hl, wCurrentMapScriptFlags
 	set BIT_CUR_MAP_LOADED_1, [hl]
 	set BIT_CUR_MAP_LOADED_2, [hl]
@@ -529,7 +528,7 @@ GameCornerPosterText:
 	ld a, $43
 	ld [wNewTileBlockID], a
 	lb bc, 2, 8
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	rst TextScriptEnd
 
 .SwitchBehindPosterText:

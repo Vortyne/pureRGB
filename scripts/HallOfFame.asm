@@ -22,7 +22,7 @@ HallOfFameResetEventsAndSaveScript:
 	ld a, [wLetterPrintingDelayFlags]
 	push af
 	call EnableAllJoypad
-	predef HallOfFamePC
+	callfar HallOfFamePC
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ld hl, wStatusFlags7
@@ -92,29 +92,24 @@ HallOfFameOakCongratulationsScript:
 ;;;;;;;;;; PureRGBnote: ADDED: hide the third pokeball in oak's lab because he's using it in battle now
 	ld a, [wPlayerStarter]
 	cp STARTER1
-	ld b, TOGGLE_STARTER_BALL_3
+	ld c, TOGGLE_STARTER_BALL_3
 	jr z, .hideStarterBall
 	cp STARTER2
-	ld b, TOGGLE_STARTER_BALL_1
+	ld c, TOGGLE_STARTER_BALL_1
 	jr z, .hideStarterBall
-	ld b, TOGGLE_STARTER_BALL_2
+	ld c, TOGGLE_STARTER_BALL_2
 .hideStarterBall
-	ld a, b
-	call .hallHideObject
+	call HideObject
 ;;;;;;;;;;
-	ld a, TOGGLE_CERULEAN_CAVE_GUY
-	call .hallHideObject
+	ld c, TOGGLE_CERULEAN_CAVE_GUY
+	call HideObject
 ;;;;;;;;;; PureRGBnote: ADDED: hide the guy in the first floor of the secret house in cerulean - makes it appear he went downstairs.
-	ld a, TOGGLE_CERULEAN_ROCKET_HOUSE_1F_GUY
-	call .hallHideObject
+	ld c, TOGGLE_CERULEAN_ROCKET_HOUSE_1F_GUY
+	call HideObject
 ;;;;;;;;;;
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a
 	ret
-.hallHideObject
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
-
 
 HallOfFame_TextPointers:
 	def_text_pointers

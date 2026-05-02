@@ -206,7 +206,7 @@ ShowBeforeAfterImages:
 	call UpdateSprites
 	call HalfVolume
 	
-	ld b, SET_PAL_BEFORE_AFTER
+	ld d, SET_PAL_BEFORE_AFTER
 	call RunPaletteCommand
 	
 	call Delay3

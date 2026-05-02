@@ -15,9 +15,7 @@ DisplayDiploma::
 	ld bc, TILE_SIZE
 	ld a, BANK(CircleTile)
 	call FarCopyData2
-	hlcoord 0, 0
-	lb bc, 16, 18
-	predef Diploma_TextBoxBorder
+	callfar Diploma_TextBoxBorder
 
 	ld hl, DiplomaTextPointersAndCoords
 	ld c, $5
@@ -59,7 +57,7 @@ DisplayDiploma::
 
 	call EnableLCD
 	farcall LoadTrainerInfoTextBoxTiles
-	ld b, SET_PAL_GENERIC
+	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 	call Delay3
 	call GBPalNormal

@@ -59,8 +59,8 @@ CeruleanCity_ScriptPointers:
 	dw_const CeruleanCityRocketDefeatedScript, SCRIPT_CERULEANCITY_ROCKET_DEFEATED
 
 CeruleanCityClearScripts:
-	ld a, TOGGLE_CERULEAN_RIVAL
-	call CeruleanCityHideObject
+	ld c, TOGGLE_CERULEAN_RIVAL
+	call HideObject
 .noHide
 	call EnableAllJoypad
 	ld [wCeruleanCityCurScript], a ; SCRIPT_CERULEANCITY_DEFAULT
@@ -136,9 +136,8 @@ ENDC
 	call GetPointerWithinSpriteStateData2
 	ld [hl], 25
 .playerOnRightSideOfBridge
-	ld a, TOGGLE_CERULEAN_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_CERULEAN_RIVAL
+	call ShowObject
 	ld de, CeruleanCityMovement1
 	ld a, CERULEANCITY_RIVAL
 	ldh [hSpriteIndex], a
@@ -262,8 +261,8 @@ CeruleanCityRivalCleanupScript:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, TOGGLE_CERULEAN_RIVAL
-	call CeruleanCityHideObject
+	ld c, TOGGLE_CERULEAN_RIVAL
+	call HideObject
 	call EnableAllJoypad
 	call PlayDefaultMusic
 	ld a, SCRIPT_CERULEANCITY_DEFAULT
@@ -353,13 +352,12 @@ CeruleanCityRocketText:
 	ld hl, .ReceivedTM28Text
 	rst _PrintText
 	call GBFadeOutToBlack
-	ld a, TOGGLE_CERULEAN_GUARD_1
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_CERULEAN_GUARD_2
-	call CeruleanCityHideObject
-	ld a, TOGGLE_CERULEAN_ROCKET
-	call CeruleanCityHideObject
+	ld c, TOGGLE_CERULEAN_GUARD_1
+	call ShowObject
+	ld c, TOGGLE_CERULEAN_GUARD_2
+	call HideObject
+	ld c, TOGGLE_CERULEAN_ROCKET
+	call HideObject
 	call GBFadeInFromBlack
 .Done
 	rst TextScriptEnd
@@ -387,10 +385,6 @@ CeruleanCityRocketText:
 .IllReturnTheTMText:
 	text_far _CeruleanCityRocketIllReturnTheTMText
 	text_end
-
-CeruleanCityHideObject:
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
 
 CeruleanCityCooltrainerMText:
 	text_far _CeruleanCityCooltrainerMText

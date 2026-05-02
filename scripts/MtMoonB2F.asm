@@ -115,12 +115,11 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 	ldh [hTextID], a
 	call DisplayTextID
 	CheckEvent EVENT_GOT_DOME_FOSSIL
-	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_1
+	ld c, TOGGLE_MT_MOON_B2F_FOSSIL_1
 	jr z, .continue
-	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_2
+	ld c, TOGGLE_MT_MOON_B2F_FOSSIL_2
 .continue
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	call HideObject
 	; ask the player if they want to give the nerd their fossil right away, and can collect their fossil pokemon in saffron later
 	ld a, 1
 	ldh [hSpriteIndex], a
@@ -149,14 +148,13 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 
 ;;;;;;;;;; PureRGBnote: ADDED: hide or show the fossil in seafoam islands depending on what you chose
 	CheckEvent EVENT_GOT_DOME_FOSSIL
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL
+	ld c, TOGGLE_SEAFOAM_ISLANDS_B3F_DOME_FOSSIL
 	jr nz, .hideObjectSeafoam
 	CheckEvent EVENT_GOT_HELIX_FOSSIL
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL
+	ld c, TOGGLE_SEAFOAM_ISLANDS_B3F_HELIX_FOSSIL
 	jr z, .done
 .hideObjectSeafoam
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	call HideObject
 ;;;;;;;;;;
 .done
 	; done
@@ -257,9 +255,8 @@ MtMoonB2FDomeFossilText:
 	call GiveItem
 	jp nc, MtMoonB2FYouHaveNoRoomText
 	call MtMoonB2FReceivedFossilText
-	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_1
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_MT_MOON_B2F_FOSSIL_1
+	call HideObject
 	SetEvent EVENT_GOT_DOME_FOSSIL
 	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
 	ld [wMtMoonB2FCurScript], a
@@ -283,9 +280,8 @@ MtMoonB2FHelixFossilText:
 	call GiveItem
 	jp nc, MtMoonB2FYouHaveNoRoomText
 	call MtMoonB2FReceivedFossilText
-	ld a, TOGGLE_MT_MOON_B2F_FOSSIL_2
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_MT_MOON_B2F_FOSSIL_2
+	call HideObject
 	SetEvent EVENT_GOT_HELIX_FOSSIL
 	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
 	ld [wMtMoonB2FCurScript], a

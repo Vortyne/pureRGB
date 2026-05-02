@@ -44,7 +44,7 @@ UnlockLab::
 	ld a, $78
 	lb bc, 6, 2
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 CheckUnlockLab::
 	CheckEvent EVENT_UNLOCKED_SECRET_LAB

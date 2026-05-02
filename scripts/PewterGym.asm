@@ -59,12 +59,10 @@ PewterGymScriptReceiveTM34:
 	ld hl, wObtainedBadges
 	set BIT_BOULDERBADGE, [hl]
 
-	ld a, TOGGLE_GYM_GUY
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_ROUTE_22_RIVAL_1
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_GYM_GUY
+	call HideObject
+	ld c, TOGGLE_ROUTE_22_RIVAL_1
+	call HideObject
 
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 

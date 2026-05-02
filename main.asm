@@ -5,7 +5,7 @@ INCLUDE "engine/events/black_out.asm"
 INCLUDE "engine/battle/safari_zone.asm"
 INCLUDE "engine/movie/title3.asm"
 INCLUDE "engine/pokemon/load_mon_data.asm"
-INCLUDE "data/items/prices.asm"
+INCLUDE "engine/items/get_prices.asm"
 INCLUDE "data/items/names.asm"
 INCLUDE "engine/gfx/sprite_oam.asm"
 INCLUDE "engine/gfx/oam_dma.asm"
@@ -59,7 +59,6 @@ INCLUDE "engine/overworld/cut.asm"
 INCLUDE "engine/overworld/toggleable_objects.asm"
 INCLUDE "engine/overworld/push_boulder.asm"
 INCLUDE "engine/pokemon/add_mon.asm"
-INCLUDE "engine/flag_action.asm"
 INCLUDE "engine/events/heal_party.asm"
 INCLUDE "engine/math/bcd.asm"
 INCLUDE "engine/movie/oak_speech/init_player_data.asm"
@@ -319,7 +318,6 @@ INCLUDE "engine/menus/league_pc.asm"
 INCLUDE "engine/events/hidden_items.asm"
 ; PureRGBnote: MOVED: moved these from bank 1E
 INCLUDE "engine/overworld/elevator.asm"
-INCLUDE "engine/items/tm_prices.asm"
 INCLUDE "engine/movie/evolution.asm"
 INCLUDE "gfx/fishing.asm"
 INCLUDE "engine/overworld/cut2.asm"
@@ -372,6 +370,10 @@ INCLUDE "engine/events/pokecenter.asm"
 INCLUDE "engine/menus/draw_badges.asm"
 ; moved from battle core
 INCLUDE "engine/battle/move_effects/sleep.asm"
+; moved from home bank
+INCLUDE "engine/menus/load_font.asm"
+INCLUDE "engine/overworld/check_boulder_coords.asm"
+INCLUDE "engine/pokemon/calc_stat.asm"
 
 SECTION "Party Sprites", ROMX, BANK[$34]
 ; PureRGBnote: ADDED: new menu sprite icons raw data
@@ -473,6 +475,7 @@ SECTION "newCode3", ROMX
 INCLUDE "engine/movie/title.asm"
 INCLUDE "audio/pause_resume_music.asm"
 INCLUDE "engine/battle/prevent_invalid_encounters.asm"
+INCLUDE "engine/items/sort_items.asm"
 
 SECTION "Silph Card Key Scripts", ROMX
 

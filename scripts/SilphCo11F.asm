@@ -23,37 +23,20 @@ SilphCo11FTeamRocketLeavesScript::
 	cp $ff
 	jr z, .done_hiding
 	push hl
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, a
+	call HideObject
 	pop hl
 	jr .hide_loop
-.done_hiding
-	ld hl, .ShowToggleableObjectIDs
+.done_hiding ; the lists are in a sequence so you can just keep going after the first loop hits -1
 .show_loop
 	ld a, [hli]
 	cp -1
 	ret z
 	push hl
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, a
+	call ShowObject
 	pop hl
 	jr .show_loop
-
-.ShowToggleableObjectIDs:
-	db TOGGLE_SAFFRON_CITY_8
-	db TOGGLE_SAFFRON_CITY_9
-	db TOGGLE_SAFFRON_CITY_A
-	db TOGGLE_SAFFRON_CITY_B
-	db TOGGLE_SAFFRON_CITY_C
-	db TOGGLE_SAFFRON_CITY_D
-;;;;;;;;;; PureRGBnote: ADDED: show additional new NPCs on the first floor
-	db TOGGLE_SILPH_CO_1F_TRAINER_1
-	db TOGGLE_SILPH_CO_1F_TRAINER_2
-	db TOGGLE_SILPH_CO_1F_TRAINER_3
-	db TOGGLE_SILPH_CO_1F_TRAINER_4
-;;;;;;;;;;
-	db TOGGLE_SILPH_CO_1F_RECEPTIONIST ; PureRGBnote: CHANGED: used to be shown with an event instead for some reason
-	db -1 ; end
 
 .HideToggleableObjectIDs:
 	db TOGGLE_SAFFRON_CITY_1
@@ -96,6 +79,21 @@ SilphCo11FTeamRocketLeavesScript::
 	db TOGGLE_SILPH_CO_11F_1
 	db TOGGLE_SILPH_CO_11F_2
 	db TOGGLE_SILPH_CO_11F_3
+	db -1 ; end
+.ShowToggleableObjectIDs:
+	db TOGGLE_SAFFRON_CITY_8
+	db TOGGLE_SAFFRON_CITY_9
+	db TOGGLE_SAFFRON_CITY_A
+	db TOGGLE_SAFFRON_CITY_B
+	db TOGGLE_SAFFRON_CITY_C
+	db TOGGLE_SAFFRON_CITY_D
+;;;;;;;;;; PureRGBnote: ADDED: show additional new NPCs on the first floor
+	db TOGGLE_SILPH_CO_1F_TRAINER_1
+	db TOGGLE_SILPH_CO_1F_TRAINER_2
+	db TOGGLE_SILPH_CO_1F_TRAINER_3
+	db TOGGLE_SILPH_CO_1F_TRAINER_4
+;;;;;;;;;;
+	db TOGGLE_SILPH_CO_1F_RECEPTIONIST ; PureRGBnote: CHANGED: used to be shown with an event instead for some reason
 	db -1 ; end
 
 SilphCo11F_ScriptPointers:

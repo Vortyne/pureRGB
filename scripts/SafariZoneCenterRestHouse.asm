@@ -55,9 +55,8 @@ SafariZoneCenterRestHouseErikText:
 	rst TextScriptEnd
 
 ShowHouseSaraErik:
-	ld a, TOGGLE_ERIK_HOUSE
+	ld c, TOGGLE_ERIK_HOUSE
 	call .show
-	ld a, TOGGLE_SARA_HOUSE
+	ld c, TOGGLE_SARA_HOUSE
 .show
-	ld [wToggleableObjectIndex], a
-	predef_jump ShowExtraObject
+	jp ShowExtraObject

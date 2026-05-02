@@ -466,7 +466,7 @@ SetSingleBitOption:
 	jr z, .set
 	ld b, FLAG_RESET
 .set
-	predef_jump FlagActionPredef
+	jp FlagAction
 
 LoadXValueAndGetHLCoord:
 	hlcoord 0, 0
@@ -489,7 +489,7 @@ LoadXValueAndGetHLCoord:
 Get2ValueOptionCursorPosition:
 	ld b, FLAG_TEST
 	push af
-	predef FlagActionPredef
+	call FlagAction
 	pop af
 	ld b, a
 	ld a, c

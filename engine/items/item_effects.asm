@@ -548,7 +548,7 @@ ItemUseBall:
 	rst _PrintText
 
 ; Add the caught Pokémon to the Pokédex.
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 ;;;;;;;;;; PureRGBnote: ADDED: need specific behaviour when catching missingno since it has no pokedex data
 	and a ; is it missingno?
@@ -558,17 +558,14 @@ ItemUseBall:
 	ld c, a
 	ld b, FLAG_TEST
 	ld hl, wPokedexOwned
-	predef FlagActionPredef
-	ld a, c
+	call FlagAction
 	push af
 	ld a, [wPokedexNum]
 	dec a
 	ld c, a
 	ld b, FLAG_SET
-	predef FlagActionPredef
+	call FlagAction
 	pop af
-
-	and a ; was the Pokémon already in the Pokédex?
 	jr nz, .skipShowingPokedexData ; if so, don't show the Pokédex data
 
 	ld hl, ItemUseBallText06
@@ -581,7 +578,7 @@ ItemUseBall:
 	call ClearSprites
 	ld a, [wEnemyMonSpecies]
 	ld [wPokedexNum], a
-	predef ShowPokedexData
+	callfar ShowPokedexData
 
 .skipShowingPokedexData
 	ld a, [wPartyCount]
@@ -778,7 +775,6 @@ ItemUseBicycle:
 	and a
 	jp nz, ItemUseNotTime
 	ld a, [wWalkBikeSurfState]
-	ld [wWalkBikeSurfStateCopy], a
 	cp 2 ; is the player surfing?
 	jp z, ItemUseNotTime
 	dec a ; is player already bicycling?
@@ -865,7 +861,6 @@ ItemUseBicycle:
 ; indirectly used by SURF in StartMenu_Pokemon.surf
 ItemUseSurfboard:
 	ld a, [wWalkBikeSurfState]
-	ld [wWalkBikeSurfStateCopy], a
 	cp SURFING ; is the player already surfing?
 	jr z, .alreadySurfing ; don't do anything if so ; PureRGBnote: CHANGED: can't use surf to "get back on land", this feature is bugged anyway
 	;jr z, .tryToStopSurfing
@@ -940,7 +935,7 @@ LavaSurfText:
 	text_end
 
 ItemUsePokedex:
-	predef_jump ShowPokedexMenu
+	jpfar ShowPokedexMenu
 
 ItemUseEvoStone:
 	ld a, [wIsInBattle]
@@ -1115,15 +1110,13 @@ ItemUseMedicine:
 	ld c, a
 	ld hl, wPartyFoughtCurrentEnemyFlags
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	jr z, .next
 	ld a, [wUsedItemOnWhichPokemon]
 	ld c, a
 	ld hl, wPartyGainExpFlags
 	ld b, FLAG_SET
-	predef FlagActionPredef
+	call FlagAction
 .next
 	pop bc
 	pop de
@@ -1232,7 +1225,7 @@ ItemUseMedicine:
 	ldh [hUILayoutFlags], a
 	ld a, $02
 	ld [wHPBarType], a
-	predef UpdateHPBar2 ; animate HP bar decrease of pokemon that used Softboiled
+	predef UpdateHPBar ; animate HP bar decrease of pokemon that used Softboiled
 	ldh a, [hUILayoutFlags]
 	res BIT_PARTY_MENU_HP_BAR, a
 	ldh [hUILayoutFlags], a
@@ -1390,7 +1383,7 @@ ItemUseMedicine:
 	ldh [hUILayoutFlags], a
 	ld a, $02
 	ld [wHPBarType], a
-	predef UpdateHPBar2 ; animate the HP bar lengthening
+	predef UpdateHPBar ; animate the HP bar lengthening
 	ldh a, [hUILayoutFlags]
 	res BIT_PARTY_MENU_HP_BAR, a
 	ldh [hUILayoutFlags], a
@@ -2344,7 +2337,7 @@ ItemUseItemfinder:
 	ld [wEmotionBubbleSpriteIndex], a
 	ld a, QUESTION_BUBBLE
   	ld [wWhichEmotionBubble], a
-	predef_jump EmotionBubbleQuick
+	jpfar EmotionBubbleQuick
 .onTopOfItem2
 	; if we're on top of the item, show an exclamation bubble
 	ld a, SFX_SWAP
@@ -2353,7 +2346,7 @@ ItemUseItemfinder:
   	ld [wWhichEmotionBubble], a
 	xor a
 	ld [wEmotionBubbleSpriteIndex], a
-	predef_jump EmotionBubble
+	jpfar EmotionBubble
 .printText
 	rst _PrintText
 	ret
@@ -2594,7 +2587,7 @@ ItemUseTMHM:
 .skipAdding
 	inc a
 	ld [wTempTMHM], a
-	predef TMToMove ; get move ID from TM/HM ID
+	callfar TMToMove ; get move ID from TM/HM ID
 	ld a, [wTempTMHM]
 	ld [wMoveNum], a
 	call GetMoveName
@@ -2661,7 +2654,7 @@ ItemUseTMHM:
 	call RunDefaultPaletteCommand
 	jp LoadScreenTilesFromBuffer1 ; restore saved screen
 .checkIfAbleToLearnMove
-	predef CanLearnTM ; check if the pokemon can learn the move
+	callfar CanLearnTM ; check if the pokemon can learn the move
 	push bc
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
@@ -3120,9 +3113,7 @@ IsKeyItem_::
 	ld c, a
 	ld hl, wBuffer
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	ret nz
 .checkIfItemIsHM
 	ld a, [wCurItem]

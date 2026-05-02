@@ -1,6 +1,5 @@
-_RunPaletteCommand:
-	call GetPredefRegisters
-	ld a, b
+_RunPaletteCommand::
+	ld a, d
 	cp SET_PAL_DEFAULT
 	jr nz, .not_default
 	ld a, [wDefaultPaletteCommand]
@@ -15,10 +14,8 @@ _RunPaletteCommand:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	; call hl then jp to SendSGBPackets
-	ld de, SendSGBPackets
-	push de
-	jp hl
+	call hl_caller
+	jp SendSGBPackets
 
 SetPal_BattleBlack:
 	ld hl, PalPacket_Black
@@ -428,13 +425,13 @@ SetPal_PokemonWholeScreen:
 	and 1 ; only the 1st bit of the flags determines alt palette, zero the other ones
 	ld [wIsAltPalettePkmn], a
 SetPal_PokemonWholeScreenTrade:
-	push bc
+	push de
 	ld hl, PalPacket_Empty
 	ld de, wPalPacket
 	ld bc, $10
 	rst _CopyData
-	pop bc
-	ld a, c
+	pop de
+	ld a, e
 	and a
 	ld a, PAL_BLACK
 	jr nz, .next
@@ -554,7 +551,7 @@ DeterminePaletteIDOutOfBattle:
 	ld de, 3
 	call IsInArray
 	jr c, .specialMonPalette
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld a, [wPokedexNum]
 	; 0 = missingno is a valid value here
 .skipDexNumConversion
@@ -702,7 +699,7 @@ _SendSGBPacket:
 	jr .loop2
 
 ; shinpokerednote: gbcnote: run GBC color code if on GBC when running this function now
-LoadSGB:
+LoadSGB::
 	ldh a, [hGBC]
 	and a
 	ld a, 1

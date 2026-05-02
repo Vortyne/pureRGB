@@ -92,7 +92,7 @@ Init::
 	callfar CopyOptionsFromSRAM
 ;;;;;;;;;;
 
-	predef LoadSGB
+	callfar LoadSGB
 
 	ld a, BANK(SFX_Shooting_Star)
 	ld [wAudioROMBank], a
@@ -110,10 +110,10 @@ ENDC
 	ld a, [wSpriteOptions2]
 	bit BIT_SKIP_INTRO, a
 	jr nz, .noIntro
-	predef PlayIntro
+	callfar PlayIntro
 	jr .doneIntro
 .noIntro
-	ld b, SET_PAL_GAME_FREAK_INTRO
+	ld d, SET_PAL_GAME_FREAK_INTRO
 	call RunPaletteCommand
 .doneIntro
 	call DisableLCD

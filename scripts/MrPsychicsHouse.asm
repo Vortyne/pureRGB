@@ -14,7 +14,7 @@ MrPsychicsHouse_Script:
 	ld a, $06
 	ld [wNewTileBlockID], a
 	lb bc, 3, 7
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 .notFirstLoad
 	jp EnableAutoTextBoxDrawing
 

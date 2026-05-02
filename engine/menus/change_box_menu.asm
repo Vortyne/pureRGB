@@ -1,14 +1,14 @@
 LoadBillsPCExtraTiles::
-	ld hl, vChars2 tile $78
+	ld hl, vChars1 tile $4F
 	ld de, PokeballTileGraphics ; pokeball tile
 	lb bc, BANK(PokeballTileGraphics), 1
 	call CopyVideoData
-	ld hl, vChars2 tile $77
+	ld hl, vChars1 tile $4E
 	ld de, PokeballTileGraphics tile 2 ; pokeball with x tile
 	lb bc, BANK(PokeballTileGraphics), 1
 	call CopyVideoData
 	ld de, HpBarAndStatusGraphics tile 18 ; "No" tile
-	ld hl, vChars2 tile $76
+	ld hl, vChars1 tile $4D
 	lb bc, BANK(HpBarAndStatusGraphics), 1
 	call CopyVideoData
 	ld de, ExtraMenuBorderConnectors
@@ -95,9 +95,9 @@ DisplayChangeBoxMenu:
 	jr z, .boxEmpty ; don't print anything beside it
 	push af
 	cp MONS_PER_BOX
-	ld a, $78 ; pokeball tile
+	ld a, $CF ; pokeball tile
 	jr nz, .placeBallTile
-	ld a, $77 ; ball tile with X on top
+	ld a, $CE ; ball tile with X on top
 .placeBallTile
 	ld [hli], a ; place pokeball tile next to box name if box not empty
 .placeBoxCount
@@ -145,7 +145,7 @@ DrawCurrentBoxPrompt::
 	call PlaceString
 	inc_hl_ycoord
 	push hl
-	ld a, $76 ; "No" tile
+	ld a, $CD ; "No" tile
 	ld [hli], a
 	ld a, '.'
 	ld [hli], a
@@ -171,9 +171,9 @@ DrawCurrentBoxPrompt::
 	and a
 	jr z, .noBallTile
 	cp 20
-	ld a, $78 ; normal pokeball tile
+	ld a, $CF ; normal pokeball tile
 	jr nz, .loadBallTile
-	ld a, $77 ; x over pokeball tile
+	ld a, $CE ; x over pokeball tile
 .loadBallTile
 	ld [hl], a
 .noBallTile

@@ -28,9 +28,8 @@ ENDC
 	call PlayMusic
 	ld a, [wCoordIndex]
 	ldh [hSavedCoordIndex], a
-	ld a, TOGGLE_SS_ANNE_2F_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	ld c, TOGGLE_SS_ANNE_2F_RIVAL
+	call ShowObject
 	call Delay3
 	ld a, SSANNE2F_RIVAL
 	ldh [hSpriteIndex], a
@@ -153,9 +152,8 @@ SSAnne2FRivalExitScript:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 	call EnableAllJoypad
-	ld a, TOGGLE_SS_ANNE_2F_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_SS_ANNE_2F_RIVAL
+	call HideObject
 	call PlayDefaultMusic
 	ld a, SCRIPT_SSANNE2F_NOOP
 	ld [wSSAnne2FCurScript], a

@@ -53,7 +53,7 @@ DiamondMineReplaceHole:
 .replaceTile
 	lb bc, 1, 1
 	ld [wNewTileBlockID], a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 .checkLeaveHole
 	ld hl, DiamondMineLeaveHoleCoords
 	call ArePlayerCoordsInArray
@@ -264,7 +264,7 @@ DiamondMineCheckDigAnimation:
 	lb bc, 1, 1
 	ld a, $A2
 	ld [wNewTileBlockID], a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	ld de, SFX_Break_Stone
 	call PlayNewSoundChannel8
 	call DiamondMineShakeScreen
@@ -403,9 +403,8 @@ DiamondMineProspectorText:
 	call EnableSpriteUpdates
 	call LoadScreenTilesFromBuffer2
 	SetEvent EVENT_DIAMOND_MINE_COMPLETED
-	ld a, TOGGLE_PROSPECTORS_HOUSE_PROSPECTOR
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_PROSPECTORS_HOUSE_PROSPECTOR
+	call ShowExtraObject
 	call DiamondMineReplaceHole
 	call UpdateSpritesAndDelay3
 	call GBFadeInFromWhite

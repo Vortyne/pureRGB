@@ -174,9 +174,7 @@ PokemonMansion2FDiary3Text:
 	ld c, DEX_MEW - 1
 	ld hl, wPokedexSeen
 	ld b, FLAG_TEST
-	predef FlagActionPredef
-	ld a, c
-	and a
+	call FlagAction
 	jr z, .done
 	CheckEvent FLAG_MEW_LEARNSET
 	jr nz, .done

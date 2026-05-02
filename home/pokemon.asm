@@ -1,4 +1,5 @@
 DrawHPBar::
+; TODO: move to another bank ?
 ; Draw an HP bar d tiles long, and fill it to e pixels.
 ; If c is nonzero, show at least a sliver regardless.
 ; The right end of the bar changes with [wHPBarType].
@@ -103,7 +104,7 @@ LoadFrontSpriteByMonIndex::
 	push af
 	ld a, [wCurPartySpecies]
 	ld [wPokedexNum], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	ld hl, wPokedexNum
 	ld a, [hl]
 	pop bc
@@ -420,4 +421,8 @@ AreLearnsetsEnabled::
 	ret
 .no
 	xor a
+	ret
+	
+IndexToPokedex::
+	homecall _IndexToPokedex
 	ret

@@ -59,22 +59,18 @@ FuchsiaGoodRodHouseOnMapLoad:
 	call UpdateSprites
 	ld a, $32
 	call .replaceTileBlockEntry
-	ld a, TOGGLE_ERIK_SARA_HOUSE_NOTE2
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_ERIK_SARA_HOUSE_NOTE2
+	call ShowExtraObject
 	jp GBFadeInFromBlack
 .replaceTileBlockEntry
 	ld [wNewTileBlockID], a
 	lb bc, 5, 10
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 .noEndingText
-	ld a, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_SARA
-	call FuchsiaGoodRodHouseHideExtraObjectEntry
-	ld a, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
-	; fall through
-FuchsiaGoodRodHouseHideExtraObjectEntry:
-	ld [wToggleableObjectIndex], a
-	predef_jump HideExtraObject
+	ld c, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_SARA
+	call HideExtraObject
+	ld c, TOGGLE_SAFARI_ZONE_CENTER_REST_HOUSE_ERIK
+	jp HideExtraObject
 
 FuchsiaGoodRodHouseFishingGuruText:
 	text_asm

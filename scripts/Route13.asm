@@ -36,7 +36,7 @@ Route13CheckHideCutTree:
 	lb bc, 2, 17
 	ld a, $6F
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 Route13_ScriptPointers:
 	def_script_pointers

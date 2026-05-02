@@ -35,6 +35,10 @@ SilphCo7FDefaultScript:
 	ld hl, .RivalEncounterCoordinates
 	call ArePlayerCoordsInArray
 	jp nc, CheckFightingMapTrainers
+IF DEF(_DEBUG)
+	call DebugPressedOrHeldB
+	ret nz
+ENDC
 	xor a
 	ldh [hJoyHeld], a
 	call DisableDpad
@@ -195,9 +199,8 @@ SilphCo7FRivalExitScript:
 	jr .next
 .done
 	call EnableSpriteUpdates
-	ld a, TOGGLE_SILPH_CO_7F_RIVAL
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_SILPH_CO_7F_RIVAL
+	call HideObject
 	call PlayDefaultMusic
 	jp SilphCo7FSetDefaultScript
 
@@ -234,9 +237,8 @@ SilphCo7TrainerHeader3:
 SilphCo7FSilphWorkerM1Text:
 ; lapras guy
 	text_asm
-	ld a, TOGGLE_LAPRAS_GUY_CELADON
-	ld [wToggleableObjectIndex], a
-	predef HideObject
+	ld c, TOGGLE_LAPRAS_GUY_CELADON
+	call HideObject
 	CheckEventHL EVENT_GOT_LAPRAS_EARLY
 	jr nz, .gotLaprasAlready
 	ld a, [wStatusFlags4]

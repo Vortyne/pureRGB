@@ -20,7 +20,7 @@ VermilionGymSetDoorTile:
 .replaceTile
 	ld [wNewTileBlockID], a
 	lb bc, 2, 2
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	ld hl, wCurrentMapScriptFlags
 	bit BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]

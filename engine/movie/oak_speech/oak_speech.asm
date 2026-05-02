@@ -52,7 +52,7 @@ ENDC
 	call ClearScreen
 	call LoadTextBoxTilePatterns
 	call PrepareOakSpeech
-	predef InitPlayerData
+	callfar InitPlayerData
 	call RunDefaultPaletteCommand	; shinpokerednote: gbcnote: reinitialize the default palette in case the pointers got cleared
 	ld hl, wNumBoxItems
 	ld a, ITEM_INITIAL_PC_ITEM
@@ -237,7 +237,8 @@ MovePicLeft:
 	jr .next
 
 DisplayPicCenteredOrUpperRight:
-	call GetPredefRegisters
+	ld de, RedPicFront
+	lb bc, BANK(RedPicFront), $01
 IntroDisplayPicCenteredOrUpperRight:
 ; b = bank
 ; de = address of compressed pic
@@ -254,13 +255,13 @@ IntroDisplayPicCenteredOrUpperRight:
 	pop bc
 	ld a, c
 	and a
-	hlcoord 15, 1
+	decoord 15, 1
 	jr nz, .next
-	hlcoord 6, 4
+	decoord 6, 4
 .next
 	xor a
 	ldh [hStartTileID], a
-	predef_jump CopyUncompressedPicToTilemap
+	jpfar FarCopyUncompressedPicToTilemap
 
 BackupOptionsSettings:
 	ld de, wBuffer

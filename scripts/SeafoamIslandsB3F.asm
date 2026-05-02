@@ -6,32 +6,26 @@ SeafoamIslandsB3F_Script:
 	bit BIT_PUSHED_BOULDER, [hl]
 	res BIT_PUSHED_BOULDER, [hl]
 	jr z, .noBoulderWasPushed
-	ld hl, Seafoam4HolesCoords
-	call CheckBoulderCoords
+	ld de, Seafoam4HolesCoords
+	ld c, BANK(Seafoam4HolesCoords)
+	callfar CheckBoulderCoords
 	ret nc
 	EventFlagAddress hl, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
 	ld a, [wCoordIndex]
 	cp $1
 	jr nz, .boulder2FellDownHole
 	SetEventReuseHL EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
-	ld [wObjectToHide], a
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1
-	ld [wObjectToShow], a
+	lb bc, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
 	jr .hideAndShowBoulderObjects
 .boulder2FellDownHole
 	SetEventAfterBranchReuseHL EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
-	ld [wObjectToHide], a
-	ld a, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2
-	ld [wObjectToShow], a
+	lb bc, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
 .hideAndShowBoulderObjects
-	ld a, [wObjectToHide]
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, [wObjectToShow]
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
+	push bc
+	call HideObject
+	pop bc
+	ld c, b
+	call ShowObject
 	ld d, 1
 	callfar BoulderHoleDropEffect
 	jr .runCurrentMapScript
@@ -137,7 +131,7 @@ SeafoamIslandsB3F_TextPointers:
 PickUpFossilText:
 	text_asm
 	SetEvent EVENT_SEAFOAM_FOUND_OTHER_FOSSIL
-	predef PickUpItem
+	callfar PickUpItem
 	rst TextScriptEnd
 
 BoulderBlockingWaterB3F:

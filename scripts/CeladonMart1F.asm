@@ -626,12 +626,10 @@ CallRival:
 	rst _PrintText
 	SetEvent EVENT_CALLED_RIVAL_FROM_CELADON
 	; make sure daisy sitting is the NPC that is shown because she can be walking around at this point
-	ld a, TOGGLE_DAISY_SITTING
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_DAISY_WALKING
-	ld [wToggleableObjectIndex], a
-	predef_jump HideObject
+	ld c, TOGGLE_DAISY_SITTING
+	call ShowObject
+	ld c, TOGGLE_DAISY_WALKING
+	jp HideObject
 
 CeladonMartCallRivalText:
 	text_far _CeladonMartCallRivalText

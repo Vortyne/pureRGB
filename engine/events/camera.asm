@@ -1495,7 +1495,7 @@ ShowCameraPicture::
 	add hl, de
 	ld a, [hl] ; SGB palette
 	ld [wGenericPaletteOverride], a
-    ld b, SET_PAL_GENERIC
+    ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 	jr .skipPalettes
 
@@ -1571,7 +1571,7 @@ ExclamationDuringCameraEvent:
 	ld [wEmotionBubbleSpriteIndex], a
 	ld hl, wMovementFlags
 	set BIT_LEDGE_OR_FISHING, [hl]
-	predef EmotionBubble
+	callfar EmotionBubble
 	ld hl, wMovementFlags
 	res BIT_LEDGE_OR_FISHING, [hl]
 	ld hl, wShadowOAMSprite04YCoord

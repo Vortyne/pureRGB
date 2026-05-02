@@ -80,6 +80,5 @@ SilphCoElevator_TextPointers:
 SilphCoElevatorElevatorText:
 	text_asm
 	call SilphCoElevatorCopyWarpMapsScript
-	ld hl, SilphCoElevatorWarpMaps
-	predef DisplayElevatorFloorMenu
+	callfar DisplayElevatorFloorMenu
 	rst TextScriptEnd

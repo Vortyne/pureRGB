@@ -84,3 +84,4 @@ ItemPrices::
 	bcd3 2000  ; ELIXER
 	bcd3 4000  ; MAX_ELIXER
 	assert_table_length NUM_ITEMS
+

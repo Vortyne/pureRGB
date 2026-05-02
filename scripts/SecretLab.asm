@@ -87,7 +87,7 @@ OpenBarricadeDoor:
 	lb bc, 11, 2
 	ld a, $32
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlock
+	jp ReplaceTileBlock
 
 CheckOpponentWalkIn:
 	CheckEvent EVENT_BEAT_SECRET_LAB_CHIEF
@@ -187,19 +187,16 @@ WaitForWalkFinish:
 	ld a, SFX_GO_OUTSIDE
 	rst _PlaySound
 	CheckEvent EVENT_BEAT_SECRET_LAB_SOLDIER_0
-	ld a, TOGGLE_SECRET_LAB_SOLDIER_1
-	call nz, .hideNPCAction
+	ld c, TOGGLE_SECRET_LAB_SOLDIER_1
+	call nz, HideExtraObject
 	CheckEvent EVENT_BEAT_SECRET_LAB_SOLDIER_1
-	ld a, TOGGLE_SECRET_LAB_SOLDIER_2
-	call nz, .hideNPCAction
+	ld c, TOGGLE_SECRET_LAB_SOLDIER_2
+	call nz, HideExtraObject
 	CheckEvent EVENT_BEAT_SECRET_LAB_CHIEF
-	ld a, TOGGLE_SECRET_LAB_CHIEF
-	call nz, .hideNPCAction
+	ld c, TOGGLE_SECRET_LAB_CHIEF
+	call nz, HideExtraObject
 	ResetEvent EVENT_SECRET_LAB_NPC_WALK_OUT_HAPPENING
 	ret
-.hideNPCAction
-	ld [wToggleableObjectIndex], a
-	predef_jump HideExtraObject
 
 SoldierLeaveMovementDefault:
 	db NPC_MOVEMENT_RIGHT
@@ -489,7 +486,7 @@ CheckWalkingToDoor:
 	lb bc, 11, 2
 	ld a, $31
 	ld [wNewTileBlockID], a
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	call SecretLabShakeScreen
 	call OpenBarricadeDoor
 	ld c, 60
@@ -553,7 +550,7 @@ ToggleMachineDoorQuick:
 .open
 	ld [wNewTileBlockID], a
 	push af
-	predef ReplaceTileBlock
+	call ReplaceTileBlock
 	pop af
 	and a
 	ret z
@@ -981,7 +978,7 @@ SecretLabMewtwoTransformation:
 	call ClearScreen
 	call GBPalNormal
 	call Delay3
-	ld b, SET_PAL_GENERIC
+	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
 	hlcoord 7, 4
 	ld a, [wCurPartySpecies]

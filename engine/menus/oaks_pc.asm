@@ -6,7 +6,7 @@ OpenOaksPC:
 	rst _PrintText
 	call YesNoChoice
 	jr nz, .closePC
-	predef DisplayDexRating
+	callfar DisplayDexRating
 .closePC
 	ld hl, ClosedOaksPCText
 	rst _PrintText

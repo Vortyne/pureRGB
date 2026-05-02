@@ -2,6 +2,7 @@
 ; when entering some maps in which we can replace tileblocks on loading it
 ; when we enter the map from an animation like falling through a hole or warping, 
 ; we need to still replace those tileblocks before doing the animation or the player will see them disappear / change
+; TODO: optimize?
 EnterMapAnimReplaceTileBlocks::
 	ld a, [wCurMapConnections]
 	bit BIT_DEFER_SHOWING_MAP, a

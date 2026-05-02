@@ -700,6 +700,7 @@ DojoBetaTiles:: INCBIN "gfx/unused_prototype_sprites/dojo_beta.2bpp"
 BallAnimTiles:: INCBIN "gfx/battle/ball_anim.2bpp"
 WildDataArrows:: INCBIN "gfx/town_map/wild_data_arrows.1bpp"
 WildDataShoe:: INCBIN "gfx/town_map/shoe.2bpp"
+LinkBattleVSText:: INCBIN "gfx/font/VS.1bpp"
 
 GrimerPeekingSprite:: INCBIN "gfx/sprites/grimer_peeking.2bpp"
 

@@ -42,7 +42,7 @@ EndOfBattle:
 .evolution
 	xor a
 	ld [wForceEvolution], a
-	predef EvolutionAfterBattle
+	callfar EvolutionAfterBattle
 .resetVariables
 	ResetEvent EVENT_ALREADY_BACKED_UP_MUSIC_BEFORE_BATTLE
 	xor a

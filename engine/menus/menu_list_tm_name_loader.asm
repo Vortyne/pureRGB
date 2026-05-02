@@ -19,7 +19,7 @@ CheckLoadTmName:: ; loads a TM name when the cursor is on TMs
 .skipAdding
 	inc a
 	ld [wNamedObjectIndex], a
-	predef TMToMove ; get move ID from TM/HM ID
+	callfar TMToMove ; get move ID from TM/HM ID
 
 	hlcoord 4, 13
 	lb bc, 1, 14  ; height, width

@@ -23,19 +23,19 @@ CeladonGymCheckHideCutTrees:
 .removeTreeBlockers
 	CheckEvent EVENT_CUT_DOWN_CELADON_GYM_LEFT_TREE
 	jr z, .bottomTreeCheck
-	lb bc, 2, 1
+	lb de, 2, 1
 	ld a, $35
 	call .replaceTileBlock
 .bottomTreeCheck
 	CheckEvent EVENT_CUT_DOWN_CELADON_GYM_BOTTOM_TREE
 	jr z, .rightTreeCheck
-	lb bc, 3, 2
+	lb de, 3, 2
 	ld a, $35
 	call .replaceTileBlock
 .rightTreeCheck
 	CheckEvent EVENT_CUT_DOWN_CELADON_GYM_RIGHT_TREE
 	jr z, .done
-	lb bc, 2, 3
+	lb de, 2, 3
 	ld a, $36
 	call .replaceTileBlock
 .done
@@ -44,7 +44,7 @@ CeladonGymCheckHideCutTrees:
 	jpfar RedrawMapView
 .replaceTileBlock
 	ld [wNewTileBlockID], a
-	predef_jump ReplaceTileBlockNoRedraw
+	jpfar ReplaceTileBlockNoRedraw
 
 CeladonGym_ScriptPointers:
 	def_script_pointers

@@ -1,13 +1,8 @@
-DrawHP:
-; Draws the HP bar in the stats screen
-	call GetPredefRegisters
-	ld a, $1
-	jr DrawHP_
-
-DrawHP2:
-; Draws the HP bar in the party screen
-	call GetPredefRegisters
-	ld a, $2
+DrawHP::
+; Draws the HP bar, c = 1 (stats screen), c = 2 (party screen)
+	ld h, d
+	ld l, e
+	ld a, c
 
 DrawHP_:
 	ld [wHPBarType], a
@@ -130,11 +125,12 @@ StatusScreen:
 	hlcoord 10, 9
 	ld de, TypesIDNoOTText
 	call PlaceString
-	hlcoord 11, 3
-	predef DrawHP
+	decoord 11, 3
+	ld c, 1
+	callfar DrawHP
 	ld hl, wStatusScreenHPBarColor
 	call GetHealthBarColor
-	ld b, SET_PAL_STATUS_SCREEN
+	ld d, SET_PAL_STATUS_SCREEN
 	call RunPaletteCommand
 	hlcoord 16, 6
 	ld de, wLoadedMonStatus
@@ -152,13 +148,13 @@ StatusScreen:
 	ld a, [wMonHIndex]
 	ld [wPokedexNum], a
 	ld [wCurSpecies], a
-	predef IndexToPokedex
+	call IndexToPokedex
 	hlcoord 3, 7
 	ld de, wPokedexNum
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber ; Pokémon no.
-	hlcoord 11, 10
-	predef PrintMonType
+	decoord 11, 10
+	callfar PrintMonType
 	ld hl, NamePointers2
 	call .GetStringPointer
 	ld d, h
