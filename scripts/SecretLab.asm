@@ -958,8 +958,6 @@ SecretLabMewtwoTransformation:
 	rst _PrintText
 	jr .done
 .animationStart
-	ld a, MEWTWO
-	ld [wWholeScreenPaletteMonSpecies], a
 	ld a, SFX_INTRO_WHOOSH
 	rst _PlaySound
 	ld c, 60
@@ -978,7 +976,7 @@ SecretLabMewtwoTransformation:
 	call ClearScreen
 	call GBPalNormal
 	call Delay3
-	ld d, SET_PAL_GENERIC
+	lb de, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, MEWTWO
 	call RunPaletteCommand
 	hlcoord 7, 4
 	ld a, [wCurPartySpecies]

@@ -9,11 +9,13 @@ _RunPaletteCommand::
 	ld l, a
 	ld h, 0
 	add hl, hl
+	push de
 	ld de, SetPalFunctions
 	add hl, de
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+	pop de ; e = optional argument to function
 	call hl_caller
 	jp SendSGBPackets
 
@@ -432,10 +434,10 @@ SetPal_PokemonWholeScreenTrade:
 	rst _CopyData
 	pop de
 	ld a, e
-	and a
+	cp $FF
 	ld a, PAL_BLACK
-	jr nz, .next
-	ld a, [wWholeScreenPaletteMonSpecies]
+	jr z, .next
+	ld a, e
 	call DeterminePaletteIDOutOfBattle
 .next
 	ld [wPalPacket + 1], a

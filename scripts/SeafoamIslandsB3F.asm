@@ -2,37 +2,14 @@
 SeafoamIslandsB3F_Script:
 	call EnableAutoTextBoxDrawing
 	call SeafoamIslandsB3FOnMapLoad
-	ld hl, wMiscFlags
-	bit BIT_PUSHED_BOULDER, [hl]
-	res BIT_PUSHED_BOULDER, [hl]
-	jr z, .noBoulderWasPushed
-	ld de, Seafoam4HolesCoords
-	ld c, BANK(Seafoam4HolesCoords)
-	callfar CheckBoulderCoords
-	ret nc
-	EventFlagAddress hl, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	ld a, [wCoordIndex]
-	cp $1
-	jr nz, .boulder2FellDownHole
-	SetEventReuseHL EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	lb bc, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
-	jr .hideAndShowBoulderObjects
-.boulder2FellDownHole
-	SetEventAfterBranchReuseHL EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
-	lb bc, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
-.hideAndShowBoulderObjects
-	push bc
-	call HideObject
-	pop bc
-	ld c, b
-	call ShowObject
-	ld d, 1
-	callfar BoulderHoleDropEffect
-	jr .runCurrentMapScript
-.noBoulderWasPushed
+	ld de, SeafoamB3FHolesCoords
+	ld hl, SeafoamBoulderB3FEventFunc
+	ld bc, SeafoamB3FBoulderToggleData
+	call SeafoamBoulderPushRoutine
+	jr c, .runCurrentMapScript
 	ld a, SEAFOAM_ISLANDS_B4F
 	ld [wDungeonWarpDestinationMap], a
-	ld hl, Seafoam4HolesCoords
+	ld hl, SeafoamB3FHolesCoords
 	call IsPlayerOnDungeonWarp
 	ld a, [wStatusFlags6]
 	bit BIT_DUNGEON_WARP, a
@@ -61,11 +38,6 @@ SeafoamIslandsB3FOnMapLoad::
 	ld a, $76
 	ld [wNewTileBlockID], a
 	jpfar ReplaceMultipleTileBlockLineVerticalWithOneBlock
-
-Seafoam4HolesCoords:
-	dbmapcoord  3, 16
-	dbmapcoord  6, 16
-	db -1 ; end
 
 SeafoamIslandsB3F_ScriptPointers:
 	def_script_pointers

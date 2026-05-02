@@ -374,6 +374,7 @@ INCLUDE "engine/battle/move_effects/sleep.asm"
 INCLUDE "engine/menus/load_font.asm"
 INCLUDE "engine/overworld/check_boulder_coords.asm"
 INCLUDE "engine/pokemon/calc_stat.asm"
+INCLUDE "engine/pokemon/draw_hp_bar.asm"
 
 SECTION "Party Sprites", ROMX, BANK[$34]
 ; PureRGBnote: ADDED: new menu sprite icons raw data

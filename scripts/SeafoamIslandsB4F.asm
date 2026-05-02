@@ -149,7 +149,7 @@ SeafoamIslandsB4FArticunoIntroAnimation:
 .loopSetSpriteStartingCoords
 	push de
 	push bc
-	lb de, $3C, $48
+	call .getInitialCoords
 	callfar LoadSpecificOAMSpriteCoords
 	pop bc
 	pop de
@@ -302,6 +302,20 @@ SeafoamIslandsB4FArticunoIntroAnimation:
 	jr nz, .copyOAMTileIDs
 	dec e
 	jr nz, .copyOAMTileIDsOuter
+	ret
+.getInitialCoords
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	lb de, $3C, $48
+	ret z
+	cp SPRITE_FACING_LEFT
+	lb de, $4C, $38
+	ret z
+	cp SPRITE_FACING_RIGHT
+	lb de, $4C, $58
+	ret z
+	; down
+	lb de, $5C, $48
 	ret
 
 

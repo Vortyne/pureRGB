@@ -1173,13 +1173,7 @@ wOnSGB:: db
 
 wDefaultPaletteCommand:: db
 
-UNION
 wPlayerHPBarColor:: db
-
-NEXTU
-; species of the mon whose palette is used for the whole screen
-wWholeScreenPaletteMonSpecies:: db
-ENDU
 
 wEnemyHPBarColor:: db
 

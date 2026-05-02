@@ -8,7 +8,6 @@ MACRO add_predef
 ENDM
 
 PredefPointers::
-; TODO: check which actually need to be predefs
 ; bank and address of certain subroutines are stored in home bank for easy switching with the predef subroutine
 ; all registers get preserved by a predef call, but it takes a lot of cycles to perform compared to other methods of bank switching
 ; should only use for functions that are used a bunch of times and need multiple arguments, in places where cycles don't matter very much

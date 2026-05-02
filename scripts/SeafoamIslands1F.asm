@@ -8,40 +8,136 @@ SeafoamIslands1F_Script:
 	ld hl, wCurrentMapScriptFlags
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	SetEvent EVENT_IN_SEAFOAM_ISLANDS
-	ld hl, wMiscFlags
-	bit BIT_PUSHED_BOULDER, [hl]
-	res BIT_PUSHED_BOULDER, [hl]
-	jr z, .noBoulderWasPushed
 	ld de, Seafoam1HolesCoords
-	ld c, BANK(Seafoam1HolesCoords)
-	callfar CheckBoulderCoords
-	ret nc
-	EventFlagAddress hl, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	ld a, [wCoordIndex]
-	cp $1
-	jr nz, .boulder2FellDownHole
-	SetEventReuseHL EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	lb bc, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
-	jr .hideAndShowBoulderObjects
-.boulder2FellDownHole
-	SetEventAfterBranchReuseHL EVENT_SEAFOAM1_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
-	lb bc, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
-.hideAndShowBoulderObjects
-	push bc
-	call HideObject
-	pop bc
-	ld c, b
-	call ShowObject
-	jpfar BoulderHoleDropEffectDefault
-.noBoulderWasPushed
+	ld hl, SeafoamBoulder1FEventFunc
+	ld bc, Seafoam1BoulderToggleData
+	call SeafoamBoulderPushRoutine
+	ret c
 	ld a, SEAFOAM_ISLANDS_B1F
 	ld [wDungeonWarpDestinationMap], a
 	ld hl, Seafoam1HolesCoords
 	jp IsPlayerOnDungeonWarp
 
+; input de = hole coords
+; input bc = toggle data pointer
+; input hl = event marking function
+SeafoamBoulderPushRoutine:
+	push hl
+	ld hl, wMiscFlags
+	bit BIT_PUSHED_BOULDER, [hl]
+	res BIT_PUSHED_BOULDER, [hl]
+	pop hl
+	jr z, .noBoulderPushed
+	push hl
+	push bc
+	ld c, BANK(SeafoamBoulderCoordSets)
+	callfar CheckBoulderCoords
+	pop bc
+	pop hl
+	ret nc
+	ld a, [wCoordIndex]
+	cp $1
+	jr z, .hideAndShowBoulderObjects
+	inc bc
+	inc bc
+.hideAndShowBoulderObjects
+	call hl_caller ; mark events according to z flag
+	ld h, b
+	ld l, c
+	push de
+	ld b, [hl]
+	inc hl
+	ld c, [hl]
+	push bc
+	call HideObject
+	pop bc
+	ld c, b
+	call ShowObject
+	pop de
+	callfar BoulderHoleDropEffect
+	scf
+	ret
+.noBoulderPushed
+	and a
+	ret
+
+SeafoamBoulder1FEventFunc:
+	ld d, 0 ; which boulder drop sound effect to use
+	EventFlagAddress hl, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
+	jr nz, .boulder2FellDownHole
+	SetEventReuseHL EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
+	ret
+.boulder2FellDownHole
+	SetEventAfterBranchReuseHL EVENT_SEAFOAM1_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM1_BOULDER1_DOWN_HOLE
+	ret
+
+SeafoamBoulderB1FEventFunc:
+	ld d, 0 ; which boulder drop sound effect to use
+	EventFlagAddress hl, EVENT_SEAFOAM2_BOULDER1_DOWN_HOLE
+	jr nz, .boulder2FellDownHole
+	SetEventReuseHL EVENT_SEAFOAM2_BOULDER1_DOWN_HOLE
+	ret
+.boulder2FellDownHole
+	SetEventAfterBranchReuseHL EVENT_SEAFOAM2_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM2_BOULDER1_DOWN_HOLE
+	ret
+
+SeafoamBoulderB2FEventFunc:
+	ld d, 1 ; which boulder drop sound effect to use
+	EventFlagAddress hl, EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE
+	jr nz, .boulder2FellDownHole
+	SetEventReuseHL EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE
+	ret
+.boulder2FellDownHole
+	SetEventAfterBranchReuseHL EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE
+	ret
+
+SeafoamBoulderB3FEventFunc:
+	ld d, 1 ; which boulder drop sound effect to use
+	EventFlagAddress hl, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
+	jr nz, .boulder2FellDownHole
+	SetEventReuseHL EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
+	ret
+.boulder2FellDownHole
+	SetEventAfterBranchReuseHL EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE
+	ret
+
+
+Seafoam1BoulderToggleData:
+	db TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
+	db TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
+
+SeafoamB1FBoulderToggleData:
+	db TOGGLE_SEAFOAM_ISLANDS_B2F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1
+	db TOGGLE_SEAFOAM_ISLANDS_B2F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2
+
+SeafoamB2FBoulderToggleData:
+	db TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_3, TOGGLE_SEAFOAM_ISLANDS_B2F_BOULDER_1
+	db TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_4, TOGGLE_SEAFOAM_ISLANDS_B2F_BOULDER_2
+
+SeafoamB3FBoulderToggleData:
+	db TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
+	db TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
+
+
+SeafoamBoulderCoordSets:
 Seafoam1HolesCoords:
 	dbmapcoord 17,  6
 	dbmapcoord 24,  6
+	db -1 ; end
+
+SeafoamB1FHolesCoords:
+	dbmapcoord 18,  6
+	dbmapcoord 23,  6
+	db -1 ; end
+
+SeafoamB2FHolesCoords:
+	dbmapcoord 19,  6
+	dbmapcoord 22,  6
+	db -1 ; end
+
+SeafoamB3FHolesCoords:
+	dbmapcoord  3, 16
+	dbmapcoord  6, 16
 	db -1 ; end
 
 SeafoamIslands1F_TextPointers:

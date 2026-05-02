@@ -30,7 +30,6 @@ AddPartyMon::
 	pop hl
 	ret
 
-; TODO: probably doesn't need to be in home bank
 ; calculates all 5 stats of current mon and writes them to [de]
 CalcStats::
 	ld c, $0

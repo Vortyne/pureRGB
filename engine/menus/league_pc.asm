@@ -88,13 +88,14 @@ LeaguePCShowMon:
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
 	ld [wBattleMonSpecies2], a
-	ld [wWholeScreenPaletteMonSpecies], a
 	ld a, [hli]
 	ld [wHoFMonLevel], a
 	ld de, wNameBuffer
 	ld bc, NAME_LENGTH
 	rst _CopyData
-	lb de, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, 0
+	ld a, [wCurSpecies]
+	ld e, a
+	ld d, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE
 	call RunPaletteCommand
 	hlcoord 12, 5
 	call GetMonHeader

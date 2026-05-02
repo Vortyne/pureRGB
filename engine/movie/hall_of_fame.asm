@@ -126,7 +126,6 @@ HoFShowMonOrPlayer:
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
 	ld [wBattleMonSpecies2], a
-	ld [wWholeScreenPaletteMonSpecies], a
 	ld a, [wHoFMonOrPlayer]
 	and a
 	jr z, .showMon
@@ -140,7 +139,9 @@ HoFShowMonOrPlayer:
 	call LoadFrontSpriteByMonIndex
 	callfar LoadMonBackPic
 .next1
-	lb de, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE, 0
+	ld a, [wCurSpecies]
+	ld e, a
+	ld d, SET_PAL_POKEMON_WHOLE_SCREEN_TRADE
 	call RunPaletteCommand
 	ld a, %11100100
 	ldh [rBGP], a

@@ -21,8 +21,7 @@ EvolveMon:
 	ldh [hAutoBGTransferEnabled], a
 	ldh [hTileAnimations], a
 	ld a, [wEvoOldSpecies]
-	ld [wWholeScreenPaletteMonSpecies], a
-	ld c, 0
+	ld e, a
 	call EvolutionSetWholeScreenPalette
 	ld a, [wEvoNewSpecies]
 	ld [wCurPartySpecies], a
@@ -46,7 +45,7 @@ EvolveMon:
 	call PlayMusic
 	ld c, 80
 	rst _DelayFrames
-	ld c, 1 ; set PAL_BLACK instead of mon palette
+	ld e, $FF ; set PAL_BLACK instead of mon palette
 	call EvolutionSetWholeScreenPalette
 	lb bc, $1, $10
 .animLoop
@@ -66,13 +65,15 @@ EvolveMon:
 	call Evolution_ChangeMonPic ; show the new species pic
 	ld a, [wEvoNewSpecies]
 .done
-	ld [wWholeScreenPaletteMonSpecies], a
+	push af
 	ld a, SFX_STOP_ALL_MUSIC
 	ld [wNewSoundID], a
 	rst _PlaySound
-	ld a, [wWholeScreenPaletteMonSpecies]
+	pop af
+	push af
 	call PlayCry
-	ld c, 0
+	pop af
+	ld e, a
 	call EvolutionSetWholeScreenPalette
 	pop af
 	ld [wCurSpecies], a
@@ -94,7 +95,7 @@ EvolveMon:
 	jr .done
 
 EvolutionSetWholeScreenPalette:
-	ld b, SET_PAL_POKEMON_WHOLE_SCREEN
+	ld d, SET_PAL_POKEMON_WHOLE_SCREEN
 	jp RunPaletteCommand
 
 Evolution_LoadPic:
