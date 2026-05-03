@@ -92,11 +92,10 @@ PKMNLeaguePCText: db "<PKMN>LEAGUE@"
 LogOffPCText:     db "LOG OFF@"
 
 BillsPC_::
-	ld hl, wStatusFlags5
-	set BIT_NO_TEXT_DELAY, [hl]
+	call DisableTextDelay
 	xor a
 	ld [wParentMenuItem], a
-	call LoadHpBarAndStatusTilePatterns
+	callfar LoadBillsPCExtraTiles
 	ld a, [wListScrollOffset]
 	push af
 	ld a, [wMiscFlags]
@@ -112,7 +111,6 @@ BillsPCMenu:
 	ld a, [wParentMenuItem]
 	ld [wCurrentMenuItem], a
 	ResetFlag FLAG_VIEW_PC_PKMN
-	callfar LoadBillsPCExtraTiles
 	call LoadScreenTilesFromBuffer2DisableBGTransfer
 	hlcoord 0, 0
 	lb bc, 10, 12
@@ -142,17 +140,30 @@ BillsPCMenu:
 	rst _PrintText
 	decoord 13, 13
 	callfar DrawCurrentBoxPrompt
+	callfar GetBillsPCMenuPrompt
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
 .handleMenuInput
-	call HandleMenuInput
+	ld a, 8
+	ld [wListMenuHoverTextType], a
+	callfar HandleMenuInputFromBank1
+	xor a
+	ld [wListMenuHoverTextType], a
+	ldh a, [hJoy5]
 	bit B_PAD_SELECT, a
 	jr z, .notSelect
 	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .handleMenuInput
 	ld [wParentMenuItem], a
+	and a
+	jr z, .view
+	cp 3
+	jp z, RenameCurrentBox
+	jr .handleMenuInput
+.view
+	ld a, [wBoxCount]
+	and a
+	jr z, .handleMenuInput
 	SetFlag FLAG_VIEW_PC_PKMN
 	jp BillsPCWithdraw
 .notSelect
@@ -185,16 +196,13 @@ ExitBillsPC:
 	call LoadScreenTilesFromBuffer2
 	pop af
 	ld [wListScrollOffset], a
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl]
-	ret
+	jp EnableTextDelay
 
 BillsPCDeposit:
 	ld a, [wPartyCount]
 	dec a
 	jr nz, .partyLargeEnough
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay so we don't get instant text
+	call EnableTextDelay
 	ld hl, CantDepositLastMonText
 	rst _PrintText
 	jp BillsPCMenu
@@ -202,8 +210,7 @@ BillsPCDeposit:
 	ld a, [wBoxCount]
 	cp MONS_PER_BOX
 	jr nz, .boxNotFull
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay so we don't get instant text
+	call EnableTextDelay
 	ld hl, BoxFullText
 	rst _PrintText
 	jp BillsPCMenu
@@ -250,8 +257,7 @@ BillsPCDeposit:
 	ld a, [wPartyCount]
 	dec a
 	jp z, BillsPCMenu ; if 1 pokemon left in party, exit the menu automatically
-	ld hl, wStatusFlags5
-	set BIT_NO_TEXT_DELAY, [hl] ; turn off letter printing delay so we get instant text
+	call DisableTextDelay
 	ld hl, WhatText
 	rst _PrintText
 	; in case we displayed the status menu, need to reload these
@@ -262,8 +268,7 @@ BillsPCWithdraw:
 	ld a, [wBoxCount]
 	and a
 	jr nz, .boxNotEmpty
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay so we don't get instant text
+	call EnableTextDelay
 	ld hl, NoMonText
 	rst _PrintText
 	jp BillsPCMenu
@@ -273,8 +278,7 @@ BillsPCWithdraw:
 	ld a, [wPartyCount]
 	cp PARTY_LENGTH
 	jr nz, .partyNotFull
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay so we don't get instant text
+	call EnableTextDelay
 	ld hl, CantTakeMonText
 	rst _PrintText
 	jp BillsPCMenu
@@ -319,8 +323,7 @@ BillsPCWithdraw:
 	jp BillsPCWithdraw ; otherwise go back to the menu
 .redrawTextBoxAndCurrentBox
 	push hl
-	ld hl, wStatusFlags5
-	set BIT_NO_TEXT_DELAY, [hl] ; turn off letter printing delay so we get instant text
+	call DisableTextDelay
 	pop hl
 	rst _PrintText
 	jp RedrawCurrentBoxPrompt
@@ -336,22 +339,19 @@ BillsPCRelease:
 	ld a, [wBoxCount]
 	and a
 	jr nz, .loop
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay so we don't get instant text
+	call EnableTextDelay
 	ld hl, NoMonText
 	rst _PrintText
 	jp BillsPCMenu
 .loop
-	ld hl, wStatusFlags5
-	set BIT_NO_TEXT_DELAY, [hl] ; turn off letter printing delay so we get instant text
+	call EnableTextDelay
 	ld hl, ReleaseWhichMonText
 	rst _PrintText
 	ld hl, wBoxCount
 	call DisplayMonListMenu
 	jp c, BillsPCMenu
 	call BillsPCBackupListIndex
-	ld hl, wStatusFlags5
-	res BIT_NO_TEXT_DELAY, [hl] ; turn on letter printing delay so we don't get instant text
+	call EnableTextDelay
 	ld hl, OnceReleasedText
 	rst _PrintText
 	xor a
@@ -515,6 +515,8 @@ DisplayDepositWithdrawMenu:
 	callfar StatusScreenOriginal
 	call LoadScreenTilesFromBuffer1
 	call ReloadTilesetTilePatterns
+	callfar LoadBillsPCExtraTiles ; in the case of displaying pokemon status menu, this needs to be reloaded
+	call LoadTextBoxTilePatterns
 	call RunDefaultPaletteCommand
 	call LoadGBPal
 	CheckFlag FLAG_VIEW_PC_PKMN
@@ -634,6 +636,11 @@ BillsPCRestoreListIndex:
 	ret
 
 RedrawCurrentBoxPrompt:
-	callfar LoadBillsPCExtraTiles ; in the case of displaying pokemon status menu, this needs to be reloaded
 	decoord 13, 13
 	jpfar DrawCurrentBoxPrompt ; redraw current box prompt since it probably changed
+
+RenameCurrentBox:
+	call EnableTextDelay
+	callfar _RenameCurrentBox
+	call DisableTextDelay
+	jp BillsPCMenu

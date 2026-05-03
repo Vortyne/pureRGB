@@ -431,7 +431,6 @@ INCLUDE "engine/menus/text_multi_button_prompt.asm"
 INCLUDE "engine/menus/multi_choice_menu.asm"
 INCLUDE "engine/menus/map_pokemon_areas.asm"
 INCLUDE "engine/gfx/save_screen_area_to_buffer3.asm"
-INCLUDE "engine/menus/change_box_menu.asm"
 INCLUDE "engine/overworld/autosurf.asm"
 INCLUDE "audio/remap_armored_mewtwo_cry.asm"
 INCLUDE "engine/pokemon/change_mon_species.asm"
@@ -470,6 +469,7 @@ INCLUDE "engine/battle/move_effects/siphon_snag.asm"
 INCLUDE "engine/menus/map_wild_data.asm"
 INCLUDE "engine/battle/move_effects/screech.asm"
 INCLUDE "engine/menus/preview_front_sprite.asm"
+INCLUDE "engine/menus/change_box_menu.asm"
 
 SECTION "newCode3", ROMX
 

@@ -518,7 +518,8 @@ PrintListMenuEntries::
 	pop hl
 	ld bc, SCREEN_WIDTH + 8 ; 1 row down and 8 columns right
 	add hl, bc
-	call PrintLevel
+	ld a, $CE ; level tile (when in pc menus)
+	call PrintLevelArbitraryTile
 	pop af
 	ld [wNamedObjectIndex], a
 ;;;;

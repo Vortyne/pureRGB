@@ -670,7 +670,6 @@ MapAreasUI::	INCBIN "gfx/town_map/area_type_ui.2bpp"
 MapAreasUIEnd::
 FishingWaterIcons:: INCBIN "gfx/town_map/mon_fishing_water_icons.1bpp"
 ExtraMenuBorderConnectors:: INCBIN "gfx/font/extra_menu_border_connectors.1bpp"
-FromToChangeBoxPrompt:: INCBIN "gfx/font/from_to_change_box_prompt.1bpp"
 EditPrompt:: INCBIN "gfx/font/edit_prompt.1bpp"
 TeaTile:: INCBIN "gfx/icons/tea.2bpp"
 FoodTiles:: INCBIN "gfx/icons/food_on_table.2bpp"

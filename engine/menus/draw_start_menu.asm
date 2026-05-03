@@ -75,7 +75,6 @@ CheckSavedStartMenuIndex:
 	ld [wLastMenuItem], a
 	ret
 
-; TODO: use line and print once?
 StartMenuWithPokedexText:
 	db "#DEX"
 	next

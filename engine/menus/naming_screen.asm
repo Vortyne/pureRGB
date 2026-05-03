@@ -139,6 +139,8 @@ DisplayNamingScreenWrap:
 	ld a, [wNamingScreenType]
 	cp NAME_BALL_SCREEN
 	jr z, .getBallColor
+	cp NAME_BOX_SCREEN
+	jr z, .skipBallColor
 	farcall AnimatePartyMon_ForceSpeed1
 	jr .skipBallColor
 .getBallColor
@@ -246,10 +248,16 @@ DisplayNamingScreenWrap:
 	ld [wNamingScreenLetter], a
 	call CalcStringLength
 	ld a, [wNamingScreenType]
+	cp NAME_BOX_SCREEN
+	jr z, .checkBoxNameLength
 	cp NAME_MON_SCREEN
 	jr nc, .checkMonNameLength
 	ld a, [wNamingScreenNameLength]
 	cp PLAYER_NAME_LENGTH - 1
+	jr .checkNameLength
+.checkBoxNameLength
+	ld a, [wNamingScreenNameLength]
+	cp BOX_NAME_LENGTH - 1
 	jr .checkNameLength
 .checkMonNameLength
 	ld a, [wNamingScreenNameLength]
@@ -385,6 +393,9 @@ PrintNicknameAndUnderscores:
 	call PlaceString
 	hlcoord 10, 3
 	ld a, [wNamingScreenType]
+	cp NAME_BOX_SCREEN
+	ld b, BOX_NAME_LENGTH - 1
+	jr z, .playerOrRival1
 	cp NAME_MON_SCREEN
 	ld b, NAME_LENGTH - 1 ; pokemon max name length
 	jr nc, .playerOrRival1
@@ -396,11 +407,17 @@ PrintNicknameAndUnderscores:
 	dec b
 	jr nz, .placeUnderscoreLoop
 	ld a, [wNamingScreenType]
+	cp NAME_BOX_SCREEN
+	jr z, .nameBox
 	cp NAME_MON_SCREEN
 	ld a, [wNamingScreenNameLength]
 	jr nc, .pokemon2
 ; player or rival
 	cp PLAYER_NAME_LENGTH - 1
+	jr .checkEmptySpaces
+.nameBox
+	ld a, [wNamingScreenNameLength]
+	cp BOX_NAME_LENGTH - 1
 	jr .checkEmptySpaces
 .pokemon2
 	cp NAME_LENGTH - 1
@@ -414,12 +431,16 @@ PrintNicknameAndUnderscores:
 	ld a, $5 ; "ED" y coord
 	ld [wCurrentMenuItem], a
 	ld a, [wNamingScreenType]
+	cp NAME_BOX_SCREEN
+	ld c, BOX_NAME_LENGTH - 2
+	jr z, .placeRaisedUnderscore2
 	cp NAME_MON_SCREEN
-	ld a, NAME_LENGTH - 2
-	jr nc, .placeRaisedUnderscore
-	ld a, PLAYER_NAME_LENGTH - 2
+	ld c, NAME_LENGTH - 2
+	jr nc, .placeRaisedUnderscore2
+	ld c, PLAYER_NAME_LENGTH - 2
 .placeRaisedUnderscore
 	ld c, a
+.placeRaisedUnderscore2
 	ld b, $0
 	hlcoord 10, 3
 	add hl, bc
@@ -457,6 +478,8 @@ CalcStringLength:
 PrintNamingText:
 	hlcoord 0, 1
 	ld a, [wNamingScreenType]
+	cp NAME_BOX_SCREEN
+	jr z, .nameBox
 	ld de, YourTextString
 	and a
 	jr z, .notNickname
@@ -495,6 +518,13 @@ PrintNamingText:
 	hlcoord 3, 3
 	call .addNameText
 	jpfar CustomPokeballRename
+.nameBox
+	hlcoord 3, 3
+	call .addNameText
+	hlcoord 3, 1
+	ld de, PCBoxString
+	jp PlaceString
+
 
 YourTextString:
 	db "YOUR @"
@@ -506,3 +536,6 @@ NicknameTextString:
 	db "NICK"
 NameTextString:
 	db "NAME?@"
+
+PCBoxString:
+	db "<PC> BOX@"

@@ -1184,10 +1184,10 @@ _SubstituteBrokeText::
 	line "SUBSTITUTE broke!"
 	prompt
 
-_BuildingRageText::
-	text "<USER>'s"
-	line "RAGE is building!"
-	prompt
+;_BuildingRageText::
+;	text "<USER>'s"
+;	line "RAGE is building!"
+;	prompt
 
 _MirrorMoveFailedText::
 	text "The MIRROR MOVE"
@@ -1453,18 +1453,16 @@ _TurnedOnPC1Text::
 _AccessedBillsPCText::
 	text "Accessed BILL's"
 	line "<PC>."
-
+	; fall through
+_AccessedMonStorageSystemText::
 	para "Accessed #MON"
 	line "Storage System."
 	prompt
 
 _AccessedSomeonesPCText::
 	text "Accessed someone's"
-	line "<PC>."
-
-	para "Accessed #MON"
-	line "Storage System."
-	prompt
+	line "<PC>.@"
+	text_jump _AccessedMonStorageSystemText
 
 _AccessedMyPCText::
 	text "Accessed my <PC>."

@@ -60,6 +60,11 @@ _ChooseABoxDataWillSaveText::
 	line "Game will save.@"
 	text_end
 
+_RenameCurrentBoxText::
+	text "Rename the current"
+	line "BOX?"
+	done
+
 _EvolvedText::
 	text_ram_stringbuffer
 	text " evolved"

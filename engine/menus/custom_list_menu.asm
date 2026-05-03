@@ -58,6 +58,7 @@ CustomListMenuHoverTextMethods:
 	dw _ShowDeptStoreFloorInfo
 	dw _ShowDeptStoreFloorInfoClerk
 	dw GetStartMenuPrompt
+	dw GetBillsPCMenuPrompt
 
 GetListEntryID:
 	ld a, [wListCount]
@@ -272,3 +273,31 @@ StartSaveBoxPrompt:
 
 StartItemSortPrompt:
 	db $60, $69, $6A, $6B, $6E, $6F
+
+GetBillsPCMenuPrompt:
+	ld a, [wCurrentMenuItem]
+	hlcoord 7, 11
+	and a
+	jr z, .view
+	cp 3 ; change box option
+	ld de, BillsPCBoxNamePrompt
+	jr z, .gotPrompt
+.clearPrompt
+	lb bc, $7A, 6
+	ld de, 1
+	jp DrawTileLine
+.view
+	; no prompt when box empty
+	ld a, [wBoxCount]
+	and a
+	jr z, .clearPrompt
+	ld de, BillsPCBoxViewPrompt	
+.gotPrompt
+	jp PlaceString
+
+
+BillsPCBoxNamePrompt:
+	db $60, $69, $6A, $CF, $D0, $D1, '@'
+
+BillsPCBoxViewPrompt:
+	db $60, $69, $6A, $D2, $D3, $D4, '@'

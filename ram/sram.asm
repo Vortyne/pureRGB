@@ -20,7 +20,14 @@ sCustomBallNames:: ds NAME_LENGTH * NUM_CUSTOM_BALLS ; 176
 ; used to restore music to previous point after battle
 sAudioRamBackup:: ds wAudioWRAMEnd - wAudioWRAMStart
 
-; still quite a bit of space left here
+	ds 100 ; extra space in case audio wram increases in size later
+
+sBoxRenamedFlags:: flag_array NUM_BOXES ; 2 bytes
+sBoxRenamedFlagsEnd::
+sBoxNames:: ds NUM_BOXES * BOX_NAME_LENGTH ; 72 bytes
+
+; still quite a bit of space left here, around 1000 bytes
+
 
 
 SECTION "Save Data", SRAM

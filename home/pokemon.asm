@@ -267,6 +267,7 @@ PrintStatusConditionNotFainted::
 ; [wLoadedMonLevel] = level
 PrintLevel::
 	ld a, '<LV>' ; ":L" tile ID
+PrintLevelArbitraryTile::
 	ld [hli], a
 	ld c, 2 ; number of digits
 	ld a, [wLoadedMonLevel] ; level
