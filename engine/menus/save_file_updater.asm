@@ -164,6 +164,13 @@ ResetMonFlagsFully:
 	and a
 	ret z ; if your party is empty, you are at the beginning of the game, so don't do anything
 	ld b, a
+	push bc
+	ld hl, wCurrentBoxNum
+	bit BIT_HAS_CHANGED_BOXES, [hl] ; is it the first time player is changing the box?
+	jr nz, .dontInitializeBoxes
+	callfar EmptyAllSRAMBoxes ; if so, empty all boxes in SRAM
+.dontInitializeBoxes
+	pop bc
 	ld hl, wPartyMon1Flags
 	ld de, wPartyMon2Flags - wPartyMon1Flags
 .loop

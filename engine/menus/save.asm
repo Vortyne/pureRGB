@@ -474,7 +474,7 @@ CopyBoxToOrFromSRAM:
 	ld [rRAMG], a
 	ret
 
-EmptyAllSRAMBoxes:
+EmptyAllSRAMBoxes::
 ; marks all boxes in SRAM as empty (initialisation for the first time the
 ; player changes the box)
 	ld a, RAMG_SRAM_ENABLE
