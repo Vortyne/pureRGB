@@ -2655,13 +2655,11 @@ ItemUseTMHM:
 	jp LoadScreenTilesFromBuffer1 ; restore saved screen
 .checkIfAbleToLearnMove
 	callfar CanLearnTM ; check if the pokemon can learn the move
-	push bc
+	push af
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	pop bc
-	ld a, c
-	and a ; can the pokemon learn the move?
+	pop af
 	jr nz, .checkIfAlreadyLearnedMove
 ; if the pokemon can't learn the move
 	ld a, SFX_DENIED

@@ -89,8 +89,6 @@ RedrawPartyMenu_::
 	callfar CanLearnTM ; check if the pokemon can learn the move
 	pop hl
 	ld de, .ableToLearnMoveOrEvolveText
-	ld a, c
-	and a
 	jr nz, .placeMoveLearnabilityString
 	ld de, .notAbleToLearnMoveOrEvolveText
 .placeMoveLearnabilityString

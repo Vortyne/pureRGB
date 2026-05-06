@@ -15,11 +15,9 @@ LoadTMLearnsetIntoWram:
 	push bc
 	push de
 	call CanLearnTMBody
-	ld a, c
 	pop de
 	pop bc
 	pop hl
-	and a
 	jr z, .notLearnable
 	ld a, b
 	cp NUM_TMS
