@@ -142,24 +142,27 @@ IF DEF(_DEBUG)
 	SetEvent EVENT_CAUGHT_GHOST_MAROWAK
 	SetEvent EVENT_DONATED_TO_POKECENTER_CHARITY
 	SetEvent EVENT_HIDE_ALREADY_HAS_FOUR_MOVES_MSG
+	SetEvent EVENT_BEAT_ROCKET_HIDEOUT_GIOVANNI
 	;SetEvent EVENT_UNLOCKED_AT_LEAST_ONE_CUSTOM_BALL
 	;SetEvent EVENT_ARENA_ALL_CHALLENGERS_DEFEATED
+
+
+	SetEvent EVENT_BEAT_TORCHED
+	SetEvent EVENT_BEAT_CHUNKY
+	SetEvent EVENT_BEAT_PAINLESS
+	SetEvent EVENT_BEAT_IRRADIATED
 
 	;callfar SilphCo11FTeamRocketLeavesScript
 
 	
-	ld a, TOGGLE_LYING_OLD_MAN
-	ld [wToggleableObjectIndex], a
-	predef HideObject
-	ld a, TOGGLE_OLD_MAN
-	ld [wToggleableObjectIndex], a
-	predef ShowObject
-	ld a, TOGGLE_ERIK_HOUSE
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
-	ld a, TOGGLE_SARA_HOUSE
-	ld [wToggleableObjectIndex], a
-	predef ShowExtraObject
+	ld c, TOGGLE_LYING_OLD_MAN
+	call HideObject
+	ld c, TOGGLE_OLD_MAN
+	call ShowObject
+	ld c, TOGGLE_ERIK_HOUSE
+	call ShowExtraObject
+	ld c, TOGGLE_SARA_HOUSE
+	call ShowExtraObject
 	ld hl, wPocketAbraNick
 	ld de, PocketAbraTestName
 	call CopyString
