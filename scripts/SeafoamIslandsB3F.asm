@@ -120,6 +120,13 @@ SeafoamWaveSFXB3F::
 	ld a, [wOverworldAnimationCounter]
 	and %11
 	ret nz ; every 2 iterations the below code will run
+	; if we're near the rocks but also near the water, don't play any sound because it messes with rock push sound effects
+	lb bc, 8, 9
+	lb de, 12, 14
+	predef ArePlayerCoordsInRangePredef
+	dec d
+	ret z
+	; otherwise check various areas to play sound
 	lb bc, 7, 21
 	lb de, 0,  4
 	predef ArePlayerCoordsInRangePredef

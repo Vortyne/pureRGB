@@ -768,7 +768,7 @@ DEF FLAG_JIGGLE_TOGGLE EQU const_value
 
 ; Route 20 events
 	const_next $500
-	const EVENT_IN_SEAFOAM_ISLANDS
+	const_skip ; used to be EVENT_IN_SEAFOAM_ISLANDS but this wasn't necessary
 	const EVENT_BEAT_ROUTE_20_TRAINER_0
 	const EVENT_BEAT_ROUTE_20_TRAINER_1
 	const EVENT_BEAT_ROUTE_20_TRAINER_2

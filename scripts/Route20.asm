@@ -5,8 +5,6 @@ Route20_Script:
 	jr nz, .noDragonair
 	SetEvent EVENT_SEAFOAM_DRAGONAIR_PRESENT
 .noDragonair
-	CheckAndResetEvent EVENT_IN_SEAFOAM_ISLANDS
-	call nz, Route20BoulderScript
 	call EnableAutoTextBoxDrawing
 	ld hl, Route20TrainerHeaders
 	ld de, Route20_ScriptPointers
@@ -14,44 +12,6 @@ Route20_Script:
 	call ExecuteCurMapScriptInTable
 	ld [wRoute20CurScript], a
 	ret
-
-Route20BoulderScript:
-	CheckBothEventsSet EVENT_SEAFOAM3_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM3_BOULDER2_DOWN_HOLE
-	jr z, .next_boulder_check
-	ld c, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_1
-	call ShowObject
-	ld c, TOGGLE_SEAFOAM_ISLANDS_1F_BOULDER_2
-	call ShowObject
-	ld hl, .ToggleableObjectIDs
-.hide_toggleable_objects
-	ld a, [hli]
-	cp $ff
-	jr z, .next_boulder_check
-	push hl
-	call HideObject
-	pop hl
-	jr .hide_toggleable_objects
-
-.ToggleableObjectIDs:
-	db TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_1
-	db TOGGLE_SEAFOAM_ISLANDS_B1F_BOULDER_2
-	db TOGGLE_SEAFOAM_ISLANDS_B2F_BOULDER_1
-	db TOGGLE_SEAFOAM_ISLANDS_B2F_BOULDER_2
-	db TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_3
-	db TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_4
-	db -1 ; end
-
-.next_boulder_check
-	CheckBothEventsSet EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
-	ret z
-	ld c, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_1
-	call ShowObject
-	ld c, TOGGLE_SEAFOAM_ISLANDS_B3F_BOULDER_2
-	call ShowObject
-	ld c, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_1
-	call HideObject
-	ld c, TOGGLE_SEAFOAM_ISLANDS_B4F_BOULDER_2
-	jp HideObject
 
 Route20_ScriptPointers:
 	def_script_pointers

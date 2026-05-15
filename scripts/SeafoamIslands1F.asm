@@ -6,7 +6,6 @@ SeafoamIslands1F_Script:
 	jp nc, DragonairUnderWaterEventAreaScript
 	ld hl, wCurrentMapScriptFlags
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	SetEvent EVENT_IN_SEAFOAM_ISLANDS
 	ld de, Seafoam1HolesCoords
 	ld hl, SeafoamBoulder1FEventFunc
 	ld bc, Seafoam1BoulderToggleData
