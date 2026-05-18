@@ -136,17 +136,10 @@ CeruleanGymMistyReceivedCascadeBadgeText:
 	text_end
 
 CeruleanGymCooltrainerFText:
-	text_asm
-	ld hl, CeruleanGymTrainerHeader0
-	; fall through
-CeruleanGymTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer CeruleanGymTrainerHeader0
 
 CeruleanGymSwimmerText:
-	text_asm
-	ld hl, CeruleanGymTrainerHeader1
-	jr CeruleanGymTalkToTrainer
+	script_trainer CeruleanGymTrainerHeader1
 
 CeruleanGymBattleText1:
 	text_far _CeruleanGymBattleText1

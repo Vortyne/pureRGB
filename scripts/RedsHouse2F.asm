@@ -28,4 +28,9 @@ RedBedroomSNESText::
 	text_end
 
 RedBedroomPCText::
-	script_players_pc
+	text_asm
+	call SaveScreenTilesToBuffer2
+	callfar PlayerPC
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	rst TextScriptEnd

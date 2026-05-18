@@ -73,26 +73,16 @@ PokemonTower5FChanneler1Text:
 	text_end
 
 PokemonTower5FChanneler2Text:
-	text_asm
-	ld hl, PokemonTower5TrainerHeader0
-	jr PokemonTower5TalkToTrainer
+	script_trainer PokemonTower5TrainerHeader0
 
 PokemonTower5FChanneler3Text:
-	text_asm
-	ld hl, PokemonTower5TrainerHeader1
-	jr PokemonTower5TalkToTrainer
+	script_trainer PokemonTower5TrainerHeader1
 
 PokemonTower5FChanneler4Text:
-	text_asm
-	ld hl, PokemonTower5TrainerHeader2
-	jr PokemonTower5TalkToTrainer
+	script_trainer PokemonTower5TrainerHeader2
 
 PokemonTower5FChanneler5Text:
-	text_asm
-	ld hl, PokemonTower5TrainerHeader3
-PokemonTower5TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer PokemonTower5TrainerHeader3
 
 PokemonTower5FChanneler2BattleText:
 	text_far _PokemonTower5FChanneler2BattleText

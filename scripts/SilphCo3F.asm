@@ -59,16 +59,10 @@ SilphCo3FSilphWorkerMText:
 	text_end
 
 SilphCo3FRocketText:
-	text_asm
-	ld hl, SilphCo3TrainerHeader0
-SilphCo3FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo3TrainerHeader0
 
 SilphCo3FScientistText:
-	text_asm
-	ld hl, SilphCo3TrainerHeader1
-	jr SilphCo3FTalkToTrainer
+	script_trainer SilphCo3TrainerHeader1
 
 SilphCo3FRocketBattleText:
 	text_far _SilphCo3FRocketBattleText

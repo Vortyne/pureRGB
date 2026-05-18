@@ -79,51 +79,31 @@ Route9TrainerHeader8:
 	db -1 ; end
 
 Route9CooltrainerF1Text:
-	text_asm
-	ld hl, Route9TrainerHeader0
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader0
 
 Route9CooltrainerM1Text:
-	text_asm
-	ld hl, Route9TrainerHeader1
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader1
 
 Route9CooltrainerM2Text:
-	text_asm
-	ld hl, Route9TrainerHeader2
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader2
 
 Route9CooltrainerF2Text:
-	text_asm
-	ld hl, Route9TrainerHeader3
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader3
 
 Route9Hiker1Text:
-	text_asm
-	ld hl, Route9TrainerHeader4
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader4
 
 Route9Hiker2Text:
-	text_asm
-	ld hl, Route9TrainerHeader5
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader5
 
 Route9Youngster1Text:
-	text_asm
-	ld hl, Route9TrainerHeader6
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader6
 
 Route9Hiker3Text:
-	text_asm
-	ld hl, Route9TrainerHeader7
-	jr Route9TalkToTrainer
+	script_trainer Route9TrainerHeader7
 
 Route9Youngster2Text:
-	text_asm
-	ld hl, Route9TrainerHeader8
-Route9TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route9TrainerHeader8
 
 Route9CooltrainerF1BattleText:
 	text_far _Route9CooltrainerF1BattleText

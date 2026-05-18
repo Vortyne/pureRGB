@@ -108,36 +108,22 @@ MoltresTrainerHeader:
 	db -1 ; end
 
 VictoryRoad2FHikerText:
-	text_asm
-	ld hl, VictoryRoad2TrainerHeader0
-VictoryRoad2FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer VictoryRoad2TrainerHeader0
 
 VictoryRoad2FSuperNerd1Text:
-	text_asm
-	ld hl, VictoryRoad2TrainerHeader1
-	jr VictoryRoad2FTalkToTrainer
+	script_trainer VictoryRoad2TrainerHeader1
 
 VictoryRoad2FCooltrainerMText:
-	text_asm
-	ld hl, VictoryRoad2TrainerHeader2
-	jr VictoryRoad2FTalkToTrainer
+	script_trainer VictoryRoad2TrainerHeader2
 
 VictoryRoad2FSuperNerd2Text:
-	text_asm
-	ld hl, VictoryRoad2TrainerHeader3
-	jr VictoryRoad2FTalkToTrainer
+	script_trainer VictoryRoad2TrainerHeader3
 
 VictoryRoad2FSuperNerd3Text:
-	text_asm
-	ld hl, VictoryRoad2TrainerHeader4
-	jr VictoryRoad2FTalkToTrainer
+	script_trainer VictoryRoad2TrainerHeader4
 
 VictoryRoad2FMoltresText:
-	text_asm
-	ld hl, MoltresTrainerHeader
-	jr VictoryRoad2FTalkToTrainer
+	script_trainer MoltresTrainerHeader
 
 VictoryRoad2FMoltresBattleText:
 	text_far _VictoryRoad2FMoltresBattleText

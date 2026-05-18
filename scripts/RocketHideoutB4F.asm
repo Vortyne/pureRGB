@@ -164,21 +164,13 @@ RocketHideoutB4FGiovanniHopeWeMeetAgainText:
 	text_end
 
 RocketHideoutB4FRocket1Text:
-	text_asm
-	ld hl, RocketHideout4TrainerHeader0
-RocketHideoutB4FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer RocketHideout4TrainerHeader0
 
 RocketHideoutB4FRocket2Text:
-	text_asm
-	ld hl, RocketHideout4TrainerHeader1
-	jr RocketHideoutB4FTalkToTrainer
+	script_trainer RocketHideout4TrainerHeader1
 
 RocketHideoutB4FRocket3Text:
-	text_asm
-	ld hl, RocketHideout4TrainerHeader2
-	jr RocketHideoutB4FTalkToTrainer
+	script_trainer RocketHideout4TrainerHeader2
 
 RocketHideoutB4FRocket1BattleText:
 	text_far _RocketHideoutB4FRocket1BattleText

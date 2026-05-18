@@ -63,41 +63,25 @@ Route10TrainerHeader6:
 	db -1 ; end
 
 Route10SuperNerd1Text:
-	text_asm
-	ld hl, Route10TrainerHeader0
-Route10TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route10TrainerHeader0
 
 Route10Hiker1Text:
-	text_asm
-	ld hl, Route10TrainerHeader1
-	jr Route10TalkToTrainer
+	script_trainer Route10TrainerHeader1
 
 Route10SuperNerd2Text:
-	text_asm
-	ld hl, Route10TrainerHeader2
-	jr Route10TalkToTrainer
+	script_trainer Route10TrainerHeader2
 
 Route10CooltrainerF1Text:
-	text_asm
-	ld hl, Route10TrainerHeader3
-	jr Route10TalkToTrainer
+	script_trainer Route10TrainerHeader3
 
 Route10Hiker2Text:
-	text_asm
-	ld hl, Route10TrainerHeader4
-	jr Route10TalkToTrainer
+	script_trainer Route10TrainerHeader4
 
 Route10CooltrainerF2Text:
-	text_asm
-	ld hl, Route10TrainerHeader5
-	jr Route10TalkToTrainer
+	script_trainer Route10TrainerHeader5
 
 Route10Text7:
-	text_asm
-	ld hl, Route10TrainerHeader6
-	jr Route10TalkToTrainer
+	script_trainer Route10TrainerHeader6
 
 Route10SuperNerd1BattleText:
 	text_far _Route10SuperNerd1BattleText

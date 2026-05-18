@@ -157,10 +157,7 @@ PewterGymBrockReceivedBoulderBadgeText:
 	text_end
 
 PewterGymCooltrainerMText:
-	text_asm
-	ld hl, PewterGymTrainerHeader0
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer PewterGymTrainerHeader0
 
 PewterGymCooltrainerMBattleText:
 	text_far _PewterGymCooltrainerMBattleText

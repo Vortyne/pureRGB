@@ -60,46 +60,28 @@ Route6TrainerHeader7:
 	db -1 ; end
 
 Route6CooltrainerM1Text:
-	text_asm
-	ld hl, Route6TrainerHeader0
-Route6TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route6TrainerHeader0
 
 Route6CooltrainerF1Text:
-	text_asm
-	ld hl, Route6TrainerHeader1
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader1
 
 Route6Youngster1Text:
-	text_asm
-	ld hl, Route6TrainerHeader2
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader2
 
 Route6CooltrainerM2Text:
-	text_asm
-	ld hl, Route6TrainerHeader3
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader3
 
 Route6CooltrainerF2Text:
-	text_asm
-	ld hl, Route6TrainerHeader4
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader4
 
 Route6Youngster2Text:
-	text_asm
-	ld hl, Route6TrainerHeader5
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader5
 
 Route6Text7:
-	text_asm
-	ld hl, Route6TrainerHeader6
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader6
 
 Route6Text8:
-	text_asm
-	ld hl, Route6TrainerHeader7
-	jr Route6TalkToTrainer
+	script_trainer Route6TrainerHeader7
 
 Route6CooltrainerM1BattleText:
 	text_far _Route6CooltrainerM1BattleText

@@ -47,26 +47,16 @@ Route4CooltrainerF1Text:
 	text_end
 
 Route4CooltrainerF2Text:
-	text_asm
-	ld hl, Route4TrainerHeader0
-Route4TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route4TrainerHeader0
 
 Route4Text3:
-	text_asm
-	ld hl, Route4TrainerHeader1
-	jr Route4TalkToTrainer
+	script_trainer Route4TrainerHeader1
 
 Route4Text4:
-	text_asm
-	ld hl, Route4TrainerHeader2
-	jr Route4TalkToTrainer
+	script_trainer Route4TrainerHeader2
 
 Route4Text5:
-	text_asm
-	ld hl, Route4TrainerHeader3
-	jr Route4TalkToTrainer
+	script_trainer Route4TrainerHeader3
 
 Route4CooltrainerF2BattleText:
 	text_far _Route4CooltrainerF2BattleText

@@ -58,56 +58,34 @@ Route17TrainerHeader9:
 	db -1 ; end
 
 Route17Biker1Text:
-	text_asm
-	ld hl, Route17TrainerHeader0
-Route17TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route17TrainerHeader0
 
 Route17Biker2Text:
-	text_asm
-	ld hl, Route17TrainerHeader1
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader1
 
 Route17Biker3Text:
-	text_asm
-	ld hl, Route17TrainerHeader2
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader2
 
 Route17Biker4Text:
-	text_asm
-	ld hl, Route17TrainerHeader3
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader3
 
 Route17Biker5Text:
-	text_asm
-	ld hl, Route17TrainerHeader4
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader4
 
 Route17Biker6Text:
-	text_asm
-	ld hl, Route17TrainerHeader5
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader5
 
 Route17Biker7Text:
-	text_asm
-	ld hl, Route17TrainerHeader6
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader6
 
 Route17Biker8Text:
-	text_asm
-	ld hl, Route17TrainerHeader7
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader7
 
 Route17Biker9Text:
-	text_asm
-	ld hl, Route17TrainerHeader8
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader8
 
 Route17Biker10Text:
-	text_asm
-	ld hl, Route17TrainerHeader9
-	jr Route17TalkToTrainer
+	script_trainer Route17TrainerHeader9
 
 Route17Biker1BattleText:
 	text_far _Route17Biker1BattleText

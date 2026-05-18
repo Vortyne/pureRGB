@@ -44,36 +44,22 @@ SSAnne10TrainerHeader5:
 	db -1 ; end
 
 SSAnneB1FRoomsSailor1Text:
-	text_asm
-	ld hl, SSAnne10TrainerHeader0
-SSAnneB1FRoomsTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SSAnne10TrainerHeader0
 
 SSAnneB1FRoomsSailor2Text:
-	text_asm
-	ld hl, SSAnne10TrainerHeader1
-	jr SSAnneB1FRoomsTalkToTrainer
+	script_trainer SSAnne10TrainerHeader1
 
 SSAnneB1FRoomsSailor3Text:
-	text_asm
-	ld hl, SSAnne10TrainerHeader2
-	jr SSAnneB1FRoomsTalkToTrainer
+	script_trainer SSAnne10TrainerHeader2
 
 SSAnneB1FRoomsSailor4Text:
-	text_asm
-	ld hl, SSAnne10TrainerHeader3
-	jr SSAnneB1FRoomsTalkToTrainer
+	script_trainer SSAnne10TrainerHeader3
 
 SSAnneB1FRoomsSailor5Text:
-	text_asm
-	ld hl, SSAnne10TrainerHeader4
-	jr SSAnneB1FRoomsTalkToTrainer
+	script_trainer SSAnne10TrainerHeader4
 
 SSAnneB1FRoomsFisherText:
-	text_asm
-	ld hl, SSAnne10TrainerHeader5
-	jr SSAnneB1FRoomsTalkToTrainer
+	script_trainer SSAnne10TrainerHeader5
 
 SSAnneB1FRoomsMachokeText:
 	text_far _SSAnneB1FRoomsMachokeText

@@ -37,26 +37,16 @@ Route5TrainerHeader3:
 	db -1 ; end
 
 Route5Rookie1Text:
-	text_asm
-	ld hl, Route5TrainerHeader0
-Route5TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route5TrainerHeader0
 
 Route5Rookie2Text:
-	text_asm
-	ld hl, Route5TrainerHeader1
-	jr Route5TalkToTrainer
+	script_trainer Route5TrainerHeader1
 
 Route5Rookie3Text:
-	text_asm
-	ld hl, Route5TrainerHeader2
-	jr Route5TalkToTrainer
+	script_trainer Route5TrainerHeader2
 
 Route5TamerText:
-	text_asm
-	ld hl, Route5TrainerHeader3
-	jr Route5TalkToTrainer
+	script_trainer Route5TrainerHeader3
 
 Route5BattleText1:
 	text_far _Route5BattleText1

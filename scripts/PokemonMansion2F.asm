@@ -73,31 +73,19 @@ Mansion2TrainerHeader4:
 	db -1 ; end
 
 PokemonMansion2FSuperNerdText:
-	text_asm
-	ld hl, Mansion2TrainerHeader0
-	jr Mansion2TalkToTrainer
+	script_trainer Mansion2TrainerHeader0
 
 Mansion2Trainer2:
-	text_asm
-	ld hl, Mansion2TrainerHeader1
-	jr Mansion2TalkToTrainer
+	script_trainer Mansion2TrainerHeader1
 
 Mansion2Trainer3:
-	text_asm
-	ld hl, Mansion2TrainerHeader2
-	jr Mansion2TalkToTrainer
+	script_trainer Mansion2TrainerHeader2
 
 Mansion2Trainer4:
-	text_asm
-	ld hl, Mansion2TrainerHeader3
-	jr Mansion2TalkToTrainer
+	script_trainer Mansion2TrainerHeader3
 
 Mansion2Trainer5:
-	text_asm
-	ld hl, Mansion2TrainerHeader4
-Mansion2TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Mansion2TrainerHeader4
 
 PokemonMansion2FSuperNerdBattleText:
 	text_far _PokemonMansion2FSuperNerdBattleText

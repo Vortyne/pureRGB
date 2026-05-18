@@ -53,56 +53,34 @@ Route15TrainerHeader9:
 	db -1 ; end
 
 Route15CooltrainerF1Text:
-	text_asm
-	ld hl, Route15TrainerHeader0
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader0
 
 Route15CooltrainerF2Text:
-	text_asm
-	ld hl, Route15TrainerHeader1
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader1
 
 Route15CooltrainerM1Text:
-	text_asm
-	ld hl, Route15TrainerHeader2
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader2
 
 Route15CooltrainerM2Text:
-	text_asm
-	ld hl, Route15TrainerHeader3
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader3
 
 Route15Beauty1Text:
-	text_asm
-	ld hl, Route15TrainerHeader4
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader4
 
 Route15Beauty2Text:
-	text_asm
-	ld hl, Route15TrainerHeader5
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader5
 
 Route15Biker1Text:
-	text_asm
-	ld hl, Route15TrainerHeader6
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader6
 
 Route15Biker2Text:
-	text_asm
-	ld hl, Route15TrainerHeader7
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader7
 
 Route15CooltrainerF3Text:
-	text_asm
-	ld hl, Route15TrainerHeader8
-	jr Route15TalkToTrainer
+	script_trainer Route15TrainerHeader8
 
 Route15CooltrainerF4Text:
-	text_asm
-	ld hl, Route15TrainerHeader9
-Route15TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route15TrainerHeader9
 
 Route15CooltrainerF1BattleText:
 	text_far _Route15CooltrainerF1BattleText

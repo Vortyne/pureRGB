@@ -86,56 +86,34 @@ Route13TrainerHeader9:
 	db -1 ; end
 
 Route13CooltrainerM1Text:
-	text_asm
-	ld hl, Route13TrainerHeader0
-Route13TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route13TrainerHeader0
 
 Route13CooltrainerF1Text:
-	text_asm
-	ld hl, Route13TrainerHeader1
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader1
 
 Route13CooltrainerF2Text:
-	text_asm
-	ld hl, Route13TrainerHeader2
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader2
 
 Route13CooltrainerF3Text:
-	text_asm
-	ld hl, Route13TrainerHeader3
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader3
 
 Route13CooltrainerF4Text:
-	text_asm
-	ld hl, Route13TrainerHeader4
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader4
 
 Route13CooltrainerM2Text:
-	text_asm
-	ld hl, Route13TrainerHeader5
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader5
 
 Route13Beauty1Text:
-	text_asm
-	ld hl, Route13TrainerHeader6
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader6
 
 Route13Beauty2Text:
-	text_asm
-	ld hl, Route13TrainerHeader7
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader7
 
 Route13BikerText:
-	text_asm
-	ld hl, Route13TrainerHeader8
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader8
 
 Route13CooltrainerM3Text:
-	text_asm
-	ld hl, Route13TrainerHeader9
-	jr Route13TalkToTrainer
+	script_trainer Route13TrainerHeader9
 
 Route13CooltrainerM1BattleText:
 	text_far _Route13CooltrainerM1BattleText

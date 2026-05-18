@@ -47,26 +47,9 @@ SafariZoneGameOver:
 	ld a, [wChannelSoundIDs + CHAN5]
 	cp SFX_SAFARI_ZONE_PA
 	jr nz, .waitForMusicToPlay
-;;;;;;;;;; PureRGBnote: ADDED: special ending text if we completed ranger hunt safari game
-	ld a, [wSafariType]
-	and a
-	jr nz, .rangerHuntDone ; if we finished a Ranger Hunt game (wSafariType = 1) we will display different ending text
-.noRangerHuntSuccess	
 	ld a, TEXT_SAFARI_GAME_OVER
 	ldh [hTextID], a
 	call DisplayTextID
-	jr .doneSafari
-.rangerHuntDone	
-	ld a, [wNumRangersLeft]
-	and a
-	jr nz, .noRangerHuntSuccess ; if wNumRangersLeft isn't 0, display the normal game over text
-	; otherwise we've defeated all the rangers and have won the safari game
-.rangerHuntSuccess
-	ld a, TEXT_RANGER_SAFARI_GAME_OVER
-	ldh [hTextID], a
-	call DisplayTextID
-.doneSafari	
-;;;;;;;;;;
 	xor a
 	ld [wPlayerMovingDirection], a
 	ld a, SAFARI_ZONE_GATE
@@ -80,15 +63,24 @@ SafariZoneGameOver:
 	ld [wSafariZoneGameOver], a
 	ret
 
-PrintRangerSafariGameOverText::
-	ld hl, SafariRangerHuntSuccessText
-	jr PrintSafariGameOverText.next
-
 PrintSafariGameOverText::
+;;;;;;;;;; PureRGBnote: ADDED: special ending text if we completed ranger hunt safari game
 	ld hl, SafariGameOverText
-.next
+	; wSafariType Cannot be FREE ROAM (2) here as we cannot experience the game over text during FREE ROAM.
+	ld a, [wSafariType]
+	and a
+	jr z, .gotSafariDoneText 
+	; if we finished a Ranger Hunt game (wSafariType = 1) we will display different ending text. 
+	ld a, [wNumRangersLeft]
+	and a
+	jr nz, .gotSafariDoneText ; if wNumRangersLeft isn't 0, display the normal game over text
+	; otherwise we've defeated all the rangers and have won the ranger safari game
+	ld hl, SafariRangerHuntSuccessText
+.gotSafariDoneText
+;;;;;;;;;;
 	call EnableAllJoypad
-	jp PrintText
+	rst _PrintText
+	ret
 
 SafariGameOverText:
 	text_asm

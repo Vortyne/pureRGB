@@ -34,10 +34,7 @@ RocketHideout2TrainerHeader0:
 	db -1 ; end
 
 RocketHideoutB2FRocketText:
-	text_asm
-	ld hl, RocketHideout2TrainerHeader0
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer RocketHideout2TrainerHeader0
 
 RocketHideoutB2FRocketBattleText:
 	text_far _RocketHideoutB2FRocketBattleText

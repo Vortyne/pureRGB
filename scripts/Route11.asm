@@ -53,56 +53,34 @@ Route11TrainerHeader9:
 	db -1 ; end
 
 Route11Gambler1Text:
-	text_asm
-	ld hl, Route11TrainerHeader0
-Route11TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route11TrainerHeader0
 
 Route11Gambler2Text:
-	text_asm
-	ld hl, Route11TrainerHeader1
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader1
 
 Route11Youngster1Text:
-	text_asm
-	ld hl, Route11TrainerHeader2
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader2
 
 Route11SuperNerd1Text:
-	text_asm
-	ld hl, Route11TrainerHeader3
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader3
 
 Route11Youngster2Text:
-	text_asm
-	ld hl, Route11TrainerHeader4
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader4
 
 Route11Gambler3Text:
-	text_asm
-	ld hl, Route11TrainerHeader5
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader5
 
 Route11Gambler4Text:
-	text_asm
-	ld hl, Route11TrainerHeader6
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader6
 
 Route11Youngster3Text:
-	text_asm
-	ld hl, Route11TrainerHeader7
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader7
 
 Route11SuperNerd2Text:
-	text_asm
-	ld hl, Route11TrainerHeader8
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader8
 
 Route11Youngster4Text:
-	text_asm
-	ld hl, Route11TrainerHeader9
-	jr Route11TalkToTrainer
+	script_trainer Route11TrainerHeader9
 
 Route11Gambler1BattleText:
 	text_far _Route11Gambler1BattleText

@@ -534,6 +534,7 @@ ShowAllHl:
 	ld a, [hli]                  ; read move from move table
 	cp -1
 	ret z
+	ld c, a
 	push hl
 	call ShowExtraObject
 	pop hl

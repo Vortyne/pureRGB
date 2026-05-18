@@ -175,36 +175,22 @@ Route24CooltrainerM1Text:
 	text_end
 
 Route24CooltrainerM2Text:
-	text_asm
-	ld hl, Route24TrainerHeader0
-Route24TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route24TrainerHeader0
 
 Route24CooltrainerM3Text:
-	text_asm
-	ld hl, Route24TrainerHeader1
-	jr Route24TalkToTrainer
+	script_trainer Route24TrainerHeader1
 
 Route24CooltrainerF1Text:
-	text_asm
-	ld hl, Route24TrainerHeader2
-	jr Route24TalkToTrainer
+	script_trainer Route24TrainerHeader2
 
 Route24Youngster1Text:
-	text_asm
-	ld hl, Route24TrainerHeader3
-	jr Route24TalkToTrainer
+	script_trainer Route24TrainerHeader3
 
 Route24CooltrainerF2Text:
-	text_asm
-	ld hl, Route24TrainerHeader4
-	jr Route24TalkToTrainer
+	script_trainer Route24TrainerHeader4
 
 Route24Youngster2Text:
-	text_asm
-	ld hl, Route24TrainerHeader5
-	jr Route24TalkToTrainer
+	script_trainer Route24TrainerHeader5
 
 Route24CooltrainerM2BattleText:
 	text_far _Route24CooltrainerM2BattleText

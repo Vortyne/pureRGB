@@ -119,26 +119,16 @@ Mansion4TrainerHeader3:
 	db -1 ; end
 
 PokemonMansionB1FBurglarText:
-	text_asm
-	ld hl, Mansion4TrainerHeader0
-	jr PokemonMansionB1FTalkToTrainer
+	script_trainer Mansion4TrainerHeader0
 
 PokemonMansionB1FScientistText:
-	text_asm
-	ld hl, Mansion4TrainerHeader1
-	jr PokemonMansionB1FTalkToTrainer
+	script_trainer Mansion4TrainerHeader1
 
 Mansion4Text3:
-	text_asm
-	ld hl, Mansion4TrainerHeader2
-	jr PokemonMansionB1FTalkToTrainer
+	script_trainer Mansion4TrainerHeader2
 
 Mansion4Text4:
-	text_asm
-	ld hl, Mansion4TrainerHeader3
-PokemonMansionB1FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Mansion4TrainerHeader3
 
 PokemonMansionB1FBurglarBattleText:
 	text_far _PokemonMansionB1FBurglarBattleText

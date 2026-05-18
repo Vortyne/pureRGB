@@ -255,7 +255,9 @@ CeladonMartRoofLittleGirlText:
 	text_end
 
 CeladonMartRoofVendingMachineText:
-	script_vending_machine
+	text_asm
+	callfar VendingMachineMenu
+	rst TextScriptEnd
 
 CeladonMartRoofCurrentFloorSignText:
 	text_far _CeladonMartRoofCurrentFloorSignText

@@ -80,16 +80,10 @@ VictoryRoad1TrainerHeader1:
 	db -1 ; end
 
 VictoryRoad1FCooltrainerFText:
-	text_asm
-	ld hl, VictoryRoad1TrainerHeader0
-VictoryRoad1FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer VictoryRoad1TrainerHeader0
 
 VictoryRoad1FCooltrainerMText:
-	text_asm
-	ld hl, VictoryRoad1TrainerHeader1
-	jr VictoryRoad1FTalkToTrainer
+	script_trainer VictoryRoad1TrainerHeader1
 
 VictoryRoad1FCooltrainerFBattleText:
 	text_far _VictoryRoad1FCooltrainerFBattleText

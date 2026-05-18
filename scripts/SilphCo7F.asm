@@ -392,26 +392,16 @@ SilphCo7FSilphWorkerM4Text:
 	text_end
 
 SilphCo7FRocket1Text:
-	text_asm
-	ld hl, SilphCo7TrainerHeader0
-SilphCo7FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo7TrainerHeader0
 
 SilphCo7FScientistText:
-	text_asm
-	ld hl, SilphCo7TrainerHeader1
-	jr SilphCo7FTalkToTrainer
+	script_trainer SilphCo7TrainerHeader1
 
 SilphCo7FRocket2Text:
-	text_asm
-	ld hl, SilphCo7TrainerHeader2
-	jr SilphCo7FTalkToTrainer
+	script_trainer SilphCo7TrainerHeader2
 
 SilphCo7FRocket3Text:
-	text_asm
-	ld hl, SilphCo7TrainerHeader3
-	jr SilphCo7FTalkToTrainer
+	script_trainer SilphCo7TrainerHeader3
 	
 SilphCo7FRocket1BattleText:
 	text_far _SilphCo7FRocket1BattleText

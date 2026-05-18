@@ -243,38 +243,35 @@ MACRO script_mart
 	db -1 ; end
 ENDM
 
-	const TX_SCRIPT_BILLS_PC ; $fd
-MACRO script_bills_pc
-	db TX_SCRIPT_BILLS_PC
-ENDM
-
-	const TX_SCRIPT_PLAYERS_PC ; $fc
-MACRO script_players_pc
-	db TX_SCRIPT_PLAYERS_PC
-ENDM
-
-	const_skip ; $fb
-
-	const_skip ; $fa
-
-	const TX_SCRIPT_POKECENTER_PC ; $f9
+	const TX_SCRIPT_POKECENTER_PC ; $fd
 MACRO script_pokecenter_pc
 	db TX_SCRIPT_POKECENTER_PC
 ENDM
 
-	const_skip ; $f8
-
-	const TX_SCRIPT_PRIZE_VENDOR ; $f7
-MACRO script_prize_vendor
-	db TX_SCRIPT_PRIZE_VENDOR
-ENDM
-
-	const TX_SCRIPT_CABLE_CLUB_RECEPTIONIST ; $f6
+	const TX_SCRIPT_CABLE_CLUB_RECEPTIONIST ; $fc
 MACRO script_cable_club_receptionist
 	db TX_SCRIPT_CABLE_CLUB_RECEPTIONIST
 ENDM
 
-	const TX_SCRIPT_VENDING_MACHINE ; $f5
-MACRO script_vending_machine
-	db TX_SCRIPT_VENDING_MACHINE
+
+DEF FIRST_GENERIC_NPC_TEXT_SCRIPT EQU const_value
+
+	const TX_SCRIPT_TRAINER ; $fb
+MACRO script_trainer
+	db TX_SCRIPT_TRAINER
+	dw \1 ; trainer header
 ENDM
+
+; removed the other ones since they were only used in one map. These can be used for other generic scripts if there are any determined to be worth it.
+
+	const_skip ; $fa
+
+	const_skip ; $f9
+
+	const_skip ; $f8
+
+	const_skip ; $f7
+
+	const_skip ; $f6
+
+	const_skip ; $f5

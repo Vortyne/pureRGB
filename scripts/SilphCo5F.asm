@@ -63,26 +63,16 @@ SilphCo5FSilphWorkerMText:
 	text_end
 
 SilphCo5FRocket1Text:
-	text_asm
-	ld hl, SilphCo5TrainerHeader0
-SilphCo5FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo5TrainerHeader0
 
 SilphCo5FScientistText:
-	text_asm
-	ld hl, SilphCo5TrainerHeader1
-	jr SilphCo5FTalkToTrainer
+	script_trainer SilphCo5TrainerHeader1
 
 SilphCo5FRockerText:
-	text_asm
-	ld hl, SilphCo5TrainerHeader2
-	jr SilphCo5FTalkToTrainer
+	script_trainer SilphCo5TrainerHeader2
 
 SilphCo5FRocket2Text:
-	text_asm
-	ld hl, SilphCo5TrainerHeader3
-	jr SilphCo5FTalkToTrainer
+	script_trainer SilphCo5TrainerHeader3
 
 SilphCo5FRocket1BattleText:
 	text_far _SilphCo5FRocket1BattleText

@@ -21,17 +21,16 @@ DisplayTextID::
 	ld d, $00
 	ldh a, [hTextID]
 	ld [wSpriteIndex], a
-
-	dict TEXT_START_MENU,       DisplayStartMenu
-	dict TEXT_SAFARI_GAME_OVER, DisplaySafariGameOverText
-	dict TEXT_MON_FAINTED,      DisplayPokemonFaintedText
-	dict TEXT_BLACKED_OUT,      DisplayPlayerBlackedOutText
-	dict TEXT_REPEL_WORE_OFF,   DisplayRepelWoreOffText
-	dict TEXT_RANGER_SAFARI_GAME_OVER, DisplayRangerSafariGameOverText ; PureRGBnote: ADDED: text that displays when ranger hunt is completed
-	
+	and a
+	jp z, DisplayStartMenu
 	cp $FF
 	jp z, CloseTextDisplay
-
+	sub GENERIC_TEXT_IDS_START
+	jr c, .continue
+	ld hl, GenericTextScriptJumpTable
+	call GetAddressFromPointerArray
+	jp hl
+.continue
 	ld a, [wNumSprites]
 	ld e, a
 	ldh a, [hSpriteIndex] ; sprite ID
@@ -72,30 +71,26 @@ DisplayTextID::
 	ld a, [hl] ; a = first byte of text
 
 ; check first byte of text for special cases
-
-MACRO dict2
-	cp \1
-	jr nz, .not\@
-	\2
-	jr AfterDisplayingTextID
-.not\@
-ENDM
-
-	dict  TX_SCRIPT_MART,                    DisplayPokemartDialogue
-	dict  TX_SCRIPT_POKECENTER_NURSE,        DisplayPokemonCenterDialogue
-	dict  TX_SCRIPT_PLAYERS_PC,              TextScript_ItemStoragePC
-	dict  TX_SCRIPT_BILLS_PC,                TextScript_BillsPC
-	dict  TX_SCRIPT_POKECENTER_PC,           TextScript_PokemonCenterPC
-	dict2 TX_SCRIPT_VENDING_MACHINE,         farcall VendingMachineMenu
-	dict  TX_SCRIPT_PRIZE_VENDOR,            TextScript_GameCornerPrizeMenu
-	dict2 TX_SCRIPT_CABLE_CLUB_RECEPTIONIST, callfar CableClubNPC
-
+	sub FIRST_GENERIC_NPC_TEXT_SCRIPT
+	jr c, .continue2
+	
+	push hl
+	ld hl, GenericTextScriptJumpTable2
+	call GetAddressFromPointerArray
+	ld d, h
+	ld e, l
+	pop hl
+	ld bc, AfterDisplayingTextID
+	push bc ; return to AfterDisplayingTextID after jumping to de
+	push de
+	ret ; ret to de (generic script)
+.continue2
 	call PrintText_NoCreatingTextBox
+AfterDisplayingTextID::
 	ld a, [wDoNotWaitForButtonPressAfterDisplayingText]
 	and a
 	jr nz, HoldTextDisplayOpen
-
-AfterDisplayingTextID::
+AfterDisplayingTextID2::
 	ld a, [wEnteringCableClub]
 	and a
 	call z, WaitForTextScrollButtonPress ; wait for a button press after displaying all the text
@@ -111,12 +106,34 @@ HoldTextDisplayOpen::
 ; FIXME: this unintentionally gets run after HoldTextDisplayOpen...but that may be a good thing since resetting sprite facings seems pointless.
 CloseTextDisplayNoSpriteUpdate:: ; PureRGBnote: ADDED: less laggy version of closing the text display that doesn't reset sprite facings
 	call CloseTextDisplayPart1
-	jp CloseTextDisplayPart2
+	jr CloseTextDisplayPart2
 
 CloseTextDisplay::
 	call CloseTextDisplayPart1
 	call CloseTextDisplaySpriteUpdateLoop
-	jp CloseTextDisplayPart2
+	jr CloseTextDisplayPart2
+
+DisplaySafariGameOverText:: ; TODO: combine with other safari one?
+	callfar PrintSafariGameOverText
+	jr AfterDisplayingTextID2
+
+DisplayPokemonFaintedText::
+	ld hl, PokemonFaintedText
+	rst _PrintText
+	jr AfterDisplayingTextID2
+
+DisplayPlayerBlackedOutText::
+	ld hl, PlayerBlackedOutText
+	rst _PrintText
+	ld hl, wStatusFlags6
+	res BIT_ALWAYS_ON_BIKE, [hl] ; reset forced to use bike bit
+	jr HoldTextDisplayOpen
+
+DisplayRepelWoreOffText::
+	ld hl, RepelWoreOffText
+	rst _PrintText
+	callfar UseAnotherRepel ; PureRGBnote: ADDED: when repel wears off ask to use another if available
+	jr CloseTextDisplay  
 
 CloseTextDisplayPart1:
 	ld a, [wCurMap]
@@ -127,21 +144,6 @@ CloseTextDisplayPart1:
 	call LoadGBPal
 	xor a
 	ldh [hAutoBGTransferEnabled], a ; disable continuous WRAM to VRAM transfer each V-blank
-	ret
-
-CloseTextDisplaySpriteUpdateLoop:
-; loop to make sprites face the directions they originally faced before the dialogue
-	ld hl, wSprite01StateData2OrigFacingDirection
-	ld c, NUM_SPRITESTATEDATA_STRUCTS - 1
-	ld de, SPRITESTATEDATA1_LENGTH
-.restoreSpriteFacingDirectionLoop
-	ld a, [hl] ; x#SPRITESTATEDATA2_ORIGFACINGDIRECTION
-	dec h
-	ld [hl], a ; [x#SPRITESTATEDATA1_FACINGDIRECTION]
-	inc h
-	add hl, de
-	dec c
-	jr nz, .restoreSpriteFacingDirectionLoop
 	ret
 
 CloseTextDisplayPart2:
@@ -164,14 +166,40 @@ CloseTextDisplayPart2:
 	ld [wEnteringCableClub], a
 	jp EnterMap
 
+CloseTextDisplaySpriteUpdateLoop:
+; loop to make sprites face the directions they originally faced before the dialogue
+	ld hl, wSprite01StateData2OrigFacingDirection
+	ld c, NUM_SPRITESTATEDATA_STRUCTS - 1
+	ld de, SPRITESTATEDATA1_LENGTH
+.restoreSpriteFacingDirectionLoop
+	ld a, [hl] ; x#SPRITESTATEDATA2_ORIGFACINGDIRECTION
+	dec h
+	ld [hl], a ; [x#SPRITESTATEDATA1_FACINGDIRECTION]
+	inc h
+	add hl, de
+	dec c
+	jr nz, .restoreSpriteFacingDirectionLoop
+	ret
+
+GenericTextScriptJumpTable:
+	dw DisplayPokemonFaintedText ; TEXT_MON_FAINTED
+	dw DisplayPlayerBlackedOutText ; TEXT_BLACKED_OUT
+	dw DisplayRepelWoreOffText ; TEXT_REPEL_WORE_OFF
+	dw DisplaySafariGameOverText ; TEXT_SAFARI_GAME_OVER
+
+GenericTextScriptJumpTable2:
+	dw TextScript_Trainer ; TX_SCRIPT_TRAINER
+	dw TextScript_CableClubNPC ; TX_SCRIPT_CABLE_CLUB_RECEPTIONIST 
+	dw TextScript_PokemonCenterPC ; TX_SCRIPT_POKECENTER_PC
+	dw DisplayPokemartDialogue ; TX_SCRIPT_MART 
+	dw DisplayPokemonCenterDialogue ; TX_SCRIPT_POKECENTER_NURSE    
+
 DisplayPokemartDialogue::
 	push hl
 	ld hl, PokemartGreetingText
 	rst _PrintText
 	pop hl
-	call DisplayPokemartNoGreeting
-	jp AfterDisplayingTextID
-
+	; fall through
 DisplayPokemartNoGreeting:: ; PureRGBnote: ADDED: show pokemart without the "welcome!" dialogue first, allows vendors to say something else beforehand.
 	inc hl
 	call LoadItemList
@@ -196,34 +224,7 @@ LoadItemList::
 	ret
 
 DisplayPokemonCenterDialogue::
-	callfar DisplayPokemonCenterDialogue_
-	jp AfterDisplayingTextID
-
-DisplaySafariGameOverText::
-	callfar PrintSafariGameOverText
-	jp AfterDisplayingTextID
-
-DisplayRangerSafariGameOverText::
-	callfar PrintRangerSafariGameOverText
-	jp AfterDisplayingTextID
-
-DisplayPokemonFaintedText::
-	ld hl, PokemonFaintedText
-	rst _PrintText
-	jp AfterDisplayingTextID
-
-DisplayPlayerBlackedOutText::
-	ld hl, PlayerBlackedOutText
-	rst _PrintText
-	ld hl, wStatusFlags6
-	res BIT_ALWAYS_ON_BIKE, [hl] ; reset forced to use bike bit
-	jp HoldTextDisplayOpen
-
-DisplayRepelWoreOffText::
-	ld hl, RepelWoreOffText
-	rst _PrintText
-	callfar UseAnotherRepel ; PureRGBnote: ADDED: when repel wears off ask to use another if available
-	jp CloseTextDisplay
+	jpfar DisplayPokemonCenterDialogue_
 	
 DisplayTextPromptButton::
 	ld hl, TextScriptPromptButton

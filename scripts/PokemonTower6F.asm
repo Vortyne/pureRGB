@@ -119,21 +119,13 @@ PokemonTower6TrainerHeader2:
 	db -1 ; end
 
 PokemonTower6FChanneler1Text:
-	text_asm
-	ld hl, PokemonTower6TrainerHeader0
-PokemonTower6FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer PokemonTower6TrainerHeader0
 
 PokemonTower6FChanneler2Text:
-	text_asm
-	ld hl, PokemonTower6TrainerHeader1
-	jr PokemonTower6FTalkToTrainer
+	script_trainer PokemonTower6TrainerHeader1
 
 PokemonTower6FChanneler3Text:
-	text_asm
-	ld hl, PokemonTower6TrainerHeader2
-	jr PokemonTower6FTalkToTrainer
+	script_trainer PokemonTower6TrainerHeader2
 
 PokemonTower6FMarowakDepartedText:
 	text_asm

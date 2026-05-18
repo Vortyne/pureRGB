@@ -45,26 +45,16 @@ SSAnne9TrainerHeader3:
 	db -1 ; end
 
 SSAnne2FRoomsGentleman1Text:
-	text_asm
-	ld hl, SSAnne9TrainerHeader0
-SSAnne2FRoomsTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SSAnne9TrainerHeader0
 
 SSAnne2FRoomsFisherText:
-	text_asm
-	ld hl, SSAnne9TrainerHeader1
-	jr SSAnne2FRoomsTalkToTrainer
+	script_trainer SSAnne9TrainerHeader1
 
 SSAnne2FRoomsGentleman2Text:
-	text_asm
-	ld hl, SSAnne9TrainerHeader2
-	jr SSAnne2FRoomsTalkToTrainer
+	script_trainer SSAnne9TrainerHeader2
 
 SSAnne2FRoomsCooltrainerFText:
-	text_asm
-	ld hl, SSAnne9TrainerHeader3
-	jr SSAnne2FRoomsTalkToTrainer
+	script_trainer SSAnne9TrainerHeader3
 
 SSAnne2FRoomsGentleman3Text:
 	text_asm

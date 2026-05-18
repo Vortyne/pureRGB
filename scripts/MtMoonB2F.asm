@@ -221,27 +221,16 @@ MtMoonB2FSuperNerdText:
 	rst TextScriptEnd
 
 MtMoonB2FRocket1Text:
-	text_asm
-	ld hl, MtMoon3TrainerHeader0
-	; fall through
-MtMoonB2FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer MtMoon3TrainerHeader0
 
 MtMoonB2FRocket2Text:
-	text_asm
-	ld hl, MtMoon3TrainerHeader1
-	jr MtMoonB2FTalkToTrainer
+	script_trainer MtMoon3TrainerHeader1
 
 MtMoonB2FRocket3Text:
-	text_asm
-	ld hl, MtMoon3TrainerHeader2
-	jr MtMoonB2FTalkToTrainer
+	script_trainer MtMoon3TrainerHeader2
 
 MtMoonB2FRocket4Text:
-	text_asm
-	ld hl, MtMoon3TrainerHeader3
-	jr MtMoonB2FTalkToTrainer
+	script_trainer MtMoon3TrainerHeader3
 
 MtMoonB2FDomeFossilText:
 	text_asm

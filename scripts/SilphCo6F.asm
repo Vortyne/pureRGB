@@ -128,21 +128,13 @@ SilphCo6FSilphWorkerM3Text:
 	text_end
 
 SilphCo6FRocket1Text:
-	text_asm
-	ld hl, SilphCo6TrainerHeader0
-SilphCo6FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo6TrainerHeader0
 
 SilphCo6FScientistText:
-	text_asm
-	ld hl, SilphCo6TrainerHeader1
-	jr SilphCo6FTalkToTrainer
+	script_trainer SilphCo6TrainerHeader1
 
 SilphCo6FRocket2Text:
-	text_asm
-	ld hl, SilphCo6TrainerHeader2
-	jr SilphCo6FTalkToTrainer
+	script_trainer SilphCo6TrainerHeader2
 
 SilphCo6FRocket1BattleText:
 	text_far _SilphCo6FRocket1BattleText

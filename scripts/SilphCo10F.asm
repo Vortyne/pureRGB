@@ -41,16 +41,10 @@ SilphCo10TrainerHeader1:
 	db -1 ; end
 
 SilphCo10FRocketText:
-	text_asm
-	ld hl, SilphCo10TrainerHeader0
-SilphCo10FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo10TrainerHeader0
 
 SilphCo10FScientistText:
-	text_asm
-	ld hl, SilphCo10TrainerHeader1
-	jr SilphCo10FTalkToTrainer
+	script_trainer SilphCo10TrainerHeader1
 
 SilphCo10FSilphWorkerFText:
 	text_asm

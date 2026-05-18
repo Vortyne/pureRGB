@@ -84,31 +84,19 @@ SafariZoneWestRangerText1:
 	rst TextScriptEnd
 
 SafariZoneWestTrainerText0:
-	text_asm
-	ld hl, SafariZoneWestTrainerHeader0
-	jr SafariZoneWestTrainerTalk
+	script_trainer SafariZoneWestTrainerHeader0
 
 SafariZoneWestTrainerText1:
-	text_asm
-	ld hl, SafariZoneWestTrainerHeader1
-	jr SafariZoneWestTrainerTalk
+	script_trainer SafariZoneWestTrainerHeader1
 
 SafariZoneWestTrainerText2:
-	text_asm
-	ld hl, SafariZoneWestTrainerHeader2
-	jr SafariZoneWestTrainerTalk
+	script_trainer SafariZoneWestTrainerHeader2
 
 SafariZoneWestTrainerText3:
-	text_asm
-	ld hl, SafariZoneWestTrainerHeader3
-	jr SafariZoneWestTrainerTalk
+	script_trainer SafariZoneWestTrainerHeader3
 
 SafariZoneWestTrainerText4:
-	text_asm
-	ld hl, SafariZoneWestTrainerHeader4
-SafariZoneWestTrainerTalk:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SafariZoneWestTrainerHeader4
 
 SafariZoneWestRangerBattleText0:
 	text_far _SafariZoneWestRanger0Text

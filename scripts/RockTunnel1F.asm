@@ -68,41 +68,25 @@ RockTunnel1TrainerHeader6:
 	db -1 ; end
 
 RockTunnel1FHiker1Text:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader0
-	jr RockTunnel1FTalkToTrainer
+	script_trainer RockTunnel1TrainerHeader0
 
 RockTunnel1FHiker2Text:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader1
-	jr RockTunnel1FTalkToTrainer
+	script_trainer RockTunnel1TrainerHeader1
 
 RockTunnel1FHiker3Text:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader2
-	jr RockTunnel1FTalkToTrainer
+	script_trainer RockTunnel1TrainerHeader2
 
 RockTunnel1FSuperNerdText:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader3
-	jr RockTunnel1FTalkToTrainer
+	script_trainer RockTunnel1TrainerHeader3
 
 RockTunnel1FCooltrainerF1Text:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader4
-	jr RockTunnel1FTalkToTrainer
+	script_trainer RockTunnel1TrainerHeader4
 
 RockTunnel1FCooltrainerF2Text:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader5
-	jr RockTunnel1FTalkToTrainer
+	script_trainer RockTunnel1TrainerHeader5
 
 RockTunnel1FCooltrainerF3Text:
-	text_asm
-	ld hl, RockTunnel1TrainerHeader6
-RockTunnel1FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer RockTunnel1TrainerHeader6
 
 RockTunnel1FHiker1BattleText:
 	text_far _RockTunnel1FHiker1BattleText

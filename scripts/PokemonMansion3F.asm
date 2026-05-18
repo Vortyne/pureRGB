@@ -99,21 +99,13 @@ Mansion3TrainerHeader2:
 	db -1 ; end
 
 PokemonMansion3FSuperNerdText:
-	text_asm
-	ld hl, Mansion3TrainerHeader0
-	jr PokemonMansion3FTalkToTrainer
+	script_trainer Mansion3TrainerHeader0
 
 PokemonMansion3FScientistText:
-	text_asm
-	ld hl, Mansion3TrainerHeader1
-	jr PokemonMansion3FTalkToTrainer
+	script_trainer Mansion3TrainerHeader1
 
 Mansion3Text3:
-	text_asm
-	ld hl, Mansion3TrainerHeader2
-PokemonMansion3FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Mansion3TrainerHeader2
 
 PokemonMansion3FSuperNerdBattleText:
 	text_far _PokemonMansion3FSuperNerdBattleText

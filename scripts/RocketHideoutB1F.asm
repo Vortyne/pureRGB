@@ -59,31 +59,19 @@ RocketHideout1TrainerHeader4:
 	db -1 ; end
 
 RocketHideoutB1FRocket1Text:
-	text_asm
-	ld hl, RocketHideout1TrainerHeader0
-RocketHideoutB1FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer RocketHideout1TrainerHeader0
 
 RocketHideoutB1FRocket2Text:
-	text_asm
-	ld hl, RocketHideout1TrainerHeader1
-	jr RocketHideoutB1FTalkToTrainer
+	script_trainer RocketHideout1TrainerHeader1
 
 RocketHideoutB1FRocket3Text:
-	text_asm
-	ld hl, RocketHideout1TrainerHeader2
-	jr RocketHideoutB1FTalkToTrainer
+	script_trainer RocketHideout1TrainerHeader2
 
 RocketHideoutB1FRocket4Text:
-	text_asm
-	ld hl, RocketHideout1TrainerHeader3
-	jr RocketHideoutB1FTalkToTrainer
+	script_trainer RocketHideout1TrainerHeader3
 
 RocketHideoutB1FRocket5Text:
-	text_asm
-	ld hl, RocketHideout1TrainerHeader4
-	jr RocketHideoutB1FTalkToTrainer
+	script_trainer RocketHideout1TrainerHeader4
 
 RocketHideoutB1FRocket5EndBattleText:
 	text_far _RocketHideoutB1FRocket5EndBattleText

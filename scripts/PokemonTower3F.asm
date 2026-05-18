@@ -31,21 +31,13 @@ PokemonTower3TrainerHeader2:
 	db -1 ; end
 
 PokemonTower3FChanneler1Text:
-	text_asm
-	ld hl, PokemonTower3TrainerHeader0
-	jr PokemonTower3FTalkToTrainer
+	script_trainer PokemonTower3TrainerHeader0
 
 PokemonTower3FChanneler2Text:
-	text_asm
-	ld hl, PokemonTower3TrainerHeader1
-	jr PokemonTower3FTalkToTrainer
+	script_trainer PokemonTower3TrainerHeader1
 
 PokemonTower3FChanneler3Text:
-	text_asm
-	ld hl, PokemonTower3TrainerHeader2
-PokemonTower3FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer PokemonTower3TrainerHeader2
 
 PokemonTower3FChanneler1BattleText:
 	text_far _PokemonTower3FChanneler1BattleText

@@ -285,51 +285,31 @@ Route12SnorlaxCalmedDownText: ; PureRGBnote: CHANGED: now also used by route 16'
 	text_end
 
 Route12Fisher1Text:
-	text_asm
-	ld hl, Route12TrainerHeader0
-Route12TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route12TrainerHeader0
 
 Route12Fisher2Text:
-	text_asm
-	ld hl, Route12TrainerHeader1
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader1
 
 Route12CooltrainerMText:
-	text_asm
-	ld hl, Route12TrainerHeader2
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader2
 
 Route12SuperNerdText:
-	text_asm
-	ld hl, Route12TrainerHeader3
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader3
 
 Route12Fisher3Text:
-	text_asm
-	ld hl, Route12TrainerHeader4
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader4
 
 Route12Fisher4Text:
-	text_asm
-	ld hl, Route12TrainerHeader5
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader5
 
 Route12Fisher5Text:
-	text_asm
-	ld hl, Route12TrainerHeader6
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader6
 
 Route12Text9:
-	text_asm
-	ld hl, Route12TrainerHeader7
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader7
 
 Route12Text10:
-	text_asm
-	ld hl, Route12TrainerHeader8
-	jr Route12TalkToTrainer
+	script_trainer Route12TrainerHeader8
 
 Route12Fisher1BattleText:
 	text_far _Route12Fisher1BattleText

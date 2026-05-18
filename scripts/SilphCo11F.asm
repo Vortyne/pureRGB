@@ -286,17 +286,10 @@ SilphCo11FGiovanniYouRuinedOurPlansText:
 	text_end
 
 SilphCo11FRocket1Text:
-	text_asm
-	ld hl, SilphCo11TrainerHeader0
-	; fall through
-SilphCo11FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo11TrainerHeader0
 
 SilphCo11FRocket2Text:
-	text_asm
-	ld hl, SilphCo11TrainerHeader1
-	jr SilphCo11FTalkToTrainer
+	script_trainer SilphCo11TrainerHeader1
 
 SilphCo11FRocket1BattleText:
 	text_far _SilphCo11FRocket1BattleText

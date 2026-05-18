@@ -148,22 +148,13 @@ PokemonTower7TrainerHeader2:
 	db -1 ; end
 
 PokemonTower7FRocket1Text:
-	text_asm
-	ld hl, PokemonTower7TrainerHeader0
-	; fall through
-PokemonTower7FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer PokemonTower7TrainerHeader0
 
 PokemonTower7FRocket2Text:
-	text_asm
-	ld hl, PokemonTower7TrainerHeader1
-	jr PokemonTower7FTalkToTrainer
+	script_trainer PokemonTower7TrainerHeader1
 
 PokemonTower7FRocket3Text:
-	text_asm
-	ld hl, PokemonTower7TrainerHeader2
-	jr PokemonTower7FTalkToTrainer
+	script_trainer PokemonTower7TrainerHeader2
 
 PokemonTower7FMrFujiText:
 	text_asm

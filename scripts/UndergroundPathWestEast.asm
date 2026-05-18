@@ -33,21 +33,13 @@ UndergroundPathWestEastTrainerHeader2:
 	db -1 ;end
 
 UndergroundPathWestEastTrainer1Text:
-	text_asm
-	ld hl, UndergroundPathWestEastTrainerHeader0
-UndergroundPathWestEastTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer UndergroundPathWestEastTrainerHeader0
 
 UndergroundPathWestEastTrainer2Text:
-	text_asm
-	ld hl, UndergroundPathWestEastTrainerHeader1
-	jr UndergroundPathWestEastTalkToTrainer
+	script_trainer UndergroundPathWestEastTrainerHeader1
 
 UndergroundPathWestEastTrainer3Text:
-	text_asm
-	ld hl, UndergroundPathWestEastTrainerHeader2
-	jr UndergroundPathWestEastTalkToTrainer
+	script_trainer UndergroundPathWestEastTrainerHeader2
 
 UndergroundPathWestEastBattleText1:
 	text_far _UndergroundPathWestEastBattleText1

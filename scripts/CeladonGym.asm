@@ -192,42 +192,25 @@ CeladonGymTM21NoRoomText:
 	text_end
 
 CeladonGymCooltrainerF1Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader0
-	; fall through
-CeladonGymTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer CeladonGymTrainerHeader0
 
 CeladonGymBeauty1Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader1
-	jr CeladonGymTalkToTrainer
+	script_trainer CeladonGymTrainerHeader1
 
 CeladonGymCooltrainerF2Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader2
-	jr CeladonGymTalkToTrainer
+	script_trainer CeladonGymTrainerHeader2
 
 CeladonGymBeauty2Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader3
-	jr CeladonGymTalkToTrainer
+	script_trainer CeladonGymTrainerHeader3
 
 CeladonGymCooltrainerF3Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader4
-	jr CeladonGymTalkToTrainer
+	script_trainer CeladonGymTrainerHeader4
 
 CeladonGymBeauty3Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader5
-	jr CeladonGymTalkToTrainer
+	script_trainer CeladonGymTrainerHeader5
 
 CeladonGymCooltrainerF4Text:
-	text_asm
-	ld hl, CeladonGymTrainerHeader6
-	jr CeladonGymTalkToTrainer
+	script_trainer CeladonGymTrainerHeader6
 
 CeladonGymBattleText2:
 	text_far _CeladonGymBattleText2

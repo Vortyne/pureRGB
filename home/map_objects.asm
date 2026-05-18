@@ -1,26 +1,5 @@
-TextScript_ItemStoragePC::
-	call SaveScreenTilesToBuffer2
-	ld b, BANK(PlayerPC)
-	ld hl, PlayerPC
-	jr BankswitchAndContinue
-
-TextScript_BillsPC::
-	call SaveScreenTilesToBuffer2
-	ld b, BANK(BillsPC_)
-	ld hl, BillsPC_
-	jr BankswitchAndContinue
-
-TextScript_GameCornerPrizeMenu::
-	ld b, BANK(CeladonPrizeMenu)
-	ld hl, CeladonPrizeMenu
-BankswitchAndContinue::
-	rst _Bankswitch
-	jp HoldTextDisplayOpen        ; continue to main text-engine function
-
 TextScript_PokemonCenterPC::
-	ld b, BANK(ActivatePC)
-	ld hl, ActivatePC
-	jr BankswitchAndContinue
+	jpfar ActivatePC
 
 StartSimulatingJoypadStatesOnlyAOrBPress::
 	ld a, PAD_START | PAD_SELECT | PAD_CTRL_PAD
@@ -216,3 +195,11 @@ GetSpriteMovementByte2Pointer::
 	add hl, de
 	pop de
 	ret
+
+TextScript_CableClubNPC::
+	jpfar CableClubNPC
+
+TextScript_Trainer::
+	inc hl
+	hl_deref
+	jp TalkToTrainer

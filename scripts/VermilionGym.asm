@@ -168,21 +168,13 @@ VermilionGymLTSurgeReceivedThunderBadgeText:
 	text_end
 
 VermilionGymGentlemanText:
-	text_asm
-	ld hl, VermilionGymTrainerHeader0
-VermilionGymTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer VermilionGymTrainerHeader0
 
 VermilionGymSuperNerdText:
-	text_asm
-	ld hl, VermilionGymTrainerHeader1
-	jr VermilionGymTalkToTrainer
+	script_trainer VermilionGymTrainerHeader1
 
 VermilionGymSailorText:
-	text_asm
-	ld hl, VermilionGymTrainerHeader2
-	jr VermilionGymTalkToTrainer
+	script_trainer VermilionGymTrainerHeader2
 
 VermilionGymGentlemanBattleText:
 	text_far _VermilionGymGentlemanBattleText

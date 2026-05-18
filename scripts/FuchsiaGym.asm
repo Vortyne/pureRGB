@@ -148,37 +148,22 @@ FuchsiaGymKogaTM06NoRoomText:
 	text_end
 
 FuchsiaGymJuggler1Text:
-	text_asm
-	ld hl, FuchsiaGymTrainerHeader0
-	; fall through
-FuchsiaGymTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer FuchsiaGymTrainerHeader0
 
 FuchsiaGymJuggler2Text:
-	text_asm
-	ld hl, FuchsiaGymTrainerHeader1
-	jr FuchsiaGymTalkToTrainer
+	script_trainer FuchsiaGymTrainerHeader1
 
 FuchsiaGymJuggler3Text:
-	text_asm
-	ld hl, FuchsiaGymTrainerHeader2
-	jr FuchsiaGymTalkToTrainer
+	script_trainer FuchsiaGymTrainerHeader2
 
 FuchsiaGymTamer1Text:
-	text_asm
-	ld hl, FuchsiaGymTrainerHeader3
-	jr FuchsiaGymTalkToTrainer
+	script_trainer FuchsiaGymTrainerHeader3
 
 FuchsiaGymTamer2Text:
-	text_asm
-	ld hl, FuchsiaGymTrainerHeader4
-	jr FuchsiaGymTalkToTrainer
+	script_trainer FuchsiaGymTrainerHeader4
 
 FuchsiaGymJuggler4Text:
-	text_asm
-	ld hl, FuchsiaGymTrainerHeader5
-	jr FuchsiaGymTalkToTrainer
+	script_trainer FuchsiaGymTrainerHeader5
 
 FuchsiaGymJuggler1BattleText:
 	text_far _FuchsiaGymJuggler1BattleText

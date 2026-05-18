@@ -104,26 +104,16 @@ SilphCo1FTrainerHeader3:
 	db -1 ;end
 
 SilphCo1FTrainer1Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader0
-SilphCo1FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo1FTrainerHeader0
 
 SilphCo1FTrainer2Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader1
-	jr SilphCo1FTalkToTrainer
+	script_trainer SilphCo1FTrainerHeader1
 
 SilphCo1FTrainer3Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader2
-	jr SilphCo1FTalkToTrainer
+	script_trainer SilphCo1FTrainerHeader2
 	
 SilphCo1FTrainer4Text:
-	text_asm
-	ld hl, SilphCo1FTrainerHeader3
-	jr SilphCo1FTalkToTrainer
+	script_trainer SilphCo1FTrainerHeader3
 
 SilphCo1FBattleText1:
 	text_far _SilphCo1FBattleText1

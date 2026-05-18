@@ -41,31 +41,19 @@ Route18TrainerHeader4:
 	db -1 ; end
 
 Route18CooltrainerM1Text:
-	text_asm
-	ld hl, Route18TrainerHeader0
-Route18TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route18TrainerHeader0
 
 Route18CooltrainerM2Text:
-	text_asm
-	ld hl, Route18TrainerHeader1
-	jr Route18TalkToTrainer
+	script_trainer Route18TrainerHeader1
 
 Route18CooltrainerM3Text:
-	text_asm
-	ld hl, Route18TrainerHeader2
-	jr Route18TalkToTrainer
+	script_trainer Route18TrainerHeader2
 
 Route18Text4:
-	text_asm
-	ld hl, Route18TrainerHeader3
-	jr Route18TalkToTrainer
+	script_trainer Route18TrainerHeader3
 
 Route18Text5:
-	text_asm
-	ld hl, Route18TrainerHeader4
-	jr Route18TalkToTrainer
+	script_trainer Route18TrainerHeader4
 
 Route18CooltrainerM1BattleText:
 	text_far _Route18CooltrainerM1BattleText

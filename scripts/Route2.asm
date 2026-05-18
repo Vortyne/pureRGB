@@ -89,21 +89,13 @@ Route2TrainerHeader2:
 	db -1 ; end
 
 Route2BugCatcherText:
-	text_asm
-	ld hl, Route2TrainerHeader0
-Route2TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route2TrainerHeader0
 
 Route2JrTrainerMText:
-	text_asm
-	ld hl, Route2TrainerHeader1
-	jr Route2TalkToTrainer
+	script_trainer Route2TrainerHeader1
 
 Route2JrTrainerFText:
-	text_asm
-	ld hl, Route2TrainerHeader2
-	jr Route2TalkToTrainer
+	script_trainer Route2TrainerHeader2
 
 Route2BattleText1:
 	text_far _Route2BattleText1

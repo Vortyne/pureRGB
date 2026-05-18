@@ -145,36 +145,22 @@ Route16TrainerHeader5:
 	db -1 ; end
 
 Route16Biker1Text:
-	text_asm
-	ld hl, Route16TrainerHeader0
-Route16TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route16TrainerHeader0
 
 Route16Biker2Text:
-	text_asm
-	ld hl, Route16TrainerHeader1
-	jr Route16TalkToTrainer
+	script_trainer Route16TrainerHeader1
 
 Route16Biker3Text:
-	text_asm
-	ld hl, Route16TrainerHeader2
-	jr Route16TalkToTrainer
+	script_trainer Route16TrainerHeader2
 
 Route16Biker4Text:
-	text_asm
-	ld hl, Route16TrainerHeader3
-	jr Route16TalkToTrainer
+	script_trainer Route16TrainerHeader3
 
 Route16Biker5Text:
-	text_asm
-	ld hl, Route16TrainerHeader4
-	jr Route16TalkToTrainer
+	script_trainer Route16TrainerHeader4
 
 Route16Biker6Text:
-	text_asm
-	ld hl, Route16TrainerHeader5
-	jr Route16TalkToTrainer
+	script_trainer Route16TrainerHeader5
 
 Route16Biker1BattleText:
 	text_far _Route16Biker1BattleText

@@ -103,26 +103,16 @@ VictoryRoad3TrainerHeader3:
 	db -1 ; end
 
 VictoryRoad3FCooltrainerM1Text:
-	text_asm
-	ld hl, VictoryRoad3TrainerHeader0
-VictoryRoad3FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer VictoryRoad3TrainerHeader0
 
 VictoryRoad3FCooltrainerF1Text:
-	text_asm
-	ld hl, VictoryRoad3TrainerHeader1
-	jr VictoryRoad3FTalkToTrainer
+	script_trainer VictoryRoad3TrainerHeader1
 
 VictoryRoad3FCooltrainerM2Text:
-	text_asm
-	ld hl, VictoryRoad3TrainerHeader2
-	jr VictoryRoad3FTalkToTrainer
+	script_trainer VictoryRoad3TrainerHeader2
 
 VictoryRoad3FCooltrainerF2Text:
-	text_asm
-	ld hl, VictoryRoad3TrainerHeader3
-	jr VictoryRoad3FTalkToTrainer
+	script_trainer VictoryRoad3TrainerHeader3
 
 VictoryRoad3FCooltrainerM1BattleText:
 	text_far _VictoryRoad3FCooltrainerM1BattleText

@@ -91,26 +91,16 @@ Mansion1TrainerHeader3:
 	db -1 ; end
 
 PokemonMansion1FScientistText:
-	text_asm
-	ld hl, Mansion1TrainerHeader0
-	jr Mansion1TalkToTrainer
+	script_trainer Mansion1TrainerHeader0
 
 Mansion1Text2:
-	text_asm
-	ld hl, Mansion1TrainerHeader1
-	jr Mansion1TalkToTrainer
+	script_trainer Mansion1TrainerHeader1
 
 Mansion1Text3:
-	text_asm
-	ld hl, Mansion1TrainerHeader2
-	jr Mansion1TalkToTrainer
+	script_trainer Mansion1TrainerHeader2
 
 Mansion1Text4:
-	text_asm
-	ld hl, Mansion1TrainerHeader3
-Mansion1TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Mansion1TrainerHeader3
 
 PokemonMansion1FScientistBattleText:
 	text_far _PokemonMansion1FScientistBattleText

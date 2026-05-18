@@ -94,51 +94,31 @@ Route25TrainerHeader8:
 	db -1 ; end
 
 Route25Youngster1Text:
-	text_asm
-	ld hl, Route25TrainerHeader0
-Route25TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route25TrainerHeader0
 
 Route25Youngster2Text:
-	text_asm
-	ld hl, Route25TrainerHeader1
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader1
 
 Route25CooltrainerMText:
-	text_asm
-	ld hl, Route25TrainerHeader2
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader2
 
 Route25CooltrainerF1Text:
-	text_asm
-	ld hl, Route25TrainerHeader3
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader3
 
 Route25Youngster3Text:
-	text_asm
-	ld hl, Route25TrainerHeader4
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader4
 
 Route25CooltrainerF2Text:
-	text_asm
-	ld hl, Route25TrainerHeader5
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader5
 
 Route25Hiker1Text:
-	text_asm
-	ld hl, Route25TrainerHeader6
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader6
 
 Route25Hiker2Text:
-	text_asm
-	ld hl, Route25TrainerHeader7
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader7
 
 Route25Hiker3Text:
-	text_asm
-	ld hl, Route25TrainerHeader8
-	jr Route25TalkToTrainer
+	script_trainer Route25TrainerHeader8
 
 Route25Youngster1BattleText:
 	text_far _Route25Youngster1BattleText

@@ -151,41 +151,25 @@ SaffronGymSabrinaTM46NoRoomText:
 	text_end
 
 SaffronGymChanneler1Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader0
-SaffronGymTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SaffronGymTrainerHeader0
 
 SaffronGymYoungster1Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader1
-	jr SaffronGymTalkToTrainer
+	script_trainer SaffronGymTrainerHeader1
 
 SaffronGymChanneler2Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader2
-	jr SaffronGymTalkToTrainer
+	script_trainer SaffronGymTrainerHeader2
 
 SaffronGymYoungster2Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader3
-	jr SaffronGymTalkToTrainer
+	script_trainer SaffronGymTrainerHeader3
 
 SaffronGymChanneler3Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader4
-	jr SaffronGymTalkToTrainer
+	script_trainer SaffronGymTrainerHeader4
 
 SaffronGymYoungster3Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader5
-	jr SaffronGymTalkToTrainer
+	script_trainer SaffronGymTrainerHeader5
 
 SaffronGymYoungster4Text:
-	text_asm
-	ld hl, SaffronGymTrainerHeader6
-	jr SaffronGymTalkToTrainer
+	script_trainer SaffronGymTrainerHeader6
 
 SaffronGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm

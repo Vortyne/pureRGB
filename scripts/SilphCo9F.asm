@@ -70,21 +70,13 @@ SilphCo9FNurseText:
 	text_end
 
 SilphCo9FRocket1Text:
-	text_asm
-	ld hl, SilphCo9TrainerHeader0
-SilphCo9FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo9TrainerHeader0
 
 SilphCo9FScientistText:
-	text_asm
-	ld hl, SilphCo9TrainerHeader1
-	jr SilphCo9FTalkToTrainer
+	script_trainer SilphCo9TrainerHeader1
 
 SilphCo9FRocket2Text:
-	text_asm
-	ld hl, SilphCo9TrainerHeader2
-	jr SilphCo9FTalkToTrainer
+	script_trainer SilphCo9TrainerHeader2
 
 SilphCo9FRocket1BattleText:
 	text_far _SilphCo9FRocket1BattleText

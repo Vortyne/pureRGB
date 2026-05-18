@@ -99,26 +99,16 @@ SilphCo2FSilphWorkerFText:
 	text_end
 
 SilphCo2FScientist1Text:
-	text_asm
-	ld hl, SilphCo2TrainerHeader0
-SilphCo2FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo2TrainerHeader0
 
 SilphCo2FScientist2Text:
-	text_asm
-	ld hl, SilphCo2TrainerHeader1
-	jr SilphCo2FTalkToTrainer
+	script_trainer SilphCo2TrainerHeader1
 
 SilphCo2FRocket1Text:
-	text_asm
-	ld hl, SilphCo2TrainerHeader2
-	jr SilphCo2FTalkToTrainer
+	script_trainer SilphCo2TrainerHeader2
 
 SilphCo2FRocket2Text:
-	text_asm
-	ld hl, SilphCo2TrainerHeader3
-	jr SilphCo2FTalkToTrainer
+	script_trainer SilphCo2TrainerHeader3
 
 SilphCo2FScientist1BattleText:
 	text_far _SilphCo2FScientist1BattleText

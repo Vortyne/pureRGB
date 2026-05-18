@@ -264,27 +264,16 @@ FightingDojoKarateMasterText:
 	text_end
 
 FightingDojoBlackbelt1Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader0
-	; fall through
-FightingDojoTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer FightingDojoTrainerHeader0
 
 FightingDojoBlackbelt2Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader1
-	jr FightingDojoTalkToTrainer
+	script_trainer FightingDojoTrainerHeader1
 
 FightingDojoBlackbelt3Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader2
-	jr FightingDojoTalkToTrainer
+	script_trainer FightingDojoTrainerHeader2
 
 FightingDojoBlackbelt4Text:
-	text_asm
-	ld hl, FightingDojoTrainerHeader3
-	jr FightingDojoTalkToTrainer
+	script_trainer FightingDojoTrainerHeader3
 
 FightingDojoBlackbelt1BattleText:
 	text_far _FightingDojoBlackbelt1BattleText

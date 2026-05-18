@@ -80,51 +80,31 @@ Route21TrainerHeader8:
 	db -1 ; end
 
 Route21Fisher1Text:
-	text_asm
-	ld hl, Route21TrainerHeader0
-Route21TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route21TrainerHeader0
 
 Route21Fisher2Text:
-	text_asm
-	ld hl, Route21TrainerHeader1
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader1
 
 Route21Swimmer1Text:
-	text_asm
-	ld hl, Route21TrainerHeader2
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader2
 
 Route21Swimmer2Text:
-	text_asm
-	ld hl, Route21TrainerHeader3
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader3
 
 Route21Swimmer3Text:
-	text_asm
-	ld hl, Route21TrainerHeader4
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader4
 
 Route21Swimmer4Text:
-	text_asm
-	ld hl, Route21TrainerHeader5
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader5
 
 Route21Swimmer5Text:
-	text_asm
-	ld hl, Route21TrainerHeader6
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader6
 
 Route21Fisher3Text:
-	text_asm
-	ld hl, Route21TrainerHeader7
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader7
 
 Route21Fisher4Text:
-	text_asm
-	ld hl, Route21TrainerHeader8
-	jr Route21TalkToTrainer
+	script_trainer Route21TrainerHeader8
 
 Route21Fisher1BattleText:
 	text_far _Route21Fisher1BattleText

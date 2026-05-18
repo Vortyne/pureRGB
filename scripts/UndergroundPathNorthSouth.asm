@@ -46,21 +46,13 @@ UndergroundPathNorthSouthTrainerHeader2:
 	db -1 ;end
 
 UndergroundPathNorthSouthTrainer1Text:
-	text_asm
-	ld hl, UndergroundPathNorthSouthTrainerHeader0
-UndergroundPathNorthSouthTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer UndergroundPathNorthSouthTrainerHeader0
 
 UndergroundPathNorthSouthTrainer2Text:
-	text_asm
-	ld hl, UndergroundPathNorthSouthTrainerHeader1
-	jr UndergroundPathNorthSouthTalkToTrainer
+	script_trainer UndergroundPathNorthSouthTrainerHeader1
 
 UndergroundPathNorthSouthTrainer3Text:
-	text_asm
-	ld hl, UndergroundPathNorthSouthTrainerHeader2
-	jr UndergroundPathNorthSouthTalkToTrainer
+	script_trainer UndergroundPathNorthSouthTrainerHeader2
 
 UndergroundPathNorthSouthBattleText1:
 	text_far _UndergroundPathNorthSouthBattleText1

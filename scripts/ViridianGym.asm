@@ -213,36 +213,22 @@ ViridianGymGiovanniTM27NoRoomText:
 	text_end
 
 ViridianGymCooltrainerM1Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader0
-ViridianGymTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer ViridianGymTrainerHeader0
 
 ViridianGymHiker1Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader1
-	jr ViridianGymTalkToTrainer
+	script_trainer ViridianGymTrainerHeader1
 
 ViridianGymRocker1Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader2
-	jr ViridianGymTalkToTrainer
+	script_trainer ViridianGymTrainerHeader2
 
 ViridianGymHiker2Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader3
-	jr ViridianGymTalkToTrainer
+	script_trainer ViridianGymTrainerHeader3
 
 ViridianGymCooltrainerM2Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader4
-	jr ViridianGymTalkToTrainer
+	script_trainer ViridianGymTrainerHeader4
 
 ViridianGymRocker2Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader6
-	jr ViridianGymTalkToTrainer
+	script_trainer ViridianGymTrainerHeader6
 
 ViridianGymHiker3Text:
 	text_asm
@@ -257,16 +243,15 @@ ViridianGymHiker3Text:
 	rst TextScriptEnd
 .normal
 	ld hl, ViridianGymTrainerHeader5
-	jr ViridianGymTalkToTrainer
+	call TalkToTrainer
+	rst TextScriptEnd
 ;;;;;
 .what
 	text_far _ViridianGymHiker3WhatText
 	text_end
 
 ViridianGymCooltrainerM3Text:
-	text_asm
-	ld hl, ViridianGymTrainerHeader7
-	jr ViridianGymTalkToTrainer
+	script_trainer ViridianGymTrainerHeader7
 
 ViridianGymCooltrainerM1BattleText:
 	text_far _ViridianGymCooltrainerM1BattleText

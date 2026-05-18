@@ -51,46 +51,28 @@ Route3SuperNerdText:
 	text_end
 
 Route3Youngster1Text:
-	text_asm
-	ld hl, Route3TrainerHeader0
-Route3TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route3TrainerHeader0
 
 Route3Youngster2Text:
-	text_asm
-	ld hl, Route3TrainerHeader1
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader1
 
 Route3CooltrainerF1Text:
-	text_asm
-	ld hl, Route3TrainerHeader2
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader2
 
 Route3Youngster3Text:
-	text_asm
-	ld hl, Route3TrainerHeader3
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader3
 
 Route3CooltrainerF2Text:
-	text_asm
-	ld hl, Route3TrainerHeader4
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader4
 
 Route3Youngster4Text:
-	text_asm
-	ld hl, Route3TrainerHeader5
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader5
 
 Route3Youngster5Text:
-	text_asm
-	ld hl, Route3TrainerHeader6
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader6
 
 Route3CooltrainerF3Text:
-	text_asm
-	ld hl, Route3TrainerHeader7
-	jr Route3TalkToTrainer
+	script_trainer Route3TrainerHeader7
 
 Route3Youngster1BattleText:
 	text_far _Route3Youngster1BattleText

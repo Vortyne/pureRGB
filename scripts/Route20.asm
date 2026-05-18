@@ -59,56 +59,34 @@ Route20TrainerHeader9:
 	db -1 ; end
 
 Route20Swimmer1Text:
-	text_asm
-	ld hl, Route20TrainerHeader0
-Route20TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route20TrainerHeader0
 
 Route20Swimmer2Text:
-	text_asm
-	ld hl, Route20TrainerHeader1
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader1
 
 Route20Swimmer3Text:
-	text_asm
-	ld hl, Route20TrainerHeader2
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader2
 
 Route20Swimmer4Text:
-	text_asm
-	ld hl, Route20TrainerHeader3
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader3
 
 Route20Swimmer5Text:
-	text_asm
-	ld hl, Route20TrainerHeader4
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader4
 
 Route20Swimmer6Text:
-	text_asm
-	ld hl, Route20TrainerHeader5
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader5
 
 Route20CooltrainerMText:
-	text_asm
-	ld hl, Route20TrainerHeader6
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader6
 
 Route20Swimmer7Text:
-	text_asm
-	ld hl, Route20TrainerHeader7
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader7
 
 Route20Swimmer8Text:
-	text_asm
-	ld hl, Route20TrainerHeader8
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader8
 
 Route20Swimmer9Text:
-	text_asm
-	ld hl, Route20TrainerHeader9
-	jr Route20TalkToTrainer
+	script_trainer Route20TrainerHeader9
 
 Route20Swimmer1BattleText:
 	text_far _Route20Swimmer1BattleText

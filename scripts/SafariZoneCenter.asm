@@ -93,26 +93,16 @@ SafariZoneCenterRangerText0:
 	rst TextScriptEnd
 
 SafariZoneCenterTrainerText0:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader0
-	jr SafariZoneCenterTalkToTrainer
+	script_trainer SafariZoneCenterTrainerHeader0
 
 SafariZoneCenterTrainerText1:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader1
-	jr SafariZoneCenterTalkToTrainer
+	script_trainer SafariZoneCenterTrainerHeader1
 
 SafariZoneCenterTrainerText2:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader2
-	jr SafariZoneCenterTalkToTrainer
+	script_trainer SafariZoneCenterTrainerHeader2
 
 SafariZoneCenterTrainerText3:
-	text_asm
-	ld hl, SafariZoneCenterTrainerHeader3
-SafariZoneCenterTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SafariZoneCenterTrainerHeader3
 
 SafariZoneCenterRangerBattleText0:
 	text_far _SafariZoneCenterRangerText

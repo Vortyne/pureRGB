@@ -97,51 +97,31 @@ Route8TrainerHeader8:
 	db -1 ; end
 
 Route8SuperNerd1Text:
-	text_asm
-	ld hl, Route8TrainerHeader0
-Route8TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route8TrainerHeader0
 
 Route8Gambler1Text:
-	text_asm
-	ld hl, Route8TrainerHeader1
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader1
 
 Route8SuperNerd2Text:
-	text_asm
-	ld hl, Route8TrainerHeader2
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader2
 
 Route8CooltrainerF1Text:
-	text_asm
-	ld hl, Route8TrainerHeader3
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader3
 
 Route8SuperNerd3Text:
-	text_asm
-	ld hl, Route8TrainerHeader4
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader4
 
 Route8CooltrainerF2Text:
-	text_asm
-	ld hl, Route8TrainerHeader5
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader5
 
 Route8CooltrainerF3Text:
-	text_asm
-	ld hl, Route8TrainerHeader6
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader6
 
 Route8Gambler2Text:
-	text_asm
-	ld hl, Route8TrainerHeader7
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader7
 
 Route8CooltrainerF4Text:
-	text_asm
-	ld hl, Route8TrainerHeader8
-	jr Route8TalkToTrainer
+	script_trainer Route8TrainerHeader8
 
 Route8SuperNerd2AfterBattleText:
 	text_far _Route8SuperNerd2AfterBattleText

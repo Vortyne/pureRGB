@@ -61,66 +61,40 @@ Route14TrainerHeader11:
 	db -1 ; end
 
 Route14CooltrainerM1Text:
-	text_asm
-	ld hl, Route14TrainerHeader0
-Route14TalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer Route14TrainerHeader0
 
 Route14CooltrainerM2Text:
-	text_asm
-	ld hl, Route14TrainerHeader1
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader1
 
 Route14CooltrainerM3Text:
-	text_asm
-	ld hl, Route14TrainerHeader2
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader2
 
 Route14CooltrainerM4Text:
-	text_asm
-	ld hl, Route14TrainerHeader3
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader3
 
 Route14CooltrainerM5Text:
-	text_asm
-	ld hl, Route14TrainerHeader4
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader4
 
 Route14CooltrainerM6Text:
-	text_asm
-	ld hl, Route14TrainerHeader5
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader5
 
 Route14Biker1Text:
-	text_asm
-	ld hl, Route14TrainerHeader6
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader6
 
 Route14Biker2Text:
-	text_asm
-	ld hl, Route14TrainerHeader7
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader7
 
 Route14Biker3Text:
-	text_asm
-	ld hl, Route14TrainerHeader8
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader8
 
 Route14Biker4Text:
-	text_asm
-	ld hl, Route14TrainerHeader9
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader9
 
 Route14Text11:
-	text_asm
-	ld hl, Route14TrainerHeader10
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader10
 
 Route14Text12:
-	text_asm
-	ld hl, Route14TrainerHeader11
-	jr Route14TalkToTrainer
+	script_trainer Route14TrainerHeader11
 
 Route14CooltrainerM1BattleText:
 	text_far _Route14CooltrainerM1BattleText

@@ -59,21 +59,13 @@ SilphCo8FSilphWorkerMText:
 	text_end
 
 SilphCo8FRocket1Text:
-	text_asm
-	ld hl, SilphCo8TrainerHeader0
-SilphCo8FTalkToTrainer:
-	call TalkToTrainer
-	rst TextScriptEnd
+	script_trainer SilphCo8TrainerHeader0
 
 SilphCo8FScientistText:
-	text_asm
-	ld hl, SilphCo8TrainerHeader1
-	jr SilphCo8FTalkToTrainer
+	script_trainer SilphCo8TrainerHeader1
 
 SilphCo8FRocket2Text:
-	text_asm
-	ld hl, SilphCo8TrainerHeader2
-	jr SilphCo8FTalkToTrainer
+	script_trainer SilphCo8TrainerHeader2
 
 SilphCo8FRocket1BattleText:
 	text_far _SilphCo8FRocket1BattleText
