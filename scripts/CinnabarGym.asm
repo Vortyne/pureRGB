@@ -388,7 +388,7 @@ CinnabarGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips af
 	text_asm
 	CheckEvent EVENT_BEAT_BLAINE
 	ld hl, ChampInMakingText
-	jr nz, .printDone
+	jr z, .printDone
 .afterBeat
 	CheckEvent EVENT_GOT_PEWTER_APEX_CHIPS ; have to hear about apex chips to receive them after that
 	ld hl, CinnabarGymGuidePostBattleText
