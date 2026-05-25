@@ -2113,6 +2113,18 @@ LoadMapHeader::
 	inc e
 	ld a, [hli]
 	ld [de], a ; x#SPRITESTATEDATA2_MOVEMENTBYTE1
+;   inc e
+;   inc e
+;   inc e
+;   dec d
+;   ld a, [hl]
+;   cp $ff
+;   jr z, .skipFacingDirection
+;   and %00000011
+;   add a
+;   add a
+;   ld [de], a
+;.skipFacingDirection
 	ld a, [hli]
 	ldh [hLoadSpriteTemp1], a ; save movement byte 2
 	ld a, [hli]

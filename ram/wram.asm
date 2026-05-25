@@ -567,6 +567,7 @@ wLowHealthAlarmDisabled:: db
 
 wPlayerMonMinimized:: db
 
+; TODO: move exp bar data here?
 	ds 13
 
 ; number of hits by enemy in attacks like Double Slap, etc.

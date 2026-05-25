@@ -1,6 +1,7 @@
 DEF CIRCLE_TILE_ID EQU $70
 
 DisplayDiploma::
+	;call ClearTextBox ; TODO: add and add text after to map script
 	call SaveScreenTilesToBuffer2
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
