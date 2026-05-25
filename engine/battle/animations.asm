@@ -2499,16 +2499,16 @@ AnimationSubstitute:
 	jp AnimationShowMonPic
 
 SubstituteDownSpriteLocations:
-	dw wTempPic + $120
-	dw wTempPic + $120 + $70
-	dw wTempPic + $120 + $10
-	dw wTempPic + $120 + $10 + $70
+	dw wTempPic + tile (PIC_HEIGHT * 2 + 4)
+	dw wTempPic + tile (PIC_HEIGHT * 3 + 4)
+	dw wTempPic + tile (PIC_HEIGHT * 2 + 5)
+	dw wTempPic + tile (PIC_HEIGHT * 3 + 5)
 
 SubstituteUpSpriteLocations:
-	dw wTempPic + $120 + $70
-	dw wTempPic + $120 + $e0
-	dw wTempPic + $120 + $80
-	dw wTempPic + $120 + $f0
+	dw wTempPic + tile (PIC_HEIGHT * 3 + 4)
+	dw wTempPic + tile (PIC_HEIGHT * 4 + 4)
+	dw wTempPic + tile (PIC_HEIGHT * 3 + 5)
+	dw wTempPic + tile (PIC_HEIGHT * 4 + 5)
 
 HideSubstituteShowMonAnim:
 	ldh a, [hWhoseTurn]

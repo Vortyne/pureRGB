@@ -192,7 +192,6 @@ EndTrainerBattle::
 	ld c, [hl] ; load corresponding toggleable object index and remove it
 	call HideObject
 .skipRemoveSprite
-	; TODO: remove unknown flag?
 	ld hl, wStatusFlags5
 	bit BIT_UNKNOWN_5_4, [hl]
 	res BIT_UNKNOWN_5_4, [hl]
