@@ -2,6 +2,11 @@
 
 Want to leave a review? Go [here](https://github.com/Vortyne/pureRGB/issues/new?assignees=&labels=review&projects=&template=review.yml&title=%5BReview%5D%3A+Summarize+your+review+here).
 
+### Review by Toshiba-3 on 2.7.4 - Had a blast
+
+Really had such a blast playing RGB once again with this mod. Did a 40 hour playthrough and did all (I think) the post-elite4 content too, enjoyed it all. I find this mod very inspiring in how it breathes life into a game already played to death all the while staying true to its original design. Even all the additional content was tastefully managed.
+Impressive stuff, thanks for your hard work.
+
 ### Review by samuellaw178 on 2.7.4
 
 I just wanted to leave a comment and review to say that you did a fantastic job! I thoroughly enjoyed the game, and I could see how much attention to detail went into it. This game gave me a sense of closure I didn’t know I needed!
