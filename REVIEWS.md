@@ -2,6 +2,10 @@
 
 Want to leave a review? Go [here](https://github.com/Vortyne/pureRGB/issues/new?assignees=&labels=review&projects=&template=review.yml&title=%5BReview%5D%3A+Summarize+your+review+here).
 
+### Review by samuellaw178 on 2.7.4
+
+I just wanted to leave a comment and review to say that you did a fantastic job! I thoroughly enjoyed the game, and I could see how much attention to detail went into it. This game gave me a sense of closure I didn’t know I needed!
+
 ### Review by OmegaHadangeki on 2.7.0
 
 Hello I would like to begin off saying this real quick. I started playing pokemon when I was 3 years old. I am now 33. I also have played and beaten Radical Red once, Blue Kaizo and Crystal Kaizo twice. I also use to play competetive pokemon starting way back in gen 4. So I have much pokemon experience under my belt.
