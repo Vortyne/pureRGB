@@ -55,7 +55,7 @@ DontAbandonLearning:
 	ld de, wBuffer
 	ld a, BANK(Moves)
 	call FarCopyData
-	ld a, [wBuffer + 5] ; a = move's max PP
+	ld a, [wBuffer + MOVE_PP]
 	pop de
 	pop hl
 	ld [hl], a
