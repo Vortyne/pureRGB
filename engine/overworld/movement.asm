@@ -1,5 +1,4 @@
 ; PureRGBnote: CHANGED: file was updated to deal with higher framerate (60fps) overworld.
-DEF MAP_TILESET_SIZE EQU $60
 
 UpdatePlayerSprite:
 	CheckFlag FLAG_HIDE_PLAYER_SPRITE

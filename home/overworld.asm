@@ -851,7 +851,7 @@ INCLUDE "data/tilesets/bike_riding_tilesets.asm"
 LoadTilesetTilePatternData::
 	hl_deref wTilesetGfxPtr
 	ld de, vTileset
-	ld bc, $600
+	ld bc, MAP_TILESET_SIZE tiles
 	ld a, [wTilesetBank]
 	jp FarCopyData4
 
