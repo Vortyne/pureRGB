@@ -450,6 +450,7 @@ The fifth page contains some additional options.
 - In-game trade trainers will now have unique OT names instead of just TRAINER for all of them.
 - The SAFARI ZONE warden will say different things to you if you've gotten HM03 instead of telling you to get it when you already have.
 - The SAFARI BALL was given a ball factor of 1, making it better at catching pokemon at full health.
+- When walking to leave, your rival in Silph Co will visibly "Warp away" when he hits the warp tile instead of just disappearing.
 
 ## Move changes
 - Disable disables the previously selected move of the opponent. If they haven't selected a move yet, it chooses a random move. It has 85% accuracy. It lasts 2-7 turns.
