@@ -236,7 +236,6 @@ MACRO connection
 		IF _len > \3_HEIGHT
 			DEF _len = \3_HEIGHT
 		ENDC
-
 	ELSE
 		fail "Invalid direction for 'connection'."
 	ENDC
@@ -248,6 +247,10 @@ MACRO connection
 	db \3_WIDTH
 	db _y, _x
 	dw wOverworldMap + _win
+ENDM
+
+MACRO map_setting
+	DEF MAP_CONNECTIONS_{CURRENT_MAP_ID} |= \1
 ENDM
 
 MACRO def_script_pointers

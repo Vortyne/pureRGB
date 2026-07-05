@@ -1,2 +1,2 @@
-	map_header FossilGuysHouse, FOSSIL_GUYS_HOUSE, INTERIOR, 0
+	map_header FossilGuysHouse, FOSSIL_GUYS_HOUSE, INTERIOR
 	end_map_header

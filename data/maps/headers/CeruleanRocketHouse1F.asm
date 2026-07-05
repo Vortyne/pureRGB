@@ -1,2 +1,3 @@
-	map_header CeruleanRocketHouse1F, CERULEAN_ROCKET_HOUSE_1F, REDS_HOUSE_1, DEFER_SHOWING_MAP
+	map_header CeruleanRocketHouse1F, CERULEAN_ROCKET_HOUSE_1F, REDS_HOUSE_1
+	map_setting DEFER_SHOWING_MAP
 	end_map_header

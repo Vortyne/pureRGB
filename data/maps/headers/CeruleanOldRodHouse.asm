@@ -1,2 +1,2 @@
-	map_header CeruleanOldRodHouse, CERULEAN_OLD_ROD_HOUSE, SHIP, 0
+	map_header CeruleanOldRodHouse, CERULEAN_OLD_ROD_HOUSE, SHIP
 	end_map_header

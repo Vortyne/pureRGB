@@ -1,2 +1,2 @@
-	map_header CeladonBackAlley, CELADON_BACK_ALLEY, PLATEAU, 0
+	map_header CeladonBackAlley, CELADON_BACK_ALLEY, PLATEAU
 	end_map_header

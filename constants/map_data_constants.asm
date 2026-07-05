@@ -1,9 +1,6 @@
 ; width of east/west connections
 ; height of north/south connections
 DEF MAP_BORDER EQU 3
-DEF DEFER_SHOWING_MAP EQU %10000
-DEF EXTRA_MUSIC_MAP   EQU %100000
-DEF SPECIAL_ANIMATION_MAP   EQU %1000000
 
 ; connection directions
 	const_def
@@ -23,6 +20,9 @@ DEF SPECIAL_ANIMATION_MAP   EQU %1000000
 	shift_const WEST   ; 2 %10
 	shift_const SOUTH  ; 4 %100
 	shift_const NORTH  ; 8 %1000
+	shift_const DEFER_SHOWING_MAP ; 16 %10000
+	shift_const EXTRA_MUSIC_MAP ; 32 %100000
+	shift_const SPECIAL_ANIMATION_MAP ; 64 %1000000
 
 ; wWarpEntries
 DEF MAX_WARP_EVENTS EQU 32
