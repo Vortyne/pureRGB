@@ -5,7 +5,7 @@
 The only version differences between PureRed / PureBlue / PureGreen are visual. Play whatever color you like the most.
 
 ## New Options in the Options Menu
-Many options have been added to the game's options menu. To be clear, there are **4 pages of options** now. **Use the Next button on the options page** to cycle through the pages when in-game.
+Many options have been added to the game's options menu. To be clear, there are **5 pages of options** now. **Use the Next button on the options page** to cycle through the pages when in-game.
 
 You can press SELECT to get an explanation of the current option in any option menu.
 
@@ -181,6 +181,10 @@ The fifth page contains some additional options.
 - Reduced the weirdly long artificial delay when swapping items in the item menu
 - Improved the speed and responsiveness of the main menu (CONTINUE / NEW GAME / OPTIONS) menu
 - In Elevator menus, the current floor is now displayed.
+- You can rename PC boxes to 5 letter custom names.
+- By pressing select while your cursor is on the "ITEM" option in the start menu, you can automatically sort your bag items.
+- By pressing select while viewing "Player's PC", you can automatically sort your PC items.
+- Celadon Mart's directory now uses a menu, so it's less obtuse. The 1st floor clerk will also give you the same info with her own flair.
 
 ## New Gameplay Features
 - Mew is under the truck!!! Use strength on it from the right side. If the SS Anne has left, it returns after obtaining the Soul Badge.
@@ -445,6 +449,8 @@ The fifth page contains some additional options.
 - Mr Psychic now requires you to defeat the FIGHTING DOJO before he gives you the PSYCHIC TM.
 - In-game trade trainers will now have unique OT names instead of just TRAINER for all of them.
 - The SAFARI ZONE warden will say different things to you if you've gotten HM03 instead of telling you to get it when you already have.
+- The SAFARI BALL was given a ball factor of 1, making it better at catching pokemon at full health.
+- When walking to leave, your rival in Silph Co will visibly "Warp away" when he hits the warp tile instead of just disappearing.
 
 ## Move changes
 - Disable disables the previously selected move of the opponent. If they haven't selected a move yet, it chooses a random move. It has 85% accuracy. It lasts 2-7 turns.
@@ -540,6 +546,7 @@ Additionally, GHOST type was made a "Dynamic type". What this means, is it can d
 
 ## Audio Changes
 - If you set Audio mode to OG+ in the options, an entirely new 2-minute-long song I composed for the Safari Zone based on the original short evolution song will play.
+- On the 5th page of options, you can turn on an option to pause/resume overworld music between battles instead of restarting the music after every wild encounter or battle.
 - The ghosts in pokemon tower now have a sound effect on encountering
 - Booting up a TM or HM has a little sound effect
 - Pushing a boulder down a hole in Seafoam / Victory road has a sound and feedback with it now
