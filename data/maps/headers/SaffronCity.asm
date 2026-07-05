@@ -1,4 +1,5 @@
-	map_header SaffronCity, SAFFRON_CITY, OVERWORLD, DEFER_SHOWING_MAP | NORTH | SOUTH | WEST | EAST
+	map_header SaffronCity, SAFFRON_CITY, OVERWORLD
+	map_setting DEFER_SHOWING_MAP
 	connection north, Route5, ROUTE_5, 5
 	connection south, Route6, ROUTE_6, 5
 	connection west, Route7, ROUTE_7, 4

@@ -1,2 +1,3 @@
-	map_header BrunosRoom, BRUNOS_ROOM, GYM, DEFER_SHOWING_MAP
+	map_header BrunosRoom, BRUNOS_ROOM, GYM
+	map_setting DEFER_SHOWING_MAP
 	end_map_header

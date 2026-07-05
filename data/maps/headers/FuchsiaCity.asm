@@ -1,4 +1,5 @@
-	map_header FuchsiaCity, FUCHSIA_CITY, OVERWORLD, DEFER_SHOWING_MAP | SOUTH | WEST | EAST
+	map_header FuchsiaCity, FUCHSIA_CITY, OVERWORLD
+	map_setting DEFER_SHOWING_MAP
 	connection south, Route19, ROUTE_19, 5
 	connection west, Route18, ROUTE_18, 4
 	connection east, Route15, ROUTE_15, 4

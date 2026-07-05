@@ -1,2 +1,3 @@
-	map_header UndergroundPathNorthSouth, UNDERGROUND_PATH_NORTH_SOUTH, UNDERGROUND, DEFER_SHOWING_MAP
+	map_header UndergroundPathNorthSouth, UNDERGROUND_PATH_NORTH_SOUTH, UNDERGROUND
+	map_setting DEFER_SHOWING_MAP
 	end_map_header

@@ -1,2 +1,3 @@
-	map_header FightingDojo, FIGHTING_DOJO, DOJO, DEFER_SHOWING_MAP
+	map_header FightingDojo, FIGHTING_DOJO, DOJO
+	map_setting DEFER_SHOWING_MAP
 	end_map_header

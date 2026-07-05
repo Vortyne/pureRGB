@@ -10,16 +10,16 @@ TradeMons:
 	table_width 3 + NAME_LENGTH
 	; post-trade text. English Yellow changed _AfterTrade2Text to
 	; not mention evolution.
-	npctrade ODDISH,     PONYTA,    TRADE_DIALOGSET_CASUAL, "Seabiscuit" ; route 11
-	npctrade DROWZEE,    GRIMER,    TRADE_DIALOGSET_CASUAL, "Goopinator" ; route 2
-	npctrade ALAKAZAM,   MAGNETON,  TRADE_DIALOGSET_SPROCKET, "SPROCKET" ; cerulean city rocket house basement
-	npctrade PONYTA,     MACHOP,    TRADE_DIALOGSET_CASUAL_COLOR, "HulkSmash" ; cinnabar lab
-	npctrade ONIX,       GASTLY,    TRADE_DIALOGSET_HAPPY,  "Nebula" ; vermilion city
-	npctrade TAUROS,     LICKITUNG, TRADE_DIALOGSET_CASUAL_COLOR, "Saliva" ; route 18 
-	npctrade PIDGEOTTO,  SEEL,      TRADE_DIALOGSET_EVOLUTION, "Slappy" ; cerulean city
-	npctrade KRABBY,     ZUBAT,     TRADE_DIALOGSET_EVOLUTION_COLOR, "EmeraldSDB" ; cinnabar lab
-	npctrade LAPRAS,     SNORLAX,   TRADE_DIALOGSET_HAPPY_COLOR,  "Fatso" ; cinnabar lab 
-	npctrade VOLTORB,    TANGELA,   TRADE_DIALOGSET_HAPPY,  "Discombob" ; route 5
+	npctrade ODDISH,     PONYTA,    TRADE_DIALOGSET_CASUAL, "Seabiscuit" ; used in ROUTE_11_GATE_2F
+	npctrade DROWZEE,    GRIMER,    TRADE_DIALOGSET_CASUAL, "Goopinator" ; used in ROUTE_2_TRADE_HOUSE
+	npctrade ALAKAZAM,   MAGNETON,  TRADE_DIALOGSET_SPROCKET, "SPROCKET" ; used in CERULEAN_ROCKET_HOUSE_B1F
+	npctrade PONYTA,     MACHOP,    TRADE_DIALOGSET_CASUAL_COLOR, "HulkSmash" ; used in CINNABAR_LAB_FOSSIL_ROOM
+	npctrade ONIX,       GASTLY,    TRADE_DIALOGSET_HAPPY,  "Nebula" ; used in VERMILION_TRADE_HOUSE
+	npctrade TAUROS,     LICKITUNG, TRADE_DIALOGSET_CASUAL_COLOR, "Saliva" ; used in ROUTE_18_GATE_2F
+	npctrade PIDGEOTTO,  SEEL,      TRADE_DIALOGSET_EVOLUTION, "Slappy" ; used in CERULEAN_TRADE_HOUSE
+	npctrade KRABBY,     ZUBAT,     TRADE_DIALOGSET_EVOLUTION_COLOR, "EmeraldSDB" ; used in CINNABAR_LAB_TRADE_ROOM
+	npctrade LAPRAS,     SNORLAX,   TRADE_DIALOGSET_HAPPY_COLOR,  "Fatso" ; used in CINNABAR_LAB_TRADE_ROOM
+	npctrade VOLTORB,    TANGELA,   TRADE_DIALOGSET_HAPPY,  "Discombob" ; used in UNDERGROUND_PATH_ROUTE_5
 	assert_table_length NUM_NPC_TRADES
 
 ; PureRGBnote: ADDED: some received pokemon use alternate color palettes if the feature is enabled
