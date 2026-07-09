@@ -165,7 +165,7 @@ _FossilGuyGoToCinnabarText::
 
 	para "I can't go to"
 	line "CINNABAR LAB"
-	cont "until i fix it."
+	cont "until I fix it."
 
 	para "You'll have to"
 	line "go there"
