@@ -91,6 +91,9 @@ TalkToTrainer::
 	ld c, a
 	ld b, FLAG_TEST
 	call TrainerFlagAction
+	ld a, c
+	and a
+	jr z, .trainerNotYetFought
 	ld a, TRAINER_AFTER_BATTLE_TEXT
 	call ReadTrainerHeaderInfo
 	jp PrintText
