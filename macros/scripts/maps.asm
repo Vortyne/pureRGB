@@ -122,7 +122,7 @@ MACRO trainer
 	db CURRENT_TRAINER_BIT
 	db \2 << 4
 	dw wEventFlags + (\1 - CURRENT_TRAINER_BIT) / 8
-	dw \3, \5, \4, \4
+	dba \3, \5, \4
 	DEF CURRENT_TRAINER_BIT += 1
 ENDM
 

@@ -66,43 +66,25 @@ MoveNameText:
 	ld hl, .endusedmovetexts
 	ld a, [wMoveGrammar]
 	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
 	push bc
 	ld b, $0
 	ld c, a
 	add hl, bc
 	pop bc
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
 	ret
 
 .endusedmovetexts:
-; entries correspond to MoveGrammar sets
-	dw EndUsedMove1Text
-	dw EndUsedMove2Text
-	dw EndUsedMove3Text
-	dw EndUsedMove4Text
-	dw EndUsedMove5Text
-
 EndUsedMove1Text:
-	text_far _EndUsedMove1Text
-	text_end
-
+	text_far_end _EndUsedMove1Text
 EndUsedMove2Text:
-	text_far _EndUsedMove2Text
-	text_end
-
+	text_far_end _EndUsedMove2Text
 EndUsedMove3Text:
-	text_far _EndUsedMove3Text
-	text_end
-
+	text_far_end _EndUsedMove3Text
 EndUsedMove4Text:
-	text_far _EndUsedMove4Text
-	text_end
-
+	text_far_end _EndUsedMove4Text
 EndUsedMove5Text:
-	text_far _EndUsedMove5Text
-	text_end
+	text_far_end _EndUsedMove5Text
 
 ; This function is redundant in the English localization.
 ; In Japanese, it selects one of 5 distinct sentence structures.

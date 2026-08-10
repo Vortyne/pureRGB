@@ -114,7 +114,7 @@ VendingMachineMenu::
 	ld b, 5 ; shorter for the rarecandy machine
 .playDeliverySound
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	push bc
 	ld a, SFX_PUSH_BOULDER
 	rst _PlaySound
@@ -149,8 +149,7 @@ VendingMachineMenu::
 	ret
 
 VendingMachineText1:
-	text_far _VendingMachineText1
-	text_end
+	text_far_end _VendingMachineText1
 
 DrinkText:
 	db   "FRESH WATER"
@@ -177,24 +176,19 @@ DrinkPriceText2:
 	next "@"
 
 VendingMachineText4:
-	text_far _VendingMachineText4
-	text_end
+	text_far_end _VendingMachineText4
 
 VendingMachineText5:
-	text_far _VendingMachineText5
-	text_end
+	text_far_end _VendingMachineText5
 
 VendingMachineText6:
-	text_far _VendingMachineText6
-	text_end
+	text_far_end _VendingMachineText6
 
 VendingMachineText7:
-	text_far _VendingMachineText7
-	text_end
+	text_far_end _VendingMachineText7
 
 VendingMachineText8:
-	text_far _VendingMachineText8
-	text_end
+	text_far_end _VendingMachineText8
 
 LoadVendingMachineItem:
 	ld hl, VendingPrices

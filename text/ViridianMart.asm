@@ -18,6 +18,7 @@ _ViridianMartClerkParcelQuestText::
 
 	para "<PLAYER> got"
 	line "OAK's PARCEL!@"
+	sound_get_key_item
 	text_end
 
 _ViridianMartYoungsterText::

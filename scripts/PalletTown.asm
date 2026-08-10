@@ -3,10 +3,9 @@ PalletTown_Script:
 	jr z, .next
 	SetEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
 .next
-	call EnableAutoTextBoxDrawing
 	ld hl, PalletTown_ScriptPointers
-	ld a, [wPalletTownCurScript]
-	jp CallFunctionInTable
+	ld de, wPalletTownCurScript
+	jp CallMapScriptInTable
 
 PalletTown_ScriptPointers:
 	def_script_pointers
@@ -131,29 +130,24 @@ PalletTownPlayerFollowsOakScript:
 
 PalletTownDaisyScript:
 	CheckEvent EVENT_DAISY_WALKING
-	jr nz, .next
+	ret nz
 	CheckBothEventsSet EVENT_GOT_TOWN_MAP, EVENT_ENTERED_BLUES_HOUSE, 1
-	jr nz, .next
+	ret nz
 	SetEvent EVENT_DAISY_WALKING
 	ld c, TOGGLE_DAISY_SITTING
 	call HideObject
 	ld c, TOGGLE_DAISY_WALKING
 	jp ShowObject
-.next
-	CheckEvent EVENT_GOT_POKEBALLS_FROM_OAK
-	ret z
-	SetEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS_2
-	ret
 
 PalletTown_TextPointers:
 	def_text_pointers
-	dw_const PalletTownOakText,              TEXT_PALLETTOWN_OAK
-	dw_const PalletTownGirlText,             TEXT_PALLETTOWN_GIRL
-	dw_const PalletTownFisherText,           TEXT_PALLETTOWN_FISHER
-	dw_const PalletTownOaksLabSignText,      TEXT_PALLETTOWN_OAKSLAB_SIGN
-	dw_const PalletTownSignText,             TEXT_PALLETTOWN_SIGN
-	dw_const PalletTownPlayersHouseSignText, TEXT_PALLETTOWN_PLAYERSHOUSE_SIGN
-	dw_const PalletTownRivalsHouseSignText,  TEXT_PALLETTOWN_RIVALSHOUSE_SIGN
+	dba_const PalletTownOakText,              TEXT_PALLETTOWN_OAK
+	dba_const _PalletTownGirlText,             TEXT_PALLETTOWN_GIRL
+	dba_const _PalletTownFisherText,           TEXT_PALLETTOWN_FISHER
+	dba_const _PalletTownOaksLabSignText,      TEXT_PALLETTOWN_OAKSLAB_SIGN
+	dba_const _PalletTownSignText,             TEXT_PALLETTOWN_SIGN
+	dba_const PalletTownPlayersHouseSignText, TEXT_PALLETTOWN_PLAYERSHOUSE_SIGN
+	dba_const _PalletTownRivalsHouseSignText,  TEXT_PALLETTOWN_RIVALSHOUSE_SIGN
 
 PalletTownOakText:
 	text_asm
@@ -172,7 +166,7 @@ PalletTownOakText:
 	text_far _PalletTownOakHeyWaitDontGoOutText
 	text_asm
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	xor a
 	ld [wEmotionBubbleSpriteIndex], a ; player's sprite
 	ld [wWhichEmotionBubble], a ; EXCLAMATION_BUBBLE
@@ -182,24 +176,7 @@ PalletTownOakText:
 	rst TextScriptEnd
 
 .ItsUnsafeText:
-	text_far _PalletTownOakItsUnsafeText
-	text_end
-
-PalletTownGirlText:
-	text_far _PalletTownGirlText
-	text_end
-
-PalletTownFisherText:
-	text_far _PalletTownFisherText
-	text_end
-
-PalletTownOaksLabSignText:
-	text_far _PalletTownOaksLabSignText
-	text_end
-
-PalletTownSignText:
-	text_far _PalletTownSignText
-	text_end
+	text_far_end _PalletTownOakItsUnsafeText
 
 PalletTownPlayersHouseSignText:
 IF DEF(_DEBUG)
@@ -208,10 +185,5 @@ IF DEF(_DEBUG)
 	callfar HallOfFamePC
 	jp SoftReset
 ELSE
-	text_far _PalletTownPlayersHouseSignText
-	text_end
+	text_far_end _PalletTownPlayersHouseSignText
 ENDC
-
-PalletTownRivalsHouseSignText:
-	text_far _PalletTownRivalsHouseSignText
-	text_end

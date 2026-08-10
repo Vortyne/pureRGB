@@ -22,5 +22,4 @@ CheckIfMoveIsKnown:
 	ret
 
 AlreadyKnowsText:
-	text_far _AlreadyKnowsText
-	text_end
+	text_far_end _AlreadyKnowsText

@@ -49,8 +49,7 @@ ForceLoadNickname::
 	jp CopyData
 
 DoYouWantToNicknameText:
-	text_far _DoYouWantToNicknameText
-	text_end
+	text_far_end _DoYouWantToNicknameText
 
 DisplayNameRaterScreen::
 	ld hl, wBuffer

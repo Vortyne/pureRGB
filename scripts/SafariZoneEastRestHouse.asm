@@ -3,18 +3,6 @@ SafariZoneEastRestHouse_Script:
 
 SafariZoneEastRestHouse_TextPointers:
 	def_text_pointers
-	dw_const SafariZoneEastRestHouseScientistText,    TEXT_SAFARIZONEEASTRESTHOUSE_SCIENTIST
-	dw_const SafariZoneEastRestHouseRockerText,       TEXT_SAFARIZONEEASTRESTHOUSE_ROCKER
-	dw_const SafariZoneEastRestHouseSilphWorkerMText, TEXT_SAFARIZONEEASTRESTHOUSE_SILPH_WORKER_M
-
-SafariZoneEastRestHouseScientistText:
-	text_far _SafariZoneEastRestHouseScientistText
-	text_end
-
-SafariZoneEastRestHouseRockerText:
-	text_far _SafariZoneEastRestHouseRockerText
-	text_end
-
-SafariZoneEastRestHouseSilphWorkerMText:
-	text_far _SafariZoneEastRestHouseSilphWorkerMText
-	text_end
+	dba_const _SafariZoneEastRestHouseScientistText,    TEXT_SAFARIZONEEASTRESTHOUSE_SCIENTIST
+	dba_const _SafariZoneEastRestHouseRockerText,       TEXT_SAFARIZONEEASTRESTHOUSE_ROCKER
+	dba_const _SafariZoneEastRestHouseSilphWorkerMText, TEXT_SAFARIZONEEASTRESTHOUSE_SILPH_WORKER_M

@@ -10,7 +10,7 @@ CheckGusGLeaves:
 	; show jen or gus
 	call GBFadeOutToWhite
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	call SetDetentionHideShows
 	call UpdateSpritesAndDelay3
 	call GBFadeInFromWhite
@@ -54,45 +54,33 @@ DetentionHideList:
 
 ViridianSchoolHouseB1F_TextPointers:
 	def_text_pointers
-	dw_const SchoolB1FGuyNearStairs,         TEXT_SCHOOLB1F_GUY_NEAR_STAIRS
-	dw_const SchoolB1FRightTeacher,          TEXT_SCHOOLB1F_RIGHT_TEACHER
-	dw_const SchoolB1FLittleGirl,            TEXT_SCHOOLB1F_LITTLE_GIRL
-	dw_const SchoolB1FNerd,                  TEXT_SCHOOLB1F_NERD
-	dw_const SchoolB1FLeftTeacher,           TEXT_SCHOOLB1F_LEFT_TEACHER
-	dw_const SchoolB1FStudentTeacher,        TEXT_SCHOOLB1F_STUDENT_TEACHER
-	dw_const SchoolB1FDaisyTutor,            TEXT_SCHOOLB1F_DAISY_TUTOR
-	dw_const SchoolB1FTuteeLeft,             TEXT_SCHOOLB1F_TUTEE_LEFT
-	dw_const SchoolB1FTuteeRight,            TEXT_SCHOOLB1F_TUTEE_RIGHT
-	dw_const SchoolB1FRocker,                TEXT_SCHOOLB1F_ROCKER
-	dw_const SchoolB1FBrunetteGirl,          TEXT_SCHOOLB1F_BRUNETTE_GIRL
-	dw_const SchoolB1FGameboyKid,            TEXT_SCHOOLB1F_GAMEBOY_KID
-	dw_const SchoolB1FBottomLeftNotebook,    TEXT_SCHOOLB1F_BOTTOM_LEFT_NOTEBOOK
-	dw_const SchoolB1FBottomCenterNotebook,  TEXT_SCHOOLB1F_BOTTOM_CENTER_NOTEBOOK
-	dw_const SchoolB1FLeftTuteeNotebook,     TEXT_SCHOOLB1F_LEFT_TUTEE_NOTEBOOK
-	dw_const SchoolB1FTutorNotebook,         TEXT_SCHOOLB1F_TUTOR_NOTEBOOK
-	dw_const SchoolB1FRockerNotebook,        TEXT_SCHOOLB1F_ROCKER_NOTEBOOK
-	dw_const SchoolB1FBrunetteGirlNotebook,  TEXT_SCHOOLB1F_BRUNETTE_GIRL_NOTEBOOK
-	dw_const SchoolB1FNerdNotebook,          TEXT_SCHOOLB1F_NERD_NOTEBOOK
-	dw_const SchoolB1FBottomRightNotebook,   TEXT_SCHOOLB1F_BOTTOM_RIGHT_NOTEBOOK
-	dw_const SchoolB1FLeftBlackboard,        TEXT_SCHOOLB1F_LEFT_BLACKBOARD
-	dw_const SchoolB1FRightBlackboard,       TEXT_SCHOOLB1F_RIGHT_BLACKBOARD
-	dw_const SchoolB1FLeftClassroomSign,     TEXT_SCHOOLB1F_LEFT_CLASSROOM_SIGN
-	dw_const SchoolB1FRightClassroomSign,    TEXT_SCHOOLB1F_RIGHT_CLASSROOM_SIGN
-	dw_const SchoolB1FLeftPoster,            TEXT_SCHOOLB1F_LEFT_POSTER
-	dw_const SchoolB1FRightPoster,           TEXT_SCHOOLB1F_RIGHT_POSTER
-	dw_const SchoolB1FBookcasesText,         TEXT_SCHOOLB1F_BOOKCASES
-
-SchoolB1FGuyNearStairs:
-	text_far _SchoolB1FGuyNearStairs
-	text_end
-
-SchoolB1FRightTeacher:
-	text_far _SchoolB1FRightTeacher
-	text_end
-
-SchoolB1FLittleGirl:
-	text_far _SchoolB1FLittleGirlProdigy
-	text_end
+	dba_const _SchoolB1FGuyNearStairs,         TEXT_SCHOOLB1F_GUY_NEAR_STAIRS
+	dba_const _SchoolB1FRightTeacher,          TEXT_SCHOOLB1F_RIGHT_TEACHER
+	dba_const _SchoolB1FLittleGirlProdigy,     TEXT_SCHOOLB1F_LITTLE_GIRL
+	dba_const SchoolB1FNerd,                  TEXT_SCHOOLB1F_NERD
+	dba_const SchoolB1FLeftTeacher,           TEXT_SCHOOLB1F_LEFT_TEACHER
+	dba_const _SchoolB1FStudentTeacher,        TEXT_SCHOOLB1F_STUDENT_TEACHER
+	dba_const _SchoolB1FTutorText,            TEXT_SCHOOLB1F_DAISY_TUTOR
+	dba_const _SchoolB1FLeftTuteeText,             TEXT_SCHOOLB1F_TUTEE_LEFT
+	dba_const _SchoolB1FRightTuteeText,            TEXT_SCHOOLB1F_TUTEE_RIGHT
+	dba_const SchoolB1FRocker,                TEXT_SCHOOLB1F_ROCKER
+	dba_const SchoolB1FBrunetteGirl,          TEXT_SCHOOLB1F_BRUNETTE_GIRL
+	dba_const _SchoolB1FCornerGameboyKid,            TEXT_SCHOOLB1F_GAMEBOY_KID
+	dba_const _SchoolB1FBottomLeftNotebook,    TEXT_SCHOOLB1F_BOTTOM_LEFT_NOTEBOOK
+	dba_const _SchoolB1FBottomCenterNotebook,  TEXT_SCHOOLB1F_BOTTOM_CENTER_NOTEBOOK
+	dba_const _SchoolB1FLeftTuteeNotebook,     TEXT_SCHOOLB1F_LEFT_TUTEE_NOTEBOOK
+	dba_const _SchoolB1FTutorNotebook,         TEXT_SCHOOLB1F_TUTOR_NOTEBOOK
+	dba_const _SchoolB1FRockerNotebook,        TEXT_SCHOOLB1F_ROCKER_NOTEBOOK
+	dba_const _SchoolB1FBrunetteGirlNotebook,  TEXT_SCHOOLB1F_BRUNETTE_GIRL_NOTEBOOK
+	dba_const SchoolB1FNerdNotebook,          TEXT_SCHOOLB1F_NERD_NOTEBOOK
+	dba_const _SchoolB1FBottomRightNotebook,   TEXT_SCHOOLB1F_BOTTOM_RIGHT_NOTEBOOK
+	dba_const _SchoolB1FLeftBlackboard,        TEXT_SCHOOLB1F_LEFT_BLACKBOARD
+	dba_const _SchoolB1FRightBlackboard,       TEXT_SCHOOLB1F_RIGHT_BLACKBOARD
+	dba_const _SchoolB1FLeftClassroomSign,     TEXT_SCHOOLB1F_LEFT_CLASSROOM_SIGN
+	dba_const _SchoolB1FRightClassroomSign,    TEXT_SCHOOLB1F_RIGHT_CLASSROOM_SIGN
+	dba_const _SchoolB1FLeftPoster,            TEXT_SCHOOLB1F_LEFT_POSTER
+	dba_const _SchoolB1FRightPoster,           TEXT_SCHOOLB1F_RIGHT_POSTER
+	dba_const SchoolB1FBookcasesText,         TEXT_SCHOOLB1F_BOOKCASES
 
 SchoolB1FNerd:
 	text_asm
@@ -112,7 +100,7 @@ SchoolB1FNerd:
 	ld a, SCHOOLB1F_NERD
 	call SetSpriteFacingUp
   	ld c, 20
-  	rst _DelayFrames
+  	rst DelayFrames
 	ld a, SCHOOLB1F_NERD
 	call SetSpriteFacingRight
 	ld a, SCHOOLB1F_LITTLE_GIRL
@@ -130,28 +118,22 @@ SchoolB1FNerd:
   	rst TextScriptEnd
 
 SchoolB1FNerdText:
-	text_far _SchoolB1FNerd
-	text_end
+	text_far_end _SchoolB1FNerd
 
 SchoolB1FLittleGirlRetortText:
-	text_far _SchoolB1FLittleGirlRetort
-	text_end
+	text_far_end _SchoolB1FLittleGirlRetort
 
 SchoolB1FLittleGirlRetort2Text:
-	text_far _SchoolB1FLittleGirlRetort2
-	text_end
+	text_far_end _SchoolB1FLittleGirlRetort2
 
 SchoolB1FNerdSilence:
-	text_far _SchoolB1FNerdSilence
-	text_end
+	text_far_end _SchoolB1FNerdSilence
 
 SchoolB1FLittleGirlBro:
-	text_far _SchoolB1FLittleGirlBro
-	text_end
+	text_far_end _SchoolB1FLittleGirlBro
 
 SchoolB1FNerdAck:
-	text_far _SchoolB1FNerdAck
-	text_end
+	text_far_end _SchoolB1FNerdAck
 
 SchoolB1FLeftTeacher:
 	text_asm
@@ -203,8 +185,9 @@ SchoolB1FLeftTeacher:
 	rst _PrintText
 	jr .later
 .gotMoveDex
-	ld hl, SchoolB1FLeftTeacherQuizFinalInfoPrompt
+	ld hl, SchoolB1FLeftTeacherQuizFinalInfo
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, SchoolB1FLeftTeacherEnd
 	rst _PrintText
 	jr .done
@@ -238,62 +221,34 @@ SchoolB1FLeftTeacher:
 
 
 SchoolB1FLeftTeacherInit:
-	text_far _SchoolB1FLeftTeacherInit
-	text_end
+	text_far_end _SchoolB1FLeftTeacherInit
 
 SchoolB1FLeftTeacherNoParcel:
-	text_far _SchoolB1FLeftTeacherNoParcel
-	text_end
+	text_far_end _SchoolB1FLeftTeacherNoParcel
 
 SchoolB1FLeftTeacherNoPokedex:
-	text_far _SchoolB1FLeftTeacherNoPokedex
-	text_end
+	text_far_end _SchoolB1FLeftTeacherNoPokedex
 
 SchoolB1FLeftTeacherLater:
-	text_far _SchoolB1FLeftTeacherLater
-	text_end
+	text_far_end _SchoolB1FLeftTeacherLater
 
 SchoolB1FLeftTeacherFirst:
-	text_far _SchoolB1FLeftTeacherFirst
-	text_end
+	text_far_end _SchoolB1FLeftTeacherFirst
 
 SchoolB1FLeftTeacherNo:
-	text_far _SchoolB1FLeftTeacherNo
-	text_end
+	text_far_end _SchoolB1FLeftTeacherNo
 
 SchoolB1FLeftTeacherYes:
-	text_far _SchoolB1FLeftTeacherYes
-	text_end
+	text_far_end _SchoolB1FLeftTeacherYes
 
 SchoolB1FLeftTeacherReadyStart:
-	text_far _SchoolB1FLeftTeacherReadyStart
-	text_end
+	text_far_end _SchoolB1FLeftTeacherReadyStart
 
 SchoolB1FLeftTeacherReadyYes:
-	text_far _SchoolB1FLeftTeacherReadyYes
-	text_end
+	text_far_end _SchoolB1FLeftTeacherReadyYes
 
 SchoolB1FLeftTeacherReadyNo:
-	text_far _SchoolB1FLeftTeacherReadyNo
-	text_end
-
-
-
-SchoolB1FStudentTeacher:
-	text_far _SchoolB1FStudentTeacher
-	text_end
-
-SchoolB1FDaisyTutor:
-	text_far _SchoolB1FTutorText
-	text_end
-
-SchoolB1FTuteeLeft:
-	text_far _SchoolB1FLeftTuteeText
-	text_end
-
-SchoolB1FTuteeRight:
-	text_far _SchoolB1FRightTuteeText
-	text_end
+	text_far_end _SchoolB1FLeftTeacherReadyNo
 
 SchoolB1FRocker:
 	text_asm
@@ -314,7 +269,7 @@ SchoolB1FRocker:
 	call PlayMusic
 
 	ld c, 160
-	rst _DelayFrames
+	rst DelayFrames
 
 	ld c, BANK(Music_TrainerBattle)
 	ld a, MUSIC_TRAINER_BATTLE
@@ -323,7 +278,7 @@ SchoolB1FRocker:
 	callfar BattleTransition
 
 	ld c, 120
-	rst _DelayFrames
+	rst DelayFrames
 	call LoadScreenTilesFromBuffer2
 	call StopAllMusic
 	call GBPalNormal
@@ -335,27 +290,23 @@ SchoolB1FRocker:
 	call PlayMusic
 
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, SchoolB1FRockerDetentionText
 	rst _PrintText
 	SetEvent EVENT_DETENTION_TOGGLER
 	rst TextScriptEnd
 
 SchoolB1FRockerText:
-	text_far _SchoolB1FRocker
-	text_end
+	text_far_end _SchoolB1FRocker
 
 SchoolB1FRockerYesText:
-	text_far _SchoolB1FRockerYes
-	text_end
+	text_far_end _SchoolB1FRockerYes
 
 SchoolB1FRockerNoText:
-	text_far _SchoolB1FRockerNo
-	text_end
+	text_far_end _SchoolB1FRockerNo
 
 SchoolB1FRockerDetentionText:
-	text_far _SchoolB1FDetentionText
-	text_end
+	text_far_end _SchoolB1FDetentionText
 
 
 
@@ -369,12 +320,12 @@ SchoolB1FBrunetteGirl:
 	call SetSpriteFacingLeft
   	call UpdateSprites
   	ld c, 20
-  	rst _DelayFrames
+  	rst DelayFrames
 	ld a, SCHOOLB1F_BRUNETTE_GIRL
 	call SetSpriteFacingUp
   	call UpdateSprites
   	ld c, 20
-  	rst _DelayFrames
+  	rst DelayFrames
   	pop bc
   	dec b
   	jr nz, .loop
@@ -386,14 +337,14 @@ SchoolB1FBrunetteGirl:
   	rst _PrintText
 
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 
 	ld c, BANK(SFX_Safari_Zone_PA)
 	ld a, SFX_SAFARI_ZONE_PA
 	call PlayMusic
 
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, SchoolB1FDetention2Text
 	rst _PrintText
 	ld a, SCHOOLB1F_BRUNETTE_GIRL
@@ -404,42 +355,13 @@ SchoolB1FBrunetteGirl:
 	rst TextScriptEnd
 
 SchoolB1FBrunetteGirlText:
-	text_far _SchoolB1FBrunetteGirl
-	text_end
+	text_far_end _SchoolB1FBrunetteGirl
 
 SchoolB1FDetention2Text:
-	text_far _SchoolB1FDetention2Text
-	text_end
+	text_far_end _SchoolB1FDetention2Text
 
 SchoolB1FNotAgainText:
-	text_far _SchoolB1FNotAgainText
-	text_end
-
-SchoolB1FGameboyKid:
-	text_far _SchoolB1FCornerGameboyKid
-	text_end
-
-; objects in the room that generate text
-
-SchoolB1FBottomLeftNotebook:
-	text_far _SchoolB1FBottomLeftNotebook
-	text_end
-
-SchoolB1FLeftTuteeNotebook:
-	text_far _SchoolB1FLeftTuteeNotebook
-	text_end
-
-SchoolB1FTutorNotebook:
-	text_far _SchoolB1FTutorNotebook
-	text_end
-
-SchoolB1FLeftBlackboard:
-	text_far _SchoolB1FLeftBlackboard
-	text_end
-
-SchoolB1FRightBlackboard:
-	text_far _SchoolB1FRightBlackboard
-	text_end
+	text_far_end _SchoolB1FNotAgainText
 
 SchoolB1FNerdNotebook:
 	text_asm
@@ -464,12 +386,10 @@ SchoolB1FNerdNotebook:
 	ld hl, SchoolB1FNerdNotebookTextPointers
 	ld a, [wCurrentMenuItem]
 	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
 	ld d, $0
 	ld e, a
 	add hl, de
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a
 	rst _PrintText
 	jr .loop
 .done
@@ -478,75 +398,25 @@ SchoolB1FNerdNotebook:
 	rst TextScriptEnd
 
 SchoolB1FNerdNotebookInit:
-	text_far _SchoolB1FNerdTextbook
-	text_end
+	text_far_end _SchoolB1FNerdTextbook
 
 SchoolB1FNerdNotebookRepeat:
-	text_far _SchoolB1FNerdNotebookRepeat
-	text_end
+	text_far_end _SchoolB1FNerdNotebookRepeat
 
 SchoolB1FNerdNotebookTextPointers:
-	dw SchoolB1FNerdNotebookHP
-	dw SchoolB1FNerdNotebookAttack
-	dw SchoolB1FNerdNotebookDefense
-	dw SchoolB1FNerdNotebookSpeed
-	dw SchoolB1FNerdNotebookSpecial
-
 SchoolB1FNerdNotebookHP:
-	text_far _SchoolB1FNerdNotebookHP
-	text_end
-
+	text_far_end _SchoolB1FNerdNotebookHP
 SchoolB1FNerdNotebookAttack:
-	text_far _SchoolB1FNerdNotebookAttack
-	text_end
-
+	text_far_end _SchoolB1FNerdNotebookAttack
 SchoolB1FNerdNotebookDefense:
-	text_far _SchoolB1FNerdNotebookDefense
-	text_end
-
+	text_far_end _SchoolB1FNerdNotebookDefense
 SchoolB1FNerdNotebookSpeed:
-	text_far _SchoolB1FNerdNotebookSpeed
-	text_end
-
+	text_far_end _SchoolB1FNerdNotebookSpeed
 SchoolB1FNerdNotebookSpecial:
-	text_far _SchoolB1FNerdNotebookSpecial
-	text_end
+	text_far_end _SchoolB1FNerdNotebookSpecial
 
 SchoolB1FDone:
-	text_far _VendingMachineText8
-	text_end
-
-SchoolB1FBottomRightNotebook:
-	text_far _SchoolB1FBottomRightNotebook
-	text_end
-
-SchoolB1FBottomCenterNotebook:
-	text_far _SchoolB1FBottomCenterNotebook
-	text_end
-
-SchoolB1FRockerNotebook:
-	text_far _SchoolB1FRockerNotebook
-	text_end
-
-SchoolB1FBrunetteGirlNotebook:
-	text_far _SchoolB1FBrunetteGirlNotebook
-	text_end
-
-SchoolB1FLeftClassroomSign:
-	text_far _SchoolB1FLeftClassroomSign
-	text_end
-
-SchoolB1FRightClassroomSign:
-	text_far _SchoolB1FRightClassroomSign
-	text_end
-
-SchoolB1FRightPoster:
-	text_far _SchoolB1FRightPoster
-	text_end
-
-SchoolB1FLeftPoster:
-	text_far _SchoolB1FLeftPoster
-	text_end
+	text_far_end _VendingMachineText8
 
 SchoolB1FMovedexTest:
 	ld hl, MovedexTestQuestionList
@@ -641,60 +511,40 @@ MovedexTestQuestionList:
 	db -1
 
 SchoolB1FLeftTeacherQuizQuestion1:
-	text_far _SchoolB1FLeftTeacherQuizQuestion1
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizQuestion1
 
 SchoolB1FLeftTeacherQuizQuestion2:
-	text_far _SchoolB1FLeftTeacherQuizQuestion2
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizQuestion2
 
 SchoolB1FLeftTeacherQuizQuickAttack:
-	text_far _SchoolB1FLeftTeacherQuizQuickAttack
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizQuickAttack
 
 SchoolB1FLeftTeacherQuizQuestion3:
-	text_far _SchoolB1FLeftTeacherQuizQuestion3
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizQuestion3
 
 SchoolB1FLeftTeacherQuizQuestion4:
-	text_far _SchoolB1FLeftTeacherQuizQuestion4
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizQuestion4
 
 SchoolB1FLeftTeacherQuizQuestion5:
-	text_far _SchoolB1FLeftTeacherQuizQuestion5
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizQuestion5
 
 SchoolB1FLeftTeacherQuizCorrect:
-	text_far _SchoolB1FLeftTeacherQuizCorrect
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizCorrect
 
 SchoolB1FLeftTeacherQuizIncorrect:
-	text_far _SchoolB1FLeftTeacherQuizWrong
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizWrong
 
 SchoolB1FLeftTeacherQuizFinish:
-	text_far _SchoolB1FLeftTeacherQuizFinish
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizFinish
 
 ReceivedMovedexText:
-	text_far _ReceivedMovedexText
-	sound_get_item_2
-	text_promptbutton
-	text_end
+	text_far_end _ReceivedMovedexText
 
 SchoolB1FLeftTeacherQuizFinalInfo:
-	text_far _SchoolB1FLeftTeacherQuizFinalInfo
-	text_end
-
-
-SchoolB1FLeftTeacherQuizFinalInfoPrompt:
-	text_far _SchoolB1FLeftTeacherQuizFinalInfo
-	text_promptbutton
-	text_end
+	text_far_end _SchoolB1FLeftTeacherQuizFinalInfo
 
 SchoolB1FLeftTeacherEnd:
-	text_far _SchoolB1FLeftTeacherEnd
-	text_end
+	text_far_end _SchoolB1FLeftTeacherEnd
 
 ViridianSchoolHouseB1FBookCases::
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -718,20 +568,16 @@ SchoolB1FBookCaseTextData:
 SchoolB1FLeftBookcaseAText:
 	text_far _SchoolB1FLeftBookcaseA
 	text_far _FlippedToARandomPage
-	text_far _SchoolB1FLeftBookcaseA2
-	text_end
+	text_far_end _SchoolB1FLeftBookcaseA2
 SchoolB1FLeftBookcaseBText:
 	text_far _SchoolB1FLeftBookcaseB
 	text_far _FlippedToARandomPage
-	text_far _SchoolB1FLeftBookcaseB2
-	text_end
+	text_far_end _SchoolB1FLeftBookcaseB2
 SchoolB1FRightBookcaseAText:
 	text_far _SchoolB1FRightBookcaseA
 	text_far _FlippedToARandomPage
-	text_far _SchoolB1FRightBookcaseA2
-	text_end
+	text_far_end _SchoolB1FRightBookcaseA2
 SchoolB1FRightBookcaseBText:
 	text_far _SchoolB1FRightBookcaseB
 	text_far _FlippedToARandomPage
-	text_far _SchoolB1FRightBookcaseB2
-	text_end
+	text_far_end _SchoolB1FRightBookcaseB2

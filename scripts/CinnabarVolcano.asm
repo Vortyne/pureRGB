@@ -498,10 +498,6 @@ CinnabarVolcanoDisplayTextIDEntry:
 	ldh [hTextID], a
 	jp DisplayTextID
 
-FailedDrillFloorText:
-	text_far _FailedDrillFloorText
-	text_end
-
 VolcanoPlayPowerDrillSound:
 	ld de, SFX_Power_Drill
 	call PlayNewSoundChannel8
@@ -520,7 +516,7 @@ GenericShakeScreenX::
 	add d
 	ldh [hSCX], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .shakeLoop
 	ld a, d
@@ -540,7 +536,7 @@ GenericShakeScreenY::
 	add d
 	ldh [hSCY], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .shakeLoop
 	ld a, d
@@ -568,7 +564,7 @@ VolcanoBombableRockFloor1::
 VolcanoBombableRockDone:
 	push hl
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, SFX_Lava_Flows
 	call PlayNewSoundChannel8
 	pop hl
@@ -576,7 +572,7 @@ VolcanoBombableRockDone:
 	lb de, 4, 2
 	call GenericShakeScreenX
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	; reload old amber sprite
 	call ReloadOldAmberSprite
 	; show all 3 rubies if we're just finishing the final floor
@@ -810,11 +806,11 @@ VolcanoBombableRockCommon:
 	ld de, BurningAnimation tile 4
 	call .burningAnimationLoad
 	ld c, 3
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, BurningAnimation
 	call .burningAnimationLoad
 	ld c, 3
-	rst _DelayFrames
+	rst DelayFrames
 	pop hl
 	ret
 .doShatterAnimation
@@ -862,7 +858,7 @@ ShatterAnim:
 	ld de, RockShatterAnimation
 	call .shatterAnimLoad
 	ld c, 8
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, RockShatterAnimation tile 4
 	call .shatterAnimLoad
 	call Delay3
@@ -941,25 +937,25 @@ ResumeVolcanoShaking::
 
 CinnabarVolcano_TextPointers:
 	def_text_pointers
-	dw_const CinnabarVolcanoProspectorText, TEXT_CINNABAR_VOLCANO_PROSPECTOR
-	dw_const CinnabarVolcanoBlaineText, TEXT_CINNABAR_VOLCANO_BLAINE
-	dw_const CinnabarVolcanoAvoidWestSideText, TEXT_CINNABAR_VOLCANO_AVOID_WEST_SIDE
-	dw_const CinnabarVolcanoMoltresText, TEXT_CINNABAR_VOLCANO_MOLTRES
-	dw_const CinnabarVolcanoRuby1Text, TEXT_CINNABAR_VOLCANO_RUBY1
-	dw_const CinnabarVolcanoRuby2Text, TEXT_CINNABAR_VOLCANO_RUBY2
-	dw_const CinnabarVolcanoRuby3Text, TEXT_CINNABAR_VOLCANO_RUBY3
-	dw_const CinnabarVolcanoBombRockText, TEXT_CINNABAR_VOLCANO_BOMB_ROCK
-	dw_const StopChannel8ThenPickUpItemText, TEXT_CINNABAR_VOLCANO_ITEM1
-	dw_const StopChannel8ThenPickUpItemText, TEXT_CINNABAR_VOLCANO_ITEM2
-	dw_const CinnabarVolcanoSurfingRhydonText, TEXT_CINNABAR_VOLCANO_SURFING_RHYDON
-	dw_const CinnabarVolcanoHungryGravelerText, TEXT_CINNABAR_VOLCANO_HUNGRY_GRAVELER
-	dw_const CinnabarVolcanoSickRhydonText, TEXT_CINNABAR_VOLCANO_SICK_RHYDON
-	dw_const CinnabarVolcanoBossMagmarText, TEXT_CINNABAR_VOLCANO_BOSS_MAGMAR
-	dw_const CinnabarVolcanoBombRockDoneText, TEXT_CINNABAR_VOLCANO_BOMB_ROCK_DONE
-	dw_const CinnabarVolcanoBombRockAfterText, TEXT_CINNABAR_VOLCANO_BOMB_ROCK_AFTER
-	dw_const CinnabarVolcanoBossMagmarAfterTextMove, TEXT_CINNABAR_VOLCANO_BOSS_MAGMAR_AFTER
-	dw_const CinnabarVolcanoClearedAllBlockagesText, TEXT_CINNABAR_VOLCANO_CLEARED_ALL_BLOCKAGES
-	dw_const FailedDrillFloorText, TEXT_CINNABAR_VOLCANO_FAILED_DRILLING
+	dba_const CinnabarVolcanoProspectorText, TEXT_CINNABAR_VOLCANO_PROSPECTOR
+	dba_const _VolcanoBlaineJoinUs, TEXT_CINNABAR_VOLCANO_BLAINE
+	dba_const _VolcanoAvoidWestSide, TEXT_CINNABAR_VOLCANO_AVOID_WEST_SIDE
+	dba_const CinnabarVolcanoMoltresText, TEXT_CINNABAR_VOLCANO_MOLTRES
+	dba_const CinnabarVolcanoRuby1Text, TEXT_CINNABAR_VOLCANO_RUBY1
+	dba_const CinnabarVolcanoRuby2Text, TEXT_CINNABAR_VOLCANO_RUBY2
+	dba_const CinnabarVolcanoRuby3Text, TEXT_CINNABAR_VOLCANO_RUBY3
+	dba_const CinnabarVolcanoBombRockText, TEXT_CINNABAR_VOLCANO_BOMB_ROCK
+	dba_const StopChannel8ThenPickUpItemText, TEXT_CINNABAR_VOLCANO_ITEM1
+	dba_const StopChannel8ThenPickUpItemText, TEXT_CINNABAR_VOLCANO_ITEM2
+	dba_const CinnabarVolcanoSurfingRhydonText, TEXT_CINNABAR_VOLCANO_SURFING_RHYDON
+	dba_const CinnabarVolcanoHungryGravelerText, TEXT_CINNABAR_VOLCANO_HUNGRY_GRAVELER
+	dba_const CinnabarVolcanoSickRhydonText, TEXT_CINNABAR_VOLCANO_SICK_RHYDON
+	dba_const CinnabarVolcanoBossMagmarText, TEXT_CINNABAR_VOLCANO_BOSS_MAGMAR
+	dba_const CinnabarVolcanoBombRockDoneText, TEXT_CINNABAR_VOLCANO_BOMB_ROCK_DONE
+	dba_const _CinnabarVolcanoBombRocksTextDone, TEXT_CINNABAR_VOLCANO_BOMB_ROCK_AFTER
+	dba_const CinnabarVolcanoBossMagmarAfterTextMove, TEXT_CINNABAR_VOLCANO_BOSS_MAGMAR_AFTER
+	dba_const CinnabarVolcanoClearedAllBlockagesText, TEXT_CINNABAR_VOLCANO_CLEARED_ALL_BLOCKAGES
+	dba_const _FailedDrillFloorText, TEXT_CINNABAR_VOLCANO_FAILED_DRILLING
 
 CinnabarVolcanoRuby1Text:
 	text_asm
@@ -1006,14 +1002,11 @@ CinnabarVolcanoRubyTextCommon:
 	rst _PrintText
 	rst TextScriptEnd
 .foundARuby
-	text_far _FoundRubyText
-	text_end
+	text_far_end _FoundRubyText
 .twoMoreToGo
-	text_far _RubyTwoMoreToGoText
-	text_end
+	text_far_end _RubyTwoMoreToGoText
 .oneMoreToGo
-	text_far _RubyOneMoreToGoText
-	text_end
+	text_far_end _RubyOneMoreToGoText
 .gotAllOfThemScript
 	text_asm
 	ld hl, .gotAllOfThem
@@ -1022,7 +1015,7 @@ CinnabarVolcanoRubyTextCommon:
 	ld a, SFX_TRADE_MACHINE
 	rst _PlaySound
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, SFX_Drill_PowerUp
 	call PlayNewSoundChannel8
 	call WaitForSoundToFinish
@@ -1032,17 +1025,13 @@ CinnabarVolcanoRubyTextCommon:
 	rst _PrintText
 	rst TextScriptEnd
 .gotAllOfThem
-	text_far _RubyGotAllOfThemText
-	text_end
+	text_far_end _RubyGotAllOfThemText
 .drillPoweredUp
-	text_far _RubyGoodToGo
-	text_end
+	text_far_end _RubyGoodToGo
 .gotRocksalts
-	text_far _GotRocksalts
-	text_end
+	text_far_end _GotRocksalts
 .gotLimestone
-	text_far _GotLimestone
-	text_end
+	text_far_end _GotLimestone
 
 ; z flag is set if all rubies are obtained currently
 CheckHasAllRubies::
@@ -1137,29 +1126,21 @@ CinnabarVolcanoBombRockText:
 	ld a, MELTED_ROCKS
 	jr .success
 .initialText
-	text_far _CinnabarVolcanoBombRocksText
-	text_end
+	text_far_end _CinnabarVolcanoBombRocksText
 .forgetIt
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 .wrongMon
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 .explodeRocksExplosionText
-	text_far _ExplodeRocksExplosionText
-	text_end
+	text_far_end _ExplodeRocksExplosionText
 .explodeRocksSelfdestructText
-	text_far _ExplodeRocksSelfdestructText
-	text_end
+	text_far_end _ExplodeRocksSelfdestructText
 .shatterRocksSkullBashText
-	text_far _ShatteredRocksSkullBashText
-	text_end
+	text_far_end _ShatteredRocksSkullBashText
 .shatteredRocksText
-	text_far _ShatteredRocksText
-	text_end
+	text_far_end _ShatteredRocksText
 .meltedRocksText
-	text_far _MeltedRocksText
-	text_end
+	text_far_end _MeltedRocksText
 
 PlayUnusedFanfareThenTextPrompt:
 	call PlayUnusedFanfare
@@ -1221,14 +1202,11 @@ CinnabarVolcanoSurfingRhydonText:
 	rst _PrintText
 	rst TextScriptEnd
 .itsRhydon
-	text_far _ItsRhydon
-	text_end
+	text_far_end _ItsRhydon
 .getOn
-	text_far _RhydonGetOnBack
-	text_end
+	text_far_end _RhydonGetOnBack
 .gotOn
-	text_far _RhydonGotOnBack
-	text_end
+	text_far_end _RhydonGotOnBack
 
 CinnabarVolcanoBombRockDoneText:
 	text_asm
@@ -1271,15 +1249,12 @@ CinnabarVolcanoBombRockDoneText:
 	call PlayNewSoundChannel8
 	rst TextScriptEnd
 .rocksGone
-	text_far _RocksGoneText
-	text_end
+	text_far_end _RocksGoneText
 .floor3Text
 .floor1Text
-	text_far _WhereRubiesText
-	text_end
+	text_far_end _WhereRubiesText
 .uhoh
-	text_far _UhohVolcano
-	text_end
+	text_far_end _UhohVolcano
 .floor2Text
 	text_asm
 	ld hl, .floor1Text
@@ -1309,8 +1284,7 @@ CinnabarVolcanoBombRockDoneText:
 	call PlayNewSoundChannel8
 	jp ShatterAnim
 .floor2WarpTilesText
-	text_far _CinnabarVolcanoFloor2WarpTilesText
-	text_end
+	text_far_end _CinnabarVolcanoFloor2WarpTilesText
 
 VolcanoBlowWallOpen::
 	call GBFadeOutToWhite
@@ -1328,14 +1302,14 @@ VolcanoBlowWallOpen::
 	call PlayNewSoundChannel8
 	pop bc
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .loop
 	call WaitForSoundToFinish
 	call StopVolcanoShaking
 	call GBFadeInFromWhite
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, TEXT_CINNABAR_VOLCANO_CLEARED_ALL_BLOCKAGES
 	call CinnabarVolcanoDisplayTextIDEntry
 	ld c, TOGGLE_VOLCANO_BLAINE
@@ -1421,14 +1395,11 @@ CinnabarVolcanoHungryGravelerText:
 .noRockSalts
 	rst TextScriptEnd
 .itsGraveler
-	text_far _ItsGraveler
-	text_end
+	text_far_end _ItsGraveler
 .giveRockSalts
-	text_far _GiveGravelerRockSalts
-	text_end
+	text_far_end _GiveGravelerRockSalts
 .munching
-	text_far _GravelerMunching
-	text_end
+	text_far_end _GravelerMunching
 
 CinnabarVolcanoSickRhydonText:
 	text_asm
@@ -1497,23 +1468,17 @@ CinnabarVolcanoSickRhydonText:
 .noLimestone
 	rst TextScriptEnd
 .itsSickRhydon
-	text_far _ItsSickRhydon
-	text_end
+	text_far_end _ItsSickRhydon
 .giveLimestone
-	text_far _GiveRhydonLimestone
-	text_end
+	text_far_end _GiveRhydonLimestone
 .grinded
-	text_far _RhydonGrinded
-	text_end
+	text_far_end _RhydonGrinded
 .antacid
-	text_far _GotAntacidText
-	text_end
+	text_far_end _GotAntacidText
 .gaveAntacid
-	text_far _GaveRhydonAntacid
-	text_end
+	text_far_end _GaveRhydonAntacid
 .resting
-	text_far _RhydonResting
-	text_end
+	text_far_end _RhydonResting
 
 CinnabarVolcanoBossMagmarText:
 	text_asm
@@ -1544,22 +1509,14 @@ CinnabarVolcanoBossMagmarText:
 	rst _PrintText
 	rst TextScriptEnd
 .magmar
-	text_far _MagmarBoss
-	text_end
+	text_far_end _MagmarBoss
 .battleQuestion
-	text_far _MagmarFight
-	text_end
+	text_far_end _MagmarFight
 .letsdothis
-	text_far _LetsDoThis
-	text_end
+	text_far_end _LetsDoThis
 
 CinnabarVolcanoBossMagmarAfterText:
-	text_far _MagmarDefeat
-	text_end
-
-CinnabarVolcanoBombRockAfterText:
-	text_far _CinnabarVolcanoBombRocksTextDone
-	text_end
+	text_far_end _MagmarDefeat
 
 CheckWaitForVolcanoSpriteWalk:
 	CheckEvent EVENT_VOLCANO_SPRITE_MOVING
@@ -1687,7 +1644,7 @@ SlideSpriteUpOrDownCommon:
 	push bc
 	ld a, [wTempStore1]
 	ld c, a
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec b
 	jr nz, .walkLoop
@@ -1871,7 +1828,7 @@ MoltresBattleAnimation:
 	SetEvent EVENT_BATTLING_MOLTRES
 	callfar PlayDefaultTrainerMusic
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	jp HideAnimationSprite
 .doubleBTimes
 	push bc
@@ -2013,7 +1970,7 @@ CinnabarVolcanoProspectorText:
 	ld a, SFX_HEAL_HP
 	rst _PlaySound
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wYCoord]
 	cp 2
 	jr nz, .noFacingChange
@@ -2034,7 +1991,7 @@ CinnabarVolcanoProspectorText:
 	ld a, SFX_HEAL_HP
 	rst _PlaySound
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wYCoord]
 	cp 2
 	ld a, PLAYER_DIR_LEFT
@@ -2094,7 +2051,7 @@ CinnabarVolcanoProspectorText:
 	ld de, vNPCSprites tile $2C
 	callfar FarLoadSmokeTileFourTimes
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	ld c, TOGGLE_VOLCANO_ARCANINE
 	call HideExtraObject
 	ld hl, .goodluck
@@ -2109,12 +2066,12 @@ CinnabarVolcanoProspectorText:
 	call .bothLookUp
 	call UpdateSprites
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, SFX_Lava_Flows
 	call PlayNewSoundChannel8
 	call CinnabarVolcanoReplaceMainRoomLava
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, CINNABAR_VOLCANO_PROSPECTOR
 	call SetSpriteFacingRight
 	ld a, PLAYER_DIR_LEFT
@@ -2148,7 +2105,7 @@ CinnabarVolcanoProspectorText:
 	ld [wSprite01StateData1PictureID], a
 	ld [wMapSpriteOriginalPictureIDs], a ; first sprite's original pic id
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, .gladgotthem
 	rst _PrintText
 	ld a, CINNABAR_VOLCANO_PROSPECTOR
@@ -2177,7 +2134,7 @@ CinnabarVolcanoProspectorText:
 	call SetSpriteFacingDown
 	call UpdateSprites
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, CINNABAR_VOLCANO_BLAINE
 	call SetSpriteFacingUp
 	ld hl, .blainemoltres
@@ -2205,77 +2162,53 @@ CinnabarVolcanoProspectorText:
 	ld [wPlayerMovingDirection], a
 	ret
 .neverMetIntro
-	text_far _CinnabarVolcanoProspectorGreetingNotMetText
-	text_end
+	text_far_end _CinnabarVolcanoProspectorGreetingNotMetText
 .didMeetIntro
-	text_far _CinnabarVolcanoProspectorGreetingMetText
-	text_end
+	text_far_end _CinnabarVolcanoProspectorGreetingMetText
 .helpOut
-	text_far _CinnabarVolcanoProspectorStrongMonsText
-	text_end
+	text_far_end _CinnabarVolcanoProspectorStrongMonsText
 .tryOneOn
-	text_far _CinnabarVolcanoProspectorLavaSuitText
-	text_end
+	text_far_end _CinnabarVolcanoProspectorLavaSuitText
 .lookinGood
-	text_far _CinnabarVolcanoProspectorLetsGo
-	text_end
+	text_far_end _CinnabarVolcanoProspectorLetsGo
 .problem
-	text_far _CinnabarVolcanoProspectorHeresProblem
-	text_end
+	text_far_end _CinnabarVolcanoProspectorHeresProblem
 .lavaconefull
-	text_far _CinnabarVolcanoProspectorLavaExplain
-	text_end
+	text_far_end _CinnabarVolcanoProspectorLavaExplain
 .blowrocks
-	text_far _CinnabarVolcanoProspectorBlowRocks
-	text_end
+	text_far_end _CinnabarVolcanoProspectorBlowRocks
 .digDown
-	text_far _CinnabarVolcanoGiveDrill
-	text_end
+	text_far_end _CinnabarVolcanoGiveDrill
 .gotDrill
-	text_far _CinnabarVolcanoGotDrill
-	text_end
+	text_far_end _CinnabarVolcanoGotDrill
 .drillInfo
-	text_far _CinnabarVolcanoDrill
-	text_end
+	text_far_end _CinnabarVolcanoDrill
 .friend
-	text_far _CinnabarVolcanoFriend
-	text_end
+	text_far_end _CinnabarVolcanoFriend
 .youeast
-	text_far _CinnabarVolcanoYouClearEast
-	text_end
+	text_far_end _CinnabarVolcanoYouClearEast
 .goodluck
-	text_far _GenericGoodLuckText
-	text_end
+	text_far_end _GenericGoodLuckText
 .whatdidyoudo
-	text_far _VolcanoProspectorDone
-	text_end
+	text_far_end _VolcanoProspectorDone
 .letsgetout
-	text_far _VolcanoProspectorDone2
-	text_end
+	text_far_end _VolcanoProspectorDone2
 .phew
-	text_far _VolcanoProspectorPhew
-	text_end
+	text_far_end _VolcanoProspectorPhew
 .gladgotthem
-	text_far _VolcanoProspectorRightBlaine
-	text_end
+	text_far_end _VolcanoProspectorRightBlaine
 .blainemoltres
-	text_far _VolcanoBlaineMessage1
-	text_end
+	text_far_end _VolcanoBlaineMessage1
 .blainelastmessagenotdonegym
-	text_far _VolcanoBlaineMessageNotDone
-	text_end
+	text_far_end _VolcanoBlaineMessageNotDone
 .blainelastmessagedonegym
-	text_far _VolcanoBlaineMessageGymDone
-	text_end
+	text_far_end _VolcanoBlaineMessageGymDone
 .prospecting
-	text_far _VolcanoProspectorAfterMessage
-	text_end
+	text_far_end _VolcanoProspectorAfterMessage
 .moreInfo
-	text_far _VolcanoNeedSomeInfo
-	text_end
+	text_far_end _VolcanoNeedSomeInfo
 .getToIt2
-	text_far _VolcanoGetToIt2
-	text_end
+	text_far_end _VolcanoGetToIt2
 .getToIt
 	text_far _VolcanoGetToIt
 	text_asm
@@ -2437,22 +2370,13 @@ MakeBlaineAndProspectorWearLavaSuit:
 CinnabarVolcanoClearedAllBlockagesText::
 	text_far _VolcanoBlockagesGone
 	sound_get_item_2
-	text_far _VolcanoGoBackMainFloor
-	text_end
-
-CinnabarVolcanoBlaineText:
-	text_far _VolcanoBlaineJoinUs
-	text_end
+	text_far_end _VolcanoGoBackMainFloor
 
 CinnabarVolcanoReplaceMainRoomLava:
 	ld a, $59 ; walkable block
 	ld [wNewTileBlockID], a
 	ld de, VolcanoMainRoomTileBlockReplacements
 	jpfar ReplaceTileBlockLineVerticalWithOneBlock
-
-CinnabarVolcanoAvoidWestSideText:
-	text_far _VolcanoAvoidWestSide
-	text_end
 
 StopChannel8ThenPickUpItemText:
 	text_asm

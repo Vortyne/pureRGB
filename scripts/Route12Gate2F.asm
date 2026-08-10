@@ -3,9 +3,9 @@ Route12Gate2F_Script:
 
 Route12Gate2F_TextPointers:
 	def_text_pointers
-	dw_const Route12Gate2FBrunetteGirlText,    TEXT_ROUTE12GATE2F_BRUNETTE_GIRL
-	dw_const Route12Gate2FLeftBinocularsText,  TEXT_ROUTE12GATE2F_LEFT_BINOCULARS
-	dw_const Route12Gate2FRightBinocularsText, TEXT_ROUTE12GATE2F_RIGHT_BINOCULARS
+	dba_const Route12Gate2FBrunetteGirlText,    TEXT_ROUTE12GATE2F_BRUNETTE_GIRL
+	dba_const Route12Gate2FLeftBinocularsText,  TEXT_ROUTE12GATE2F_LEFT_BINOCULARS
+	dba_const Route12Gate2FRightBinocularsText, TEXT_ROUTE12GATE2F_RIGHT_BINOCULARS
 
 Route12Gate2FBrunetteGirlText:
 	text_asm
@@ -37,8 +37,7 @@ Route12Gate2FBrunetteGirlText:
 	predef_jump LearnsetTrainerScriptMain
 
 .YouCanHaveThisText:
-	text_far _Route12Gate2FBrunetteGirlYouCanHaveThisText
-	text_end
+	text_far_end _Route12Gate2FBrunetteGirlYouCanHaveThisText
 
 .ReceivedTM39Text:
 	text_far _Route12Gate2FBrunetteGirlReceivedTM39Text
@@ -46,12 +45,10 @@ Route12Gate2FBrunetteGirlText:
 	text_end
 
 .TM39ExplanationText:
-	text_far _Route12Gate2FBrunetteGirlTM39ExplanationText
-	text_end
+	text_far_end _Route12Gate2FBrunetteGirlTM39ExplanationText
 
 .TM39NoRoomText:
-	text_far _Route12Gate2FBrunetteGirlTM39NoRoomText
-	text_end
+	text_far_end _Route12Gate2FBrunetteGirlTM39NoRoomText
 
 .mourningGirl
 	db "SAD GIRL@"
@@ -63,8 +60,7 @@ Route12Gate2FLeftBinocularsText:
 
 .Text:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route12Gate2FLeftBinocularsText
-	text_end
+	text_far_end _Route12Gate2FLeftBinocularsText
 
 Route12Gate2FRightBinocularsText:
 	text_asm
@@ -73,8 +69,7 @@ Route12Gate2FRightBinocularsText:
 
 .Text:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route12Gate2FRightBinocularsText
-	text_end
+	text_far_end _Route12Gate2FRightBinocularsText
 
 GateUpstairsScript_PrintIfFacingUp:
 	ld a, [wSpritePlayerStateData1FacingDirection]

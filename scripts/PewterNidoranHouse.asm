@@ -3,10 +3,10 @@ PewterNidoranHouse_Script:
 
 PewterNidoranHouse_TextPointers:
 	def_text_pointers
-	dw_const PewterNidoranHouseNidoranText,          TEXT_PEWTERNIDORANHOUSE_NIDORAN
-	dw_const PewterNidoranHouseLittleBoyText,        TEXT_PEWTERNIDORANHOUSE_LITTLE_BOY
-	dw_const PewterNidoranHouseMiddleAgedManText,    TEXT_PEWTERNIDORANHOUSE_MIDDLE_AGED_MAN
-	dw_const PewterNidoranHouseMiddleAgedWomanText,  TEXT_PEWTERNIDORANHOUSE_MIDDLE_AGED_WOMAN
+	dba_const PewterNidoranHouseNidoranText,          TEXT_PEWTERNIDORANHOUSE_NIDORAN
+	dba_const PewterNidoranHouseLittleBoyText,        TEXT_PEWTERNIDORANHOUSE_LITTLE_BOY
+	dba_const _PewterNidoranHouseMiddleAgedManText,    TEXT_PEWTERNIDORANHOUSE_MIDDLE_AGED_MAN
+	dba_const PewterNidoranHouseMiddleAgedWomanText,  TEXT_PEWTERNIDORANHOUSE_MIDDLE_AGED_WOMAN
 
 PewterNidoranHouseNidoranText:
 	text_far _PewterNidoranHouseNidoranText
@@ -39,13 +39,7 @@ PewterNidoranHouseMiddleAgedWomanText:
 	jr PewterNidoranHouseNidoranText.done
 
 .Text
-	text_far _PewterHouse1Text4
-	text_end
+	text_far_end _PewterHouse1Text4
 
 .TextColor::
-	text_far _PewterHouse1Text4Color
-	text_end
-
-PewterNidoranHouseMiddleAgedManText:
-	text_far _PewterNidoranHouseMiddleAgedManText
-	text_end
+	text_far_end _PewterHouse1Text4Color

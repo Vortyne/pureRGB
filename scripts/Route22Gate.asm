@@ -1,8 +1,7 @@
 Route22Gate_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, Route22Gate_ScriptPointers
-	ld a, [wRoute22GateCurScript]
-	call CallFunctionInTable
+	ld de, wRoute22GateCurScript
+	call CallMapScriptInTable
 	ld a, [wYCoord]
 	cp 4
 	ld a, ROUTE_23
@@ -54,7 +53,7 @@ Route22GatePlayerMovingScript:
 
 Route22Gate_TextPointers:
 	def_text_pointers
-	dw_const Route22GateGuardText, TEXT_ROUTE22GATE_GUARD
+	dba_const Route22GateGuardText, TEXT_ROUTE22GATE_GUARD
 
 Route22GateGuardText:
 	text_asm
@@ -86,10 +85,7 @@ Route22GateGuardNoBoulderbadgeText:
 	ret
 
 Route22GateGuardICantLetYouPassText:
-	text_far _Route22GateGuardICantLetYouPassText
-	text_end
+	text_far_end _Route22GateGuardICantLetYouPassText
 
 Route22GateGuardGoRightAheadText:
-	text_far _Route22GateGuardGoRightAheadText
-	sound_get_item_1
-	text_end
+	text_far_end _Route22GateGuardGoRightAheadText

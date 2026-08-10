@@ -168,7 +168,7 @@ DrawFrameBlock:
 	jr z, .advanceFrameBlockDestAddr ; skip delay and don't clean OAM buffer
 	ld a, [wSubAnimFrameDelay]
 	ld c, a
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wFBMode]
 	cp FRAMEBLOCKMODE_03
 	jr z, .advanceFrameBlockDestAddr ; skip cleaning OAM buffer
@@ -480,7 +480,7 @@ MoveAnimationContent:
 	jr .next
 .animationsDisabled
 	ld c, 10 ; PureRGBnote: CHANGED: less delay when animations are turned off to speed up gameplay.
-	rst _DelayFrames 
+	rst DelayFrames 
 .next
 	vc_hook_red Stop_reducing_move_anim_flashing
 	vc_hook_blue Stop_reducing_move_anim_flashing_Rock_Slide_Dream_Eater
@@ -586,7 +586,7 @@ AnimationShakeScreenHorizontallySlow:
 	inc a
 	ldh [rWX], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .loop1
 	pop bc
@@ -595,7 +595,7 @@ AnimationShakeScreenHorizontallySlow:
 	dec a
 	ldh [rWX], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .loop2
 	pop bc
@@ -827,7 +827,7 @@ DoBallShakeSpecialEffects:
 	ld a, SFX_TINK
 	rst _PlaySound
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 .skipPlayingSound
 	ld a, [wSubAnimCounter]
 	dec a
@@ -1110,7 +1110,7 @@ TradeJumpPokeball:
 .skipPlayingSound
 	push bc
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	ldh a, [hSCX] ; background scroll X
 	sub 8 ; scroll to the left
@@ -1139,14 +1139,14 @@ TailWhipAnimationUnused:
 	ld a, 1
 	ld [wSubAnimCounter], a
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 INCLUDE "data/battle_anims/special_effect_pointers.asm"
 
 AnimationDelay10:
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 ; calls a function with the turn flipped from player to enemy or vice versa
@@ -1208,13 +1208,13 @@ AnimationFlashScreenLongLessFlashing::
 	push af
 	call AnimationDarkenMonPalette
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	call AnimationLightenMonPalette
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	call AnimationResetScreenPalette
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	dec a
 	jr nz, .loop2
@@ -1298,12 +1298,12 @@ AnimationFlashScreenCommon:
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	xor a ; white out background
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color facilitation
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 .restore
 	pop af
 	ldh [rBGP], a ; restore initial palette
@@ -1315,7 +1315,7 @@ AnimationFlashScreenCommonLessDarkFlashing:
 	call z, AnimationDarkenMonPalette ; play a less intense sprite flicker instead of full screen flash if in default palettes 
 	; otherwise it will not flash
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	jr AnimationFlashScreenCommon.restore
 
 AnimationFlashScreenCommonLessLightFlashing:
@@ -1324,7 +1324,7 @@ AnimationFlashScreenCommonLessLightFlashing:
 	call z, AnimationLightenMonPalette ; play a less intense sprite flicker instead of full screen flash if in default palettes
 	; otherwise it will not flash
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	jr AnimationFlashScreenCommon.restore
 
 AnimationDarkScreenPalette:
@@ -1586,7 +1586,7 @@ _AnimationSlideMonUp:
 	jr nz, .fillBottomRowLoop
 
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	pop hl
 	pop de
@@ -1743,10 +1743,10 @@ BlinkMonCommon::
 	push bc
 	call AnimationHideMonPic
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	call AnimationShowMonPic
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec c
 	jr nz, .loop
@@ -1800,7 +1800,7 @@ AnimationEnemyShakeBackAndForth:
 	call CallWithTurnFlipped
 	call AnimationShowEnemyMonPic
 	ld c, 8
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec b
 	jr nz, .loop
@@ -2010,7 +2010,7 @@ AnimationSpiralBallsInward:
 	ld a, SFX_BATTLE_1E
 	rst _PlaySound
 .frameDelay
-	rst _DelayFrames
+	rst DelayFrames
 	pop hl
 	inc hl
 	inc hl
@@ -2170,7 +2170,7 @@ _AnimationShootBallsUpward:
 	add hl, de ; next OAM entry
 	dec b
 	jr nz, .innerLoop
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	ld a, [wNumShootingBalls]
 	and a
@@ -2278,7 +2278,7 @@ AnimationSlideMonDownAndHide:
 	call GetMonSpriteTileMapPointerFromRowCount
 	call CopyPicTiles
 	ld c, 15
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	inc a
 	pop bc
@@ -2286,7 +2286,7 @@ AnimationSlideMonDownAndHide:
 	jr nz, .loop
 	call AnimationHideMonPic
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	jp AnimationShowMonPic
 
 _AnimationSlideMonOff:
@@ -2326,7 +2326,7 @@ _AnimationSlideMonOff:
 	jr nz, .rowLoop
 	ld a, [wSlideMonDelay]
 	ld c, a
-	rst _DelayFrames
+	rst DelayFrames
 	pop hl
 	dec d
 	dec e
@@ -3146,12 +3146,12 @@ ShakeEnemyHUD_ShakeBG:
 	add d
 	ldh [hSCX], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wTempSCX]
 	sub d
 	ldh [hSCX], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec e
 	jr nz, .loop
 	ld a, [wTempSCX]
@@ -3356,11 +3356,11 @@ AnimationCrosshairScansOpponent:
 	ld de, wShadowOAMSprite05Attributes
 	call .functionForEachCrosshairTile
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	call AnimationCleanOAM
 	call AnimationLightScreenPalette
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, $01
 	ld [wFrequencyModifier], a
 	ld a, $80

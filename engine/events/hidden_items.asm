@@ -97,16 +97,13 @@ FoundHiddenItemText::
 	rst TextScriptEnd
 
 FoundHiddenItemSingleText::
-	text_far _FoundHiddenItemText
-	text_end
+	text_far_end _FoundHiddenItemText
 
 FoundHiddenItemMultiText::
-	text_far _FoundHiddenItemMultiText
-	text_end
+	text_far_end _FoundHiddenItemMultiText
 
 HiddenItemBagFullText::
-	text_far _HiddenItemBagFullText
-	text_end
+	text_far_end _HiddenItemBagFullText
 
 ;;;;;;;;;;
 

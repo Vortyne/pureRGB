@@ -7,7 +7,7 @@ GymStatues:
 	cp SPRITE_FACING_UP
 	ret nz
 	tx_pre_id GymStatueTextScript
-	jp PrintPredefTextID
+	jp PrintPredefText
 
 INCLUDE "data/maps/badge_maps.asm"
 
@@ -33,12 +33,10 @@ GymStatueTextScript::
 	rst TextScriptEnd
 .text1
 	text_far _GymStatueText
-	text_far _GymStatueRival
-	text_end
+	text_far_end _GymStatueRival
 .text2
 	text_far _GymStatueText
-	text_far _GymStatueRivalPlayer
-	text_end
+	text_far_end _GymStatueRivalPlayer
 
 ; PureRGBnote: CHANGED: Previously gym statue name data was loaded by the respective gym's map script into wram, 
 ; but it was wasteful because it's not even hard to load without even using wram values right when you read the statue.
@@ -94,34 +92,25 @@ GymOutsideSignTextScript::
 	rst _PrintText
 	rst TextScriptEnd
 .genericGymSignText
-	text_far _GymSignGenericText
-	text_promptbutton
-	text_end
+	text_far_end _GymSignGenericText
 
 PewterGymOutsideSign::
-	text_far _PewterCityGymSignText
-	text_end
+	text_far_end _PewterCityGymSignText
 
 CeruleanGymOutsideSign::
-	text_far _CeruleanCityGymSign
-	text_end
+	text_far_end _CeruleanCityGymSign
 
 VermilionGymOutsideSign::
-	text_far _VermilionCityGymSignText
-	text_end
+	text_far_end _VermilionCityGymSignText
 
 CeladonGymOutsideSign::
-	text_far _CeladonCityGymSignText
-	text_end
+	text_far_end _CeladonCityGymSignText
 	
 FuchsiaGymOutsideSign::
-	text_far _FuchsiaCityGymSignText
-	text_end
+	text_far_end _FuchsiaCityGymSignText
 
 SaffronGymOutsideSign::
-	text_far _SaffronCityGymSignText
-	text_end
+	text_far_end _SaffronCityGymSignText
 
 CinnabarGymOutsideSign::
-	text_far _CinnabarIslandGymSignText
-	text_end
+	text_far_end _CinnabarIslandGymSignText

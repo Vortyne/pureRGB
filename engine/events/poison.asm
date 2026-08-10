@@ -116,7 +116,7 @@ ChangeBGPalColor0_4Frames:
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color code from pokemon yellow
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	ldh a, [rBGP]
 	and %11111100
 	ldh [rBGP], a

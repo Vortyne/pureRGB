@@ -27,14 +27,12 @@ PrintCardKeyText:
 	jr nz, .continue
 	; no card key
 	tx_pre_id CardKeyFailText
-	ldh [hTextID], a
-	jp PrintPredefTextID
+	jp PrintPredefText
 .continue
 	call GetCoordsInFrontOfPlayer
 	push de
 	tx_pre_id CardKeySuccessText
-	ldh [hTextID], a
-	call PrintPredefTextID
+	call PrintPredefText
 	pop de
 	srl d
 	ld b, d
@@ -65,8 +63,7 @@ PrintCardKeyText:
 	ld [wItemQuantity], a
 	call RemoveItemFromInventory
 	tx_pre_id CardKeyDoneText
-	ldh [hTextID], a
-	jp PrintPredefTextID
+	jp PrintPredefText
 
 ; PureRGBnote: ADDED: text that displays when the card key will be consumed.
 CheckAllCardKeyEvents::
@@ -104,18 +101,15 @@ CheckAllCardKeyEvents::
 INCLUDE "data/events/card_key_maps.asm"
 
 CardKeyDoneText::
-	text_far _CardKeyDoneText
-	text_end
+	text_far_end _CardKeyDoneText
 
 CardKeySuccessText::
 	text_far _CardKeySuccessText1
 	sound_get_item_1
-	text_far _CardKeySuccessText2
-	text_end
+	text_far_end _CardKeySuccessText2
 
 CardKeyFailText::
-	text_far _CardKeyFailText
-	text_end
+	text_far_end _CardKeyFailText
 
 ; d = Y
 ; e = X

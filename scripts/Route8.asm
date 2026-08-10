@@ -1,12 +1,9 @@
 Route8_Script:
-	call EnableAutoTextBoxDrawing
 	call Route8CheckHideCutTrees
 	ld hl, Route8TrainerHeaders
 	ld de, Route8_ScriptPointers
-	ld a, [wRoute8CurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wRoute8CurScript], a
-	ret
+	ld bc, wRoute8CurScript
+	jp ExecuteCustomMapScriptInTable
 
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 Route8CheckHideCutTrees:
@@ -60,40 +57,40 @@ Route8_ScriptPointers:
 
 Route8_TextPointers:
 	def_text_pointers
-	dw_const Route8SuperNerd1Text,      TEXT_ROUTE8_SUPER_NERD1
-	dw_const Route8Gambler1Text,        TEXT_ROUTE8_GAMBLER1
-	dw_const Route8SuperNerd2Text,      TEXT_ROUTE8_SUPER_NERD2
-	dw_const Route8CooltrainerF1Text,   TEXT_ROUTE8_COOLTRAINER_F1
-	dw_const Route8SuperNerd3Text,      TEXT_ROUTE8_SUPER_NERD3
-	dw_const Route8CooltrainerF2Text,   TEXT_ROUTE8_COOLTRAINER_F2
-	dw_const Route8CooltrainerF3Text,   TEXT_ROUTE8_COOLTRAINER_F3
-	dw_const Route8Gambler2Text,        TEXT_ROUTE8_GAMBLER2
-	dw_const Route8CooltrainerF4Text,   TEXT_ROUTE8_COOLTRAINER_F4
-	dw_const Route8JolteonText,         TEXT_ROUTE8_JOLTEON 
-	dw_const PickUp5ItemText,           TEXT_ROUTE8_ITEM1 ; PureRGBnote: ADDED: new item on this route.
-	dw_const Route8UndergroundSignText, TEXT_ROUTE8_UNDERGROUND_SIGN
-	dw_const Route8JolteonRightText,    TEXT_ROUTE8_JOLTEON_RIGHT
+	dba_const Route8SuperNerd1Text,      TEXT_ROUTE8_SUPER_NERD1
+	dba_const Route8Gambler1Text,        TEXT_ROUTE8_GAMBLER1
+	dba_const Route8SuperNerd2Text,      TEXT_ROUTE8_SUPER_NERD2
+	dba_const Route8CooltrainerF1Text,   TEXT_ROUTE8_COOLTRAINER_F1
+	dba_const Route8SuperNerd3Text,      TEXT_ROUTE8_SUPER_NERD3
+	dba_const Route8CooltrainerF2Text,   TEXT_ROUTE8_COOLTRAINER_F2
+	dba_const Route8CooltrainerF3Text,   TEXT_ROUTE8_COOLTRAINER_F3
+	dba_const Route8Gambler2Text,        TEXT_ROUTE8_GAMBLER2
+	dba_const Route8CooltrainerF4Text,   TEXT_ROUTE8_COOLTRAINER_F4
+	dba_const _Route8JolteonText,         TEXT_ROUTE8_JOLTEON 
+	dba_const PickUp5ItemText,           TEXT_ROUTE8_ITEM1 ; PureRGBnote: ADDED: new item on this route.
+	dba_const _Route8UndergroundSignText, TEXT_ROUTE8_UNDERGROUND_SIGN
+	dba_const _Route8JolteonCameraAngleText,    TEXT_ROUTE8_JOLTEON_RIGHT
 
 Route8TrainerHeaders:
 	def_trainers
 Route8TrainerHeader0:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_0, 4, Route8SuperNerd1BattleText, Route8SuperNerd1EndBattleText, Route8SuperNerd1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_0, 4, _Route8SuperNerd1BattleText, _Route8SuperNerd1EndBattleText, _Route8SuperNerd1AfterBattleText
 Route8TrainerHeader1:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_1, 4, Route8Gambler1BattleText, Route8Gambler1EndBattleText, Route8Gambler1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_1, 4, _Route8Gambler1BattleText, _Route8Gambler1EndBattleText, _Route8Gambler1AfterBattleText
 Route8TrainerHeader2:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_2, 4, Route8SuperNerd2BattleText, Route8SuperNerd2EndBattleText, Route8SuperNerd2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_2, 4, _Route8SuperNerd2BattleText, _Route8SuperNerd2EndBattleText, Route8SuperNerd2AfterBattleText 
 Route8TrainerHeader3:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_3, 2, Route8CooltrainerF1BattleText, Route8CooltrainerF1EndBattleText, Route8CooltrainerF1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_3, 2, _Route8CooltrainerF1BattleText, _Route8CooltrainerF1EndBattleText, Route8CooltrainerF1AfterBattleText 
 Route8TrainerHeader4:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_4, 3, Route8SuperNerd3BattleText, Route8SuperNerd3EndBattleText, Route8SuperNerd3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_4, 3, _Route8SuperNerd3BattleText, _Route8SuperNerd3EndBattleText, _Route8SuperNerd3AfterBattleText
 Route8TrainerHeader5:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_5, 3, Route8CooltrainerF2BattleText, Route8CooltrainerF2EndBattleText, Route8CooltrainerF2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_5, 3, _Route8CooltrainerF2BattleText, _Route8CooltrainerF2EndBattleText, Route8CooltrainerF2AfterBattleText 
 Route8TrainerHeader6:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_6, 2, Route8CooltrainerF3BattleText, Route8CooltrainerF3EndBattleText, Route8CooltrainerF3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_6, 2, _Route8CooltrainerF3BattleText, _Route8CooltrainerF3EndBattleText, _Route8CooltrainerF3AfterBattleText
 Route8TrainerHeader7:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_7, 2, Route8Gambler2BattleText, Route8Gambler2EndBattleText, Route8Gambler2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_7, 2, _Route8Gambler2BattleText, _Route8Gambler2EndBattleText, _Route8Gambler2AfterBattleText
 Route8TrainerHeader8:
-	trainer EVENT_BEAT_ROUTE_8_TRAINER_8, 4, Route8CooltrainerF4BattleText, Route8CooltrainerF4EndBattleText, Route8CooltrainerF4AfterBattleText
+	trainer EVENT_BEAT_ROUTE_8_TRAINER_8, 4, _Route8CooltrainerF4BattleText, _Route8CooltrainerF4EndBattleText, Route8CooltrainerF4AfterBattleText 
 	db -1 ; end
 
 Route8SuperNerd1Text:
@@ -153,110 +150,6 @@ Route8CooltrainerF4AfterBattleText:
 	; fall through
 Route8LearnsetScript:
 	predef_jump LearnsetTrainerScript
-
-Route8SuperNerd1BattleText:
-	text_far _Route8SuperNerd1BattleText
-	text_end
-
-Route8SuperNerd1EndBattleText:
-	text_far _Route8SuperNerd1EndBattleText
-	text_end
-
-Route8SuperNerd1AfterBattleText:
-	text_far _Route8SuperNerd1AfterBattleText
-	text_end
-
-Route8Gambler1BattleText:
-	text_far _Route8Gambler1BattleText
-	text_end
-
-Route8Gambler1EndBattleText:
-	text_far _Route8Gambler1EndBattleText
-	text_end
-
-Route8Gambler1AfterBattleText:
-	text_far _Route8Gambler1AfterBattleText
-	text_end
-
-Route8SuperNerd2BattleText:
-	text_far _Route8SuperNerd2BattleText
-	text_end
-
-Route8SuperNerd2EndBattleText:
-	text_far _Route8SuperNerd2EndBattleText
-	text_end
-
-Route8CooltrainerF1BattleText:
-	text_far _Route8CooltrainerF1BattleText
-	text_end
-
-Route8CooltrainerF1EndBattleText:
-	text_far _Route8CooltrainerF1EndBattleText
-	text_end
-
-Route8SuperNerd3BattleText:
-	text_far _Route8SuperNerd3BattleText
-	text_end
-
-Route8SuperNerd3EndBattleText:
-	text_far _Route8SuperNerd3EndBattleText
-	text_end
-
-Route8SuperNerd3AfterBattleText:
-	text_far _Route8SuperNerd3AfterBattleText
-	text_end
-
-Route8CooltrainerF2BattleText:
-	text_far _Route8CooltrainerF2BattleText
-	text_end
-
-Route8CooltrainerF2EndBattleText:
-	text_far _Route8CooltrainerF2EndBattleText
-	text_end
-
-Route8CooltrainerF3BattleText:
-	text_far _Route8CooltrainerF3BattleText
-	text_end
-
-Route8CooltrainerF3EndBattleText:
-	text_far _Route8CooltrainerF3EndBattleText
-	text_end
-
-Route8CooltrainerF3AfterBattleText:
-	text_far _Route8CooltrainerF3AfterBattleText
-	text_end
-
-Route8Gambler2BattleText:
-	text_far _Route8Gambler2BattleText
-	text_end
-
-Route8Gambler2EndBattleText:
-	text_far _Route8Gambler2EndBattleText
-	text_end
-
-Route8Gambler2AfterBattleText:
-	text_far _Route8Gambler2AfterBattleText
-	text_end
-
-Route8CooltrainerF4BattleText:
-	text_far _Route8CooltrainerF4BattleText
-	text_end
-
-Route8CooltrainerF4EndBattleText:
-	text_far _Route8CooltrainerF4EndBattleText
-	text_end
-
-Route8UndergroundSignText:
-	text_far _Route8UndergroundSignText
-	text_end
-
-Route8JolteonText:
-	text_far _Route8JolteonText
-	text_end
-
-Route8JolteonRightText:
-	text_far _Route8JolteonCameraAngleText
-	text_end
 
 JolteonRightSide::
 	CheckEvent FLAG_BALL_DESIGNER_TURNED_OFF

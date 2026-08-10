@@ -44,7 +44,7 @@ EvolveMon:
 	ld a, MUSIC_EVOLUTION
 	call PlayMusic
 	ld c, 80
-	rst _DelayFrames
+	rst DelayFrames
 	ld e, $FF ; set PAL_BLACK instead of mon palette
 	call EvolutionSetWholeScreenPalette
 	lb bc, $1, $10

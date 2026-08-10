@@ -5,13 +5,8 @@ DisplayTextID::
 	ldh a, [hLoadedROMBank]
 	push af
 	farcall DisplayTextIDInit ; initialization
-	ld hl, wTextPredefFlag
-	bit BIT_TEXT_PREDEF, [hl]
-	res BIT_TEXT_PREDEF, [hl]
-	jr nz, .skipSwitchToMapBank
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
-.skipSwitchToMapBank
 	ld a, 30 ; half a second
 	ldh [hFrameCounter], a ; used as joypad poll timer
 	ld hl, wCurMapTextPtr
@@ -63,13 +58,21 @@ DisplayTextID::
 ; look up the address of the text in the map's text entries
 	dec a
 	ld e, a
-	sla e
 	add hl, de
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a ; hl = address of the text
-	ld a, [hl] ; a = first byte of text
-
+	add hl, de
+	add hl, de
+	ld a, [hli] ; a = first byte text pointer table for the current entry (now contains bank)
+	ld b, a
+	hl_deref ; get the text script from the text pointer in the current map's table
+	dec b
+	inc b
+	jr z, .textCheckOkay ; home bank is okay for generic npc text scripts
+	ldh a, [hMapROMBank]
+	cp b
+	jr nz, .continue2 ; if the bank is not the map bank, assume it will never be a generic NPC text script
+	; map bank is okay for generic npc text scripts
+.textCheckOkay
+	ld a, [hl]
 ; check first byte of text for special cases
 	sub FIRST_GENERIC_NPC_TEXT_SCRIPT
 	jr c, .continue2
@@ -85,6 +88,8 @@ DisplayTextID::
 	push de
 	ret ; ret to de (generic script)
 .continue2
+	ld a, b
+	call SetCurBank
 	call PrintText_NoCreatingTextBox
 AfterDisplayingTextID::
 	ld a, [wDoNotWaitForButtonPressAfterDisplayingText]
@@ -116,6 +121,13 @@ CloseTextDisplay::
 DisplaySafariGameOverText:: ; TODO: combine with other safari one?
 	callfar PrintSafariGameOverText
 	jr AfterDisplayingTextID2
+
+DisplayPredefText::
+	callfar GetPredefText
+	ld a, d
+	call SetCurBank
+	rst _PrintText
+	jr AfterDisplayingTextID
 
 DisplayPokemonFaintedText::
 	ld hl, PokemonFaintedText
@@ -186,11 +198,11 @@ GenericTextScriptJumpTable:
 	dw DisplayPlayerBlackedOutText ; TEXT_BLACKED_OUT
 	dw DisplayRepelWoreOffText ; TEXT_REPEL_WORE_OFF
 	dw DisplaySafariGameOverText ; TEXT_SAFARI_GAME_OVER
+	dw DisplayPredefText ; TEXT_PREDEF
 
 GenericTextScriptJumpTable2:
 	dw TextScript_Trainer ; TX_SCRIPT_TRAINER
-	dw TextScript_CableClubNPC ; TX_SCRIPT_CABLE_CLUB_RECEPTIONIST 
-	dw TextScript_PokemonCenterPC ; TX_SCRIPT_POKECENTER_PC
+	dw TextScript_CableClubNPC ; TX_SCRIPT_CABLE_CLUB_RECEPTIONIST
 	dw DisplayPokemartDialogue ; TX_SCRIPT_MART 
 	dw DisplayPokemonCenterDialogue ; TX_SCRIPT_POKECENTER_NURSE    
 
@@ -250,3 +262,9 @@ EnableTextDelay::
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	ret
+
+PrintPredefText::
+	ld [wTextPredefID], a
+	ld a, TEXT_PREDEF
+	ldh [hTextID], a
+	jp DisplayTextID

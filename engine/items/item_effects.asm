@@ -459,7 +459,7 @@ ItemUseBall:
 
 .skipShakeCalculations
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 
 	; Do the animation.
 	call MapBallToAnimation ; PureRGBnote: CHANGED: choose which toss animation to use before entering animation code
@@ -644,24 +644,19 @@ ItemUseBall:
 ItemUseBallText00:
 ;"It dodged the thrown ball!"
 ;"This pokemon can't be caught"
-	text_far _ItemUseBallText00
-	text_end
+	text_far_end _ItemUseBallText00
 ItemUseBallText01:
 ;"You missed the pokemon!"
-	text_far _ItemUseBallText01
-	text_end
+	text_far_end _ItemUseBallText01
 ItemUseBallText02:
 ;"Darn! The pokemon broke free!"
-	text_far _ItemUseBallText02
-	text_end
+	text_far_end _ItemUseBallText02
 ItemUseBallText03:
 ;"Aww! It appeared to be caught!"
-	text_far _ItemUseBallText03
-	text_end
+	text_far_end _ItemUseBallText03
 ItemUseBallText04:
 ;"Shoot! It was so close too!"
-	text_far _ItemUseBallText04
-	text_end
+	text_far_end _ItemUseBallText04
 ItemUseBallText05:
 ;"All right! {MonName} was caught!"
 ;play sound
@@ -671,28 +666,23 @@ ItemUseBallText05:
 	text_end
 ItemUseBallText07:
 ;"X was transferred to Bill's PC"
-	text_far _ItemUseBallText07
-	text_end
+	text_far_end _ItemUseBallText07
 ItemUseBallText08:
 ;"X was transferred to someone's PC"
-	text_far _ItemUseBallText08
-	text_end
+	text_far_end _ItemUseBallText08
 
 NoBoxSlotsLeftText:
 ;"0 slots left in Box X! Time to change boxes!"
-	text_far _NoBoxSlotsLeftText
-	text_end
+	text_far_end _NoBoxSlotsLeftText
 
 BoxSlotsLeftText:
 ;"X slots left in box X"
-	text_far _BoxSlotsLeftText
-	text_end
+	text_far_end _BoxSlotsLeftText
 
 
 ItemUseBallText06:
 ;"New DEX data will be added..."
-	text_far _ItemUseBallText06
-	text_end
+	text_far_end _ItemUseBallText06
 ;play sound
 ItemUseBallText06Sound:	
 	sound_dex_page_added
@@ -922,16 +912,13 @@ ItemUseSurfboard:
 	ret
 
 SurfingGotOnText:
-	text_far _SurfingGotOnText
-	text_end
+	text_far_end _SurfingGotOnText
 
 AlreadySurfingText:
-	text_far _AlreadySurfingText
-	text_end
+	text_far_end _AlreadySurfingText
 
 LavaSurfText:
-	text_far _LavaSurfingText
-	text_end
+	text_far_end _LavaSurfingText
 
 ItemUsePokedex:
 	jpfar ShowPokedexMenu
@@ -1409,7 +1396,7 @@ ItemUseMedicine:
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	call WaitForTextScrollButtonPress
 	jr .done
 .canceledItemUse
@@ -1646,29 +1633,23 @@ ItemUseMedicine:
 	jp GBPalWhiteOut
 
 ApexChipPutOnPokeballText:
-	text_far _ApexChipPutOnPokeballText
-	text_end
+	text_far_end _ApexChipPutOnPokeballText
 
 ApexChipDVsMaxedText:
-	text_far _ApexChipDVsMaxedText
-	text_end
+	text_far_end _ApexChipDVsMaxedText
 
 ApexChipAlreadyUsedText:
-	text_far _ApexChipAlreadyUsedText
-	text_end
+	text_far_end _ApexChipAlreadyUsedText
 ;;;;;;;;;;
 
 VitaminStatRoseText:
-	text_far _VitaminStatRoseText
-	text_end
+	text_far_end _VitaminStatRoseText
 
 VitaminNoEffectText:
-	text_far _VitaminNoEffectText
-	text_end
+	text_far_end _VitaminNoEffectText
 
 RareCandyNoEffectText:
-	text_far _RareCandyNoEffectText
-	text_end
+	text_far_end _RareCandyNoEffectText
 
 INCLUDE "data/battle/stat_names.asm"
 
@@ -1726,12 +1707,10 @@ BaitRockCommon:
 	jp DelayFrames
 
 ThrewBaitText:
-	text_far _ThrewBaitText
-	text_end
+	text_far_end _ThrewBaitText
 
 ThrewRockText:
-	text_far _ThrewRockText
-	text_end
+	text_far_end _ThrewRockText
 
 ;;;;;;;;;; PureRGBnote: CHANGED: this was separated off into a separate function for reusability
 IsEscapeRopeUsable:
@@ -1782,12 +1761,11 @@ ItemUseEscapeRope:
 	ret nz ; if so, return
 	call ItemUseReloadOverworldData
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	jp RemoveUsedItem
 .escapeText
 	text_far _EscapeText
-	text_far _ToLastPkmnCenterText
-	text_end
+	text_far_end _ToLastPkmnCenterText
 
 
 INCLUDE "data/tilesets/escape_rope_tilesets.asm"
@@ -1819,54 +1797,41 @@ ItemUsePocketAbra:
 	callfar ClearSafariFlags
 	call ItemUseReloadOverworldData
 	call Random
-	cp 200
-	jr nc, .flavor1
-	cp 150
-	jr nc, .flavor2
-	cp 100
-	jr nc, .flavor3
-	cp 50
-	jr nc, .flavor4
-	ld hl, .pocketAbraFlavorText5
+	and %111
+	ld d, 0
+	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
+	ld e, a
+	ld hl, .pocketAbraFlavorList
+	add hl, de 
 .done
 	rst _PrintText
 	call StopMusic
 	ld a, ABRA
 	jp PlayCry
-.flavor1
-	ld hl, .pocketAbraFlavorText1
-	jr .done
-.flavor2
-	ld hl, .pocketAbraFlavorText2
-	jr .done
-.flavor3
-	ld hl, .pocketAbraFlavorText3
-	jr .done
-.flavor4
-	ld hl, .pocketAbraFlavorText4
-	jr .done
 .wantToTeleportText
 	text_far _WarpText
-	text_far _ToLastPkmnCenterText
-	text_end
+	text_far_end _ToLastPkmnCenterText
 .pocketAbraNo
-	text_far _PocketAbraNo
-	text_end
+	text_far_end _PocketAbraNo
+
+.pocketAbraFlavorList
 .pocketAbraFlavorText1
-	text_far _PocketAbraFlavorText1
-	text_end
+	text_far_end _PocketAbraFlavorText1
 .pocketAbraFlavorText2
-	text_far _PocketAbraFlavorText2
-	text_end
+	text_far_end _PocketAbraFlavorText2
 .pocketAbraFlavorText3
-	text_far _PocketAbraFlavorText3
-	text_end
+	text_far_end _PocketAbraFlavorText3
 .pocketAbraFlavorText4
-	text_far _PocketAbraFlavorText4
-	text_end
+	text_far_end _PocketAbraFlavorText4
 .pocketAbraFlavorText5
-	text_far _PocketAbraFlavorText5
-	text_end
+	text_far_end _PocketAbraFlavorText5
+.pocketAbraFlavorText6
+	text_far_end _PocketAbraFlavorText6
+.pocketAbraFlavorText7
+	text_far_end _PocketAbraFlavorText7
+.pocketAbraFlavorText8
+	text_far_end _PocketAbraFlavorText8
 
 ItemUseRepel:
 	ld b, 100
@@ -1910,12 +1875,12 @@ ItemUsePokeDoll:
 	call RemoveUsedItem
 	call WaitForSoundToFinish
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, POKE_DOLL_ANIM
 	ld [wAnimationID], a
 	call ItemEffectsDoMoveAnimation
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, $01
 	ld [wEscapedFromBattle], a
 	ret
@@ -2126,12 +2091,10 @@ Route16SnorlaxFluteCoords:
 	db -1 ; end
 
 PlayedFluteNoEffectText:
-	text_far _PlayedFluteNoEffectText
-	text_end
+	text_far_end _PlayedFluteNoEffectText
 
 FluteWokeUpText:
-	text_far _FluteWokeUpText
-	text_end
+	text_far_end _FluteWokeUpText
 
 PlayedFluteHadEffectText:
 	text_far _PlayedFluteHadEffectText
@@ -2163,8 +2126,7 @@ ItemUseCoinCase:
 	jp PrintText
 
 CoinCaseNumCoinsText:
-	text_far _CoinCaseNumCoinsText
-	text_end
+	text_far_end _CoinCaseNumCoinsText
 
 ; PureRGBnote: CHANGED: now has 50% chance of landing goldeen and 50% chance of landing magikarp.
 ItemUseOldRod: 
@@ -2277,7 +2239,7 @@ FishingInit:
 	ld a, SFX_HEAL_AILMENT
 	rst _PlaySound
 	ld c, 20 ; PureRGBnote: CHANGED: reduce the artificial delay on initiating fishing.
-	rst _DelayFrames
+	rst DelayFrames
 	and a
 	ret
 .surfing
@@ -2351,12 +2313,10 @@ ItemUseItemfinder:
 	ret
 
 ItemfinderFoundItemText:
-	text_far _ItemfinderFoundItemText
-	text_end
+	text_far_end _ItemfinderFoundItemText
 
 ItemfinderFoundNothingText:
-	text_far _ItemfinderFoundNothingText
-	text_end
+	text_far_end _ItemfinderFoundNothingText
 
 ItemUsePPUp:
 	ld a, [wIsInBattle]
@@ -2541,24 +2501,19 @@ ItemUsePPRestore:
 	ret
 
 RaisePPWhichTechniqueText:
-	text_far _RaisePPWhichTechniqueText
-	text_end
+	text_far_end _RaisePPWhichTechniqueText
 
 RestorePPWhichTechniqueText:
-	text_far _RestorePPWhichTechniqueText
-	text_end
+	text_far_end _RestorePPWhichTechniqueText
 
 PPMaxedOutText:
-	text_far _PPMaxedOutText
-	text_end
+	text_far_end _PPMaxedOutText
 
 PPIncreasedText:
-	text_far _PPIncreasedText
-	text_end
+	text_far_end _PPIncreasedText
 
 PPRestoredText:
-	text_far _PPRestoredText
-	text_end
+	text_far_end _PPRestoredText
 
 ; for items that can't be used from the Item menu
 UnusableItem:
@@ -2684,20 +2639,16 @@ ItemUseTMHM:
 	jp RemoveUsedItem
 
 BootedUpTMText:
-	text_far _BootedUpTMText
-	text_end
+	text_far_end _BootedUpTMText
 
 BootedUpHMText:
-	text_far _BootedUpHMText
-	text_end
+	text_far_end _BootedUpHMText
 
 TeachMachineMoveText:
-	text_far _TeachMachineMoveText
-	text_end
+	text_far_end _TeachMachineMoveText
 
 MonCannotLearnMachineMoveText:
-	text_far _MonCannotLearnMachineMoveText
-	text_end
+	text_far_end _MonCannotLearnMachineMoveText
 
 PrintItemUseTextAndRemoveItem:
 	ld hl, ItemUseText00
@@ -2771,78 +2722,61 @@ ItemUseFailed:
 	jp PrintText
 
 ItemUseNotTimeText:
-	text_far _ItemUseNotTimeText
-	text_end
+	text_far_end _ItemUseNotTimeText
 
 ItemUseValuableText:
-	text_far _ItemUseValuableText
-	text_end
+	text_far_end _ItemUseValuableText
 
 ItemUseFossilText:
-	text_far _ItemUseFossilText
-	text_end
+	text_far_end _ItemUseFossilText
 
 ItemUseInBattleText:
-	text_far _ItemUseInBattleText
-	text_end
+	text_far_end _ItemUseInBattleText
 
 ItemUseCameraInBattleText:
-	text_far _ItemUseCameraInBattleText
-	text_end
+	text_far_end _ItemUseCameraInBattleText
 
 ItemUseWildMonText:
-	text_far _ItemUseWildMonText
-	text_end
+	text_far_end _ItemUseWildMonText
 
 NoPokeDollsOnSpiritsText:
-	text_far _NoPokeDollsOnSpiritsText
-	text_end
+	text_far_end _NoPokeDollsOnSpiritsText
 
 ItemUseNotYoursToUseText:
-	text_far _ItemUseNotYoursToUseText
-	text_end
+	text_far_end _ItemUseNotYoursToUseText
 
 ItemUseNoEffectText:
-	text_far _ItemUseNoEffectText
-	text_end
+	text_far_end _ItemUseNoEffectText
 
 ThrowBallAtTrainerMonText1:
-	text_far _ThrowBallAtTrainerMonText1
-	text_end
+	text_far_end _ThrowBallAtTrainerMonText1
 
 ThrowBallAtTrainerMonText2:
-	text_far _ThrowBallAtTrainerMonText2
-	text_end
+	text_far_end _ThrowBallAtTrainerMonText2
 
 NoCyclingAllowedHereText:
-	text_far _NoCyclingAllowedHereText
-	text_end
+	text_far_end _NoCyclingAllowedHereText
 
 NoSurfingHereText:
-	text_far _NoSurfingHereText
-	text_end
+	text_far_end _NoSurfingHereText
 
 BoxFullCannotThrowBallText:
-	text_far _BoxFullCannotThrowBallText
-	text_end
+	text_far_end _BoxFullCannotThrowBallText
 
 ItemUseText00:
 	text_far _ItemUseText001
 	text_low
-	text_far _ItemUseText002
-	text_end
+	text_far_end _ItemUseText002
 
 GotOnBicycleText:
 	text_far _GotOnBicycleText1
 	text_low
-	text_far _GotOnBicycleText2
-	text_end
+	text_far_end _GotOnBicycleText2
 
 GotOffBicycleText:
 	text_far _GotOffBicycleText1
 	text_low
-	text_far _GotOffBicycleText2
-	text_end
+	text_far_end _GotOffBicycleText2
 
 ; restores bonus PP (from PP Ups) when healing at a pokemon center
 ; also, when a PP Up is used, it increases the current PP by one PP Up bonus
@@ -3074,16 +3008,13 @@ TossItem_::
 	ret
 
 ThrewAwayItemText:
-	text_far _ThrewAwayItemText
-	text_end
+	text_far_end _ThrewAwayItemText
 
 IsItOKToTossItemText:
-	text_far _IsItOKToTossItemText
-	text_end
+	text_far_end _IsItOKToTossItemText
 
 TooImportantToTossText:
-	text_far _TooImportantToTossText
-	text_end
+	text_far_end _TooImportantToTossText
 
 ; checks if an item is a key item
 ; INPUT:
@@ -3524,8 +3455,7 @@ UseTopSecretKey:
 	jp ItemUseFailed
 
 TopSecretKeyText:
-	text_far _TopSecretKeyText
-	text_end
+	text_far_end _TopSecretKeyText
 
 ClearParaBurnBattleFlagsOnHeal:
 ;;;;;;;;;; shinpokerednote: FIXED: reset burn and paralyze stat drops on healing via full restore

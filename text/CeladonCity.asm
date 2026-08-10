@@ -96,6 +96,7 @@ _CeladonPoolGrampsAfterTeachText::
 	para "Use it well!"
 	done
 
+; TODO: make sound playing variants?
 _GenericPlayerReceivedText::
 _PewterGymReceivedTM34Text::
 _CeruleanGymMistyReceivedTM11Text::

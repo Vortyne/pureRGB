@@ -143,7 +143,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld hl, IsEvolvingText
 	rst _PrintText
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	hlcoord 0, 0
@@ -171,7 +171,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	call ClearScreen
 	call RenameEvolvedMon
 	ld a, [wPokedexNum]
@@ -367,20 +367,16 @@ CancelledEvolution:
 	jp Evolution_PartyMonLoop
 
 EvolvedText:
-	text_far _EvolvedText
-	text_end
+	text_far_end _EvolvedText
 
 IntoText:
-	text_far _IntoText
-	text_end
+	text_far_end _IntoText
 
 StoppedEvolvingText:
-	text_far _StoppedEvolvingText
-	text_end
+	text_far_end _StoppedEvolvingText
 
 IsEvolvingText:
-	text_far _IsEvolvingText
-	text_end
+	text_far_end _IsEvolvingText
 
 Evolution_ReloadTilesetTilePatterns:
 	ld a, [wLinkState]
@@ -665,11 +661,9 @@ WriteMonMoves_ShiftMoveData:
 	ret
 
 YoureAnExpertText:
-	text_far _YoureAnExpertText
-	text_end
+	text_far_end _YoureAnExpertText
 
 LearnsetUnlockedText:
-	text_far _LearnsetUnlockedText
-	text_end
+	text_far_end _LearnsetUnlockedText
 
 INCLUDE "data/pokemon/evos_moves.asm"

@@ -22,7 +22,7 @@ MainMenu:
 
 .mainMenuLoop
 	; ld c, 20
-	; rst _DelayFrames
+	; rst DelayFrames
 	xor a ; LINK_STATE_NONE
 	ld [wLinkState], a
 	ld hl, wPartyAndBillsPCSavedMenuItem
@@ -81,7 +81,7 @@ MainMenu:
 	bit B_PAD_B, a
 	jp nz, DisplayTitleScreen ; if so, go back to the title screen
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wCurrentMenuItem]
 	ld b, a
 	ld a, [wSaveFileStatus]
@@ -148,7 +148,7 @@ MainMenu:
 	ld a, PLAYER_DIR_DOWN
 	ld [wPlayerDirection], a
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 	; fixes an issue with the shaking visually in cinnabar volcano after loading into the map
 	ld a, [wCurMap]
@@ -292,7 +292,7 @@ LinkMenu:
 	ld a, d
 	ldcoord_a 6, 11
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	call LoadScreenTilesFromBuffer1
 	ld a, [wLinkMenuSelectionSendBuffer]
 	and PAD_B << 2 ; was B button pressed?
@@ -312,14 +312,14 @@ LinkMenu:
 	ld hl, PleaseWaitText
 	rst _PrintText
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, wStatusFlags6
 	res BIT_DEBUG_MODE, [hl]
 	ld a, [wDefaultMap]
 	ld [wDestinationMap], a
 	call PrepareForSpecialWarp
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	xor a
 	ld [wMenuJoypadPollCount], a
 	ld [wSerialExchangeNybbleSendData], a
@@ -341,16 +341,13 @@ LinkMenu:
 	ret
 
 WhereWouldYouLikeText:
-	text_far _WhereWouldYouLikeText
-	text_end
+	text_far_end _WhereWouldYouLikeText
 
 PleaseWaitText:
-	text_far _PleaseWaitText
-	text_end
+	text_far_end _PleaseWaitText
 
 LinkCanceledText:
-	text_far _LinkCanceledText
-	text_end
+	text_far_end _LinkCanceledText
 
 StartNewGame:
 	ld hl, wStatusFlags6
@@ -372,7 +369,7 @@ IF DEF(_DEBUG)
 .normal
 ENDC
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 
 ; enter map after using a special warp or loading the game from the main menu
 SpecialEnterMap::
@@ -389,7 +386,7 @@ SpecialEnterMap::
 	set BIT_GAME_TIMER_COUNTING, [hl]
 	call ResetPlayerSpriteData
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wEnteringCableClub]
 	and a
 	ret nz
@@ -466,7 +463,7 @@ PrintSaveScreenText:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	ld c, 5 ; PureRGBnote: CHANGED: reduce the artificial delay when displaying this screen.
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 PrintNumBadges:

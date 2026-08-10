@@ -1,11 +1,8 @@
 Route24_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, Route24TrainerHeaders
 	ld de, Route24_ScriptPointers
-	ld a, [wRoute24CurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wRoute24CurScript], a
-	ret
+	ld bc, wRoute24CurScript
+	jp ExecuteCustomMapScriptInTable
 
 Route24_ScriptPointers:
 	def_script_pointers
@@ -79,31 +76,31 @@ Route24AfterRocketBattleScript:
 
 Route24_TextPointers:
 	def_text_pointers
-	dw_const Route24CooltrainerM1Text, TEXT_ROUTE24_COOLTRAINER_M1
-	dw_const Route24CooltrainerM2Text, TEXT_ROUTE24_COOLTRAINER_M2
-	dw_const Route24CooltrainerM3Text, TEXT_ROUTE24_COOLTRAINER_M3
-	dw_const Route24CooltrainerF1Text, TEXT_ROUTE24_COOLTRAINER_F1
-	dw_const Route24Youngster1Text,    TEXT_ROUTE24_YOUNGSTER1
-	dw_const Route24CooltrainerF2Text, TEXT_ROUTE24_COOLTRAINER_F2
-	dw_const Route24Youngster2Text,    TEXT_ROUTE24_YOUNGSTER2
-	dw_const PickUpItemText,           TEXT_ROUTE24_ITEM1
-	dw_const PickUpItemText,           TEXT_ROUTE24_ITEM2 ; PureRGBnote: ADDED: new item on this route.
-	dw_const DoRet,                    TEXT_ROUTE24_ABRA
+	dba_const Route24CooltrainerM1Text, TEXT_ROUTE24_COOLTRAINER_M1
+	dba_const Route24CooltrainerM2Text, TEXT_ROUTE24_COOLTRAINER_M2
+	dba_const Route24CooltrainerM3Text, TEXT_ROUTE24_COOLTRAINER_M3
+	dba_const Route24CooltrainerF1Text, TEXT_ROUTE24_COOLTRAINER_F1
+	dba_const Route24Youngster1Text,    TEXT_ROUTE24_YOUNGSTER1
+	dba_const Route24CooltrainerF2Text, TEXT_ROUTE24_COOLTRAINER_F2
+	dba_const Route24Youngster2Text,    TEXT_ROUTE24_YOUNGSTER2
+	dba_const PickUpItemText,           TEXT_ROUTE24_ITEM1
+	dba_const PickUpItemText,           TEXT_ROUTE24_ITEM2 ; PureRGBnote: ADDED: new item on this route.
+	dba_const DoRet,                    TEXT_ROUTE24_ABRA
 
 Route24TrainerHeaders:
 	def_trainers 2
 Route24TrainerHeader0:
-	trainer EVENT_BEAT_ROUTE_24_TRAINER_0, 4, Route24CooltrainerM2BattleText, Route24CooltrainerM2EndBattleText, Route24CooltrainerM2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_24_TRAINER_0, 4, _Route24CooltrainerM2BattleText, _Route24CooltrainerM2EndBattleText, _Route24CooltrainerM2AfterBattleText
 Route24TrainerHeader1:
-	trainer EVENT_BEAT_ROUTE_24_TRAINER_1, 1, Route24CooltrainerM3BattleText, Route24CooltrainerM3EndBattleText, Route24CooltrainerM3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_24_TRAINER_1, 1, _Route24CooltrainerM3BattleText, _Route24CooltrainerM3EndBattleText, _Route24CooltrainerM3AfterBattleText
 Route24TrainerHeader2:
-	trainer EVENT_BEAT_ROUTE_24_TRAINER_2, 1, Route24CooltrainerF1BattleText, Route24CooltrainerF1EndBattleText, Route24CooltrainerF1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_24_TRAINER_2, 1, _Route24CooltrainerF1BattleText, _Route24CooltrainerF1EndBattleText, _Route24CooltrainerF1AfterBattleText
 Route24TrainerHeader3:
-	trainer EVENT_BEAT_ROUTE_24_TRAINER_3, 1, Route24Youngster1BattleText, Route24Youngster1EndBattleText, Route24Youngster1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_24_TRAINER_3, 1, _Route24Youngster1BattleText, _Route24Youngster1EndBattleText, _Route24Youngster1AfterBattleText
 Route24TrainerHeader4:
-	trainer EVENT_BEAT_ROUTE_24_TRAINER_4, 1, Route24CooltrainerF2BattleText, Route24CooltrainerF2EndBattleText, Route24CooltrainerF2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_24_TRAINER_4, 1, _Route24CooltrainerF2BattleText, _Route24CooltrainerF2EndBattleText, _Route24CooltrainerF2AfterBattleText
 Route24TrainerHeader5:
-	trainer EVENT_BEAT_ROUTE_24_TRAINER_5, 1, Route24Youngster2BattleText, Route24Youngster2EndBattleText, Route24Youngster2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_24_TRAINER_5, 1, _Route24Youngster2BattleText, _Route24Youngster2EndBattleText, _Route24Youngster2AfterBattleText
 	db -1 ; end
 
 Route24CooltrainerM1Text:
@@ -149,8 +146,7 @@ Route24CooltrainerM1Text:
 .YouBeatOurContestText:
 	text_far _Route24CooltrainerM1YouBeatOurContestText
 	sound_get_item_1
-	text_far _Route24CooltrainerM1YouJustEarnedAPrizeText
-	text_end
+	text_far_end _Route24CooltrainerM1YouJustEarnedAPrizeText
 
 .ReceivedNuggetText:
 	text_far _Route24CooltrainerM1ReceivedNuggetText
@@ -159,20 +155,16 @@ Route24CooltrainerM1Text:
 	text_end
 
 .NoRoomText:
-	text_far _Route24CooltrainerM1NoRoomText
-	text_end
+	text_far_end _Route24CooltrainerM1NoRoomText
 
 .JoinTeamRocketText:
-	text_far _Route24CooltrainerM1JoinTeamRocketText
-	text_end
+	text_far_end _Route24CooltrainerM1JoinTeamRocketText
 
 .DefeatedText:
-	text_far _Route24CooltrainerM1DefeatedText
-	text_end
+	text_far_end _Route24CooltrainerM1DefeatedText
 
 .YouCouldBecomeATopLeaderText:
-	text_far _Route24CooltrainerM1YouCouldBecomeATopLeaderText
-	text_end
+	text_far_end _Route24CooltrainerM1YouCouldBecomeATopLeaderText
 
 Route24CooltrainerM2Text:
 	script_trainer Route24TrainerHeader0
@@ -191,75 +183,3 @@ Route24CooltrainerF2Text:
 
 Route24Youngster2Text:
 	script_trainer Route24TrainerHeader5
-
-Route24CooltrainerM2BattleText:
-	text_far _Route24CooltrainerM2BattleText
-	text_end
-
-Route24CooltrainerM2EndBattleText:
-	text_far _Route24CooltrainerM2EndBattleText
-	text_end
-
-Route24CooltrainerM2AfterBattleText:
-	text_far _Route24CooltrainerM2AfterBattleText
-	text_end
-
-Route24CooltrainerM3BattleText:
-	text_far _Route24CooltrainerM3BattleText
-	text_end
-
-Route24CooltrainerM3EndBattleText:
-	text_far _Route24CooltrainerM3EndBattleText
-	text_end
-
-Route24CooltrainerM3AfterBattleText:
-	text_far _Route24CooltrainerM3AfterBattleText
-	text_end
-
-Route24CooltrainerF1BattleText:
-	text_far _Route24CooltrainerF1BattleText
-	text_end
-
-Route24CooltrainerF1EndBattleText:
-	text_far _Route24CooltrainerF1EndBattleText
-	text_end
-
-Route24CooltrainerF1AfterBattleText:
-	text_far _Route24CooltrainerF1AfterBattleText
-	text_end
-
-Route24Youngster1BattleText:
-	text_far _Route24Youngster1BattleText
-	text_end
-
-Route24Youngster1EndBattleText:
-	text_far _Route24Youngster1EndBattleText
-	text_end
-
-Route24Youngster1AfterBattleText:
-	text_far _Route24Youngster1AfterBattleText
-	text_end
-
-Route24CooltrainerF2BattleText:
-	text_far _Route24CooltrainerF2BattleText
-	text_end
-
-Route24CooltrainerF2EndBattleText:
-	text_far _Route24CooltrainerF2EndBattleText
-	text_end
-
-Route24CooltrainerF2AfterBattleText:
-	text_far _Route24CooltrainerF2AfterBattleText
-	text_end
-
-Route24Youngster2BattleText:
-	text_far _Route24Youngster2BattleText
-	text_end
-
-Route24Youngster2EndBattleText:
-	text_far _Route24Youngster2EndBattleText
-	text_end
-
-Route24Youngster2AfterBattleText:
-	text_far _Route24Youngster2AfterBattleText
-	text_end

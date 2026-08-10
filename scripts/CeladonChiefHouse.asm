@@ -7,30 +7,18 @@ CeladonChiefHouse_Script:
 
 CeladonChiefHouse_TextPointers:
 	def_text_pointers
-	dw_const CeladonChiefHouseChiefText,  TEXT_CELADONCHIEFHOUSE_CHIEF
-	dw_const CeladonChiefHouseRocketText, TEXT_CELADONCHIEFHOUSE_ROCKET
-	dw_const CeladonChiefHouseSailorText, TEXT_CELADONCHIEFHOUSE_SAILOR
-	dw_const CeladonSeniorHouseGrampsText, TEXT_BACKALLEYSENIORHOUSE_GRAMPS
-	dw_const CeladonSeniorHouseGrannyText, TEXT_BACKALLEYSENIORHOUSE_GRANNY
-	dw_const CeladonSoftboiledGuysHouseChanseyText, TEXT_SOFTBOILEDGUYSHOUSE_CHANSEY
-	dw_const CeladonSoftboiledGuysHousePaperText, TEXT_SOFTBOILEDGUYSHOUSE_PAPER
-	dw_const CeladonChiefHouseBookCaseLeftText, TEXT_CELADONCHIEFHOUSE_BOOKCASE_LEFT
-	dw_const CeladonChiefHousePlaqueText, TEXT_CELADONCHIEFHOUSE_PLAQUE
-	dw_const CeladonChiefHouseBookCaseRightText, TEXT_CELADONCHIEFHOUSE_BOOKCASE_RIGHT
-	dw_const CeladonSoftboiledGuysHouseEggStatueText, TEXT_SOFTBOILEDGUYSHOUSE_EGG_STATUE
-	dw_const CeladonSoftboiledGuysHouseBookcaseText, TEXT_SOFTBOILEDGUYSHOUSE_BOOKCASE
-
-CeladonChiefHouseChiefText:
-	text_far _CeladonChiefHouseChiefText
-	text_end
-
-CeladonChiefHouseRocketText:
-	text_far _CeladonChiefHouseRocketText
-	text_end
-
-CeladonChiefHouseSailorText:
-	text_far _CeladonChiefHouseSailorText
-	text_end
+	dba_const _CeladonChiefHouseChiefText,  TEXT_CELADONCHIEFHOUSE_CHIEF
+	dba_const _CeladonChiefHouseRocketText, TEXT_CELADONCHIEFHOUSE_ROCKET
+	dba_const _CeladonChiefHouseSailorText, TEXT_CELADONCHIEFHOUSE_SAILOR
+	dba_const _CeladonSeniorHouseGrampsText, TEXT_BACKALLEYSENIORHOUSE_GRAMPS
+	dba_const _CeladonSeniorHouseGrannyText, TEXT_BACKALLEYSENIORHOUSE_GRANNY
+	dba_const CeladonSoftboiledGuysHouseChanseyText, TEXT_SOFTBOILEDGUYSHOUSE_CHANSEY
+	dba_const CeladonSoftboiledGuysHousePaperText, TEXT_SOFTBOILEDGUYSHOUSE_PAPER
+	dba_const CeladonChiefHouseBookCaseLeftText, TEXT_CELADONCHIEFHOUSE_BOOKCASE_LEFT
+	dba_const _CeladonChiefHousePlaqueText, TEXT_CELADONCHIEFHOUSE_PLAQUE
+	dba_const CeladonChiefHouseBookCaseRightText, TEXT_CELADONCHIEFHOUSE_BOOKCASE_RIGHT
+	dba_const _CeladonSoftboiledGuysHouseEggStatueText, TEXT_SOFTBOILEDGUYSHOUSE_EGG_STATUE
+	dba_const CeladonSoftboiledGuysHouseBookcaseText, TEXT_SOFTBOILEDGUYSHOUSE_BOOKCASE
 
 CeladonChiefHouseBookCaseLeftText:
 	text_far _CeladonChiefHouseBookCaseLeftText
@@ -56,18 +44,6 @@ CeladonChiefHouseBookCaseRightText:
 .done
 	rst TextScriptEnd
 
-CeladonChiefHousePlaqueText:
-	text_far _CeladonChiefHousePlaqueText
-	text_end
-
-CeladonSeniorHouseGrampsText:
-	text_far _CeladonSeniorHouseGrampsText
-	text_end
-	
-CeladonSeniorHouseGrannyText:
-	text_far _CeladonSeniorHouseGrannyText
-	text_end
-
 CeladonSoftboiledGuysHouseChanseyText:
 	text_far _CopycatsHouse1FChanseyText
 	text_asm
@@ -91,12 +67,7 @@ CeladonSoftboiledGuysHousePaperText:
 	rst _PrintText
 	rst TextScriptEnd
 .endText
-	text_far _CeladonSoftboiledGuysHousePaper2Text
-	text_end
-
-CeladonSoftboiledGuysHouseEggStatueText:
-	text_far _CeladonSoftboiledGuysHouseEggStatueText
-	text_end
+	text_far_end _CeladonSoftboiledGuysHousePaper2Text
 
 CeladonSoftboiledGuysHouseBookcaseText:
 	text_far _CeladonSoftboiledGuysHouseBookcaseText

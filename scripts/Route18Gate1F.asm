@@ -1,10 +1,9 @@
 Route18Gate1F_Script:
 	ld hl, wStatusFlags6
 	res BIT_ALWAYS_ON_BIKE, [hl]
-	call EnableAutoTextBoxDrawing
-	ld a, [wRoute18Gate1FCurScript]
 	ld hl, Route18Gate1F_ScriptPointers
-	jp CallFunctionInTable
+	ld de, wRoute18Gate1FCurScript
+	jp CallMapScriptInTable
 
 Route18Gate1F_ScriptPointers:
 	def_script_pointers
@@ -80,8 +79,8 @@ Route18Gate1FPlayerMovingRightScript:
 
 Route18Gate1F_TextPointers:
 	def_text_pointers
-	dw_const Route18Gate1FGuardText,         TEXT_ROUTE18GATE1F_GUARD
-	dw_const Route18Gate1FGuardExcuseMeText, TEXT_ROUTE18GATE1F_GUARD_EXCUSE_ME
+	dba_const Route18Gate1FGuardText,         TEXT_ROUTE18GATE1F_GUARD
+	dba_const _Route18Gate1FGuardExcuseMeText, TEXT_ROUTE18GATE1F_GUARD_EXCUSE_ME
 
 Route18Gate1FGuardText:
 	text_asm
@@ -94,13 +93,7 @@ Route18Gate1FGuardText:
 	rst TextScriptEnd
 
 .YouNeedABicycleText:
-	text_far _Route18Gate1FGuardYouNeedABicycleText
-	text_end
+	text_far_end _Route18Gate1FGuardYouNeedABicycleText
 
 .CyclingRoadUphillText:
-	text_far _Route18Gate1FGuardCyclingRoadUphillText
-	text_end
-
-Route18Gate1FGuardExcuseMeText:
-	text_far _Route18Gate1FGuardExcuseMeText
-	text_end
+	text_far_end _Route18Gate1FGuardCyclingRoadUphillText

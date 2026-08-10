@@ -58,6 +58,8 @@ _SSTicketReceivedText::
 	line "an @"
 	text_ram_stringbuffer
 	text "!@"
+	sound_get_key_item
+	text_promptbutton
 	text_end
 
 _SSTicketNoRoomText::

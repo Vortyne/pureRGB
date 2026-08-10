@@ -273,7 +273,7 @@ ENDC
 .finishedBouncingPokemonLogo
 	call LoadScreenTilesFromBuffer1
 	ld c, 36
-	rst _DelayFrames
+	rst DelayFrames
 	call IsPureTitleScreenEnabled
 	jr z, .skipNewTitleStuff1
 	ld a, HIGH(vBGMap0)
@@ -369,7 +369,7 @@ ENDC
 	rst _PlaySound
 	call WaitForSoundToFinish
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	ld [wTitleMonSpecies], a
 
@@ -696,7 +696,7 @@ IF DEF(_RED)
 	jr nz, .loopAnimateFire
 	call PureTitleClearNonPlayerOAM
 	ld c, 22
-	rst _DelayFrames
+	rst DelayFrames
 	call StopAllMusic
 	call Delay3
 	;callfar PlaySparkleShort
@@ -853,7 +853,7 @@ IF DEF(_GREEN)
 	jr nz, .loopMoveEnergy
 	call PureTitleClearNonPlayerOAM
 	ld c, 12
-	rst _DelayFrames
+	rst DelayFrames
 	call StopAllMusic
 	call Delay3
 	;callfar PlaySparkleShort
@@ -1010,7 +1010,7 @@ ENDC
 .doneShineAcross
 	call PureTitleClearNonPlayerOAM
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	jp StopAllMusic
 
 PureTitleClearNonPlayerOAM:
@@ -1231,7 +1231,7 @@ IF DEF(_GREEN)
 ENDC
 	call .loadBlinkingData
 	ld c, 6
-	rst _DelayFrames
+	rst DelayFrames
 IF DEF(_RED)
 	ld de, CharizardNotBlinkingTileData
 ENDC
@@ -1248,7 +1248,7 @@ IF DEF(_GREEN)
 ENDC
 	call .loadBlinkingData
 	ld c, 6
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec b
 	jr nz, .loopBlink

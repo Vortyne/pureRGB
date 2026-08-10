@@ -3,25 +3,14 @@ FuchsiaMeetingRoom_Script:
 
 FuchsiaMeetingRoom_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaMeetingRoomSafariZoneWorker1, TEXT_FUCHSIAMEETINGROOM_SAFARI_ZONE_WORKER1
-	dw_const FuchsiaMeetingRoomSafariZoneWorker2, TEXT_FUCHSIAMEETINGROOM_SAFARI_ZONE_WORKER2
-	dw_const FuchsiaMeetingRoomSafariZoneWorker3, TEXT_FUCHSIAMEETINGROOM_SAFARI_ZONE_WORKER3
-	dw_const FuchsiaMeetingRoomOaksAide,          TEXT_FUCHSIAMEETINGROOM_OAKS_AIDE
-	dw_const FuchsiaMeetingRoomPoster,            TEXT_FUCHSIAMEETINGROOM_POSTER
-	dw_const FuchsiaMeetingRoomDeskPapers,        TEXT_FUCHSIAMEETINGROOM_DESK_PAPERS
-
-FuchsiaMeetingRoomSafariZoneWorker1:
-	text_far _FuchsiaMeetingRoomSafariZoneWorker1
-	text_end
-
-FuchsiaMeetingRoomSafariZoneWorker2:
-	text_far _FuchsiaMeetingRoomSafariZoneWorker2
-	text_end
-
-FuchsiaMeetingRoomSafariZoneWorker3:
-	text_far _FuchsiaMeetingRoomSafariZoneWorker3
-	text_end
-
+	dba_const _FuchsiaMeetingRoomSafariZoneWorker1, TEXT_FUCHSIAMEETINGROOM_SAFARI_ZONE_WORKER1
+	dba_const _FuchsiaMeetingRoomSafariZoneWorker2, TEXT_FUCHSIAMEETINGROOM_SAFARI_ZONE_WORKER2
+	dba_const _FuchsiaMeetingRoomSafariZoneWorker3, TEXT_FUCHSIAMEETINGROOM_SAFARI_ZONE_WORKER3
+	dba_const FuchsiaMeetingRoomOaksAide,          TEXT_FUCHSIAMEETINGROOM_OAKS_AIDE
+; PureRGBnote: ADDED: text entries for the poster and the papers on the desk in this room
+	dba_const _FuchsiaMeetingRoomPoster,            TEXT_FUCHSIAMEETINGROOM_POSTER
+	dba_const _FuchsiaMeetingRoomDeskPapers,        TEXT_FUCHSIAMEETINGROOM_DESK_PAPERS
+	
 FuchsiaMeetingRoomOaksAide:
 	text_asm
 	CheckEvent EVENT_UPGRADED_TOWN_MAP
@@ -48,7 +37,7 @@ FuchsiaMeetingRoomOaksAide:
 	ld a, SFX_TRADE_MACHINE
 	call PlaySoundWaitForCurrent
 	ld c, 17
-	rst _DelayFrames
+	rst DelayFrames
 	call StopSFXChannels
 	ld a, SFX_ARROW_TILES
 	rst _PlaySound
@@ -62,34 +51,16 @@ FuchsiaMeetingRoomOaksAide:
 	rst _PrintText
 	rst TextScriptEnd
 .greet
-	text_far _FuchsiaMeetingRoomOaksAideGreeting
-	text_end
+	text_far_end _FuchsiaMeetingRoomOaksAideGreeting
 .noTownMap
-	text_far _FuchsiaMeetingRoomOaksAideNoTownmap
-	text_end
+	text_far_end _FuchsiaMeetingRoomOaksAideNoTownmap
 .howMany
-	text_far _FuchsiaMeetingRoomOaksAideHowMany
-	text_end 
+	text_far_end _FuchsiaMeetingRoomOaksAideHowMany 
 .notEnough
-	text_far _FuchsiaMeetingRoomOaksAideNotEnough
-	text_end
+	text_far_end _FuchsiaMeetingRoomOaksAideNotEnough
 .enough
-	text_far _FuchsiaMeetingRoomOaksAideEnough
-	text_end
+	text_far_end _FuchsiaMeetingRoomOaksAideEnough
 .goodLuck
-	text_far _FuchsiaMeetingRoomOaksAideGoodLuck
-	text_end
+	text_far_end _FuchsiaMeetingRoomOaksAideGoodLuck
 .thereWeGo
-	text_far _GenericThereWeGoText
-	text_end
-
-
-; PureRGBnote: ADDED: text entries for the poster and the papers on the desk in this room
-
-FuchsiaMeetingRoomPoster:
-	text_far _FuchsiaMeetingRoomPoster
-	text_end
-
-FuchsiaMeetingRoomDeskPapers:
-	text_far _FuchsiaMeetingRoomDeskPapers
-	text_end
+	text_far_end _GenericThereWeGoText

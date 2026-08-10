@@ -2,13 +2,10 @@
 ; PureRGBnote: CHANGED: code related to spinners found in this map script was GREATLY simplified to reduce the space the script uses.
 
 ViridianGym_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, ViridianGymTrainerHeaders
 	ld de, ViridianGym_ScriptPointers
-	ld a, [wViridianGymCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wViridianGymCurScript], a
-	ret
+	ld bc, wViridianGymCurScript
+	jp ExecuteCustomMapScriptInTable
 
 ViridianGym_ScriptPointers:
 	def_script_pointers
@@ -77,39 +74,39 @@ ViridianGymReceiveTM27:
 
 ViridianGym_TextPointers:
 	def_text_pointers
-	dw_const ViridianGymGiovanniText,               TEXT_VIRIDIANGYM_GIOVANNI
-	dw_const ViridianGymCooltrainerM1Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M1
-	dw_const ViridianGymHiker1Text,                 TEXT_VIRIDIANGYM_HIKER1
-	dw_const ViridianGymRocker1Text,                TEXT_VIRIDIANGYM_ROCKER1
-	dw_const ViridianGymHiker2Text,                 TEXT_VIRIDIANGYM_HIKER2
-	dw_const ViridianGymCooltrainerM2Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M2
-	dw_const ViridianGymHiker3Text,                 TEXT_VIRIDIANGYM_HIKER3
-	dw_const ViridianGymRocker2Text,                TEXT_VIRIDIANGYM_ROCKER2
-	dw_const ViridianGymCooltrainerM3Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M3
-	dw_const ViridianGymGymGuideText,               TEXT_VIRIDIANGYM_GYM_GUIDE
-	dw_const PickUpItemText,                        TEXT_VIRIDIANGYM_ITEM1
-	dw_const ViridianGymGiovanniEarthBadgeInfoText, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
-	dw_const ViridianGymGiovanniReceivedTM27Text,   TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
-	dw_const ViridianGymGiovanniTM27NoRoomText,     TEXT_VIRIDIANGYM_GIOVANNI_TM27_NO_ROOM
+	dba_const ViridianGymGiovanniText,               TEXT_VIRIDIANGYM_GIOVANNI
+	dba_const ViridianGymCooltrainerM1Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M1
+	dba_const ViridianGymHiker1Text,                 TEXT_VIRIDIANGYM_HIKER1
+	dba_const ViridianGymRocker1Text,                TEXT_VIRIDIANGYM_ROCKER1
+	dba_const ViridianGymHiker2Text,                 TEXT_VIRIDIANGYM_HIKER2
+	dba_const ViridianGymCooltrainerM2Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M2
+	dba_const ViridianGymHiker3Text,                 TEXT_VIRIDIANGYM_HIKER3
+	dba_const ViridianGymRocker2Text,                TEXT_VIRIDIANGYM_ROCKER2
+	dba_const ViridianGymCooltrainerM3Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M3
+	dba_const ViridianGymGymGuideText,               TEXT_VIRIDIANGYM_GYM_GUIDE
+	dba_const PickUpItemText,                        TEXT_VIRIDIANGYM_ITEM1
+	dba_const _ViridianGymGiovanniEarthBadgeInfoText, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
+	dba_const ViridianGymGiovanniReceivedTM27Text,   TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
+	dba_const _ViridianGymGiovanniTM27NoRoomText,     TEXT_VIRIDIANGYM_GIOVANNI_TM27_NO_ROOM
 
 ViridianGymTrainerHeaders:
 	def_trainers 2
 ViridianGymTrainerHeader0:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, 4, ViridianGymCooltrainerM1BattleText, ViridianGymCooltrainerM1EndBattleText, ViridianGymCooltrainerM1AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, 4, _ViridianGymCooltrainerM1BattleText, _ViridianGymCooltrainerM1EndBattleText, _ViridianGymCooltrainerM1AfterBattleText
 ViridianGymTrainerHeader1:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_1, 4, ViridianGymHiker1BattleText, ViridianGymHiker1EndBattleText, ViridianGymHiker1AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_1, 4, _ViridianGymHiker1BattleText, _ViridianGymHiker1EndBattleText, _ViridianGymHiker1AfterBattleText
 ViridianGymTrainerHeader2:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_2, 4, ViridianGymRocker1BattleText, ViridianGymRocker1EndBattleText, ViridianGymRocker1AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_2, 4, _ViridianGymRocker1BattleText, _ViridianGymRocker1EndBattleText, _ViridianGymRocker1AfterBattleText
 ViridianGymTrainerHeader3:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_3, 2, ViridianGymHiker2BattleText, ViridianGymHiker2EndBattleText, ViridianGymHiker2AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_3, 2, _ViridianGymHiker2BattleText, _ViridianGymHiker2EndBattleText, _ViridianGymHiker2AfterBattleText
 ViridianGymTrainerHeader4:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_4, 3, ViridianGymCooltrainerM2BattleText, ViridianGymCooltrainerM2EndBattleText, ViridianGymCooltrainerM2AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_4, 3, _ViridianGymCooltrainerM2BattleText, _ViridianGymCooltrainerM2EndBattleText, _ViridianGymCooltrainerM2AfterBattleText
 ViridianGymTrainerHeader5:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_5, 4, ViridianGymHiker3BattleText, ViridianGymHiker3EndBattleText, ViridianGymHiker3AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_5, 4, _ViridianGymHiker3BattleText, _ViridianGymHiker3EndBattleText, _ViridianGymHiker3AfterBattleText
 ViridianGymTrainerHeader6:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_6, 3, ViridianGymRocker2BattleText, ViridianGymRocker2EndBattleText, ViridianGymRocker2AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_6, 3, _ViridianGymRocker2BattleText, _ViridianGymRocker2EndBattleText, _ViridianGymRocker2AfterBattleText
 ViridianGymTrainerHeader7:
-	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7, 4, ViridianGymCooltrainerM3BattleText, ViridianGymCooltrainerM3EndBattleText, ViridianGymCooltrainerM3AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7, 4, _ViridianGymCooltrainerM3BattleText, _ViridianGymCooltrainerM3EndBattleText, _ViridianGymCooltrainerM3AfterBattleText
 	db -1 ; end
 
 ViridianGymGiovanniText:
@@ -178,8 +175,7 @@ ViridianGymGiovanniText:
 	rst TextScriptEnd
 
 .PreBattleText:
-	text_far _ViridianGymGiovanniPreBattleText
-	text_end
+	text_far_end _ViridianGymGiovanniPreBattleText
 
 .ReceivedEarthBadgeText:
 	text_far _ViridianGymGiovanniReceivedEarthBadgeText
@@ -196,21 +192,13 @@ ViridianGymGiovanniText:
 	text_waitbutton
 	text_end
 
-ViridianGymGiovanniEarthBadgeInfoText:
-	text_far _ViridianGymGiovanniEarthBadgeInfoText
-	text_end
-
 ViridianGymGiovanniReceivedTM27Text:
 	text_far _ViridianGymGiovanniReceivedTM27Text
 	sound_get_item_1
+	text_end
 
 ViridianGymGiovanniTM27ExplanationText:
-	text_far _ViridianGymGiovanniTM27ExplanationText
-	text_end
-
-ViridianGymGiovanniTM27NoRoomText:
-	text_far _ViridianGymGiovanniTM27NoRoomText
-	text_end
+	text_far_end _ViridianGymGiovanniTM27ExplanationText
 
 ViridianGymCooltrainerM1Text:
 	script_trainer ViridianGymTrainerHeader0
@@ -247,107 +235,10 @@ ViridianGymHiker3Text:
 	rst TextScriptEnd
 ;;;;;
 .what
-	text_far _ViridianGymHiker3WhatText
-	text_end
+	text_far_end _ViridianGymHiker3WhatText
 
 ViridianGymCooltrainerM3Text:
 	script_trainer ViridianGymTrainerHeader7
-
-ViridianGymCooltrainerM1BattleText:
-	text_far _ViridianGymCooltrainerM1BattleText
-	text_end
-
-ViridianGymCooltrainerM1EndBattleText:
-	text_far _ViridianGymCooltrainerM1EndBattleText
-	text_end
-
-ViridianGymCooltrainerM1AfterBattleText:
-	text_far _ViridianGymCooltrainerM1AfterBattleText
-	text_end
-
-ViridianGymHiker1BattleText:
-	text_far _ViridianGymHiker1BattleText
-	text_end
-
-ViridianGymHiker1EndBattleText:
-	text_far _ViridianGymHiker1EndBattleText
-	text_end
-
-ViridianGymHiker1AfterBattleText:
-	text_far _ViridianGymHiker1AfterBattleText
-	text_end
-
-ViridianGymRocker1BattleText:
-	text_far _ViridianGymRocker1BattleText
-	text_end
-
-ViridianGymRocker1EndBattleText:
-	text_far _ViridianGymRocker1EndBattleText
-	text_end
-
-ViridianGymRocker1AfterBattleText:
-	text_far _ViridianGymRocker1AfterBattleText
-	text_end
-
-ViridianGymHiker2BattleText:
-	text_far _ViridianGymHiker2BattleText
-	text_end
-
-ViridianGymHiker2EndBattleText:
-	text_far _ViridianGymHiker2EndBattleText
-	text_end
-
-ViridianGymHiker2AfterBattleText:
-	text_far _ViridianGymHiker2AfterBattleText
-	text_end
-
-ViridianGymCooltrainerM2BattleText:
-	text_far _ViridianGymCooltrainerM2BattleText
-	text_end
-
-ViridianGymCooltrainerM2EndBattleText:
-	text_far _ViridianGymCooltrainerM2EndBattleText
-	text_end
-
-ViridianGymCooltrainerM2AfterBattleText:
-	text_far _ViridianGymCooltrainerM2AfterBattleText
-	text_end
-
-ViridianGymHiker3BattleText:
-	text_far _ViridianGymHiker3BattleText
-	text_end
-
-ViridianGymHiker3EndBattleText:
-	text_far _ViridianGymHiker3EndBattleText
-	text_end
-
-ViridianGymHiker3AfterBattleText:
-	text_far _ViridianGymHiker3AfterBattleText
-	text_end
-
-ViridianGymRocker2BattleText:
-	text_far _ViridianGymRocker2BattleText
-	text_end
-
-ViridianGymRocker2EndBattleText:
-	text_far _ViridianGymRocker2EndBattleText
-	text_end
-
-ViridianGymRocker2AfterBattleText:
-	text_far _ViridianGymRocker2AfterBattleText
-	text_end
-
-ViridianGymCooltrainerM3BattleText:
-	text_far _ViridianGymCooltrainerM3BattleText
-	text_end
-
-ViridianGymCooltrainerM3EndBattleText:
-	text_far _ViridianGymCooltrainerM3EndBattleText
-	text_end
-
-ViridianGymCooltrainerM3AfterBattleText:
-	text_far _ViridianGymCooltrainerM3AfterBattleText
-	text_end
 
 ViridianGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
@@ -381,31 +272,23 @@ ViridianGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips af
 	rst TextScriptEnd
 
 ReceivedApexChipsText8:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText8:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText8:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 AlreadyReceivedApexChipsText8:
-	text_far _ViridianGymGuideSeeAtPokemonLeagueText
-	text_end
+	text_far_end _ViridianGymGuideSeeAtPokemonLeagueText
 
 ViridianGymGuideApexChipGroundText:
-	text_far _ViridianGymGuideApexChipGroundText
-	text_end
+	text_far_end _ViridianGymGuideApexChipGroundText
 
 ViridianGymGuidePreBattleText:
 	text_far _GymGuideChampInMakingText
-	text_far _ViridianGymGuidePreBattleText
-	text_end
+	text_far_end _ViridianGymGuidePreBattleText
 
 ViridianGymGuidePostBattleText:
-	text_far _ViridianGymGuidePostBattleText
-	text_end
+	text_far_end _ViridianGymGuidePostBattleText

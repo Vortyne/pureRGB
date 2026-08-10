@@ -1,8 +1,7 @@
 BillsGarden_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, BillsGarden_ScriptPointers
-	ld a, [wBillsGardenCurScript]
-	jp CallFunctionInTable
+	ld de, wBillsGardenCurScript
+	jp CallMapScriptInTable
 
 BillsGarden_ScriptPointers:
 	def_script_pointers
@@ -201,10 +200,10 @@ DoSpriteFacing:
 
 BillsGarden_TextPointers:
 	def_text_pointers
-	dw_const BillsGardenLeftNPCText,   TEXT_BILLS_GARDEN_VARIABLE_GUEST1
-	dw_const BillsGardenRightNPCText,  TEXT_BILLS_GARDEN_VARIABLE_GUEST2
-	dw_const BillsGardenSignText,      TEXT_BILLS_GARDEN_SIGN
-	dw_const BillsGardenOverheardText, TEXT_BILLS_GARDEN_OVERHEARD
+	dba_const BillsGardenLeftNPCText,   TEXT_BILLS_GARDEN_VARIABLE_GUEST1
+	dba_const BillsGardenRightNPCText,  TEXT_BILLS_GARDEN_VARIABLE_GUEST2
+	dba_const _BillsGardenSignText,     TEXT_BILLS_GARDEN_SIGN
+	dba_const BillsGardenOverheardText, TEXT_BILLS_GARDEN_OVERHEARD
 
 BillsGardenLeftNPCText:
 	text_asm
@@ -238,10 +237,6 @@ BillsGardenRightNPCTextPointers:
 	dw BillsGardenGiovanniText
 	dw BillsGardenMomText
 
-BillsGardenSignText:
-	text_far _BillsGardenSignText
-	text_end
-
 BillsGardenOverheardText:
 	text_asm
 	ld hl, BillsGardenEavesDropQuestion
@@ -257,12 +252,10 @@ BillsGardenOverheardText:
 	rst TextScriptEnd
 
 BillsGardenEavesDropQuestion:
-	text_far _BillsGardenEavesdropQuestion
-	text_end
+	text_far_end _BillsGardenEavesdropQuestion
 
 BillsGardenEavesDropQuestionNo:
-	text_far _CeladonMartUsePhoneTextNo
-	text_end
+	text_far_end _CeladonMartUsePhoneTextNo
 
 BillsGardenOverheardTextPointers:
 	dw BillsGardenErikaSabrinaOverheardText
@@ -274,8 +267,7 @@ BillsGardenOverheardTextPointers:
 ; erika and sabrina
 
 BillsGardenErikaSabrinaOverheardText:
-	text_far _BillsGardenErikaSabrinaOverheardText
-	text_end
+	text_far_end _BillsGardenErikaSabrinaOverheardText
 
 BillsGardenErikaText:
 	text_asm
@@ -304,27 +296,21 @@ BillsGardenErikaText:
 	rst TextScriptEnd
 
 BillsGardenErikaText1:
-	text_far _BillsGardenErikaText1
-	text_end
+	text_far_end _BillsGardenErikaText1
 BillsGardenErikaText2Yes:
-	text_far _BillsGardenErikaText2Yes
-	text_end
+	text_far_end _BillsGardenErikaText2Yes
 BillsGardenErikaText2No:
-	text_far _BillsGardenErikaText2No
-	text_end
+	text_far_end _BillsGardenErikaText2No
 BillsGardenErikaText3:
-	text_far _BillsGardenErikaText3
-	text_end
+	text_far_end _BillsGardenErikaText3
 
 BillsGardenSabrinaText:
-	text_far _BillsGardenSabrinaText
-	text_end
+	text_far_end _BillsGardenSabrinaText
 
 ; blue and daisy
 
 BillsGardenBlueDaisyOverheardText:
-	text_far _BillsGardenBlueDaisyOverheardText
-	text_end
+	text_far_end _BillsGardenBlueDaisyOverheardText
 
 BillsGardenBlueText:
 	text_asm 
@@ -364,23 +350,17 @@ BillsGardenBlueText:
 	rst TextScriptEnd
 
 BillsGardenBlueText1:
-	text_far _BillsGardenBlueText
-	text_end
+	text_far_end _BillsGardenBlueText
 BillsGardenBlueText2:
-	text_far _BillsGardenBlueText2
-	text_end
+	text_far_end _BillsGardenBlueText2
 BillsGardenBlueText3:
-	text_far _BillsGardenBlueText3
-	text_end
+	text_far_end _BillsGardenBlueText3
 BillsGardenBlueText4:
-	text_far _BillsGardenBlueText4
-	text_end
+	text_far_end _BillsGardenBlueText4
 BillsGardenBlueText4Yes:
-	text_far _BillsGardenBlueText4Yes
-	text_end
+	text_far_end _BillsGardenBlueText4Yes
 BillsGardenBlueText4No:
-	text_far _BillsGardenBlueText4No
-	text_end
+	text_far_end _BillsGardenBlueText4No
 
 BillsGardenDaisyText:
 	text_asm
@@ -395,21 +375,17 @@ BillsGardenDaisyText:
 	rst TextScriptEnd
 
 BillsGardenDaisyText1:
-	text_far _BillsGardenDaisyText
-	text_end
+	text_far_end _BillsGardenDaisyText
 BillsGardenDaisyText2:
-	text_far _BillsGardenDaisyText2
-	text_end
+	text_far_end _BillsGardenDaisyText2
 
 ; bike shop owner and misty
 
 BillsGardenBikeShopOwnerMistyOverheardText:
-	text_far _BillsGardenBikeShopOwnerMistyOverheardText
-	text_end
+	text_far_end _BillsGardenBikeShopOwnerMistyOverheardText
 
 BillsGardenBikeShopOwnerText:
-	text_far _BillsGardenBikeShopOwnerText
-	text_end
+	text_far_end _BillsGardenBikeShopOwnerText
 
 BillsGardenMistyText:
 	text_asm
@@ -430,24 +406,19 @@ BillsGardenMistyText:
 	rst TextScriptEnd
 
 BillsGardenMistyText1:
-	text_far _BillsGardenMistyText
-	text_end
+	text_far_end _BillsGardenMistyText
 BillsGardenMistyText2:
-	text_far _BillsGardenMistyText2
-	text_end
+	text_far_end _BillsGardenMistyText2
 BillsGardenMistyText3:
-	text_far _BillsGardenMistyText3
-	text_end
+	text_far_end _BillsGardenMistyText3
 
 ; Agatha and Oak
 
 BillsGardenAgathaOakOverheardText:
-	text_far _BillsGardenAgathaOakOverheardText
-	text_end
+	text_far_end _BillsGardenAgathaOakOverheardText
 
 BillsGardenAgathaText:
-	text_far _BillsGardenAgathaText
-	text_end
+	text_far_end _BillsGardenAgathaText
 
 BillsGardenOakText:
 	text_asm
@@ -480,20 +451,15 @@ BillsGardenOakText:
 	rst TextScriptEnd
 
 BillsGardenOakText1:
-	text_far _BillsGardenOakText
-	text_end
+	text_far_end _BillsGardenOakText
 BillsGardenOakText2:
-	text_far _BillsGardenOakText2
-	text_end
+	text_far_end _BillsGardenOakText2
 BillsGardenOakText3:
-	text_far _BillsGardenOakText3
-	text_end
+	text_far_end _BillsGardenOakText3
 BillsGardenOakText4:
-	text_far _BillsGardenOakText4
-	text_end
+	text_far_end _BillsGardenOakText4
 BillsGardenOakText5:
-	text_far _BillsGardenOakText5
-	text_end
+	text_far_end _BillsGardenOakText5
 
 
 ; input d = which pokemon to find
@@ -519,8 +485,7 @@ FindPokemonInParty:
 ; Mr Fuji and Giovanni
 
 BillsGardenMrFujiGiovanniOverheardText:
-	text_far _BillsGardenMrFujiGiovanniOverheardText
-	text_end
+	text_far_end _BillsGardenMrFujiGiovanniOverheardText
 BillsGardenMrFujiText:
 	text_asm
 	ld d, MEWTWO
@@ -536,14 +501,11 @@ BillsGardenMrFujiText:
 	rst _PrintText
 	rst TextScriptEnd
 BillsGardenMrFujiText1:
-	text_far _BillsGardenMrFujiText
-	text_end
+	text_far_end _BillsGardenMrFujiText
 BillsGardenMrFujiMewtwoText:
-	text_far _BillsGardenMrFujiMewtwoText
-	text_end
+	text_far_end _BillsGardenMrFujiMewtwoText
 BillsGardenMrFujiArmoredMewtwoText:
-	text_far _BillsGardenMrFujiArmoredMewtwoText
-	text_end
+	text_far_end _BillsGardenMrFujiArmoredMewtwoText
 
 BillsGardenGiovanniText:
 	text_asm
@@ -561,14 +523,11 @@ BillsGardenGiovanniText:
 	rst TextScriptEnd
 
 BillsGardenGiovanniText1:
-	text_far _BillsGardenGiovanniText
-	text_end
+	text_far_end _BillsGardenGiovanniText
 BillsGardenGiovanniMewtwoText:
-	text_far _BillsGardenGiovanniMewtwoText
-	text_end
+	text_far_end _BillsGardenGiovanniMewtwoText
 BillsGardenGiovanniArmoredMewtwoText:
-	text_far _BillsGardenGiovanniArmoredMewtwoText
-	text_end
+	text_far_end _BillsGardenGiovanniArmoredMewtwoText
 
 ; Dad and Mom
 
@@ -601,7 +560,7 @@ BillsGardenDadText:
 	jr nz, .no
 	call GBFadeOutToWhite
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call ClearScreen
 	ld hl, TextScriptEndingText
 	rst _PrintText ; seemingly the only way of preventing sprites from flickering on the screen during the next printText
@@ -618,23 +577,17 @@ BillsGardenDadText:
 	rst TextScriptEnd
 
 BillsGardenDadText1:
-	text_far _BillsGardenDadText
-	text_end
+	text_far_end _BillsGardenDadText
 BillsGardenDadText2:
-	text_far _BillsGardenDadText2
-	text_end
+	text_far_end _BillsGardenDadText2
 BillsGardenDadText3:
-	text_far _BillsGardenDadText3
-	text_end
+	text_far_end _BillsGardenDadText3
 BillsGardenDadText3No:
-	text_far _BillsGardenDadText3No
-	text_end
+	text_far_end _BillsGardenDadText3No
 BillsGardenDadText3Yes:
-	text_far _BillsGardenDadText3Yes
-	text_end
+	text_far_end _BillsGardenDadText3Yes
 BillsGardenDadText4:
-	text_far _BillsGardenDadText4
-	text_end
+	text_far_end _BillsGardenDadText4
 
 BillsGardenMomText:
 	text_asm
@@ -647,5 +600,4 @@ BillsGardenMomText:
 	rst TextScriptEnd
 
 BillsGardenMomText1:
-	text_far _BillsGardenMomText
-	text_end
+	text_far_end _BillsGardenMomText

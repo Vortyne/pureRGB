@@ -20,7 +20,7 @@ TextCommandPromptMultiButton::
 	lb bc, 6, 18
 	call ClearScreenArea
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	ret
 .interrupted

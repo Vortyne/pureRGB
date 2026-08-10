@@ -4,13 +4,10 @@ VermilionGym_Script:
 	bit BIT_CUR_MAP_LOADED_2, [hl]
 	res BIT_CUR_MAP_LOADED_2, [hl]
 	call nz, VermilionGymSetDoorTile
-	call EnableAutoTextBoxDrawing
 	ld hl, VermilionGymTrainerHeaders
 	ld de, VermilionGym_ScriptPointers
-	ld a, [wVermilionGymCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wVermilionGymCurScript], a
-	ret
+	ld bc, wVermilionGymCurScript
+	jp ExecuteCustomMapScriptInTable
 
 VermilionGymSetDoorTile:
 	CheckEvent EVENT_2ND_LOCK_OPENED
@@ -33,8 +30,6 @@ VermilionGym_ScriptPointers:
 	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_VERMILIONGYM_START_BATTLE
 	dw_const EndTrainerBattle,                      SCRIPT_VERMILIONGYM_END_BATTLE
 	dw_const VermilionGymLTSurgeAfterBattleScript,  SCRIPT_VERMILIONGYM_LT_SURGE_AFTER_BATTLE
-
-
 
 VermilionGymResetScripts:
 	call ResetMapScripts
@@ -81,28 +76,28 @@ VermilionGymLTSurgeReceiveTM24Script:
 
 VermilionGym_TextPointers:
 	def_text_pointers
-	dw_const VermilionGymLTSurgeText,                 TEXT_VERMILIONGYM_LT_SURGE
-	dw_const VermilionGymGentlemanText,               TEXT_VERMILIONGYM_SOLDIER1
-	dw_const VermilionGymSuperNerdText,               TEXT_VERMILIONGYM_ROCKER
-	dw_const VermilionGymSailorText,                  TEXT_VERMILIONGYM_SOLDIER2
-	dw_const VermilionGymGymGuideText,                TEXT_VERMILIONGYM_GYM_GUIDE
-	dw_const VermilionGymGarbageNearSurgeText,        TEXT_VERMILIONGYM_GARBAGE_NEAR_SURGE
-	dw_const VermilionGymBookshelfText,               TEXT_VERMILIONGYM_BOOKSHELF
-	dw_const VermilionGymLTSurgeThunderBadgeInfoText, TEXT_VERMILIONGYM_LT_SURGE_THUNDER_BADGE_INFO
-	dw_const VermilionGymLTSurgeReceivedTM24Text,     TEXT_VERMILIONGYM_LT_SURGE_RECEIVED_TM24
-	dw_const VermilionGymLTSurgeTM24NoRoomText,       TEXT_VERMILIONGYM_LT_SURGE_TM24_NO_ROOM
-	dw_const VermilionGymTrashText,                   TEXT_VERMILIONGYM_ONLY_TRASH_HERE
-	dw_const VermilionGymTrashSuccessText1,           TEXT_VERMILIONGYM_FOUND_FIRST_SWITCH
-	dw_const VermilionGymTrashSuccessText3,           TEXT_VERMILIONGYM_FOUND_SECOND_SWITCH
+	dba_const VermilionGymLTSurgeText,                 TEXT_VERMILIONGYM_LT_SURGE
+	dba_const VermilionGymGentlemanText,               TEXT_VERMILIONGYM_SOLDIER1
+	dba_const VermilionGymSuperNerdText,               TEXT_VERMILIONGYM_ROCKER
+	dba_const VermilionGymSailorText,                  TEXT_VERMILIONGYM_SOLDIER2
+	dba_const VermilionGymGymGuideText,                TEXT_VERMILIONGYM_GYM_GUIDE
+	dba_const _VermilionGymGarbageNearSurgeText,        TEXT_VERMILIONGYM_GARBAGE_NEAR_SURGE
+	dba_const _VermilionGymBookshelfText,               TEXT_VERMILIONGYM_BOOKSHELF
+	dba_const _VermilionGymLTSurgeThunderBadgeInfoText, TEXT_VERMILIONGYM_LT_SURGE_THUNDER_BADGE_INFO
+	dba_const VermilionGymLTSurgeReceivedTM24Text,     TEXT_VERMILIONGYM_LT_SURGE_RECEIVED_TM24
+	dba_const _VermilionGymLTSurgeTM24NoRoomText,       TEXT_VERMILIONGYM_LT_SURGE_TM24_NO_ROOM
+	dba_const _VermilionGymTrashText,                   TEXT_VERMILIONGYM_ONLY_TRASH_HERE
+	dba_const VermilionGymTrashSuccessText1,           TEXT_VERMILIONGYM_FOUND_FIRST_SWITCH
+	dba_const VermilionGymTrashSuccessText3,           TEXT_VERMILIONGYM_FOUND_SECOND_SWITCH
 
 VermilionGymTrainerHeaders:
 	def_trainers 2
 VermilionGymTrainerHeader0:
-	trainer EVENT_BEAT_VERMILION_GYM_TRAINER_0, 3, VermilionGymGentlemanBattleText, VermilionGymGentlemanEndBattleText, VermilionGymGentlemanAfterBattleText
+	trainer EVENT_BEAT_VERMILION_GYM_TRAINER_0, 3, _VermilionGymGentlemanBattleText, _VermilionGymGentlemanEndBattleText, VermilionGymGentlemanAfterBattleText
 VermilionGymTrainerHeader1:
-	trainer EVENT_BEAT_VERMILION_GYM_TRAINER_1, 2, VermilionGymSuperNerdBattleText, VermilionGymSuperNerdEndBattleText, VermilionGymSuperNerdAfterBattleText
+	trainer EVENT_BEAT_VERMILION_GYM_TRAINER_1, 2, _VermilionGymSuperNerdBattleText, _VermilionGymSuperNerdEndBattleText, VermilionGymSuperNerdAfterBattleText
 VermilionGymTrainerHeader2:
-	trainer EVENT_BEAT_VERMILION_GYM_TRAINER_2, 3, VermilionGymSailorBattleText, VermilionGymSailorEndBattleText, VermilionGymSailorAfterBattleText
+	trainer EVENT_BEAT_VERMILION_GYM_TRAINER_2, 3, _VermilionGymSailorBattleText, _VermilionGymSailorEndBattleText, VermilionGymSailorAfterBattleText
 	db -1 ; end
 
 VermilionGymLTSurgeText:
@@ -142,30 +137,18 @@ VermilionGymLTSurgeText:
 	rst TextScriptEnd
 
 .PreBattleText:
-	text_far _VermilionGymLTSurgePreBattleText
-	text_end
+	text_far_end _VermilionGymLTSurgePreBattleText
 
 .PostBattleAdviceText:
-	text_far _VermilionGymLTSurgePostBattleAdviceText
-	text_end
-
-VermilionGymLTSurgeThunderBadgeInfoText:
-	text_far _VermilionGymLTSurgeThunderBadgeInfoText
-	text_end
+	text_far_end _VermilionGymLTSurgePostBattleAdviceText
 
 VermilionGymLTSurgeReceivedTM24Text:
 	text_far _VermilionGymLTSurgeReceivedTM24Text
 	sound_get_key_item
-	text_far _TM24ExplanationText
-	text_end
-
-VermilionGymLTSurgeTM24NoRoomText:
-	text_far _VermilionGymLTSurgeTM24NoRoomText
-	text_end
+	text_far_end _TM24ExplanationText
 
 VermilionGymLTSurgeReceivedThunderBadgeText:
-	text_far _VermilionGymLTSurgeReceivedThunderBadgeText
-	text_end
+	text_far_end _VermilionGymLTSurgeReceivedThunderBadgeText
 
 VermilionGymGentlemanText:
 	script_trainer VermilionGymTrainerHeader0
@@ -175,14 +158,6 @@ VermilionGymSuperNerdText:
 
 VermilionGymSailorText:
 	script_trainer VermilionGymTrainerHeader2
-
-VermilionGymGentlemanBattleText:
-	text_far _VermilionGymGentlemanBattleText
-	text_end
-
-VermilionGymGentlemanEndBattleText:
-	text_far _VermilionGymGentlemanEndBattleText
-	text_end
 
 VermilionGymGetTrainerText:
 	call .getWhich
@@ -195,9 +170,9 @@ VermilionGymGetTrainerText:
 	CheckEvent EVENT_BEAT_LT_SURGE
 	ret nz
 	CheckEvent EVENT_2ND_LOCK_OPENED
-	ld c, 5
+	ld c, 4
 	ret nz
-	ld c, 10
+	ld c, 8
 	ret
 
 VermilionGymGentlemanAfterBattleText:
@@ -206,14 +181,11 @@ VermilionGymGentlemanAfterBattleText:
 	jr VermilionGymGetTrainerText
 .text_entries
 .afterBeat
-	text_far _VermilionGymGentlemanAfterBattleGymDefeatedText
-	text_end
+	text_far_end _VermilionGymGentlemanAfterBattleGymDefeatedText
 .afterLocks
-	text_far _VermilionGymGentlemanAfterLocksText
-	text_end
+	text_far_end _VermilionGymGentlemanAfterLocksText
 .beforeBeat
-	text_far _VermilionGymGentlemanAfterBattleText
-	text_end
+	text_far_end _VermilionGymGentlemanAfterBattleText
 
 VermilionGymSuperNerdAfterBattleText:
 	text_asm
@@ -221,14 +193,11 @@ VermilionGymSuperNerdAfterBattleText:
 	jr VermilionGymGetTrainerText
 .text_entries
 .afterBeat
-	text_far _VermilionGymSuperNerdAfterBattleGymDefeatedText
-	text_end
+	text_far_end _VermilionGymSuperNerdAfterBattleGymDefeatedText
 .afterLocks
-	text_far _VermilionGymSuperNerdAfterLocksText
-	text_end
+	text_far_end _VermilionGymSuperNerdAfterLocksText
 .beforeBeat
-	text_far _VermilionGymSuperNerdAfterBattleText
-	text_end
+	text_far_end _VermilionGymSuperNerdAfterBattleText
 
 VermilionGymSailorAfterBattleText:
 	text_asm
@@ -236,30 +205,11 @@ VermilionGymSailorAfterBattleText:
 	jr VermilionGymGetTrainerText
 .text_entries
 .afterBeat
-	text_far _VermilionGymSailorAfterBattleGymDefeatedText
-	text_end
+	text_far_end _VermilionGymSailorAfterBattleGymDefeatedText
 .afterLocks
-	text_far _VermilionGymSailorAfterLocksText
-	text_end
+	text_far_end _VermilionGymSailorAfterLocksText
 .beforeBeat
-	text_far _VermilionGymSailorAfterBattleText
-	text_end
-
-VermilionGymSailorBattleText:
-	text_far _VermilionGymSailorBattleText
-	text_end
-
-VermilionGymSailorEndBattleText:
-	text_far _VermilionGymSailorEndBattleText
-	text_end
-
-VermilionGymSuperNerdBattleText:
-	text_far _VermilionGymSuperNerdBattleText
-	text_end
-
-VermilionGymSuperNerdEndBattleText:
-	text_far _VermilionGymSuperNerdEndBattleText
-	text_end
+	text_far_end _VermilionGymSailorAfterBattleText
 
 VermilionGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
@@ -294,48 +244,28 @@ VermilionGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips a
 	rst TextScriptEnd
 
 ReceivedApexChipsText3:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText3:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText3:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 AlreadyReceivedApexChipsText3:
-	text_far _AlreadyReceivedApexChipsText
-	text_end
+	text_far_end _AlreadyReceivedApexChipsText
 
 VermilionGymGuideChampInMakingText:
 	text_far _GymGuideChampInMakingText
-	text_far _VermilionGymGymGuideChampInMakingText
-	text_end
+	text_far_end _VermilionGymGymGuideChampInMakingText
 
 VermilionGymGuidePostBattleText:
-	text_far _VermilionGymGymGuideBeatLTSurgeText
-	text_end
+	text_far_end _VermilionGymGymGuideBeatLTSurgeText
 
 VermilionGymGuideApexChipElectricText:
-	text_far _VermilionGymGuideApexChipElectricText
-	text_end
+	text_far_end _VermilionGymGuideApexChipElectricText
 
 ; PureRGBnote: ADDED: text entries for the garbage can and bookcase near surge for some flavour
-
-VermilionGymGarbageNearSurgeText:
-	text_far _VermilionGymGarbageNearSurgeText
-	text_end
-
-VermilionGymBookshelfText:
-	text_far _VermilionGymBookshelfText
-	text_end
-
-VermilionGymTrashText::
-	text_far _VermilionGymTrashText
-	text_end
 
 GymTrashScript::
 	call EnableAutoTextBoxDrawing
@@ -469,8 +399,7 @@ VermilionGymTrashSuccessText1::
 	call WaitForSoundToFinish
 	rst TextScriptEnd
 .lockOpened
-	text_far _VermilionGym1stElectricLock
-	text_end
+	text_far_end _VermilionGym1stElectricLock
 
 VermilionGymTrashSuccessText3::
 	text_far _VermilionGymTrashSuccessText2
@@ -490,11 +419,9 @@ VermilionGymTrashSuccessText3::
 	call WaitForSoundToFinish
 	rst TextScriptEnd
 .lockOpened
-	text_far _VermilionGym2ndElectricLock
-	text_end
+	text_far_end _VermilionGym2ndElectricLock
 .motorizedDoorOpened
-	text_far _VermilionGymTrashSuccessText3
-	text_end
+	text_far_end _VermilionGymTrashSuccessText3
 
 ;VermilionGymTrashFailText::
 ;	text_far _VermilionGymTrashFailText

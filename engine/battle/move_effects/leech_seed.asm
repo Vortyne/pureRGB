@@ -27,14 +27,12 @@ LeechSeedEffect_:
 	jp PrintText
 .moveMissed
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, EvadedAttackText
 	jp PrintText
 
 WasSeededText:
-	text_far _WasSeededText
-	text_end
+	text_far_end _WasSeededText
 
 EvadedAttackText:
-	text_far _EvadedAttackText
-	text_end
+	text_far_end _EvadedAttackText

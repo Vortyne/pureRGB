@@ -13,10 +13,9 @@ FocusEnergyEffect_:
 	jp PrintText
 .alreadyUsing
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	jpfar PrintButItFailedText_
 
 GettingPumpedText:
 	text_pause
-	text_far _GettingPumpedText
-	text_end
+	text_far_end _GettingPumpedText

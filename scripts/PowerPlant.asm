@@ -13,10 +13,8 @@ PowerPlant_Script:
 	call PowerPlantCheckStandingOnButton
 	ld hl, PowerPlantTrainerHeaders
 	ld de, PowerPlant_ScriptPointers
-	ld a, [wPowerPlantCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wPowerPlantCurScript], a
-	ret
+	ld bc, wPowerPlantCurScript
+	jp ExecuteCustomMapScriptInTable
 
 PowerPlantOnMapLoad:
 	call WasMapJustLoaded
@@ -119,11 +117,11 @@ PowerPlantCheckStandingOnButton:
 	ld a, SFX_TELEPORT_ENTER_2
 	rst _PlaySound
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, PowerPlantGatePowerDown
 	call PlayNewSoundChannel5
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, PowerPlantGateShutOff
 	call PlayNewSoundChannel8
 	ld a, TEXT_POWERPLANT_OPEN_GATE_TEXT
@@ -176,7 +174,7 @@ LoadVoltorbSprite::
 	push hl
 	call CopyMenuSpritesVideoData
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	; make it move a bit by alternating frames
 .loop
 	pop hl
@@ -239,49 +237,49 @@ PowerPlant_ScriptPointers:
 
 PowerPlant_TextPointers:
 	def_text_pointers
-	dw_const PowerPlantVoltorb1Text,   TEXT_POWERPLANT_VOLTORB1
-	dw_const PowerPlantVoltorb2Text,   TEXT_POWERPLANT_VOLTORB2
-	dw_const PowerPlantVoltorb3Text,   TEXT_POWERPLANT_VOLTORB3
-	dw_const PowerPlantElectrode1Text, TEXT_POWERPLANT_ELECTRODE1
-	dw_const PowerPlantVoltorb4Text,   TEXT_POWERPLANT_VOLTORB4
-	dw_const PowerPlantVoltorb5Text,   TEXT_POWERPLANT_VOLTORB5
-	dw_const PowerPlantElectrode2Text, TEXT_POWERPLANT_ELECTRODE2
-	dw_const PowerPlantVoltorb6Text,   TEXT_POWERPLANT_VOLTORB6
-	dw_const PowerPlantZapdosText,     TEXT_POWERPLANT_ZAPDOS
-	dw_const PickUpItemText,           TEXT_POWERPLANT_ITEM1
-	dw_const PickUpItemText,           TEXT_POWERPLANT_ITEM2
-	dw_const PickUpItemText,           TEXT_POWERPLANT_ITEM3
-	dw_const PickUpItemText,           TEXT_POWERPLANT_ITEM4
-	dw_const PickUpItemText,           TEXT_POWERPLANT_ITEM5
-	dw_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER1
-	dw_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER2
-	dw_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER3
-	dw_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER4
-	dw_const PowerPlantOpenGateText,   TEXT_POWERPLANT_OPEN_GATE_TEXT
-	dw_const PowerPlantElectricityText, TEXT_POWERPLANT_ELECTRICITY
-	dw_const PowerPlantZapdosFlewAwayText, TEXT_ZAPDOS_FLEW_AWAY
-	dw_const PowerPlantMagnetText, TEXT_POWERPLANT_MAGNET
-	dw_const MagnetonWasSuperChargedText, TEXT_MAGNETON_WAS_SUPERCHARGED
-	dw_const PowerPlantPowerBackText,  TEXT_POWERPLANT_POWER_BACK
+	dba_const PowerPlantVoltorb1Text,   TEXT_POWERPLANT_VOLTORB1
+	dba_const PowerPlantVoltorb2Text,   TEXT_POWERPLANT_VOLTORB2
+	dba_const PowerPlantVoltorb3Text,   TEXT_POWERPLANT_VOLTORB3
+	dba_const PowerPlantElectrode1Text, TEXT_POWERPLANT_ELECTRODE1
+	dba_const PowerPlantVoltorb4Text,   TEXT_POWERPLANT_VOLTORB4
+	dba_const PowerPlantVoltorb5Text,   TEXT_POWERPLANT_VOLTORB5
+	dba_const PowerPlantElectrode2Text, TEXT_POWERPLANT_ELECTRODE2
+	dba_const PowerPlantVoltorb6Text,   TEXT_POWERPLANT_VOLTORB6
+	dba_const PowerPlantZapdosText,     TEXT_POWERPLANT_ZAPDOS
+	dba_const PickUpItemText,           TEXT_POWERPLANT_ITEM1
+	dba_const PickUpItemText,           TEXT_POWERPLANT_ITEM2
+	dba_const PickUpItemText,           TEXT_POWERPLANT_ITEM3
+	dba_const PickUpItemText,           TEXT_POWERPLANT_ITEM4
+	dba_const PickUpItemText,           TEXT_POWERPLANT_ITEM5
+	dba_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER1
+	dba_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER2
+	dba_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER3
+	dba_const PowerPlantComputerText,  TEXT_POWERPLANT_COMPUTER4
+	dba_const _PowerPlantOpenGateText,   TEXT_POWERPLANT_OPEN_GATE_TEXT
+	dba_const _PowerPlantElectricityText, TEXT_POWERPLANT_ELECTRICITY
+	dba_const _ZapdosFlewAway, TEXT_ZAPDOS_FLEW_AWAY
+	dba_const PowerPlantMagnetText, TEXT_POWERPLANT_MAGNET
+	dba_const MagnetonWasSuperChargedText, TEXT_MAGNETON_WAS_SUPERCHARGED
+	dba_const _PowerCameBackText,  TEXT_POWERPLANT_POWER_BACK
 
 PowerPlantTrainerHeaders:
 	def_trainers
 Voltorb0TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_0, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_0, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb1TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_1, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_1, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb2TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_2, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_2, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb3TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_3, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_3, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb4TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_4, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_4, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb5TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_5, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_5, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb6TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_6, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_6, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 Voltorb7TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_7, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_7, 0, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText, _PowerPlantVoltorbBattleText
 	db -1 ; end
 
 InitVoltorbBattle:
@@ -359,14 +357,6 @@ PowerPlantZapdosText:
 	ld [wPowerPlantCurScript], a
 	rst TextScriptEnd
 
-PowerPlantVoltorbBattleText:
-	text_far _PowerPlantVoltorbBattleText
-	text_end
-
-PowerPlantOpenGateText:
-	text_far _PowerPlantOpenGateText
-	text_end
-
 PowerPlantElectricity1::
 	CheckEvent EVENT_PRESSED_POWER_PLANT_SWITCH1
 	ret nz
@@ -390,10 +380,6 @@ PowerPlantElectricity:
 	ld a, TEXT_POWERPLANT_ELECTRICITY
 	ldh [hTextID], a
 	jp DisplayTextID
-
-PowerPlantElectricityText::
-	text_far _PowerPlantElectricityText
-	text_end
 
 ZapdosAbsorbAnimation:
 	ld a, BANK(SFX_Battle_25)
@@ -483,7 +469,7 @@ ZapdosAbsorbAnimation:
 	ld de, PowerPlantGatePowerDown
 	call PlayNewSoundChannel5
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, POWERPLANT_ZAPDOS
 	call SetSpriteFacingRight
 	call UpdateSprites
@@ -530,10 +516,6 @@ ZapdosAbsorbAnimation:
 	ld [wCurMapScript], a
 	ret
 
-PowerPlantZapdosFlewAwayText:
-	text_far _ZapdosFlewAway
-	text_end
-
 PowerPlantComputerText:
 	text_asm
 	CheckEvent EVENT_BEAT_ZAPDOS
@@ -556,21 +538,16 @@ PowerPlantComputerText:
 	rst _PrintText
 	rst TextScriptEnd
 .computer1
-	text_far _PowerPlantComputer1
-	text_end
+	text_far_end _PowerPlantComputer1
 .computer2
-	text_far _PowerPlantComputer2
-	text_end
+	text_far_end _PowerPlantComputer2
 .computer3
-	text_far _PowerPlantComputer3
-	text_end
+	text_far_end _PowerPlantComputer3
 .computer4
-	text_far _PowerPlantComputer4
-	text_end
+	text_far_end _PowerPlantComputer4
 
 PowerPlantPowerOut:
-	text_far _PowersOutCantUse
-	text_end
+	text_far_end _PowersOutCantUse
 
 PowerPlantMagnet::
 	ld a, TEXT_POWERPLANT_MAGNET
@@ -627,29 +604,22 @@ PowerPlantMagnetText:
 	ld hl, .magnetonWentClose
 	jr .done
 .electromagnetic
-	text_far _MagnetText
-	text_end
+	text_far_end _MagnetText
 .forgetIt
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 .magnemite
-	text_far _MagnetMagnemiteText
-	text_end
+	text_far_end _MagnetMagnemiteText
 .already
-	text_far _MagnetFloatingMagnetonText
-	text_end
+	text_far_end _MagnetFloatingMagnetonText
 .wrongMon
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 .magnetonWentClose
-	text_far _MagnetMagnetonText1
-	text_end
+	text_far_end _MagnetMagnetonText1
 
 MagnetonWasSuperChargedText:
 	text_far _MagnetMagnetonText2
 	sound_get_item_2
-	text_far _MagnetMagnetonText3
-	text_end
+	text_far_end _MagnetMagnetonText3
 
 MagnetonSuperchargeAnimation:
 	call IsPlayerAutoMoving
@@ -689,7 +659,7 @@ MagnetonSuperchargeAnimation:
 	call DisplayTextID
 	call ResumeMusic
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call .doBallPoof
 	ld c, TOGGLE_ELECTRODE_1
 	call HideObject
@@ -731,10 +701,6 @@ PowerPlantCheckPowersBack:
 	ldh [hTextID], a
 	jp DisplayTextID
 
-PowerPlantPowerBackText::
-	text_far _PowerCameBackText
-	text_end
-
 DoBallPoofOnNPC::
 	push de
 	ld de, SFX_Volcano_Ball_Poof_Ch5
@@ -744,7 +710,7 @@ DoBallPoofOnNPC::
 	pop de
 	callfar FarLoadSmokeTileFourTimes
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 ; input [hSpriteIndex] = which sprite
@@ -756,7 +722,7 @@ FloatingAnimation::
 	call GetPointerWithinSpriteStateData1
 	; hl = wSpriteStateDataXPixels
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	; do animation
 	; make magneton sprite wobble back and forth

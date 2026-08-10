@@ -44,26 +44,19 @@ OaksAideScript::
 	ret
 
 OaksAideHiText:
-	text_far _OaksAideHiText
-	text_end
+	text_far_end _OaksAideHiText
 
 OaksAideUhOhText:
-	text_far _OaksAideUhOhText
-	text_end
+	text_far_end _OaksAideUhOhText
 
 OaksAideComeBackText:
-	text_far _OaksAideComeBackText
-	text_end
+	text_far_end _OaksAideComeBackText
 
 OaksAideHereYouGoText:
-	text_far _OaksAideHereYouGoText
-	text_end
+	text_far_end _OaksAideHereYouGoText
 
 OaksAideGotItemText:
-	text_far _OaksAideGotItemText
-	sound_get_item_1
-	text_end
+	text_far_end _OaksAideGotItemText
 
 OaksAideNoRoomText:
-	text_far _OaksAideNoRoomText
-	text_end
+	text_far_end _OaksAideNoRoomText

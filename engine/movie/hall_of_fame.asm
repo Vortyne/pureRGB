@@ -2,7 +2,7 @@ AnimateHallOfFame:
 	call HoFFadeOutScreenAndMusic
 	call ClearScreen
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	call LoadFontTilePatterns
 	call LoadTextBoxTilePatterns
 	call DisableLCD
@@ -58,7 +58,7 @@ AnimateHallOfFame:
 	call HoFShowMonOrPlayer
 	call HoFDisplayAndRecordMonInfo
 	ld c, 80
-	rst _DelayFrames
+	rst DelayFrames
 	hlcoord 2, 13
 	lb bc, 3, 14
 	call TextBoxBorder
@@ -66,7 +66,7 @@ AnimateHallOfFame:
 	ld de, HallOfFameText
 	call PlaceString
 	ld c, 180
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeOutToWhite
 	pop bc
 	pop hl
@@ -278,7 +278,7 @@ HoFDisplayPlayerStats:
 HoFPrintTextAndDelay:
 	rst _PrintText
 	ld c, 120
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 HoFPlayTimeText:
@@ -288,12 +288,10 @@ HoFMoneyText:
 	db "MONEY@"
 
 DexSeenOwnedText:
-	text_far _DexSeenOwnedText
-	text_end
+	text_far_end _DexSeenOwnedText
 
 DexRatingText:
-	text_far _DexRatingText
-	text_end
+	text_far_end _DexRatingText
 
 HoFRecordMonInfo:
 	ld hl, wHallOfFame

@@ -408,11 +408,9 @@ BallCustomizationMenu::
 	call DisableTextDelay
 	jp LoadScreenTilesFromBuffer2
 .cannotChange
-	text_far _CeruleanBallDesignerCannotChangeTile
-	text_end
+	text_far_end _CeruleanBallDesignerCannotChangeTile
 .noColor
-	text_far _CeruleanBallDesignerCannotChangeColor
-	text_end
+	text_far_end _CeruleanBallDesignerCannotChangeColor
 
 LoadBallPoofTileAndOAM:
 	push de
@@ -1054,7 +1052,7 @@ VizualizeBallAnimation:
 	call HideAnimationOAMEntries
 	call ClearScreen
 	ld c, 16
-	rst _DelayFrames
+	rst DelayFrames
 	; need the first tile in sprite memory to be nothing for the original poof
 	ld hl, vSprites
 	lb bc, BANK(NothingSprite), 1
@@ -1345,7 +1343,7 @@ CeruleanBallDesignerPhotoHintMenu::
 .backToHint
 	pop af
 	ld hl, CeruleanBallDesignerPhotoHintTextRefs
-	ld bc, 5 ; length of each text reference
+	ld bc, TEXT_FAR_TABLE_ENTRY_SIZE
 	call AddNTimes
 	rst _PrintText
 	ret
@@ -1357,77 +1355,45 @@ CeruleanBallDesignerPhotoHintMenu::
 	rst _PrintText
 	ret
 .lastHintNotUnlocked
-	text_far _LastBallPhotoHintNotUnlocked
-	text_end
+	text_far_end _LastBallPhotoHintNotUnlocked
 
 CeruleanBallDesignerPhotoText:
 	db "Photo @"
 CeruleanBallDesignerHintText:
 	db "HINTS@"
 
-; Each ref is expected to be 5 bytes long with a single text far and then text end and in the correct order
+; Each ref is expected to be TEXT_FAR_TABLE_ENTRY_SIZE bytes long with a single text far end in the correct order
 ; Do not separate the below entries or change order
 CeruleanBallDesignerPhotoHintTextRefs:
 BallDesignerPokemonBreederHint:
-	text_far _BallDesignerPokemonBreederHint
-	text_end
-
+	text_far_end _BallDesignerPokemonBreederHint
 BallDesignerPsyduckHint:
-	text_far _BallDesignerPsyduckHint
-	text_end
-
+	text_far_end _BallDesignerPsyduckHint
 BallDesignerFlareonHint:
-	text_far _BallDesignerFlareonHint
-	text_end
-
+	text_far_end _BallDesignerFlareonHint
 BallDesignerJigglypuffHint:
-	text_far _BallDesignerJigglypuffHint
-	text_end
-	
+	text_far_end _BallDesignerJigglypuffHint
 BallDesignerJolteonHint:
-	text_far _BallDesignerJolteonHint
-	text_end
-
+	text_far_end _BallDesignerJolteonHint
 BallDesignerPorygonHint:
-	text_far _BallDesignerPorygonHint
-	text_end
-
+	text_far_end _BallDesignerPorygonHint
 BallDesignerFossilHint:
-	text_far _BallDesignerFossilHint
-	text_end
-
+	text_far_end _BallDesignerFossilHint
 BallDesignerArticunoHint:
-	text_far _BallDesignerArticunoHint
-	text_end
-
+	text_far_end _BallDesignerArticunoHint
 BallDesignerAbraHint:
-	text_far _BallDesignerAbraHint
-	text_end
-
+	text_far_end _BallDesignerAbraHint
 BallDesignerPidgeotHint:
-	text_far _BallDesignerPidgeotHint
-	text_end
-
+	text_far_end _BallDesignerPidgeotHint
 BallDesignerGrimerHint:
-	text_far _BallDesignerGrimerHint
-	text_end
-
+	text_far_end _BallDesignerGrimerHint
 BallDesignerGastlyHint:
-	text_far _BallDesignerGastlyHint
-	text_end
-
+	text_far_end _BallDesignerGastlyHint
 BallDesignerScytherHint:
-	text_far _BallDesignerScytherHint
-	text_end
-
+	text_far_end _BallDesignerScytherHint
 BallDesignerLassHint:
-	text_far _BallDesignerLassHint
-	text_end
-
+	text_far_end _BallDesignerLassHint
 BallDesignerMankeyHint:
-	text_far _BallDesignerMankeyHint
-	text_end
-
+	text_far_end _BallDesignerMankeyHint
 BallDesignerGamblerHint:
-	text_far _BallDesignerGamblerHint
-	text_end
+	text_far_end _BallDesignerGamblerHint

@@ -4,26 +4,8 @@ FuchsiaPokecenter_Script:
 
 FuchsiaPokecenter_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaPokecenterNurseText,            TEXT_FUCHSIAPOKECENTER_NURSE
-	dw_const FuchsiaPokecenterRockerText,           TEXT_FUCHSIAPOKECENTER_ROCKER
-	dw_const FuchsiaPokecenterCooltrainerFText,     TEXT_FUCHSIAPOKECENTER_COOLTRAINER_F
-	dw_const FuchsiaPokecenterLinkReceptionistText, TEXT_FUCHSIAPOKECENTER_LINK_RECEPTIONIST
-	dw_const FuchsiaPokecenterBenchGuyText,         TEXT_FUCHSIAPOKECENTER_BENCH_GUY
-
-FuchsiaPokecenterNurseText:
-	script_pokecenter_nurse
-
-FuchsiaPokecenterRockerText:
-	text_far _FuchsiaPokecenterRockerText
-	text_end
-
-FuchsiaPokecenterCooltrainerFText:
-	text_far _FuchsiaPokecenterCooltrainerFText
-	text_end
-
-FuchsiaPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
-
-FuchsiaPokecenterBenchGuyText:
-	text_far _FuchsiaCityPokecenterGuyText
-	text_end
+	dba_const GenericPokecenterNurseText,             TEXT_FUCHSIAPOKECENTER_NURSE
+	dba_const _FuchsiaPokecenterRockerText,           TEXT_FUCHSIAPOKECENTER_ROCKER
+	dba_const _FuchsiaPokecenterCooltrainerFText,     TEXT_FUCHSIAPOKECENTER_COOLTRAINER_F
+	dba_const GenericLinkReceptionistText,            TEXT_FUCHSIAPOKECENTER_LINK_RECEPTIONIST
+	dba_const _FuchsiaPokecenterBenchGuyText,         TEXT_FUCHSIAPOKECENTER_BENCH_GUY

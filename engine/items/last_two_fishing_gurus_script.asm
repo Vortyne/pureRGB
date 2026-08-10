@@ -53,30 +53,21 @@ LastTwoGurusFishingGuideBookText::
 	CheckBothEventsSet EVENT_GOT_FUCHSIA_FISHING_GURU_ITEM, EVENT_GOT_ROUTE12_FISHING_GURU_ITEM
 	ld hl, FishingGuideBookText
 	jr nz, .done
-	ld hl, FishingGuideBookTextPrompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, LastTwoGurusFishingGuideInfo
 .done
 	rst _PrintText
 	ret
 
 FishingGuideBookText:
-	text_far _FishingGuideBookText
-	text_end
-
-FishingGuideBookTextPrompt:
-	text_far _FishingGuideBookText
-	text_promptbutton
-	text_end
-
+	text_far_end _FishingGuideBookText
 
 LastTwoGurusTextQuestion:
-	text_far _LastTwoGurusTextQuestion
-	text_end
+	text_far_end _LastTwoGurusTextQuestion
 
 LastTwoGurusTextYes:
-	text_far _LastTwoGurusTextYes
-	text_end
+	text_far_end _LastTwoGurusTextYes
 
 LastTwoGurusReceivedItemText:
 	text_far _LastTwoGurusReceivedItemText
@@ -84,23 +75,16 @@ LastTwoGurusReceivedItemText:
 	text_end
 
 LastTwoGurusTextNo:
-	text_far _LastTwoGurusTextNo
-	text_end
+	text_far_end _LastTwoGurusTextNo
 
 LastTwoGurusTextBagFull:
-	text_far _LastTwoGurusTextBagFull
-	text_end
+	text_far_end _LastTwoGurusTextBagFull
 
 LastTwoGurusTextAlreadyHaveSuperRod:
-	text_far _LastTwoGurusTextAlreadyHaveSuperRod
-	text_end
+	text_far_end _LastTwoGurusTextAlreadyHaveSuperRod
 
 LastTwoGurusFishingGuideReceived:
-	text_far _LastTwoGurusFishingGuideReceived
-	sound_get_item_2
-	text_promptbutton
-	text_end
+	text_far_end _LastTwoGurusFishingGuideReceived
 
 LastTwoGurusFishingGuideInfo:
-	text_far _LastTwoGurusFishingGuideInfo
-	text_end
+	text_far_end _LastTwoGurusFishingGuideInfo

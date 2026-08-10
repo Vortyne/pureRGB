@@ -3,14 +3,14 @@ PokemonFanClub_Script:
 
 PokemonFanClub_TextPointers:
 	def_text_pointers
-	dw_const PokemonFanClubPikachuFanText,   TEXT_POKEMONFANCLUB_PIKACHU_FAN
-	dw_const PokemonFanClubSeelFanText,      TEXT_POKEMONFANCLUB_SEEL_FAN
-	dw_const PokemonFanClubPikachuText,      TEXT_POKEMONFANCLUB_PIKACHU
-	dw_const PokemonFanClubSeelText,         TEXT_POKEMONFANCLUB_SEEL
-	dw_const PokemonFanClubChairmanText,     TEXT_POKEMONFANCLUB_CHAIRMAN
-	dw_const PokemonFanClubReceptionistText, TEXT_POKEMONFANCLUB_RECEPTIONIST
-	dw_const PokemonFanClubSign1Text,        TEXT_POKEMONFANCLUB_SIGN_1
-	dw_const PokemonFanClubSign2Text,        TEXT_POKEMONFANCLUB_SIGN_2
+	dba_const PokemonFanClubPikachuFanText,    TEXT_POKEMONFANCLUB_PIKACHU_FAN
+	dba_const PokemonFanClubSeelFanText,       TEXT_POKEMONFANCLUB_SEEL_FAN
+	dba_const PokemonFanClubPikachuText,       TEXT_POKEMONFANCLUB_PIKACHU
+	dba_const PokemonFanClubSeelText,          TEXT_POKEMONFANCLUB_SEEL
+	dba_const PokemonFanClubChairmanText,      TEXT_POKEMONFANCLUB_CHAIRMAN
+	dba_const _PokemonFanClubReceptionistText, TEXT_POKEMONFANCLUB_RECEPTIONIST
+	dba_const _PokemonFanClubSign1Text,        TEXT_POKEMONFANCLUB_SIGN_1
+	dba_const _PokemonFanClubSign2Text,        TEXT_POKEMONFANCLUB_SIGN_2
 
 PokemonFanClubPikachuFanText:
 	text_asm
@@ -46,16 +46,13 @@ PokemonFanClubPikachuFanText:
 	rst TextScriptEnd
 
 .NormalText:
-	text_far _PokemonFanClubPikachuFanNormalText
-	text_end
+	text_far_end _PokemonFanClubPikachuFanNormalText
 
 .BetterText:
-	text_far _PokemonFanClubPikachuFanBetterText
-	text_end
+	text_far_end _PokemonFanClubPikachuFanBetterText
 
 .yoursText:
-	text_far _PokemonFanClubPikachuFanYoursText
-	text_end
+	text_far_end _PokemonFanClubPikachuFanYoursText
 
 FanName:
 	db "SUPERFAN@"
@@ -94,16 +91,13 @@ PokemonFanClubSeelFanText:
 	rst TextScriptEnd
 
 .NormalText:
-	text_far _PokemonFanClubSeelFanNormalText
-	text_end
+	text_far_end _PokemonFanClubSeelFanNormalText
 
 .BetterText:
-	text_far _PokemonFanClubSeelFanBetterText
-	text_end
+	text_far_end _PokemonFanClubSeelFanBetterText
 
 .yoursText:
-	text_far _PokemonFanClubSeelFanYoursText
-	text_end
+	text_far_end _PokemonFanClubSeelFanYoursText
 
 PokemonFanClubPikachuText:
 	text_asm
@@ -116,8 +110,7 @@ PokemonFanClubPikachuText:
 	rst TextScriptEnd
 
 .Text
-	text_far _PokemonFanClubPikachuText
-	text_end
+	text_far_end _PokemonFanClubPikachuText
 
 PokemonFanClubSeelText:
 	text_asm
@@ -130,8 +123,7 @@ PokemonFanClubSeelText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _PokemonFanClubSeelText
-	text_end
+	text_far_end _PokemonFanClubSeelText
 
 PokemonFanClubChairmanText:
 	text_asm
@@ -183,50 +175,30 @@ PokemonFanClubChairmanText:
 	ret
 
 .IntroText:
-	text_far _PokemonFanClubChairmanIntroText
-	text_end
+	text_far_end _PokemonFanClubChairmanIntroText
 
 .StoryText:
-	text_far _PokemonFanClubChairmanStoryText
-	text_end
+	text_far_end _PokemonFanClubChairmanStoryText
 
 .BikeVoucherText:
 	text_far _PokemonFanClubReceivedBikeVoucherText
 	sound_get_key_item
-	text_far _PokemonFanClubExplainBikeVoucherText
-	text_end
+	text_far_end _PokemonFanClubExplainBikeVoucherText
 
 .NoStoryText:
-	text_far _PokemonFanClubNoStoryText
-	text_end
+	text_far_end _PokemonFanClubNoStoryText
 
 .FinalText:
-	text_far _PokemonFanClubChairFinalText
-	text_end
+	text_far_end _PokemonFanClubChairFinalText
 
 .BagFullText:
-	text_far _PokemonFanClubBagFullText
-	text_end
+	text_far_end _PokemonFanClubBagFullText
 
 .moreAboutRapidash
-	text_far _PokemonFanClubChairMoreText
-	text_end
+	text_far_end _PokemonFanClubChairMoreText
 
 .longOne
-	text_far _PokemonFanClubChairLongOne
-	text_end
+	text_far_end _PokemonFanClubChairLongOne
 
 ChairName::
 	db "CLUB CHAIR@"
-
-PokemonFanClubReceptionistText:
-	text_far _PokemonFanClubReceptionistText
-	text_end
-
-PokemonFanClubSign1Text:
-	text_far _PokemonFanClubSign1Text
-	text_end
-
-PokemonFanClubSign2Text:
-	text_far _PokemonFanClubSign2Text
-	text_end

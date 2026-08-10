@@ -2,13 +2,10 @@
 
 SilphCo8F_Script:
 	call SilphCo8FGateCallbackScript
-	call EnableAutoTextBoxDrawing
 	ld hl, SilphCo8TrainerHeaders
 	ld de, SilphCo8F_ScriptPointers
-	ld a, [wSilphCo8FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSilphCo8FCurScript], a
-	ret
+	ld bc, wSilphCo8FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SilphCo8FGateCallbackScript::
 	call WasMapJustLoaded
@@ -25,20 +22,29 @@ SilphCo8F_ScriptPointers:
 
 SilphCo8F_TextPointers:
 	def_text_pointers
-	dw_const SilphCo8FSilphWorkerMText, TEXT_SILPHCO8F_SILPH_WORKER_M
-	dw_const SilphCo8FRocket1Text,      TEXT_SILPHCO8F_ROCKET1
-	dw_const SilphCo8FScientistText,    TEXT_SILPHCO8F_SCIENTIST
-	dw_const SilphCo8FRocket2Text,      TEXT_SILPHCO8F_ROCKET2
+	dba_const SilphCo8FSilphWorkerMText, TEXT_SILPHCO8F_SILPH_WORKER_M
+	dba_const SilphCo8FRocket1Text,      TEXT_SILPHCO8F_ROCKET1
+	dba_const SilphCo8FScientistText,    TEXT_SILPHCO8F_SCIENTIST
+	dba_const SilphCo8FRocket2Text,      TEXT_SILPHCO8F_ROCKET2
 
 SilphCo8TrainerHeaders:
 	def_trainers 2
 SilphCo8TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_0, 4, SilphCo8FRocket1BattleText, SilphCo8FRocket1EndBattleText, SilphCo8FRocket1AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_0, 4, _SilphCo8FRocket1BattleText, _SilphCo8FRocket1EndBattleText, _SilphCo8FRocket1AfterBattleText
 SilphCo8TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_1, 4, SilphCo8FScientistBattleText, SilphCo8FScientistEndBattleText, SilphCo8FScientistAfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_1, 4, _SilphCo8FScientistBattleText, _SilphCo8FScientistEndBattleText, _SilphCo8FScientistAfterBattleText
 SilphCo8TrainerHeader2:
-	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_2, 4, SilphCo8FRocket2BattleText, SilphCo8FRocket2EndBattleText, SilphCo8FRocket2AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_8F_TRAINER_2, 4, _SilphCo8FRocket2BattleText, _SilphCo8FRocket2EndBattleText, _SilphCo8FRocket2AfterBattleText
 	db -1 ; end
+
+SilphCo8FRocket1Text:
+	script_trainer SilphCo8TrainerHeader0
+
+SilphCo8FScientistText:
+	script_trainer SilphCo8TrainerHeader1
+
+SilphCo8FRocket2Text:
+	script_trainer SilphCo8TrainerHeader2
 
 SilphCo8FSilphWorkerMText:
 	text_asm
@@ -51,54 +57,7 @@ SilphCo8FSilphWorkerMText:
 	rst TextScriptEnd
 
 .SilphIsFinishedText:
-	text_far _SilphCo8FSilphWorkerMSilphIsFinishedText
-	text_end
+	text_far_end _SilphCo8FSilphWorkerMSilphIsFinishedText
 
 .ThanksForSavingUsText:
-	text_far _SilphCo8FSilphWorkerMThanksForSavingUsText
-	text_end
-
-SilphCo8FRocket1Text:
-	script_trainer SilphCo8TrainerHeader0
-
-SilphCo8FScientistText:
-	script_trainer SilphCo8TrainerHeader1
-
-SilphCo8FRocket2Text:
-	script_trainer SilphCo8TrainerHeader2
-
-SilphCo8FRocket1BattleText:
-	text_far _SilphCo8FRocket1BattleText
-	text_end
-
-SilphCo8FRocket1EndBattleText:
-	text_far _SilphCo8FRocket1EndBattleText
-	text_end
-
-SilphCo8FRocket1AfterBattleText:
-	text_far _SilphCo8FRocket1AfterBattleText
-	text_end
-
-SilphCo8FScientistBattleText:
-	text_far _SilphCo8FScientistBattleText
-	text_end
-
-SilphCo8FScientistEndBattleText:
-	text_far _SilphCo8FScientistEndBattleText
-	text_end
-
-SilphCo8FScientistAfterBattleText:
-	text_far _SilphCo8FScientistAfterBattleText
-	text_end
-
-SilphCo8FRocket2BattleText:
-	text_far _SilphCo8FRocket2BattleText
-	text_end
-
-SilphCo8FRocket2EndBattleText:
-	text_far _SilphCo8FRocket2EndBattleText
-	text_end
-
-SilphCo8FRocket2AfterBattleText:
-	text_far _SilphCo8FRocket2AfterBattleText
-	text_end
+	text_far_end _SilphCo8FSilphWorkerMThanksForSavingUsText

@@ -1,9 +1,8 @@
 CeruleanCity_Script:
 	call CeruleanCityReplaceCutTile
-	call EnableAutoTextBoxDrawing
 	ld hl, CeruleanCity_ScriptPointers
-	ld a, [wCeruleanCityCurScript]
-	jp CallFunctionInTable
+	ld de, wCeruleanCityCurScript
+	jp CallMapScriptInTable
 
 ; PureRGBnote: ADDED: function that will remove the cut tree if we deleted it with the tree deleter
 CeruleanCityReplaceCutTile:
@@ -269,24 +268,24 @@ CeruleanCityRivalCleanupScript:
 
 CeruleanCity_TextPointers:
 	def_text_pointers
-	dw_const CeruleanCityRivalText,         TEXT_CERULEANCITY_RIVAL
-	dw_const CeruleanCityRocketText,        TEXT_CERULEANCITY_ROCKET
-	dw_const CeruleanCityCooltrainerMText,  TEXT_CERULEANCITY_COOLTRAINER_M
-	dw_const CeruleanCitySuperNerd1Text,    TEXT_CERULEANCITY_SUPER_NERD1
-	dw_const CeruleanCitySuperNerd2Text,    TEXT_CERULEANCITY_SUPER_NERD2
-	dw_const CeruleanCityGuardText,         TEXT_CERULEANCITY_GUARD1
-	dw_const CeruleanCityCooltrainerF1Text, TEXT_CERULEANCITY_COOLTRAINER_F1
-	dw_const CeruleanCitySlowbroText,       TEXT_CERULEANCITY_SLOWBRO
-	dw_const CeruleanCityCooltrainerF2Text, TEXT_CERULEANCITY_COOLTRAINER_F2
-	dw_const CeruleanCitySuperNerd3Text,    TEXT_CERULEANCITY_SUPER_NERD3
-	dw_const CeruleanCityGuardText,         TEXT_CERULEANCITY_GUARD2
-	dw_const PickUp5ItemText,               TEXT_CERULEANCITY_ITEM1 ; PureRGBnote: ADDED: new item location
-	dw_const CeruleanCitySignText,          TEXT_CERULEANCITY_SIGN
-	dw_const CeruleanCityTrainerTipsText,   TEXT_CERULEANCITY_TRAINER_TIPS
-	dw_const MartSignText,                  TEXT_CERULEANCITY_MART_SIGN
-	dw_const PokeCenterSignText,            TEXT_CERULEANCITY_POKECENTER_SIGN
-	dw_const CeruleanCityBikeShopSign,      TEXT_CERULEANCITY_BIKESHOP_SIGN
-	dw_const CeruleanCityGymSign,           TEXT_CERULEANCITY_GYM_SIGN
+	dba_const CeruleanCityRivalText,          TEXT_CERULEANCITY_RIVAL
+	dba_const CeruleanCityRocketText,         TEXT_CERULEANCITY_ROCKET
+	dba_const _CeruleanCityCooltrainerMText,  TEXT_CERULEANCITY_COOLTRAINER_M
+	dba_const CeruleanCitySuperNerd1Text,     TEXT_CERULEANCITY_SUPER_NERD1
+	dba_const _CeruleanCitySuperNerd2Text,    TEXT_CERULEANCITY_SUPER_NERD2
+	dba_const _CeruleanCityGuardText,         TEXT_CERULEANCITY_GUARD1
+	dba_const CeruleanCityCooltrainerF1Text,  TEXT_CERULEANCITY_COOLTRAINER_F1
+	dba_const CeruleanCitySlowbroText,        TEXT_CERULEANCITY_SLOWBRO
+	dba_const _CeruleanCityCooltrainerF2Text, TEXT_CERULEANCITY_COOLTRAINER_F2
+	dba_const _CeruleanCitySuperNerd3Text,    TEXT_CERULEANCITY_SUPER_NERD3
+	dba_const _CeruleanCityGuardText,         TEXT_CERULEANCITY_GUARD2
+	dba_const PickUp5ItemText,                TEXT_CERULEANCITY_ITEM1 ; PureRGBnote: ADDED: new item location
+	dba_const _CeruleanCitySignText,          TEXT_CERULEANCITY_SIGN
+	dba_const _CeruleanCityTrainerTipsText,   TEXT_CERULEANCITY_TRAINER_TIPS
+	dba_const MartSignText,                   TEXT_CERULEANCITY_MART_SIGN
+	dba_const PokeCenterSignText,             TEXT_CERULEANCITY_POKECENTER_SIGN
+	dba_const _CeruleanCityBikeShopSign,      TEXT_CERULEANCITY_BIKESHOP_SIGN
+	dba_const CeruleanCityGymSign,            TEXT_CERULEANCITY_GYM_SIGN
 
 CeruleanCityRivalText:
 	text_asm
@@ -301,20 +300,16 @@ CeruleanCityRivalText:
 	rst TextScriptEnd
 
 .PreBattleText:
-	text_far _CeruleanCityRivalPreBattleText
-	text_end
+	text_far_end _CeruleanCityRivalPreBattleText
 
 CeruleanCityRivalDefeatedText:
-	text_far _CeruleanCityRivalDefeatedText
-	text_end
+	text_far_end _CeruleanCityRivalDefeatedText
 
 CeruleanCityRivalVictoryText:
-	text_far _CeruleanCityRivalVictoryText
-	text_end
+	text_far_end _CeruleanCityRivalVictoryText
 
 CeruleanCityRivalIWentToBillsText:
-	text_far _CeruleanCityRivalIWentToBillsText
-	text_end
+	text_far_end _CeruleanCityRivalIWentToBillsText
 
 CeruleanCityRocketText:
 	text_asm
@@ -362,8 +357,7 @@ CeruleanCityRocketText:
 
 
 .Text:
-	text_far _CeruleanCityRocketText
-	text_end
+	text_far_end _CeruleanCityRocketText
 
 .ReceivedTM28Text:
 	text_far _CeruleanCityRocketReceivedTM28Text
@@ -373,20 +367,13 @@ CeruleanCityRocketText:
 	text_end
 
 .TM28NoRoomText:
-	text_far _CeruleanCityRocketTM28NoRoomText
-	text_end
+	text_far_end _CeruleanCityRocketTM28NoRoomText
 
 .IGiveUpText:
-	text_far _CeruleanCityRocketIGiveUpText
-	text_end
+	text_far_end _CeruleanCityRocketIGiveUpText
 
 .IllReturnTheTMText:
-	text_far _CeruleanCityRocketIllReturnTheTMText
-	text_end
-
-CeruleanCityCooltrainerMText:
-	text_far _CeruleanCityCooltrainerMText
-	text_end
+	text_far_end _CeruleanCityRocketIllReturnTheTMText
 
 CeruleanCitySuperNerd1Text:
 	text_asm
@@ -399,20 +386,10 @@ CeruleanCitySuperNerd1Text:
 	rst TextScriptEnd
 
 .CeruleanCitySuperNerd1_BeforeTreeDelete:
-	text_far _CeruleanCitySuperNerd1Text
-	text_end
+	text_far_end _CeruleanCitySuperNerd1Text
 
 .CeruleanCitySuperNerd1_AfterTreeDelete:
-	text_far _CeruleanCitySuperNerd1_AfterTreeDelete
-	text_end
-
-CeruleanCitySuperNerd2Text:
-	text_far _CeruleanCitySuperNerd2Text
-	text_end
-
-CeruleanCityGuardText:
-	text_far _CeruleanCityGuardText
-	text_end
+	text_far_end _CeruleanCitySuperNerd1_AfterTreeDelete
 
 CeruleanCityCooltrainerF1Text:
 	text_asm
@@ -432,16 +409,13 @@ CeruleanCityCooltrainerF1Text:
 	rst TextScriptEnd
 
 .SlowbroUseSonicboomText:
-	text_far _CeruleanCityCooltrainerF1SlowbroUseSonicboomText
-	text_end
+	text_far_end _CeruleanCityCooltrainerF1SlowbroUseSonicboomText
 
 .SlowbroPunchText:
-	text_far _CeruleanCityCooltrainerF1SlowbroPunchText
-	text_end
+	text_far_end _CeruleanCityCooltrainerF1SlowbroPunchText
 
 .SlowbroWithdrawText:
-	text_far _CeruleanCityCooltrainerF1SlowbroWithdrawText
-	text_end
+	text_far_end _CeruleanCityCooltrainerF1SlowbroWithdrawText
 
 CeruleanCitySlowbroText:
 	text_asm
@@ -464,40 +438,16 @@ CeruleanCitySlowbroText:
 	rst TextScriptEnd
 
 .TookASnoozeText:
-	text_far _CeruleanCitySlowbroTookASnoozeText
-	text_end
+	text_far_end _CeruleanCitySlowbroTookASnoozeText
 
 .IsLoafingAroundText:
-	text_far _CeruleanCitySlowbroIsLoafingAroundText
-	text_end
+	text_far_end _CeruleanCitySlowbroIsLoafingAroundText
 
 .TurnedAwayText:
-	text_far _CeruleanCitySlowbroTurnedAwayText
-	text_end
+	text_far_end _CeruleanCitySlowbroTurnedAwayText
 
 .IgnoredOrdersText:
-	text_far _CeruleanCitySlowbroIgnoredOrdersText
-	text_end
-
-CeruleanCityCooltrainerF2Text:
-	text_far _CeruleanCityCooltrainerF2Text
-	text_end
-
-CeruleanCitySuperNerd3Text:
-	text_far _CeruleanCitySuperNerd3Text
-	text_end
-
-CeruleanCitySignText:
-	text_far _CeruleanCitySignText
-	text_end
-
-CeruleanCityTrainerTipsText:
-	text_far _CeruleanCityTrainerTipsText
-	text_end
-
-CeruleanCityBikeShopSign:
-	text_far _CeruleanCityBikeShopSign
-	text_end
+	text_far_end _CeruleanCitySlowbroIgnoredOrdersText
 
 CeruleanCityGymSign:
 	text_asm

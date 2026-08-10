@@ -3,17 +3,9 @@ PewterSpeechHouse_Script:
 
 PewterSpeechHouse_TextPointers:
 	def_text_pointers
-	dw_const PewterSpeechHouseGamblerText,           TEXT_PEWTERSPEECHHOUSE_GAMBLER
-	dw_const PewterSpeechHouseYoungsterText,         TEXT_PEWTERSPEECHHOUSE_YOUNGSTER
-	dw_const PewterSpeechHouseLostWalletBeautyText,  TEXT_PEWTERSPEECHHOUSE_LOST_WALLET_BEAUTY
-
-PewterSpeechHouseGamblerText:
-	text_far _PewterSpeechHouseGamblerText
-	text_end
-
-PewterSpeechHouseYoungsterText:
-	text_far _PewterSpeechHouseYoungsterText
-	text_end
+	dba_const _PewterSpeechHouseGamblerText,           TEXT_PEWTERSPEECHHOUSE_GAMBLER
+	dba_const _PewterSpeechHouseYoungsterText,         TEXT_PEWTERSPEECHHOUSE_YOUNGSTER
+	dba_const PewterSpeechHouseLostWalletBeautyText,  TEXT_PEWTERSPEECHHOUSE_LOST_WALLET_BEAUTY
 
 ; PureRGBnote: ADDED: new NPC who will give you POCKET ABRA once you return their LOST WALLET
 PewterSpeechHouseLostWalletBeautyText: 
@@ -56,17 +48,13 @@ PewterSpeechHouseLostWalletBeautyText:
 		rst TextScriptEnd
 
 PewterHouse2Text3Intro:
-	text_far _PewterHouse2Text3Intro
-	text_end
+	text_far_end _PewterHouse2Text3Intro
 
 PewterHouse2Text3Found:
-	text_far _PewterHouse2Text3Found
-	text_end
+	text_far_end _PewterHouse2Text3Found
 
 PewterHouse2Text3HowsAbra:
-	text_far _PewterHouse2Text3After
-	text_end
+	text_far_end _PewterHouse2Text3After
 
 ReceivedPocketAbraText:
-	text_far _ReceivedPocketAbraText
-	text_end
+	text_far_end _ReceivedPocketAbraText

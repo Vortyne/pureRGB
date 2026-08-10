@@ -519,6 +519,8 @@ _ChampArenaAssistantDefeatedAllTrainers::
 	line "has defeated all"
 	cont "challengers!"
 	para "Congratulations!@"
+	sound_get_item_2
+	text_promptbutton
 	text_end
 
 _ChampArenaAssistantCallInChallengers::

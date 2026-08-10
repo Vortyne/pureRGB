@@ -15,9 +15,8 @@ _DefenseCurlEffect::
 	ret
 .moveFailed
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	jpfar PrintButItFailedText_
 
 DefenseCurlGuardedText:
-	text_far _GuardedAgainstSuperEffectiveMovesText
-	text_end
+	text_far_end _GuardedAgainstSuperEffectiveMovesText

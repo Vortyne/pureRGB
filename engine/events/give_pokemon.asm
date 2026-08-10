@@ -88,9 +88,7 @@ GotMonText:
 	text_end
 
 SentToBoxText:
-	text_far _SentToBoxText
-	text_end
+	text_far_end _SentToBoxText
 
 BoxIsFullText:
-	text_far _BoxIsFullText
-	text_end
+	text_far_end _BoxIsFullText

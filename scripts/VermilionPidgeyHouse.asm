@@ -3,9 +3,9 @@ VermilionPidgeyHouse_Script:
 
 VermilionPidgeyHouse_TextPointers:
 	def_text_pointers
-	dw_const VermilionPidgeyHouseYoungsterText, TEXT_VERMILIONPIDGEYHOUSE_YOUNGSTER
-	dw_const VermilionPidgeyHousePidgeyText,    TEXT_VERMILIONPIDGEYHOUSE_PIDGEY
-	dw_const VermilionPidgeyHouseLetterText,    TEXT_VERMILIONPIDGEYHOUSE_LETTER
+	dba_const VermilionPidgeyHouseYoungsterText, TEXT_VERMILIONPIDGEYHOUSE_YOUNGSTER
+	dba_const VermilionPidgeyHousePidgeyText,    TEXT_VERMILIONPIDGEYHOUSE_PIDGEY
+	dba_const _VermilionPidgeyHouseLetterText,    TEXT_VERMILIONPIDGEYHOUSE_LETTER
 
 VermilionPidgeyHouseYoungsterText:
 	text_far _VermilionPidgeyHouseYoungsterText
@@ -30,7 +30,3 @@ VermilionPidgeyHousePidgeyText:
 	ld a, PIDGEY
 	call PlayCry
 	rst TextScriptEnd
-
-VermilionPidgeyHouseLetterText:
-	text_far _VermilionPidgeyHouseLetterText
-	text_end

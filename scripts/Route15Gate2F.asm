@@ -3,9 +3,9 @@ Route15Gate2F_Script:
 
 Route15Gate2F_TextPointers:
 	def_text_pointers
-	dw_const Route15Gate2FOaksAideText,   TEXT_ROUTE15GATE2F_OAKS_AIDE
-	dw_const Route15Gate2FBinocularsText, TEXT_ROUTE15GATE2F_BINOCULARS
-	dw_const Route15GateLeftBinocularsText, TEXT_ROUTE15GATE2F_BINOCULARS_ARTICUNO
+	dba_const Route15Gate2FOaksAideText,   TEXT_ROUTE15GATE2F_OAKS_AIDE
+	dba_const Route15Gate2FBinocularsText, TEXT_ROUTE15GATE2F_BINOCULARS
+	dba_const Route15GateLeftBinocularsText, TEXT_ROUTE15GATE2F_BINOCULARS_ARTICUNO
 
 ; PureRGBnote: CHANGED: oak's aide here will give you the BOOSTER CHIP instead of EXP.ALL, and it requires 80 pokemon caught to obtain.
 ; Once you install it, you must talk to him to get it removed. This removes the need for it taking up an item slot when in use.
@@ -57,13 +57,13 @@ RemoveBoosterChipSounds:
 	ld a, SFX_NOISE_INSTRUMENT16
 	rst _PlaySound
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .loop
 	ld a, SFX_NOISE_INSTRUMENT03
 	rst _PlaySound
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_WITHDRAW_DEPOSIT
 	rst _PlaySound
 	ld c, 30
@@ -71,8 +71,7 @@ RemoveBoosterChipSounds:
 	
 
 BoosterChipText:
-	text_far _Route15Gate2FOaksAideBoosterChipText
-	text_end
+	text_far_end _Route15Gate2FOaksAideBoosterChipText
 
 ;;;;;;;; PureRGBnote: FIXED: Articuno cry is played within the DisplayMonFrontSpriteInBox code now
 Route15GateLeftBinocularsText:
@@ -92,8 +91,7 @@ Route15GateLeftBinocularsText:
 ;;;;;;;;
 .text::
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route15UpstairsBinocularsText
-	text_end
+	text_far_end _Route15UpstairsBinocularsText
 
 
 Route15Gate2FBinocularsText:
@@ -103,22 +101,16 @@ Route15Gate2FBinocularsText:
 
 .Text:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route15Gate2FBinocularsText
-	text_end
+	text_far_end _Route15Gate2FBinocularsText
 
 Route15GateUpstairsNoRoomText:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 Route15GateUpstairsRemoveBoosterText:
-	text_far _Route15GateUpstairsRemoveBoosterText
-	text_end
+	text_far_end _Route15GateUpstairsRemoveBoosterText
 
 Route15GateUpstairsNoUninstallText:
-	text_far _FossilGuyDenied
-	text_end
+	text_far_end _FossilGuyDenied
 
 Route15GateUpstairsDoneText:
-	text_far _Route15GateUpstairsDoneText
-	sound_get_item_1
-	text_end
+	text_far_end _Route15GateUpstairsDoneText

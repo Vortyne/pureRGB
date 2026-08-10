@@ -43,7 +43,7 @@ AnimateHealingMachine:
 	jr nz, .doDelay ; NEW: if you're holding b when you start talking to the nurse, it'll do healing faster
 	ld c, 30
 .doDelay	
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .partyLoop
 	ld a, [wAudioROMBank]
@@ -66,7 +66,7 @@ AnimateHealingMachine:
 	cp MUSIC_PKMN_HEALED ; is the healed music still playing?
 	jr z, .waitLoop2 ; if so, check gain
 	ld c, 32
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	ldh [rOBP1], a
 	call UpdateGBCPal_OBP1 ; shinpokerednote: gbcnote: gbc color code from yellow 
@@ -98,7 +98,7 @@ FlashSprite8Times:
 	ldh [rOBP1], a
 	call UpdateGBCPal_OBP1 ; shinpokerednote: gbcnote: gbc color code from yellow 
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .loop
 	ret

@@ -44,6 +44,7 @@ _CeladonDinerCoinCaseGuyImFlatOutBustedText::
 _CeladonDinerCoinCaseGuyReceivedCoinCaseText::
 	text "<PLAYER> received"
 	line "a COIN CASE!@"
+	sound_get_key_item
 	text_end
 	
 ;_CeladonDinerCoinCaseGuyCoinCaseNoRoomText::

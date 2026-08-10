@@ -1,8 +1,7 @@
 SSAnne2F_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, SSAnne2F_ScriptPointers
-	ld a, [wSSAnne2FCurScript]
-	jp CallFunctionInTable
+	ld de, wSSAnne2FCurScript
+	jp CallMapScriptInTable
 
 SSAnne2F_ScriptPointers:
 	def_script_pointers
@@ -159,38 +158,24 @@ SSAnne2FRivalExitScript:
 
 SSAnne2F_TextPointers:
 	def_text_pointers
-	dw_const SSAnne2FWaiterText,         TEXT_SSANNE2F_WAITER
-	dw_const SSAnne2FRivalText,          TEXT_SSANNE2F_RIVAL
-	dw_const SSAnne2FRivalCutMasterText, TEXT_SSANNE2F_RIVAL_CUT_MASTER
-
-SSAnne2FWaiterText:
-	text_far _SSAnne2FWaiterText
-	text_end
+	dba_const _SSAnne2FWaiterText,         TEXT_SSANNE2F_WAITER
+	dba_const SSAnne2FRivalText,          TEXT_SSANNE2F_RIVAL
+	dba_const _SSAnne2FRivalCutMasterText, TEXT_SSANNE2F_RIVAL_CUT_MASTER
 
 SSAnne2FRivalText:
 	text_asm
-	ld hl, .Text
+	ld hl, .intro
 	rst _PrintText
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
-	ld hl, SSAnne2FRivalDefeatedText
-	ld de, SSAnne2FRivalVictoryText
+	ld hl, .defeated
+	ld de, .victory
 	call SaveEndBattleTextPointers
 	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRivalText
-	text_end
-
-SSAnne2FRivalDefeatedText:
-	text_far _SSAnne2FRivalDefeatedText
-	text_end
-
-SSAnne2FRivalVictoryText:
-	text_far _SSAnne2FRivalVictoryText
-	text_end
-
-SSAnne2FRivalCutMasterText:
-	text_far _SSAnne2FRivalCutMasterText
-	text_end
+.intro:
+	text_far_end _SSAnne2FRivalText
+.defeated:
+	text_far_end _SSAnne2FRivalDefeatedText
+.victory:
+	text_far_end _SSAnne2FRivalVictoryText

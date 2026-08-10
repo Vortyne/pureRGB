@@ -1,9 +1,8 @@
 Route23_Script:
 	call Route23SetVictoryRoadBoulders
-	call EnableAutoTextBoxDrawing
 	ld hl, Route23_ScriptPointers
-	ld a, [wRoute23CurScript]
-	jp CallFunctionInTable
+	ld de, wRoute23CurScript
+	jp CallMapScriptInTable
 
 Route23SetVictoryRoadBoulders:
 	ld hl, wCurrentMapScriptFlags
@@ -93,16 +92,16 @@ Route23ResetToDefaultScript:
 
 Route23_TextPointers:
 	def_text_pointers
-	dw_const Route23Guard1Text,              TEXT_ROUTE23_GUARD1
-	dw_const Route23Guard2Text,              TEXT_ROUTE23_GUARD2
-	dw_const Route23Swimmer1Text,            TEXT_ROUTE23_SWIMMER1
-	dw_const Route23Swimmer2Text,            TEXT_ROUTE23_SWIMMER2
-	dw_const Route23Guard3Text,              TEXT_ROUTE23_GUARD3
-	dw_const Route23Guard4Text,              TEXT_ROUTE23_GUARD4
-	dw_const Route23Guard5Text,              TEXT_ROUTE23_GUARD5
-	dw_const PickUpItemText,                 TEXT_ROUTE23_ITEM1 ; PureRGBnote: ADDED: new item on this route.
-	dw_const PickUpItemText,                 TEXT_ROUTE23_ITEM2 ; PureRGBnote: ADDED: new item on this route.
-	dw_const Route23VictoryRoadGateSignText, TEXT_ROUTE23_VICTORY_ROAD_GATE_SIGN
+	dba_const Route23Guard1Text,              TEXT_ROUTE23_GUARD1
+	dba_const Route23Guard2Text,              TEXT_ROUTE23_GUARD2
+	dba_const Route23Swimmer1Text,            TEXT_ROUTE23_SWIMMER1
+	dba_const Route23Swimmer2Text,            TEXT_ROUTE23_SWIMMER2
+	dba_const Route23Guard3Text,              TEXT_ROUTE23_GUARD3
+	dba_const Route23Guard4Text,              TEXT_ROUTE23_GUARD4
+	dba_const Route23Guard5Text,              TEXT_ROUTE23_GUARD5
+	dba_const PickUpItemText,                 TEXT_ROUTE23_ITEM1 ; PureRGBnote: ADDED: new item on this route.
+	dba_const PickUpItemText,                 TEXT_ROUTE23_ITEM2 ; PureRGBnote: ADDED: new item on this route.
+	dba_const _Route23VictoryRoadGateSignText, TEXT_ROUTE23_VICTORY_ROAD_GATE_SIGN
 
 Route23Guard1Text:
 	text_asm
@@ -174,10 +173,6 @@ Route23CheckForBadgeScript:
 	ld [wRoute23CurScript], a
 	ret
 
-Route23PrintOhThatsTheBadgeTextScript: ; unreferenced
-	ld hl, Route23OhThatIsTheBadgeText
-	jp PrintText
-
 Route23YouDontHaveTheBadgeYetText:
 	text_far _Route23YouDontHaveTheBadgeYetText
 	text_asm
@@ -189,9 +184,4 @@ Route23YouDontHaveTheBadgeYetText:
 Route23OhThatIsTheBadgeText:
 	text_far _Route23OhThatIsTheBadgeText
 	sound_get_item_1
-	text_far _Route23GoRightAheadText
-	text_end
-
-Route23VictoryRoadGateSignText:
-	text_far _Route23VictoryRoadGateSignText
-	text_end
+	text_far_end _Route23GoRightAheadText

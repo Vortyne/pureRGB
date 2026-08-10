@@ -15,19 +15,19 @@ ENDM
 
 
 MACRO? tx_pre_id
-	ld a, (\1_id - TextPredefs) / 2 + 1
+	ld a, (\1_id - TextPredefs) / 3
 ENDM
 
 MACRO? tx_pre
 	tx_pre_id \1
-	call PrintPredefTextID
+	call PrintPredefText
 ENDM
 
 MACRO? tx_pre_jump
 	tx_pre_id \1
-	jp PrintPredefTextID
+	jp PrintPredefText
 ENDM
 
 MACRO? db_tx_pre
-	db (\1_id - TextPredefs) / 2 + 1
+	db (\1_id - TextPredefs) / 3
 ENDM

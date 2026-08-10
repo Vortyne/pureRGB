@@ -63,26 +63,26 @@ CeladonBackAlleyEntranceBlockData:
 
 CeladonCity_TextPointers:
 	def_text_pointers
-	dw_const CeladonCityLittleGirlText,        TEXT_CELADONCITY_LITTLE_GIRL
-	dw_const CeladonCityGramps1Text,           TEXT_CELADONCITY_GRAMPS1
-	dw_const CeladonCityGirlText,              TEXT_CELADONCITY_GIRL
-	dw_const CeladonCityGramps2Text,           TEXT_CELADONCITY_GRAMPS2
-	dw_const CeladonCityGramps3Text,           TEXT_CELADONCITY_GRAMPS3
-	dw_const CeladonCityFisherText,            TEXT_CELADONCITY_FISHER
-	dw_const CeladonCityPoliwrathText,         TEXT_CELADONCITY_POLIWRATH
-	dw_const CeladonCityRocket1Text,           TEXT_CELADONCITY_ROCKET1
-	dw_const CeladonCityRocket2Text,           TEXT_CELADONCITY_ROCKET2
-	dw_const DoRet,                            TEXT_CELADONCITY_ANIMATION_PROXY
-	dw_const CeladonCityTrainerTips1Text,      TEXT_CELADONCITY_TRAINER_TIPS1
-	dw_const CeladonCitySignText,              TEXT_CELADONCITY_SIGN
-	dw_const PokeCenterSignText,               TEXT_CELADONCITY_POKECENTER_SIGN
-	dw_const CeladonCityGymSignText,           TEXT_CELADONCITY_GYM_SIGN
-	dw_const CeladonCityMansionSignText,       TEXT_CELADONCITY_MANSION_SIGN
-	dw_const CeladonCityDeptStoreSignText,     TEXT_CELADONCITY_DEPTSTORE_SIGN
-	dw_const CeladonCityTrainerTips2Text,      TEXT_CELADONCITY_TRAINER_TIPS2
-	dw_const CeladonCityPrizeExchangeSignText, TEXT_CELADONCITY_PRIZEEXCHANGE_SIGN
-	dw_const CeladonCityGameCornerSignText,    TEXT_CELADONCITY_GAMECORNER_SIGN
-	dw_const CeladonCityText19,    TEXT_CELADONCITY_TRAINER_TIPS3
+	dba_const CeladonCityLittleGirlText,         TEXT_CELADONCITY_LITTLE_GIRL
+	dba_const _CeladonCityGramps1Text,           TEXT_CELADONCITY_GRAMPS1
+	dba_const _CeladonCityGirlText,              TEXT_CELADONCITY_GIRL
+	dba_const _CeladonCityGramps2Text,           TEXT_CELADONCITY_GRAMPS2
+	dba_const CeladonCityGramps3Text,            TEXT_CELADONCITY_GRAMPS3
+	dba_const CeladonCityFisherText,             TEXT_CELADONCITY_FISHER
+	dba_const CeladonCityPoliwrathText,          TEXT_CELADONCITY_POLIWRATH
+	dba_const _CeladonCityRocket1Text,           TEXT_CELADONCITY_ROCKET1
+	dba_const _CeladonCityRocket2Text,           TEXT_CELADONCITY_ROCKET2
+	dba_const DoRet,                             TEXT_CELADONCITY_ANIMATION_PROXY
+	dba_const _CeladonCityTrainerTips1Text,      TEXT_CELADONCITY_TRAINER_TIPS1
+	dba_const CeladonCitySignText,               TEXT_CELADONCITY_SIGN
+	dba_const PokeCenterSignText,                TEXT_CELADONCITY_POKECENTER_SIGN
+	dba_const CeladonCityGymSignText,            TEXT_CELADONCITY_GYM_SIGN
+	dba_const _CeladonCityMansionSignText,       TEXT_CELADONCITY_MANSION_SIGN
+	dba_const _CeladonCityDeptStoreSignText,     TEXT_CELADONCITY_DEPTSTORE_SIGN
+	dba_const _CeladonCityTrainerTips2Text,      TEXT_CELADONCITY_TRAINER_TIPS2
+	dba_const _CeladonCityPrizeExchangeSignText, TEXT_CELADONCITY_PRIZEEXCHANGE_SIGN
+	dba_const _CeladonCityGameCornerSignText,    TEXT_CELADONCITY_GAMECORNER_SIGN
+	dba_const _CeladonCityText19,                TEXT_CELADONCITY_TRAINER_TIPS3
 
 CeladonCityLittleGirlText:
 	text_far _CeladonCityLittleGirlText
@@ -115,7 +115,7 @@ CeladonCityLittleGirlText:
 	predef LearnsetTrainerScriptMain
 	call WaitForSoundToFinish
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	lb hl, 55, 34
 	ld de, vNPCSprites tile $78
 	ld c, CELADONCITY_ANIMATION_PROXY
@@ -133,30 +133,15 @@ CeladonCityLittleGirlText:
 .done
 	rst TextScriptEnd
 .wantToSee
-	text_far _CeladonCityLittleGirlText2
-	text_end
+	text_far_end _CeladonCityLittleGirlText2
 .prettyCool
-	text_far _CeladonCityLittleGirlText3
-	text_end
+	text_far_end _CeladonCityLittleGirlText3
 .littleGirlName
 	db "LITTLE GIRL@"
 
 
 CeladonSuitYourself::
-	text_far _GenericSuitYourselfText
-	text_end
-
-CeladonCityGramps1Text:
-	text_far _CeladonCityGramps1Text
-	text_end
-
-CeladonCityGirlText:
-	text_far _CeladonCityGirlText
-	text_end
-
-CeladonCityGramps2Text:
-	text_far _CeladonCityGramps2Text
-	text_end
+	text_far_end _GenericSuitYourselfText
 
 CeladonCityGramps3Text:
 	text_asm
@@ -187,14 +172,11 @@ CeladonCityGramps3Text:
 .done
 	rst TextScriptEnd
 .metGramps:
-	text_far _CeladonCityGramps3Text
-	text_end
+	text_far_end _CeladonCityGramps3Text
 .returnedGramps:
-	text_far _CeladonCityGramps3Text2
-	text_end
+	text_far_end _CeladonCityGramps3Text2
 .coolMove
-	text_far _CeladonPoolGrampsAfterTeachText
-	text_end
+	text_far_end _CeladonPoolGrampsAfterTeachText
 
 CeladonCityFisherText:
 	text_far _CeladonCityFisherText
@@ -227,11 +209,9 @@ CeladonCityFisherText:
 .done
 	rst TextScriptEnd
 .seeMoves
-	text_far _CeladonCityFisher2Text
-	text_end
+	text_far_end _CeladonCityFisher2Text
 .letsDoThis
-	text_far _LetsDoThis
-	text_end
+	text_far_end _LetsDoThis
 .bigGuyName
 	db "BIG GUY@"
 
@@ -246,7 +226,7 @@ PoliwrathAnimation::
 	lb bc, BANK(FightingSprite), 12
 	call CopyVideoData
 	ld c, 3
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, vNPCSprites tile $18
 	ld de, FightingSprite
 	lb bc, BANK(FightingSprite), 12
@@ -278,17 +258,6 @@ CeladonCityPoliwrathText:
 ;	ld [hl], a
 ;	ret
 
-CeladonCityRocket1Text:
-	text_far _CeladonCityRocket1Text
-	text_end
-
-CeladonCityRocket2Text:
-	text_far _CeladonCityRocket2Text
-	text_end
-
-CeladonCityTrainerTips1Text:
-	text_far _CeladonCityTrainerTips1Text
-	text_end
 
 CeladonCitySignText:
 ;;;;; PureRGBnote: ADDED: can enable or disable the beta unused rainbow palette for celadon city by talking to the sign.
@@ -302,8 +271,7 @@ CeladonCitySignText:
 	call RunDefaultPaletteCommand
 	rst TextScriptEnd
 .text
-	text_far _CeladonCitySignText
-	text_end
+	text_far_end _CeladonCitySignText
 ;;;;;
 
 CeladonCityGymSignText:
@@ -311,27 +279,3 @@ CeladonCityGymSignText:
 	ld c, CELADON_GYM
 	ld de, CeladonGymOutsideSign
 	jpfar GymOutsideSignTextScript
-	
-CeladonCityMansionSignText:
-	text_far _CeladonCityMansionSignText
-	text_end
-
-CeladonCityDeptStoreSignText:
-	text_far _CeladonCityDeptStoreSignText
-	text_end
-
-CeladonCityTrainerTips2Text:
-	text_far _CeladonCityTrainerTips2Text
-	text_end
-
-CeladonCityPrizeExchangeSignText:
-	text_far _CeladonCityPrizeExchangeSignText
-	text_end
-
-CeladonCityGameCornerSignText:
-	text_far _CeladonCityGameCornerSignText
-	text_end
-
-CeladonCityText19:
-	text_far _CeladonCityText19
-	text_end

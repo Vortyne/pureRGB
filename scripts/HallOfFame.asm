@@ -1,8 +1,7 @@
 HallOfFame_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, HallOfFame_ScriptPointers
-	ld a, [wHallOfFameCurScript]
-	jp CallFunctionInTable
+	ld de, wHallOfFameCurScript
+	jp CallMapScriptInTable
 
 ;HallofFameRoomClearScripts: ; unreferenced
 ;	call EnableAllJoypad
@@ -48,7 +47,7 @@ HallOfFameResetEventsAndSaveScript:
 	ld b, 5
 .delayLoop
 	ld c, 600 / 5
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .delayLoop
 	call WaitForTextScrollButtonPress
@@ -113,8 +112,4 @@ HallOfFameOakCongratulationsScript:
 
 HallOfFame_TextPointers:
 	def_text_pointers
-	dw_const HallOfFameOakText, TEXT_HALLOFFAME_OAK
-
-HallOfFameOakText:
-	text_far _HallOfFameOakText
-	text_end
+	dba_const _HallOfFameOakText, TEXT_HALLOFFAME_OAK

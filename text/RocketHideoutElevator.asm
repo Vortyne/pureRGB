@@ -1,6 +1,7 @@
 _RocketHideoutElevatorAppearsToNeedKeyText::
 	text "It appears to"
 	line "need a key.@"
+	text_waitbutton
 	text_end
 
 _UnlockedElevatorText::

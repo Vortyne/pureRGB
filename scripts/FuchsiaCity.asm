@@ -64,31 +64,30 @@ LoadKabutoShellSprite:
 
 FuchsiaCity_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaCityYoungster1Text,      TEXT_FUCHSIACITY_YOUNGSTER1
-	dw_const FuchsiaCityGamblerText,         TEXT_FUCHSIACITY_GAMBLER
-	dw_const FuchsiaCityErikText,            TEXT_FUCHSIACITY_ERIK
-	dw_const FuchsiaCityYoungster2Text,      TEXT_FUCHSIACITY_YOUNGSTER2
-	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_CHANSEY
-	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_VOLTORB
-	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_KANGASKHAN
-	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_SLOWPOKE
-	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_LAPRAS
-	dw_const FuchsiaCityPokemonText,         TEXT_FUCHSIACITY_FOSSIL
-	dw_const FuchsiaCityFossilFanText,       TEXT_FUCHSIACITY_FOSSIL_FAN
-	dw_const FuchsiaCitySignText,            TEXT_FUCHSIACITY_SIGN1
-	dw_const FuchsiaCitySignText,            TEXT_FUCHSIACITY_SIGN2
-	dw_const FuchsiaCitySafariGameSignText,  TEXT_FUCHSIACITY_SAFARI_GAME_SIGN
-	dw_const MartSignText,                   TEXT_FUCHSIACITY_MART_SIGN
-	dw_const PokeCenterSignText,             TEXT_FUCHSIACITY_POKECENTER_SIGN
-	dw_const FuchsiaCityWardensHomeSignText, TEXT_FUCHSIACITY_WARDENS_HOME_SIGN
-	dw_const FuchsiaCitySafariZoneSignText,  TEXT_FUCHSIACITY_SAFARI_ZONE_SIGN
-	dw_const FuchsiaCityGymSignText,         TEXT_FUCHSIACITY_GYM_SIGN
-	dw_const FuchsiaCityChanseySignText,     TEXT_FUCHSIACITY_CHANSEY_SIGN
-	dw_const FuchsiaCityVoltorbSignText,     TEXT_FUCHSIACITY_VOLTORB_SIGN
-	dw_const FuchsiaCityKangaskhanSignText,  TEXT_FUCHSIACITY_KANGASKHAN_SIGN
-	dw_const FuchsiaCitySlowpokeSignText,    TEXT_FUCHSIACITY_SLOWPOKE_SIGN
-	dw_const FuchsiaCityLaprasSignText,      TEXT_FUCHSIACITY_LAPRAS_SIGN
-	dw_const FuchsiaCityFossilSignText,      TEXT_FUCHSIACITY_FOSSIL_SIGN
+	dba_const FuchsiaCityYoungster1Text,      TEXT_FUCHSIACITY_YOUNGSTER1
+	dba_const _FuchsiaCityGamblerText,        TEXT_FUCHSIACITY_GAMBLER
+	dba_const FuchsiaCityErikText,            TEXT_FUCHSIACITY_ERIK
+	dba_const FuchsiaCityYoungster2Text,      TEXT_FUCHSIACITY_YOUNGSTER2
+	dba_const _FuchsiaCityPokemonText,        TEXT_FUCHSIACITY_CHANSEY
+	dba_const _FuchsiaCityPokemonText,        TEXT_FUCHSIACITY_VOLTORB
+	dba_const _FuchsiaCityPokemonText,        TEXT_FUCHSIACITY_KANGASKHAN
+	dba_const _FuchsiaCityPokemonText,        TEXT_FUCHSIACITY_SLOWPOKE
+	dba_const _FuchsiaCityPokemonText,        TEXT_FUCHSIACITY_LAPRAS
+	dba_const _FuchsiaCityPokemonText,        TEXT_FUCHSIACITY_FOSSIL
+	dba_const FuchsiaCityFossilFanText,       TEXT_FUCHSIACITY_FOSSIL_FAN
+	dba_const _FuchsiaCitySignText,           TEXT_FUCHSIACITY_SIGN
+	dba_const _FuchsiaCitySafariGameSignText,  TEXT_FUCHSIACITY_SAFARI_GAME_SIGN
+	dba_const MartSignText,                   TEXT_FUCHSIACITY_MART_SIGN
+	dba_const PokeCenterSignText,             TEXT_FUCHSIACITY_POKECENTER_SIGN
+	dba_const _FuchsiaCityWardensHomeSignText, TEXT_FUCHSIACITY_WARDENS_HOME_SIGN
+	dba_const _FuchsiaCitySafariZoneSignText,  TEXT_FUCHSIACITY_SAFARI_ZONE_SIGN
+	dba_const FuchsiaCityGymSignText,         TEXT_FUCHSIACITY_GYM_SIGN
+	dba_const FuchsiaCityChanseySignText,     TEXT_FUCHSIACITY_CHANSEY_SIGN
+	dba_const FuchsiaCityVoltorbSignText,     TEXT_FUCHSIACITY_VOLTORB_SIGN
+	dba_const FuchsiaCityKangaskhanSignText,  TEXT_FUCHSIACITY_KANGASKHAN_SIGN
+	dba_const FuchsiaCitySlowpokeSignText,    TEXT_FUCHSIACITY_SLOWPOKE_SIGN
+	dba_const FuchsiaCityLaprasSignText,      TEXT_FUCHSIACITY_LAPRAS_SIGN
+	dba_const FuchsiaCityFossilSignText,      TEXT_FUCHSIACITY_FOSSIL_SIGN
 
 ; PureRGBnote: CHANGED: this NPC will point out how alt palette pokemon appear in the safari zone
 ; but only if we have alt palette pokemon enabled in the game options.
@@ -99,29 +98,18 @@ FuchsiaCityYoungster1Text:
 	ld hl, .didYouTrySafariText
 	jr z, .printDone
 .altPalettes
-	ld hl, .didYouTrySafariPromptText
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, .manyHaveUniqueColorsText
 .printDone
 	rst _PrintText
 	rst TextScriptEnd
 
 .didYouTrySafariText:
-	text_far _FuchsiaCityYoungster1Text
-	text_end
-
-.didYouTrySafariPromptText:
-	text_far _FuchsiaCityYoungster1Text
-	text_promptbutton
-	text_end
+	text_far_end _FuchsiaCityYoungster1Text
 
 .manyHaveUniqueColorsText:
-	text_far _FuchsiaCityYoungster1TextColor
-	text_end
-
-FuchsiaCityGamblerText:
-	text_far _FuchsiaCityGamblerText
-	text_end
+	text_far_end _FuchsiaCityYoungster1TextColor
 
 ; PureRGBnote: CHANGED: ERIK can be sent off to find SARA once you find her in the SAFARI ZONE.
 FuchsiaCityErikText:
@@ -165,8 +153,7 @@ FuchsiaCityErikText:
 .notMet
 	rst TextScriptEnd
 .ohShesInSafariZone
-	text_far _ErikSaraInSafariZoneText
-	text_end
+	text_far_end _ErikSaraInSafariZoneText
 .checkTreeBlockPresent
 	ld a, [wXCoord]
 	cp 29
@@ -220,7 +207,7 @@ FuchsiaCityYoungster2Text:
 	ld de, vChars0 + VOLTORB_POKEBALL_TILE1
 	callfar LoadVoltorbSprite
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, vChars0 + VOLTORB_POKEBALL_TILE1
 	ld de, PokeBallSprite
 	lb bc, BANK(PokeBallSprite), 4
@@ -229,28 +216,7 @@ FuchsiaCityYoungster2Text:
 ;;;;;;;;;;
 	rst TextScriptEnd
 .Text:
-	text_far _FuchsiaCityYoungster2Text
-	text_end
-
-FuchsiaCityPokemonText:
-	text_far _FuchsiaCityPokemonText
-	text_end
-
-FuchsiaCitySignText:
-	text_far _FuchsiaCitySignText
-	text_end
-
-FuchsiaCitySafariGameSignText:
-	text_far _FuchsiaCitySafariGameSignText
-	text_end
-
-FuchsiaCityWardensHomeSignText:
-	text_far _FuchsiaCityWardensHomeSignText
-	text_end
-
-FuchsiaCitySafariZoneSignText:
-	text_far _FuchsiaCitySafariZoneSignText
-	text_end
+	text_far_end _FuchsiaCityYoungster2Text
 
 FuchsiaCityGymSignText:
 	text_asm
@@ -259,8 +225,7 @@ FuchsiaCityGymSignText:
 	jpfar GymOutsideSignTextScript
 
 FuchsiaCitySoMuchInfoText:
-	text_far _FuchsiaCitySoMuchInfo
-	text_end
+	text_far_end _FuchsiaCitySoMuchInfo
 
 FuchsiaCityPrintMonNameText:
 	ld [wNamedObjectIndex], a
@@ -274,8 +239,7 @@ FuchsiaCityPrintMonNameText:
 	pop af
 	jp DisplayPokedex
 .text
-	text_far _GenericFuchsiaZooNameText
-	text_end
+	text_far_end _GenericFuchsiaZooNameText
 
 LearnsetFuchsiaZoo:
 	ld [wPokedexNum], a
@@ -305,8 +269,7 @@ FuchsiaCityChanseySignText:
 .done
 	rst TextScriptEnd
 .Text:
-	text_far _FuchsiaCityChanseySignText
-	text_end
+	text_far_end _FuchsiaCityChanseySignText
 
 
 FuchsiaCityVoltorbSignText:
@@ -323,8 +286,7 @@ FuchsiaCityVoltorbSignText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FuchsiaCityVoltorbSignText
-	text_end
+	text_far_end _FuchsiaCityVoltorbSignText
 
 FuchsiaCityKangaskhanSignText:
 	text_asm
@@ -340,8 +302,7 @@ FuchsiaCityKangaskhanSignText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FuchsiaCityKangaskhanSignText
-	text_end
+	text_far_end _FuchsiaCityKangaskhanSignText
 
 FuchsiaCitySlowpokeSignText:
 	text_asm
@@ -357,8 +318,7 @@ FuchsiaCitySlowpokeSignText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FuchsiaCitySlowpokeSignText
-	text_end
+	text_far_end _FuchsiaCitySlowpokeSignText
 
 FuchsiaCityLaprasSignText:
 	text_asm
@@ -374,8 +334,7 @@ FuchsiaCityLaprasSignText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FuchsiaCityLaprasSignText
-	text_end
+	text_far_end _FuchsiaCityLaprasSignText
 
 FuchsiaCityFossilSignText:
 	text_asm
@@ -411,12 +370,10 @@ FuchsiaCityFossilSignText:
 	jp FuchsiaCityPrintMonNameText
 
 .fossilText:
-	text_far _FuchsiaCityFossilSignText
-	text_end
+	text_far_end _FuchsiaCityFossilSignText
 
 .UndeterminedText:
-	text_far _FuchsiaCityFossilSignUndeterminedText
-	text_end
+	text_far_end _FuchsiaCityFossilSignUndeterminedText
 
 FuchsiaCityFossilFanText:
 	text_asm
@@ -424,11 +381,12 @@ FuchsiaCityFossilFanText:
 	jr nz, .moveFossil
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a 
+	ld hl, FuchsiaCityFossilFanText1
 	jr z, .noEvent
 	CheckEitherEventSet EVENT_GOT_HELIX_FOSSIL, EVENT_GOT_DOME_FOSSIL
 	jr z, .noEvent
-	ld hl, FuchsiaCityFossilFanText1Prompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, FuchsiaCityFossilFanText2
 	rst _PrintText
 	SetEvent EVENT_FOSSIL_FAN_TEXT_TOGGLE
@@ -447,34 +405,25 @@ FuchsiaCityFossilFanText:
 	ld hl, FuchsiaCityFossilFanText3
 	rst _PrintText
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, PLAYER_DIR_UP
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
 	call MoveFossilPokemon
   	jr .done
 .noEvent
-	ld hl, FuchsiaCityFossilFanText1
 	rst _PrintText
 .done
 	rst TextScriptEnd
 
 FuchsiaCityFossilFanText1:
-	text_far _FuchsiaCityFossilFanText
-	text_end
-
-FuchsiaCityFossilFanText1Prompt:
-	text_far _FuchsiaCityFossilFanText
-	text_promptbutton
-	text_end
+	text_far_end _FuchsiaCityFossilFanText
 
 FuchsiaCityFossilFanText2:
-	text_far _FuchsiaCityFossilFanText2
-	text_end
+	text_far_end _FuchsiaCityFossilFanText2
 
 FuchsiaCityFossilFanText3:
-	text_far _FuchsiaCityFossilFanText3
-	text_end
+	text_far_end _FuchsiaCityFossilFanText3
 
 GetFossilSpriteData:
 	CheckEvent EVENT_GOT_HELIX_FOSSIL
@@ -525,5 +474,5 @@ MoveFossilPokemon:
 	jp CopyVideoData
 .hideKabuto:
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	jp LoadKabutoShellSprite

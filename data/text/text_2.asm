@@ -138,6 +138,7 @@ _GymSignGenericText::
 	line "#MON GYM"
 	cont "LEADER: @"
 	text_ram_namebuffer
+	text_promptbutton
 	text_end
 
 _GymStatueText::
@@ -154,14 +155,14 @@ _GymStatueRivalPlayer::
 	cont "<PLAYER>"
 	done
 
-_ViridianCityPokecenterGuyText::
+_ViridianPokecenterBenchGuyText::
 	text "#MON CENTERs"
 	line "heal your tired,"
 	cont "hurt or fainted"
 	cont "#MON!"
 	done
 
-_PewterCityPokecenterGuyText::
+_PewterPokecenterBenchGuyText::
 	text "Yawn!"
 
 	para "When JIGGLYPUFF"
@@ -172,7 +173,7 @@ _PewterCityPokecenterGuyText::
 	line "Snore<...>"
 	done
 
-_CeruleanPokecenterGuyText::
+_CeruleanPokecenterBenchGuyText::
 	text "BILL has lots of"
 	line "#MON!"
 
@@ -180,7 +181,7 @@ _CeruleanPokecenterGuyText::
 	line "ones too!"
 	done
 
-_LavenderPokecenterGuyText::
+_LavenderPokecenterBenchGuyText::
 	text "CUBONEs wear"
 	line "skulls, right?"
 
@@ -195,7 +196,7 @@ _MtMoonPokecenterBenchGuyText::
 	cont "via <PC>!"
 	done
 
-_RockTunnelPokecenterGuyText::
+_RockTunnelPokecenterBenchGuyText::
 	text "I heard that"
 	line "GHOSTs haunt"
 	cont "LAVENDER TOWN!"
@@ -212,7 +213,7 @@ _SafariZoneTiredGuyText::
 ;	cont "SAFARI ZONE."
 ;	done
 
-_VermilionPokecenterGuyText::
+_VermilionPokecenterBenchGuyText::
 	text "It is true that a"
 	line "higher level"
 	cont "#MON will be"
@@ -228,13 +229,13 @@ _VermilionPokecenterGuyText::
 	cont "strong #MON."
 	done
 
-_CeladonCityPokecenterGuyText::
+_CeladonPokecenterBenchGuyText::
 	text "If I had a BIKE,"
 	line "I would go to"
 	cont "CYCLING ROAD!"
 	done
 
-_FuchsiaCityPokecenterGuyText::
+_FuchsiaPokecenterBenchGuyText::
 	text "If you're studying"
 	line "#MON, visit"
 	cont "the SAFARI ZONE."
@@ -243,7 +244,7 @@ _FuchsiaCityPokecenterGuyText::
 	line "of rare #MON."
 	done
 
-_CinnabarPokecenterGuyText::
+_CinnabarPokecenterBenchGuyText::
 	text "#MON can still"
 	line "learn techniques"
 	cont "after canceling"
@@ -268,7 +269,7 @@ _SaffronCityPokecenterGuyText2::
 	cont "That's great!"
 	done
 
-_CeladonCityHotelText::
+_CeladonHotelBenchGuyText::
 	text "My sis brought me"
 	line "on this vacation!"
 	done
@@ -312,8 +313,9 @@ _RangerHuntSuccessText::
 	line "has defeated all"
 	cont "5 RANGERs!!"
 
-	para "Congratulations!"
-	done
+	para "Congratulations!@"
+	sound_get_item_2
+	text_end
 
 _CinnabarGymQuizStartText::
 	text "#MON Quiz!"
@@ -786,13 +788,7 @@ _FoundHiddenCoinsText::
 	line "@"
 	text_bcd hCoins, 2 | LEADING_ZEROES | LEFT_ALIGN
 	text " coins!@"
-	text_end
-
-_FoundHiddenCoins2Text::
-	text "<PLAYER> found"
-	line "@"
-	text_bcd hCoins, 2 | LEADING_ZEROES | LEFT_ALIGN
-	text " coins!@"
+	sound_get_item_2
 	text_end
 
 _DroppedHiddenCoinsText::
@@ -1231,6 +1227,7 @@ _GrewLevelText::
 	line "to level @"
 	text_decimal wCurEnemyLevel, 1, 3
 	text "!@"
+	sound_level_up
 	text_end
 
 _WildMonAppearedText::
@@ -1447,6 +1444,8 @@ _RareCandyText::
 	line "to level @"
 	text_decimal wCurEnemyLevel, 1, 3
 	text "!@"
+	sound_get_item_1 ; probably supposed to play SFX_LEVEL_UP but the wrong music bank is loaded
+	text_promptbutton
 	text_end
 
 _TurnedOnPC1Text::
@@ -1650,6 +1649,7 @@ _PressStartToReleaseText::
 _RequireCoinCaseText::
 	text "A COIN CASE is"
 	line "required!@"
+	text_waitbutton
 	text_end
 
 _ExchangeCoinsForPrizesText::
@@ -1667,8 +1667,9 @@ _HereYouGoText::
 	done
 
 _GoodChoice::
-	text "Good choice!"
-	done
+	text "Good choice!@"
+	text_waitbutton
+	text_end
 
 _SoYouWantPrizeText::
 	text "So, you want"
@@ -1680,15 +1681,18 @@ _SoYouWantPrizeText::
 _SorryNeedMoreCoinsText::
 	text "Sorry, you need"
 	line "more coins.@"
+	text_waitbutton
 	text_end
 
 _OopsYouDontHaveEnoughRoomText::
 	text "Oops! You don't"
 	line "have enough room.@"
+	text_waitbutton
 	text_end
 
 _OhFineThenText::
 	text "Oh, fine then.@"
+	text_waitbutton
 	text_end
 
 _GetDexRatedText::
@@ -1699,6 +1703,7 @@ _GetDexRatedText::
 _ClosedOaksPCText::
 	text "Closed link to"
 	line "PROF.OAK's <PC>.@"
+	text_waitbutton
 	text_end
 
 _AccessedOaksPCText::
@@ -1813,10 +1818,6 @@ _WillBeTradedText::
 ;	text_decimal hTextID, 1, 2
 ;	text " ERROR."
 ;	done
-
-_ContCharText::
-	text "<_CONT>@"
-	text_end
 
 _CantDepositSSTicketText::
 	text "You need that"

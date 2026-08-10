@@ -5,13 +5,10 @@ ASSERT BANK(PokemonMansionSwitchScript) == BANK(PokemonMansion2F_Script)
 
 PokemonMansion2F_Script:
 	call Mansion2CheckReplaceSwitchDoorBlocks
-	call EnableAutoTextBoxDrawing
 	ld hl, Mansion2TrainerHeaders
 	ld de, PokemonMansion2F_ScriptPointers
-	ld a, [wPokemonMansion2FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wPokemonMansion2FCurScript], a
-	ret
+	ld bc, wPokemonMansion2FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 Mansion2CheckReplaceSwitchDoorBlocks:
 	call WasMapJustLoaded
@@ -47,29 +44,29 @@ PokemonMansion2F_ScriptPointers:
 
 PokemonMansion2F_TextPointers:
 	def_text_pointers
-	dw_const PokemonMansion2FSuperNerdText, TEXT_POKEMONMANSION2F_SUPER_NERD
-	dw_const Mansion2Trainer2,              TEXT_POKEMONMANSION2F_COOLTRAINER_M
-	dw_const Mansion2Trainer3,              TEXT_POKEMONMANSION2F_COOLTRAINER_F1
-	dw_const Mansion2Trainer4,              TEXT_POKEMONMANSION2F_SCIENTIST
-	dw_const Mansion2Trainer5,              TEXT_POKEMONMANSION2F_COOLTRAINER_F2
-	dw_const PickUpItemText,                TEXT_POKEMONMANSION2F_ITEM1
-	dw_const PokemonMansion2FDiary1Text,    TEXT_POKEMONMANSION2F_DIARY1
-	dw_const PokemonMansion2FDiary2Text,    TEXT_POKEMONMANSION2F_DIARY2
-	dw_const PokemonMansion2FDiary3Text,    TEXT_POKEMONMANSION2F_DIARY3
-	dw_const PokemonMansionSwitchText,      TEXT_POKEMONMANSION2F_SWITCH
+	dba_const PokemonMansion2FSuperNerdText, TEXT_POKEMONMANSION2F_SUPER_NERD
+	dba_const Mansion2Trainer2,              TEXT_POKEMONMANSION2F_COOLTRAINER_M
+	dba_const Mansion2Trainer3,              TEXT_POKEMONMANSION2F_COOLTRAINER_F1
+	dba_const Mansion2Trainer4,              TEXT_POKEMONMANSION2F_SCIENTIST
+	dba_const Mansion2Trainer5,              TEXT_POKEMONMANSION2F_COOLTRAINER_F2
+	dba_const PickUpItemText,                TEXT_POKEMONMANSION2F_ITEM1
+	dba_const _PokemonMansion2FDiary1Text,    TEXT_POKEMONMANSION2F_DIARY1
+	dba_const _PokemonMansion2FDiary2Text,    TEXT_POKEMONMANSION2F_DIARY2
+	dba_const PokemonMansion2FDiary3Text,    TEXT_POKEMONMANSION2F_DIARY3
+	dba_const PokemonMansionSwitchText,      TEXT_POKEMONMANSION2F_SWITCH
 
 Mansion2TrainerHeaders:
 	def_trainers
 Mansion2TrainerHeader0:
-	trainer EVENT_BEAT_MANSION_2_TRAINER_0, 0, PokemonMansion2FSuperNerdBattleText, PokemonMansion2FSuperNerdEndBattleText, PokemonMansion2FSuperNerdAfterBattleText
+	trainer EVENT_BEAT_MANSION_2_TRAINER_0, 0, _PokemonMansion2FSuperNerdBattleText, _PokemonMansion2FSuperNerdEndBattleText, _PokemonMansion2FSuperNerdAfterBattleText
 Mansion2TrainerHeader1:
-	trainer EVENT_BEAT_MANSION_2_TRAINER_1, 0, Mansion2BattleText2, Mansion2EndBattleText2, Mansion2AfterBattleText2
+	trainer EVENT_BEAT_MANSION_2_TRAINER_1, 0, _Mansion2BattleText2, _Mansion2EndBattleText2, _Mansion2AfterBattleText2
 Mansion2TrainerHeader2:
-	trainer EVENT_BEAT_MANSION_2_TRAINER_2, 0, Mansion2BattleText3, Mansion2EndBattleText3, Mansion2AfterBattleText3
+	trainer EVENT_BEAT_MANSION_2_TRAINER_2, 0, _Mansion2BattleText3, _Mansion2EndBattleText3, _Mansion2AfterBattleText3
 Mansion2TrainerHeader3:
-	trainer EVENT_BEAT_MANSION_2_TRAINER_3, 3, Mansion2BattleText4, Mansion2EndBattleText4, Mansion2AfterBattleText4
+	trainer EVENT_BEAT_MANSION_2_TRAINER_3, 3, _Mansion2BattleText4, _Mansion2EndBattleText4, _Mansion2AfterBattleText4
 Mansion2TrainerHeader4:
-	trainer EVENT_BEAT_MANSION_2_TRAINER_4, 0, Mansion2BattleText5, Mansion2EndBattleText5, Mansion2AfterBattleText5
+	trainer EVENT_BEAT_MANSION_2_TRAINER_4, 0, _Mansion2BattleText5, _Mansion2EndBattleText5, _Mansion2AfterBattleText5
 	db -1 ; end
 
 PokemonMansion2FSuperNerdText:
@@ -86,74 +83,6 @@ Mansion2Trainer4:
 
 Mansion2Trainer5:
 	script_trainer Mansion2TrainerHeader4
-
-PokemonMansion2FSuperNerdBattleText:
-	text_far _PokemonMansion2FSuperNerdBattleText
-	text_end
-
-PokemonMansion2FSuperNerdEndBattleText:
-	text_far _PokemonMansion2FSuperNerdEndBattleText
-	text_end
-
-PokemonMansion2FSuperNerdAfterBattleText:
-	text_far _PokemonMansion2FSuperNerdAfterBattleText
-	text_end
-
-Mansion2BattleText2:
-	text_far _Mansion2BattleText2
-	text_end
-
-Mansion2EndBattleText2:
-	text_far _Mansion2EndBattleText2
-	text_end
-
-Mansion2AfterBattleText2:
-	text_far _Mansion2AfterBattleText2
-	text_end
-
-Mansion2BattleText3:
-	text_far _Mansion2BattleText3
-	text_end
-
-Mansion2EndBattleText3:
-	text_far _Mansion2EndBattleText3
-	text_end
-
-Mansion2AfterBattleText3:
-	text_far _Mansion2AfterBattleText3
-	text_end
-
-Mansion2BattleText4:
-	text_far _Mansion2BattleText4
-	text_end
-
-Mansion2EndBattleText4:
-	text_far _Mansion2EndBattleText4
-	text_end
-
-Mansion2AfterBattleText4:
-	text_far _Mansion2AfterBattleText4
-	text_end
-
-Mansion2BattleText5:
-	text_far _Mansion2BattleText5
-	text_end
-
-Mansion2EndBattleText5:
-	text_far _Mansion2EndBattleText5
-	text_end
-
-Mansion2AfterBattleText5:
-	text_far _Mansion2AfterBattleText5
-	text_end
-
-PokemonMansion2FDiary1Text:
-	text_far _PokemonMansion2FDiary1Text
-	text_end
-
-PokemonMansion2FDiary2Text:
-	text_far _PokemonMansion2FDiary2Text
-	text_end
 
 PokemonMansion2FDiary3Text:
 	text_far _PokemonMansion2FDiary3Text

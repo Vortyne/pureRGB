@@ -4,11 +4,11 @@ CeladonMart1F_Script:
 
 CeladonMart1F_TextPointers:
 	def_text_pointers
-	dw_const CeladonMart1FReceptionistText,     TEXT_CELADONMART1F_RECEPTIONIST
-	dw_const CeladonMart1FDirectorySignText,    TEXT_CELADONMART1F_DIRECTORY_SIGN
-	dw_const CeladonMart1FCurrentFloorSignText, TEXT_CELADONMART1F_CURRENT_FLOOR_SIGN
-	dw_const CeladonMart1PhoneLeft,             TEXT_CELADONMART1F_PHONE_LEFT
-	dw_const CeladonMart1PhoneRight,            TEXT_CELADONMART1F_PHONE_RIGHT
+	dba_const CeladonMart1FReceptionistText,     TEXT_CELADONMART1F_RECEPTIONIST
+	dba_const CeladonMart1FDirectorySignText,    TEXT_CELADONMART1F_DIRECTORY_SIGN
+	dba_const CeladonMart1FCurrentFloorSignText, TEXT_CELADONMART1F_CURRENT_FLOOR_SIGN
+	dba_const CeladonMart1PhoneLeft,             TEXT_CELADONMART1F_PHONE_LEFT
+	dba_const CeladonMart1PhoneRight,            TEXT_CELADONMART1F_PHONE_RIGHT
 
 CeladonMart1FReceptionistText:
 	text_far _CeladonMart1FReceptionistText
@@ -24,8 +24,7 @@ CeladonMart1FReceptionistText:
 	rst _PrintText
 	rst TextScriptEnd
 .atYourService
-	text_far _CeladonMart1FReceptionistText2
-	text_end
+	text_far_end _CeladonMart1FReceptionistText2
 
 
 ; PureRGBnote: CHANGED: this was made into a menu because it's just nicer that way
@@ -102,30 +101,24 @@ CeladonDirectoryClerkText:
 ShowDeptStoreFloorInfo::
 	ld hl, ShowDeptStoreTextEntry.floorTextData
 ShowDeptStoreTextEntry:
-	ld bc, 5
+	ld bc, TEXT_FAR_TABLE_ENTRY_SIZE
 	ld a, [wCurrentMenuItem]
 	call AddNTimes
 	rst _PrintText
 	ret
 .floorTextData
 CeladonMart1FCurrentFloorSignText:
-	text_far _CeladonMart1FCurrentFloorSignText
-	text_end
+	text_far_end _CeladonMart1FCurrentFloorSignText
 .2f
-	text_far _CeladonMart2FDirectorySignText
-	text_end
+	text_far_end _CeladonMart2FDirectorySignText
 .3f
-	text_far _CeladonMart3FCurrentFloorSignText
-	text_end
+	text_far_end _CeladonMart3FCurrentFloorSignText
 .4f
-	text_far _CeladonMart4FDirectorySignText
-	text_end
+	text_far_end _CeladonMart4FDirectorySignText
 .5f
-	text_far _CeladonMart5FCurrentFloorSignText
-	text_end
+	text_far_end _CeladonMart5FCurrentFloorSignText
 .roof
-	text_far _CeladonMartRoofCurrentFloorSignText
-	text_end
+	text_far_end _CeladonMartRoofCurrentFloorSignText
 
 ShowDeptStoreFloorInfoClerk::
 	ld hl, .floorTextData
@@ -133,23 +126,17 @@ ShowDeptStoreFloorInfoClerk::
 .floorTextData
 CeladonMart1FCurrentFloorClerkText:
 .1f
-	text_far _CeladonMart1FCurrentFloorClerkText
-	text_end
+	text_far_end _CeladonMart1FCurrentFloorClerkText
 .2f
-	text_far _CeladonMart2FDirectoryClerkText
-	text_end
+	text_far_end _CeladonMart2FDirectoryClerkText
 .3f
-	text_far _CeladonMart3FCurrentFloorClerkText
-	text_end
+	text_far_end _CeladonMart3FCurrentFloorClerkText
 .4f
-	text_far _CeladonMart4FDirectoryClerkText
-	text_end
+	text_far_end _CeladonMart4FDirectoryClerkText
 .5f
-	text_far _CeladonMart5FCurrentFloorClerkText
-	text_end
+	text_far_end _CeladonMart5FCurrentFloorClerkText
 .roof
-	text_far _CeladonMartRoofCurrentFloorClerkText
-	text_end
+	text_far_end _CeladonMartRoofCurrentFloorClerkText
 
 CeladonMart1PhoneLeft:
 CeladonMart1PhoneRight:
@@ -193,7 +180,7 @@ CeladonMart1PhoneRight:
 	ld a, SFX_NOISE_INSTRUMENT03
 	call PlaySoundWaitForCurrent
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_STOP_ALL_MUSIC
 	rst _PlaySound
 	ld a, SFX_NOISE_INSTRUMENT10
@@ -210,28 +197,22 @@ CeladonMart1PhoneRight:
 	rst TextScriptEnd
 
 CeladonMart1PhoneQuestion:
-	text_far _CeladonMartUsePhoneText
-	text_end
+	text_far_end _CeladonMartUsePhoneText
 
 CeladonMart1PhoneNotEnoughCash:
-	text_far _GenericNotEnoughMoneyText
-	text_end
+	text_far_end _GenericNotEnoughMoneyText
 
 CeladonMart1CallWhoQuestion:
-	text_far _CeladonMartCallWhoText
-	text_end
+	text_far_end _CeladonMartCallWhoText
 
 CeladonMartUsePhoneTextNo:
-	text_far _CeladonMartUsePhoneTextNo
-	text_end
+	text_far_end _CeladonMartUsePhoneTextNo
 
 CeladonMartUsePhoneCallStart:
-	text_far _CeladonMartCallStartText
-	text_end
+	text_far_end _CeladonMartCallStartText
 
 CeladonMartUsePhoneCallEnd:
-	text_far _CeladonMartUsePhoneCallEnd
-	text_end
+	text_far_end _CeladonMartUsePhoneCallEnd
 
 SubtractMoney:
 	; put coin in
@@ -252,7 +233,7 @@ SubtractMoney:
 	call DisplayTextBoxID
 	; wait a little bit
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 DialPhone:
@@ -264,11 +245,11 @@ DialPhone:
 	dec b
 	jr z, .donedial
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	jr .loopdial
 .donedial
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 
 	; call outgoing sounds 
 	call Random
@@ -285,7 +266,7 @@ DialPhone:
 	ld a, SFX_TURN_OFF_PC
 	rst _PlaySound
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec b
 	jr nz, .loop2
@@ -295,24 +276,24 @@ DialPhone:
 	ld a, SFX_STOP_ALL_MUSIC
 	rst _PlaySound
 	ld c, 120
-	rst _DelayFrames
+	rst DelayFrames
 	jr .loop
 .doneOutgoing
 	; phone gets picked up
 	ld a, SFX_STOP_ALL_MUSIC
 	rst _PlaySound
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_NOISE_INSTRUMENT01
 	rst _PlaySound
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_STOP_ALL_MUSIC
 	rst _PlaySound
 	ld a, SFX_NOISE_INSTRUMENT06
 	rst _PlaySound
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 StartCall:
@@ -430,28 +411,22 @@ CallHome:
 	ret
 
 CeladonMartCallMomText:
-	text_far _CeladonMartCallMomText
-	text_end
+	text_far_end _CeladonMartCallMomText
 
 CeladonMartCallMomGreatText:
-	text_far _CeladonMartCallMomGreatText
-	text_end
+	text_far_end _CeladonMartCallMomGreatText
 
 CeladonMartCallMomBoredText:
-	text_far _CeladonMartCallMomBoredText
-	text_end
+	text_far_end _CeladonMartCallMomBoredText
 
 CeladonMartCallMomGoodIdeaText:
-	text_far _CeladonMartCallMomGoodIdeaText
-	text_end
+	text_far_end _CeladonMartCallMomGoodIdeaText
 
 CeladonMartCallMomGamblingText:
-	text_far _CeladonMartCallMomGamblingText
-	text_end
+	text_far_end _CeladonMartCallMomGamblingText
 
 CeladonMartCallMomHomesickText:
-	text_far _CeladonMartCallMomHomesickText
-	text_end
+	text_far_end _CeladonMartCallMomHomesickText
 
 CeladonMartCallMomRiceBallsText:
 	text_far _CeladonMartCallMomRiceBallsText
@@ -481,20 +456,16 @@ CeladonMartCallMomBrisketText:
 	rst TextScriptEnd
 
 CeladonMartCallMomBrisketText1:
-	text_far _CeladonMartCallMomBrisketText
-	text_end
+	text_far_end _CeladonMartCallMomBrisketText
 
 CeladonMartCallMomBrisketText2:
-	text_far _CeladonMartCallMomBrisketText2
-	text_end
+	text_far_end _CeladonMartCallMomBrisketText2
 
 CeladonMartDadBrisketText:
-	text_far _CeladonMartDadBrisketText
-	text_end
+	text_far_end _CeladonMartDadBrisketText
 
 CeladonMartCallMomBrisketText3:
-	text_far _CeladonMartCallMomBrisketText3
-	text_end
+	text_far_end _CeladonMartCallMomBrisketText3
 
 CeladonMartCallMomLasagnaText:
 	text_far _CeladonMartCallMomLasagnaText
@@ -503,36 +474,28 @@ CeladonMartCallMomLasagnaText:
 	rst TextScriptEnd
 
 CeladonMartCallMomGoodbyeText:
-	text_far _CeladonMartCallMomGoodbyeText
-	text_end
+	text_far_end _CeladonMartCallMomGoodbyeText
 
 CeladonMartCallMomGoodbyeSweetSon:
-	text_far _CeladonMartCallMomGoodbyeSweetSon
-	text_end
+	text_far_end _CeladonMartCallMomGoodbyeSweetSon
 
 CeladonMartCallMomGoodbyeComplete:
-	text_far _CeladonMartCallMomGoodbyeComplete
-	text_end
+	text_far_end _CeladonMartCallMomGoodbyeComplete
 
 CeladonMartCallDadText:
-	text_far _CeladonMartCallDadText
-	text_end
+	text_far_end _CeladonMartCallDadText
 
 CeladonMartCallDadBulbasaurText:
-	text_far _CeladonMartCallDadBulbasaurText
-	text_end
+	text_far_end _CeladonMartCallDadBulbasaurText
 
 CeladonMartCallDadCharmanderText:
-	text_far _CeladonMartCallDadCharmanderText
-	text_end
+	text_far_end _CeladonMartCallDadCharmanderText
 
 CeladonMartCallDadSquirtleText:
-	text_far _CeladonMartCallDadSquirtleText
-	text_end
+	text_far_end _CeladonMartCallDadSquirtleText
 
 CeladonMartCallDadText2:
-	text_far _CeladonMartCallDadText2
-	text_end
+	text_far_end _CeladonMartCallDadText2
 
 CallOak:
 	ld c, BANK(Music_MeetProfOak)
@@ -571,28 +534,22 @@ CallOak:
 	ret
 
 CeladonMartCallOakText:
-	text_far _CeladonMartCallOakText
-	text_end
+	text_far_end _CeladonMartCallOakText
 
 CeladonMartCallOakTextItEvolved:
-	text_far _CeladonMartCallOakTextItEvolved
-	text_end
+	text_far_end _CeladonMartCallOakTextItEvolved
 
 CeladonMartCallOakTextILoveIt:
-	text_far _CeladonMartCallOakTextILoveIt
-	text_end
+	text_far_end _CeladonMartCallOakTextILoveIt
 
 CeladonMartCallOakTextKeepingBusy:
-	text_far _CeladonMartCallOakTextKeepingBusy
-	text_end
+	text_far_end _CeladonMartCallOakTextKeepingBusy
 
 CeladonMartCallOakTextHowsDaisy:
-	text_far _CeladonMartCallOakTextHowsDaisy
-	text_end
+	text_far_end _CeladonMartCallOakTextHowsDaisy
 
 CeladonMartCallOakTextGottaGo:
-	text_far _CeladonMartCallOakTextGottaGo
-	text_end
+	text_far_end _CeladonMartCallOakTextGottaGo
 
 CallRival:
 	ld c, BANK(Music_PalletTown)
@@ -632,21 +589,16 @@ CallRival:
 	jp HideObject
 
 CeladonMartCallRivalText:
-	text_far _CeladonMartCallRivalText
-	text_end
+	text_far_end _CeladonMartCallRivalText
 
 CeladonMartCallRivalText2:
-	text_far _CeladonMartCallRivalText2
-	text_end
+	text_far_end _CeladonMartCallRivalText2
 
 CeladonMartCallRivalText3:
-	text_far _CeladonMartCallRivalText3
-	text_end
+	text_far_end _CeladonMartCallRivalText3
 
 CeladonMartCallRivalText3map:
-	text_far _CeladonMartCallRivalText3map
-	text_end
+	text_far_end _CeladonMartCallRivalText3map
 
 CeladonMartCallRivalText4:
-	text_far _CeladonMartCallRivalText4
-	text_end
+	text_far_end _CeladonMartCallRivalText4

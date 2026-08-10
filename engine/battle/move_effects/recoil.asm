@@ -99,5 +99,4 @@ GotRecoilDamage:
 	ld hl, HitWithRecoilText
 	jp PrintText
 HitWithRecoilText:
-	text_far _HitWithRecoilText
-	text_end
+	text_far_end _HitWithRecoilText

@@ -93,7 +93,7 @@ _Route11Youngster2EndBattleText::
 	line "#MON couldn't!"
 	prompt
 
-_Route11Youngster2AfterBattleText5::
+_Route11Youngster2AfterBattleText::
 	text "What do you want?"
 	line "Leave me alone!"
 	done

@@ -1,22 +1,12 @@
 PewterMart_Script:
-	jp DisableAutoTextBoxDrawing
+	jp EnableAutoTextBoxDrawing
 
 PewterMart_TextPointers:
 	def_text_pointers
-	dw_const PewterMartClerkText,     TEXT_PEWTERMART_CLERK
-	dw_const PewterMartYoungsterText, TEXT_PEWTERMART_YOUNGSTER
-	dw_const PewterMartSuperNerdText, TEXT_PEWTERMART_SUPER_NERD
-	dw_const PewterMartTMKid,         TEXT_PEWTERMART_TM_KID
-
-PewterMartYoungsterText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _PewterMartYoungsterText
-	text_end
+	dba_const PewterMartClerkText,     TEXT_PEWTERMART_CLERK
+	dba_const _PewterMartYoungsterText, TEXT_PEWTERMART_YOUNGSTER
+	dba_const _PewterMartSuperNerdText, TEXT_PEWTERMART_SUPER_NERD
+	dba_const PewterMartTMKid,         TEXT_PEWTERMART_TM_KID
 	
 PewterMartTMKid: ; PureRGBnote: ADDED: new NPC who will talk about selling TMs
 	text_asm
@@ -32,25 +22,12 @@ PewterMartTMKid: ; PureRGBnote: ADDED: new NPC who will talk about selling TMs
 	rst TextScriptEnd
 
 .Text
-	text_far _PewterMartTMKid
-	text_end
+	text_far_end _PewterMartTMKid
 
 .Text2
-	text_far _TMKidStockingUp
-	text_end
+	text_far_end _TMKidStockingUp
 
 .Text3
-	text_far _TMKidGreet
-	text_end
-
-PewterMartSuperNerdText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _PewterMartSuperNerdText
-	text_end
+	text_far_end _TMKidGreet
 
 INCLUDE "data/items/marts/pewter.asm"

@@ -5,16 +5,14 @@ FuchsiaTreeDeleterHouse_Script:
 
 FuchsiaTreeDeleterHouse_TextPointers:
 	def_text_pointers
-	dw_const TreeDeleterText,             TEXT_FUCHSIATREEDELETERHOUSE_TREE_DELETER
-	dw_const TreeDeleterSnorlaxText,      TEXT_FUCHSIATREEDELETERHOUSE_SNORLAX
+	dba_const TreeDeleterText,             TEXT_FUCHSIATREEDELETERHOUSE_TREE_DELETER
+	dba_const TreeDeleterSnorlaxText,      TEXT_FUCHSIATREEDELETERHOUSE_SNORLAX
 
 FuchsiaTreeDeleterHouseText1:
-	text_far _FuchsiaTreeDeleterText1
-	text_end
+	text_far_end _FuchsiaTreeDeleterText1
 
 FuchsiaTreeDeleterHouseText2:
-	text_far _FuchsiaTreeDeleterText2
-	text_end
+	text_far_end _FuchsiaTreeDeleterText2
 
 TreeDeleterSnorlaxText:
 	text_far _FuchsiaTreeDeleterSnorlax
@@ -35,11 +33,9 @@ TreeDeleterSnorlaxText:
 .done
 	rst TextScriptEnd
 .couchPotato
-	text_far _FuchsiaTreeDeleterSnorlax2
-	text_end
+	text_far_end _FuchsiaTreeDeleterSnorlax2
 .thatsMy
-	text_far _FuchsiaTreeDeleterSnorlax3
-	text_end
+	text_far_end _FuchsiaTreeDeleterSnorlax3
 
 CheckAllTreesDeleted:
 	CheckBothEventsSet EVENT_DELETED_ROUTE2_TREES, EVENT_DELETED_CERULEAN_TREE
@@ -102,16 +98,13 @@ TreeDeleterName:
 	db "TREE DELETER@"
 
 FuchsiaTreeDeleterDoneText:
-	text_far _FuchsiaTreeDeleterDoneText
-	text_end
+	text_far_end _FuchsiaTreeDeleterDoneText
 
 FuchsiaTreeDeleterFinalText:
-	text_far _FuchsiaTreeDeleterFinalText
-	text_end
+	text_far_end _FuchsiaTreeDeleterFinalText
 
 FuchsiaTreeDeleterFinalText2:
-	text_far _FuchsiaTreeDeleterFinalText2
-	text_end
+	text_far_end _FuchsiaTreeDeleterFinalText2
 
 TextPointers_TreeDelete:
 	dw FuchsiaTreeDeleterRoute2
@@ -140,16 +133,13 @@ PurchasedTreeDeletion:
 	ret
 
 NotEnoughMoneyTreeDeleterText:
-	text_far _PokemartNotEnoughMoneyText
-	text_end
+	text_far_end _PokemartNotEnoughMoneyText
 
 FuchsiaTreeDeleterAlreadyDeletedText:
-	text_far _FuchsiaTreeDeleterAlreadyDeletedText
-	text_end
+	text_far_end _FuchsiaTreeDeleterAlreadyDeletedText
 
 FuchsiaTreeDeleterTreeDelete:
-	text_far _FuchsiaTreeDeleterTreeDelete
-	text_end
+	text_far_end _FuchsiaTreeDeleterTreeDelete
 
 FuchsiaTreeDeleterRoute2:
 	text_asm
@@ -184,8 +174,7 @@ TreeDeleterTextScript:
 	ret
 
 FuchsiaTreeDeleterRoute2Text:
-	text_far _FuchsiaTreeDeleterRoute2
-	text_end
+	text_far_end _FuchsiaTreeDeleterRoute2
 
 FuchsiaTreeDeleterCeruleanCity:
 	text_asm
@@ -199,8 +188,7 @@ FuchsiaTreeDeleterCeruleanCity:
 	rst TextScriptEnd
 
 FuchsiaTreeDeleterCeruleanCityText:
-	text_far _FuchsiaTreeDeleterCerulean
-	text_end
+	text_far_end _FuchsiaTreeDeleterCerulean
 
 FuchsiaTreeDeleterRoute9:
 	text_asm
@@ -214,8 +202,7 @@ FuchsiaTreeDeleterRoute9:
 	rst TextScriptEnd
 
 FuchsiaTreeDeleterRoute9Text:
-	text_far _FuchsiaTreeDeleterRoute9
-	text_end
+	text_far_end _FuchsiaTreeDeleterRoute9
 
 FuchsiaTreeDeleterFuchsiaCity:
 	text_asm
@@ -229,5 +216,4 @@ FuchsiaTreeDeleterFuchsiaCity:
 	rst TextScriptEnd
 
 FuchsiaTreeDeleterFuchsiaCityText:
-	text_far _FuchsiaTreeDeleterFuchsiaCity
-	text_end
+	text_far_end _FuchsiaTreeDeleterFuchsiaCity

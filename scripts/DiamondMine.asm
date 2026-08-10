@@ -220,7 +220,7 @@ DiamondMineShakeScreen:
 	add d
 	ldh [hSCX], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .shakeLoop
 	ld a, d
@@ -246,14 +246,14 @@ DiamondMineCheckDigAnimation:
 	ld [wSprite01StateData1ImageIndex], a
 	push bc
 	ld c, 3
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec b
 	jr nz, .runForwardLoop
 	dec c
 	jr nz, .soundEffectLoop
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSprite01StateData1ImageIndex]
 	xor 1
 	ld [wSprite01StateData1ImageIndex], a
@@ -294,9 +294,9 @@ DiamondMineCheckFinalStep:
 
 DiamondMine_TextPointers:
 	def_text_pointers
-	dw_const DiamondMineProspectorText, TEXT_DIAMOND_MINE_PROSPECTOR
-	dw_const DiamondMineBoombox, TEXT_DIAMOND_MINE_BOOMBOX
-	dw_const DiamondMineCompleted, TEXT_DIAMOND_MINE_COMPLETED
+	dba_const DiamondMineProspectorText, TEXT_DIAMOND_MINE_PROSPECTOR
+	dba_const DiamondMineBoombox, TEXT_DIAMOND_MINE_BOOMBOX
+	dba_const DiamondMineCompleted, TEXT_DIAMOND_MINE_COMPLETED
 
 DiamondMineProspectorText:
 	text_asm
@@ -324,8 +324,8 @@ DiamondMineProspectorText:
 	; amount of repels in bag still in a
 	cp 10 ; need 10 REPEL
 	jr c, .done1
-	ld hl, .giveRepels2
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, .giveRepels3
 	rst _PrintText
 	call YesNoChoice
@@ -342,7 +342,7 @@ DiamondMineProspectorText:
 	ld de, SFX_Spray_Repel
 	call PlayNewSoundChannel8
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeInFromBlack
 	; fall through
 .secondHelp
@@ -448,7 +448,7 @@ DiamondMineProspectorText:
 	callfar ChangePartyPokemonSpecies ; turn the onix into a hardened onix
 	call GBFadeOutToWhite
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeInFromWhite
 	ld hl, .moreOnix3
 .done2
@@ -456,63 +456,42 @@ DiamondMineProspectorText:
 .done3
 	rst TextScriptEnd	
 .intro
-	text_far _DiamondMineProspectorText
-	text_end
+	text_far_end _DiamondMineProspectorText
 .okayThen
-	text_far _NoTrade1Text
-	text_end
+	text_far_end _NoTrade1Text
 .help1
-	text_far _DiamondMineProspectorHelp
-	text_end
+	text_far_end _DiamondMineProspectorHelp
 .giveRepels1
-	text_far _DiamondProspectorRepels
-	text_end
-.giveRepels2
-	text_far _DiamondProspectorRepels
-	text_promptbutton
-	text_end
+	text_far_end _DiamondProspectorRepels
 .giveRepels3
-	text_far _DiamondProspectorGiveRepels
-	text_end
+	text_far_end _DiamondProspectorGiveRepels
 .giveRepels4
-	text_far _DiamondProspectorUseRepels
-	text_end
+	text_far_end _DiamondProspectorUseRepels
 .help2
-	text_far _DiamondMineProspectorHelp2
-	text_end
+	text_far_end _DiamondMineProspectorHelp2
 .help3
-	text_far _DiamondMineProspectorHelp3
-	text_end
+	text_far_end _DiamondMineProspectorHelp3
 .help4
-	text_far _DiamondMineProspectorHelp4
-	text_end
+	text_far_end _DiamondMineProspectorHelp4
 .ragh
-	text_far _DiamondMineProspectorRagh
-	text_end
+	text_far_end _DiamondMineProspectorRagh
 .hardWorkBegins
-	text_far _DiamondMinePickedOnix
-	text_end
+	text_far_end _DiamondMinePickedOnix
 .diamondDownHere
-	text_far _DiamondMineDownHere
-	text_end
+	text_far_end _DiamondMineDownHere
 .weeksOfWork
-	text_far _DiamondMineWeeksOfWork
-	text_end
+	text_far_end _DiamondMineWeeksOfWork
 .endText
-	text_far _DiamondMineEndText
-	text_end
+	text_far_end _DiamondMineEndText
 .moreOnix1
-	text_far _DiamondMineMoreOnix
-	text_end
+	text_far_end _DiamondMineMoreOnix
 .moreOnix2
-	text_far _DiamondMineMoreOnix2
-	text_end
+	text_far_end _DiamondMineMoreOnix2
 .moreOnix3
 	text_far _DiamondMineOnixTrainDone
 	text_far _DiamondMineFinished2
 	sound_get_item_2
-	text_far _DiamondMineFinished3
-	text_end
+	text_far_end _DiamondMineFinished3
 
 DiamondMineLoadPlayerDirections:
 	call SetPlayerAutoMoving
@@ -549,8 +528,8 @@ DiamondMineBoombox:
 	CheckEvent EVENT_DIAMOND_MINE_GAVE_REPELS
 	ld hl, .initialtext
 	jr z, .done
-	ld hl, .initialtextprompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, .zapquestion
 	rst _PrintText
 	call YesNoChoice
@@ -595,30 +574,19 @@ DiamondMineBoombox:
 	rst _PrintText
 	rst TextScriptEnd
 .boomboxworking
-	text_far _DiamondMineBoomboxFunctional
-	text_end
+	text_far_end _DiamondMineBoomboxFunctional
 .initialtext
-	text_far _DiamondMineBoomboxInitial
-	text_end
-.initialtextprompt
-	text_far _DiamondMineBoomboxInitial
-	text_promptbutton
-	text_end
+	text_far_end _DiamondMineBoomboxInitial
 .zapquestion
-	text_far _DiamondMineBoomboxZap
-	text_end
+	text_far_end _DiamondMineBoomboxZap
 .forgetIt
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 .zapMessage
-	text_far _DiamondMineBoomboxZapProc
-	text_end
+	text_far_end _DiamondMineBoomboxZapProc
 .zapMessageTWave
-	text_far _DiamondMineBoomboxZapProc2
-	text_end
+	text_far_end _DiamondMineBoomboxZapProc2
 .wrongMon
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 
 GenericShowPartyMenuSelection::
 DiamondMineShowPartyMenuSelection:
@@ -640,5 +608,4 @@ DiamondMineCompleted:
 	text_far _DiamondMineFinished
 	text_far _DiamondMineFinished2
 	sound_get_item_2
-	text_far _DiamondMineFinished3
-	text_end
+	text_far_end _DiamondMineFinished3

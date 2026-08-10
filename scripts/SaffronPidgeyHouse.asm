@@ -3,15 +3,11 @@ SaffronPidgeyHouse_Script:
 
 SaffronPidgeyHouse_TextPointers:
 	def_text_pointers
-	dw_const SaffronPidgeyHouseBrunetteGirlText, TEXT_SAFFRONPIDGEYHOUSE_BRUNETTE_GIRL
-	dw_const SaffronPidgeyHousePidgeyText,       TEXT_SAFFRONPIDGEYHOUSE_PIDGEY
-	dw_const SaffronPidgeyHouseYoungsterText,    TEXT_SAFFRONPIDGEYHOUSE_YOUNGSTER
-	dw_const SaffronPidgeyHousePaperText,        TEXT_SAFFRONPIDGEYHOUSE_PAPER
-	dw_const SaffronPidgeyHouseTVText,           TEXT_SAFFRONPIDGEYHOUSE_TV
-
-SaffronPidgeyHouseBrunetteGirlText:
-	text_far _SaffronPidgeyHouseBrunetteGirlText
-	text_end
+	dba_const _SaffronPidgeyHouseBrunetteGirlText, TEXT_SAFFRONPIDGEYHOUSE_BRUNETTE_GIRL
+	dba_const SaffronPidgeyHousePidgeyText,        TEXT_SAFFRONPIDGEYHOUSE_PIDGEY
+	dba_const _SaffronPidgeyHouseYoungsterText,    TEXT_SAFFRONPIDGEYHOUSE_YOUNGSTER
+	dba_const _SaffronPidgeyHousePaperText,        TEXT_SAFFRONPIDGEYHOUSE_PAPER
+	dba_const SaffronPidgeyHouseTVText,            TEXT_SAFFRONPIDGEYHOUSE_TV
 
 SaffronPidgeyHousePidgeyText:
 	text_far _SaffronPidgeyHousePidgeyText
@@ -19,14 +15,6 @@ SaffronPidgeyHousePidgeyText:
 	ld a, PIDGEY
 	call PlayCry
 	rst TextScriptEnd
-
-SaffronPidgeyHouseYoungsterText:
-	text_far _SaffronPidgeyHouseYoungsterText
-	text_end
-
-SaffronPidgeyHousePaperText:
-	text_far _SaffronPidgeyHousePaperText
-	text_end
 
 SaffronPidgeyHouseTVText::
 	text_asm

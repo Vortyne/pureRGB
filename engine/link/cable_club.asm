@@ -3,7 +3,7 @@
 ; Before doing either action, it swaps random numbers, trainer names and party data with the other gameboy.
 CableClub_DoBattleOrTrade:
 	ld c, 80
-	rst _DelayFrames
+	rst DelayFrames
 	call ClearScreen
 	call UpdateSprites
 	call LoadFontTilePatterns
@@ -658,7 +658,7 @@ TradeCenter_PrintPartyListNames:
 
 TradeCenter_Trade:
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	xor a
 	ld [wSerialExchangeNybbleSendData + 1], a ; unnecessary
 	ld [wSerialExchangeNybbleReceiveData], a
@@ -823,7 +823,7 @@ TradeCenter_Trade:
 	ld [wNewSoundID], a
 	rst _PlaySound
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	call ClearScreen
 	call LoadHpBarAndStatusTilePatterns
 	xor a
@@ -844,7 +844,7 @@ TradeCenter_Trade:
 	call RunPaletteCommand ;shinpokerednote: gbcnote: refresh pal
 	call Serial_PrintWaitingTextAndSyncAndExchangeNybble
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	hlcoord 0, 12
 	lb bc, 4, 18
 	call CableClub_TextBoxBorder
@@ -854,20 +854,19 @@ TradeCenter_Trade:
 	callfar SavePartyAndDexData ; this allows reset into Pokecenter
 	vc_hook Trade_save_game_end
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	xor a
 	ld [wTradeCenterPointerTableIndex], a
 	jp CableClub_DoBattleOrTradeAgain
 .tradeCancelled
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	xor a ; TradeCenter_SelectMon
 	ld [wTradeCenterPointerTableIndex], a
 	jp CallCurrentTradeCenterFunction
 
 WillBeTradedText:
-	text_far _WillBeTradedText
-	text_end
+	text_far_end _WillBeTradedText
 
 TradeCompleted:
 	db "Trade completed!@"

@@ -12,5 +12,5 @@ SeafoamIslandsB2F_Script:
 
 SeafoamIslandsB2F_TextPointers:
 	def_text_pointers
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB2F_BOULDER1
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB2F_BOULDER2
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB2F_BOULDER1
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB2F_BOULDER2

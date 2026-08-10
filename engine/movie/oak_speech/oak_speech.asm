@@ -123,7 +123,7 @@ ENDC
 	pop af
 	call SetCurBank
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, RedSprite
 	ld hl, vSprites
 	lb bc, BANK(RedSprite), $0C
@@ -132,7 +132,7 @@ ENDC
 	lb bc, BANK(ShrinkPic1), $00
 	call IntroDisplayPicCenteredOrUpperRight
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, ShrinkPic2
 	lb bc, BANK(ShrinkPic2), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -156,21 +156,20 @@ IF DEF(_DEBUG)
 	jr nz, .skipDelay
 ENDC
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	hlcoord 6, 5
 	lb bc, 7, 7
 	call ClearScreenArea
 	call LoadTextBoxTilePatterns
 	call EnableSpriteUpdates
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeOutToWhite
 .skipDelay
 	jp ClearScreen
 
 OakSpeechText1:
-	text_far _OakSpeechText1
-	text_end
+	text_far_end _OakSpeechText1
 
 OakSpeechText2:
 	text_far _OakSpeechText2A
@@ -183,20 +182,16 @@ OakSpeechText2:
 	rst _PrintText
 	rst TextScriptEnd
 .2b
-	text_far _OakSpeechText2B
-	text_end
+	text_far_end _OakSpeechText2B
 
 IntroducePlayerText:
-	text_far _IntroducePlayerText
-	text_end
+	text_far_end _IntroducePlayerText
 
 IntroduceRivalText:
-	text_far _IntroduceRivalText
-	text_end
+	text_far_end _IntroduceRivalText
 
 OakSpeechText3:
-	text_far _OakSpeechText3
-	text_end
+	text_far_end _OakSpeechText3
 
 FadeInIntroPic:
 	ld hl, IntroFadePalettes
@@ -206,7 +201,7 @@ FadeInIntroPic:
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color code from yellow 
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .next
 	ret

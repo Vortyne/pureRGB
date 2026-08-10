@@ -174,17 +174,13 @@ BattleOptionsInfoTextJumpTable:
 	dw NPCPPText
 
 TypeMatchupText:
-	text_far _TypeMatchupText
-	text_end
+	text_far_end _TypeMatchupText
 
 EXPBarText:
-	text_far _EXPBarText
-	text_end
+	text_far_end _EXPBarText
 
 NPCEVsText:
-	text_far _NPCEVsText
-	text_end
+	text_far_end _NPCEVsText
 
 NPCPPText:
-	text_far _NPCPPText
-	text_end
+	text_far_end _NPCPPText

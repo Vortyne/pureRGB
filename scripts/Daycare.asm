@@ -3,7 +3,7 @@ Daycare_Script:
 
 Daycare_TextPointers:
 	def_text_pointers
-	dw_const DaycareGentlemanText, TEXT_DAYCARE_GENTLEMAN
+	dba_const DaycareGentlemanText, TEXT_DAYCARE_GENTLEMAN
 
 DaycareGentlemanText:
 	text_asm
@@ -208,59 +208,45 @@ DaycareGentlemanText:
 	rst TextScriptEnd
 
 .IntroText:
-	text_far _DaycareGentlemanIntroText
-	text_end
+	text_far_end _DaycareGentlemanIntroText
 
 .WhichMonText:
-	text_far _DaycareGentlemanWhichMonText
-	text_end
+	text_far_end _DaycareGentlemanWhichMonText
 
 .WillLookAfterMonText:
-	text_far _DaycareGentlemanWillLookAfterMonText
-	text_end
+	text_far_end _DaycareGentlemanWillLookAfterMonText
 
 .ComeSeeMeInAWhileText:
-	text_far _DaycareGentlemanComeSeeMeInAWhileText
-	text_end
+	text_far_end _DaycareGentlemanComeSeeMeInAWhileText
 
 .MonHasGrownText:
-	text_far _DaycareGentlemanMonHasGrownText
-	text_end
+	text_far_end _DaycareGentlemanMonHasGrownText
 
 .OweMoneyText:
-	text_far _DaycareGentlemanOweMoneyText
-	text_end
+	text_far_end _DaycareGentlemanOweMoneyText
 
 .GotMonBackText:
-	text_far _DaycareGentlemanGotMonBackText
-	text_end
+	text_far_end _DaycareGentlemanGotMonBackText
 
 .MonNeedsMoreTimeText:
-	text_far _DaycareGentlemanMonNeedsMoreTimeText
-	text_end
+	text_far_end _DaycareGentlemanMonNeedsMoreTimeText
 
 .AllRightThenText:
 	text_far _DaycareGentlemanAllRightThenText
 .ComeAgainText:
-	text_far _DaycareGentlemanComeAgainText
-	text_end
+	text_far_end _DaycareGentlemanComeAgainText
 
 .NoRoomForMonText:
-	text_far _DaycareGentlemanNoRoomForMonText
-	text_end
+	text_far_end _DaycareGentlemanNoRoomForMonText
 
 .OnlyHaveOneMonText:
-	text_far _DaycareGentlemanOnlyHaveOneMonText
-	text_end
+	text_far_end _DaycareGentlemanOnlyHaveOneMonText
 
 ;.CantAcceptMonWithHMText:
-;	text_far _DaycareGentlemanCantAcceptMonWithHMText
-;	text_end
+;	text_far_end _DaycareGentlemanCantAcceptMonWithHMText
 
 .HeresYourMonText:
-	text_far _DaycareGentlemanHeresYourMonText
-	text_end
+	text_far_end _DaycareGentlemanHeresYourMonText
 
 .NotEnoughMoneyText:
-	text_far _DaycareGentlemanNotEnoughMoneyText
-	text_end
+	text_far_end _DaycareGentlemanNotEnoughMoneyText

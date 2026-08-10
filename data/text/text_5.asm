@@ -57,10 +57,9 @@ _ToLastPkmnCenterText::
 
 _PocketAbraFlavorText1::
 	text_ram wPocketAbraNick
-	text " "
-	line "grabbed your"
-	cont "hand quickly in"
-	cont "anticipation."
+	text " grabbed"
+	line "your hand quickly"
+	cont "in anticipation."
 	prompt
 
 _PocketAbraFlavorText2::
@@ -85,9 +84,29 @@ _PocketAbraFlavorText4::
 
 _PocketAbraFlavorText5::
 	text_ram wPocketAbraNick
-	text_start
-	line "focused with"
-	cont "all its might!"
+	text " focused"
+	line "with all its"
+	cont "might!"
+	prompt
+
+_PocketAbraFlavorText6::
+	text_ram wPocketAbraNick
+	text " struck"
+	line "a dramatic pose!"
+	prompt
+
+_PocketAbraFlavorText7::
+	text_ram wPocketAbraNick
+	text " was"
+	line "munching on some"
+	cont "of your food!"
+	prompt
+
+_PocketAbraFlavorText8::
+	text_ram wPocketAbraNick
+	text " was"
+	line "browsing your"
+	cont "#DEX!"
 	prompt
 
 _PocketAbraNo::

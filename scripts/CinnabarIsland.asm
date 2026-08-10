@@ -1,10 +1,9 @@
 CinnabarIsland_Script:
-	call EnableAutoTextBoxDrawing
 	ResetEvent EVENT_MANSION_SWITCH_ON
 	ResetEvent EVENT_LAB_STILL_REVIVING_FOSSIL
 	ld hl, CinnabarIsland_ScriptPointers
-	ld a, [wCinnabarIslandCurScript]
-	jp CallFunctionInTable
+	ld de, wCinnabarIslandCurScript
+	jp CallMapScriptInTable
 
 CinnabarIsland_ScriptPointers:
 	def_script_pointers
@@ -52,14 +51,14 @@ CinnabarIslandPlayerMovingScript:
 
 CinnabarIsland_TextPointers:
 	def_text_pointers
-	dw_const CinnabarIslandGirlText,           TEXT_CINNABARISLAND_GIRL
-	dw_const CinnabarIslandGamblerText,        TEXT_CINNABARISLAND_GAMBLER
-	dw_const CinnabarIslandSignText,           TEXT_CINNABARISLAND_SIGN
-	dw_const MartSignText,                     TEXT_CINNABARISLAND_MART_SIGN
-	dw_const PokeCenterSignText,               TEXT_CINNABARISLAND_POKECENTER_SIGN
-	dw_const CinnabarIslandPokemonLabSignText, TEXT_CINNABARISLAND_POKEMONLAB_SIGN
-	dw_const CinnabarIslandGymSignText,        TEXT_CINNABARISLAND_GYM_SIGN
-	dw_const CinnabarIslandDoorIsLockedText,   TEXT_CINNABARISLAND_DOOR_IS_LOCKED
+	dba_const _CinnabarIslandGirlText,           TEXT_CINNABARISLAND_GIRL
+	dba_const _CinnabarIslandGamblerText,        TEXT_CINNABARISLAND_GAMBLER
+	dba_const _CinnabarIslandSignText,           TEXT_CINNABARISLAND_SIGN
+	dba_const MartSignText,                      TEXT_CINNABARISLAND_MART_SIGN
+	dba_const PokeCenterSignText,                TEXT_CINNABARISLAND_POKECENTER_SIGN
+	dba_const _CinnabarIslandPokemonLabSignText, TEXT_CINNABARISLAND_POKEMONLAB_SIGN
+	dba_const CinnabarIslandGymSignText,         TEXT_CINNABARISLAND_GYM_SIGN
+	dba_const CinnabarIslandDoorIsLockedText,    TEXT_CINNABARISLAND_DOOR_IS_LOCKED
 
 CinnabarIslandDoorIsLockedText: ; PureRGBnote: CHANGED: secret key gets consumed on usage and the door is permanently unlocked.
 	text_asm
@@ -90,28 +89,10 @@ CinnabarIslandDoorIsLockedText: ; PureRGBnote: CHANGED: secret key gets consumed
 	rst TextScriptEnd
 
 UnlockedDoorText:
-	text_far _UnlockedCinnabarGymDoorText
-	text_end
+	text_far_end _UnlockedCinnabarGymDoorText
 
 NoKeyText:
-	text_far _CinnabarIslandDoorIsLockedText
-	text_end
-
-CinnabarIslandGirlText:
-	text_far _CinnabarIslandGirlText
-	text_end
-
-CinnabarIslandGamblerText:
-	text_far _CinnabarIslandGamblerText
-	text_end
-
-CinnabarIslandSignText:
-	text_far _CinnabarIslandSignText
-	text_end
-
-CinnabarIslandPokemonLabSignText:
-	text_far _CinnabarIslandPokemonLabSignText
-	text_end
+	text_far_end _CinnabarIslandDoorIsLockedText
 
 CinnabarIslandGymSignText:
 	text_asm

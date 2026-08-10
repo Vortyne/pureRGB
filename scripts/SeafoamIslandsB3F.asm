@@ -1,6 +1,5 @@
 ; PureRGBnote: CHANGED: This map script was changed a bunch to simplify how currents move the player around.
 SeafoamIslandsB3F_Script:
-	call EnableAutoTextBoxDrawing
 	call SeafoamIslandsB3FOnMapLoad
 	ld de, SeafoamB3FHolesCoords
 	ld hl, SeafoamBoulderB3FEventFunc
@@ -16,8 +15,8 @@ SeafoamIslandsB3F_Script:
 	ret nz
 .runCurrentMapScript
 	ld hl, SeafoamIslandsB3F_ScriptPointers
-	ld a, [wSeafoamIslandsB3FCurScript]
-	jp CallFunctionInTable
+	ld de, wSeafoamIslandsB3FCurScript
+	jp CallMapScriptInTable
 
 SeafoamIslandsB3FOnMapLoad::
 	call WasMapJustLoaded
@@ -91,24 +90,20 @@ SeafoamIslandsB3FObjectMoving1Script:
 
 SeafoamIslandsB3F_TextPointers:
     def_text_pointers
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER1
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER2
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER3
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER4
-	dw_const BoulderBlockingWaterB3F, TEXT_SEAFOAMISLANDSB3F_BOULDER5
-	dw_const BoulderBlockingWaterB3F, TEXT_SEAFOAMISLANDSB3F_BOULDER6
-	dw_const PickUpFossilText, TEXT_SEAFOAMISLANDSB3F_DOME_FOSSIL
-	dw_const PickUpFossilText, TEXT_SEAFOAMISLANDSB3F_HELIX_FOSSIL
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER1
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER2
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER3
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB3F_BOULDER4
+	dba_const _BoulderBlockingCurrent, TEXT_SEAFOAMISLANDSB3F_BOULDER5
+	dba_const _BoulderBlockingCurrent, TEXT_SEAFOAMISLANDSB3F_BOULDER6
+	dba_const PickUpFossilText, TEXT_SEAFOAMISLANDSB3F_DOME_FOSSIL
+	dba_const PickUpFossilText, TEXT_SEAFOAMISLANDSB3F_HELIX_FOSSIL
 
 PickUpFossilText:
 	text_asm
 	SetEvent EVENT_SEAFOAM_FOUND_OTHER_FOSSIL
 	callfar PickUpItem
 	rst TextScriptEnd
-
-BoulderBlockingWaterB3F:
-	text_far _BoulderBlockingCurrent
-	text_end
 
 SeafoamWaveSFXB3F::
 	ld hl, wAudioFlags

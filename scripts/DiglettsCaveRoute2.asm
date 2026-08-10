@@ -5,8 +5,4 @@ DiglettsCaveRoute2_Script:
 
 DiglettsCaveRoute2_TextPointers:
 	def_text_pointers
-	dw_const DiglettsCaveRoute2FishingGuruText, TEXT_DIGLETTSCAVEROUTE2_FISHING_GURU
-
-DiglettsCaveRoute2FishingGuruText:
-	text_far _DiglettsCaveRoute2FishingGuruText
-	text_end
+	dba_const _DiglettsCaveRoute2FishingGuruText, TEXT_DIGLETTSCAVEROUTE2_FISHING_GURU

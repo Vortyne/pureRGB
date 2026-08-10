@@ -20,12 +20,12 @@ MrPsychicsHouse_Script:
 
 MrPsychicsHouse_TextPointers:
 	def_text_pointers
-	dw_const MrPsychicsHouseMrPsychicText, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
-	dw_const MrPsychicsHouseTableBook, TEXT_MRPSYCHICSHOUSE_TABLE_BOOK
-	dw_const FightingBrosLeftBroText, TEXT_FIGHTINGBROSHOUSE_LEFT_BRO
-	dw_const FightingBrosRightBroText, TEXT_FIGHTINGBROSHOUSE_RIGHT_BRO
-	dw_const FightingBrosHouseRocketText, TEXT_FIGHTINGBROSHOUSE_ROCKET
-	dw_const FightingBrosHouseCatalogue, TEXT_FIGHTINGBROSHOUSE_TABLE_BOOK
+	dba_const MrPsychicsHouseMrPsychicText, TEXT_MRPSYCHICSHOUSE_MR_PSYCHIC
+	dba_const MrPsychicsHouseTableBook, TEXT_MRPSYCHICSHOUSE_TABLE_BOOK
+	dba_const FightingBrosLeftBroText, TEXT_FIGHTINGBROSHOUSE_LEFT_BRO
+	dba_const FightingBrosRightBroText, TEXT_FIGHTINGBROSHOUSE_RIGHT_BRO
+	dba_const FightingBrosHouseRocketText, TEXT_FIGHTINGBROSHOUSE_ROCKET
+	dba_const FightingBrosHouseCatalogue, TEXT_FIGHTINGBROSHOUSE_TABLE_BOOK
 
 MrPsychicsHouseMrPsychicText:
 	text_asm
@@ -48,8 +48,7 @@ MrPsychicsHouseMrPsychicText:
 	rst TextScriptEnd
 
 .YouWantedThisText:
-	text_far _MrPsychicsHouseMrPsychicYouWantedThisText
-	text_end
+	text_far_end _MrPsychicsHouseMrPsychicYouWantedThisText
 
 .ReceivedTM29Text:
 	text_far _MrPsychicsHouseMrPsychicReceivedTM29Text
@@ -57,16 +56,13 @@ MrPsychicsHouseMrPsychicText:
 	text_end
 
 .TM29ExplanationText:
-	text_far _MrPsychicsHouseMrPsychicTM29ExplanationText
-	text_end
+	text_far_end _MrPsychicsHouseMrPsychicTM29ExplanationText
 
 .TM29NoRoomText:
-	text_far _MrPsychicsHouseMrPsychicTM29NoRoomText
-	text_end
+	text_far_end _MrPsychicsHouseMrPsychicTM29NoRoomText
 
 .IKnowWhatYouWant:
-	text_far _MrPsychicsHouseIKnowWhatYouWantText
-	text_end
+	text_far_end _MrPsychicsHouseIKnowWhatYouWantText
 
 MrPsychicsHouseTableBook:
 	text_far _MrPsychicsHouseBookText
@@ -98,17 +94,13 @@ FightingBrosHouseRocketText:
 	rst _PrintText
 	rst TextScriptEnd
 .rocket
-	text_far _FightingBrosRocketText
-	text_end
+	text_far_end _FightingBrosRocketText
 .needsGuidance
-	text_far _FightingBrosRocketText2
-	text_end
+	text_far_end _FightingBrosRocketText2
 .yipes
-	text_far _FightingBrosRocketText3
-	text_end
+	text_far_end _FightingBrosRocketText3
 .whiteBelt
-	text_far _FightingBrosRocketText4
-	text_end
+	text_far_end _FightingBrosRocketText4
 
 FightingBrosLeftBroText:
 	text_asm
@@ -141,14 +133,11 @@ FightingBrosLeftBroText:
 .done
 	rst TextScriptEnd
 .leftBroExplanation
-	text_far _FightingBrosLeftBro
-	text_end
+	text_far_end _FightingBrosLeftBro
 .leftBroExplanationShort
-	text_far _FightingBrosLeftBroShort
-	text_end
+	text_far_end _FightingBrosLeftBroShort
 .coolMove
-	text_far _FightingBrosLeftBroAfterTeachText
-	text_end
+	text_far_end _FightingBrosLeftBroAfterTeachText
 
 FightingBrosRightBroText:
 	text_asm
@@ -250,7 +239,7 @@ FightingBrosRightBroText:
 	call GBFadeOutToWhite
 	call LoadScreenTilesFromBuffer2
 	ld c, 120
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeInFromWhite
 	ld hl, .convene2
 	rst _PrintText
@@ -265,29 +254,21 @@ FightingBrosRightBroText:
 	SetEvent EVENT_FIGHTING_BROS_ALAKAZAM_TUTORED
 	rst TextScriptEnd
 .RightBroExplanation
-	text_far _FightingBrosRightBro
-	text_end
+	text_far_end _FightingBrosRightBro
 .RightBroExplanationShort
-	text_far _FightingBrosRightBroShort
-	text_end
+	text_far_end _FightingBrosRightBroShort
 .which
-	text_far _FightingBrosRightBroWhich
-	text_end
+	text_far_end _FightingBrosRightBroWhich
 .wrongMon
-	text_far _GenericWrongMonText
-	text_end
+	text_far_end _GenericWrongMonText
 .convene
-	text_far _FightingBrosRightBroConvene
-	text_end
+	text_far_end _FightingBrosRightBroConvene
 .convene2
-	text_far _FightingBrosRightBroConvene2
-	text_end
+	text_far_end _FightingBrosRightBroConvene2
 .end
-	text_far _FightingBrosRightBroEnd
-	text_end
+	text_far_end _FightingBrosRightBroEnd
 .after
-	text_far _FightingBrosRightBroAfter
-	text_end
+	text_far_end _FightingBrosRightBroAfter
 
 FightingBrosAlakazamPunchMoves:
 	db FIRE_PUNCH
@@ -317,14 +298,11 @@ DoFightingBrosWelcome:
 	or 1
 	ret
 .wereFightingBros
-	text_far _FightingBrosWelcomeText
-	text_end
+	text_far_end _FightingBrosWelcomeText
 .beatSabrina
-	text_far _FightingBrosSabrinaText
-	text_end
+	text_far_end _FightingBrosSabrinaText
 .gotMarshBadge
-	text_far _FightingBrosGotMarshBadge
-	text_end
+	text_far_end _FightingBrosGotMarshBadge
 
 FightingBrosHouseCatalogue::
 	text_far _FightingBrosHouseCatalogueText
@@ -340,8 +318,7 @@ FightingBrosHouseCatalogue::
 	rst _PrintText
 	rst TextScriptEnd
 .endText
-	text_far _FightingBrosHouseCatalogue2Text
-	text_end
+	text_far_end _FightingBrosHouseCatalogue2Text
 
 CheckInFightingBrosHouseAfterGiovanni::
 	ld a, [wXCoord]

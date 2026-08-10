@@ -183,273 +183,209 @@ SetMonSeen::
 	jp FlagAction
 
 WhileGoingBackToPkmnCenter::
-	text_far _WhileGoingBackToPkmnCenter
-	text_end
+	text_far_end _WhileGoingBackToPkmnCenter
 
 StartedTalkingAboutDetails::
-	text_far _StartedTalkingAboutDetails
-	text_end
+	text_far_end _StartedTalkingAboutDetails
 
 LearnsetUnlockedText2::
-	text_far _LearnsetUnlockedText
-	text_end
+	text_far_end _LearnsetUnlockedText
 
 LearnsetKnowAlotAbout::
-	text_far _LearnsetKnowAlotAbout
-	text_end
+	text_far_end _LearnsetKnowAlotAbout
 
 LearnsetKnowEverythingAbout::
-	text_far _LearnsetKnowEverythingAbout
-	text_end
+	text_far_end _LearnsetKnowEverythingAbout
 
 LearnsetKnowMoreThanYou::
-	text_far _LearnsetKnowMoreThanYou
-	text_end
+	text_far_end _LearnsetKnowMoreThanYou
 
 LearnsetAppreciator::
-	text_far _LearnsetAppreciator
-	text_end
+	text_far_end _LearnsetAppreciator
 
 LearnsetCuteTalk::
-	text_far _LearnsetCuteTalk
-	text_end
+	text_far_end _LearnsetCuteTalk
 
 LearnsetCool::
-	text_far _LearnsetCool
-	text_end
+	text_far_end _LearnsetCool
 
 LearnsetLove::
-	text_far _LearnsetLove
-	text_end
+	text_far_end _LearnsetLove
 
 LearnsetRude::
-	text_far _LearnsetRude
-	text_end
+	text_far_end _LearnsetRude
 
 LearnsetTough::
-	text_far _LearnsetTough
-	text_end
+	text_far_end _LearnsetTough
 
 LearnsetBoring::
-	text_far _LearnsetBoring
-	text_end
+	text_far_end _LearnsetBoring
 
 LearnsetDream::
-	text_far _LearnsetDream
-	text_end
+	text_far_end _LearnsetDream
 
 LearnsetBeautyTalk::
-	text_far _LearnsetBeautyTalk
-	text_end
+	text_far_end _LearnsetBeautyTalk
 
 ReadAlotAboutPkmn::
-	text_far _ReadAlotAboutPkmn
-	text_end
+	text_far_end _ReadAlotAboutPkmn
 
 KeepReadingText::
-	text_far _KeepReadingText
-	text_end
+	text_far_end _KeepReadingText
 
 Route2AfterBattle1Learnset::
-	text_far _Route2AfterBattle1Learnset
-	text_end
+	text_far_end _Route2AfterBattle1Learnset
 
 Route2AfterBattle3Learnset::
 	text_far _Route2AfterBattle3Learnset
-	text_far _LearnsetCuteTalk
-	text_end
+	text_far_end _LearnsetCuteTalk
 
 TextNothing::
-	text_far _TextNothing
-	text_end
+	text_far_end _TextNothing
 
 CheckDexToSeeIt::
-	text_far _CheckDexToSeeIt
-	text_end
+	text_far_end _CheckDexToSeeIt
 
 TextForgetIt178::
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 
 Route5CharmeleonLearnset::
-	text_far _Route5CharmeleonLearnset
-	text_end
+	text_far_end _Route5CharmeleonLearnset
 
 Route6ButterfreeLearnsetText::
 	text_far _Route6ButterfreeLearnsetText
-	text_far _LearnsetKnowMoreThanYou
-	text_end
+	text_far_end _LearnsetKnowMoreThanYou
 
 Route6VenonatLearnsetText::
-	text_far _Route6VenonatLearnsetText
-	text_end
+	text_far_end _Route6VenonatLearnsetText
 
 Route3RattataLearnsetText::
-	text_far _Route3Youngster2AfterBattleText3Yes2
-	text_end
+	text_far_end _Route3Youngster2AfterBattleText3Yes2
 
 MtMoonB2fRocket4AfterBattleLearnsetText::
 	text_far _MtMoonB2fRocket4AfterBattleLearnsetText
-	text_far _LearnsetKnowEverythingAbout
-	text_end
+	text_far_end _LearnsetKnowEverythingAbout
 
 MtMoonPokecenterMagikarpSalesmanArentYouGladText::
-	text_far _MtMoonPokecenterMagikarpSalesmanArentYouGladText
-	text_end
+	text_far_end _MtMoonPokecenterMagikarpSalesmanArentYouGladText
 
 Route3CooltrainerF3AfterBattleText2::
 	text_far _Route3CooltrainerF3AfterBattleText2
-	text_far _LearnsetRude
-	text_end
+	text_far_end _LearnsetRude
 
 PewterCityBenchGuyJigglyPuff2::
-	text_far _PewterPokecenterBenchGuyLearnsetText2
-	text_end
+	text_far_end _PewterPokecenterBenchGuyLearnsetText2
 
 Route18AerodactylLearnsetText::
 	text_far _Route18AerodactylLearnsetText
-	text_far _LearnsetTough
-	text_end
+	text_far_end _LearnsetTough
 
 Route5SquirtleLearnset::
-	text_far _Route5SquirtleLearnset
-	text_end
+	text_far_end _Route5SquirtleLearnset
 
 LearnsetKrabbyKid::
-	text_far _LearnsetKrabbyKid
-	text_end
+	text_far_end _LearnsetKrabbyKid
 
 LearnsetKinglerGuy::
-	text_far _CinnabarLabKinglerLearnset
-	text_end
+	text_far_end _CinnabarLabKinglerLearnset
 
 ToldAThrillingStory::
-	text_far _ToldAThrillingStory
-	text_end
+	text_far_end _ToldAThrillingStory
 
 VermilionPidgeyHouseYoungsterLearnset::
-	text_far _VermilionPidgeyHouseYoungsterLearnset
-	text_end
+	text_far_end _VermilionPidgeyHouseYoungsterLearnset
 
 LearnsetGrowlithe::
 	text_far _GrowlitheLearnset
-	text_far _LearnsetMastering
-	text_end
+	text_far_end _LearnsetMastering
 
 WhileGoingHeadingToShipInfirmary::
-	text_far _WhileGoingHeadingToShipInfirmary
-	text_end
+	text_far_end _WhileGoingHeadingToShipInfirmary
 
 ShowedCoolMoves::
-	text_far _ShowedCoolMoves
-	text_end
+	text_far_end _ShowedCoolMoves
 
 PlayedAroundWith::
-	text_far _PlayedAroundWith
-	text_end
+	text_far_end _PlayedAroundWith
 
 LearnsetFondMemories::
-	text_far _LearnsetFondMemories
-	text_end
+	text_far_end _LearnsetFondMemories
 
 PokemonTower1FGirl2Text::
-	text_far _PokemonTower1FGirl2Text
-	text_end
+	text_far_end _PokemonTower1FGirl2Text
 
 LearnsetVulpixLuckyNumber::
-	text_far _LearnsetVulpixLuckyNumber
-	text_end
+	text_far_end _LearnsetVulpixLuckyNumber
 
 LearnsetBellsprout::
-	text_far _LearnsetBellsprout
-	text_end
+	text_far_end _LearnsetBellsprout
 
 LearnsetMagneton::
 	text_far _LearnsetMagneton
-	text_far _LearnsetKnowEverythingAbout
-	text_end
+	text_far_end _LearnsetKnowEverythingAbout
 
 LearnsetStaryu::
 	text_far _LearnsetStaryu
-	text_far _LearnsetMystery
-	text_end
+	text_far_end _LearnsetMystery
 
 LearnsetGloom::
 	text_far _LearnsetGloom
-	text_far _LearnsetLove
-	text_end
+	text_far_end _LearnsetLove
 
 LearnsetSandslash::
-	text_far _LearnsetSandslash
-	text_end
+	text_far_end _LearnsetSandslash
 
 GeodudeLearnset::
-	text_far _GeodudeLearnset
-	text_end
+	text_far_end _GeodudeLearnset
 
 RhyhornLearnset::
-	text_far _RhyhornLearnset
-	text_end
+	text_far_end _RhyhornLearnset
 
 GastlyLearnset::
-	text_far _ViridianCityFisherGastlyLearnset
-	text_end
+	text_far_end _ViridianCityFisherGastlyLearnset
 
 LavenderCuboneLearnset::
-	text_far _LavenderCuboneLearnset
-	text_end
+	text_far_end _LavenderCuboneLearnset
 
 ArbokLearnset::
-	text_far _ArbokLearnset
-	text_end
+	text_far_end _ArbokLearnset
 
 TentacoolLearnset::
-	text_far _LearnsetTentacool
-	text_end
+	text_far_end _LearnsetTentacool
 
 SeadraLearnset::
 	text_far _SeadraLearnset
-	text_far _LearnsetMystery
-	text_end
+	text_far_end _LearnsetMystery
 
 ShellderLearnset::
 	text_far _ShellderLearnset
-	text_far _LearnsetKnowAlotAbout
-	text_end
+	text_far_end _LearnsetKnowAlotAbout
 
 LearnsetGoldeen::
 	text_far _LearnsetGoldeen
-	text_far _LearnsetBeautyTalk
-	text_end
+	text_far_end _LearnsetBeautyTalk
 
 LearnsetNidorina::
-	text_far _NidorinaLearnset
-	text_end
+	text_far_end _NidorinaLearnset
 
 MukLearnset::
-	text_far _MukLearnset
-	text_end
+	text_far_end _MukLearnset
 
 MukLearnset2::
-	text_far _MukLearnset2
-	text_end
+	text_far_end _MukLearnset2
 
 ClefableLearnset::
 	text_far _ClefableLearnset
-	text_far _LearnsetLove
-	text_end
+	text_far_end _LearnsetLove
 
 MeowthLearnset::
-	text_far _LearnsetMeowth
-	text_end
+	text_far_end _LearnsetMeowth
 
 FearowLearnset::
-	text_far _FearowLearnset
-	text_end
+	text_far_end _FearowLearnset
 
 KoffingLearnsetText::
-	text_far _KoffingLearnsetText
-	text_end
+	text_far_end _KoffingLearnsetText
 
 PoliwrathLearnsetText::
 	text_far _PoliwrathLearnsetText
@@ -458,45 +394,35 @@ PoliwrathLearnsetText::
 
 ElectabuzzLearnsetText::
 	text_far _ElectabuzzLearnsetText
-	text_far _LearnsetKnowMoreThanYou
-	text_end
+	text_far_end _LearnsetKnowMoreThanYou
 
 MankeyLearnsetText::
 	text_far _MankeyLearnsetText
-	text_far _LearnsetCuteTalk
-	text_end
+	text_far_end _LearnsetCuteTalk
 
 MachokeLearnsetText2::
 	text_far _MachokeLearnsetText2
-	text_far _LearnsetMastering
-	text_end 
+	text_far_end _LearnsetMastering 
 
 PrimeapeLearnsetText::
 	text_far _PrimeapeLearnsetText
-	text_far _LearnsetTough
-	text_end 
+	text_far_end _LearnsetTough 
 
 TaurosLearnsetText::
-	text_far _TaurosLearnsetText
-	text_end
+	text_far_end _TaurosLearnsetText
 
 BlaineStory::
-	text_far _BlaineStory
-	text_end
+	text_far_end _BlaineStory
 
 ChanseyLearnsetText::
-	text_far _CopycatsHouse1FChanseyText2
-	text_end
+	text_far_end _CopycatsHouse1FChanseyText2
 
 DoduoLearnsetText::
-	text_far _DoduoLearnsetText
-	text_end
+	text_far_end _DoduoLearnsetText
 
 LearnsetNaturalHabitatText::
-	text_far _LearnsetNaturalHabitatText
-	text_end
+	text_far_end _LearnsetNaturalHabitatText
 
 LearnsetElectrode::
 	text_far _LearnsetElectrode
-	text_far _LearnsetCool
-	text_end
+	text_far_end _LearnsetCool

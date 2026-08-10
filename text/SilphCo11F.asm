@@ -24,6 +24,7 @@ _SilphCo11FSilphPresidentReceivedMasterBallText::
 	line "@"
 	text_ram_stringbuffer
 	text "!@"
+	sound_get_key_item
 	text_end
 
 _SilphCo11FSilphPresidentMasterBallDescriptionText::

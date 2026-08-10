@@ -8,10 +8,8 @@ PokemonMansionB1F_Script:
 	call EnableAutoTextBoxDrawing
 	ld hl, Mansion4TrainerHeaders
 	ld de, PokemonMansionB1F_ScriptPointers
-	ld a, [wPokemonMansionB1FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wPokemonMansionB1FCurScript], a
-	ret
+	ld bc, wPokemonMansionB1FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 MansionB1FCheckReplaceSwitchDoorBlocks:
 	call WasMapJustLoaded
@@ -71,15 +69,11 @@ CheckUnlockLab::
 	ld a, SFX_59
 	call PlaySoundWaitForCurrent
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_GO_INSIDE
 	call PlaySoundWaitForCurrent
 	SetEvent EVENT_UNLOCKED_SECRET_LAB
 	jp UnlockLab
-
-Mansion4Text8:
-	text_far _MansionB1FKeyHoleText
-	text_end
 
 Mansion4Script_Switches::
 	ld b, TEXT_POKEMONMANSIONB1F_SWITCH
@@ -93,29 +87,29 @@ PokemonMansionB1F_ScriptPointers:
 
 PokemonMansionB1F_TextPointers:
 	def_text_pointers
-	dw_const PokemonMansionB1FBurglarText,   TEXT_POKEMONMANSIONB1F_BURGLAR
-	dw_const PokemonMansionB1FScientistText, TEXT_POKEMONMANSIONB1F_SCIENTIST
-	dw_const Mansion4Text3,                  TEXT_POKEMONMANSIONB1F_COOLTRAINER_M
-	dw_const Mansion4Text4,                  TEXT_POKEMONMANSIONB1F_FIREFIGHTER
-	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM1
-	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM2
-	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM3
-	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM4
-	dw_const PokemonMansionB1FDiaryText,     TEXT_POKEMONMANSIONB1F_DIARY
-	dw_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_SECRET_KEY
-	dw_const PokemonMansionSwitchText,       TEXT_POKEMONMANSIONB1F_SWITCH
-	dw_const Mansion4Text8,                  TEXT_POKEMONMANSIONB1F_TOP_SECRET_KEYHOLE
+	dba_const PokemonMansionB1FBurglarText,   TEXT_POKEMONMANSIONB1F_BURGLAR
+	dba_const PokemonMansionB1FScientistText, TEXT_POKEMONMANSIONB1F_SCIENTIST
+	dba_const Mansion4Text3,                  TEXT_POKEMONMANSIONB1F_COOLTRAINER_M
+	dba_const Mansion4Text4,                  TEXT_POKEMONMANSIONB1F_FIREFIGHTER
+	dba_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM1
+	dba_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM2
+	dba_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM3
+	dba_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_ITEM4
+	dba_const _PokemonMansionB1FDiaryText,    TEXT_POKEMONMANSIONB1F_DIARY
+	dba_const PickUpItemText,                 TEXT_POKEMONMANSIONB1F_SECRET_KEY
+	dba_const PokemonMansionSwitchText,       TEXT_POKEMONMANSIONB1F_SWITCH
+	dba_const _MansionB1FKeyHoleText,         TEXT_POKEMONMANSIONB1F_TOP_SECRET_KEYHOLE
 
 Mansion4TrainerHeaders:
 	def_trainers
 Mansion4TrainerHeader0:
-	trainer EVENT_BEAT_MANSION_4_TRAINER_0, 0, PokemonMansionB1FBurglarBattleText, PokemonMansionB1FBurglarEndBattleText, PokemonMansionB1FBurglarAfterBattleText
+	trainer EVENT_BEAT_MANSION_4_TRAINER_0, 0, _PokemonMansionB1FBurglarBattleText, _PokemonMansionB1FBurglarEndBattleText, _PokemonMansionB1FBurglarAfterBattleText
 Mansion4TrainerHeader1:
-	trainer EVENT_BEAT_MANSION_4_TRAINER_1, 3, PokemonMansionB1FScientistBattleText, PokemonMansionB1FScientistEndBattleText, PokemonMansionB1FScientistAfterBattleText
+	trainer EVENT_BEAT_MANSION_4_TRAINER_1, 3, _PokemonMansionB1FScientistBattleText, _PokemonMansionB1FScientistEndBattleText, _PokemonMansionB1FScientistAfterBattleText
 Mansion4TrainerHeader2:
-	trainer EVENT_BEAT_MANSION_4_TRAINER_2, 0, Mansion4BattleText3, Mansion4EndBattleText3, Mansion4AfterBattleText3
+	trainer EVENT_BEAT_MANSION_4_TRAINER_2, 0, _Mansion4BattleText3, _Mansion4EndBattleText3, _Mansion4AfterBattleText3
 Mansion4TrainerHeader3:
-	trainer EVENT_BEAT_MANSION_4_TRAINER_3, 0, Mansion4BattleText4, Mansion4EndBattleText4, Mansion4AfterBattleText4
+	trainer EVENT_BEAT_MANSION_4_TRAINER_3, 0, _Mansion4BattleText4, _Mansion4EndBattleText4, _Mansion4AfterBattleText4
 	db -1 ; end
 
 PokemonMansionB1FBurglarText:
@@ -129,55 +123,3 @@ Mansion4Text3:
 
 Mansion4Text4:
 	script_trainer Mansion4TrainerHeader3
-
-PokemonMansionB1FBurglarBattleText:
-	text_far _PokemonMansionB1FBurglarBattleText
-	text_end
-
-PokemonMansionB1FBurglarEndBattleText:
-	text_far _PokemonMansionB1FBurglarEndBattleText
-	text_end
-
-PokemonMansionB1FBurglarAfterBattleText:
-	text_far _PokemonMansionB1FBurglarAfterBattleText
-	text_end
-
-PokemonMansionB1FScientistBattleText:
-	text_far _PokemonMansionB1FScientistBattleText
-	text_end
-
-PokemonMansionB1FScientistEndBattleText:
-	text_far _PokemonMansionB1FScientistEndBattleText
-	text_end
-
-PokemonMansionB1FScientistAfterBattleText:
-	text_far _PokemonMansionB1FScientistAfterBattleText
-	text_end
-
-Mansion4BattleText3:
-	text_far _Mansion4BattleText3
-	text_end
-
-Mansion4EndBattleText3:
-	text_far _Mansion4EndBattleText3
-	text_end
-
-Mansion4AfterBattleText3:
-	text_far _Mansion4AfterBattleText3
-	text_end
-
-Mansion4BattleText4:
-	text_far _Mansion4BattleText4
-	text_end
-
-Mansion4EndBattleText4:
-	text_far _Mansion4EndBattleText4
-	text_end
-
-Mansion4AfterBattleText4:
-	text_far _Mansion4AfterBattleText4
-	text_end	
-
-PokemonMansionB1FDiaryText:
-	text_far _PokemonMansionB1FDiaryText
-	text_end

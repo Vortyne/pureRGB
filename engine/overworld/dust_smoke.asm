@@ -124,7 +124,7 @@ BoulderHoleDropEffect:: ; d = 1 prior to calling will cause a "splash" sound ins
 	and a
 	jr z, .noSplash
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, wChannelCommandPointers + CHAN5 * 2
 	ld de, EndSound ; end the SFX_CRY_16 of rock crashing
 	ld a, e
@@ -165,7 +165,7 @@ BoulderHoleDropEffect:: ; d = 1 prior to calling will cause a "splash" sound ins
 	add d
 	ldh [hSCY], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .shakeLoop
 	ld a, d

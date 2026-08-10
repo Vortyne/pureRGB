@@ -3,19 +3,11 @@ CeladonMart2F_Script:
 
 CeladonMart2F_TextPointers:
 	def_text_pointers
-	dw_const CeladonMart2FClerk1Text,           TEXT_CELADONMART2F_CLERK1
-	dw_const CeladonMart2FClerk2Text,           TEXT_CELADONMART2F_CLERK2
-	dw_const CeladonMart2FMiddleAgedManText,    TEXT_CELADONMART2F_MIDDLE_AGED_MAN
-	dw_const CeladonMart2FGirlText,             TEXT_CELADONMART2F_GIRL
-	dw_const CeladonMart2FCurrentFloorSignText, TEXT_CELADONMART2F_CURRENT_FLOOR_SIGN
-
-CeladonMart2FMiddleAgedManText:
-	text_far _CeladonMart2FMiddleAgedManText
-	text_end
-
-CeladonMart2FGirlText:
-	text_far _CeladonMart2FGirlText
-	text_end
+	dba_const CeladonMart2FClerk1Text,           TEXT_CELADONMART2F_CLERK1
+	dba_const CeladonMart2FClerk2Text,           TEXT_CELADONMART2F_CLERK2
+	dba_const _CeladonMart2FMiddleAgedManText,   TEXT_CELADONMART2F_MIDDLE_AGED_MAN
+	dba_const _CeladonMart2FGirlText,             TEXT_CELADONMART2F_GIRL
+	dba_const CeladonMart2FCurrentFloorSignText, TEXT_CELADONMART2F_CURRENT_FLOOR_SIGN
 
 CeladonMart2FCurrentFloorSignText:
 	text_far _CeladonMart2FCurrentFloorSignText
@@ -24,7 +16,6 @@ CeladonMart2FCurrentFloorSignText:
 	rst _PrintText
 	rst TextScriptEnd
 .part2
-	text_far _CeladonMart2FDirectorySignText
-	text_end
+	text_far_end _CeladonMart2FDirectorySignText
 
 INCLUDE "data/items/marts/celadon2F.asm"

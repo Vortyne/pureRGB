@@ -10,8 +10,9 @@ _Route16FlyHouseBrunetteGirlText::
 
 _Route16FlyHouseBrunetteGirlReceivedHM02Text::
 	text "<PLAYER> received"
-	line "HM02!"
-	done
+	line "HM02!@"
+	sound_get_key_item
+	text_end
 
 _Route16FlyHouseBrunetteGirlHM02ExplanationText::
 	text "HM02 is FLY."

@@ -65,8 +65,9 @@ _ProspectorsHouseProspectorText3::
 _ProspectorsHouseProspectorText4::
 	text "<PLAYER> learned"
 	line "how to DIG"
-	cont "between towns!"
-	done
+	cont "between towns!@"
+	sound_get_item_2
+	text_end
 
 _ProspectorsHouseBookcase1Text::
 	text "UNDERGROUND"

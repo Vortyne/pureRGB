@@ -198,8 +198,7 @@ StartMenu_Pokemon::
 	call GBPalWhiteOutWithDelay3
 	jp .goBackToMap
 .flashLightsAreaText
-	text_far _FlashLightsAreaText
-	text_end
+	text_far_end _FlashLightsAreaText
 .dig
 	callfar DigFromPartyMenu
 	jp c, StartMenu_Pokemon
@@ -227,19 +226,16 @@ StartMenu_Pokemon::
 	set BIT_UNKNOWN_4_1, [hl]
 	res BIT_NO_BATTLES, [hl]
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call GBPalWhiteOutWithDelay3
 	callfar ClearSafariFlags ; PureRGBnote: CHANGED: when teleporting, safari stuff is cleared.
 	jp .goBackToMap
 .warpToLastPokemonCenterText
-	text_far _WarpToLastPokemonCenterText
-	text_end
+	text_far_end _WarpToLastPokemonCenterText
 .cannotUseTeleportNowText
-	text_far _CannotUseTeleportNowText
-	text_end
+	text_far_end _CannotUseTeleportNowText
 .cannotFlyHereText
-	text_far _CannotFlyHereText
-	text_end
+	text_far_end _CannotFlyHereText
 .softboiled
 	ld hl, wPartyMon1MaxHP
 	ld a, [wWhichPokemon]
@@ -277,8 +273,7 @@ StartMenu_Pokemon::
 	rst _PrintText
 	jp .loop
 .notHealthyEnoughText
-	text_far _NotHealthyEnoughText
-	text_end
+	text_far_end _NotHealthyEnoughText
 .goBackToMap
 	call RestoreScreenTilesAndReloadTilePatterns
 	jp CloseTextDisplay
@@ -288,11 +283,9 @@ StartMenu_Pokemon::
 	rst _PrintText
 	jp .loop
 .newBadgeRequiredText
-	text_far _NewBadgeRequiredText
-	text_end
+	text_far_end _NewBadgeRequiredText
 .alreadyBright
-	text_far _AlreadyBrightText
-	text_end
+	text_far_end _AlreadyBrightText
 
 ; writes a blank tile to all possible menu cursor positions on the party menu
 ErasePartyMenuCursors::
@@ -501,12 +494,10 @@ ItemMenuRestoreItemIndex:
 	ret
 
 CannotUseItemsHereText:
-	text_far _CannotUseItemsHereText
-	text_end
+	text_far_end _CannotUseItemsHereText
 
 CannotGetOffHereText:
-	text_far _CannotGetOffHereText
-	text_end
+	text_far_end _CannotGetOffHereText
 
 INCLUDE "data/items/use_party.asm"
 

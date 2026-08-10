@@ -75,6 +75,3 @@ Func_3082:: ; added from pokeyellow - update audio so it doesn't "lag"
 	callbs Audio1_UpdateMusic
 	pop af
 	jp BankswitchCommon
-
-EndSound::
-	sound_ret

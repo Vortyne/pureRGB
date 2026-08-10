@@ -2,13 +2,10 @@
 
 SilphCo4F_Script:
 	call SilphCo4FGateCallbackScript
-	call EnableAutoTextBoxDrawing
 	ld hl, SilphCo4TrainerHeaders
 	ld de, SilphCo4F_ScriptPointers
-	ld a, [wSilphCo4FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSilphCo4FCurScript], a
-	ret
+	ld bc, wSilphCo4FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SilphCo4FGateCallbackScript::
 	call WasMapJustLoaded
@@ -23,22 +20,22 @@ SilphCo4F_ScriptPointers:
 
 SilphCo4F_TextPointers:
 	def_text_pointers
-	dw_const SilphCo4FSilphWorkerMText, TEXT_SILPHCO4F_SILPH_WORKER_M
-	dw_const SilphCo4FRocket1Text,      TEXT_SILPHCO4F_ROCKET1
-	dw_const SilphCo4FScientistText,    TEXT_SILPHCO4F_SCIENTIST
-	dw_const SilphCo4FRocket2Text,      TEXT_SILPHCO4F_ROCKET2
-	dw_const PickUp3ItemText,           TEXT_SILPHCO4F_ITEM1
-	dw_const PickUpItemText,            TEXT_SILPHCO4F_ITEM2
-	dw_const PickUpItemText,            TEXT_SILPHCO4F_ITEM3
+	dba_const SilphCo4FSilphWorkerMText, TEXT_SILPHCO4F_SILPH_WORKER_M
+	dba_const SilphCo4FRocket1Text,      TEXT_SILPHCO4F_ROCKET1
+	dba_const SilphCo4FScientistText,    TEXT_SILPHCO4F_SCIENTIST
+	dba_const SilphCo4FRocket2Text,      TEXT_SILPHCO4F_ROCKET2
+	dba_const PickUp3ItemText,           TEXT_SILPHCO4F_ITEM1
+	dba_const PickUpItemText,            TEXT_SILPHCO4F_ITEM2
+	dba_const PickUpItemText,            TEXT_SILPHCO4F_ITEM3
 
 SilphCo4TrainerHeaders:
 	def_trainers 2
 SilphCo4TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_4F_TRAINER_0, 4, SilphCo4FRocket1BattleText, SilphCo4FRocket1EndBattleText, SilphCo4FRocket1AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_4F_TRAINER_0, 4, _SilphCo4FRocket1BattleText, _SilphCo4FRocket1EndBattleText, _SilphCo4FRocket1AfterBattleText
 SilphCo4TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_4F_TRAINER_1, 3, SilphCo4FScientistBattleText, SilphCo4FScientistEndBattleText, SilphCo4FScientistAfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_4F_TRAINER_1, 3, _SilphCo4FScientistBattleText, _SilphCo4FScientistEndBattleText, _SilphCo4FScientistAfterBattleText
 SilphCo4TrainerHeader2:
-	trainer EVENT_BEAT_SILPH_CO_4F_TRAINER_2, 4, SilphCo4FRocket2BattleText, SilphCo4FRocket2EndBattleText, SilphCo4FRocket2AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_4F_TRAINER_2, 4, _SilphCo4FRocket2BattleText, _SilphCo4FRocket2EndBattleText, _SilphCo4FRocket2AfterBattleText
 	db -1 ; end
 
 SilphCo4FSilphWorkerMText:
@@ -49,12 +46,10 @@ SilphCo4FSilphWorkerMText:
 	rst TextScriptEnd
 
 .ImHidingText:
-	text_far _SilphCo4FSilphWorkerMImHidingText
-	text_end
+	text_far_end _SilphCo4FSilphWorkerMImHidingText
 
 .TeamRocketIsGoneText:
-	text_far _SilphCo4FSilphWorkerMTeamRocketIsGoneText
-	text_end
+	text_far_end _SilphCo4FSilphWorkerMTeamRocketIsGoneText
 
 SilphCo4FRocket1Text:
 	script_trainer SilphCo4TrainerHeader0
@@ -64,39 +59,3 @@ SilphCo4FScientistText:
 
 SilphCo4FRocket2Text:
 	script_trainer SilphCo4TrainerHeader2
-
-SilphCo4FRocket1BattleText:
-	text_far _SilphCo4FRocket1BattleText
-	text_end
-
-SilphCo4FRocket1EndBattleText:
-	text_far _SilphCo4FRocket1EndBattleText
-	text_end
-
-SilphCo4FRocket1AfterBattleText:
-	text_far _SilphCo4FRocket1AfterBattleText
-	text_end
-
-SilphCo4FScientistBattleText:
-	text_far _SilphCo4FScientistBattleText
-	text_end
-
-SilphCo4FScientistEndBattleText:
-	text_far _SilphCo4FScientistEndBattleText
-	text_end
-
-SilphCo4FScientistAfterBattleText:
-	text_far _SilphCo4FScientistAfterBattleText
-	text_end
-
-SilphCo4FRocket2BattleText:
-	text_far _SilphCo4FRocket2BattleText
-	text_end
-
-SilphCo4FRocket2EndBattleText:
-	text_far _SilphCo4FRocket2EndBattleText
-	text_end
-
-SilphCo4FRocket2AfterBattleText:
-	text_far _SilphCo4FRocket2AfterBattleText
-	text_end

@@ -1,12 +1,10 @@
 ; PureRGBnote: CHANGED: ADDED: the super nerd who you both get fossils on this floor will now ask to take your fossil right away
 ; and then meet him in saffron city to receive the revived pokemon. Frees up some space in your items.
 MtMoonB2F_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, MtMoon3TrainerHeaders
 	ld de, MtMoonB2F_ScriptPointers
-	ld a, [wMtMoonB2FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wMtMoonB2FCurScript], a
+	ld bc ,wMtMoonB2FCurScript
+	call ExecuteCustomMapScriptInTable
 	CheckEvent EVENT_BEAT_MT_MOON_EXIT_SUPER_NERD
 	ret z
 	lb bc, 11, 14
@@ -164,28 +162,28 @@ MtMoonB2FSuperNerdTakesOtherFossilScript:
 
 MtMoonB2F_TextPointers:
 	def_text_pointers
-	dw_const MtMoonB2FSuperNerdText,                 TEXT_MTMOONB2F_SUPER_NERD
-	dw_const MtMoonB2FRocket1Text,                   TEXT_MTMOONB2F_ROCKET1
-	dw_const MtMoonB2FRocket2Text,                   TEXT_MTMOONB2F_ROCKET2
-	dw_const MtMoonB2FRocket3Text,                   TEXT_MTMOONB2F_ROCKET3
-	dw_const MtMoonB2FRocket4Text,                   TEXT_MTMOONB2F_ROCKET4
-	dw_const MtMoonB2FDomeFossilText,                TEXT_MTMOONB2F_DOME_FOSSIL
-	dw_const MtMoonB2FHelixFossilText,               TEXT_MTMOONB2F_HELIX_FOSSIL
-	dw_const PickUpItemText,                         TEXT_MTMOONB2F_ITEM1
-	dw_const PickUpItemText,                         TEXT_MTMOONB2F_ITEM2
-	dw_const MtMoonB2FSuperNerdThenThisIsMineText,   TEXT_MTMOONB2F_SUPER_NERD_THEN_THIS_IS_MINE
-	dw_const MtMoonSuperNerdTakeFossilQuestionText,  TEXT_MTMOONB2F_SUPER_NERD_FOSSIL_QUESTION
+	dba_const MtMoonB2FSuperNerdText,                 TEXT_MTMOONB2F_SUPER_NERD
+	dba_const MtMoonB2FRocket1Text,                   TEXT_MTMOONB2F_ROCKET1
+	dba_const MtMoonB2FRocket2Text,                   TEXT_MTMOONB2F_ROCKET2
+	dba_const MtMoonB2FRocket3Text,                   TEXT_MTMOONB2F_ROCKET3
+	dba_const MtMoonB2FRocket4Text,                   TEXT_MTMOONB2F_ROCKET4
+	dba_const MtMoonB2FDomeFossilText,                TEXT_MTMOONB2F_DOME_FOSSIL
+	dba_const MtMoonB2FHelixFossilText,               TEXT_MTMOONB2F_HELIX_FOSSIL
+	dba_const PickUpItemText,                         TEXT_MTMOONB2F_ITEM1
+	dba_const PickUpItemText,                         TEXT_MTMOONB2F_ITEM2
+	dba_const _MtMoonB2FSuperNerdThenThisIsMineText,  TEXT_MTMOONB2F_SUPER_NERD_THEN_THIS_IS_MINE
+	dba_const MtMoonSuperNerdTakeFossilQuestionText,  TEXT_MTMOONB2F_SUPER_NERD_FOSSIL_QUESTION
 
 MtMoon3TrainerHeaders:
 	def_trainers 2
 MtMoon3TrainerHeader0:
-	trainer EVENT_BEAT_MT_MOON_3_TRAINER_0, 4, MtMoonB2FRocket1BattleText, MtMoonB2FRocket1EndBattleText, MtMoonB2FRocket1AfterBattleText
+	trainer EVENT_BEAT_MT_MOON_3_TRAINER_0, 4, _MtMoonB2FRocket1BattleText, _MtMoonB2FRocket1EndBattleText, _MtMoonB2FRocket1AfterBattleText
 MtMoon3TrainerHeader1:
-	trainer EVENT_BEAT_MT_MOON_3_TRAINER_1, 4, MtMoonB2FRocket2BattleText, MtMoonB2FRocket2EndBattleText, MtMoonB2FRocket2AfterBattleText
+	trainer EVENT_BEAT_MT_MOON_3_TRAINER_1, 4, _MtMoonB2FRocket2BattleText, _MtMoonB2FRocket2EndBattleText, _MtMoonB2FRocket2AfterBattleText
 MtMoon3TrainerHeader2:
-	trainer EVENT_BEAT_MT_MOON_3_TRAINER_2, 4, MtMoonB2FRocket3BattleText, MtMoonB2FRocket3EndBattleText, MtMoonB2FRocket3AfterBattleText
+	trainer EVENT_BEAT_MT_MOON_3_TRAINER_2, 4, _MtMoonB2FRocket3BattleText, _MtMoonB2FRocket3EndBattleText, _MtMoonB2FRocket3AfterBattleText
 MtMoon3TrainerHeader3:
-	trainer EVENT_BEAT_MT_MOON_3_TRAINER_3, 4, MtMoonB2FRocket4BattleText, MtMoonB2FRocket4EndBattleText, MtMoonB2FRocket4AfterBattleText
+	trainer EVENT_BEAT_MT_MOON_3_TRAINER_3, 4, _MtMoonB2FRocket4BattleText, _MtMoonB2FRocket4EndBattleText, MtMoonB2FRocket4AfterBattleText
 	db -1 ; end
 
 MtMoonB2FSuperNerdText:
@@ -231,6 +229,8 @@ MtMoonB2FRocket3Text:
 MtMoonB2FRocket4Text:
 	script_trainer MtMoon3TrainerHeader3
 
+; TODO: optimize these two
+
 MtMoonB2FDomeFossilText:
 	text_asm
 	ld a, $1
@@ -253,8 +253,7 @@ MtMoonB2FDomeFossilText:
 	rst TextScriptEnd
 
 .YouWantText:
-	text_far _MtMoonB2FDomeFossilYouWantText
-	text_end
+	text_far_end _MtMoonB2FDomeFossilYouWantText
 
 MtMoonB2FHelixFossilText:
 	text_asm
@@ -278,18 +277,14 @@ MtMoonB2FHelixFossilText:
 	rst TextScriptEnd
 
 .YouWantText:
-	text_far _MtMoonB2FHelixFossilYouWantText
-	text_end
+	text_far_end _MtMoonB2FHelixFossilYouWantText
 
 MtMoonB2FReceivedFossilText:
 	ld hl, .Text
 	jp PrintText
 
 .Text:
-	text_far _MtMoonB2FReceivedFossilText
-	sound_get_key_item
-	text_waitbutton
-	text_end
+	text_far_end _MtMoonB2FReceivedFossilText
 
 MtMoonB2FYouHaveNoRoomText:
 	ld hl, .Text
@@ -297,30 +292,19 @@ MtMoonB2FYouHaveNoRoomText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _MtMoonB2FYouHaveNoRoomText
-	text_waitbutton
-	text_end
+	text_far_end _MtMoonB2FYouHaveNoRoomText
 
 MtMoonB2FSuperNerdTheyreBothMineText:
-	text_far _MtMoonB2FSuperNerdTheyreBothMineText
-	text_end
+	text_far_end _MtMoonB2FSuperNerdTheyreBothMineText
 
 MtMoonB2FSuperNerdOkIllShareText:
-	text_far _MtMoonB2FSuperNerdOkIllShareText
-	text_end
+	text_far_end _MtMoonB2FSuperNerdOkIllShareText
 
 MtMoonB2fSuperNerdEachTakeOneText:
-	text_far _MtMoonB2fSuperNerdEachTakeOneText
-	text_end
+	text_far_end _MtMoonB2fSuperNerdEachTakeOneText
 
 MtMoonB2FSuperNerdTheresAPokemonLabText:
-	text_far _MtMoonB2FSuperNerdTheresAPokemonLabText
-	text_end
-
-MtMoonB2FSuperNerdThenThisIsMineText:
-	text_far _MtMoonB2FSuperNerdThenThisIsMineText
-	sound_get_key_item
-	text_end
+	text_far_end _MtMoonB2FSuperNerdTheresAPokemonLabText
 
 MtMoonSuperNerdTakeFossilQuestionText:
 	text_asm
@@ -373,82 +357,28 @@ MtMoonSuperNerdTakeFossilQuestion:
 	ret
 	
 MtMoon3TextSuperNerdNoFossil:
-	text_far _MtMoon3TextSuperNerdNoFossil
-	text_end
+	text_far_end _MtMoon3TextSuperNerdNoFossil
 
 MtMoon3TextSuperNerdGiveFossil:
-	text_far _MtMoon3TextSuperNerdGiveFossil
-	text_end
+	text_far_end _MtMoon3TextSuperNerdGiveFossil
 
 MtMoon3TextSuperNerdGaveFossil:
-	text_far _MtMoon3TextSuperNerdGaveFossil
-	text_end
+	text_far_end _MtMoon3TextSuperNerdGaveFossil
 
 MtMoon3TextSuperNerdGaveHelix:
-	text_far _MtMoon3TextSuperNerdGaveHelix
-	sound_get_item_1
-	text_end
+	text_far_end _MtMoon3TextSuperNerdGaveHelix
 
 MtMoon3TextSuperNerdGaveDome:
-	text_far _MtMoon3TextSuperNerdGaveDome
-	sound_get_item_1
-	text_end
+	text_far_end _MtMoon3TextSuperNerdGaveDome
 
 MtMoon3TextSuperNerdGaveFossilEnd:
-	text_far _MtMoon3TextSuperNerdGaveFossilEnd
-	text_end
+	text_far_end _MtMoon3TextSuperNerdGaveFossilEnd
 
 MtMoon3TextSuperNerdKeptFossil:
-	text_far _MtMoon3TextSuperNerdKeptFossil
-	text_end
+	text_far_end _MtMoon3TextSuperNerdKeptFossil
 
 MtMoon3TextSuperNerdLookingForMoreFossils:
-	text_far _MtMoon3TextSuperNerdLookingForMoreFossils
-	text_end
-	
-MtMoonB2FRocket1BattleText:
-	text_far _MtMoonB2FRocket1BattleText
-	text_end
-
-MtMoonB2FRocket1EndBattleText:
-	text_far _MtMoonB2FRocket1EndBattleText
-	text_end
-
-MtMoonB2FRocket1AfterBattleText:
-	text_far _MtMoonB2FRocket1AfterBattleText
-	text_end
-
-MtMoonB2FRocket2BattleText:
-	text_far _MtMoonB2FRocket2BattleText
-	text_end
-
-MtMoonB2FRocket2EndBattleText:
-	text_far _MtMoonB2FRocket2EndBattleText
-	text_end
-
-MtMoonB2FRocket2AfterBattleText:
-	text_far _MtMoonB2FRocket2AfterBattleText
-	text_end
-
-MtMoonB2FRocket3BattleText:
-	text_far _MtMoonB2FRocket3BattleText
-	text_end
-
-MtMoonB2FRocket3EndBattleText:
-	text_far _MtMoonB2FRocket3EndBattleText
-	text_end
-
-MtMoonB2FRocket3AfterBattleText:
-	text_far _MtMoonB2FRocket3AfterBattleText
-	text_end
-
-MtMoonB2FRocket4BattleText:
-	text_far _MtMoonB2FRocket4BattleText
-	text_end
-
-MtMoonB2FRocket4EndBattleText:
-	text_far _MtMoonB2FRocket4EndBattleText
-	text_end
+	text_far_end _MtMoon3TextSuperNerdLookingForMoreFossils
 
 MtMoonB2FRocket4AfterBattleText:
 	text_far _MtMoonB2FRocket4AfterBattleText

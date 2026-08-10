@@ -8,17 +8,17 @@ Museum2F_Script:
 
 Museum2F_TextPointers:
 	def_text_pointers
-	dw_const Museum2FWalletKid1,           TEXT_MUSEUM2F_WALLET_KID
-	dw_const Museum2FYoungsterText,        TEXT_MUSEUM2F_YOUNGSTER
-	dw_const Museum2FGrampsText,           TEXT_MUSEUM2F_GRAMPS
-	dw_const Museum2FScientistText,        TEXT_MUSEUM2F_SCIENTIST
-	dw_const Museum2FBrunetteGirlText,     TEXT_MUSEUM2F_BRUNETTE_GIRL
-	dw_const Museum2FHikerText,            TEXT_MUSEUM2F_HIKER
-	dw_const Museum2FSpaceShuttleSignText, TEXT_MUSEUM2F_SPACE_SHUTTLE_SIGN
-	dw_const Museum2FMoonStoneSignText,    TEXT_MUSEUM2F_MOON_STONE_SIGN
-	dw_const Museum2FWalletKidWalletGive,  TEXT_MUSEUM2F_WALLET_KID_WALLET_GIVE
-	dw_const ReceivedLostWallet,           TEXT_MUSEUM2F_RECEIVED_LOST_WALLET
-	dw_const WalletKidNoRoomText,          TEXT_MUSEUM2F_WALLET_KID_NO_ROOM
+	dba_const Museum2FWalletKid1,           TEXT_MUSEUM2F_WALLET_KID
+	dba_const _Museum2FYoungsterText,        TEXT_MUSEUM2F_YOUNGSTER
+	dba_const _Museum2FGrampsText,           TEXT_MUSEUM2F_GRAMPS
+	dba_const _Museum2FScientistText,        TEXT_MUSEUM2F_SCIENTIST
+	dba_const _Museum2FBrunetteGirlText,     TEXT_MUSEUM2F_BRUNETTE_GIRL
+	dba_const _Museum2FHikerText,            TEXT_MUSEUM2F_HIKER
+	dba_const _Museum2FSpaceShuttleSignText, TEXT_MUSEUM2F_SPACE_SHUTTLE_SIGN
+	dba_const _Museum2FMoonStoneSignText,    TEXT_MUSEUM2F_MOON_STONE_SIGN
+	dba_const _Museum2FWalletKidWalletGive,  TEXT_MUSEUM2F_WALLET_KID_WALLET_GIVE
+	dba_const ReceivedLostWallet,           TEXT_MUSEUM2F_RECEIVED_LOST_WALLET
+	dba_const WalletKidNoRoomText,          TEXT_MUSEUM2F_WALLET_KID_NO_ROOM
 
 Museum2F_ScriptPointers:
 	def_script_pointers
@@ -26,34 +26,6 @@ Museum2F_ScriptPointers:
 	dw_const DisplayEnemyTrainerTextAndStartBattle, SCRIPT_MUSEUM2F_START_BATTLE
 	dw_const EndTrainerBattle,                      SCRIPT_MUSEUM2F_END_BATTLE
 	dw_const WalletKidPostBattle,                   SCRIPT_MUSEUM2F_WALLET_KID_POST_BATTLE
-	
-Museum2FYoungsterText:
-	text_far _Museum2FYoungsterText
-	text_end
-
-Museum2FGrampsText:
-	text_far _Museum2FGrampsText
-	text_end
-
-Museum2FScientistText:
-	text_far _Museum2FScientistText
-	text_end
-
-Museum2FBrunetteGirlText:
-	text_far _Museum2FBrunetteGirlText
-	text_end
-
-Museum2FHikerText:
-	text_far _Museum2FHikerText
-	text_end
-
-Museum2FSpaceShuttleSignText:
-	text_far _Museum2FSpaceShuttleSignText
-	text_end
-
-Museum2FMoonStoneSignText:
-	text_far _Museum2FMoonStoneSignText
-	text_end
 
 Museum2FTrainerHeaders:
 	def_trainers
@@ -69,8 +41,8 @@ Museum2FWalletKid1:
 .battle
 	CheckEvent EVENT_BEAT_WALLET_KID
 	jp nz, .giveWallet
-	ld hl, Museum2FWalletKid1IntroPrompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, WalletKidTrainerHeader
 	call TalkToTrainer
 	ld a, SCRIPT_MUSEUM2F_WALLET_KID_POST_BATTLE
@@ -114,33 +86,19 @@ GiveWallet:
 	jr ResetScripts
 
 Museum2FWalletKid1Intro:
-	text_far _Museum2FWalletKid1
-	text_end
+	text_far_end _Museum2FWalletKid1
 
 Museum2FWalletKidEnd:
-	text_far _Museum2FWalletKidEnd
-	text_end
-
-Museum2FWalletKid1IntroPrompt:
-	text_far _Museum2FWalletKid1
-	text_promptbutton
-	text_end
+	text_far_end _Museum2FWalletKidEnd
 
 Museum2FWalletKidBattle:
-	text_far _Museum2FWalletKidBattle
-	text_end 
+	text_far_end _Museum2FWalletKidBattle 
 
 Museum2FWalletKidEndBattle:
-	text_far _Museum2FWalletKidBattleAfter
-	text_end 
-
-Museum2FWalletKidWalletGive:
-	text_far _Museum2FWalletKidWalletGive
-	text_end
+	text_far_end _Museum2FWalletKidBattleAfter 
 
 WalletKidNoRoomText:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 ReceivedLostWallet:
 	text_far _Museum2FReceivedLostWalletText

@@ -5,7 +5,7 @@ VermilionOldRodHouse_Script:
 
 VermilionOldRodHouse_TextPointers:
 	def_text_pointers
-	dw_const VermilionGuruHouseText1, TEXT_VERMILIONOLDRODHOUSE_FISHING_GURU
+	dba_const VermilionGuruHouseText1, TEXT_VERMILIONOLDRODHOUSE_FISHING_GURU
 
 VermilionGuruHouseText1:
 	text_asm
@@ -31,8 +31,7 @@ VermilionGuruHouseText1:
 
 .DoYouLikeToFishText:
 	text_far _VermilionOldRodHouseFishingGuruDoYouLikeToFishText
-	text_far _VermilionOldRodHouseISimplyLoveFishing
-	text_end
+	text_far_end _VermilionOldRodHouseISimplyLoveFishing
 
 .TakeThisText:
 	text_far _VermilionOldRodHouseFishingGuruTakeThisText
@@ -41,14 +40,11 @@ VermilionGuruHouseText1:
 	text_end
 
 .ThatsSoDisappointingText:
-	text_far _LastTwoGurusTextNo
-	text_end
+	text_far_end _LastTwoGurusTextNo
 
 .HowAreTheFishBitingText:
 	text_far _VermilionOldRodHouseFishingGuruHowAreTheFishBitingText
-	text_far _VermilionOldRodHouseGoodRodInfo
-	text_end
+	text_far_end _VermilionOldRodHouseGoodRodInfo
 
 .NoRoomText:
-	text_far _LastTwoGurusTextBagFull
-	text_end
+	text_far_end _LastTwoGurusTextBagFull

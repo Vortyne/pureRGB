@@ -1,14 +1,17 @@
 SSAnne2FRooms_Script:
-	ld a, 1 << BIT_NO_AUTO_TEXT_BOX
-	ld [wAutoTextBoxDrawingControl], a
-	xor a
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call EnableAutoTextBoxDrawing
+	ld hl, wYCoord
+	ld a, [hli]
+	cp 6
+	jr nc, .continue
+	ld a, [hl] ; x coord
+	cp 4
+	call c, DisableAutoTextBoxDrawing ; need to disable auto text box drawing in the snorlax guy's room for the snorlax display to work properly.
+.continue
 	ld hl, SSAnne9TrainerHeaders
 	ld de, SSAnne2FRooms_ScriptPointers
-	ld a, [wSSAnne2FRoomsCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSSAnne2FRoomsCurScript], a
-	ret
+	ld bc, wSSAnne2FRoomsCurScript
+	jp ExecuteCustomMapScriptInTableOnly
 
 SSAnne2FRooms_ScriptPointers:
 	def_script_pointers
@@ -18,30 +21,30 @@ SSAnne2FRooms_ScriptPointers:
 
 SSAnne2FRooms_TextPointers:
 	def_text_pointers
-	dw_const SSAnne2FRoomsGentleman1Text,   TEXT_SSANNE2FROOMS_GENTLEMAN1
-	dw_const SSAnne2FRoomsFisherText,       TEXT_SSANNE2FROOMS_FISHER
-	dw_const SSAnne2FRoomsGentleman2Text,   TEXT_SSANNE2FROOMS_GENTLEMAN2
-	dw_const SSAnne2FRoomsCooltrainerFText, TEXT_SSANNE2FROOMS_COOLTRAINER_F
-	dw_const SSAnne2FRoomsGentleman3Text,   TEXT_SSANNE2FROOMS_GENTLEMAN3
-	dw_const PickUp2ItemText,               TEXT_SSANNE2FROOMS_ITEM1
-	dw_const SSAnne2FRoomsGentleman4Text,   TEXT_SSANNE2FROOMS_GENTLEMAN4
-	dw_const SSAnne2FRoomsGrampsText,       TEXT_SSANNE2FROOMS_GRAMPS
-	dw_const PickUpItemText,                TEXT_SSANNE2FROOMS_ITEM2
-	dw_const SSAnne2FRoomsGentleman5Text,   TEXT_SSANNE2FROOMS_GENTLEMAN5
-	dw_const SSAnne2FRoomsLittleBoyText,    TEXT_SSANNE2FROOMS_LITTLE_BOY
-	dw_const SSAnne2FRoomsBrunetteGirlText, TEXT_SSANNE2FROOMS_BRUNETTE_GIRL
-	dw_const SSAnne2FRoomsBeautyText,       TEXT_SSANNE2FROOMS_BEAUTY
+	dba_const SSAnne2FRoomsGentleman1Text,   TEXT_SSANNE2FROOMS_GENTLEMAN1
+	dba_const SSAnne2FRoomsFisherText,       TEXT_SSANNE2FROOMS_FISHER
+	dba_const SSAnne2FRoomsGentleman2Text,   TEXT_SSANNE2FROOMS_GENTLEMAN2
+	dba_const SSAnne2FRoomsCooltrainerFText, TEXT_SSANNE2FROOMS_COOLTRAINER_F
+	dba_const SSAnne2FRoomsGentleman3Text,   TEXT_SSANNE2FROOMS_GENTLEMAN3
+	dba_const PickUp2ItemText,               TEXT_SSANNE2FROOMS_ITEM1
+	dba_const _SSAnne2FRoomsGentleman4Text,   TEXT_SSANNE2FROOMS_GENTLEMAN4
+	dba_const _SSAnne2FRoomsGrampsText,       TEXT_SSANNE2FROOMS_GRAMPS
+	dba_const PickUpItemText,                TEXT_SSANNE2FROOMS_ITEM2
+	dba_const _SSAnne2FRoomsGentleman5Text,   TEXT_SSANNE2FROOMS_GENTLEMAN5
+	dba_const _SSAnne2FRoomsLittleBoyText,    TEXT_SSANNE2FROOMS_LITTLE_BOY
+	dba_const _SSAnne2FRoomsBrunetteGirlText, TEXT_SSANNE2FROOMS_BRUNETTE_GIRL
+	dba_const _SSAnne2FRoomsBeautyText,       TEXT_SSANNE2FROOMS_BEAUTY
 
 SSAnne9TrainerHeaders:
 	def_trainers
 SSAnne9TrainerHeader0:
-	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_0, 2, SSAnne2FRoomsGentleman1BattleText, SSAnne2FRoomsGentleman1EndBattleText, SSAnne2FRoomsGentleman1AfterBattleText
+	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_0, 2, _SSAnne2FRoomsGentleman1BattleText, _SSAnne2FRoomsGentleman1EndBattleText, _SSAnne2FRoomsGentleman1AfterBattleText
 SSAnne9TrainerHeader1:
-	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_1, 3, SSAnne2FRoomsFisherBattleText, SSAnne2FRoomsFisherEndBattleText, SSAnne2FRoomsFisherAfterBattleText
+	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_1, 3, _SSAnne2FRoomsFisherBattleText, _SSAnne2FRoomsFisherEndBattleText, _SSAnne2FRoomsFisherAfterBattleText
 SSAnne9TrainerHeader2:
-	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_2, 3, SSAnne2FRoomsGentleman2BattleText, SSAnne2FRoomsGentleman2EndBattleText, SSAnne2FRoomsGentleman2AfterBattleText
+	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_2, 3, _SSAnne2FRoomsGentleman2BattleText, _SSAnne2FRoomsGentleman2EndBattleText, _SSAnne2FRoomsGentleman2AfterBattleText
 SSAnne9TrainerHeader3:
-	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_3, 2, SSAnne2FRoomsCooltrainerFBattleText, SSAnne2FRoomsCooltrainerFEndBattleText, SSAnne2FRoomsCooltrainerFAfterBattleText
+	trainer EVENT_BEAT_SS_ANNE_9_TRAINER_3, 2, _SSAnne2FRoomsCooltrainerFBattleText, _SSAnne2FRoomsCooltrainerFEndBattleText, _SSAnne2FRoomsCooltrainerFAfterBattleText
 	db -1 ; end
 
 SSAnne2FRoomsGentleman1Text:
@@ -67,113 +70,4 @@ SSAnne2FRoomsGentleman3Text:
 	rst TextScriptEnd
 
 .Text:
-	text_far _SSAnne2FRoomsGentleman3Text
-	text_end
-
-SSAnne2FRoomsGentleman4Text:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRoomsGentleman4Text
-	text_end
-
-SSAnne2FRoomsGrampsText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRoomsGrampsText
-	text_end
-
-SSAnne2FRoomsGentleman5Text:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRoomsGentleman5Text
-	text_end
-
-SSAnne2FRoomsLittleBoyText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRoomsLittleBoyText
-	text_end
-
-SSAnne2FRoomsBrunetteGirlText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRoomsBrunetteGirlText
-	text_end
-
-SSAnne2FRoomsBeautyText:
-	text_asm
-	ld hl, .Text
-	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
-	text_far _SSAnne2FRoomsBeautyText
-	text_end
-
-SSAnne2FRoomsGentleman1BattleText:
-	text_far _SSAnne2FRoomsGentleman1BattleText
-	text_end
-
-SSAnne2FRoomsGentleman1EndBattleText:
-	text_far _SSAnne2FRoomsGentleman1EndBattleText
-	text_end
-
-SSAnne2FRoomsGentleman1AfterBattleText:
-	text_far _SSAnne2FRoomsGentleman1AfterBattleText
-	text_end
-
-SSAnne2FRoomsFisherBattleText:
-	text_far _SSAnne2FRoomsFisherBattleText
-	text_end
-
-SSAnne2FRoomsFisherEndBattleText:
-	text_far _SSAnne2FRoomsFisherEndBattleText
-	text_end
-
-SSAnne2FRoomsFisherAfterBattleText:
-	text_far _SSAnne2FRoomsFisherAfterBattleText
-	text_end
-
-SSAnne2FRoomsGentleman2BattleText:
-	text_far _SSAnne2FRoomsGentleman2BattleText
-	text_end
-
-SSAnne2FRoomsGentleman2EndBattleText:
-	text_far _SSAnne2FRoomsGentleman2EndBattleText
-	text_end
-
-SSAnne2FRoomsGentleman2AfterBattleText:
-	text_far _SSAnne2FRoomsGentleman2AfterBattleText
-	text_end
-
-SSAnne2FRoomsCooltrainerFBattleText:
-	text_far _SSAnne2FRoomsCooltrainerFBattleText
-	text_end
-
-SSAnne2FRoomsCooltrainerFEndBattleText:
-	text_far _SSAnne2FRoomsCooltrainerFEndBattleText
-	text_end
-
-SSAnne2FRoomsCooltrainerFAfterBattleText:
-	text_far _SSAnne2FRoomsCooltrainerFAfterBattleText
-	text_end
+	text_far_end _SSAnne2FRoomsGentleman3Text

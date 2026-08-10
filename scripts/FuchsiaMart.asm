@@ -3,10 +3,10 @@ FuchsiaMart_Script:
 
 FuchsiaMart_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaMartClerkText,         TEXT_FUCHSIAMART_CLERK
-	dw_const FuchsiaMartMiddleAgedManText, TEXT_FUCHSIAMART_MIDDLE_AGED_MAN
-	dw_const FuchsiaMartCooltrainerFText,  TEXT_FUCHSIAMART_COOLTRAINER_F
-	dw_const FuchsiaMartTMKid,             TEXT_FUCHSIAMART_TM_KID
+	dba_const FuchsiaMartClerkText,         TEXT_FUCHSIAMART_CLERK
+	dba_const _FuchsiaMartMiddleAgedManText, TEXT_FUCHSIAMART_MIDDLE_AGED_MAN
+	dba_const _FuchsiaMartCooltrainerFText,  TEXT_FUCHSIAMART_COOLTRAINER_F
+	dba_const FuchsiaMartTMKid,             TEXT_FUCHSIAMART_TM_KID
 
 FuchsiaMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
@@ -23,26 +23,15 @@ FuchsiaMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	rst TextScriptEnd
 	
 TMKidGreet5::
-	text_far _TMKidGreet
-	text_end
+	text_far_end _TMKidGreet
 
 FuchsiaMartTMKidFlavor:
 	text_far _TMKidBringingTMsAnyCost
 	text_far _FuchsiaMartTMKidFlavor
 	text_far _TMKidSellingTMsCopiedDadOriginals
-	text_far _TMKidWantSomeText
-	text_end
+	text_far_end _TMKidWantSomeText
 
 TMKidQuick5::
-	text_far _TMKidQuick
-	text_end
-
-FuchsiaMartMiddleAgedManText:
-	text_far _FuchsiaMartMiddleAgedManText
-	text_end
-
-FuchsiaMartCooltrainerFText:
-	text_far _FuchsiaMartCooltrainerFText
-	text_end
+	text_far_end _TMKidQuick
 
 INCLUDE "data/items/marts/fuchsia.asm"

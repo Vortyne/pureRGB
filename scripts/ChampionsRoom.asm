@@ -1,8 +1,7 @@
 ChampionsRoom_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, ChampionsRoom_ScriptPointers
-	ld a, [wChampionsRoomCurScript]
-	jp CallFunctionInTable
+	ld de, wChampionsRoomCurScript
+	jp CallMapScriptInTable
 
 ChampionsRoom_ScriptPointers:
 	def_script_pointers
@@ -215,11 +214,11 @@ ChampionsRoom_DisplayTextID_AllowABSelectStart:
 
 ChampionsRoom_TextPointers:
 	def_text_pointers
-	dw_const ChampionsRoomRivalText,                    TEXT_CHAMPIONSROOM_RIVAL
-	dw_const ChampionsRoomOakText,                      TEXT_CHAMPIONSROOM_OAK
-	dw_const ChampionsRoomOakCongratulatesPlayerText,   TEXT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
-	dw_const ChampionsRoomOakDisappointedWithRivalText, TEXT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
-	dw_const ChampionsRoomOakComeWithMeText,            TEXT_CHAMPIONSROOM_OAK_COME_WITH_ME
+	dba_const ChampionsRoomRivalText,                    TEXT_CHAMPIONSROOM_RIVAL
+	dba_const _ChampionsRoomOakText,                      TEXT_CHAMPIONSROOM_OAK
+	dba_const ChampionsRoomOakCongratulatesPlayerText,   TEXT_CHAMPIONSROOM_OAK_CONGRATULATES_PLAYER
+	dba_const _ChampionsRoomOakDisappointedWithRivalText, TEXT_CHAMPIONSROOM_OAK_DISAPPOINTED_WITH_RIVAL
+	dba_const _ChampionsRoomOakComeWithMeText,            TEXT_CHAMPIONSROOM_OAK_COME_WITH_ME
 
 ChampionsRoomRivalText:
 	text_asm
@@ -232,24 +231,16 @@ ChampionsRoomRivalText:
 	rst TextScriptEnd
 
 .IntroText:
-	text_far _ChampionsRoomRivalIntroText
-	text_end
+	text_far_end _ChampionsRoomRivalIntroText
 
 RivalDefeatedText:
-	text_far _RivalDefeatedText
-	text_end
+	text_far_end _RivalDefeatedText
 
 RivalVictoryText:
-	text_far _RivalVictoryText
-	text_end
+	text_far_end _RivalVictoryText
 
 ChampionsRoomRivalAfterBattleText:
-	text_far _ChampionsRoomRivalAfterBattleText
-	text_end
-
-ChampionsRoomOakText:
-	text_far _ChampionsRoomOakText
-	text_end
+	text_far_end _ChampionsRoomRivalAfterBattleText
 
 ChampionsRoomOakCongratulatesPlayerText:
 	text_asm
@@ -261,13 +252,4 @@ ChampionsRoomOakCongratulatesPlayerText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _ChampionsRoomOakCongratulatesPlayerText
-	text_end
-
-ChampionsRoomOakDisappointedWithRivalText:
-	text_far _ChampionsRoomOakDisappointedWithRivalText
-	text_end
-
-ChampionsRoomOakComeWithMeText:
-	text_far _ChampionsRoomOakComeWithMeText
-	text_end
+	text_far_end _ChampionsRoomOakCongratulatesPlayerText

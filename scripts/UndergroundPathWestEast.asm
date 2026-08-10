@@ -1,13 +1,10 @@
 ; PureRGBnote: ADDED: trainers in this location
 
 UndergroundPathWestEast_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, UndergroundPathWestEastTrainerHeaders
 	ld de, UndergroundPathWestEast_ScriptPointers
-	ld a, [wUndergroundPathWestEastCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wUndergroundPathWestEastCurScript], a
-	ret
+	ld bc, wUndergroundPathWestEastCurScript
+	jp ExecuteCustomMapScriptInTable
 
 UndergroundPathWestEast_ScriptPointers:
 	def_script_pointers
@@ -17,19 +14,19 @@ UndergroundPathWestEast_ScriptPointers:
 
 UndergroundPathWestEast_TextPointers:
 	def_text_pointers
-	dw_const UndergroundPathWestEastTrainer1Text,  TEXT_UNDERGROUNDPATHWESTEAST_GENTLEMAN1
-	dw_const UndergroundPathWestEastTrainer2Text,  TEXT_UNDERGROUNDPATHWESTEAST_GENTLEMAN2
-	dw_const UndergroundPathWestEastTrainer3Text,  TEXT_UNDERGROUNDPATHWESTEAST_COOL_KID
-	dw_const UndergroundPathWestEastBrunetteGirl,  TEXT_UNDERGROUNDPATHWESTEAST_BRUNETTE_GIRL
+	dba_const UndergroundPathWestEastTrainer1Text,  TEXT_UNDERGROUNDPATHWESTEAST_GENTLEMAN1
+	dba_const UndergroundPathWestEastTrainer2Text,  TEXT_UNDERGROUNDPATHWESTEAST_GENTLEMAN2
+	dba_const UndergroundPathWestEastTrainer3Text,  TEXT_UNDERGROUNDPATHWESTEAST_COOL_KID
+	dba_const _GrimerEventGirlText,  TEXT_UNDERGROUNDPATHWESTEAST_BRUNETTE_GIRL
 
 UndergroundPathWestEastTrainerHeaders:
 	def_trainers 3
 UndergroundPathWestEastTrainerHeader0:
-	trainer EVENT_BEAT_UNDERGROUND_PATH_WEST_EAST_TRAINER_0, 0, UndergroundPathWestEastBattleText1, UndergroundPathWestEastEndBattleText1, UndergroundPathWestEastAfterBattleText1
+	trainer EVENT_BEAT_UNDERGROUND_PATH_WEST_EAST_TRAINER_0, 0, _UndergroundPathWestEastBattleText1, _UndergroundPathWestEastEndBattleText1, _UndergroundPathWestEastAfterBattleText1
 UndergroundPathWestEastTrainerHeader1:
-	trainer EVENT_BEAT_UNDERGROUND_PATH_WEST_EAST_TRAINER_1, 0, UndergroundPathWestEastBattleText2, UndergroundPathWestEastEndBattleText2, UndergroundPathWestEastAfterBattleText2
+	trainer EVENT_BEAT_UNDERGROUND_PATH_WEST_EAST_TRAINER_1, 0, _UndergroundPathWestEastBattleText2, _UndergroundPathWestEastEndBattleText2, _UndergroundPathWestEastAfterBattleText2
 UndergroundPathWestEastTrainerHeader2:
-	trainer EVENT_BEAT_UNDERGROUND_PATH_WEST_EAST_TRAINER_2, 0, UndergroundPathWestEastBattleText3, UndergroundPathWestEastEndBattleText3, UndergroundPathWestEastAfterBattleText3
+	trainer EVENT_BEAT_UNDERGROUND_PATH_WEST_EAST_TRAINER_2, 0, _UndergroundPathWestEastBattleText3, _UndergroundPathWestEastEndBattleText3, _UndergroundPathWestEastAfterBattleText3
 	db -1 ;end
 
 UndergroundPathWestEastTrainer1Text:
@@ -40,43 +37,3 @@ UndergroundPathWestEastTrainer2Text:
 
 UndergroundPathWestEastTrainer3Text:
 	script_trainer UndergroundPathWestEastTrainerHeader2
-
-UndergroundPathWestEastBattleText1:
-	text_far _UndergroundPathWestEastBattleText1
-	text_end
-
-UndergroundPathWestEastEndBattleText1:
-	text_far _UndergroundPathWestEastEndBattleText1
-	text_end
-
-UndergroundPathWestEastAfterBattleText1:
-	text_far _UndergroundPathWestEastAfterBattleText1
-	text_end
-
-UndergroundPathWestEastBattleText2:
-	text_far _UndergroundPathWestEastBattleText2
-	text_end
-
-UndergroundPathWestEastEndBattleText2:
-	text_far _UndergroundPathWestEastEndBattleText2
-	text_end
-
-UndergroundPathWestEastAfterBattleText2:
-	text_far _UndergroundPathWestEastAfterBattleText2
-	text_end
-
-UndergroundPathWestEastBattleText3:
-	text_far _UndergroundPathWestEastBattleText3
-	text_end
-
-UndergroundPathWestEastEndBattleText3:
-	text_far _UndergroundPathWestEastEndBattleText3
-	text_end
-
-UndergroundPathWestEastAfterBattleText3:
-	text_far _UndergroundPathWestEastAfterBattleText3
-	text_end
-
-UndergroundPathWestEastBrunetteGirl:
-	text_far _GrimerEventGirlText
-	text_end

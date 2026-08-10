@@ -1,29 +1,11 @@
 CeladonPokecenter_Script:
 	call SetLastBlackoutMap ; PureRGBnote: ADDED: set blackout map on entering pokemon center
-	jp Serial_TryEstablishingExternallyClockedConnection
+	jp Serial_TryEstablishingExternallyClockedConnection ; TODO: parameterize?
 
 CeladonPokecenter_TextPointers:
 	def_text_pointers
-	dw_const CeladonPokecenterNurseText,            TEXT_CELADONPOKECENTER_NURSE
-	dw_const CeladonPokecenterGentlemanText,        TEXT_CELADONPOKECENTER_GENTLEMAN
-	dw_const CeladonPokecenterBeautyText,           TEXT_CELADONPOKECENTER_BEAUTY
-	dw_const CeladonPokecenterLinkReceptionistText, TEXT_CELADONPOKECENTER_LINK_RECEPTIONIST
-	dw_const CeladonPokecenterBenchGuyText,         TEXT_CELADONPOKECENTER_BENCH_GUY
-
-CeladonPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
-
-CeladonPokecenterNurseText:
-	script_pokecenter_nurse
-
-CeladonPokecenterGentlemanText:
-	text_far _CeladonPokecenterGentlemanText
-	text_end
-
-CeladonPokecenterBeautyText:
-	text_far _CeladonPokecenterBeautyText
-	text_end
-
-CeladonPokecenterBenchGuyText:
-	text_far _CeladonCityPokecenterGuyText
-	text_end
+	dba_const GenericPokecenterNurseText,             TEXT_CELADONPOKECENTER_NURSE
+	dba_const _CeladonPokecenterGentlemanText,        TEXT_CELADONPOKECENTER_GENTLEMAN
+	dba_const _CeladonPokecenterBeautyText,           TEXT_CELADONPOKECENTER_BEAUTY
+	dba_const GenericLinkReceptionistText,            TEXT_CELADONPOKECENTER_LINK_RECEPTIONIST
+	dba_const _CeladonPokecenterBenchGuyText,         TEXT_CELADONPOKECENTER_BENCH_GUY

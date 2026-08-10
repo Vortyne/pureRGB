@@ -1,6 +1,6 @@
 EchoingScreeches::
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	xor a
 	ld [wTempoModifier], a
 	ld a, 2
@@ -11,8 +11,7 @@ EchoingScreeches::
 	rst _PrintText
 	ret
 .screechesPrevented
-	text_far _ScreechesPreventedSleepText
-	text_end
+	text_far_end _ScreechesPreventedSleepText
 
 _SleepEffect::
 	ld de, wEnemyMonStatus
@@ -115,15 +114,12 @@ _SleepEffect::
 	ldh [hWhoseTurn], a
 	ret
 .letOutAScreech
-	text_far _LetOutAScreechText
-	text_end
+	text_far_end _LetOutAScreechText
 	
 
 FellAsleepText:
-	text_far _FellAsleepText
-	text_end
+	text_far_end _FellAsleepText
 
 AlreadyAsleepText:
-	text_far _AlreadyAsleepText
-	text_end
+	text_far_end _AlreadyAsleepText
 

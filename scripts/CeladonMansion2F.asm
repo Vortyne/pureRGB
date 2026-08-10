@@ -6,18 +6,14 @@ CeladonMansion2F_Script:
 
 CeladonMansion2F_TextPointers:
 	def_text_pointers
-	dw_const ProspectorsHouseProspectorText, TEXT_CELADON_PROSPECTORS_HOUSE_PROSPECTOR
-	dw_const ProspectorsHouseBoomboxText, TEXT_CELADON_PROSPECTORS_HOUSE_BOOMBOX
-	dw_const ProspectorsHousePaperText, TEXT_CELADON_PROSPECTORS_HOUSE_NOTE
-	dw_const CeladonMansion2FMeetingRoomSignText, TEXT_CELADONMANSION2F_MEETING_ROOM_SIGN
-	dw_const ProspectorsHouseBookcaseText1, TEXT_PROSPECTORS_HOUSE_BOOKCASE1
-	dw_const ProspectorsHouseBookcaseText2, TEXT_PROSPECTORS_HOUSE_BOOKCASE2
-	dw_const ProspectorsHouseBookcaseText3, TEXT_PROSPECTORS_HOUSE_BOOKCASE3
-	dw_const ProspectorsHouseBoomboxText, TEXT_CELADON_PROSPECTORS_HOUSE_BOOMBOX_2
-
-CeladonMansion2FMeetingRoomSignText:
-	text_far _CeladonMansion2FMeetingRoomSignText
-	text_end
+	dba_const ProspectorsHouseProspectorText, TEXT_CELADON_PROSPECTORS_HOUSE_PROSPECTOR
+	dba_const ProspectorsHouseBoomboxText, TEXT_CELADON_PROSPECTORS_HOUSE_BOOMBOX
+	dba_const ProspectorsHousePaperText, TEXT_CELADON_PROSPECTORS_HOUSE_NOTE
+	dba_const _CeladonMansion2FMeetingRoomSignText, TEXT_CELADONMANSION2F_MEETING_ROOM_SIGN
+	dba_const ProspectorsHouseBookcaseText1, TEXT_PROSPECTORS_HOUSE_BOOKCASE1
+	dba_const ProspectorsHouseBookcaseText2, TEXT_PROSPECTORS_HOUSE_BOOKCASE2
+	dba_const ProspectorsHouseBookcaseText3, TEXT_PROSPECTORS_HOUSE_BOOKCASE3
+	dba_const ProspectorsHouseBoomboxText, TEXT_CELADON_PROSPECTORS_HOUSE_BOOMBOX_2
 
 CeladonHouse2FBookCaseCheck::
 	ld a, [wYCoord]
@@ -44,7 +40,7 @@ ProspectorsHouseProspectorText:
 	rst _PrintText
 	call GBFadeOutToWhite
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeInFromWhite
 	SetEvent EVENT_LEARNED_TO_DIG_BETWEEN_TOWNS
 	ld hl, .learnedToDig
@@ -53,18 +49,13 @@ ProspectorsHouseProspectorText:
 .reallyDone
 	rst TextScriptEnd
 .greeting
-	text_far _ProspectorsHouseProspectorText1
-	text_end
+	text_far_end _ProspectorsHouseProspectorText1
 .byTheWayDigBetweenTowns
-	text_far _ProspectorsHouseProspectorText2
-	text_end
+	text_far_end _ProspectorsHouseProspectorText2
 .haveALookAtMap
-	text_far _ProspectorsHouseProspectorText3
-	text_end
+	text_far_end _ProspectorsHouseProspectorText3
 .learnedToDig
-	text_far _ProspectorsHouseProspectorText4
-	sound_get_item_2
-	text_end
+	text_far_end _ProspectorsHouseProspectorText4
 
 CheckJiggleProspectorsHouseBoombox::
 	ld a, [wYCoord]
@@ -106,16 +97,13 @@ ProspectorsHouseBoomboxText:
 	rst _PrintText
 	rst TextScriptEnd
 .dontTouch
-	text_far _ProspectorsHouseBoomboxText1
-	text_end 
+	text_far_end _ProspectorsHouseBoomboxText1
 .turnedOff
 	text_far _ProspectorsHouseBoomboxText2
-	text_far _ProspectorsHouseBoomboxOff
-	text_end
+	text_far_end _ProspectorsHouseBoomboxOff
 .turnedOn
 	text_far _ProspectorsHouseBoomboxText2
-	text_far _ProspectorsHouseBoomboxOn
-	text_end
+	text_far_end _ProspectorsHouseBoomboxOn
 
 ProspectorsHousePaperText:
 	text_asm
@@ -127,11 +115,9 @@ ProspectorsHousePaperText:
 	rst _PrintText
 	rst TextScriptEnd
 .goneDigging
-	text_far _ProspectorsHousePaperText1
-	text_end 
+	text_far_end _ProspectorsHousePaperText1
 .topographicalMap
-	text_far _ProspectorsHousePaperText2
-	text_end
+	text_far_end _ProspectorsHousePaperText2
 
 ProspectorsHouseBookcaseText1:
 	text_far _ProspectorsHouseBookcase1Text
@@ -146,8 +132,8 @@ ProspectorsHouseBookcaseText1:
 	rst TextScriptEnd
 
 ProspectorsHouseBookcaseText2:
-	text_far _ProspectorsHouseBookcase2Text
-	text_end
+	text_far_end _ProspectorsHouseBookcase2Text
+
 ProspectorsHouseBookcaseText3:
 	text_far _ProspectorsHouseBookcase3Text
 	text_far _FlippedToARandomPage
@@ -174,8 +160,7 @@ PorygonTVScreenText::
 	rst _PrintText
 	rst TextScriptEnd
 .wrongSide
-	text_far _RedsHouse1FTVWrongSideText
-	text_end
+	text_far_end _RedsHouse1FTVWrongSideText
 
 PorygonPCScreenText::
 	text_asm
@@ -189,18 +174,15 @@ PorygonPCScreenText::
 	ld c, DEX_PORYGON - 1
 	callfar SetMonSeen
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, PORYGON
 	call PlayCry
 	ld hl, .porygon
 	rst _PrintText
 	rst TextScriptEnd
 .pc
-	text_far _TurnedOnPC1Text
-	text_end
+	text_far_end _TurnedOnPC1Text
 .nothing
-	text_far _PorygonNothingMuch
-	text_end
+	text_far_end _PorygonNothingMuch
 .porygon
-	text_far _PorygonOnScreen
-	text_end
+	text_far_end _PorygonOnScreen

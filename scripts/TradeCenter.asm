@@ -31,8 +31,4 @@ TradeCenter_Script:
 
 TradeCenter_TextPointers:
 	def_text_pointers
-	dw_const TradeCenterOpponentText, TEXT_TRADECENTER_OPPONENT
-
-TradeCenterOpponentText:
-	text_far _TradeCenterOpponentText
-	text_end
+	dba_const _TradeCenterOpponentText, TEXT_TRADECENTER_OPPONENT

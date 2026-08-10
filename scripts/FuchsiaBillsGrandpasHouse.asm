@@ -3,22 +3,10 @@ FuchsiaBillsGrandpasHouse_Script:
 
 FuchsiaBillsGrandpasHouse_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaBillsGrandpasHouseMiddleAgedWomanText, TEXT_FUCHSIABILLSGRANDPASHOUSE_MIDDLE_AGED_WOMAN
-	dw_const FuchsiaBillsGrandpasHouseBillsGrandpaText,    TEXT_FUCHSIABILLSGRANDPASHOUSE_BILLS_GRANDPA
-	dw_const FuchsiaBillsGrandpasHouseYoungsterText,       TEXT_FUCHSIABILLSGRANDPASHOUSE_YOUNGSTER
-	dw_const FuchsiaBillsGrandpasHouseTVText,              TEXT_FUCHSIABILLSGRANDPASHOUSE_TV
-
-FuchsiaBillsGrandpasHouseMiddleAgedWomanText:
-	text_far _FuchsiaBillsGrandpasHouseMiddleAgedWomanText
-	text_end
-
-FuchsiaBillsGrandpasHouseBillsGrandpaText:
-	text_far _FuchsiaBillsGrandpasHouseBillsGrandpaText
-	text_end
-
-FuchsiaBillsGrandpasHouseYoungsterText:
-	text_far _FuchsiaBillsGrandpasHouseYoungsterText
-	text_end
+	dba_const _FuchsiaBillsGrandpasHouseMiddleAgedWomanText, TEXT_FUCHSIABILLSGRANDPASHOUSE_MIDDLE_AGED_WOMAN
+	dba_const _FuchsiaBillsGrandpasHouseBillsGrandpaText,    TEXT_FUCHSIABILLSGRANDPASHOUSE_BILLS_GRANDPA
+	dba_const _FuchsiaBillsGrandpasHouseYoungsterText,       TEXT_FUCHSIABILLSGRANDPASHOUSE_YOUNGSTER
+	dba_const FuchsiaBillsGrandpasHouseTVText,              TEXT_FUCHSIABILLSGRANDPASHOUSE_TV
 
 FuchsiaBillsGrandpasHouseTVText::
 	text_asm

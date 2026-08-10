@@ -5,7 +5,7 @@ CableClubNPC::
 	jp nz, .receivedPokedex
 ; if the player hasn't received the pokedex
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, CableClubNPCMakingPreparationsText
 	rst _PrintText
 	jp .didNotConnect
@@ -55,7 +55,7 @@ CableClubNPC::
 	rst _DelayFrame
 	call Serial_SendZeroByte
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, CableClubNPCPleaseApplyHereHaveToSaveText
 	rst _PrintText
 	xor a
@@ -123,33 +123,25 @@ CableClubNPC::
 	jpfar LinkMenu
 
 CableClubNPCAreaReservedFor2FriendsLinkedByCableText:
-	text_far _CableClubNPCAreaReservedFor2FriendsLinkedByCableText
-	text_end
+	text_far_end _CableClubNPCAreaReservedFor2FriendsLinkedByCableText
 
 CableClubNPCWelcomeText:
-	text_far _CableClubNPCWelcomeText
-	text_end
+	text_far_end _CableClubNPCWelcomeText
 
 CableClubNPCPleaseApplyHereHaveToSaveText:
-	text_far _CableClubNPCPleaseApplyHereHaveToSaveText
-	text_end
+	text_far_end _CableClubNPCPleaseApplyHereHaveToSaveText
 
 CableClubNPCPleaseWaitText:
-	text_far _CableClubNPCPleaseWaitText
-	text_pause
-	text_end
+	text_far_end _CableClubNPCPleaseWaitText
 
 CableClubNPCLinkClosedBecauseOfInactivityText:
-	text_far _CableClubNPCLinkClosedBecauseOfInactivityText
-	text_end
+	text_far_end _CableClubNPCLinkClosedBecauseOfInactivityText
 
 CableClubNPCPleaseComeAgainText:
-	text_far _CableClubNPCPleaseComeAgainText
-	text_end
+	text_far_end _CableClubNPCPleaseComeAgainText
 
 CableClubNPCMakingPreparationsText:
-	text_far _CableClubNPCMakingPreparationsText
-	text_end
+	text_far_end _CableClubNPCMakingPreparationsText
 
 CloseLinkConnection:
 	call Delay3

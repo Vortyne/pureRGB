@@ -3,10 +3,10 @@ Route11Gate2F_Script:
 
 Route11Gate2F_TextPointers:
 	def_text_pointers
-	dw_const Route11Gate2FYoungsterText,       TEXT_ROUTE11GATE2F_YOUNGSTER
-	dw_const Route11Gate2FOaksAideText,        TEXT_ROUTE11GATE2F_OAKS_AIDE
-	dw_const Route11Gate2FLeftBinocularsText,  TEXT_ROUTE11GATE2F_LEFT_BINOCULARS
-	dw_const Route11Gate2FRightBinocularsText, TEXT_ROUTE11GATE2F_RIGHT_BINOCULARS
+	dba_const Route11Gate2FYoungsterText,       TEXT_ROUTE11GATE2F_YOUNGSTER
+	dba_const Route11Gate2FOaksAideText,        TEXT_ROUTE11GATE2F_OAKS_AIDE
+	dba_const Route11Gate2FLeftBinocularsText,  TEXT_ROUTE11GATE2F_LEFT_BINOCULARS
+	dba_const Route11Gate2FRightBinocularsText, TEXT_ROUTE11GATE2F_RIGHT_BINOCULARS
 
 Route11Gate2FYoungsterText:
 	text_asm
@@ -42,8 +42,7 @@ Route11Gate2FOaksAideText:
 	rst TextScriptEnd
 
 .ItemfinderDescriptionText:
-	text_far _Route11Gate2FOaksAideItemfinderDescriptionText
-	text_end
+	text_far_end _Route11Gate2FOaksAideItemfinderDescriptionText
 
 Route11Gate2FLeftBinocularsText:
 	text_asm
@@ -60,13 +59,11 @@ Route11Gate2FLeftBinocularsText:
 
 .SnorlaxText:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route11Gate2FLeftBinocularsSnorlaxText
-	text_end
+	text_far_end _Route11Gate2FLeftBinocularsSnorlaxText
 
 .NoSnorlaxText:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route11Gate2FLeftBinocularsNoSnorlaxText
-	text_end
+	text_far_end _Route11Gate2FLeftBinocularsNoSnorlaxText
 
 Route11Gate2FRightBinocularsText:
 	text_asm
@@ -75,5 +72,4 @@ Route11Gate2FRightBinocularsText:
 
 .Text:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route11Gate2FRightBinocularsText
-	text_end
+	text_far_end _Route11Gate2FRightBinocularsText

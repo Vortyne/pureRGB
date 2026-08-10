@@ -10,11 +10,11 @@ ChampArena_Script:
 
 ChampArena_TextPointers:
 	def_text_pointers
-	dw_const ChampArenaIntroText,           TEXT_CHAMP_ARENA_INTRO
-	dw_const ChampArenaStartBattleText,     TEXT_CHAMP_ARENA_START_BATTLE
-	dw_const ChampArenaAssistantText,       TEXT_CHAMP_ARENA_ASSISTANT
-	dw_const ChampArenaEndBattleText,       TEXT_CHAMP_ARENA_END_BATTLE
-	dw_const ChampArenaContinueText,        TEXT_CHAMP_ARENA_CONTINUE
+	dba_const ChampArenaIntroText,           TEXT_CHAMP_ARENA_INTRO
+	dba_const ChampArenaStartBattleText,     TEXT_CHAMP_ARENA_START_BATTLE
+	dba_const ChampArenaAssistantText,       TEXT_CHAMP_ARENA_ASSISTANT
+	dba_const ChampArenaEndBattleText,       TEXT_CHAMP_ARENA_END_BATTLE
+	dba_const ChampArenaContinueText,        TEXT_CHAMP_ARENA_CONTINUE
 
 InitNewArenaCutscene:
 	CheckEvent EVENT_ARENA_ALL_CHALLENGERS_DEFEATED
@@ -410,23 +410,17 @@ ChampArenaAssistantText:
 .done2
 	rst TextScriptEnd
 .welcome
-	text_far _ChampArenaAssistantWelcome
-	text_end
+	text_far_end _ChampArenaAssistantWelcome
 .trainersWaiting
-	text_far _ChampArenaAssistantTrainersWaitingToBattle
-	text_end
+	text_far_end _ChampArenaAssistantTrainersWaitingToBattle
 .welcome2
-	text_far _ChampArenaAssistantWelcome2
-	text_end
+	text_far_end _ChampArenaAssistantWelcome2
 .welcome3
-	text_far _ChampArenaAssistantWelcome3
-	text_end	
+	text_far_end _ChampArenaAssistantWelcome3
 .seeYa
-	text_far _ChampArenaAssistantSeeYa
-	text_end
+	text_far_end _ChampArenaAssistantSeeYa
 .inviteIn
-	text_far _ChampArenaAssistantInviteIn
-	text_end
+	text_far_end _ChampArenaAssistantInviteIn
 
 PlayerCenterFieldDirectionsLeft:
 	db PAD_DOWN
@@ -445,8 +439,7 @@ ChampArenaIntroText:
 	; audience reaction
 	rst TextScriptEnd
 .welcomeAudience
-	text_far _ChampArenaAssistantStartBattle
-	text_end
+	text_far_end _ChampArenaAssistantStartBattle
 
 ChampArenaContinueText:
 	text_asm
@@ -505,25 +498,17 @@ ChampArenaContinueText:
 	rst _PrintText
 	rst TextScriptEnd
 .stillOpponentsLeft
-	text_far _ChampArenaAssistantStillOpponentsLeft
-	text_end
+	text_far_end _ChampArenaAssistantStillOpponentsLeft
 .stillOpponentsLeft2
-	text_far _ChampArenaAssistantStillOpponentsLeft2
-	text_end
+	text_far_end _ChampArenaAssistantStillOpponentsLeft2
 .stillOpponentsLeft3
-	text_far _ChampArenaAssistantStillOpponentsLeft3
-	text_end
+	text_far_end _ChampArenaAssistantStillOpponentsLeft3
 .defeatedAllTrainers
-	text_far _ChampArenaAssistantDefeatedAllTrainers
-	sound_get_item_2
-	text_promptbutton
-	text_end
+	text_far_end _ChampArenaAssistantDefeatedAllTrainers
 .callInChallengers
-	text_far _ChampArenaAssistantCallInChallengers
-	text_end
+	text_far_end _ChampArenaAssistantCallInChallengers
 .callInChallengers2
-	text_far _ChampArenaAssistantCallInChallengers2
-	text_end
+	text_far_end _ChampArenaAssistantCallInChallengers2
 
 ReloadChallengerSprite:
 	ld a, [wChampArenaChallenger]
@@ -631,7 +616,7 @@ ChampArenaStartBattleText:
 	call AssistantBows
 	call UpdateSprites
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	call AssistantFacesDown
 	ld hl, .battlePositions
 	rst _PrintText
@@ -657,7 +642,7 @@ ChampArenaStartBattleText:
 	jr nz, .momDadNotInCrowd
 	; if mom is in the crowd, make her talk call out to the player
 	ld c, 30
-	rst _DelayFrames ; delay frames so it's a bit easier to tell what is going on
+	rst DelayFrames ; delay frames so it's a bit easier to tell what is going on
 	CheckEvent EVENT_MET_DAD
 	lb bc, HEART_BUBBLE, CHAMP_ARENA_VARIABLE_CROWD1
 	ld hl, .momCheersOn
@@ -710,20 +695,15 @@ ChampArenaStartBattleText:
 	call ShowChampArenaMusicSelectMenu
 	jr .letBattleCommence
 .battlePositions
-	text_far _ChampArenaAssistantBattlePositions
-	text_end
+	text_far_end _ChampArenaAssistantBattlePositions
 .whichMusic
-	text_far _ChampArenaAssistantMusic
-	text_end
+	text_far_end _ChampArenaAssistantMusic
 .battleCommence
-	text_far _ChampArenaAssistantBattleCommence
-	text_end
+	text_far_end _ChampArenaAssistantBattleCommence
 .momCheersOn
-	text_far _ChampArenaMomCheersPlayerOn
-	text_end
+	text_far_end _ChampArenaMomCheersPlayerOn
 .dadCheersOn
-	text_far _ChampArenaDadCheersPlayerOn
-	text_end
+	text_far_end _ChampArenaDadCheersPlayerOn
 
 OpponentIntroductionTextArray:
 	dw ErikaIntroText
@@ -750,7 +730,7 @@ ChampArenaEndBattleText:
 	call AssistantFacesDown
 	call UpdateSprites
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	; move the proxy player and opponent sprites back to the middle of the battle area
 	call GBPalWhiteOut
 	ld a, 10 ; (x = 6) (+4 MapX offset)
@@ -775,8 +755,7 @@ ChampArenaEndBattleText:
 	call GetAddressFromPointerArray
 	jp hl
 .defeated
-	text_far _ChampArenaAssistantDefeatedText
-	text_end
+	text_far_end _ChampArenaAssistantDefeatedText
 
 OpponentDefeatedTextArray:
 	dw ErikaDefeatedText
@@ -813,17 +792,13 @@ ErikaIntroText:
 	ld hl, ChampArenaMusicSelectErika
 	ret
 .intro
-	text_far _ErikaIntroText
-	text_end
+	text_far_end _ErikaIntroText
 .intro2
-	text_far _ErikaIntroText2
-	text_end
+	text_far_end _ErikaIntroText2
 .challengerLost
-	text_far _ErikaLostText
-	text_end
+	text_far_end _ErikaLostText
 .challengerWon
-	text_far _ErikaWonText
-	text_end
+	text_far_end _ErikaWonText
 
 BlaineIntroText:
 	ld hl, .intro 
@@ -845,17 +820,13 @@ BlaineIntroText:
 	ld hl, ChampArenaMusicSelectBlaine
 	ret
 .intro
-	text_far _BlaineIntroText
-	text_end
+	text_far_end _BlaineIntroText
 .intro2
-	text_far _BlaineIntroText2
-	text_end
+	text_far_end _BlaineIntroText2
 .challengerLost
-	text_far _BlaineLostText
-	text_end
+	text_far_end _BlaineLostText
 .challengerWon
-	text_far _BlaineWonText
-	text_end
+	text_far_end _BlaineWonText
 
 SurgeIntroText:
 	ld hl, .intro 
@@ -877,17 +848,13 @@ SurgeIntroText:
 	ld hl, ChampArenaMusicSelectSurge
 	ret
 .intro
-	text_far _SurgeIntroText
-	text_end
+	text_far_end _SurgeIntroText
 .intro2
-	text_far _SurgeIntroText2
-	text_end
+	text_far_end _SurgeIntroText2
 .challengerLost
-	text_far _SurgeLostText
-	text_end
+	text_far_end _SurgeLostText
 .challengerWon
-	text_far _SurgeWonText
-	text_end
+	text_far_end _SurgeWonText
 
 SabrinaIntroText:
 	ld hl, .intro 
@@ -909,17 +876,13 @@ SabrinaIntroText:
 	ld hl, ChampArenaMusicSelectSabrina
 	ret
 .intro
-	text_far _SabrinaIntroText
-	text_end
+	text_far_end _SabrinaIntroText
 .intro2
-	text_far _SabrinaIntroText2
-	text_end
+	text_far_end _SabrinaIntroText2
 .challengerLost
-	text_far _SabrinaLostText
-	text_end
+	text_far_end _SabrinaLostText
 .challengerWon
-	text_far _SabrinaWonText
-	text_end
+	text_far_end _SabrinaWonText
 
 BrunoIntroText:
 	ld hl, .intro 
@@ -941,17 +904,13 @@ BrunoIntroText:
 	ld hl, ChampArenaMusicSelectBruno
 	ret
 .intro
-	text_far _BrunoIntroText
-	text_end
+	text_far_end _BrunoIntroText
 .intro2
-	text_far _BrunoIntroText2
-	text_end
+	text_far_end _BrunoIntroText2
 .challengerLost
-	text_far _BrunoLostText
-	text_end
+	text_far_end _BrunoLostText
 .challengerWon
-	text_far _BrunoWonText
-	text_end
+	text_far_end _BrunoWonText
 
 MistyIntroText:
 	ld hl, .intro 
@@ -979,20 +938,15 @@ MistyIntroText:
 	ld hl, ChampArenaMusicSelectMisty
 	ret
 .intro
-	text_far _MistyIntroText
-	text_end
+	text_far_end _MistyIntroText
 .intro2
-	text_far _MistyIntroText2
-	text_end
+	text_far_end _MistyIntroText2
 .intro3
-	text_far _MistyIntroText3
-	text_end
+	text_far_end _MistyIntroText3
 .challengerLost
-	text_far _MistyLostText
-	text_end
+	text_far_end _MistyLostText
 .challengerWon
-	text_far _MistyWonText
-	text_end
+	text_far_end _MistyWonText
 
 LanceIntroText:
 	ld hl, .intro 
@@ -1014,17 +968,13 @@ LanceIntroText:
 	ld hl, ChampArenaMusicSelectLance
 	ret
 .intro
-	text_far _LanceIntroText
-	text_end
+	text_far_end _LanceIntroText
 .intro2
-	text_far _LanceIntroText2
-	text_end
+	text_far_end _LanceIntroText2
 .challengerLost
-	text_far _LanceLostText
-	text_end
+	text_far_end _LanceLostText
 .challengerWon
-	text_far _LanceWonText
-	text_end
+	text_far_end _LanceWonText
 
 KogaIntroText:
 	ld hl, .intro 
@@ -1046,17 +996,13 @@ KogaIntroText:
 	ld hl, ChampArenaMusicSelectKoga
 	ret
 .intro
-	text_far _KogaIntroText
-	text_end
+	text_far_end _KogaIntroText
 .intro2
-	text_far _KogaIntroText2
-	text_end
+	text_far_end _KogaIntroText2
 .challengerLost
-	text_far _KogaLostText
-	text_end
+	text_far_end _KogaLostText
 .challengerWon
-	text_far _KogaWonText
-	text_end
+	text_far_end _KogaWonText
 	
 LoreleiIntroText:
 	ld hl, .intro 
@@ -1078,17 +1024,13 @@ LoreleiIntroText:
 	ld hl, ChampArenaMusicSelectLorelei
 	ret
 .intro
-	text_far _LoreleiIntroText
-	text_end
+	text_far_end _LoreleiIntroText
 .intro2
-	text_far _LoreleiIntroText2
-	text_end
+	text_far_end _LoreleiIntroText2
 .challengerLost
-	text_far _LoreleiLostText
-	text_end
+	text_far_end _LoreleiLostText
 .challengerWon
-	text_far _LoreleiWonText
-	text_end
+	text_far_end _LoreleiWonText
 
 BrockIntroText:
 	ld hl, .intro 
@@ -1110,17 +1052,13 @@ BrockIntroText:
 	ld hl, ChampArenaMusicSelectBrock
 	ret
 .intro
-	text_far _BrockIntroText
-	text_end
+	text_far_end _BrockIntroText
 .intro2
-	text_far _BrockIntroText2
-	text_end
+	text_far_end _BrockIntroText2
 .challengerLost
-	text_far _BrockLostText
-	text_end
+	text_far_end _BrockLostText
 .challengerWon
-	text_far _BrockWonText
-	text_end
+	text_far_end _BrockWonText
 
 AgathaIntroText:
 	ld hl, .intro 
@@ -1148,20 +1086,15 @@ AgathaIntroText:
 	ld hl, ChampArenaMusicSelectAgatha
 	ret
 .intro
-	text_far _AgathaIntroText
-	text_end
+	text_far_end _AgathaIntroText
 .intro2
-	text_far _AgathaIntroText2
-	text_end
+	text_far_end _AgathaIntroText2
 .intro3
-	text_far _AgathaIntroText3
-	text_end
+	text_far_end _AgathaIntroText3
 .challengerLost
-	text_far _AgathaLostText
-	text_end
+	text_far_end _AgathaLostText
 .challengerWon
-	text_far _AgathaWonText
-	text_end
+	text_far_end _AgathaWonText
 
 GymGuideIntroText:
 	ld hl, .intro 
@@ -1186,20 +1119,15 @@ GymGuideIntroText:
 	ld hl, ChampArenaMusicSelectGymGuide
 	ret
 .intro
-	text_far _GymGuideIntroText
-	text_end
+	text_far_end _GymGuideIntroText
 .intro2
-	text_far _GymGuideIntroText2
-	text_end
+	text_far_end _GymGuideIntroText2
 .tmkid
-	text_far _ChampArenaGymGuideSonText
-	text_end
+	text_far_end _ChampArenaGymGuideSonText
 .challengerLost
-	text_far _GymGuideLostText
-	text_end
+	text_far_end _GymGuideLostText
 .challengerWon
-	text_far _GymGuideWonText
-	text_end
+	text_far_end _GymGuideWonText
 
 BlueIntroText:
 	ld hl, .intro
@@ -1225,17 +1153,13 @@ BlueIntroText:
 	ld hl, ChampArenaMusicSelectBlue
 	ret
 .intro
-	text_far _RivalIntroText
-	text_end
+	text_far_end _RivalIntroText
 .intro2
-	text_far _RivalIntroText2
-	text_end
+	text_far_end _RivalIntroText2
 .challengerLost
-	text_far _RivalLostText
-	text_end
+	text_far_end _RivalLostText
 .challengerWon
-	text_far _RivalWonText
-	text_end
+	text_far_end _RivalWonText
 
 ChampArenaStoreInitBattleData:	
 	ld [wCurOpponent], a
@@ -1253,8 +1177,7 @@ ErikaDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaErikaBeforeLeaves
-	text_end
+	text_far_end _ChampArenaErikaBeforeLeaves
 
 BlaineDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_BLAINE
@@ -1262,8 +1185,7 @@ BlaineDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaBlaineBeforeLeaves
-	text_end
+	text_far_end _ChampArenaBlaineBeforeLeaves
 
 SurgeDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_SURGE
@@ -1271,8 +1193,7 @@ SurgeDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaSurgeBeforeLeaves
-	text_end
+	text_far_end _ChampArenaSurgeBeforeLeaves
 
 SabrinaDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_SABRINA
@@ -1280,8 +1201,7 @@ SabrinaDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaSabrinaBeforeLeaves
-	text_end
+	text_far_end _ChampArenaSabrinaBeforeLeaves
 
 BrunoDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_BRUNO
@@ -1289,8 +1209,7 @@ BrunoDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaBrunoBeforeLeaves
-	text_end
+	text_far_end _ChampArenaBrunoBeforeLeaves
 
 MistyDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_MISTY
@@ -1298,8 +1217,7 @@ MistyDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaMistyBeforeLeaves
-	text_end
+	text_far_end _ChampArenaMistyBeforeLeaves
 
 LanceDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_LANCE
@@ -1307,8 +1225,7 @@ LanceDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaLanceBeforeLeaves
-	text_end
+	text_far_end _ChampArenaLanceBeforeLeaves
 
 KogaDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_KOGA
@@ -1316,8 +1233,7 @@ KogaDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaKogaBeforeLeaves
-	text_end
+	text_far_end _ChampArenaKogaBeforeLeaves
 
 LoreleiDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_LORELEI
@@ -1325,8 +1241,7 @@ LoreleiDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaLoreleiBeforeLeaves
-	text_end
+	text_far_end _ChampArenaLoreleiBeforeLeaves
 
 BrockDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_BROCK
@@ -1334,8 +1249,7 @@ BrockDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaBrockBeforeLeaves
-	text_end
+	text_far_end _ChampArenaBrockBeforeLeaves
 
 AgathaDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_AGATHA
@@ -1343,8 +1257,7 @@ AgathaDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaAgathaBeforeLeaves
-	text_end
+	text_far_end _ChampArenaAgathaBeforeLeaves
 
 GymGuideDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_GYM_GUIDE
@@ -1352,8 +1265,7 @@ GymGuideDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaGymGuideBeforeLeaves
-	text_end
+	text_far_end _ChampArenaGymGuideBeforeLeaves
 
 BlueDefeatedText:
 	SetEventA EVENT_ARENA_BEAT_BLUE
@@ -1361,8 +1273,7 @@ BlueDefeatedText:
 	rst _PrintText
 	rst TextScriptEnd
 .defeated
-	text_far _ChampArenaRivalBeforeLeaves
-	text_end
+	text_far_end _ChampArenaRivalBeforeLeaves
 
 ; INPUT:
 ; hl = address of string of bytes

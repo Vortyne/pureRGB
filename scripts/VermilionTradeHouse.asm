@@ -3,10 +3,10 @@ VermilionTradeHouse_Script:
 
 VermilionTradeHouse_TextPointers:
 	def_text_pointers
-	dw_const VermilionTradeHouseLittleGirlText, TEXT_VERMILIONTRADEHOUSE_LITTLE_GIRL
-	dw_const VermilionTradeHouseGameboyKidText, TEXT_VERMILIONTRADEHOUSE_GAMEBOY_KID
-	dw_const VermilionTradeHouseDuxText, TEXT_VERMILIONTRADEHOUSE_DUX
-	dw_const VermilionTradeHouseClipboardText, TEXT_VERMILIONTRADEHOUSE_CLIPBOARD
+	dba_const VermilionTradeHouseLittleGirlText, TEXT_VERMILIONTRADEHOUSE_LITTLE_GIRL
+	dba_const VermilionTradeHouseGameboyKidText, TEXT_VERMILIONTRADEHOUSE_GAMEBOY_KID
+	dba_const VermilionTradeHouseDuxText, TEXT_VERMILIONTRADEHOUSE_DUX
+	dba_const _VermilionCityTradeHouseClipboardText, TEXT_VERMILIONTRADEHOUSE_CLIPBOARD
 
 VermilionTradeHouseLittleGirlText:
 	text_asm
@@ -31,8 +31,7 @@ VermilionTradeHouseGameboyKidText:
 .done
 	rst TextScriptEnd
 .learnset
-	text_far _VermilionCityTradeHouseGameboyKidLearnsetText
-	text_end
+	text_far_end _VermilionCityTradeHouseGameboyKidLearnsetText
 
 VermilionTradeHouseSeeFarfetchd:
 	ld c, DEX_FARFETCHD - 1
@@ -49,9 +48,4 @@ VermilionTradeHouseDuxText:
 	rst _PrintText
 	rst TextScriptEnd
 .hands
-	text_far _VermilionCityTradeHouseDUX2Text
-	text_end
-
-VermilionTradeHouseClipboardText:
-	text_far _VermilionCityTradeHouseClipboardText
-	text_end
+	text_far_end _VermilionCityTradeHouseDUX2Text

@@ -89,7 +89,7 @@ DisplayPokemonCenterDialogue_::
 	call Random
 	and %111
 	ld hl, PokemonCenterChampFarewells
-	ld bc, 5
+	ld bc, TEXT_FAR_TABLE_ENTRY_SIZE
 	call AddNTimes
 	jr .printDone
 .notChamp
@@ -106,67 +106,51 @@ DisplayPokemonCenterDialogue_::
 .nurseBows
 	ld a, $14
 	ld [wSprite01StateData1ImageIndex], a ; make the nurse bow
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 PokemonCenterWelcomeText:
-	text_far _PokemonCenterWelcomeText
-	text_end
+	text_far_end _PokemonCenterWelcomeText
 
 ShallWeHealYourPokemonText:
 	text_pause
-	text_far _ShallWeHealYourPokemonText
-	text_end
+	text_far_end _ShallWeHealYourPokemonText
 
 NeedYourPokemonText:
-	text_far _NeedYourPokemonText
-	text_end
+	text_far_end _NeedYourPokemonText
 
 PokemonCenterFastWelcomeText:
-	text_far _PokemonCenterFastWelcomeText
-	text_end
+	text_far_end _PokemonCenterFastWelcomeText
 
 PokemonFightingFitText:
-	text_far _PokemonFightingFitText
-	text_end
+	text_far_end _PokemonFightingFitText
 
 PokemonCenterFarewellTextDelay:
 	text_pause
 PokemonCenterFarewellText:
-	text_far _PokemonCenterFarewellText
-	text_end
+	text_far_end _PokemonCenterFarewellText
 
 PokemonCenterChampText:
-	text_far _PokemonCenterChampText
-	text_end
+	text_far_end _PokemonCenterChampText
 
 PokemonCenterFastChampText:
-	text_far _PokemonCenterFastChampText
-	text_end
+	text_far_end _PokemonCenterFastChampText
 
 ; keep the below 8 text references together in the same format
 PokemonCenterChampFarewells:
 PokemonCenterFarewellChamp1Text:
-	text_far _PokemonCenterFarewellChamp1Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp1Text
 PokemonCenterFarewellChamp2Text:
-	text_far _PokemonCenterFarewellChamp2Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp2Text
 PokemonCenterFarewellChamp3Text:
-	text_far _PokemonCenterFarewellChamp3Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp3Text
 PokemonCenterFarewellChamp4Text:
-	text_far _PokemonCenterFarewellChamp4Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp4Text
 PokemonCenterFarewellChamp5Text:
-	text_far _PokemonCenterFarewellChamp5Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp5Text
 PokemonCenterFarewellChamp6Text:
-	text_far _PokemonCenterFarewellChamp6Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp6Text
 PokemonCenterFarewellChamp7Text:
-	text_far _PokemonCenterFarewellChamp7Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp7Text
 PokemonCenterFarewellChamp8Text:
-	text_far _PokemonCenterFarewellChamp8Text
-	text_end
+	text_far_end _PokemonCenterFarewellChamp8Text

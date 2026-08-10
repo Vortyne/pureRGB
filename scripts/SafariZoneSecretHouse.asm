@@ -3,7 +3,7 @@ SafariZoneSecretHouse_Script:
 
 SafariZoneSecretHouse_TextPointers:
 	def_text_pointers
-	dw_const SafariZoneSecretHouseFishingGuruText, TEXT_SAFARIZONESECRETHOUSE_FISHING_GURU
+	dba_const SafariZoneSecretHouseFishingGuruText, TEXT_SAFARIZONESECRETHOUSE_FISHING_GURU
 
 SafariZoneSecretHouseFishingGuruText:
 	text_asm
@@ -23,8 +23,7 @@ SafariZoneSecretHouseFishingGuruText:
 	rst TextScriptEnd
 
 .YouHaveWonText:
-	text_far _SafariZoneSecretHouseFishingGuruYouHaveWonText
-	text_end
+	text_far_end _SafariZoneSecretHouseFishingGuruYouHaveWonText
 
 .ReceivedHM03Text:
 	text_far _SafariZoneSecretHouseFishingGuruReceivedHM03Text
@@ -32,9 +31,7 @@ SafariZoneSecretHouseFishingGuruText:
 	text_end
 
 .HM03ExplanationText:
-	text_far _SafariZoneSecretHouseFishingGuruHM03ExplanationText
-	text_end
+	text_far_end _SafariZoneSecretHouseFishingGuruHM03ExplanationText
 
 .HM03NoRoomText:
-	text_far _SafariZoneSecretHouseFishingGuruHM03NoRoomText
-	text_end
+	text_far_end _SafariZoneSecretHouseFishingGuruHM03NoRoomText

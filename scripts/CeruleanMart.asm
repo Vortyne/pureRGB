@@ -3,10 +3,10 @@ CeruleanMart_Script:
 
 CeruleanMart_TextPointers:
 	def_text_pointers
-	dw_const CeruleanMartClerkText,        TEXT_CERULEANMART_CLERK
-	dw_const CeruleanMartCooltrainerMText, TEXT_CERULEANMART_COOLTRAINER_M
-	dw_const CeruleanMartCooltrainerFText, TEXT_CERULEANMART_COOLTRAINER_F
-	dw_const CeruleanMartTMKid,            TEXT_CERULEANMART_TM_KID
+	dba_const CeruleanMartClerkText,        TEXT_CERULEANMART_CLERK
+	dba_const _CeruleanMartCooltrainerMText, TEXT_CERULEANMART_COOLTRAINER_M
+	dba_const _CeruleanMartCooltrainerFText, TEXT_CERULEANMART_COOLTRAINER_F
+	dba_const CeruleanMartTMKid,            TEXT_CERULEANMART_TM_KID
 
 CeruleanMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	text_asm
@@ -23,26 +23,15 @@ CeruleanMartTMKid: ; PureRGBnote: ADDED: new NPC who will sell TMs
 	rst TextScriptEnd
 	
 TMKidGreet1::
-	text_far _TMKidGreet
-	text_end
+	text_far_end _TMKidGreet
 
 CeruleanMartTMKidFlavor:
 	text_far _TMKidBringingTMsAnyCost
 	text_far _CeruleanMartTMKidFlavor
 	text_far _TMKidSellingTMsCopiedDadOriginals
-	text_far _TMKidWantSomeText
-	text_end
+	text_far_end _TMKidWantSomeText
 
 TMKidQuick1::
-	text_far _TMKidQuick
-	text_end
-
-CeruleanMartCooltrainerMText:
-	text_far _CeruleanMartCooltrainerMText
-	text_end
-
-CeruleanMartCooltrainerFText:
-	text_far _CeruleanMartCooltrainerFText
-	text_end
+	text_far_end _TMKidQuick
 
 INCLUDE "data/items/marts/cerulean.asm"

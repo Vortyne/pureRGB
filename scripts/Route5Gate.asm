@@ -1,8 +1,7 @@
 Route5Gate_Script:
-	call EnableAutoTextBoxDrawing
-	ld a, [wRoute5GateCurScript]
 	ld hl, Route5Gate_ScriptPointers
-	jp CallFunctionInTable
+	ld de, wRoute5GateCurScript
+	jp CallMapScriptInTable
 
 Route5Gate_ScriptPointers:
 	def_script_pointers
@@ -77,21 +76,11 @@ SaffronGatesPlayerMovingScript:
 
 Route5Gate_TextPointers:
 	def_text_pointers
-	dw_const SaffronGateGuardText,             TEXT_ROUTE5GATE_GUARD
-	dw_const SaffronGateGuardGeeImThirstyText, TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY
-	dw_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE5GATE_GUARD_GIVE_DRINK
-
-SaffronGateGuardGeeImThirstyText:
-	text_far _SaffronGateGuardGeeImThirstyText
-	text_end
+	dba_const _SaffronGateGuardThanksForTheDrinkText,  TEXT_ROUTE5GATE_GUARD
+	dba_const _SaffronGateGuardGeeImThirstyText, TEXT_ROUTE5GATE_GUARD_GEE_IM_THIRSTY
+	dba_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE5GATE_GUARD_GIVE_DRINK
 
 SaffronGateGuardGiveDrinkText:
 	text_far _SaffronGateGuardImParchedText
 	sound_get_key_item
-	text_far _SaffronGateGuardYouCanGoOnThroughText
-	text_end
-
-SaffronGateGuardText:
-SaffronGateGuardThanksForTheDrinkText:
-	text_far _SaffronGateGuardThanksForTheDrinkText
-	text_end
+	text_far_end _SaffronGateGuardYouCanGoOnThroughText

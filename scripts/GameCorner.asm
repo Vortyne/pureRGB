@@ -1,10 +1,9 @@
 GameCorner_Script:
 	call GameCornerSelectLuckySlotMachine
 	call GameCornerSetRocketHideoutDoorTile
-	call EnableAutoTextBoxDrawing
 	ld hl, GameCorner_ScriptPointers
-	ld a, [wGameCornerCurScript]
-	jp CallFunctionInTable
+	ld de, wGameCornerCurScript
+	jp CallMapScriptInTable
 
 GameCornerSelectLuckySlotMachine:
 	ld hl, wCurrentMapScriptFlags
@@ -114,32 +113,28 @@ GameCornerRocketExitScript:
 
 GameCorner_TextPointers:
 	def_text_pointers
-	dw_const GameCornerBeauty1Text,           TEXT_GAMECORNER_BEAUTY1
-	dw_const GameCornerClerk1Text,            TEXT_GAMECORNER_CLERK1
-	dw_const GameCornerMiddleAgedMan1Text,    TEXT_GAMECORNER_MIDDLE_AGED_MAN1
-	dw_const GameCornerBeauty2Text,           TEXT_GAMECORNER_BEAUTY2
-	dw_const GameCornerFishingGuruText,       TEXT_GAMECORNER_FISHING_GURU
-	dw_const GameCornerMiddleAgedWomanText,   TEXT_GAMECORNER_MIDDLE_AGED_WOMAN
-	dw_const GameCornerGymGuideText,          TEXT_GAMECORNER_GYM_GUIDE
-	dw_const GameCornerGamblerText,           TEXT_GAMECORNER_GAMBLER
-	dw_const GameCornerClerk2Text,            TEXT_GAMECORNER_CLERK2
-	dw_const GameCornerGentlemanText,         TEXT_GAMECORNER_GENTLEMAN
-	dw_const GameCornerRocketText,            TEXT_GAMECORNER_ROCKET
-	dw_const GameCornerPosterText,            TEXT_GAMECORNER_POSTER
-	dw_const GameCornerRocketAfterBattleText, TEXT_GAMECORNER_ROCKET_AFTER_BATTLE
-	dw_const GameCornerOutOfOrderText,        TEXT_GAMECORNER_OUT_OF_ORDER
-	dw_const GameCornerOutToLunchText,        TEXT_GAMECORNER_OUT_TO_LUNCH
-	dw_const GameCornerSomeonesKeysText,      TEXT_GAMECORNER_SOMEONES_KEYS
-	dw_const GameCornerCoinCaseText,          TEXT_GAMECORNER_NEED_COIN_CASE
-	dw_const GameCornerNoCoinsText,           TEXT_GAMECORNER_NO_COINS
-	dw_const FoundHiddenCoinsText,            TEXT_GAMECORNER_FOUND_HIDDEN_COINS
+	dba_const _GameCornerBeauty1Text,           TEXT_GAMECORNER_BEAUTY1
+	dba_const GameCornerClerk1Text,            TEXT_GAMECORNER_CLERK1
+	dba_const _GameCornerMiddleAgedMan1Text,    TEXT_GAMECORNER_MIDDLE_AGED_MAN1
+	dba_const _GameCornerBeauty2Text,           TEXT_GAMECORNER_BEAUTY2
+	dba_const GameCornerFishingGuruText,       TEXT_GAMECORNER_FISHING_GURU
+	dba_const _GameCornerMiddleAgedWomanText,   TEXT_GAMECORNER_MIDDLE_AGED_WOMAN
+	dba_const GameCornerGymGuideText,          TEXT_GAMECORNER_GYM_GUIDE
+	dba_const _GameCornerGamblerText,           TEXT_GAMECORNER_GAMBLER
+	dba_const GameCornerClerk2Text,            TEXT_GAMECORNER_CLERK2
+	dba_const GameCornerGentlemanText,         TEXT_GAMECORNER_GENTLEMAN
+	dba_const GameCornerRocketText,            TEXT_GAMECORNER_ROCKET
+	dba_const GameCornerPosterText,            TEXT_GAMECORNER_POSTER
+	dba_const _GameCornerRocketAfterBattleText, TEXT_GAMECORNER_ROCKET_AFTER_BATTLE
+	dba_const _GameCornerOutOfOrderText,        TEXT_GAMECORNER_OUT_OF_ORDER
+	dba_const _GameCornerOutToLunchText,        TEXT_GAMECORNER_OUT_TO_LUNCH
+	dba_const _GameCornerSomeonesKeysText,      TEXT_GAMECORNER_SOMEONES_KEYS
+	dba_const _GameCornerCoinCaseText,          TEXT_GAMECORNER_NEED_COIN_CASE
+	dba_const _GameCornerNoCoinsText,           TEXT_GAMECORNER_NO_COINS
+	dba_const FoundHiddenCoinsText,            TEXT_GAMECORNER_FOUND_HIDDEN_COINS
 	EXPORT TEXT_GAMECORNER_FOUND_HIDDEN_COINS
-	dw_const DroppedHiddenCoinsText,          TEXT_GAMECORNER_DROPPED_HIDDEN_COINS
+	dba_const DroppedHiddenCoinsText,          TEXT_GAMECORNER_DROPPED_HIDDEN_COINS
 	EXPORT TEXT_GAMECORNER_DROPPED_HIDDEN_COINS
-
-GameCornerBeauty1Text:
-	text_far _GameCornerBeauty1Text
-	text_end
 
 GameCornerClerk1Text:
 	text_asm
@@ -212,44 +207,28 @@ GameCornerClerk1Text:
 	rst TextScriptEnd
 
 .CeladonGameCornerThanks:
-	text_far _Thanks2Text
-	text_end
+	text_far_end _Thanks2Text
 
 .CeladonGameCornerText_another500:
-	text_far _CeladonGameCornerText_another500
-	text_end
+	text_far_end _CeladonGameCornerText_another500
 
 .DoYouNeedSomeGameCoins:
-	text_far _GameCornerClerk1DoYouNeedSomeGameCoinsText
-	text_end
+	text_far_end _GameCornerClerk1DoYouNeedSomeGameCoinsText
 
 .ThanksHereAre50Coins:
-	text_far _GameCornerClerk1ThanksHereAre50CoinsText
-	text_end
+	text_far_end _GameCornerClerk1ThanksHereAre50CoinsText
 
 .PleaseComePlaySometime:
-	text_far _GameCornerClerk1PleaseComePlaySometimeText
-	text_end
+	text_far_end _GameCornerClerk1PleaseComePlaySometimeText
 
 .CantAffordTheCoins:
-	text_far _GameCornerClerk1CantAffordTheCoinsText
-	text_end
+	text_far_end _GameCornerClerk1CantAffordTheCoinsText
 
 .CoinCaseIsFull:
-	text_far _GameCornerClerk1CoinCaseIsFullText
-	text_end
+	text_far_end _GameCornerClerk1CoinCaseIsFullText
 
 .DontHaveCoinCase:
-	text_far _GameCornerClerk1DontHaveCoinCaseText
-	text_end
-
-GameCornerMiddleAgedMan1Text:
-	text_far _GameCornerMiddleAgedMan1Text
-	text_end
-
-GameCornerBeauty2Text:
-	text_far _GameCornerBeauty2Text
-	text_end
+	text_far_end _GameCornerClerk1DontHaveCoinCaseText
 
 GameCornerFishingGuruText:
 	text_asm
@@ -288,25 +267,16 @@ GameCornerFishingGuruText:
 	rst TextScriptEnd
 
 .WantToPlayText:
-	text_far _GameCornerFishingGuruWantToPlayText
-	text_end
+	text_far_end _GameCornerFishingGuruWantToPlayText
 
 .Received10CoinsText:
-	text_far _GameCornerFishingGuruReceived10CoinsText
-	sound_get_item_1
-	text_end
+	text_far_end _GameCornerFishingGuruReceived10CoinsText
 
 .DontNeedMyCoinsText:
-	text_far _GameCornerFishingGuruDontNeedMyCoinsText
-	text_end
+	text_far_end _GameCornerFishingGuruDontNeedMyCoinsText
 
 .WinsComeAndGoText:
-	text_far _GameCornerFishingGuruWinsComeAndGoText
-	text_end
-
-GameCornerMiddleAgedWomanText:
-	text_far _GameCornerMiddleAgedWomanText
-	text_end
+	text_far_end _GameCornerFishingGuruWinsComeAndGoText
 
 GameCornerGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
@@ -344,38 +314,26 @@ GameCornerGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips aft
 	rst TextScriptEnd
 
 ReceivedApexChipsText4:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText4:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText4:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 CeladonGameCornerText_gymguide:
 	text_far _GymGuideChampInMakingText
-	text_far _CeladonGameCornerText_gymguide
-	text_end
+	text_far_end _CeladonGameCornerText_gymguide
 
 CeladonGameCornerGymGuideApexChipGrassText:
-	text_far _CeladonGameCornerGymGuideApexChipGrassText
-	text_end
+	text_far_end _CeladonGameCornerGymGuideApexChipGrassText
 
 GameCornerGymGuideChampInMakingText:
-	text_far _GameCornerGymGuideChampInMakingText
-	text_end
+	text_far_end _GameCornerGymGuideChampInMakingText
 
 GameCornerGymGuideTheyOfferRarePokemonText:
-	text_far _GameCornerGymGuideTheyOfferRarePokemonText
-	text_end
-
-GameCornerGamblerText:
-	text_far _GameCornerGamblerText
-	text_end
+	text_far_end _GameCornerGymGuideTheyOfferRarePokemonText
 
 GameCornerClerk2Text:
 	text_asm
@@ -412,21 +370,16 @@ GameCornerClerk2Text:
 	rst TextScriptEnd
 
 .WantSomeCoinsText:
-	text_far _GameCornerClerk2WantSomeCoinsText
-	text_end
+	text_far_end _GameCornerClerk2WantSomeCoinsText
 
 .Received20CoinsText:
-	text_far _GameCornerClerk2Received20CoinsText
-	sound_get_item_1
-	text_end
+	text_far_end _GameCornerClerk2Received20CoinsText
 
 .YouHaveLotsOfCoinsText:
-	text_far _GameCornerClerk2YouHaveLotsOfCoinsText
-	text_end
+	text_far_end _GameCornerClerk2YouHaveLotsOfCoinsText
 
 .INeedMoreCoinsText:
-	text_far _GameCornerClerk2INeedMoreCoinsText
-	text_end
+	text_far_end _GameCornerClerk2INeedMoreCoinsText
 
 GameCornerGentlemanText:
 	text_asm
@@ -463,21 +416,16 @@ GameCornerGentlemanText:
 	rst TextScriptEnd
 
 .ThrowingMeOffText:
-	text_far _GameCornerGentlemanThrowingMeOffText
-	text_end
+	text_far_end _GameCornerGentlemanThrowingMeOffText
 
 .Received20CoinsText:
-	text_far _GameCornerGentlemanReceived20CoinsText
-	sound_get_item_1
-	text_end
+	text_far_end _GameCornerGentlemanReceived20CoinsText
 
 .YouGotYourOwnCoinsText:
-	text_far _GameCornerGentlemanYouGotYourOwnCoinsText
-	text_end
+	text_far_end _GameCornerGentlemanYouGotYourOwnCoinsText
 
 .CloselyWatchTheReelsText:
-	text_far _GameCornerGentlemanCloselyWatchTheReelsText
-	text_end
+	text_far_end _GameCornerGentlemanCloselyWatchTheReelsText
 
 GameCornerRocketText:
 	text_asm
@@ -502,16 +450,10 @@ GameCornerRocketText:
 	rst TextScriptEnd
 
 .ImGuardingThisPosterText:
-	text_far _GameCornerRocketImGuardingThisPosterText
-	text_end
+	text_far_end _GameCornerRocketImGuardingThisPosterText
 
 .BattleEndText:
-	text_far _GameCornerRocketBattleEndText
-	text_end
-
-GameCornerRocketAfterBattleText:
-	text_far _GameCornerRocketAfterBattleText
-	text_end
+	text_far_end _GameCornerRocketBattleEndText
 
 GameCornerPosterText:
 	text_asm
@@ -539,8 +481,7 @@ GameCornerPosterText:
 	rst TextScriptEnd
 
 GameCornerOopsForgotCoinCaseText:
-	text_far _GameCornerOopsForgotCoinCaseText
-	text_end
+	text_far_end _GameCornerOopsForgotCoinCaseText
 
 GameCornerDrawCoinBox:
 	call DisableTextDelay
@@ -626,34 +567,9 @@ StartSlotMachine::
 	ldh [hTextID], a
 	jp DisplayTextID
 
-
-GameCornerOutOfOrderText::
-	text_far _GameCornerOutOfOrderText
-	text_end
-
-GameCornerOutToLunchText::
-	text_far _GameCornerOutToLunchText
-	text_end
-
-GameCornerSomeonesKeysText::
-	text_far _GameCornerSomeonesKeysText
-	text_end
-
-GameCornerCoinCaseText::
-	text_far _GameCornerCoinCaseText
-	text_end
-
-GameCornerNoCoinsText::
-	text_far _GameCornerNoCoinsText
-	text_end
-
 FoundHiddenCoinsText::
-	text_far _FoundHiddenCoinsText
-	sound_get_item_2
-	text_end
+	text_far_end _FoundHiddenCoinsText
 
 DroppedHiddenCoinsText::
-	text_far _FoundHiddenCoins2Text
-	sound_get_item_2
-	text_far _DroppedHiddenCoinsText
-	text_end
+	text_far _FoundHiddenCoinsText
+	text_far_end _DroppedHiddenCoinsText

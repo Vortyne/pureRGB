@@ -121,12 +121,10 @@ DisplayElevatorFloorMenu::
 
 
 WhichFloorText:
-	text_far _WhichFloorText
-	text_end
+	text_far_end _WhichFloorText
 
 AlreadyOnThatFloorText:
-	text_far _AlreadyOnThatFloor
-	text_end
+	text_far_end _AlreadyOnThatFloor
 
 CurrentFloorText:
 	db "Current: @"

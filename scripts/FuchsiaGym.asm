@@ -1,11 +1,8 @@
 FuchsiaGym_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, FuchsiaGymTrainerHeaders
 	ld de, FuchsiaGym_ScriptPointers
-	ld a, [wFuchsiaGymCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wFuchsiaGymCurScript], a
-	ret
+	ld bc, wFuchsiaGymCurScript
+	jp ExecuteCustomMapScriptInTable
 
 FuchsiaGym_ScriptPointers:
 	def_script_pointers
@@ -59,32 +56,32 @@ FuchsiaGymReceiveTM06:
 
 FuchsiaGym_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaGymKogaText,              TEXT_FUCHSIAGYM_KOGA
-	dw_const FuchsiaGymJuggler1Text,          TEXT_FUCHSIAGYM_JUGGLER1
-	dw_const FuchsiaGymJuggler2Text,          TEXT_FUCHSIAGYM_JUGGLER2
-	dw_const FuchsiaGymJuggler3Text,          TEXT_FUCHSIAGYM_JUGGLER3
-	dw_const FuchsiaGymTamer1Text,            TEXT_FUCHSIAGYM_TAMER1
-	dw_const FuchsiaGymTamer2Text,            TEXT_FUCHSIAGYM_TAMER2
-	dw_const FuchsiaGymJuggler4Text,          TEXT_FUCHSIAGYM_JUGGLER4
-	dw_const FuchsiaGymGymGuideText,          TEXT_FUCHSIAGYM_GYM_GUIDE
-	dw_const FuchsiaGymKogaSoulBadgeInfoText, TEXT_FUCHSIAGYM_KOGA_SOUL_BADGE_INFO
-	dw_const FuchsiaGymKogaReceivedTM06Text,  TEXT_FUCHSIAGYM_KOGA_RECEIVED_TM06
-	dw_const FuchsiaGymKogaTM06NoRoomText,    TEXT_FUCHSIAGYM_KOGA_TM06_NO_ROOM
+	dba_const FuchsiaGymKogaText,              TEXT_FUCHSIAGYM_KOGA
+	dba_const FuchsiaGymJuggler1Text,          TEXT_FUCHSIAGYM_JUGGLER1
+	dba_const FuchsiaGymJuggler2Text,          TEXT_FUCHSIAGYM_JUGGLER2
+	dba_const FuchsiaGymJuggler3Text,          TEXT_FUCHSIAGYM_JUGGLER3
+	dba_const FuchsiaGymTamer1Text,            TEXT_FUCHSIAGYM_TAMER1
+	dba_const FuchsiaGymTamer2Text,            TEXT_FUCHSIAGYM_TAMER2
+	dba_const FuchsiaGymJuggler4Text,          TEXT_FUCHSIAGYM_JUGGLER4
+	dba_const FuchsiaGymGymGuideText,          TEXT_FUCHSIAGYM_GYM_GUIDE
+	dba_const FuchsiaGymKogaSoulBadgeInfoText, TEXT_FUCHSIAGYM_KOGA_SOUL_BADGE_INFO
+	dba_const FuchsiaGymKogaReceivedTM06Text,  TEXT_FUCHSIAGYM_KOGA_RECEIVED_TM06
+	dba_const FuchsiaGymKogaTM06NoRoomText,    TEXT_FUCHSIAGYM_KOGA_TM06_NO_ROOM
 
 FuchsiaGymTrainerHeaders:
 	def_trainers 2
 FuchsiaGymTrainerHeader0:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, 2, FuchsiaGymJuggler1BattleText, FuchsiaGymJuggler1EndBattleText, FuchsiaGymJuggler1AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, 2, _FuchsiaGymJuggler1BattleText, _FuchsiaGymJuggler1EndBattleText, _FuchsiaGymJuggler1AfterBattleText
 FuchsiaGymTrainerHeader1:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_1, 2, FuchsiaGymJuggler2BattleText, FuchsiaGymJuggler2EndBattleText, FuchsiaGymJuggler2AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_1, 2, _FuchsiaGymJuggler2BattleText, _FuchsiaGymJuggler2EndBattleText, _FuchsiaGymJuggler2AfterBattleText
 FuchsiaGymTrainerHeader2:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_2, 4, FuchsiaGymJuggler3BattleText, FuchsiaGymJuggler3EndBattleText, FuchsiaGymJuggler3AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_2, 4, _FuchsiaGymJuggler3BattleText, _FuchsiaGymJuggler3EndBattleText, _FuchsiaGymJuggler3AfterBattleText
 FuchsiaGymTrainerHeader3:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_3, 2, FuchsiaGymTamer1BattleText, FuchsiaGymTamer1EndBattleText, FuchsiaGymTamer1AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_3, 2, _FuchsiaGymTamer1BattleText, _FuchsiaGymTamer1EndBattleText, FuchsiaGymTamer1AfterBattleText
 FuchsiaGymTrainerHeader4:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_4, 2, FuchsiaGymTamer2BattleText, FuchsiaGymTamer2EndBattleText, FuchsiaGymTamer2AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_4, 2, _FuchsiaGymTamer2BattleText, _FuchsiaGymTamer2EndBattleText, _FuchsiaGymTamer2AfterBattleText
 FuchsiaGymTrainerHeader5:
-	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_5, 2, FuchsiaGymJuggler4BattleText, FuchsiaGymJuggler4EndBattleText, FuchsiaGymJuggler4AfterBattleText
+	trainer EVENT_BEAT_FUCHSIA_GYM_TRAINER_5, 2, _FuchsiaGymJuggler4BattleText, _FuchsiaGymJuggler4EndBattleText, _FuchsiaGymJuggler4AfterBattleText
 	db -1 ; end
 
 FuchsiaGymKogaText:
@@ -122,30 +119,24 @@ FuchsiaGymKogaText:
 	rst TextScriptEnd
 
 .BeforeBattleText:
-	text_far _FuchsiaGymKogaBeforeBattleText
-	text_end
+	text_far_end _FuchsiaGymKogaBeforeBattleText
 
 .ReceivedSoulBadgeText:
-	text_far _FuchsiaGymKogaReceivedSoulBadgeText
-	text_end
+	text_far_end _FuchsiaGymKogaReceivedSoulBadgeText
 
 .PostBattleAdviceText:
-	text_far _FuchsiaGymKogaPostBattleAdviceText
-	text_end
+	text_far_end _FuchsiaGymKogaPostBattleAdviceText
 
 FuchsiaGymKogaSoulBadgeInfoText:
-	text_far _FuchsiaGymKogaSoulBadgeInfoText
-	text_end
+	text_far_end _FuchsiaGymKogaSoulBadgeInfoText
 
 FuchsiaGymKogaReceivedTM06Text:
 	text_far _FuchsiaGymKogaReceivedTM06Text
 	sound_get_key_item
-	text_far _FuchsiaGymKogaTM06ExplanationText
-	text_end
+	text_far_end _FuchsiaGymKogaTM06ExplanationText
 
 FuchsiaGymKogaTM06NoRoomText:
-	text_far _FuchsiaGymKogaTM06NoRoomText
-	text_end
+	text_far_end _FuchsiaGymKogaTM06NoRoomText
 
 FuchsiaGymJuggler1Text:
 	script_trainer FuchsiaGymTrainerHeader0
@@ -165,50 +156,6 @@ FuchsiaGymTamer2Text:
 FuchsiaGymJuggler4Text:
 	script_trainer FuchsiaGymTrainerHeader5
 
-FuchsiaGymJuggler1BattleText:
-	text_far _FuchsiaGymJuggler1BattleText
-	text_end
-
-FuchsiaGymJuggler1EndBattleText:
-	text_far _FuchsiaGymJuggler1EndBattleText
-	text_end
-
-FuchsiaGymJuggler1AfterBattleText:
-	text_far _FuchsiaGymJuggler1AfterBattleText
-	text_end
-
-FuchsiaGymJuggler2BattleText:
-	text_far _FuchsiaGymJuggler2BattleText
-	text_end
-
-FuchsiaGymJuggler2EndBattleText:
-	text_far _FuchsiaGymJuggler2EndBattleText
-	text_end
-
-FuchsiaGymJuggler2AfterBattleText:
-	text_far _FuchsiaGymJuggler2AfterBattleText
-	text_end
-
-FuchsiaGymJuggler3BattleText:
-	text_far _FuchsiaGymJuggler3BattleText
-	text_end
-
-FuchsiaGymJuggler3EndBattleText:
-	text_far _FuchsiaGymJuggler3EndBattleText
-	text_end
-
-FuchsiaGymJuggler3AfterBattleText:
-	text_far _FuchsiaGymJuggler3AfterBattleText
-	text_end
-
-FuchsiaGymTamer1BattleText:
-	text_far _FuchsiaGymTamer1BattleText
-	text_end
-
-FuchsiaGymTamer1EndBattleText:
-	text_far _FuchsiaGymTamer1EndBattleText
-	text_end
-
 FuchsiaGymTamer1AfterBattleText:
 	text_asm
 	CheckEvent EVENT_BEAT_KOGA
@@ -217,35 +164,9 @@ FuchsiaGymTamer1AfterBattleText:
 	ld hl, .afterBeat
 	ret
 .afterBeat
-	text_far _FuchsiaGymTamer1AfterBattleGymDefeatedText
-	text_end
+	text_far_end _FuchsiaGymTamer1AfterBattleGymDefeatedText
 .beforeBeat
-	text_far _FuchsiaGymTamer1AfterBattleText
-	text_end
-
-FuchsiaGymTamer2BattleText:
-	text_far _FuchsiaGymTamer2BattleText
-	text_end
-
-FuchsiaGymTamer2EndBattleText:
-	text_far _FuchsiaGymTamer2EndBattleText
-	text_end
-
-FuchsiaGymTamer2AfterBattleText:
-	text_far _FuchsiaGymTamer2AfterBattleText
-	text_end
-
-FuchsiaGymJuggler4BattleText:
-	text_far _FuchsiaGymJuggler4BattleText
-	text_end
-
-FuchsiaGymJuggler4EndBattleText:
-	text_far _FuchsiaGymJuggler4EndBattleText
-	text_end
-
-FuchsiaGymJuggler4AfterBattleText:
-	text_far _FuchsiaGymJuggler4AfterBattleText
-	text_end
+	text_far_end _FuchsiaGymTamer1AfterBattleText
 
 FuchsiaGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
@@ -279,31 +200,23 @@ FuchsiaGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips aft
 	rst TextScriptEnd
 
 ReceivedApexChipsText5:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText5:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText5:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 AlreadyReceivedApexChipsText5:
-	text_far _AlreadyReceivedApexChipsText
-	text_end
+	text_far_end _AlreadyReceivedApexChipsText
 
 FuchsiaGymChampInMakingText:
 	text_far _GymGuideChampInMakingText
-	text_far _FuchsiaGymGymGuideChampInMakingText
-	text_end
+	text_far_end _FuchsiaGymGymGuideChampInMakingText
 
 FuchsiaGymGuidePostBattleText:
-	text_far _FuchsiaGymGymGuideBeatKogaText
-	text_end
+	text_far_end _FuchsiaGymGymGuideBeatKogaText
 
 FuchsiaGymGuideApexChipPoisonText:
-	text_far _FuchsiaGymGuideApexChipPoisonText
-	text_end
+	text_far_end _FuchsiaGymGuideApexChipPoisonText

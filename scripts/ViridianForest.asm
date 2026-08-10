@@ -1,13 +1,10 @@
 ; PureRGBnote: ADDED: the 2 trainers that were added in pokemon yellow were added.
 
 ViridianForest_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, ViridianForestTrainerHeaders
 	ld de, ViridianForest_ScriptPointers
-	ld a, [wViridianForestCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wViridianForestCurScript], a
-	ret
+	ld bc, wViridianForestCurScript
+	jp ExecuteCustomMapScriptInTable
 
 ViridianForest_ScriptPointers:
 	def_script_pointers
@@ -17,40 +14,36 @@ ViridianForest_ScriptPointers:
 
 ViridianForest_TextPointers:
 	def_text_pointers
-	dw_const ViridianForestYoungster1Text,      TEXT_VIRIDIANFOREST_YOUNGSTER1
-	dw_const ViridianForestYoungster2Text,      TEXT_VIRIDIANFOREST_YOUNGSTER2
-	dw_const ViridianForestYoungster3Text,      TEXT_VIRIDIANFOREST_YOUNGSTER3
-	dw_const ViridianForestYoungster4Text,      TEXT_VIRIDIANFOREST_YOUNGSTER4
-	dw_const ViridianForestText5,               TEXT_VIRIDIANFOREST_LASS
-	dw_const ViridianForestText6,               TEXT_VIRIDIANFOREST_YOUNGSTER5
-	dw_const PickUp3ItemText,                   TEXT_VIRIDIANFOREST_ITEM1
-	dw_const PickUp2ItemText,                   TEXT_VIRIDIANFOREST_ITEM2
-	dw_const PickUp5ItemText,                   TEXT_VIRIDIANFOREST_ITEM3
-	dw_const ViridianForestYoungster5Text,      TEXT_VIRIDIANFOREST_YOUNGSTER6
-	dw_const ViridianForestTrainerTips1Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS1
-	dw_const ViridianForestUseAntidoteSignText, TEXT_VIRIDIANFOREST_USE_ANTIDOTE_SIGN
-	dw_const ViridianForestTrainerTips2Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS2
-	dw_const ViridianForestTrainerTips3Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS3
-	dw_const ViridianForestTrainerTips4Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS4
-	dw_const ViridianForestLeavingSignText,     TEXT_VIRIDIANFOREST_LEAVING_SIGN
+	dba_const _ViridianForestYoungster1Text,      TEXT_VIRIDIANFOREST_YOUNGSTER1
+	dba_const ViridianForestYoungster2Text,       TEXT_VIRIDIANFOREST_YOUNGSTER2
+	dba_const ViridianForestYoungster3Text,       TEXT_VIRIDIANFOREST_YOUNGSTER3
+	dba_const ViridianForestYoungster4Text,       TEXT_VIRIDIANFOREST_YOUNGSTER4
+	dba_const ViridianForestText5,                TEXT_VIRIDIANFOREST_LASS
+	dba_const ViridianForestText6,                TEXT_VIRIDIANFOREST_YOUNGSTER5
+	dba_const PickUp3ItemText,                    TEXT_VIRIDIANFOREST_ITEM1
+	dba_const PickUp2ItemText,                    TEXT_VIRIDIANFOREST_ITEM2
+	dba_const PickUp5ItemText,                    TEXT_VIRIDIANFOREST_ITEM3
+	dba_const _ViridianForestYoungster5Text,      TEXT_VIRIDIANFOREST_YOUNGSTER6
+	dba_const _ViridianForestTrainerTips1Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS1
+	dba_const _ViridianForestUseAntidoteSignText, TEXT_VIRIDIANFOREST_USE_ANTIDOTE_SIGN
+	dba_const _ViridianForestTrainerTips2Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS2
+	dba_const _ViridianForestTrainerTips3Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS3
+	dba_const _ViridianForestTrainerTips4Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS4
+	dba_const _ViridianForestLeavingSignText,     TEXT_VIRIDIANFOREST_LEAVING_SIGN
 
 ViridianForestTrainerHeaders:
 	def_trainers 2
 ViridianForestTrainerHeader0:
-	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_0, 4, ViridianForestYoungster2BattleText, ViridianForestYoungster2EndBattleText, ViridianForestYoungster2AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_0, 4, _ViridianForestYoungster2BattleText, _ViridianForestYoungster2EndBattleText, _ViridianForestYoungster2AfterBattleText
 ViridianForestTrainerHeader1:
-	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_1, 4, ViridianForestYoungster3BattleText, ViridianForestYoungster3EndBattleText, ViridianForestYoungster3AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_1, 4, _ViridianForestYoungster3BattleText, _ViridianForestYoungster3EndBattleText, _ViridianForestYoungster3AfterBattleText
 ViridianForestTrainerHeader2:
-	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_2, 1, ViridianForestYoungster4BattleText, ViridianForestYoungster4EndBattleText, ViridianForestYoungster4AfterBattleText
+	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_2, 1, _ViridianForestYoungster4BattleText, _ViridianForestYoungster4EndBattleText, _ViridianForestYoungster4AfterBattleText
 ViridianForestTrainerHeader3:
-	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_3, 0, ViridianForestBattleText4, ViridianForestEndBattleText4, ViridianForestAfterBattleText4
+	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_3, 0, _ViridianForestBattleTextPikaGirl, _ViridianForestEndBattleTextPikaGirl, _ViridianForestAfterBattleTextPikaGirl
 ViridianForestTrainerHeader4:
-	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_4, 4, ViridianForestBattleText5, ViridianForestEndBattleText5, ViridianForestAfterBattleText5
+	trainer EVENT_BEAT_VIRIDIAN_FOREST_TRAINER_4, 4, _ViridianForestBattleTextSamurai, _ViridianForestEndBattleTextSamurai, _ViridianForestAfterBattleTextSamurai
 	db -1 ; end
-
-ViridianForestYoungster1Text:
-	text_far _ViridianForestYoungster1Text
-	text_end
 
 ViridianForestYoungster2Text:
 	script_trainer ViridianForestTrainerHeader0
@@ -66,91 +59,3 @@ ViridianForestText5:
 
 ViridianForestText6:
 	script_trainer ViridianForestTrainerHeader4
-
-ViridianForestYoungster2BattleText:
-	text_far _ViridianForestYoungster2BattleText
-	text_end
-
-ViridianForestYoungster2EndBattleText:
-	text_far _ViridianForestYoungster2EndBattleText
-	text_end
-
-ViridianForestYoungster2AfterBattleText:
-	text_far _ViridianForestYoungster2AfterBattleText
-	text_end
-
-ViridianForestYoungster3BattleText:
-	text_far _ViridianForestYoungster3BattleText
-	text_end
-
-ViridianForestYoungster3EndBattleText:
-	text_far _ViridianForestYoungster3EndBattleText
-	text_end
-
-ViridianForestYoungster3AfterBattleText:
-	text_far _ViridianForestYoungster3AfterBattleText
-	text_end
-
-ViridianForestYoungster4BattleText:
-	text_far _ViridianForestYoungster4BattleText
-	text_end
-
-ViridianForestYoungster4EndBattleText:
-	text_far _ViridianForestYoungster4EndBattleText
-	text_end
-
-ViridianForestYoungster4AfterBattleText:
-	text_far _ViridianForestYoungster4AfterBattleText
-	text_end
-
-ViridianForestBattleText4:
-	text_far _ViridianForestBattleTextPikaGirl
-	text_end
-
-ViridianForestEndBattleText4:
-	text_far _ViridianForestEndBattleTextPikaGirl
-	text_end
-
-ViridianForestAfterBattleText4:
-	text_far _ViridianForestAfterBattleTextPikaGirl
-	text_end
-
-ViridianForestBattleText5:
-	text_far _ViridianForestBattleTextSamurai
-	text_end
-
-ViridianForestEndBattleText5:
-	text_far _ViridianForestEndBattleTextSamurai
-	text_end
-
-ViridianForestAfterBattleText5:
-	text_far _ViridianForestAfterBattleTextSamurai
-	text_end
-
-ViridianForestYoungster5Text:
-	text_far _ViridianForestYoungster5Text
-	text_end
-
-ViridianForestTrainerTips1Text:
-	text_far _ViridianForestTrainerTips1Text
-	text_end
-
-ViridianForestUseAntidoteSignText:
-	text_far _ViridianForestUseAntidoteSignText
-	text_end
-
-ViridianForestTrainerTips2Text:
-	text_far _ViridianForestTrainerTips2Text
-	text_end
-
-ViridianForestTrainerTips3Text:
-	text_far _ViridianForestTrainerTips3Text
-	text_end
-
-ViridianForestTrainerTips4Text:
-	text_far _ViridianForestTrainerTips4Text
-	text_end
-
-ViridianForestLeavingSignText:
-	text_far _ViridianForestLeavingSignText
-	text_end

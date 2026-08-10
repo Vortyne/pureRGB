@@ -3,12 +3,12 @@ CinnabarLabMetronomeRoom_Script:
 
 CinnabarLabMetronomeRoom_TextPointers:
 	def_text_pointers
-	dw_const CinnabarLabMetronomeRoomScientist1Text, TEXT_CINNABARLABMETRONOMEROOM_SCIENTIST1
-	dw_const CinnabarLabMetronomeRoomScientist2Text, TEXT_CINNABARLABMETRONOMEROOM_SCIENTIST2
-	dw_const CinnabarLabMetronomeRoomScientist3Text, TEXT_CINNABARLABMETRONOMEROOM_SCIENTIST3
-	dw_const CinnabarLabMetronomeRoomPCText,         TEXT_CINNABARLABMETRONOMEROOM_PC_KEYBOARD
-	dw_const CinnabarLabMetronomeRoomPCText,         TEXT_CINNABARLABMETRONOMEROOM_PC_MONITOR
-	dw_const CinnabarLabMetronomeRoomAmberPipeText,  TEXT_CINNABARLABMETRONOMEROOM_AMBER_PIPE
+	dba_const CinnabarLabMetronomeRoomScientist1Text,  TEXT_CINNABARLABMETRONOMEROOM_SCIENTIST1
+	dba_const _CinnabarLabMetronomeRoomScientist2Text, TEXT_CINNABARLABMETRONOMEROOM_SCIENTIST2
+	dba_const CinnabarLabMetronomeRoomScientist3Text,  TEXT_CINNABARLABMETRONOMEROOM_SCIENTIST3
+	dba_const _CinnabarLabMetronomeRoomPCText,         TEXT_CINNABARLABMETRONOMEROOM_PC_KEYBOARD
+	dba_const _CinnabarLabMetronomeRoomPCText,         TEXT_CINNABARLABMETRONOMEROOM_PC_MONITOR
+	dba_const _CinnabarLabMetronomeRoomAmberPipeText,  TEXT_CINNABARLABMETRONOMEROOM_AMBER_PIPE
 
 CinnabarLabMetronomeRoomScientist1Text:
 	text_asm
@@ -36,8 +36,7 @@ CinnabarLabMetronomeRoomScientist1Text:
 	predef_jump LearnsetTrainerScriptMain
 
 .Text:
-	text_far _CinnabarLabMetronomeRoomScientist1Text
-	text_end
+	text_far_end _CinnabarLabMetronomeRoomScientist1Text
 
 .ReceivedTM35Text:
 	text_far _CinnabarLabMetronomeRoomScientist1ReceivedTM35Text
@@ -45,24 +44,10 @@ CinnabarLabMetronomeRoomScientist1Text:
 	text_end
 
 .TM35ExplanationText:
-	text_far _CinnabarLabMetronomeRoomScientist1TM35ExplanationText
-	text_end
+	text_far_end _CinnabarLabMetronomeRoomScientist1TM35ExplanationText
 
 .TM35NoRoomText:
-	text_far _CinnabarLabMetronomeRoomScientist1TM35NoRoomText
-	text_end
-
-CinnabarLabMetronomeRoomScientist2Text:
-	text_far _CinnabarLabMetronomeRoomScientist2Text
-	text_end
-
-CinnabarLabMetronomeRoomPCText:
-	text_far _CinnabarLabMetronomeRoomPCText
-	text_end
-
-CinnabarLabMetronomeRoomAmberPipeText:
-	text_far _CinnabarLabMetronomeRoomAmberPipeText
-	text_end
+	text_far_end _CinnabarLabMetronomeRoomScientist1TM35NoRoomText
 
 CinnabarLabMetronomeRoomScientist3Text:
 	text_asm
@@ -86,11 +71,9 @@ CinnabarLabMetronomeRoomScientist3Text:
 	ld bc, LearnsetFadeOutInDetails
 	predef_jump LearnsetTrainerScriptMain
 .default
-	text_far _CinnabarLabMetronomeRoomScientist3Text
-	text_end
+	text_far_end _CinnabarLabMetronomeRoomScientist3Text
 .shownBirdBefore
-	text_far _CinnabarLabMetronomeRoomScientist3Text2
-	text_end
+	text_far_end _CinnabarLabMetronomeRoomScientist3Text2
 
 ResearcherLadyName:
 	db "RESEARCHER@"

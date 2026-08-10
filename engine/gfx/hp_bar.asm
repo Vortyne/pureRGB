@@ -151,7 +151,7 @@ UpdateHPBar_AnimateHPBar:
 	ldh [hAutoBGTransferEnabled], a
 ;;;;;;;;;;
 	ld c, 2 ; PureRGB: TODO: decides speed of HP bar animation
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	ld a, [wHPBarDelta] ; +1 or -1
 	add e

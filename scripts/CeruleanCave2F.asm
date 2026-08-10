@@ -1,10 +1,9 @@
 ; PureRGBnote: ADDED: code was added pertaining to battling professor oak on this floor.
 
 CeruleanCave2F_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, CeruleanCave2F_ScriptPointers
-	ld a, [wCeruleanCave2FCurScript]
-	jp CallFunctionInTable
+	ld de, wCeruleanCave2FCurScript
+	jp CallMapScriptInTable
 
 CeruleanCave2F_ScriptPointers:
 	def_script_pointers
@@ -36,11 +35,11 @@ CeruleanCave2FAfterOakBattleScript:
 
 CeruleanCave2F_TextPointers:
 	def_text_pointers
-	dw_const OakCeruleanCaveText, TEXT_CERULEANCAVE2F_OAK
-	dw_const PickUpItemText, TEXT_CERULEANCAVE2F_ITEM1
-	dw_const PickUpItemText, TEXT_CERULEANCAVE2F_ITEM2
-	dw_const PickUpItemText, TEXT_CERULEANCAVE2F_ITEM3
-	dw_const OakCeruleanCaveFirstDefeatText, TEXT_CERULEANCAVE2F_OAK_FIRST_DEFEAT
+	dba_const OakCeruleanCaveText, TEXT_CERULEANCAVE2F_OAK
+	dba_const PickUpItemText, TEXT_CERULEANCAVE2F_ITEM1
+	dba_const PickUpItemText, TEXT_CERULEANCAVE2F_ITEM2
+	dba_const PickUpItemText, TEXT_CERULEANCAVE2F_ITEM3
+	dba_const OakCeruleanCaveFirstDefeatText, TEXT_CERULEANCAVE2F_OAK_FIRST_DEFEAT
 
 OakCeruleanCaveText:
 	text_asm
@@ -78,23 +77,16 @@ OakCeruleanCaveFirstDefeatText:
 	rst TextScriptEnd
 
 OakBattleStartText:
-	text_far _OakBattleStartText
-	text_end
+	text_far_end _OakBattleStartText
 
 OakBattleWinText:
-	text_far _OakBattleWinText
-	text_end
+	text_far_end _OakBattleWinText
 
 OakBattleLoseText:
-	text_far _OakBattleLoseText
-	text_end
+	text_far_end _OakBattleLoseText
 
 OakBeatenText:
-	text_far _OakBeatenText
-	text_end
+	text_far_end _OakBeatenText
 
 OakFirstLoseText:
-	text_far _OakFirstLoseText
-	sound_pokedex_rating
-	text_end
-	
+	text_far_end _OakFirstLoseText	

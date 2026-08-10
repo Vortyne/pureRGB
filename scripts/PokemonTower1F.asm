@@ -13,24 +13,12 @@ PokemonTower1F_Script:
 
 PokemonTower1F_TextPointers:
 	def_text_pointers
-	dw_const PokemonTower1FReceptionistText,    TEXT_POKEMONTOWER1F_RECEPTIONIST
-	dw_const PokemonTower1FMiddleAgedWomanText, TEXT_POKEMONTOWER1F_MIDDLE_AGED_WOMAN
-	dw_const PokemonTower1FBaldingGuyText,      TEXT_POKEMONTOWER1F_BALDING_GUY
-	dw_const PokemonTower1FGirlText,            TEXT_POKEMONTOWER1F_GIRL
-	dw_const PokemonTower1FChannelerText,       TEXT_POKEMONTOWER1F_CHANNELER
-	dw_const PokemonTower1FRocketText,          TEXT_POKEMONTOWER1F_ROCKET
-
-PokemonTower1FReceptionistText:
-	text_far _PokemonTower1FReceptionistText
-	text_end
-
-PokemonTower1FMiddleAgedWomanText:
-	text_far _PokemonTower1FMiddleAgedWomanText
-	text_end
-
-PokemonTower1FBaldingGuyText:
-	text_far _PokemonTower1FBaldingGuyText
-	text_end
+	dba_const _PokemonTower1FReceptionistText,    TEXT_POKEMONTOWER1F_RECEPTIONIST
+	dba_const _PokemonTower1FMiddleAgedWomanText, TEXT_POKEMONTOWER1F_MIDDLE_AGED_WOMAN
+	dba_const _PokemonTower1FBaldingGuyText,      TEXT_POKEMONTOWER1F_BALDING_GUY
+	dba_const PokemonTower1FGirlText,            TEXT_POKEMONTOWER1F_GIRL
+	dba_const _PokemonTower1FChannelerText,       TEXT_POKEMONTOWER1F_CHANNELER
+	dba_const PokemonTower1FRocketText,          TEXT_POKEMONTOWER1F_ROCKET
 
 PokemonTower1FGirlText:
 	text_far _PokemonTower1FGirlText
@@ -47,10 +35,6 @@ PokemonTower1FGirlText:
 .pensivegirl
 	db "SAD LADY@"
 
-PokemonTower1FChannelerText:
-	text_far _PokemonTower1FChannelerText
-	text_end
-
 PokemonTower1FRocketText:
 	text_asm
 	ld hl, PokemonTower1FRocketText1
@@ -64,14 +48,10 @@ PokemonTower1FRocketText:
 	rst TextScriptEnd
 
 PokemonTower1FRocketText1:
-	text_far _PokemonTower1FRocketText
-	text_end
+	text_far_end _PokemonTower1FRocketText
 
 PokemonTower1FRocketText2:
-	text_far _PokemonTower1FRocketText2
-	text_end
+	text_far_end _PokemonTower1FRocketText2
 
 PokemonTower1FRocketText3:
-	text_far _PokemonTower1FRocketText3
-	text_end
-
+	text_far_end _PokemonTower1FRocketText3

@@ -1,6 +1,6 @@
 SubstituteEffect_:
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, wBattleMonMaxHP
 	ld de, wPlayerSubstituteHP
 	ld bc, wPlayerBattleStatus2
@@ -74,13 +74,10 @@ SubstituteEffect_:
 	ret
 
 SubstituteText:
-	text_far _SubstituteText
-	text_end
+	text_far_end _SubstituteText
 
 HasSubstituteText:
-	text_far _HasSubstituteText
-	text_end
+	text_far_end _HasSubstituteText
 
 TooWeakSubstituteText:
-	text_far _TooWeakSubstituteText
-	text_end
+	text_far_end _TooWeakSubstituteText

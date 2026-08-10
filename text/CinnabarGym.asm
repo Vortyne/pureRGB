@@ -19,6 +19,8 @@ _CinnabarGymBlaineReceivedVolcanoBadgeText::
 
 	para "You have earned"
 	line "the VOLCANOBADGE!@"
+	sound_get_key_item ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
+	text_waitbutton
 	text_end
 
 _CinnabarGymBlainePostBattleAdviceText::

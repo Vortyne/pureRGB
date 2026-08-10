@@ -224,6 +224,7 @@ _CableClubNPCPleaseApplyHereHaveToSaveText::
 
 _CableClubNPCPleaseWaitText::
 	text "Please wait.@"
+	text_pause
 	text_end
 
 _CableClubNPCLinkClosedBecauseOfInactivityText::

@@ -32,15 +32,15 @@ SortItems::
 	ld a, SFX_WITHDRAW_DEPOSIT
 	call PlaySoundWaitForCurrent
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_WITHDRAW_DEPOSIT
 	rst _PlaySound
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_WITHDRAW_DEPOSIT
 	rst _PlaySound
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	pop hl
 	ld c, 0
 .sortItemsLoop
@@ -124,23 +124,18 @@ SortItems::
 	rst _PlaySound
 	ret	
 .sorted
-	text_far _SortDone
-	text_end
+	text_far_end _SortDone
 .sortingInProgress
-	text_far _FuchsiaCityFossilSignUndeterminedText
-	text_end
+	text_far_end _FuchsiaCityFossilSignUndeterminedText
 .nothingToSort
-	text_far _SortNotEnough
-	text_end
+	text_far_end _SortNotEnough
 
 
 SortBagText::
-	text_far _SortItems
-	text_end
+	text_far_end _SortItems
 
 SortPCText::
-	text_far _SortPCItems
-	text_end
+	text_far_end _SortPCItems
 
 
 ItemSortedList:

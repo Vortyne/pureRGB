@@ -1,10 +1,9 @@
 ; PureRGBnote: ADDED: lots of code pertaining to the new safari zone game types.
 
 SafariZoneGate_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, SafariZoneGate_ScriptPointers
-	ld a, [wSafariZoneGateCurScript]
-	jp CallFunctionInTable
+	ld de, wSafariZoneGateCurScript
+	jp CallMapScriptInTable
 
 SafariZoneGate_ScriptPointers:
 	def_script_pointers
@@ -165,23 +164,21 @@ SafariZoneGateReturnSimulatedJoypadStateScript:
 
 SafariZoneGate_TextPointers:
 	def_text_pointers
-	dw_const SafariZoneGateSafariZoneWorker1Text,                   TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1
-	dw_const SafariZoneGateSafariZoneWorker2Text,                   TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER2
-	dw_const SafariZoneGateSafariZoneWorker1Text,                   TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_1
-	dw_const SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText, TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_WOULD_YOU_LIKE_TO_JOIN
-	dw_const SafariZoneGateSafariZoneWorker1LeavingEarlyText,       TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_LEAVING_EARLY
-	dw_const SafariZoneGateSafariZoneWorker1GoodHaulComeAgainText,  TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_GOOD_HAUL_COME_AGAIN
-	dw_const SafariZoneEntranceText7,                               TEXT_SAFARIZONEGATE_FAILED_RANGER_HUNT
-	dw_const SafariZoneEntranceText8,                               TEXT_SAFARIZONEGATE_RANGER_HUNT_SUCCESS
-	dw_const SafariZoneEntranceText9,                               TEXT_SAFARIZONEGATE_OWED_HYPER_BALL
+	dba_const SafariZoneGateSafariZoneWorker1Text,                   TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1
+	dba_const SafariZoneGateSafariZoneWorker2Text,                   TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER2
+	dba_const SafariZoneGateSafariZoneWorker1Text,                   TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_1
+	dba_const SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText, TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_WOULD_YOU_LIKE_TO_JOIN
+	dba_const SafariZoneGateSafariZoneWorker1LeavingEarlyText,       TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_LEAVING_EARLY
+	dba_const SafariZoneGateSafariZoneWorker1GoodHaulComeAgainText,  TEXT_SAFARIZONEGATE_SAFARI_ZONE_WORKER1_GOOD_HAUL_COME_AGAIN
+	dba_const _RangerHuntDoneFailText,                               TEXT_SAFARIZONEGATE_FAILED_RANGER_HUNT
+	dba_const SafariZoneEntranceText8,                               TEXT_SAFARIZONEGATE_RANGER_HUNT_SUCCESS
+	dba_const SafariZoneEntranceText9,                               TEXT_SAFARIZONEGATE_OWED_HYPER_BALL
 
 SafariZoneEntranceText1Get:
-	text_far _SafariZoneGateSafariZoneWorker1Text
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker1Text
 
 SafariZoneEntranceHyperBallOwedText:
-	text_far _SafariZoneEntranceHyperBallOwedText
-	text_end
+	text_far_end _SafariZoneEntranceHyperBallOwedText
 
 SafariZoneGateSafariZoneWorker1Text:
 	text_asm
@@ -195,8 +192,7 @@ SafariZoneGateSafariZoneWorker1Text:
 	
 
 SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinTextGet:
-	text_far _SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText
-	text_end	
+	text_far_end _SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText	
 
 SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText:
 	text_asm
@@ -264,12 +260,10 @@ SafariZoneGateSafariZoneWorker1WouldYouLikeToJoinText:
 	rst TextScriptEnd
 
 .MakePaymentText
-	text_far _SafariZoneGateSafariZoneWorker1ThatllBe500PleaseText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker1ThatllBe500PleaseText
 
 .NotEnoughMoneyText
-	text_far _SafariZoneGateSafariZoneWorker1NotEnoughMoneyText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker1NotEnoughMoneyText
 
 SafariZoneGateSafariZoneWorker1LeavingEarlyText:
 	text_far _SafariZoneGateSafariZoneWorker1LeavingEarlyText
@@ -303,21 +297,13 @@ SafariZoneGateSafariZoneWorker1LeavingEarlyText:
 	rst TextScriptEnd
 
 .ReturnSafariBallsText
-	text_far _SafariZoneGateSafariZoneWorker1ReturnSafariBallsText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker1ReturnSafariBallsText
 
 .GoodLuckText
-	text_far _SafariZoneGateSafariZoneWorker1GoodLuckText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker1GoodLuckText
 
 SafariZoneGateSafariZoneWorker1GoodHaulComeAgainText:
-	text_far _SafariZoneGateSafariZoneWorker1GoodHaulComeAgainText
-	text_end
-
-SafariZoneEntranceText7:
-	text_far _RangerHuntDoneFailText
-	text_end
-
+	text_far_end _SafariZoneGateSafariZoneWorker1GoodHaulComeAgainText
 SafariZoneEntranceText8:
 	text_asm 
 	ld hl, .RangerHuntDoneSuccessText
@@ -326,8 +312,7 @@ SafariZoneEntranceText8:
 	rst TextScriptEnd
 
 .RangerHuntDoneSuccessText
-	text_far _RangerHuntDoneSuccessText
-	text_end
+	text_far_end _RangerHuntDoneSuccessText
 
 SafariZoneGateSafariZoneWorker2Text:
 	text_asm
@@ -346,12 +331,10 @@ SafariZoneGateSafariZoneWorker2Text:
 	rst TextScriptEnd
 
 .FirstTimeHereText
-	text_far _SafariZoneGateSafariZoneWorker2FirstTimeHereText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker2FirstTimeHereText
 
 .YoureARegularHereText
-	text_far _SafariZoneGateSafariZoneWorker2YoureARegularHereText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker2YoureARegularHereText
 
 SafariZoneEntranceText9:
 	text_asm
@@ -389,12 +372,10 @@ TextPointers_SafariGames:
 	dw SafariFreeRoamPaidInfo
 
 SafariZoneEntranceWhatGame:
-	text_far _SafariZoneEntranceWhatGame
-	text_end
+	text_far_end _SafariZoneEntranceWhatGame
 
 PleaseComeAgainText:
-	text_far _SafariZoneGateSafariZoneWorker1PleaseComeAgainText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker1PleaseComeAgainText
 
 SafariClassicPaidInfo:
 	text_asm
@@ -445,29 +426,16 @@ SafariFreeRoamPaidInfo:
 	rst TextScriptEnd
 
 SafariZoneClassicText:
-	text_far _SafariZoneClassic
-	text_end
+	text_far_end _SafariZoneClassic
 
 SafariZoneEntranceSafariBallsReceived:
-	text_far _SafariZoneEntranceSafariBallsReceived
-	sound_get_item_1
-	text_end
+	text_far_end _SafariZoneEntranceSafariBallsReceived
 
 SafariZonePAText:
-	text_far _SafariZoneEntranceText_75360
-	text_end
-
-SafariZoneRangerHunt:
-	text_far _SafariZoneRangerHunt
-	text_end
-
-SafariZoneFreeRoam:
-	text_far _SafariZoneFreeRoam
-	text_end
+	text_far_end _SafariZoneEntranceText_75360
 
 SafariZonePATextNoBalls:
-	text_far _SafariZonePATextNoBalls
-	text_end
+	text_far_end _SafariZonePATextNoBalls
 
 GiveHyperBall:
 	lb bc, ITEM_RANGER_HUNT_COMPLETION_PRIZE_NEW, 1
@@ -489,8 +457,7 @@ ReceivedHyperBallText:
 	text_end
 
 HyperBallNoRoomText:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 HideShowRangers:
 	db TOGGLE_SAFARI_ZONE_NORTH_RANGER_0
@@ -568,7 +535,11 @@ AskGameTypeExplanation:
 	jr nz, .goodbye
 	ld hl, TextPointers_SafariExplanations
 	ld a, [wCurrentMenuItem]
-	call GetAddressFromPointerArray
+	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
+	ld d, 0
+	ld e, a
+	add hl, de
 	rst _PrintText
 	and a
 	ret
@@ -576,15 +547,13 @@ AskGameTypeExplanation:
 	scf
 	ret
 
-TextPointers_SafariExplanations:
-	dw ExplanationText
-	dw SafariZoneRangerHunt
-	dw SafariZoneFreeRoam
-
 SafariZoneHelp:
-	text_far _SafariZoneHelp
-	text_end
+	text_far_end _SafariZoneHelp
 
+TextPointers_SafariExplanations:
 ExplanationText:
-	text_far _SafariZoneGateSafariZoneWorker2SafariZoneExplanationText
-	text_end
+	text_far_end _SafariZoneGateSafariZoneWorker2SafariZoneExplanationText
+SafariZoneRangerHunt:
+	text_far_end _SafariZoneRangerHunt
+SafariZoneFreeRoam:
+	text_far_end _SafariZoneFreeRoam

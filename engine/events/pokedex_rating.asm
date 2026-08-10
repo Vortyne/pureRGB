@@ -10,17 +10,23 @@ DisplayDexRating::
 	ld a, [wNumSetBits]
 	ldh [hDexRatingNumMonsOwned], a
 	ld hl, DexRatingsTable
+	ld c, 0
 .findRating
 	ld a, [hli]
 	ld b, a
 	ldh a, [hDexRatingNumMonsOwned]
 	cp b
 	jr c, .foundRating
-	inc hl
-	inc hl
+	inc c
 	jr .findRating
 .foundRating
-	hl_deref
+	ld hl, DexRatingTextPointerList
+	ld a, c
+	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
+	ld b, 0
+	ld c, a
+	add hl, bc
 	CheckAndResetEventA EVENT_HALL_OF_FAME_DEX_RATING
 	jr nz, .hallOfFame
 	push hl
@@ -38,99 +44,61 @@ DisplayDexRating::
 	ldh a, [hDexRatingNumMonsOwned]
 	ld [de], a
 	inc de
-.copyRatingTextLoop
-	ld a, [hli]
-	cp '@'
-	jr z, .doneCopying
-	ld [de], a
-	inc de
-	jr .copyRatingTextLoop
-.doneCopying
-	ld [de], a
+	ld bc, TEXT_FAR_TABLE_ENTRY_SIZE
+	rst _CopyData
 	ret
 
 DexCompletionText:
-	text_far _DexCompletionText
-	text_end
+	text_far_end _DexCompletionText
 
 DexRatingsTable:
-	dbw 10, DexRatingText_Own0To9
-	dbw 20, DexRatingText_Own10To19
-	dbw 30, DexRatingText_Own20To29
-	dbw 40, DexRatingText_Own30To39
-	dbw 50, DexRatingText_Own40To49
-	dbw 60, DexRatingText_Own50To59
-	dbw 70, DexRatingText_Own60To69
-	dbw 80, DexRatingText_Own70To79
-	dbw 90, DexRatingText_Own80To89
-	dbw 100, DexRatingText_Own90To99
-	dbw 110, DexRatingText_Own100To109
-	dbw 120, DexRatingText_Own110To119
-	dbw 130, DexRatingText_Own120To129
-	dbw 140, DexRatingText_Own130To139
-	dbw 150, DexRatingText_Own140To149
-	dbw NUM_POKEMON + 1, DexRatingText_Own150To151
+	db 10
+	db 20
+	db 30
+	db 40
+	db 50
+	db 60
+	db 70
+	db 80
+	db 90
+	db 100
+	db 110
+	db 120
+	db 130
+	db 140
+	db 150
+	db NUM_POKEMON + 1
 
+DexRatingTextPointerList:
 DexRatingText_Own0To9:
-	text_far _DexRatingText_Own0To9
-	text_end
-
+	text_far_end _DexRatingText_Own0To9
 DexRatingText_Own10To19:
-	text_far _DexRatingText_Own10To19
-	text_end
-
+	text_far_end _DexRatingText_Own10To19
 DexRatingText_Own20To29:
-	text_far _DexRatingText_Own20To29
-	text_end
-
+	text_far_end _DexRatingText_Own20To29
 DexRatingText_Own30To39:
-	text_far _DexRatingText_Own30To39
-	text_end
-
+	text_far_end _DexRatingText_Own30To39
 DexRatingText_Own40To49:
-	text_far _DexRatingText_Own40To49
-	text_end
-
+	text_far_end _DexRatingText_Own40To49
 DexRatingText_Own50To59:
-	text_far _DexRatingText_Own50To59
-	text_end
-
+	text_far_end _DexRatingText_Own50To59
 DexRatingText_Own60To69:
-	text_far _DexRatingText_Own60To69
-	text_end
-
+	text_far_end _DexRatingText_Own60To69
 DexRatingText_Own70To79:
-	text_far _DexRatingText_Own70To79
-	text_end
-
+	text_far_end _DexRatingText_Own70To79
 DexRatingText_Own80To89:
-	text_far _DexRatingText_Own80To89
-	text_end
-
+	text_far_end _DexRatingText_Own80To89
 DexRatingText_Own90To99:
-	text_far _DexRatingText_Own90To99
-	text_end
-
+	text_far_end _DexRatingText_Own90To99
 DexRatingText_Own100To109:
-	text_far _DexRatingText_Own100To109
-	text_end
-
+	text_far_end _DexRatingText_Own100To109
 DexRatingText_Own110To119:
-	text_far _DexRatingText_Own110To119
-	text_end
-
+	text_far_end _DexRatingText_Own110To119
 DexRatingText_Own120To129:
-	text_far _DexRatingText_Own120To129
-	text_end
-
+	text_far_end _DexRatingText_Own120To129
 DexRatingText_Own130To139:
-	text_far _DexRatingText_Own130To139
-	text_end
-
+	text_far_end _DexRatingText_Own130To139
 DexRatingText_Own140To149:
-	text_far _DexRatingText_Own140To149
-	text_end
-
+	text_far_end _DexRatingText_Own140To149
 DexRatingText_Own150To151:
-	text_far _DexRatingText_Own150To151
-	text_end
+	text_far_end _DexRatingText_Own150To151

@@ -82,6 +82,9 @@ PrintSafariGameOverText::
 	rst _PrintText
 	ret
 
+SafariRangerHuntSuccessText::
+	text_far_end _RangerHuntSuccessText
+
 SafariGameOverText:
 	text_asm
 	ld a, [wNumSafariBalls]
@@ -94,10 +97,11 @@ SafariGameOverText:
 	rst _PrintText
 	rst TextScriptEnd
 
-SafariRangerHuntSuccessText::
-	text_far _RangerHuntSuccessText
-	sound_get_item_2
-	text_end	
+TimesUpText:
+	text_far_end _TimesUpText
+
+GameOverText:
+	text_far_end _GameOverText
 
 ; PureRGBnote: ADDED: used when leaving the safari zone by flying, teleporting, blacking out, etc.
 ;                     clears all variables related to the safari game you were in
@@ -110,11 +114,3 @@ ClearSafariFlags::
 	ld [wSafariZoneGameOver], a 
 	ld [wSafariZoneGateCurScript], a ; SCRIPT_SAFARIZONEGATE_DEFAULT
 	ret
-
-TimesUpText:
-	text_far _TimesUpText
-	text_end
-
-GameOverText:
-	text_far _GameOverText
-	text_end

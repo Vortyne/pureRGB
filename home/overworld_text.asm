@@ -35,3 +35,13 @@ DoMultiItemPickup:
 	rst TextScriptEnd
 
 ;;;;;;;;;;
+
+
+PokeCenterSignText::
+	text_far_end _PokeCenterSignText
+
+PokemonFaintedText::
+	text_far_end _PokemonFaintedText
+
+RepelWoreOffText::
+	text_far_end _RepelWoreOffText

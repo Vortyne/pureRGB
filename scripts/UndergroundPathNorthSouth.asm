@@ -3,13 +3,10 @@
 
 UndergroundPathNorthSouth_Script:
 	call UndergroundPathNorthSouthOnMapLoad
-	call EnableAutoTextBoxDrawing
 	ld hl, UndergroundPathNorthSouthTrainerHeaders
 	ld de, UndergroundPathNorthSouth_ScriptPointers
-	ld a, [wUndergroundPathNorthSouthCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wUndergroundPathNorthSouthCurScript], a
-	ret
+	ld bc, wUndergroundPathNorthSouthCurScript
+	jp ExecuteCustomMapScriptInTable
 
 UndergroundPathNorthSouthOnMapLoad:
 	call WasMapJustLoaded
@@ -31,18 +28,18 @@ UndergroundPathNorthSouth_ScriptPointers:
 
 UndergroundPathNorthSouth_TextPointers:
 	def_text_pointers
-	dw_const UndergroundPathNorthSouthTrainer1Text,     TEXT_UNDERGROUNDPATHNORTHSOUTH_GENTLEMAN
-	dw_const UndergroundPathNorthSouthTrainer2Text,     TEXT_UNDERGROUNDPATHNORTHSOUTH_COOL_KID1
-	dw_const UndergroundPathNorthSouthTrainer3Text,     TEXT_UNDERGROUNDPATHNORTHSOUTH_COOL_KID2
+	dba_const UndergroundPathNorthSouthTrainer1Text,     TEXT_UNDERGROUNDPATHNORTHSOUTH_GENTLEMAN
+	dba_const UndergroundPathNorthSouthTrainer2Text,     TEXT_UNDERGROUNDPATHNORTHSOUTH_COOL_KID1
+	dba_const UndergroundPathNorthSouthTrainer3Text,     TEXT_UNDERGROUNDPATHNORTHSOUTH_COOL_KID2
 
 UndergroundPathNorthSouthTrainerHeaders:
 	def_trainers 5
 UndergroundPathNorthSouthTrainerHeader0:
-	trainer EVENT_BEAT_UNDERGROUND_PATH_NORTH_SOUTH_TRAINER_0, 0, UndergroundPathNorthSouthBattleText1, UndergroundPathNorthSouthEndBattleText1, UndergroundPathNorthSouthAfterBattleText1
+	trainer EVENT_BEAT_UNDERGROUND_PATH_NORTH_SOUTH_TRAINER_0, 0, _UndergroundPathNorthSouthBattleText1, _UndergroundPathNorthSouthEndBattleText1, _UndergroundPathNorthSouthAfterBattleText1
 UndergroundPathNorthSouthTrainerHeader1:
-	trainer EVENT_BEAT_UNDERGROUND_PATH_NORTH_SOUTH_TRAINER_1, 0, UndergroundPathNorthSouthBattleText2, UndergroundPathNorthSouthEndBattleText2, UndergroundPathNorthSouthAfterBattleText2
+	trainer EVENT_BEAT_UNDERGROUND_PATH_NORTH_SOUTH_TRAINER_1, 0, _UndergroundPathNorthSouthBattleText2, _UndergroundPathNorthSouthEndBattleText2, _UndergroundPathNorthSouthAfterBattleText2
 UndergroundPathNorthSouthTrainerHeader2:
-	trainer EVENT_BEAT_UNDERGROUND_PATH_NORTH_SOUTH_TRAINER_2, 0, UndergroundPathNorthSouthBattleText3, UndergroundPathNorthSouthEndBattleText3, UndergroundPathNorthSouthAfterBattleText3
+	trainer EVENT_BEAT_UNDERGROUND_PATH_NORTH_SOUTH_TRAINER_2, 0, _UndergroundPathNorthSouthBattleText3, _UndergroundPathNorthSouthEndBattleText3, UndergroundPathNorthSouthAfterBattleText3
 	db -1 ;end
 
 UndergroundPathNorthSouthTrainer1Text:
@@ -53,38 +50,6 @@ UndergroundPathNorthSouthTrainer2Text:
 
 UndergroundPathNorthSouthTrainer3Text:
 	script_trainer UndergroundPathNorthSouthTrainerHeader2
-
-UndergroundPathNorthSouthBattleText1:
-	text_far _UndergroundPathNorthSouthBattleText1
-	text_end
-
-UndergroundPathNorthSouthEndBattleText1:
-	text_far _UndergroundPathNorthSouthEndBattleText1
-	text_end
-
-UndergroundPathNorthSouthAfterBattleText1:
-	text_far _UndergroundPathNorthSouthAfterBattleText1
-	text_end
-
-UndergroundPathNorthSouthBattleText2:
-	text_far _UndergroundPathNorthSouthBattleText2
-	text_end
-
-UndergroundPathNorthSouthEndBattleText2:
-	text_far _UndergroundPathNorthSouthEndBattleText2
-	text_end
-
-UndergroundPathNorthSouthAfterBattleText2:
-	text_far _UndergroundPathNorthSouthAfterBattleText2
-	text_end
-
-UndergroundPathNorthSouthBattleText3:
-	text_far _UndergroundPathNorthSouthBattleText3
-	text_end
-
-UndergroundPathNorthSouthEndBattleText3:
-	text_far _UndergroundPathNorthSouthEndBattleText3
-	text_end
 
 UndergroundPathNorthSouthAfterBattleText3:
 	text_far _UndergroundPathNorthSouthAfterBattleText3

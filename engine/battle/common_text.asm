@@ -21,7 +21,7 @@ PrintBeginningBattleText:
 .trainerBattle
 	call .playSFX
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, TrainerWantsToFightText
 .wildBattle
 	push hl
@@ -103,20 +103,15 @@ CheckSpecialWildBattleIntroText:
 	and a
 	ret
 .torched
-	text_far _TorchedAppeared
-	text_end
+	text_far_end _TorchedAppeared
 .chunky
-	text_far _ChunkyAppeared
-	text_end
+	text_far_end _ChunkyAppeared
 .painless
-	text_far _PainlessAppeared
-	text_end
+	text_far_end _PainlessAppeared
 .irradiated
-	text_far _IrradiatedAppeared
-	text_end
+	text_far_end _IrradiatedAppeared
 .maw
-	text_far _TheMawAppeared
-	text_end
+	text_far_end _TheMawAppeared
 ;;;;;;
 
 
@@ -133,28 +128,22 @@ PlayGhostSfx:
 ;;;;;;;;;;
 
 WildMonAppearedText:
-	text_far _WildMonAppearedText
-	text_end
+	text_far_end _WildMonAppearedText
 
 HookedMonAttackedText:
-	text_far _HookedMonAttackedText
-	text_end
+	text_far_end _HookedMonAttackedText
 
 EnemyAppearedText:
-	text_far _EnemyAppearedText
-	text_end
+	text_far_end _EnemyAppearedText
 
 TrainerWantsToFightText:
-	text_far _TrainerWantsToFightText
-	text_end
+	text_far_end _TrainerWantsToFightText
 
 UnveiledGhostText:
-	text_far _UnveiledGhostText
-	text_end
+	text_far_end _UnveiledGhostText
 
 GhostCantBeIDdText:
-	text_far _GhostCantBeIDdText
-	text_end
+	text_far_end _GhostCantBeIDdText
 
 PrintSendOutMonMessage:
 	ld hl, wEnemyMonHP
@@ -223,8 +212,7 @@ PrintPlayerMon1Text:
 	ret
 
 PlayerMon1Text:
-	text_far _PlayerMon1Text
-	text_end
+	text_far_end _PlayerMon1Text
 
 RetreatMon:
 	ld hl, PlayerMon2Text
@@ -300,5 +288,4 @@ PrintComeBackText:
 	ret
 
 ComeBackText:
-	text_far _ComeBackText
-	text_end
+	text_far_end _ComeBackText

@@ -1,13 +1,10 @@
 VictoryRoad2F_Script:
 	call VictoryRoad2FResetBoulderEventScript
 	call VictoryRoad2FCheckBoulderEventScript
-	call EnableAutoTextBoxDrawing
 	ld hl, VictoryRoad2TrainerHeaders
 	ld de, VictoryRoad2F_ScriptPointers
-	ld a, [wVictoryRoad2FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wVictoryRoad2FCurScript], a
-	ret
+	ld bc, wVictoryRoad2FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 VictoryRoad2FResetBoulderEventScript:
 	ld hl, wCurrentMapScriptFlags
@@ -77,32 +74,32 @@ VictoryRoad2FBoulderSwitchCoords:
 
 VictoryRoad2F_TextPointers:
 	def_text_pointers
-	dw_const VictoryRoad2FHikerText,        TEXT_VICTORYROAD2F_HIKER
-	dw_const VictoryRoad2FSuperNerd1Text,   TEXT_VICTORYROAD2F_SUPER_NERD1
-	dw_const VictoryRoad2FCooltrainerMText, TEXT_VICTORYROAD2F_COOLTRAINER_M
-	dw_const VictoryRoad2FSuperNerd2Text,   TEXT_VICTORYROAD2F_SUPER_NERD2
-	dw_const VictoryRoad2FSuperNerd3Text,   TEXT_VICTORYROAD2F_SUPER_NERD3
-	dw_const VictoryRoad2FMoltresText,      TEXT_VICTORYROAD2F_MOLTRES
-	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM1
-	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM2
-	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM3
-	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM4
-	dw_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER1
-	dw_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER2
-	dw_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER3
+	dba_const VictoryRoad2FHikerText,        TEXT_VICTORYROAD2F_HIKER
+	dba_const VictoryRoad2FSuperNerd1Text,   TEXT_VICTORYROAD2F_SUPER_NERD1
+	dba_const VictoryRoad2FCooltrainerMText, TEXT_VICTORYROAD2F_COOLTRAINER_M
+	dba_const VictoryRoad2FSuperNerd2Text,   TEXT_VICTORYROAD2F_SUPER_NERD2
+	dba_const VictoryRoad2FSuperNerd3Text,   TEXT_VICTORYROAD2F_SUPER_NERD3
+	dba_const VictoryRoad2FMoltresText,      TEXT_VICTORYROAD2F_MOLTRES
+	dba_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM1
+	dba_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM2
+	dba_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM3
+	dba_const PickUpItemText,                TEXT_VICTORYROAD2F_ITEM4
+	dba_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER1
+	dba_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER2
+	dba_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER3
 
 VictoryRoad2TrainerHeaders:
 	def_trainers
 VictoryRoad2TrainerHeader0:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_0, 4, VictoryRoad2FHikerBattleText, VictoryRoad2FHikerEndBattleText, VictoryRoad2FHikerAfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_0, 4, _VictoryRoad2FHikerBattleText, _VictoryRoad2FHikerEndBattleText, _VictoryRoad2FHikerAfterBattleText
 VictoryRoad2TrainerHeader1:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1, 3, VictoryRoad2FSuperNerd1BattleText, VictoryRoad2FSuperNerd1EndBattleText, VictoryRoad2FSuperNerd1AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_1, 3, _VictoryRoad2FSuperNerd1BattleText, _VictoryRoad2FSuperNerd1EndBattleText, _VictoryRoad2FSuperNerd1AfterBattleText
 VictoryRoad2TrainerHeader2:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2, 3, VictoryRoad2FCooltrainerMBattleText, VictoryRoad2FCooltrainerMEndBattleText, VictoryRoad2FCooltrainerMAfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_2, 3, _VictoryRoad2FCooltrainerMBattleText, _VictoryRoad2FCooltrainerMEndBattleText, _VictoryRoad2FCooltrainerMAfterBattleText
 VictoryRoad2TrainerHeader3:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3, 1, VictoryRoad2FSuperNerd2BattleText, VictoryRoad2FSuperNerd2EndBattleText, VictoryRoad2FSuperNerd2AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_3, 1, _VictoryRoad2FSuperNerd2BattleText, _VictoryRoad2FSuperNerd2EndBattleText, _VictoryRoad2FSuperNerd2AfterBattleText
 VictoryRoad2TrainerHeader4:
-	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4, 3, VictoryRoad2FSuperNerd3BattleText, VictoryRoad2FSuperNerd3EndBattleText, VictoryRoad2FSuperNerd3AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_2_TRAINER_4, 3, _VictoryRoad2FSuperNerd3BattleText, _VictoryRoad2FSuperNerd3EndBattleText, _VictoryRoad2FSuperNerd3AfterBattleText
 MoltresTrainerHeader:
 	trainer EVENT_BEAT_MOLTRES, 0, VictoryRoad2FMoltresBattleText, VictoryRoad2FMoltresBattleText, VictoryRoad2FMoltresBattleText
 	db -1 ; end
@@ -132,63 +129,3 @@ VictoryRoad2FMoltresBattleText:
 	call PlayCry
 	call WaitForSoundToFinish
 	rst TextScriptEnd
-
-VictoryRoad2FHikerBattleText:
-	text_far _VictoryRoad2FHikerBattleText
-	text_end
-
-VictoryRoad2FHikerEndBattleText:
-	text_far _VictoryRoad2FHikerEndBattleText
-	text_end
-
-VictoryRoad2FHikerAfterBattleText:
-	text_far _VictoryRoad2FHikerAfterBattleText
-	text_end
-
-VictoryRoad2FSuperNerd1BattleText:
-	text_far _VictoryRoad2FSuperNerd1BattleText
-	text_end
-
-VictoryRoad2FSuperNerd1EndBattleText:
-	text_far _VictoryRoad2FSuperNerd1EndBattleText
-	text_end
-
-VictoryRoad2FSuperNerd1AfterBattleText:
-	text_far _VictoryRoad2FSuperNerd1AfterBattleText
-	text_end
-
-VictoryRoad2FCooltrainerMBattleText:
-	text_far _VictoryRoad2FCooltrainerMBattleText
-	text_end
-
-VictoryRoad2FCooltrainerMEndBattleText:
-	text_far _VictoryRoad2FCooltrainerMEndBattleText
-	text_end
-
-VictoryRoad2FCooltrainerMAfterBattleText:
-	text_far _VictoryRoad2FCooltrainerMAfterBattleText
-	text_end
-
-VictoryRoad2FSuperNerd2BattleText:
-	text_far _VictoryRoad2FSuperNerd2BattleText
-	text_end
-
-VictoryRoad2FSuperNerd2EndBattleText:
-	text_far _VictoryRoad2FSuperNerd2EndBattleText
-	text_end
-
-VictoryRoad2FSuperNerd2AfterBattleText:
-	text_far _VictoryRoad2FSuperNerd2AfterBattleText
-	text_end
-
-VictoryRoad2FSuperNerd3BattleText:
-	text_far _VictoryRoad2FSuperNerd3BattleText
-	text_end
-
-VictoryRoad2FSuperNerd3EndBattleText:
-	text_far _VictoryRoad2FSuperNerd3EndBattleText
-	text_end
-
-VictoryRoad2FSuperNerd3AfterBattleText:
-	text_far _VictoryRoad2FSuperNerd3AfterBattleText
-	text_end

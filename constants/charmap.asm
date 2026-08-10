@@ -3,7 +3,19 @@
 ; Control characters (see home/text.asm)
 
 	charmap "<NULL>",    $00
-	DEF FIRST_TEXT_SHORCUT_ID EQU $3F
+	DEF FIRST_TEXT_SHORTCUT_ID EQU $33
+	charmap "like",      $33
+	charmap "an",        $34
+	charmap "You",       $35
+	charmap "er",        $36
+	charmap "with",      $37
+	charmap "at",        $38
+	charmap "ight",      $39
+	charmap "have",      $3A ; PureRGBnote: Added: single byte verion of have
+	charmap " a ",       $3B ; PureRGBnote: Added: single byte verion of " a "
+	charmap "here",      $3C ; PureRGBnote: Added: single byte verion of here
+	charmap "to ",       $3D ; PureRGBnote: Added: single byte verion of "to "
+	charmap " to",       $3E ; PureRGBnote: Added: single byte verion of " to"
 	charmap "or",        $3F ; PureRGBnote: ADDED: single byte version of or
 	charmap "ing",       $40 ; PureRGBnote: ADDED: single byte version of ing
 	charmap "the",       $41 ; PureRGBnote: ADDED: single byte version of the

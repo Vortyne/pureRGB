@@ -88,11 +88,9 @@ _SiphonSnagEffect::
 	rst _PrintText
 	ret
 .healedUser
-	text_far _SiphonSnagHealedUserText
-	text_end
+	text_far_end _SiphonSnagHealedUserText
 .healedPartyMember
-	text_far _SiphonSnagHealedPartyText
-	text_end
+	text_far_end _SiphonSnagHealedPartyText
 
 _AnimationSiphonSnagAttack::
 	ld hl, vSprites tile $31
@@ -368,7 +366,7 @@ AnimationSiphonSnagHealParty:
 	dec c
 	jr nz, .loopMoveBall
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld c, 18
 .loopMoveBallFast
 	dec d
@@ -380,7 +378,7 @@ AnimationSiphonSnagHealParty:
 	dec c
 	jr nz, .loopMoveBallFast
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_HEAL_AILMENT
 	rst _PlaySound
 	jpfar AnimationFlashLightScreen

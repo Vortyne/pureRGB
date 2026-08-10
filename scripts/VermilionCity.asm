@@ -33,8 +33,8 @@ VermilionCity_Script:
 .no_dock_warp
 ;;;;;
 	ld hl, VermilionCity_ScriptPointers
-	ld a, [wVermilionCityCurScript]
-	jp CallFunctionInTable
+	ld de, wVermilionCityCurScript
+	jp CallMapScriptInTable
 ; PureRGBnote: ADDED: code that keeps the cut tree cut down if we're in its alcove. Prevents getting softlocked if you delete cut.
 .setFirstLockTrashCanIndexAndCheckTileReplacements
 	call Random
@@ -167,7 +167,7 @@ VermilionCityPlayerMovingUp1Script:
 	and a
 	ret nz
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	jr ResetVermilionMapScript
 
 VermilionCityPlayerExitShipScript:
@@ -183,45 +183,36 @@ VermilionCityPlayerExitShipScript:
 
 VermilionCity_TextPointers:
 	def_text_pointers
-	dw_const VermilionCityBeautyText,             TEXT_VERMILIONCITY_BEAUTY
-	dw_const VermilionCityGambler1Text,           TEXT_VERMILIONCITY_GAMBLER1
-	dw_const VermilionCitySailor1Text,            TEXT_VERMILIONCITY_SAILOR1
-	dw_const VermilionCityGambler2Text,           TEXT_VERMILIONCITY_GAMBLER2
-	dw_const VermilionCityMachopText,             TEXT_VERMILIONCITY_MACHOP
-	dw_const VermilionCitySailor2Text,            TEXT_VERMILIONCITY_SAILOR2
-	dw_const VermilionCityDockBeautyText,         TEXT_VERMILIONCITY_DOCK_BEAUTY
-	dw_const VermilionCitySignText,               TEXT_VERMILIONCITY_SIGN
-	dw_const VermilionCityNoticeSignText,         TEXT_VERMILIONCITY_NOTICE_SIGN
-	dw_const MartSignText,                        TEXT_VERMILIONCITY_MART_SIGN
-	dw_const PokeCenterSignText,                  TEXT_VERMILIONCITY_POKECENTER_SIGN
-	dw_const VermilionCityPokemonFanClubSignText, TEXT_VERMILIONCITY_POKEMON_FAN_CLUB_SIGN
-	dw_const VermilionCityGymSignText,            TEXT_VERMILIONCITY_GYM_SIGN
-	dw_const VermilionCityHarborSignText,         TEXT_VERMILIONCITY_HARBOR_SIGN
-
-VermilionCityBeautyText:
-	text_far _VermilionCityBeautyText
-	text_end
+	dba_const _VermilionCityBeautyText,             TEXT_VERMILIONCITY_BEAUTY
+	dba_const VermilionCityGambler1Text,           TEXT_VERMILIONCITY_GAMBLER1
+	dba_const VermilionCitySailor1Text,            TEXT_VERMILIONCITY_SAILOR1
+	dba_const _VermilionCityGambler2Text,           TEXT_VERMILIONCITY_GAMBLER2
+	dba_const VermilionCityMachopText,             TEXT_VERMILIONCITY_MACHOP
+	dba_const VermilionCitySailor2Text,            TEXT_VERMILIONCITY_SAILOR2
+	dba_const VermilionCityDockBeautyText,         TEXT_VERMILIONCITY_DOCK_BEAUTY
+	dba_const _VermilionCitySignText,               TEXT_VERMILIONCITY_SIGN
+	dba_const _VermilionCityNoticeSignText,         TEXT_VERMILIONCITY_NOTICE_SIGN
+	dba_const MartSignText,                        TEXT_VERMILIONCITY_MART_SIGN
+	dba_const PokeCenterSignText,                  TEXT_VERMILIONCITY_POKECENTER_SIGN
+	dba_const _VermilionCityPokemonFanClubSignText, TEXT_VERMILIONCITY_POKEMON_FAN_CLUB_SIGN
+	dba_const VermilionCityGymSignText,            TEXT_VERMILIONCITY_GYM_SIGN
+	dba_const _VermilionCityHarborSignText,         TEXT_VERMILIONCITY_HARBOR_SIGN
 
 VermilionCityGambler1Text:
 	text_asm
 	CheckEvent EVENT_SS_ANNE_LEFT
-	jr nz, .ship_departed
-	ld hl, .DidYouSeeText
-	rst _PrintText
-	jr .text_script_end
-.ship_departed
 	ld hl, .SSAnneDepartedText
+	jr nz, .printDone
+	ld hl, .DidYouSeeText
+.printDone
 	rst _PrintText
-.text_script_end
 	rst TextScriptEnd
 
 .DidYouSeeText:
-	text_far _VermilionCityGambler1DidYouSeeText
-	text_end
+	text_far_end _VermilionCityGambler1DidYouSeeText
 
 .SSAnneDepartedText:
-	text_far _VermilionCityGambler1SSAnneDepartedText
-	text_end
+	text_far_end _VermilionCityGambler1SSAnneDepartedText
 
 VermilionCitySailor1Text:
 	text_asm
@@ -272,32 +263,22 @@ VermilionCitySailor1Text:
 	db -1 ; end
 
 .WelcomeToSSAnneText:
-	text_far _VermilionCitySailor1WelcomeToSSAnneText
-	text_end
+	text_far_end _VermilionCitySailor1WelcomeToSSAnneText
 
 .DoYouHaveATicketText:
-	text_far _VermilionCitySailor1DoYouHaveATicketText
-	text_end
+	text_far_end _VermilionCitySailor1DoYouHaveATicketText
 
 .FlashedTicketText:
-	text_far _VermilionCitySailor1FlashedTicketText
-	text_end
+	text_far_end _VermilionCitySailor1FlashedTicketText
 
 .YouNeedATicketText:
-	text_far _VermilionCitySailor1YouNeedATicketText
-	text_end
+	text_far_end _VermilionCitySailor1YouNeedATicketText
 
 .ShipSetSailText:
-	text_far _VermilionCitySailor1ShipSetSailText
-	text_end
+	text_far_end _VermilionCitySailor1ShipSetSailText
 
 .ComeOnThroughText:
-	text_far _VermilionCity1OhItsYouText
-	text_end
-
-VermilionCityGambler2Text:
-	text_far _VermilionCityGambler2Text
-	text_end
+	text_far_end _VermilionCity1OhItsYouText
 
 VermilionCityMachopText:
 	text_far _VermilionCityMachopText
@@ -310,49 +291,28 @@ VermilionCityMachopText:
 	ret
 
 .StompingTheLandFlatText:
-	text_far _VermilionCityMachopStompingTheLandFlatText
-	text_end
+	text_far_end _VermilionCityMachopStompingTheLandFlatText
 
 VermilionCitySailor2Text:
 	text_asm
 	ld a, [wObtainedBadges]
 	bit BIT_SOULBADGE, a ; after obtaining the soul badge the ship returns
-	jr z, .default
-	ld hl, .ShipBackText
-	ret
-.default
 	ld hl, .Text
+	ret z
+	ld hl, .ShipBackText
 	ret
 
 .Text:
-	text_far _VermilionCitySailor2Text
-	text_end
+	text_far_end _VermilionCitySailor2Text
 
 .ShipBackText:
-	text_far _VermilionCityText15
-	text_end
-
-VermilionCitySignText:
-	text_far _VermilionCitySignText
-	text_end
-
-VermilionCityNoticeSignText:
-	text_far _VermilionCityNoticeSignText
-	text_end
-
-VermilionCityPokemonFanClubSignText:
-	text_far _VermilionCityPokemonFanClubSignText
-	text_end
+	text_far_end _VermilionCityText15
 
 VermilionCityGymSignText:
 	text_asm
 	ld c, VERMILION_GYM
 	ld de, VermilionGymOutsideSign
 	jpfar GymOutsideSignTextScript
-
-VermilionCityHarborSignText:
-	text_far _VermilionCityHarborSignText
-	text_end
 
 ; PureRGBnote: ADDED: new NPC who will give you an item if found. Requires surf to even see this NPC's location.
 VermilionCityDockBeautyText: 
@@ -374,12 +334,10 @@ VermilionCityDockBeautyText:
 	rst TextScriptEnd
 
 VermilionCityDockBeautyGreeting:
-	text_far _VermilionCityDockBeautyGreeting
-	text_end
+	text_far_end _VermilionCityDockBeautyGreeting
 
 VermilionCityDockBeautyNoRoomText:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 VermilionCityDockBeautyReceivedItemText:
 	text_far _MrFujisHouseMrFujiReceivedPokeFluteText
@@ -387,5 +345,4 @@ VermilionCityDockBeautyReceivedItemText:
 	text_end
 
 VermilionCityDockBeautyEndText:
-	text_far _VermilionCityDockBeautyEndText
-	text_end
+	text_far_end _VermilionCityDockBeautyEndText

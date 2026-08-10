@@ -7,12 +7,12 @@ TypeGuysHouse_Script:
 
 TypeGuysHouse_TextPointers:
 	def_text_pointers
-	dw_const TypeGuysHouseTypeGuyText,              TEXT_TYPE_GUYS_HOUSE_TYPE_GUY
-	dw_const TypeGuysHouseShortBookCaseText,        TEXT_TYPE_GUYS_HOUSE_SHORT_BOOKCASE
-	dw_const TypeGuysHouseSculptureText,            TEXT_TYPE_GUYS_HOUSE_SCULPTURE
-	dw_const TypeGuysHouseRightTallBookcaseText,    TEXT_TYPE_GUYS_HOUSE_RIGHT_TALL_BOOKCASE
-	dw_const TypeGuysHouseLeftTallBookcaseText,     TEXT_TYPE_GUYS_HOUSE_LEFT_TALL_BOOKCASE
-	dw_const TypeGuysHouseComputer.text,            TEXT_TYPE_GUYS_HOUSE_COMPUTER
+	dba_const TypeGuysHouseTypeGuyText,              TEXT_TYPE_GUYS_HOUSE_TYPE_GUY
+	dba_const TypeGuysHouseShortBookCaseText,        TEXT_TYPE_GUYS_HOUSE_SHORT_BOOKCASE
+	dba_const TypeGuysHouseSculptureText,            TEXT_TYPE_GUYS_HOUSE_SCULPTURE
+	dba_const TypeGuysHouseRightTallBookcaseText,    TEXT_TYPE_GUYS_HOUSE_RIGHT_TALL_BOOKCASE
+	dba_const TypeGuysHouseLeftTallBookcaseText,     TEXT_TYPE_GUYS_HOUSE_LEFT_TALL_BOOKCASE
+	dba_const TypeGuysHouseComputer.text,            TEXT_TYPE_GUYS_HOUSE_COMPUTER
 
 TypeGuysHouseCheckTurnOffLights:
 	call WasMapJustLoaded
@@ -69,8 +69,7 @@ TypeGuysHouseTurnOffLights:
 	jr LoadLightSwitchOffGraphic
 
 TypeGuysHouseTooDarkText:
-	text_far _TypeGuysHouseTooDarkText
-	text_end
+	text_far_end _TypeGuysHouseTooDarkText
 
 CheckLightsTurnedOn:
 	ld a, [wMapPalOffset]
@@ -94,8 +93,7 @@ TypeGuysHouseComputer::
 	rst _PrintText
 	rst TextScriptEnd
 .computer
-	text_far _TypeGuysHouseTypeGuysComputerText
-	text_end
+	text_far_end _TypeGuysHouseTypeGuysComputerText
 
 TypeGuysHouseShortBookCaseText:
 	text_asm 
@@ -111,13 +109,11 @@ TypeGuysHouseShortBookCaseText:
 	rst _PrintText
 	rst TextScriptEnd
 .smallShelfSide
-	text_far _TypeGuysHouseShortBookCaseSideText
-	text_end
+	text_far_end _TypeGuysHouseShortBookCaseSideText
 .smallShelf
 	text_far _TypeGuysHouseShortBookCaseText
 	text_far _FlippedToARandomPage
-	text_far _TypeGuysHouseShortBookCaseText2
-	text_end
+	text_far_end _TypeGuysHouseShortBookCaseText2
 
 TypeGuysHouseSculptureText:
 	text_asm 
@@ -129,8 +125,7 @@ TypeGuysHouseSculptureText:
 	rst _PrintText
 	rst TextScriptEnd
 .sculpture
-	text_far _TypeGuysHouseSculptureText
-	text_end
+	text_far_end _TypeGuysHouseSculptureText
 
 
 TypeGuysHouseRightTallBookcaseText:
@@ -146,8 +141,7 @@ TypeGuysHouseRightTallBookcaseText:
 .rightTallBookcase
 	text_far _TypeGuysHouseRightTallBookcaseText
 	text_far _FlippedToARandomPage
-	text_far _TypeGuysHouseRightTallBookcaseText2
-	text_end
+	text_far_end _TypeGuysHouseRightTallBookcaseText2
 
 TypeGuysHouseLeftTallBookcaseText:
 	text_asm 
@@ -246,20 +240,15 @@ TypeGuysHouseTypeGuyText:
 	ld [wListScrollOffset], a ; restore list scroll offset to preserve item list index
 	rst TextScriptEnd
 .sleeping
-	text_far _TypeGuysHouseTypeGuySleepingText
-	text_end
+	text_far_end _TypeGuysHouseTypeGuySleepingText
 .awake
-	text_far _TypeGuysHouseTypeGuyAwakeText
-	text_end
+	text_far_end _TypeGuysHouseTypeGuyAwakeText
 .awake2
-	text_far _TypeGuysHouseTypeGuyAwakeText2
-	text_end
+	text_far_end _TypeGuysHouseTypeGuyAwakeText2
 .doneText
-	text_far _TypeGuysHouseTypeGuyDoneText
-	text_end
+	text_far_end _TypeGuysHouseTypeGuyDoneText
 .beThatWay
-	text_far _TypeGuysHouseTypeGuyFineText
-	text_end
+	text_far_end _TypeGuysHouseTypeGuyFineText
 
 PokemonTypeGuyList::
 	db 23

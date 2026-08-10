@@ -70,6 +70,7 @@ _GameCornerFishingGuruWantToPlayText::
 _GameCornerFishingGuruReceived10CoinsText::
 	text "<PLAYER> received"
 	line "10 coins!@"
+	sound_get_item_1
 	text_end
 
 _GameCornerFishingGuruDontNeedMyCoinsText::
@@ -148,6 +149,7 @@ _GameCornerGentlemanReceived20CoinsText::
 _GameCornerClerk2Received20CoinsText::
 	text "<PLAYER> received"
 	line "20 coins!@"
+	sound_get_item_1
 	text_end
 
 _GameCornerClerk2YouHaveLotsOfCoinsText::

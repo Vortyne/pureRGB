@@ -40,4 +40,5 @@ _Route15GateUpstairsRemoveBoosterText::
 _Route15GateUpstairsDoneText::
 	text "Done! Here's the"
 	line "BOOSTER CHIP!@"
+	sound_get_item_1
 	text_end

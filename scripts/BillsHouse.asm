@@ -3,10 +3,9 @@
 
 BillsHouse_Script:
 	call BillsHouseAddDoors
-	call EnableAutoTextBoxDrawing
-	ld a, [wBillsHouseCurScript]
 	ld hl, BillsHouse_ScriptPointers
-	jp CallFunctionInTable
+	ld de, wBillsHouseCurScript
+	jp CallMapScriptInTable
 
 BillsHouseAddDoors:
 	call WasMapJustLoaded
@@ -91,7 +90,7 @@ BillsHouseBillExitsMachineScript:
 	ld c, TOGGLE_BILL_1
 	call ShowObject
 	ld c, 8
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, BILLSHOUSE_BILL_SS_TICKET
 	ldh [hSpriteIndex], a
 	ld de, .BillExitMachineMovement
@@ -128,10 +127,10 @@ BillsHousePCScript:
 
 BillsHouse_TextPointers:
 	def_text_pointers
-	dw_const BillsHouseBillPokemonText,               TEXT_BILLSHOUSE_BILL_POKEMON
-	dw_const BillsHouseBillSSTicketText,              TEXT_BILLSHOUSE_BILL_SS_TICKET
-	dw_const BillsHouseBillCheckOutMyRarePokemonText, TEXT_BILLSHOUSE_BILL_CHECK_OUT_MY_RARE_POKEMON
-	dw_const BillsHouseActivatePCScript,              TEXT_BILLSHOUSE_ACTIVATE_PC
+	dba_const BillsHouseBillPokemonText,               TEXT_BILLSHOUSE_BILL_POKEMON
+	dba_const BillsHouseBillSSTicketText,              TEXT_BILLSHOUSE_BILL_SS_TICKET
+	dba_const BillsHouseBillCheckOutMyRarePokemonText, TEXT_BILLSHOUSE_BILL_CHECK_OUT_MY_RARE_POKEMON
+	dba_const BillsHouseActivatePCScript,              TEXT_BILLSHOUSE_ACTIVATE_PC
 
 BillsHouseBillPokemonText:
 	text_asm
@@ -149,16 +148,13 @@ BillsHouseBillPokemonText:
 	rst TextScriptEnd
 
 .ImNotAPokemonText:
-	text_far _BillsHouseBillImNotAPokemonText
-	text_end
+	text_far_end _BillsHouseBillImNotAPokemonText
 
 .UseSeparationSystemText:
-	text_far _BillsHouseBillUseSeparationSystemText
-	text_end
+	text_far_end _BillsHouseBillUseSeparationSystemText
 
 .NoYouGottaHelpText:
-	text_far _BillsHouseBillNoYouGottaHelpText
-	text_end
+	text_far_end _BillsHouseBillNoYouGottaHelpText
 
 BillsHouseBillSSTicketText:
 	text_asm
@@ -188,22 +184,16 @@ BillsHouseBillSSTicketText:
 	rst TextScriptEnd
 
 .ThankYouText:
-	text_far _BillsHouseBillThankYouText
-	text_end
+	text_far_end _BillsHouseBillThankYouText
 
 .SSTicketReceivedText:
-	text_far _SSTicketReceivedText
-	sound_get_key_item
-	text_promptbutton
-	text_end
+	text_far_end _SSTicketReceivedText
 
 .SSTicketNoRoomText:
-	text_far _SSTicketNoRoomText
-	text_end
+	text_far_end _SSTicketNoRoomText
 
 .WhyDontYouGoInsteadOfMeText:
-	text_far _BillsHouseBillWhyDontYouGoInsteadOfMeText
-	text_end
+	text_far_end _BillsHouseBillWhyDontYouGoInsteadOfMeText
 
 BillsHouseBillCheckOutMyRarePokemonText:
 	text_asm
@@ -216,12 +206,10 @@ BillsHouseBillCheckOutMyRarePokemonText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _BillsHouseBillCheckOutMyRarePokemonText
-	text_end
+	text_far_end _BillsHouseBillCheckOutMyRarePokemonText
 
 BillsHouseGardenInfo:
-	text_far _BillsHouseGardenInfo
-	text_end
+	text_far_end _BillsHouseGardenInfo
 
 BillsHousePC::
 	call EnableAutoTextBoxDrawing
@@ -272,13 +260,12 @@ BillsHouseActivatePCScript:
 	rst TextScriptEnd
 .playSoundWithDelay
 	push af
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	rst _PlaySound
 	jp WaitForSoundToFinish
 .cellOnMonitor
-	text_far _BillsHouseMonitorText
-	text_end
+	text_far_end _BillsHouseMonitorText
 .cellSeparationInitiated
 	text_far _BillsHouseInitiatedText
 	text_promptbutton
@@ -290,7 +277,7 @@ BillsHouseActivatePCScript:
 	ld a, SFX_SWITCH
 	call .playSoundWithDelay
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	rst TextScriptEnd
 
 .pokemonList
@@ -351,16 +338,13 @@ BillsHouseActivatePCScript:
 	call LoadScreenTilesFromBuffer2
 	rst TextScriptEnd
 .favoritePokemon:
-	text_far _BillsHousePokemonListText1
-	text_end
+	text_far_end _BillsHousePokemonListText1
 
 .whichPokemonInfo:
-	text_far _BillsHousePokemonListText2
-	text_end
+	text_far_end _BillsHousePokemonListText2
 
 .listingTonsOfInfo::
-	text_far _BillsHousePCInfo
-	text_end
+	text_far_end _BillsHousePCInfo
 
 BillsMonListText:
 	db   "EEVEE"

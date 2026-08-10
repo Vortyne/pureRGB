@@ -2,13 +2,10 @@
 
 RocketHideoutB4F_Script:
 	call RocketHideoutB4FDoorCallbackScript
-	call EnableAutoTextBoxDrawing
 	ld hl, RocketHideout4TrainerHeaders
 	ld de, RocketHideoutB4F_ScriptPointers
-	ld a, [wRocketHideoutB4FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wRocketHideoutB4FCurScript], a
-	ret
+	ld bc, wRocketHideoutB4FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 PlayGiovanniMusic:
 	ld a, [wOptions2]
@@ -102,25 +99,25 @@ RocketHideoutB4FBeatGiovanniScript:
 
 RocketHideoutB4F_TextPointers:
 	def_text_pointers
-	dw_const RocketHideoutB4FGiovanniText,                TEXT_ROCKETHIDEOUTB4F_GIOVANNI
-	dw_const RocketHideoutB4FRocket1Text,                 TEXT_ROCKETHIDEOUTB4F_ROCKET1
-	dw_const RocketHideoutB4FRocket2Text,                 TEXT_ROCKETHIDEOUTB4F_ROCKET2
-	dw_const RocketHideoutB4FRocket3Text,                 TEXT_ROCKETHIDEOUTB4F_ROCKET3
-	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_ITEM1
-	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_ITEM2
-	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_ITEM3
-	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_SILPH_SCOPE
-	dw_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_LIFT_KEY
-	dw_const RocketHideoutB4FGiovanniHopeWeMeetAgainText, TEXT_ROCKETHIDEOUTB4F_GIOVANNI_HOPE_WE_MEET_AGAIN
+	dba_const RocketHideoutB4FGiovanniText,                TEXT_ROCKETHIDEOUTB4F_GIOVANNI
+	dba_const RocketHideoutB4FRocket1Text,                 TEXT_ROCKETHIDEOUTB4F_ROCKET1
+	dba_const RocketHideoutB4FRocket2Text,                 TEXT_ROCKETHIDEOUTB4F_ROCKET2
+	dba_const RocketHideoutB4FRocket3Text,                 TEXT_ROCKETHIDEOUTB4F_ROCKET3
+	dba_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_ITEM1
+	dba_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_ITEM2
+	dba_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_ITEM3
+	dba_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_SILPH_SCOPE
+	dba_const PickUpItemText,                              TEXT_ROCKETHIDEOUTB4F_LIFT_KEY
+	dba_const RocketHideoutB4FGiovanniHopeWeMeetAgainText, TEXT_ROCKETHIDEOUTB4F_GIOVANNI_HOPE_WE_MEET_AGAIN
 
 RocketHideout4TrainerHeaders:
 	def_trainers 2
 RocketHideout4TrainerHeader0:
-	trainer EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_0, 0, RocketHideoutB4FRocket1BattleText, RocketHideoutB4FRocket1EndBattleText, RocketHideoutB4FRocket1AfterBattleText
+	trainer EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_0, 0, _RocketHideoutB4FRocket1BattleText, _RocketHideoutB4FRocket1EndBattleText, _RocketHideoutB4FRocket1AfterBattleText
 RocketHideout4TrainerHeader1:
-	trainer EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_1, 0, RocketHideoutB4FRocket2BattleText, RocketHideoutB4FRocket2EndBattleText, RocketHideoutB4FRocket2AfterBattleText
+	trainer EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_1, 0, _RocketHideoutB4FRocket2BattleText, _RocketHideoutB4FRocket2EndBattleText, _RocketHideoutB4FRocket2AfterBattleText
 RocketHideout4TrainerHeader2:
-	trainer EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_2, 1, RocketHideoutB4FRocket3BattleText, RocketHideoutB4FRocket3EndBattleText, RocketHideoutB4FRocket3AfterBattleText
+	trainer EVENT_BEAT_ROCKET_HIDEOUT_4_TRAINER_2, 1, _RocketHideoutB4FRocket3BattleText, _RocketHideoutB4FRocket3EndBattleText, RocketHideoutB4FRocket3AfterBattleText
 	db -1 ; end
 
 RocketHideoutB4FGiovanniText:
@@ -152,16 +149,13 @@ RocketHideoutB4FGiovanniText:
 	rst TextScriptEnd
 
 .ImpressedYouGotHereText:
-	text_far _RocketHideoutB4FGiovanniImpressedYouGotHereText
-	text_end
+	text_far_end _RocketHideoutB4FGiovanniImpressedYouGotHereText
 
 .WhatCannotBeText:
-	text_far _RocketHideoutB4FGiovanniWhatCannotBeText
-	text_end
+	text_far_end _RocketHideoutB4FGiovanniWhatCannotBeText
 
 RocketHideoutB4FGiovanniHopeWeMeetAgainText:
-	text_far _RocketHideoutB4FGiovanniHopeWeMeetAgainText
-	text_end
+	text_far_end _RocketHideoutB4FGiovanniHopeWeMeetAgainText
 
 RocketHideoutB4FRocket1Text:
 	script_trainer RocketHideout4TrainerHeader0
@@ -171,38 +165,6 @@ RocketHideoutB4FRocket2Text:
 
 RocketHideoutB4FRocket3Text:
 	script_trainer RocketHideout4TrainerHeader2
-
-RocketHideoutB4FRocket1BattleText:
-	text_far _RocketHideoutB4FRocket1BattleText
-	text_end
-
-RocketHideoutB4FRocket1EndBattleText:
-	text_far _RocketHideoutB4FRocket1EndBattleText
-	text_end
-
-RocketHideoutB4FRocket1AfterBattleText:
-	text_far _RocketHideoutB4FRocket1AfterBattleText
-	text_end
-
-RocketHideoutB4FRocket2BattleText:
-	text_far _RocketHideoutB4FRocket2BattleText
-	text_end
-
-RocketHideoutB4FRocket2EndBattleText:
-	text_far _RocketHideoutB4FRocket2EndBattleText
-	text_end
-
-RocketHideoutB4FRocket2AfterBattleText:
-	text_far _RocketHideoutB4FRocket2AfterBattleText
-	text_end
-
-RocketHideoutB4FRocket3BattleText:
-	text_far _RocketHideoutB4FRocket3BattleText
-	text_end
-
-RocketHideoutB4FRocket3EndBattleText:
-	text_far _RocketHideoutB4FRocket3EndBattleText
-	text_end
 
 RocketHideoutB4FRocket3AfterBattleText:
 	text_asm
@@ -216,8 +178,7 @@ RocketHideoutB4FRocket3AfterBattleText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _RocketHideoutB4FRocket3AfterBattleText
-	text_end
+	text_far_end _RocketHideoutB4FRocket3AfterBattleText
 
 
 WaitForMusicFadeOutToFinish::

@@ -15,12 +15,16 @@ _Route7EndBattleText1::
 	prompt
 
 _Route7AfterBattleText1::
-	text "Don't listen to"
-	line "what the other"
-	cont "guy says to you."
+	text "Don't listen to@"
+	text_call _Route7OtherGuyText
 	para "I was a GAMBLER"
 	line "when he was in"
 	cont "diapers!"
+	done
+
+_Route7OtherGuyText:
+	db "<LINE>what the other"
+	cont "guy says to you."
 	done
 
 _Route7BattleText2::
@@ -35,9 +39,8 @@ _Route7EndBattleText2::
 	prompt
 
 _Route7AfterBattleText2::
-	text "Don't believe"
-	line "what the other"
-	cont "guy says to you."
+	text "Don't believe@"
+	text_call _Route7OtherGuyText
 	para "CELADON CITY"
 	line "wouldn't be the"
 	cont "same without my"

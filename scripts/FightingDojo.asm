@@ -21,10 +21,8 @@ FightingDojo_Script:
 .noMapLoadScript2
 	ld hl, FightingDojoTrainerHeaders
 	ld de, FightingDojo_ScriptPointers
-	ld a, [wFightingDojoCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wFightingDojoCurScript], a
-	ret
+	ld bc, wFightingDojoCurScript
+	jp ExecuteCustomMapScriptInTable
 .MasterWalking
 	call IsNPCAutoMoving
 	ret nz
@@ -115,46 +113,46 @@ FightingDojoKarateMasterPostBattleScript:
 
 FightingDojo_TextPointers:
 	def_text_pointers
-	dw_const FightingDojoKarateMasterText,                          TEXT_FIGHTINGDOJO_KARATE_MASTER
-	dw_const FightingDojoBlackbelt1Text,                            TEXT_FIGHTINGDOJO_BLACKBELT1
-	dw_const FightingDojoBlackbelt2Text,                            TEXT_FIGHTINGDOJO_BLACKBELT2
-	dw_const FightingDojoBlackbelt3Text,                            TEXT_FIGHTINGDOJO_BLACKBELT3
-	dw_const FightingDojoBlackbelt4Text,                            TEXT_FIGHTINGDOJO_BLACKBELT4
-	dw_const FightingDojoSparringGuysLeftText,                      TEXT_FIGHTINGDOJO_SPARRING_GUYS_LEFT
-	dw_const FightingDojoOpponentBlackbeltText,                     TEXT_FIGHTINGDOJO_SPARRING_GUYS_RIGHT
-	dw_const FightingDojoSparringmonsNidokingText,                  TEXT_FIGHTINGDOJO_SPARRING_MONS_NIDOKING
-	dw_const FightingDojoSparringmonsMachampText,                   TEXT_FIGHTINGDOJO_SPARRING_MONS_MACHAMP
-	dw_const FightingDojoExpertBattleClerkText,                     TEXT_FIGHTINGDOJO_EXPERT_BATTLE_CLERK
-	dw_const FightingDojoOpponentFistFighterText,                   TEXT_FIGHTINGDOJO_OPPONENT_FIST_FIGHTER
-	dw_const FightingDojoOpponentTamerText,                         TEXT_FIGHTINGDOJO_OPPONENT_TAMER
-	dw_const FightingDojoOpponentCooltrainerFText,                  TEXT_FIGHTINGDOJO_OPPONENT_COOLTRAINER_F
-	dw_const FightingDojoHitmonleePokeBallText,                     TEXT_FIGHTINGDOJO_HITMONLEE_POKE_BALL
-	dw_const FightingDojoHitmonchanPokeBallText,                    TEXT_FIGHTINGDOJO_HITMONCHAN_POKE_BALL
-	dw_const FightingDojoText,                                      TEXT_FIGHTINGDOJO_STATUE1
-	dw_const FightingDojoText,                                      TEXT_FIGHTINGDOJO_STATUE2
-	dw_const FightingDojoEnemiesScrollText,                         TEXT_FIGHTINGDOJO_ENEMIES_SCROLL
-	dw_const FightingDojoHitmonleeScrollText,                       TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL
-	dw_const FightingDojoHitmonchanScrollText,                      TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL
-	dw_const FightingDojoGoesAroundScrollText,                      TEXT_FIGHTINGDOJO_GOES_AROUND_SCROLL
-	dw_const FightingDojoHitmonleeScrollText,                       TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL2
-	dw_const FightingDojoHitmonchanScrollText,                      TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL2
-	dw_const FightingDojoExpertRulesText,                           TEXT_FIGHTINGDOJO_EXPERT_RULES
-	dw_const FightingDojoBuddhaStatueText,                          TEXT_FIGHTINGDOJO_STATUE3
-	dw_const FightingDojoBuddhaStatueText,                          TEXT_FIGHTINGDOJO_STATUE4
-	dw_const FightingDojoKarateMasterText.IWillGiveYouAPokemonText, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
-	dw_const FightingDojoKarateMasterPostBallText,   				TEXT_FIGHTINGDOJO_KARATE_MASTER_POST_BALL
-	dw_const FightingDojoExpectClubAfterBattleText,                 TEXT_FIGHTINGDOJO_EXPERT_CLUB_AFTER_BATTLE
+	dba_const FightingDojoKarateMasterText,                          TEXT_FIGHTINGDOJO_KARATE_MASTER
+	dba_const FightingDojoBlackbelt1Text,                            TEXT_FIGHTINGDOJO_BLACKBELT1
+	dba_const FightingDojoBlackbelt2Text,                            TEXT_FIGHTINGDOJO_BLACKBELT2
+	dba_const FightingDojoBlackbelt3Text,                            TEXT_FIGHTINGDOJO_BLACKBELT3
+	dba_const FightingDojoBlackbelt4Text,                            TEXT_FIGHTINGDOJO_BLACKBELT4
+	dba_const _FightingDojoSparringGuysLeftText,                     TEXT_FIGHTINGDOJO_SPARRING_GUYS_LEFT
+	dba_const FightingDojoOpponentBlackbeltText,                     TEXT_FIGHTINGDOJO_SPARRING_GUYS_RIGHT
+	dba_const FightingDojoSparringmonsNidokingText,                  TEXT_FIGHTINGDOJO_SPARRING_MONS_NIDOKING
+	dba_const FightingDojoSparringmonsMachampText,                   TEXT_FIGHTINGDOJO_SPARRING_MONS_MACHAMP
+	dba_const FightingDojoExpertBattleClerkText,                     TEXT_FIGHTINGDOJO_EXPERT_BATTLE_CLERK
+	dba_const FightingDojoOpponentFistFighterText,                   TEXT_FIGHTINGDOJO_OPPONENT_FIST_FIGHTER
+	dba_const FightingDojoOpponentTamerText,                         TEXT_FIGHTINGDOJO_OPPONENT_TAMER
+	dba_const FightingDojoOpponentCooltrainerFText,                  TEXT_FIGHTINGDOJO_OPPONENT_COOLTRAINER_F
+	dba_const FightingDojoHitmonleePokeBallText,                     TEXT_FIGHTINGDOJO_HITMONLEE_POKE_BALL
+	dba_const FightingDojoHitmonchanPokeBallText,                    TEXT_FIGHTINGDOJO_HITMONCHAN_POKE_BALL
+	dba_const _FightingDojoText,                                     TEXT_FIGHTINGDOJO_STATUE1
+	dba_const _FightingDojoText,                                     TEXT_FIGHTINGDOJO_STATUE2
+	dba_const _EnemiesOnEverySideText,                               TEXT_FIGHTINGDOJO_ENEMIES_SCROLL
+	dba_const FightingDojoHitmonleeScrollText,                       TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL
+	dba_const FightingDojoHitmonchanScrollText,                      TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL
+	dba_const _WhatGoesAroundComesAroundText,                        TEXT_FIGHTINGDOJO_GOES_AROUND_SCROLL
+	dba_const FightingDojoHitmonleeScrollText,                       TEXT_FIGHTINGDOJO_HITMONLEE_SCROLL2
+	dba_const FightingDojoHitmonchanScrollText,                      TEXT_FIGHTINGDOJO_HITMONCHAN_SCROLL2
+	dba_const _FightingDojoExpertRulesSign,                          TEXT_FIGHTINGDOJO_EXPERT_RULES
+	dba_const _FightingDojoBuddhaStatueText,                         TEXT_FIGHTINGDOJO_STATUE3
+	dba_const _FightingDojoBuddhaStatueText,                         TEXT_FIGHTINGDOJO_STATUE4
+	dba_const FightingDojoKarateMasterText.IWillGiveYouAPokemonText, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
+	dba_const FightingDojoKarateMasterPostBallText,   				 TEXT_FIGHTINGDOJO_KARATE_MASTER_POST_BALL
+	dba_const FightingDojoExpectClubAfterBattleText,                 TEXT_FIGHTINGDOJO_EXPERT_CLUB_AFTER_BATTLE
 
 FightingDojoTrainerHeaders:
 	def_trainers 2
 FightingDojoTrainerHeader0:
-	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_0, 4, FightingDojoBlackbelt1BattleText, FightingDojoBlackbelt1EndBattleText, FightingDojoBlackbelt1AfterBattleText
+	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_0, 4, _FightingDojoBlackbelt1BattleText, _FightingDojoBlackbelt1EndBattleText, _FightingDojoBlackbelt1AfterBattleText
 FightingDojoTrainerHeader1:
-	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_1, 4, FightingDojoBlackbelt2BattleText, FightingDojoBlackbelt2EndBattleText, FightingDojoBlackbelt2AfterBattleText
+	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_1, 4, _FightingDojoBlackbelt2BattleText, _FightingDojoBlackbelt2EndBattleText, FightingDojoBlackbelt2AfterBattleText
 FightingDojoTrainerHeader2:
-	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_2, 3, FightingDojoBlackbelt3BattleText, FightingDojoBlackbelt3EndBattleText, FightingDojoBlackbelt3AfterBattleText
+	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_2, 3, _FightingDojoBlackbelt3BattleText, _FightingDojoBlackbelt3EndBattleText, FightingDojoBlackbelt3AfterBattleText
 FightingDojoTrainerHeader3:
-	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_3, 3, FightingDojoBlackbelt4BattleText, FightingDojoBlackbelt4EndBattleText, FightingDojoBlackbelt4AfterBattleText
+	trainer EVENT_BEAT_FIGHTING_DOJO_TRAINER_3, 3, _FightingDojoBlackbelt4BattleText, _FightingDojoBlackbelt4EndBattleText, _FightingDojoBlackbelt4AfterBattleText
 	db -1 ; end
 
 FightingDojoKarateMasterText:
@@ -222,12 +220,12 @@ FightingDojoKarateMasterText:
 	ld hl, .openUp
 	rst _PrintText
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	call FightingDojoReplaceScrolls
 	ld a, SFX_FLY
 	rst _PlaySound
 	ld c, 12
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_TELEPORT_ENTER_2
 	rst _PlaySound
 	ld a, 1
@@ -235,32 +233,25 @@ FightingDojoKarateMasterText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FightingDojoKarateMasterText
-	text_end
+	text_far_end _FightingDojoKarateMasterText
 
 .DefeatedText:
-	text_far _FightingDojoKarateMasterDefeatedText
-	text_end
+	text_far_end _FightingDojoKarateMasterDefeatedText
 
 .IWillGiveYouAPokemonText:
-	text_far _FightingDojoKarateMasterIWillGiveYouAPokemonText
-	text_end
+	text_far_end _FightingDojoKarateMasterIWillGiveYouAPokemonText
 
 .StayAndTrainWithUsText:
-	text_far _FightingDojoKarateMasterStayAndTrainWithUsText
-	text_end
+	text_far_end _FightingDojoKarateMasterStayAndTrainWithUsText
 
 .defeatOthers
-	text_far _FightingDojoKarateMasterOthersText
-	text_end
+	text_far_end _FightingDojoKarateMasterOthersText
 
 .gotSoulBadge
-	text_far _FightingDojoMasterGotBadge
-	text_end
+	text_far_end _FightingDojoMasterGotBadge
 
 .openUp
-	text_far _FightingDojoMasterOpenUp
-	text_end
+	text_far_end _FightingDojoMasterOpenUp
 
 FightingDojoBlackbelt1Text:
 	script_trainer FightingDojoTrainerHeader0
@@ -274,26 +265,6 @@ FightingDojoBlackbelt3Text:
 FightingDojoBlackbelt4Text:
 	script_trainer FightingDojoTrainerHeader3
 
-FightingDojoBlackbelt1BattleText:
-	text_far _FightingDojoBlackbelt1BattleText
-	text_end
-
-FightingDojoBlackbelt1EndBattleText:
-	text_far _FightingDojoBlackbelt1EndBattleText
-	text_end
-
-FightingDojoBlackbelt1AfterBattleText:
-	text_far _FightingDojoBlackbelt1AfterBattleText
-	text_end
-
-FightingDojoBlackbelt2BattleText:
-	text_far _FightingDojoBlackbelt2BattleText
-	text_end
-
-FightingDojoBlackbelt2EndBattleText:
-	text_far _FightingDojoBlackbelt2EndBattleText
-	text_end
-
 FightingDojoBlackbelt2AfterBattleText:
 	text_far _FightingDojoBlackbelt2AfterBattleText
 	text_asm
@@ -301,32 +272,12 @@ FightingDojoBlackbelt2AfterBattleText:
 	ld de, MachokeLearnsetText2
 	predef_jump LearnsetTrainerScript
 
-FightingDojoBlackbelt3BattleText:
-	text_far _FightingDojoBlackbelt3BattleText
-	text_end
-
-FightingDojoBlackbelt3EndBattleText:
-	text_far _FightingDojoBlackbelt3EndBattleText
-	text_end
-
 FightingDojoBlackbelt3AfterBattleText:
 	text_far _FightingDojoBlackbelt3AfterBattleText
 	text_asm
 	lb hl, DEX_PRIMEAPE, BLACKBELT
 	ld de, PrimeapeLearnsetText
 	predef_jump LearnsetTrainerScript
-
-FightingDojoBlackbelt4BattleText:
-	text_far _FightingDojoBlackbelt4BattleText
-	text_end
-
-FightingDojoBlackbelt4EndBattleText:
-	text_far _FightingDojoBlackbelt4EndBattleText
-	text_end
-
-FightingDojoBlackbelt4AfterBattleText:
-	text_far _FightingDojoBlackbelt4AfterBattleText
-	text_end
 
 FightingDojoHitmonleePokeBallText:
 	text_asm
@@ -362,8 +313,7 @@ FightingDojoHitmonleePokeBallText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FightingDojoHitmonleePokeBallText
-	text_end
+	text_far_end _FightingDojoHitmonleePokeBallText
 
 FightingDojoHitmonchanPokeBallText:
 	text_asm
@@ -399,24 +349,14 @@ FightingDojoHitmonchanPokeBallText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _FightingDojoHitmonchanPokeBallText
-	text_end
+	text_far_end _FightingDojoHitmonchanPokeBallText
 .movement
 	db NPC_MOVEMENT_LEFT
 	db NPC_MOVEMENT_UP
 	db -1
 
 FightingDojoBetterNotGetGreedyText:
-	text_far _FightingDojoBetterNotGetGreedyText
-	text_end
-
-FightingDojoText::
-	text_far _FightingDojoText
-	text_end
-
-FightingDojoEnemiesScrollText:
-	text_far _EnemiesOnEverySideText
-	text_end
+	text_far_end _FightingDojoBetterNotGetGreedyText
 
 FightingDojoHitmonleeScrollText::
 	text_far _FightingDojoHitmonleeScrollText
@@ -438,10 +378,6 @@ FightingDojoHitmonchanScrollText::
 .done
 	rst TextScriptEnd
 
-FightingDojoGoesAroundScrollText::
-	text_far _WhatGoesAroundComesAroundText
-	text_end
-
 FightingDojoKarateMasterPostBallText::
 	text_asm
 	ld c, TOGGLE_FIGHTING_DOJO_GIFT_1
@@ -449,7 +385,7 @@ FightingDojoKarateMasterPostBallText::
 	ld c, TOGGLE_FIGHTING_DOJO_GIFT_2
 	call HideObject
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wXCoord]
 	cp 4
 	ld a, PLAYER_DIR_RIGHT
@@ -473,15 +409,12 @@ FightingDojoKarateMasterPostBallText::
 .done
 	rst TextScriptEnd
 .goodChoice
-	text_far _FightingDojoMasterGoodChoice
-	text_end
+	text_far_end _FightingDojoMasterGoodChoice
 .justATest
-	text_far _FightingDojoMasterJustATest
-	text_end
+	text_far_end _FightingDojoMasterJustATest
 
 KarateMasterGoFightKogaText:
-	text_far _FightingDojoMasterJustATest2
-	text_end
+	text_far_end _FightingDojoMasterJustATest2
 
 FightingDojoReplaceScrolls:
 	CheckEvent FLAG_CATCHUP_CLUBS_TURNED_OFF
@@ -560,11 +493,9 @@ FightingDojoExpertBattleClerkText:
 	rst TextScriptEnd
 
 .intro
-	text_far _FightingDojoExpertClubClerkIntroText
-	text_end
+	text_far_end _FightingDojoExpertClubClerkIntroText
 .start
-	text_far _FightingDojoExpertClubClerkBattleText
-	text_end
+	text_far_end _FightingDojoExpertClubClerkBattleText
 
 StartFightingDojoExpertClubBattle:
 	xor a
@@ -573,7 +504,7 @@ StartFightingDojoExpertClubBattle:
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	call HideFightingDojoExpertClubSprites ; hide previous opponents if applicable
 	ld hl, AvailableFightingDojoExpertClubTrainers
 	lb de, 3, 0 ; coord delta with respect to the player for opponent to show up at
@@ -611,14 +542,6 @@ FightingDojoExpectClubAfterBattleText:
 .done
 	rst TextScriptEnd
 
-FightingDojoExpertRulesText:
-	text_far _FightingDojoExpertRulesSign
-	text_end
-
-FightingDojoSparringGuysLeftText:
-	text_far _FightingDojoSparringGuysLeftText
-	text_end
-
 FightingDojoOpponentBlackbeltText:
 	text_asm
 	ld a, [wYCoord]
@@ -631,20 +554,15 @@ FightingDojoOpponentBlackbeltText:
 	rst _PrintText
 	rst TextScriptEnd
 .intro1
-	text_far _FightingDojoOpponentBlackbeltIntro1
-	text_end
+	text_far_end _FightingDojoOpponentBlackbeltIntro1
 .intro2
-	text_far _FightingDojoOpponentBlackbeltIntro2
-	text_end
+	text_far_end _FightingDojoOpponentBlackbeltIntro2
 .intro3
-	text_far _FightingDojoOpponentBlackbeltIntro3
-	text_end
+	text_far_end _FightingDojoOpponentBlackbeltIntro3
 .intro4
-	text_far _FightingDojoOpponentBlackbeltIntro4
-	text_end
+	text_far_end _FightingDojoOpponentBlackbeltIntro4
 .normalText
-	text_far _FightingDojoSparringGuysRightText
-	text_end
+	text_far_end _FightingDojoSparringGuysRightText
 
 FightingDojoSparringmonsNidokingText:
 	text_far _FightingDojoSparringmonsNidokingText
@@ -661,8 +579,7 @@ FightingDojoSparringmonsNidokingText:
 	rst _PrintText
 	rst TextScriptEnd
 .grappling
-	text_far _FightingDojoSparringmonsText
-	text_end
+	text_far_end _FightingDojoSparringmonsText
 
 FightingDojoSparringmonsMachampText:
 	text_far _FightingDojoSparringmonsMachampText
@@ -676,52 +593,36 @@ FightingDojoOpponentFistFighterText:
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _FightingDojoOpponentFistFighterIntro1
-	text_end
+	text_far_end _FightingDojoOpponentFistFighterIntro1
 .intro2
-	text_far _FightingDojoOpponentFistFighterIntro2
-	text_end
+	text_far_end _FightingDojoOpponentFistFighterIntro2
 .intro3
-	text_far _FightingDojoOpponentFistFighterIntro3
-	text_end
+	text_far_end _FightingDojoOpponentFistFighterIntro3
 .intro4
-	text_far _FightingDojoOpponentFistFighterIntro4
-	text_end
+	text_far_end _FightingDojoOpponentFistFighterIntro4
 
 FightingDojoOpponentTamerText:
 	text_asm
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _FightingDojoOpponentTamerIntro1
-	text_end
+	text_far_end _FightingDojoOpponentTamerIntro1
 .intro2
-	text_far _FightingDojoOpponentTamerIntro2
-	text_end
+	text_far_end _FightingDojoOpponentTamerIntro2
 .intro3
-	text_far _FightingDojoOpponentTamerIntro3
-	text_end
+	text_far_end _FightingDojoOpponentTamerIntro3
 .intro4
-	text_far _FightingDojoOpponentTamerIntro4
-	text_end
+	text_far_end _FightingDojoOpponentTamerIntro4
 
 FightingDojoOpponentCooltrainerFText:
 	text_asm
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _FightingDojoOpponentCooltrainerFIntro1
-	text_end
+	text_far_end _FightingDojoOpponentCooltrainerFIntro1
 .intro2
-	text_far _FightingDojoOpponentCooltrainerFIntro2
-	text_end
+	text_far_end _FightingDojoOpponentCooltrainerFIntro2
 .intro3
-	text_far _FightingDojoOpponentCooltrainerFIntro3
-	text_end
+	text_far_end _FightingDojoOpponentCooltrainerFIntro3
 .intro4
-	text_far _FightingDojoOpponentCooltrainerFIntro4
-	text_end
-
-FightingDojoBuddhaStatueText:
-	text_far _FightingDojoBuddhaStatueText
-	text_end
+	text_far_end _FightingDojoOpponentCooltrainerFIntro4

@@ -90,8 +90,9 @@ _MomFoodPokemonChowedDownText::
 
 _MomFoodPokemonShowText::
 	text "MOM looked"
-	line "really happy!"
-	done
+	line "really happy!@"
+	sound_get_item_1
+	text_end
 
 _MomFoodDone::
 	text "You'd better"

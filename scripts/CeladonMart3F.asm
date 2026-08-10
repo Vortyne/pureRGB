@@ -3,26 +3,27 @@ CeladonMart3F_Script:
 
 CeladonMart3F_TextPointers:
 	def_text_pointers
-	dw_const CeladonMart3FClerkText,            TEXT_CELADONMART3F_CLERK
-	dw_const CeladonMart3FGameBoyKid1Text,      TEXT_CELADONMART3F_GAMEBOY_KID1
-	dw_const CeladonMart3FGameBoyKid2Text,      TEXT_CELADONMART3F_GAMEBOY_KID2
-	dw_const CeladonMart3FGameBoyKid3Text,      TEXT_CELADONMART3F_GAMEBOY_KID3
-	dw_const CeladonMart3FLittleBoyText,        TEXT_CELADONMART3F_LITTLE_BOY
-	dw_const CeladonMartTMKid,                  TEXT_CELADONMART3F_TM_KID ; PureRGbnote: ADDED: new NPC, it's the TM kid from other pokemarts, he doesn't sell anything though this time
-	dw_const CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES1
-	dw_const CeladonMart3FRPGText,              TEXT_CELADONMART3F_RPG
-	dw_const CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES2
-	dw_const CeladonMart3FSportsGameText,       TEXT_CELADONMART3F_SPORTS_GAME
-	dw_const CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES3
-	dw_const CeladonMart3FPuzzleGameText,       TEXT_CELADONMART3F_PUZZLE_GAME
-	dw_const CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES4
-	dw_const CeladonMart3FFightingGameText,     TEXT_CELADONMART3F_FIGHTING_GAME
-	dw_const CeladonMart3FCurrentFloorSignText, TEXT_CELADONMART3F_CURRENT_FLOOR_SIGN
-	dw_const CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER1
-	dw_const CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER2
-	dw_const CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER3 
-	dw_const CeladonMart3FPartyGameText,        TEXT_CELADONMART3F_PARTY_GAME 
-	dw_const CeladonMart3FPlatformerGameText,   TEXT_CELADONMART3F_PLATFORMER_GAME
+	dba_const CeladonMart3FClerkText,            TEXT_CELADONMART3F_CLERK
+	dba_const _CeladonMart3FGameBoyKid1Text,      TEXT_CELADONMART3F_GAMEBOY_KID1
+	dba_const _CeladonMart3FGameBoyKid2Text,      TEXT_CELADONMART3F_GAMEBOY_KID2
+	dba_const _CeladonMart3FGameBoyKid3Text,      TEXT_CELADONMART3F_GAMEBOY_KID3
+	dba_const _CeladonMart3FLittleBoyText,        TEXT_CELADONMART3F_LITTLE_BOY
+	dba_const CeladonMartTMKid,                  TEXT_CELADONMART3F_TM_KID ; PureRGbnote: ADDED: new NPC, it's the TM kid from other pokemarts, he doesn't sell anything though this time
+	dba_const _CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES1
+	dba_const _CeladonMart3FRPGText,              TEXT_CELADONMART3F_RPG
+	dba_const _CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES2
+	dba_const _CeladonMart3FSportsGameText,       TEXT_CELADONMART3F_SPORTS_GAME
+	dba_const _CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES3
+	dba_const _CeladonMart3FPuzzleGameText,       TEXT_CELADONMART3F_PUZZLE_GAME
+	dba_const _CeladonMart3FSNESText,             TEXT_CELADONMART3F_SNES4
+	dba_const _CeladonMart3FFightingGameText,     TEXT_CELADONMART3F_FIGHTING_GAME
+	dba_const _CeladonMart3FCurrentFloorSignText, TEXT_CELADONMART3F_CURRENT_FLOOR_SIGN
+	dba_const _CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER1
+	dba_const _CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER2
+	dba_const _CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER3 
+; PureRGBnote: ADDED: some flavour text for one block that was changed to have more TVs
+	dba_const _CeladonMart3FPartyGameText,        TEXT_CELADONMART3F_PARTY_GAME 
+	dba_const _CeladonMart3FPlatformerGameText,   TEXT_CELADONMART3F_PLATFORMER_GAME
 
 CeladonMart3FClerkText:
 	text_asm
@@ -42,65 +43,19 @@ CeladonMart3FClerkText:
 	rst TextScriptEnd
 
 .TM18PreReceiveText:
-	text_far _CeladonMart3FClerkTM18PreReceiveText
-	text_end
+	text_far_end _CeladonMart3FClerkTM18PreReceiveText
 
 .ReceivedTM18Text:
+	; TODO: put sound with far text?
 	text_far _CeladonMart3FClerkReceivedTM18Text
 	sound_get_item_1
 	text_end
 
 .TM18ExplanationText:
-	text_far _CeladonMart3FClerkTM18ExplanationText
-	text_end
+	text_far_end _CeladonMart3FClerkTM18ExplanationText
 
 .TM18NoRoomText:
-	text_far _CeladonMart3FClerkTM18NoRoomText
-	text_end
-
-CeladonMart3FGameBoyKid1Text:
-	text_far _CeladonMart3FGameBoyKid1Text
-	text_end
-
-CeladonMart3FGameBoyKid2Text:
-	text_far _CeladonMart3FGameBoyKid2Text
-	text_end
-
-CeladonMart3FGameBoyKid3Text:
-	text_far _CeladonMart3FGameBoyKid3Text
-	text_end
-
-CeladonMart3FLittleBoyText:
-	text_far _CeladonMart3FLittleBoyText
-	text_end
-
-CeladonMart3FSNESText:
-	text_far _CeladonMart3FSNESText
-	text_end
-
-CeladonMart3FRPGText:
-	text_far _CeladonMart3FRPGText
-	text_end
-
-CeladonMart3FSportsGameText:
-	text_far _CeladonMart3FSportsGameText
-	text_end
-
-CeladonMart3FPuzzleGameText:
-	text_far _CeladonMart3FPuzzleGameText
-	text_end
-
-CeladonMart3FFightingGameText:
-	text_far _CeladonMart3FFightingGameText
-	text_end
-
-CeladonMart3FCurrentFloorSignText:
-	text_far _CeladonMart3FCurrentFloorSignText
-	text_end
-
-CeladonMart3FPokemonPosterText:
-	text_far _CeladonMart3FPokemonPosterText
-	text_end
+	text_far_end _CeladonMart3FClerkTM18NoRoomText
 
 CeladonMartTMKid:
 	text_asm
@@ -111,19 +66,7 @@ CeladonMartTMKid:
 	rst TextScriptEnd
 	
 TMKidGreet4::
-	text_far _TMKidGreet
-	text_end
+	text_far_end _TMKidGreet
 
 CeladonMartTMKidFlavor:
-	text_far _CeladonMartTMKidFlavor
-	text_end
-
-; PureRGBnote: ADDED: some flavour text for one block that was changed to have more TVs
-
-CeladonMart3FPartyGameText:
-	text_far _CeladonMart3FPartyGameText
-	text_end
-
-CeladonMart3FPlatformerGameText:
-	text_far _CeladonMart3FPlatformerGameText
-	text_end
+	text_far_end _CeladonMartTMKidFlavor

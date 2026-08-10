@@ -28,6 +28,7 @@ _BikeShopExchangedVoucherText::
 	text "<PLAYER> exchanged"
 	line "the BIKE VOUCHER"
 	cont "for a BICYCLE.@"
+	sound_get_key_item
 	text_end
 
 _BikeShopComeAgainText::

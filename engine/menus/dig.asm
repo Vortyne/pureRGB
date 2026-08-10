@@ -76,21 +76,17 @@ DigFromPartyMenu::
 	rst _PrintText
 	jr .doneFailed
 .newBadgeRequiredText
-	text_far _NewBadgeRequiredText
-	text_end
+	text_far_end _NewBadgeRequiredText
 .cannotDigHereText
-	text_far _CannotDigHereText
-	text_end
+	text_far_end _CannotDigHereText
 .cannotDigWhileSurfing
-	text_far _CannotDigWhileSurfingText
-	text_end
+	text_far_end _CannotDigWhileSurfingText
 .noWhereToDigDown
-	text_far _NoWhereToDigDown
-	text_end
+	text_far_end _NoWhereToDigDown
 
 StartDigEnterMapAnimation::
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	call PlayDigSound
 	call DigAnimationMonsterFrame6
 	ld hl, wSpritePlayerStateData1YPixels
@@ -107,10 +103,10 @@ StartDigEnterMapAnimation::
 	call DigAnimationMonsterFrame2
 	call DigAnimationMonsterFrame1
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	call DigLoadMonsterSprite
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	jp ResetSFXModifiers
 
 DigLoadMonsterSprite::
@@ -131,7 +127,7 @@ DigLoadMonsterSprite::
 
 DigAnimationMonsterSpriteBlinks::
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, DiglettBlinkingSprite
@@ -143,7 +139,7 @@ DigAnimationMonsterSpriteBlinks::
 	ld hl, vNPCSprites
 	call CopyVideoData
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, PartyMonSprites2 tile 50
@@ -157,7 +153,7 @@ DigAnimationMonsterSpriteBlinks::
 
 DigAnimationMonsterFrame1:
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	jr nz, .diglett
@@ -180,7 +176,7 @@ DigAnimationMonsterFrame1:
 
 DigAnimationMonsterFrame2:
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, DiglettDiggingSprite 
@@ -194,7 +190,7 @@ DigAnimationMonsterFrame2:
 
 DigAnimationMonsterFrame3:
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, DiglettDiggingSprite tile 4
@@ -208,7 +204,7 @@ DigAnimationMonsterFrame3:
 
 DigAnimationMonsterFrame4:
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, DiglettDiggingSprite tile 8
@@ -222,7 +218,7 @@ DigAnimationMonsterFrame4:
 
 DigAnimationMonsterFrame5:
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, MonsterDiggingSprite2 tile 12
@@ -240,7 +236,7 @@ DigAnimationMonsterFrame5:
 
 DigAnimationMonsterFrame6:
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, MonsterDiggingSprite2 tile 16
@@ -269,12 +265,12 @@ StartDigLeaveMapAnimation::
 	ld a, SPRITE_FACING_DOWN
 	ld [wSpritePlayerStateData1ImageIndex], a
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	call DigAnimationMonsterSpriteBlinks
 	call DigAnimationMonsterSpriteBlinks
 	call DigAnimationMonsterSpriteBlinks
 	ld c, 24
-	rst _DelayFrames ; wait a bit after showing the sprite
+	rst DelayFrames ; wait a bit after showing the sprite
 	; show it digging away
 	call PlayDigSound
 	call DigAnimationMonsterFrame1
@@ -285,7 +281,7 @@ StartDigLeaveMapAnimation::
 	call DigAnimationMonsterFrame6
 	call ResetSFXModifiers
 	ld c, 36
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 CheckTileNotDock:

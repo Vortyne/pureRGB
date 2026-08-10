@@ -3,22 +3,10 @@ CeladonMart5F_Script:
 
 CeladonMart5F_TextPointers:
 	def_text_pointers
-	dw_const CeladonMart5FGentlemanText,        TEXT_CELADONMART5F_GENTLEMAN
-	dw_const CeladonMart5FSailorText,           TEXT_CELADONMART5F_SAILOR
-	dw_const CeladonMart5FClerk1Text,           TEXT_CELADONMART5F_CLERK1
-	dw_const CeladonMart5FClerk2Text,           TEXT_CELADONMART5F_CLERK2
-	dw_const CeladonMart5FCurrentFloorSignText, TEXT_CELADONMART5F_CURRENT_FLOOR_SIGN
-
-CeladonMart5FGentlemanText:
-	text_far _CeladonMart5FGentlemanText
-	text_end
-
-CeladonMart5FSailorText:
-	text_far _CeladonMart5FSailorText
-	text_end
-
-CeladonMart5FCurrentFloorSignText:
-	text_far _CeladonMart5FCurrentFloorSignText
-	text_end
+	dba_const _CeladonMart5FGentlemanText,        TEXT_CELADONMART5F_GENTLEMAN
+	dba_const _CeladonMart5FSailorText,           TEXT_CELADONMART5F_SAILOR
+	dba_const CeladonMart5FClerk1Text,           TEXT_CELADONMART5F_CLERK1
+	dba_const CeladonMart5FClerk2Text,           TEXT_CELADONMART5F_CLERK2
+	dba_const _CeladonMart5FCurrentFloorSignText, TEXT_CELADONMART5F_CURRENT_FLOOR_SIGN
 
 INCLUDE "data/items/marts/celadon5F.asm"

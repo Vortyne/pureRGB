@@ -1,8 +1,7 @@
 RedsHouse2F_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, RedsHouse2F_ScriptPointers
-	ld a, [wRedsHouse2FCurScript]
-	jp CallFunctionInTable
+	ld de, wRedsHouse2FCurScript
+	jp CallMapScriptInTable
 
 RedsHouse2F_ScriptPointers:
 	def_script_pointers
@@ -20,12 +19,8 @@ RedsHouse2FDefaultScript:
 
 RedsHouse2F_TextPointers:
 	def_text_pointers
-	dw_const  RedBedroomPCText, TEXT_REDSHOUSE2F_PLAYERS_PC
-	dw_const  RedBedroomSNESText, TEXT_REDSHOUSE2F_SNES
-
-RedBedroomSNESText::
-	text_far _RedBedroomSNESText
-	text_end
+	dba_const  RedBedroomPCText, TEXT_REDSHOUSE2F_PLAYERS_PC
+	dba_const  _RedBedroomSNESText, TEXT_REDSHOUSE2F_SNES
 
 RedBedroomPCText::
 	text_asm

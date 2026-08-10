@@ -1,13 +1,10 @@
 ; PureRGBnote: ADDED: new trainers on this route.
 
 Route18_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, Route18TrainerHeaders
 	ld de, Route18_ScriptPointers
-	ld a, [wRoute18CurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wRoute18CurScript], a
-	ret
+	ld bc, wRoute18CurScript
+	jp ExecuteCustomMapScriptInTable
 
 Route18_ScriptPointers:
 	def_script_pointers
@@ -17,27 +14,27 @@ Route18_ScriptPointers:
 
 Route18_TextPointers:
 	def_text_pointers
-	dw_const Route18CooltrainerM1Text,   TEXT_ROUTE18_COOLTRAINER_M1
-	dw_const Route18CooltrainerM2Text,   TEXT_ROUTE18_COOLTRAINER_M2
-	dw_const Route18CooltrainerM3Text,   TEXT_ROUTE18_COOLTRAINER_M3
-	dw_const Route18Text4,               TEXT_ROUTE18_TAMER
-	dw_const Route18Text5,               TEXT_ROUTE18_ROCKER
-	dw_const Route18SignText,            TEXT_ROUTE18_SIGN
-	dw_const Route18CyclingRoadSignText, TEXT_ROUTE18_CYCLING_ROAD_SIGN
-	dw_const Route18TrainerTipsSignText, TEXT_ROUTE18_TRAINER_TIPS_SIGN
+	dba_const Route18CooltrainerM1Text,    TEXT_ROUTE18_COOLTRAINER_M1
+	dba_const Route18CooltrainerM2Text,    TEXT_ROUTE18_COOLTRAINER_M2
+	dba_const Route18CooltrainerM3Text,    TEXT_ROUTE18_COOLTRAINER_M3
+	dba_const Route18Text4,                TEXT_ROUTE18_TAMER
+	dba_const Route18Text5,                TEXT_ROUTE18_ROCKER
+	dba_const _Route18SignText,            TEXT_ROUTE18_SIGN
+	dba_const _Route18CyclingRoadSignText, TEXT_ROUTE18_CYCLING_ROAD_SIGN
+	dba_const _Route18TipsSign,            TEXT_ROUTE18_TRAINER_TIPS_SIGN
 
 Route18TrainerHeaders:
 	def_trainers
 Route18TrainerHeader0:
-	trainer EVENT_BEAT_ROUTE_18_TRAINER_0, 3, Route18CooltrainerM1BattleText, Route18CooltrainerM1EndBattleText, Route18CooltrainerM1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_18_TRAINER_0, 3, _Route18CooltrainerM1BattleText, _Route18CooltrainerM1EndBattleText, _Route18CooltrainerM1AfterBattleText
 Route18TrainerHeader1:
-	trainer EVENT_BEAT_ROUTE_18_TRAINER_1, 3, Route18CooltrainerM2BattleText, Route18CooltrainerM2EndBattleText, Route18CooltrainerM2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_18_TRAINER_1, 3, _Route18CooltrainerM2BattleText, _Route18CooltrainerM2EndBattleText, Route18CooltrainerM2AfterBattleText
 Route18TrainerHeader2:
-	trainer EVENT_BEAT_ROUTE_18_TRAINER_2, 4, Route18CooltrainerM3BattleText, Route18CooltrainerM3EndBattleText, Route18CooltrainerM3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_18_TRAINER_2, 4, _Route18CooltrainerM3BattleText, _Route18CooltrainerM3EndBattleText, _Route18CooltrainerM3AfterBattleText
 Route18TrainerHeader3:
-	trainer EVENT_BEAT_ROUTE_18_TRAINER_3, 3, Route18BattleText4, Route18EndBattleText4, Route18AfterBattleText4
+	trainer EVENT_BEAT_ROUTE_18_TRAINER_3, 3, _Route18BattleText4, _Route18EndBattleText4, _Route18AfterBattleText4
 Route18TrainerHeader4:
-	trainer EVENT_BEAT_ROUTE_18_TRAINER_4, 2, Route18BattleText5, Route18EndBattleText5, Route18AfterBattleText5
+	trainer EVENT_BEAT_ROUTE_18_TRAINER_4, 2, _Route18BattleText5, _Route18EndBattleText5, _Route18AfterBattleText5
 	db -1 ; end
 
 Route18CooltrainerM1Text:
@@ -55,77 +52,9 @@ Route18Text4:
 Route18Text5:
 	script_trainer Route18TrainerHeader4
 
-Route18CooltrainerM1BattleText:
-	text_far _Route18CooltrainerM1BattleText
-	text_end
-
-Route18CooltrainerM1EndBattleText:
-	text_far _Route18CooltrainerM1EndBattleText
-	text_end
-
-Route18CooltrainerM1AfterBattleText:
-	text_far _Route18CooltrainerM1AfterBattleText
-	text_end
-
-Route18CooltrainerM2BattleText:
-	text_far _Route18CooltrainerM2BattleText
-	text_end
-
-Route18CooltrainerM2EndBattleText:
-	text_far _Route18CooltrainerM2EndBattleText
-	text_end
-
 Route18CooltrainerM2AfterBattleText:
 	text_far _Route18CooltrainerM2AfterBattleText
 	text_asm
 	lb hl, DEX_AERODACTYL, BIRD_KEEPER
 	ld de, Route18AerodactylLearnsetText
 	predef_jump LearnsetTrainerScript
-
-Route18CooltrainerM3BattleText:
-	text_far _Route18CooltrainerM3BattleText
-	text_end
-
-Route18CooltrainerM3EndBattleText:
-	text_far _Route18CooltrainerM3EndBattleText
-	text_end
-
-Route18CooltrainerM3AfterBattleText:
-	text_far _Route18CooltrainerM3AfterBattleText
-	text_end
-
-Route18BattleText4:
-	text_far _Route18BattleText4
-	text_end
-
-Route18EndBattleText4:
-	text_far _Route18EndBattleText4
-	text_end
-
-Route18AfterBattleText4:
-	text_far _Route18AfterBattleText4
-	text_end
-
-Route18BattleText5:
-	text_far _Route18BattleText5
-	text_end
-
-Route18EndBattleText5:
-	text_far _Route18EndBattleText5
-	text_end
-
-Route18AfterBattleText5:
-	text_far _Route18AfterBattleText5
-	text_end
-
-Route18SignText:
-	text_far _Route18SignText
-	text_end
-
-Route18CyclingRoadSignText:
-	text_far _Route18CyclingRoadSignText
-	text_end
-
-Route18TrainerTipsSignText:
-	text_far _Route18TipsSign
-	text_end

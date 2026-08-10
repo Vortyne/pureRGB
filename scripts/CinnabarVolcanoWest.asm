@@ -9,14 +9,14 @@ CinnabarVolcanoWest_Script:
 	
 CinnabarVolcanoWest_TextPointers:
 	def_text_pointers
-	dw_const CinnabarVolcanoWestMagmar1Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR1
-	dw_const CinnabarVolcanoWestMagmar2Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR2
-	dw_const CinnabarVolcanoWestMagmar3Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR3
-	dw_const CinnabarVolcanoWestMagmar2Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR4
-	dw_const CinnabarVolcanoWestMagmar3Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR5
-	dw_const CinnabarVolcanoMagmarTransformText,  TEXT_CINNABAR_VOLCANO_WEST_PROXY_POKEMON
-	dw_const CinnabarVolcanoWestLavaFlowText, TEXT_CINNABAR_VOLCANO_WEST_LAVA_FLOW
-	dw_const CinnabarVolcanoMagmarTransformText2, TEXT_CINNABAR_VOLCANO_MAGMAR_TRANSFORM2
+	dba_const CinnabarVolcanoWestMagmar1Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR1
+	dba_const CinnabarVolcanoWestMagmar2Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR2
+	dba_const CinnabarVolcanoWestMagmar3Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR3
+	dba_const CinnabarVolcanoWestMagmar2Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR4
+	dba_const CinnabarVolcanoWestMagmar3Text,  TEXT_CINNABAR_VOLCANO_WEST_MAGMAR5
+	dba_const _CinnabarVolcanoWestMagmarTransformText2,  TEXT_CINNABAR_VOLCANO_WEST_PROXY_POKEMON
+	dba_const _CinnabarVolcanoWestLavaFlowText, TEXT_CINNABAR_VOLCANO_WEST_LAVA_FLOW
+	dba_const CinnabarVolcanoMagmarTransformText2, TEXT_CINNABAR_VOLCANO_MAGMAR_TRANSFORM2
 
 CinnabarVolcanoWestMagmar1Text:
 	text_far _CinnabarVolcanoWestMagmar1Text
@@ -53,20 +53,15 @@ CinnabarVolcanoWestMagmar1Text:
 .done
 	rst TextScriptEnd
 .roomForOneMore
-	text_far _CinnabarVolcanoWestMagmar1QuestionText
-	text_end
+	text_far_end _CinnabarVolcanoWestMagmar1QuestionText
 .forgetIt
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 .wrongMon
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 .already
-	text_far _MagmarEventAlready
-	text_end
+	text_far_end _MagmarEventAlready
 .lavaBath
-	text_far _CinnabarVolcanoWestMagmarTransformText1
-	text_end
+	text_far_end _CinnabarVolcanoWestMagmarTransformText1
 
 CinnabarVolcanoWestMagmar2Text:
 	text_far _CinnabarVolcanoWestMagmar2Text
@@ -80,10 +75,6 @@ CinnabarVolcanoWestMagmar3Text:
 	text_far _CinnabarVolcanoWestMagmar3Text
 	text_asm
 	jr CinnabarVolcanoWestMagmarCryEnd
-
-CinnabarVolcanoWestLavaFlowText:
-	text_far _CinnabarVolcanoWestLavaFlowText
-	text_end
 
 CheckStartMagmarTransform:
 	ld a, [wMovementFlags]
@@ -105,7 +96,7 @@ CheckStartMagmarTransform:
 	lb bc, BANK(MonsterSprite), 4
 	call .copyMonsterSprite
 	ld c, 8
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, SFX_Lava_Splash
 	call PlayNewSoundChannel8
 	; disappeared ghost sprite frame 2
@@ -137,7 +128,7 @@ CheckStartMagmarTransform:
 	ldh [hTextID], a
 	call DisplayTextID
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call PauseMusic
 	ld de, SFX_Fire_Powerup
 	call PlayNewSoundChannel8
@@ -147,7 +138,7 @@ CheckStartMagmarTransform:
 	call CheckStartMagmarTransform.copyMonsterSpriteArbitraryDelay
 	call GBFadeOutToWhite
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeInFromWhite
 	ld a, TEXT_CINNABAR_VOLCANO_MAGMAR_TRANSFORM2
 	ldh [hTextID], a
@@ -160,7 +151,7 @@ CheckStartMagmarTransform:
 	ld [wCurPartySpecies], a
 	callfar ChangePartyPokemonSpecies
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call .magmarBallPoof
 	ld de, NothingSprite
 	lb bc, BANK(NothingSprite), 4
@@ -179,7 +170,7 @@ CheckStartMagmarTransform:
 	call CopyVideoData
 	pop af
 	ld c, a
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 .magmarBallPoof
 	ld de, SFX_Volcano_Ball_Poof_Ch5
@@ -189,16 +180,10 @@ CheckStartMagmarTransform:
 	ld de, vNPCSprites tile $78
 	callfar FarLoadSmokeTileFourTimes
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ret
-
-CinnabarVolcanoMagmarTransformText:
-	text_far _CinnabarVolcanoWestMagmarTransformText2
-	text_end
-
 
 CinnabarVolcanoMagmarTransformText2:
 	text_far _CinnabarVolcanoWestMagmarTransformText3
 	sound_get_item_2
-	text_far _CinnabarVolcanoWestMagmarTransformText4
-	text_end
+	text_far_end _CinnabarVolcanoWestMagmarTransformText4

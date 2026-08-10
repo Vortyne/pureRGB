@@ -2,13 +2,10 @@
 
 SafariZoneNorth_Script:
 	call CheckModifySafariWildRate
-	call EnableAutoTextBoxDrawing
 	ld hl, SafariZoneNorthTrainerHeaders
 	ld de, SafariZoneNorth_ScriptPointers
-	ld a, [wSafariZoneNorthCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSafariZoneNorthCurScript], a
-	ret
+	ld bc, wSafariZoneNorthCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SafariZoneNorth_ScriptPointers:
 	def_script_pointers
@@ -20,55 +17,34 @@ SafariZoneNorth_ScriptPointers:
 
 SafariZoneNorth_TextPointers:
 	def_text_pointers
-	dw_const SafariZoneNorthRangerText0,       TEXT_SAFARIZONENORTH_RANGER_F
-	dw_const SafariZoneNorthTrainerText0,      TEXT_SAFARIZONENORTH_JUGGLER
-	dw_const SafariZoneNorthTrainerText1,      TEXT_SAFARIZONENORTH_COOLTRAINER_M
-	dw_const SafariZoneNorthTrainerText2,      TEXT_SAFARIZONENORTH_SUPER_NERD
-	dw_const SafariZoneNorthTrainerText3,      TEXT_SAFARIZONENORTH_ENGINEER
-	dw_const SafariZoneNorthTrainerText4,      TEXT_SAFARIZONENORTH_POKEMANIAC
-	dw_const PickUpItemText,                   TEXT_SAFARIZONENORTH_ITEM1
-	dw_const PickUpItemText,                   TEXT_SAFARIZONENORTH_ITEM2
-	dw_const SafariZoneNorthRestHouseSignText, TEXT_SAFARIZONENORTH_REST_HOUSE_SIGN
-	dw_const SafariZoneNorthTrainerTips1Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_1
-	dw_const SafariZoneNorthSignText,          TEXT_SAFARIZONENORTH_SIGN
-	dw_const SafariZoneNorthTrainerTips2Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_2
-	dw_const SafariZoneNorthTrainerTips3Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_3
-
-
-SafariZoneNorthRestHouseSignText:
-	text_far _SafariZoneNorthRestHouseSignText
-	text_end
-
-SafariZoneNorthTrainerTips1Text:
-	text_far _SafariZoneNorthTrainerTips1Text
-	text_end
-
-SafariZoneNorthSignText:
-	text_far _SafariZoneNorthSignText
-	text_end
-
-SafariZoneNorthTrainerTips2Text:
-	text_far _SafariZoneNorthTrainerTips2Text
-	text_end
-
-SafariZoneNorthTrainerTips3Text:
-	text_far _SafariZoneNorthTrainerTips3Text
-	text_end
+	dba_const SafariZoneNorthRangerText0,       TEXT_SAFARIZONENORTH_RANGER_F
+	dba_const SafariZoneNorthTrainerText0,      TEXT_SAFARIZONENORTH_JUGGLER
+	dba_const SafariZoneNorthTrainerText1,      TEXT_SAFARIZONENORTH_COOLTRAINER_M
+	dba_const SafariZoneNorthTrainerText2,      TEXT_SAFARIZONENORTH_SUPER_NERD
+	dba_const SafariZoneNorthTrainerText3,      TEXT_SAFARIZONENORTH_ENGINEER
+	dba_const SafariZoneNorthTrainerText4,      TEXT_SAFARIZONENORTH_POKEMANIAC
+	dba_const PickUpItemText,                   TEXT_SAFARIZONENORTH_ITEM1
+	dba_const PickUpItemText,                   TEXT_SAFARIZONENORTH_ITEM2
+	dba_const _SafariZoneNorthRestHouseSignText, TEXT_SAFARIZONENORTH_REST_HOUSE_SIGN
+	dba_const _SafariZoneNorthTrainerTips1Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_1
+	dba_const _SafariZoneNorthSignText,          TEXT_SAFARIZONENORTH_SIGN
+	dba_const _SafariZoneNorthTrainerTips2Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_2
+	dba_const _SafariZoneNorthTrainerTips3Text,  TEXT_SAFARIZONENORTH_TRAINER_TIPS_3
 
 SafariZoneNorthTrainerHeaders:
 	def_trainers
 SafariZoneNorthRangerHeader:
-	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_RANGER_0, 0, SafariZoneNorthRangerBattleText0, SafariZoneNorthRangerEndBattleText0, SafariZoneNorthRangerAfterBattleText0
+	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_RANGER_0, 0, _SafariZoneNorthRangerText, _SafariZoneNorthRangerEndBattleText, _SafariZoneNorthRangerAfterBattleText
 SafariZoneNorthTrainerHeader0:
-	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_0, 4, SafariZoneNorthTrainerBattleText0, SafariZoneNorthTrainerEndBattleText0, SafariZoneNorthTrainerAfterBattleText0
+	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_0, 4, _SafariZoneNorthJugglerText, _SafariZoneNorthJugglerEndBattleText, _SafariZoneNorthJugglerAfterBattleText
 SafariZoneNorthTrainerHeader1:
-	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_1, 4, SafariZoneNorthTrainerBattleText1, SafariZoneNorthTrainerEndBattleText1, SafariZoneNorthTrainerAfterBattleText1
+	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_1, 4, _SafariZoneNorthCooltrainerMText, _SafariZoneNorthCooltrainerMEndBattleText, _SafariZoneNorthCooltrainerMAfterBattleText
 SafariZoneNorthTrainerHeader2:
-	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_2, 1, SafariZoneNorthTrainerBattleText2, SafariZoneNorthTrainerEndBattleText2, SafariZoneNorthTrainerAfterBattleText2
+	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_2, 1, _SafariZoneNorthSuperNerdText, _SafariZoneNorthSuperNerdEndBattleText, _SafariZoneNorthSuperNerdAfterBattleText
 SafariZoneNorthTrainerHeader3:
-	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_3, 0, SafariZoneNorthTrainerBattleText3, SafariZoneNorthTrainerEndBattleText3, SafariZoneNorthTrainerAfterBattleText3
+	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_3, 0, _SafariZoneNorthEngineerText, _SafariZoneNorthEngineerEndBattleText, _SafariZoneNorthEngineerAfterBattleText
 SafariZoneNorthTrainerHeader4:
-	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_4, 4, SafariZoneNorthTrainerBattleText4, SafariZoneNorthTrainerEndBattleText4, SafariZoneNorthTrainerAfterBattleText4
+	trainer EVENT_BEAT_SAFARI_ZONE_NORTH_TRAINER_4, 4, _SafariZoneNorthManiacText, _SafariZoneNorthManiacEndBattleText, _SafariZoneNorthManiacAfterBattleText
 	db -1 ; end
 
 SafariZoneNorthRangerText0:
@@ -93,75 +69,3 @@ SafariZoneNorthTrainerText3:
 
 SafariZoneNorthTrainerText4:
 	script_trainer SafariZoneNorthTrainerHeader4
-
-SafariZoneNorthRangerBattleText0:
-	text_far _SafariZoneNorthRangerText
-	text_end
-
-SafariZoneNorthRangerEndBattleText0:
-	text_far _SafariZoneNorthRangerEndBattleText
-	text_end
-
-SafariZoneNorthRangerAfterBattleText0:
-	text_far _SafariZoneNorthRangerAfterBattleText
-	text_end
-
-SafariZoneNorthTrainerBattleText0:
-	text_far _SafariZoneNorthJugglerText
-	text_end
-
-SafariZoneNorthTrainerEndBattleText0:
-	text_far _SafariZoneNorthJugglerEndBattleText
-	text_end
-
-SafariZoneNorthTrainerAfterBattleText0:
-	text_far _SafariZoneNorthJugglerAfterBattleText
-	text_end
-
-SafariZoneNorthTrainerBattleText1:
-	text_far _SafariZoneNorthCooltrainerMText
-	text_end
-
-SafariZoneNorthTrainerEndBattleText1:
-	text_far _SafariZoneNorthCooltrainerMEndBattleText
-	text_end
-
-SafariZoneNorthTrainerAfterBattleText1:
-	text_far _SafariZoneNorthCooltrainerMAfterBattleText
-	text_end
-
-SafariZoneNorthTrainerBattleText2:
-	text_far _SafariZoneNorthSuperNerdText
-	text_end
-
-SafariZoneNorthTrainerEndBattleText2:
-	text_far _SafariZoneNorthSuperNerdEndBattleText
-	text_end
-
-SafariZoneNorthTrainerAfterBattleText2:
-	text_far _SafariZoneNorthSuperNerdAfterBattleText
-	text_end
-
-SafariZoneNorthTrainerBattleText3:
-	text_far _SafariZoneNorthEngineerText
-	text_end
-
-SafariZoneNorthTrainerEndBattleText3:
-	text_far _SafariZoneNorthEngineerEndBattleText
-	text_end
-
-SafariZoneNorthTrainerAfterBattleText3:
-	text_far _SafariZoneNorthEngineerAfterBattleText
-	text_end
-
-SafariZoneNorthTrainerBattleText4:
-	text_far _SafariZoneNorthManiacText
-	text_end
-
-SafariZoneNorthTrainerEndBattleText4:
-	text_far _SafariZoneNorthManiacEndBattleText
-	text_end
-
-SafariZoneNorthTrainerAfterBattleText4:
-	text_far _SafariZoneNorthManiacAfterBattleText
-	text_end

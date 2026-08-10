@@ -33,5 +33,4 @@ UseAnotherRepel::
 	jp UseItem	;use the item
 
 RepelUseAnotherText:
-	text_far _RepelUseAnotherText
-	text_end
+	text_far_end _RepelUseAnotherText

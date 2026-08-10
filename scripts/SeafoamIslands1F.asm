@@ -140,13 +140,13 @@ SeafoamB3FHolesCoords:
 
 SeafoamIslands1F_TextPointers:
 	def_text_pointers
-	dw_const BoulderText, TEXT_SEAFOAMISLANDS1F_BOULDER1
-	dw_const BoulderText, TEXT_SEAFOAMISLANDS1F_BOULDER2
-	dw_const DragonairEventErikText, TEXT_SEAFOAMISLANDS1F_ERIK
-	dw_const DragonairEventSaraText, TEXT_SEAFOAMISLANDS1F_SARA
-	dw_const DragonairEventCloysterText, TEXT_SEAFOAMISLANDS1F_CLOYSTER
-	dw_const DragonairEventDragonairText1, TEXT_SEAFOAMISLANDS1F_DRAGONAIR1
-	dw_const DragonairEventDragonairText2, TEXT_SEAFOAMISLANDS1F_DRAGONAIR2
+	dba_const BoulderText, TEXT_SEAFOAMISLANDS1F_BOULDER1
+	dba_const BoulderText, TEXT_SEAFOAMISLANDS1F_BOULDER2
+	dba_const DragonairEventErikText, TEXT_SEAFOAMISLANDS1F_ERIK
+	dba_const DragonairEventSaraText, TEXT_SEAFOAMISLANDS1F_SARA
+	dba_const DragonairEventCloysterText, TEXT_SEAFOAMISLANDS1F_CLOYSTER
+	dba_const DragonairEventDragonairText1, TEXT_SEAFOAMISLANDS1F_DRAGONAIR1
+	dba_const DragonairEventDragonairText2, TEXT_SEAFOAMISLANDS1F_DRAGONAIR2
 
 DragonairUnderWaterEventAreaScript:
 	call WasMapJustLoaded
@@ -357,14 +357,11 @@ DragonairEventErikText:
 	rst _PrintText
 	rst TextScriptEnd
 .erikDefault
-	text_far _DragonairEventErikText
-	text_end
+	text_far_end _DragonairEventErikText
 .leaveQuestion
-	text_far _DragonairEventLeaveText
-	text_end
+	text_far_end _DragonairEventLeaveText
 .erikReturn
-	text_far _DragonairEventErikReturnText
-	text_end
+	text_far_end _DragonairEventErikReturnText
 
 DragonairEventSaraText:
 	text_asm
@@ -390,17 +387,13 @@ DragonairEventSaraText:
 	rst _PrintText
 	rst TextScriptEnd
 .saraDefault
-	text_far _DragonairEventSaraText
-	text_end
+	text_far_end _DragonairEventSaraText
 .frigginCloyster
-	text_far _DragonairEventHealText
-	text_end
+	text_far_end _DragonairEventHealText
 .dontGiveUp
-	text_far SilphCo9FNurseDontGiveUpText
-	text_end
+	text_far_end SilphCo9FNurseDontGiveUpText
 .saraReturn
-	text_far _DragonairEventSaraReturnText
-	text_end
+	text_far_end _DragonairEventSaraReturnText
 
 DragonairEventDragonairText1:
 	text_far _DragonairEventDragonairText1
@@ -494,23 +487,17 @@ DragonairEventCloysterText:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	rst TextScriptEnd
 .initial
-	text_far _DragonairEventCloysterText
-	text_end
+	text_far_end _DragonairEventCloysterText
 .initial2
-	text_far _DragonairEventCloysterText2
-	text_end
+	text_far_end _DragonairEventCloysterText2
 .lowLevel
-	text_far _DragonairEventLowLevelText
-	text_end
+	text_far_end _DragonairEventLowLevelText
 .letsDoThis
-	text_far _LetsDoThis
-	text_end
+	text_far_end _LetsDoThis
 .beaten
-	text_far _DragonairEventCloysterBeatenText
-	text_end
+	text_far_end _DragonairEventCloysterBeatenText
 .noWill
-	text_far _NoWillText
-	text_end
+	text_far_end _NoWillText
 
 DragonairEventOpenUpCloysterSprite:
 	ld a, [wSpriteOptions2]
@@ -594,14 +581,11 @@ DragonairEventTransformText:
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	rst TextScriptEnd
 .transformed2
-	text_far _DragonairEventTransformText2
-	text_end
+	text_far_end _DragonairEventTransformText2
 .transformed
-	text_far _DragonairEventTransformText
-	text_end
+	text_far_end _DragonairEventTransformText
 .transformed3
-	text_far _DragonairEventTransformText3
-	text_end
+	text_far_end _DragonairEventTransformText3
 .powerupAnimation
 	; disable sprite update routine so we can manipulate some sparkle sprites without map sprite code running
 	call DisableSpriteUpdates
@@ -706,8 +690,6 @@ JolteonSparkleSpriteStartingCoords:
 	db $5C, $88, 0, 0 ; bottom right
 	db $44, $88, 0, 1 ; top right
 	db $5C, $70, 1, 0 ; bottom left
-
-
 
 SeaweedTiles:
 	INCBIN "gfx/overworld/seaweed.2bpp"

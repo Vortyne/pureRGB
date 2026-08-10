@@ -530,60 +530,46 @@ StatsCancelPCText:
 	next "CANCEL@"
 
 SwitchOnText:
-	text_far _SwitchOnText
-	text_end
+	text_far_end _SwitchOnText
 
 WhatText:
-	text_far _WhatText
-	text_end
+	text_far_end _WhatText
 
 ViewMode:
-	text_far _ViewModeText
-	text_end
+	text_far_end _ViewModeText
 
 DepositWhichMonText:
-	text_far _DepositWhichMonText
-	text_end
+	text_far_end _DepositWhichMonText
 
 MonWasStoredText:
-	text_far _MonWasStoredText
-	text_end
+	text_far_end _MonWasStoredText
 
 CantDepositLastMonText:
-	text_far _CantDepositLastMonText
-	text_end
+	text_far_end _CantDepositLastMonText
 
 BoxFullText:
-	text_far _BoxFullText
-	text_end
+	text_far_end _BoxFullText
 
 MonIsTakenOutText:
-	text_far _MonIsTakenOutText
-	text_end
+	text_far_end _MonIsTakenOutText
 
 NoMonText:
-	text_far _NoMonText
-	text_end
+	text_far_end _NoMonText
 
 CantTakeMonText:
-	text_far _CantTakeMonText
-	text_end
+	text_far_end _CantTakeMonText
 
 ReleaseWhichMonText:
-	text_far _ReleaseWhichMonText
-	text_end
+	text_far_end _ReleaseWhichMonText
 
 OnceReleasedText:
-	text_far _OnceReleasedText
-	text_end
+	text_far_end _OnceReleasedText
 
 MonWasReleasedText:
-	text_far _MonWasReleasedText
-	text_end
+	text_far_end _MonWasReleasedText
 
 PressStartToReleaseText:
-	text_far _PressStartToReleaseText
-	text_end
+	text_far_end _PressStartToReleaseText
 
 CableClubLeftGameboy::
 	ldh a, [hSerialConnectionStatus]
@@ -620,8 +606,7 @@ CableClubRightGameboy::
 	tx_pre_jump JustAMomentText
 
 JustAMomentText::
-	text_far _JustAMomentText
-	text_end
+	text_far_end _JustAMomentText
 
 BillsPCBackupListIndex:
 	ld a, [wListScrollOffset]
@@ -644,3 +629,10 @@ RenameCurrentBox:
 	callfar _RenameCurrentBox
 	call DisableTextDelay
 	jp BillsPCMenu
+
+OpenPokemonCenterPC::
+	ld a, [wSpritePlayerStateData1FacingDirection]
+	cp SPRITE_FACING_UP
+	ret nz
+	call DisableAutoTextBoxDrawing
+	tx_pre_jump PokemonCenterPCText

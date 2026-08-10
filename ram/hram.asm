@@ -365,13 +365,7 @@ hSpriteMapXCoord::    db
 
 NEXTU
 hItemAlreadyFound:: db
-	ds 2
 hDidntFindAnyHiddenEvent:: db
-
-NEXTU
-	ds 1
-hSavedMapTextPtr:: dw
-	ds 1
 ENDU
 
 	ds 4 ; unused 4 hram bytes

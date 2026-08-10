@@ -64,20 +64,16 @@ GiveFossilToCinnabarLab::
 	ret
 
 .ScientistSeesFossilText:
-	text_far _CinnabarLabFossilRoomScientist1SeesFossilText
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1SeesFossilText
 
 .ScientistTakesFossilText:
-	text_far _CinnabarLabFossilRoomScientist1TakesFossilText
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1TakesFossilText
 
 .GoForAWalkText:
-	text_far _CinnabarLabFossilRoomScientist1GoForAWalkText2
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1GoForAWalkText2
 
 .ComeAgainText:
-	text_far _CinnabarLabFossilRoomScientist1ComeAgainText
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1ComeAgainText
 
 PrintFossilsInBag:
 ; Prints each fossil in the player's bag on a separate line in the menu.

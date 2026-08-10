@@ -134,12 +134,10 @@ DisplayChangeBoxMenu:
 	ret
 
 ChooseABoxText:
-	text_far _ChooseABoxText
-	text_end
+	text_far_end _ChooseABoxText
 
 ChooseABoxDataWillSaveText:
-	text_far _ChooseABoxDataWillSaveText
-	text_end
+	text_far_end _ChooseABoxDataWillSaveText
 
 ; draws a box that says info about the current box (used in pc and change box menus)
 ; input = de, top left coord of the prompt box
@@ -316,8 +314,7 @@ _RenameCurrentBox::
 .reload
 	jp LoadBillsPCExtraTiles
 .renameBoxQuestion
-	text_far _RenameCurrentBoxText
-	text_end
+	text_far_end _RenameCurrentBoxText
 
 GetCurrentBoxNum:
 	ld a, [wCurrentBoxNum]

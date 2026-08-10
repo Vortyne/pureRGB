@@ -57,7 +57,7 @@ EnterMapAnim::
 	jp RestoreFacingDirectionAndYScreenPos
 .dungeonWarpAnimation
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	call PlayerSpinWhileMovingDown
 	jr .done
 .flyAnimation
@@ -135,7 +135,7 @@ _LeaveMapAnim::
 	jr nz, .playerNotStandingOnWarpPad
 	ld c, 5 ; added slight delay here to make gbc fade mode play both TELEPORT_EXIT_1 and TELEPORT_ENTER_1 sound effects properly
 .playerNotStandingOnWarpPad
-	rst _DelayFrames
+	rst DelayFrames
 	call GBFadeOutToWhite
 	jp RestoreFacingDirectionAndYScreenPos
 .playerNotStandingOnWarpPadOrHole
@@ -185,7 +185,7 @@ _LeaveMapAnim::
 	ld de, FlyAnimationScreenCoords1
 	callfar DoFlyAnimation
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, wFlyAnimCounter
 	ld a, 33 ; length of second part in coordinate pairs
 	ld [hli], a ; wFlyAnimCounter
@@ -206,7 +206,7 @@ LeaveMapThroughHoleAnim:
 	ld [wShadowOAMSprite00YCoord], a
 	ld [wShadowOAMSprite01YCoord], a
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 ;;;;;;;;;; PureRGBnote: ADDED: sound effect when falling into a hole
 	; play a sound effect of falling in
 	ld de, FallDownHole
@@ -286,7 +286,7 @@ PlayerSpinInPlace:
 	ld a, [wPlayerSpinInPlaceAnimFrameDelayEndValue]
 	cp c
 	ret z
-	rst _DelayFrames
+	rst DelayFrames
 	jr PlayerSpinInPlace
 
 PlayerSpinWhileMovingUpOrDown:
@@ -302,7 +302,7 @@ PlayerSpinWhileMovingUpOrDown:
 	ret z
 	ld a, [wPlayerSpinWhileMovingUpOrDownAnimFrameDelay]
 	ld c, a
-	rst _DelayFrames
+	rst DelayFrames
 	jr PlayerSpinWhileMovingUpOrDown
 
 RestoreFacingDirectionAndYScreenPos:
@@ -350,7 +350,7 @@ INCLUDE "data/tilesets/warp_pad_hole_tile_ids.asm"
 
 FishingAnim:
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, wMovementFlags
 	set BIT_LEDGE_OR_FISHING, [hl] ; reserve the last 4 OAM entries
 	ld de, RedSprite
@@ -374,7 +374,7 @@ FishingAnim:
 	add 20 ; minimum of 20 frames after starting to result, so minimum frames fishing = 20 and max = 147
 	ld c, a
 ;;;;;;;;;;
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wRodResponse]
 	and a
 	ld hl, NoNibbleText
@@ -434,16 +434,13 @@ FishingAnim:
 	ret
 
 NoNibbleText:
-	text_far _NoNibbleText
-	text_end
+	text_far_end _NoNibbleText
 
 NothingHereText:
-	text_far _NothingHereText
-	text_end
+	text_far_end _NothingHereText
 
 ItsABiteText:
-	text_far _ItsABiteText
-	text_end
+	text_far_end _ItsABiteText
 
 FishingRodOAM:
 ; specifies how the fishing rod should be drawn on the screen

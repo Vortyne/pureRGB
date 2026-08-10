@@ -28,9 +28,7 @@ PrintSafariZoneBattleText:
 	jp PrintText
 
 SafariZoneEatingText:
-	text_far _SafariZoneEatingText
-	text_end
+	text_far_end _SafariZoneEatingText
 
 SafariZoneAngryText:
-	text_far _SafariZoneAngryText
-	text_end
+	text_far_end _SafariZoneAngryText

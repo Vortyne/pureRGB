@@ -1,8 +1,7 @@
 Route7Gate_Script:
-	call EnableAutoTextBoxDrawing
-	ld a, [wRoute7GateCurScript]
 	ld hl, Route7Gate_ScriptPointers
-	jp CallFunctionInTable
+	ld de, wRoute7GateCurScript
+	jp CallMapScriptInTable
 
 Route7Gate_ScriptPointers:
 	def_script_pointers
@@ -25,6 +24,6 @@ Route7PlayerMovingScript:
 
 Route7Gate_TextPointers:
 	def_text_pointers
-	dw_const SaffronGateGuardText,             TEXT_ROUTE7GATE_GUARD
-	dw_const SaffronGateGuardGeeImThirstyText, TEXT_ROUTE7GATE_GUARD_GEE_IM_THIRSTY
-	dw_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE7GATE_GUARD_GIVE_DRINK
+	dba_const _SaffronGateGuardThanksForTheDrinkText,  TEXT_ROUTE7GATE_GUARD
+	dba_const _SaffronGateGuardGeeImThirstyText, TEXT_ROUTE7GATE_GUARD_GEE_IM_THIRSTY
+	dba_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE7GATE_GUARD_GIVE_DRINK

@@ -335,4 +335,5 @@ _OakFirstLoseText::
 	para "<...>"
 	para "PROF.OAK wrote"
 	line "a note for you!@"
+	sound_pokedex_rating
 	text_end

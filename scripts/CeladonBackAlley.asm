@@ -60,22 +60,22 @@ CeladonBackAlley_Script:
 
 CeladonBackAlley_TextPointers:
 	def_text_pointers
-	dw_const CeladonBackAlleyHooliganText, TEXT_CELADONBACKALLEY_HOOLIGAN
-	dw_const CeladonBackAlleyCircleBiker1Text, TEXT_CELADONBACKALLEY_CIRCLE_BIKER1
-	dw_const CeladonBackAlleyCircleBiker2Text, TEXT_CELADONBACKALLEY_CIRCLE_BIKER2
-	dw_const CeladonBackAlleyCircleBiker3Text, TEXT_CELADONBACKALLEY_CIRCLE_BIKER3
-	dw_const CeladonBackAlleyCircleGamblerText, TEXT_CELADONBACKALLEY_CIRCLE_GAMBLER
-	dw_const CeladonBackAlleyCircleRocker1Text, TEXT_CELADONBACKALLEY_CIRCLE_ROCKER1
-	dw_const CeladonBackAlleyCircleRocker2Text, TEXT_CELADONBACKALLEY_CIRCLE_ROCKER2
-	dw_const CeladonBackAlleyCircleLeftBikerText, TEXT_CELADONBACKALLEY_LEFT_BIKER
-	dw_const CeladonBackAlleyCircleRightRockerText, TEXT_CELADONBACKALLEY_RIGHT_ROCKER
-	dw_const CeladonBackAlleyOpponentBikerText, TEXT_CELADONBACKALLEY_OPPONENT_BIKER
-	dw_const CeladonBackAlleyOpponentCueBallText, TEXT_CELADONBACKALLEY_OPPONENT_CUE_BALL
-	dw_const CeladonBackAlleyOpponentRockerText, TEXT_CELADONBACKALLEY_OPPONENT_ROCKER
-	dw_const CeladonBackAlleyOpponentGamblerText, TEXT_CELADONBACKALLEY_OPPONENT_GAMBLER
-	dw_const CeladonBackAlleyAfterBattle, TEXT_CELADONBACKALLEY_AFTER_BATTLE
-	dw_const CeladonBackAlleyGarbage, TEXT_CELADONBACKALLEY_GARBAGE
-	dw_const CeladonBackAlleyKoffingGraffiti, TEXT_CELADONBACKALLEY_KOFFING_GRAFFITI
+	dba_const CeladonBackAlleyHooliganText, TEXT_CELADONBACKALLEY_HOOLIGAN
+	dba_const _CeladonBackAlleyCircleBiker1Text, TEXT_CELADONBACKALLEY_CIRCLE_BIKER1
+	dba_const _CeladonBackAlleyCircleBiker2Text, TEXT_CELADONBACKALLEY_CIRCLE_BIKER2
+	dba_const _CeladonBackAlleyCircleBiker3Text, TEXT_CELADONBACKALLEY_CIRCLE_BIKER3
+	dba_const _CeladonBackAlleyCircleGamblerText, TEXT_CELADONBACKALLEY_CIRCLE_GAMBLER
+	dba_const _CeladonBackAlleyCircleRocker1Text, TEXT_CELADONBACKALLEY_CIRCLE_ROCKER1
+	dba_const _CeladonBackAlleyCircleRocker2Text, TEXT_CELADONBACKALLEY_CIRCLE_ROCKER2
+	dba_const _CeladonBackAlleyCircleLeftBikerText, TEXT_CELADONBACKALLEY_LEFT_BIKER
+	dba_const CeladonBackAlleyCircleRightRockerText, TEXT_CELADONBACKALLEY_RIGHT_ROCKER
+	dba_const CeladonBackAlleyOpponentBikerText, TEXT_CELADONBACKALLEY_OPPONENT_BIKER
+	dba_const CeladonBackAlleyOpponentCueBallText, TEXT_CELADONBACKALLEY_OPPONENT_CUE_BALL
+	dba_const CeladonBackAlleyOpponentRockerText, TEXT_CELADONBACKALLEY_OPPONENT_ROCKER
+	dba_const CeladonBackAlleyOpponentGamblerText, TEXT_CELADONBACKALLEY_OPPONENT_GAMBLER
+	dba_const CeladonBackAlleyAfterBattle, TEXT_CELADONBACKALLEY_AFTER_BATTLE
+	dba_const _SSAnneCaptainsRoomTrashText, TEXT_CELADONBACKALLEY_GARBAGE
+	dba_const _CeladonBackAlleyKoffingGraffiti, TEXT_CELADONBACKALLEY_KOFFING_GRAFFITI
 
 CeladonBackAlleyHooliganText:
 	text_far _CeladonBackAlleyCircleHooliganText
@@ -138,42 +138,11 @@ CeladonBackAlleyHooliganText:
 	call SetSpriteFacingDown
 	rst TextScriptEnd
 .intro
-	text_far _CeladonBackAlleyCircleHooliganExplainText
-	text_end
+	text_far_end _CeladonBackAlleyCircleHooliganExplainText
 .start
-	text_far _CeladonBackAlleyCircleHooliganBattleText
-	text_end
+	text_far_end _CeladonBackAlleyCircleHooliganBattleText
 ;.noKidsAllowed
-;	text_far _CeladonBackAlleyCircleHooliganNoKidsAllowedText
-;	text_end
-
-CeladonBackAlleyCircleBiker1Text:
-	text_far _CeladonBackAlleyCircleBiker1Text
-	text_end
-
-CeladonBackAlleyCircleBiker2Text:
-	text_far _CeladonBackAlleyCircleBiker2Text
-	text_end
-
-CeladonBackAlleyCircleBiker3Text:
-	text_far _CeladonBackAlleyCircleBiker3Text
-	text_end
-
-CeladonBackAlleyCircleGamblerText:
-	text_far _CeladonBackAlleyCircleGamblerText
-	text_end
-
-CeladonBackAlleyCircleRocker1Text:
-	text_far _CeladonBackAlleyCircleRocker1Text
-	text_end
-
-CeladonBackAlleyCircleRocker2Text:
-	text_far _CeladonBackAlleyCircleRocker2Text
-	text_end
-
-CeladonBackAlleyCircleLeftBikerText:
-	text_far _CeladonBackAlleyCircleLeftBikerText
-	text_end
+;	text_far_end _CeladonBackAlleyCircleHooliganNoKidsAllowedText
 
 CeladonBackAlleyCircleRightRockerText:
 	text_far _CeladonBackAlleyCircleRightRockerText
@@ -182,7 +151,7 @@ CeladonBackAlleyCircleRightRockerText:
 	ld c, BANK(Music_MeetMaleTrainer)
 	call PlayMusic
 	ld c, 166
-	rst _DelayFrames
+	rst DelayFrames
 	call StopAllMusic
 	ld hl, .question
 	rst _PrintText
@@ -197,14 +166,11 @@ CeladonBackAlleyCircleRightRockerText:
 	rst _PrintText
 	rst TextScriptEnd
 .question
-	text_far _CeladonBackAlleyCircleRightRockerThinkText
-	text_end
+	text_far_end _CeladonBackAlleyCircleRightRockerThinkText
 .yes
-	text_far _CeladonBackAlleyCircleRightRockerYesText
-	text_end
+	text_far_end _CeladonBackAlleyCircleRightRockerYesText
 .no
-	text_far _CeladonBackAlleyCircleRightRockerNoText
-	text_end
+	text_far_end _CeladonBackAlleyCircleRightRockerNoText
 
 IsPlayerBesideCeladonBackAlleyHooligan:
 	lb de, 18, 5
@@ -217,7 +183,7 @@ StartCeladonBackAlleyBattle:
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	call CeladonBackAlleyHideOpponent ; hide previous opponents if applicable
 	ld hl, AvailableCeladonBackAlleyTrainers
 	lb de, 1, 0 ; coord delta with respect to the player for opponent to show up at
@@ -238,68 +204,52 @@ CeladonBackAlleyOpponentBikerText:
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _CeladonBackAlleyOpponentBikerIntro1
-	text_end
+	text_far_end _CeladonBackAlleyOpponentBikerIntro1
 .intro2
-	text_far _CeladonBackAlleyOpponentBikerIntro2
-	text_end
+	text_far_end _CeladonBackAlleyOpponentBikerIntro2
 .intro3
-	text_far _CeladonBackAlleyOpponentBikerIntro3
-	text_end
+	text_far_end _CeladonBackAlleyOpponentBikerIntro3
 .intro4
-	text_far _CeladonBackAlleyOpponentBikerIntro4
-	text_end
+	text_far_end _CeladonBackAlleyOpponentBikerIntro4
 
 CeladonBackAlleyOpponentCueBallText:
 	text_asm
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _CeladonBackAlleyOpponentCueBallIntro1
-	text_end
+	text_far_end _CeladonBackAlleyOpponentCueBallIntro1
 .intro2
-	text_far _CeladonBackAlleyOpponentCueBallIntro2
-	text_end
+	text_far_end _CeladonBackAlleyOpponentCueBallIntro2
 .intro3
-	text_far _CeladonBackAlleyOpponentCueBallIntro3
-	text_end
+	text_far_end _CeladonBackAlleyOpponentCueBallIntro3
 .intro4
-	text_far _CeladonBackAlleyOpponentCueBallIntro4
-	text_end
+	text_far_end _CeladonBackAlleyOpponentCueBallIntro4
 
 CeladonBackAlleyOpponentRockerText:
 	text_asm
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _CeladonBackAlleyOpponentRockerIntro1
-	text_end
+	text_far_end _CeladonBackAlleyOpponentRockerIntro1
 .intro2
-	text_far _CeladonBackAlleyOpponentRockerIntro2
-	text_end
+	text_far_end _CeladonBackAlleyOpponentRockerIntro2
 .intro3
-	text_far _CeladonBackAlleyOpponentRockerIntro3
-	text_end
+	text_far_end _CeladonBackAlleyOpponentRockerIntro3
 .intro4
-	text_far _CeladonBackAlleyOpponentRockerIntro4
-	text_end
+	text_far_end _CeladonBackAlleyOpponentRockerIntro4
 
 CeladonBackAlleyOpponentGamblerText:
 	text_asm
 	ld hl, .intro1
 	jp GetRandomClubOpponentText
 .intro1
-	text_far _CeladonBackAlleyOpponentGamblerIntro1
-	text_end
+	text_far_end _CeladonBackAlleyOpponentGamblerIntro1
 .intro2
-	text_far _CeladonBackAlleyOpponentGamblerIntro2
-	text_end
+	text_far_end _CeladonBackAlleyOpponentGamblerIntro2
 .intro3
-	text_far _CeladonBackAlleyOpponentGamblerIntro3
-	text_end
+	text_far_end _CeladonBackAlleyOpponentGamblerIntro3
 .intro4
-	text_far _CeladonBackAlleyOpponentGamblerIntro4
-	text_end
+	text_far_end _CeladonBackAlleyOpponentGamblerIntro4
 
 CeladonBackAlleyAfterBattle:
 	text_asm
@@ -325,11 +275,3 @@ CeladonBackAlleyHideOpponent:
 	ld c, a
 	lb de, 50, 1
 	jpfar FarMoveSpriteOffScreen
-
-CeladonBackAlleyGarbage:
-	text_far _SSAnneCaptainsRoomTrashText
-	text_end
-
-CeladonBackAlleyKoffingGraffiti:
-	text_far _CeladonBackAlleyKoffingGraffiti
-	text_end

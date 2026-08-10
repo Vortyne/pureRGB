@@ -79,22 +79,20 @@ _TeleportEffect::
 	ld [wAnimationID], a
 	callfar PlayBattleAnimationGotID
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	; pop af
 	pop hl
 	jp PrintText
 .failed
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	jpfar PrintButItFailedText_
 
 RanFromBattleText:
-	text_far _RanFromBattleText
-	text_end
+	text_far_end _RanFromBattleText
 
 TeleportedAwayText:
-	text_far _TeleportedAway
-	text_end
+	text_far_end _TeleportedAway
 
 ; returns nz if the player/opponent can switch
 CheckCanForceSwitch::

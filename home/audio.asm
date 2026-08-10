@@ -467,13 +467,13 @@ UnmuteAudioAndRestoreAudioBank::
 
 PauseMusic::
 	ld a, 1
+.load
 	ld [wMuteAudioAndPauseMusic], a
 	ret
 
 ResumeMusic::
 	xor a
-	ld [wMuteAudioAndPauseMusic], a
-	ret
+	jr PauseMusic.load
 
 PlaySoundOverrideCurrent::
 	push af

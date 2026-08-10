@@ -5,8 +5,4 @@ UndergroundPathRoute8_Script:
 
 UndergroundPathRoute8_TextPointers:
 	def_text_pointers
-	dw_const UndergroundPathRoute8GirlText, TEXT_UNDERGROUNDPATHROUTE8_GIRL
-
-UndergroundPathRoute8GirlText:
-	text_far _UndergroundPathRoute8GirlText
-	text_end
+	dba_const _UndergroundPathRoute8GirlText, TEXT_UNDERGROUNDPATHROUTE8_GIRL

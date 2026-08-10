@@ -75,7 +75,7 @@ SilphCoElevatorShakeScript:
 
 SilphCoElevator_TextPointers:
 	def_text_pointers
-	dw_const SilphCoElevatorElevatorText, TEXT_SILPHCOELEVATOR_ELEVATOR
+	dba_const SilphCoElevatorElevatorText, TEXT_SILPHCOELEVATOR_ELEVATOR
 
 SilphCoElevatorElevatorText:
 	text_asm

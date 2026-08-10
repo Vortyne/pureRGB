@@ -1,8 +1,7 @@
 Route8Gate_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, Route8Gate_ScriptPointers
-	ld a, [wRoute8GateCurScript]
-	jp CallFunctionInTable
+	ld de, wRoute8GateCurScript
+	jp CallMapScriptInTable
 
 Route8Gate_ScriptPointers:
 	def_script_pointers
@@ -25,6 +24,6 @@ Route8GatePlayerMovingScript:
 
 Route8Gate_TextPointers:
 	def_text_pointers
-	dw_const SaffronGateGuardText,             TEXT_ROUTE8GATE_GUARD
-	dw_const SaffronGateGuardGeeImThirstyText, TEXT_ROUTE8GATE_GUARD_GEE_IM_THIRSTY
-	dw_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE8GATE_GUARD_GIVE_DRINK
+	dba_const _SaffronGateGuardThanksForTheDrinkText,  TEXT_ROUTE8GATE_GUARD
+	dba_const _SaffronGateGuardGeeImThirstyText,  TEXT_ROUTE8GATE_GUARD_GEE_IM_THIRSTY
+	dba_const SaffronGateGuardGiveDrinkText,    TEXT_ROUTE8GATE_GUARD_GIVE_DRINK

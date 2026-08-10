@@ -3,12 +3,8 @@ ViridianForestSouthGate_Script:
 
 ViridianForestSouthGate_TextPointers:
 	def_text_pointers
-	dw_const ViridianForestSouthGateGirlText,       TEXT_VIRIDIANFORESTSOUTHGATE_GIRL
-	dw_const ViridianForestSouthGateLittleGirlText, TEXT_VIRIDIANFORESTSOUTHGATE_LITTLE_GIRL
-
-ViridianForestSouthGateGirlText:
-	text_far _ViridianForestSouthGateGirlText
-	text_end
+	dba_const _ViridianForestSouthGateGirlText,       TEXT_VIRIDIANFORESTSOUTHGATE_GIRL
+	dba_const ViridianForestSouthGateLittleGirlText, TEXT_VIRIDIANFORESTSOUTHGATE_LITTLE_GIRL
 
 ViridianForestSouthGateLittleGirlText:
 	text_far _ViridianForestSouthGateLittleGirlText
@@ -22,5 +18,4 @@ ViridianForestSouthGateLittleGirlText:
 .done
 	rst TextScriptEnd
 .rightOn
-	text_far _ViridianForestSouthGateLittleGirl2Text
-	text_end
+	text_far_end _ViridianForestSouthGateLittleGirl2Text

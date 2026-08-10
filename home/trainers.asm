@@ -9,6 +9,15 @@ StoreTrainerHeaderPointer::
 	ld [wTrainerHeaderPtr+1], a
 	ret
 
+; Same as below, but accepts a custom wram map script tracker in bc
+ExecuteCustomMapScriptInTable::
+	call EnableAutoTextBoxDrawing
+ExecuteCustomMapScriptInTableOnly::
+	ld a, [bc]
+	call ExecuteCurMapScriptInTable
+	ld [bc], a
+	ret
+
 ; executes the current map script from the function pointer array provided in de.
 ; a: map script index to execute (unless overridden by [wStatusFlags7] BIT_USE_CUR_MAP_SCRIPT)
 ; hl: trainer header pointer
@@ -35,71 +44,58 @@ ExecuteCurMapScriptInTable::
 ; a: offset in header data
 ;    0 -> flag's bit (into wTrainerHeaderFlagBit)
 ;    2 -> flag's byte ptr (into hl)
-;    4 -> before battle text (into hl)
-;    6 -> after battle text (into hl)
-;    8 -> end battle text (into hl)
+;    4 -> before battle text (start of struct in hl)
+;    7 -> after battle text (start of struct in hl)
+;    10 -> end battle text (start of struct in hl)
 ReadTrainerHeaderInfo::
+	ld hl, wTrainerHeaderPtr
 	push de
 	push af
 	ld d, $0
 	ld e, a
-	ld hl, wTrainerHeaderPtr
 	ld a, [hli]
 	ld l, [hl]
 	ld h, a
 	add hl, de
 	pop af
 	and a
+	pop de
 	jr nz, .nonZeroOffset
 	ld a, [hl]
 	ld [wTrainerHeaderFlagBit], a  ; store flag's bit
-	jr .done
-.nonZeroOffset
-	cp $2
-	jr z, .readPointer ; read flag's byte ptr
-	cp $4
-	jr z, .readPointer ; read before battle text
-	cp $6
-	jr z, .readPointer ; read after battle text
-	cp $8
-	jr nz, .done 
-;   jr z, .readPointer
-;	cp $a
-;	jr nz, .done
-;	ld a, [hli]        ; read end battle text (2) but override the result afterwards (XXX why, bug?)
-;	ld d, [hl]
-;	ld e, a
-;	jr .done
-.readPointer ; read end battle text
-	call GetAddressFromPointer
-.done
-	pop de
 	ret
+.nonZeroOffset
+	cp TRAINER_EVENT_POINTER_OFFSET
+	jp z, GetAddressFromPointer
+	cp TRAINER_END_BANK_OFFSET
+	ret z
+PrintBankedTrainerText::
+	; print the text immediately otherwise for Start or After battle texts
+	ld a, [hLoadedROMBank]
+	push af
+	call GetBankedTrainerTextPointer
+	call SetCurBank
+	rst _PrintText
+	pop af
+	jp SetCurBank
 
-; PureRGBnote: CHANGED: this function was optimized a bit.
+; PureRGBnote: CHANGED: this function was optimized a bit and now has banks stored for the trainer text entries
 TalkToTrainer::
 	call StoreTrainerHeaderPointer
-	xor a
+	xor a ; TRAINER_EVENT_BIT_OFFSET
 	call ReadTrainerHeaderInfo     ; read flag's bit
 	call TrainerFlagActionTest      ; read trainer's flag
 	ld a, c
 	and a
 	jr z, .trainerNotYetFought     ; test trainer's flag
-	ld a, $6
-	call ReadTrainerHeaderInfo     ; print after battle text
-	rst _PrintText
-	ret
+	ld a, TRAINER_AFTER_BANK_OFFSET
+	jp ReadTrainerHeaderInfo     ; print after battle text
 .trainerNotYetFought
-	ld a, $4
+	ld a, TRAINER_BEFORE_BANK_OFFSET
 	call ReadTrainerHeaderInfo     ; print before battle text
-	rst _PrintText
-	;ld a, $a
-	;call ReadTrainerHeaderInfo     ; (?) does nothing apparently (maybe bug in ReadTrainerHeaderInfo)
-	push de
-	ld a, $8
+	ld a, TRAINER_END_BANK_OFFSET
 	call ReadTrainerHeaderInfo     ; read end battle text
-	pop de
-	call SaveEndBattleTextPointers
+	call SaveBankedEndBattleTextPointers
 	ld hl, wStatusFlags7
 	set BIT_USE_CUR_MAP_SCRIPT, [hl] ; activate map script index override (index is set below)
 	ld hl, wMiscFlags
@@ -244,7 +240,7 @@ SpritePositionBankswitch::
 	ret
 
 CheckForEngagingTrainers::
-	xor a
+	xor a ; TRAINER_EVENT_BIT_OFFSET
 	call ReadTrainerHeaderInfo       ; read trainer flag's bit (unused)
 	ld d, h                          ; store trainer header address in de
 	ld e, l
@@ -262,7 +258,7 @@ CheckForEngagingTrainers::
 	push hl
 	push de
 	push hl
-	xor a
+	xor a ; TRAINER_EVENT_BIT_OFFSET
 	call ReadTrainerHeaderInfo       ; get trainer header pointer
 	inc hl
 	ld a, [hl]                       ; read trainer engage distance
@@ -278,16 +274,30 @@ CheckForEngagingTrainers::
 	and a
 	ret nz ; break if the trainer is engaging
 .continue
-	ld hl, $c
+	ld hl, TRAINER_STRUCT_SIZE
 	add hl, de
 	ld d, h
 	ld e, l
 	jr .trainerLoop
 
+GetBankedTrainerTextPointer:
+	ld a, [hli]
+	push af
+	hl_deref
+	pop af
+	ret
+
+; for all basic trainers, loss text = end battle text, they never print loss text anyway
+SaveBankedEndBattleTextPointers:
+	call GetBankedTrainerTextPointer
+	ld d, h
+	ld e, l
+	jr SaveEndBattleTextPointersCommon
 ; hl = text if the player wins
 ; de = text if the player loses
 SaveEndBattleTextPointers::
-	ldh a, [hLoadedROMBank]
+	ld a, [hLoadedROMBank]
+SaveEndBattleTextPointersCommon::
 	ld [wEndBattleTextRomBank], a
 	ld a, h
 	ld [wEndBattleWinTextPointer], a
@@ -357,7 +367,7 @@ TrainerFlagActionTest::
 	ld b, FLAG_TEST
 	; fall through
 TrainerFlagAction::
-	ld a, $2
+	ld a, TRAINER_EVENT_POINTER_OFFSET
 	call ReadTrainerHeaderInfo     ; read flag's byte ptr (does not change b register)
 	ld a, [wTrainerHeaderFlagBit]
 	ld c, a

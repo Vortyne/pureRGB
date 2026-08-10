@@ -3,10 +3,11 @@ CinnabarLabFossilRoom_Script:
 
 CinnabarLabFossilRoom_TextPointers:
 	def_text_pointers
-	dw_const CinnabarLabFossilRoomScientist1Text, TEXT_CINNABARLABFOSSILROOM_SCIENTIST1
-	dw_const CinnabarLabFossilRoomScientist2Text, TEXT_CINNABARLABFOSSILROOM_SCIENTIST2
-	dw_const CinnabarLabFossilRoomColorChangerText, TEXT_CINNABARLABFOSSILROOM_COLOR_CHANGER
-	dw_const CinnabarLabFossilRoomDeskPapersText, TEXT_CINNABARLABFOSSILROOM_DESK_PAPERS
+	dba_const CinnabarLabFossilRoomScientist1Text, TEXT_CINNABARLABFOSSILROOM_SCIENTIST1
+	dba_const CinnabarLabFossilRoomScientist2Text, TEXT_CINNABARLABFOSSILROOM_SCIENTIST2
+	dba_const CinnabarLabFossilRoomColorChangerText, TEXT_CINNABARLABFOSSILROOM_COLOR_CHANGER
+; PureRGBnote: ADDED: text entry for the papers on the desk
+	dba_const _CinnabarLabFossilRoomDeskPapersText, TEXT_CINNABARLABFOSSILROOM_DESK_PAPERS
 
 Lab4Script_GetFossilsInBag:
 ; construct a list of all fossils in the player's bag
@@ -55,20 +56,16 @@ CinnabarLabFossilRoomScientist1Text:
 	rst TextScriptEnd
 
 .Text:
-	text_far _CinnabarLabFossilRoomScientist1Text
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1Text
 
 .NoFossilsText:
-	text_far _CinnabarLabFossilRoomScientist1NoFossilsText
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1NoFossilsText
 
 .GoForAWalkText:
-	text_far _CinnabarLabFossilRoomScientist1GoForAWalkText
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1GoForAWalkText
 
 .FossilIsBackToLifeText:
-	text_far _CinnabarLabFossilRoomScientist1FossilIsBackToLifeText
-	text_end
+	text_far_end _CinnabarLabFossilRoomScientist1FossilIsBackToLifeText
 
 CinnabarLabFossilRoomScientist2Text:
 	text_asm
@@ -272,89 +269,66 @@ FiddlingAroundSounds:
 	ld a, SFX_TRADE_MACHINE
 	rst _PlaySound
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_NOISE_INSTRUMENT05
 	rst _PlaySound
 	ld c, 12
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_NOISE_INSTRUMENT05
 	rst _PlaySound
 	ld c, 12
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_NOISE_INSTRUMENT05
 	rst _PlaySound
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	ld b, 20
 .loop
 	ld a, SFX_TURN_OFF_PC
 	rst _PlaySound
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .loop
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 LabColorChangerGreeting:
-	text_far _LabColorChangerGreeting
-	text_end
+	text_far_end _LabColorChangerGreeting
 
 LabColorChangerGreetingYes:
-	text_far _LabColorChangerGreetingYes
-	text_end
+	text_far_end _LabColorChangerGreetingYes
 
 LabColorChangerGreetingNo:
-	text_far _LabColorChangerGreetingNo
-	text_end
+	text_far_end _LabColorChangerGreetingNo
 
 LabColorChangerVasIsDas:
-	text_far _LabColorChangerVasIsDas
-	sound_get_item_2
-	text_promptbutton
-	text_end
+	text_far_end _LabColorChangerVasIsDas
 
 LabColorChangerNoChangesLeft:
-	text_far _LabColorChangerNoChangesLeft
-	text_end
+	text_far_end _LabColorChangerNoChangesLeft
 
 LabColorChangerStart:
-	text_far _LabColorChangerStart
-	text_end
+	text_far_end _LabColorChangerStart
 
 LabColorChangerGoodbye:
-	text_far _LabColorChangerGoodbye
-	text_end
+	text_far_end _LabColorChangerGoodbye
 
 LabColorChangerNext:
-	text_far _LabColorChangerNext
-	text_end
+	text_far_end _LabColorChangerNext
 
 LabColorChangerPics:
-	text_far _LabColorChangerPics
-	text_end
+	text_far_end _LabColorChangerPics
 
 LabColorChangerPicsShown:
-	text_far _LabColorChangerPicsShown
-	text_end
+	text_far_end _LabColorChangerPicsShown
 
 LabColorChangerStartColorChange:
-	text_far _LabColorChangerStartColorChange
-	text_end
+	text_far_end _LabColorChangerStartColorChange
 
 LabColorChangerColorChangeDone:
-	text_far _LabColorChangerColorChangeDone
-	sound_get_item_2
-	text_promptbutton
-	text_end
+	text_far_end _LabColorChangerColorChangeDone
 
 LabColorChangerResearchingColors:
-	text_far _LabColorChangerResearchingColors
-	text_end
-
-; PureRGBnote: ADDED: text entry for the papers on the desk
-
-CinnabarLabFossilRoomDeskPapersText:
-	text_far _CinnabarLabFossilRoomDeskPapersText
-	text_end
+	text_far_end _LabColorChangerResearchingColors

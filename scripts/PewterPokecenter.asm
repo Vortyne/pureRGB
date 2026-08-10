@@ -4,18 +4,11 @@ PewterPokecenter_Script:
 
 PewterPokecenter_TextPointers:
 	def_text_pointers
-	dw_const PewterPokecenterNurseText,            TEXT_PEWTERPOKECENTER_NURSE
-	dw_const PewterPokecenterGentlemanText,        TEXT_PEWTERPOKECENTER_GENTLEMAN
-	dw_const PewterPokecenterJigglypuffText,       TEXT_PEWTERPOKECENTER_JIGGLYPUFF
-	dw_const PewterPokecenterLinkReceptionistText, TEXT_PEWTERPOKECENTER_LINK_RECEPTIONIST
-	dw_const PewterPokecenterBenchGuyText,         TEXT_PEWTERPOKECENTER_BENCH_GUY
-
-PewterPokecenterNurseText:
-	script_pokecenter_nurse
-
-PewterPokecenterGentlemanText:
-	text_far _PewterPokecenterGentlemanText
-	text_end
+	dba_const GenericPokecenterNurseText,            TEXT_PEWTERPOKECENTER_NURSE
+	dba_const _PewterPokecenterGentlemanText,       TEXT_PEWTERPOKECENTER_GENTLEMAN
+	dba_const PewterPokecenterJigglypuffText,       TEXT_PEWTERPOKECENTER_JIGGLYPUFF
+	dba_const GenericLinkReceptionistText,          TEXT_PEWTERPOKECENTER_LINK_RECEPTIONIST
+	dba_const PewterPokecenterBenchGuyText,         TEXT_PEWTERPOKECENTER_BENCH_GUY
 
 PewterPokecenterJigglypuffText:
 	text_asm
@@ -27,7 +20,7 @@ PewterPokecenterJigglypuffText:
 	ld a, SFX_STOP_ALL_MUSIC
 	rst _PlaySound
 	ld c, 32
-	rst _DelayFrames
+	rst DelayFrames
 
 	ld hl, .FacingDirections
 	ld de, wJigglypuffFacingDirections
@@ -61,7 +54,7 @@ PewterPokecenterJigglypuffText:
 	ld [wJigglypuffFacingDirections + 3], a
 	pop hl
 	ld c, 24
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wChannelSoundIDs]
 	ld b, a
 	ld a, [wChannelSoundIDs + CHAN2]
@@ -69,13 +62,12 @@ PewterPokecenterJigglypuffText:
 	jr nz, .spinMovementLoop
 
 	ld c, 48
-	rst _DelayFrames
+	rst DelayFrames
 	call PlayDefaultMusic
 	rst TextScriptEnd
 
 .Text:
-	text_far _PewterPokecenterJigglypuffText
-	text_end
+	text_far_end _PewterPokecenterJigglypuffText
 
 .FacingDirections:
 	db $30 | SPRITE_FACING_DOWN
@@ -83,9 +75,6 @@ PewterPokecenterJigglypuffText:
 	db $30 | SPRITE_FACING_UP
 	db $30 | SPRITE_FACING_RIGHT
 .FacingDirectionsEnd:
-
-PewterPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
 
 PewterPokecenterBenchGuyText:
 	text_asm
@@ -109,13 +98,10 @@ PewterPokecenterBenchGuyText:
 	rst _PrintText
 	rst TextScriptEnd
 .oh
-	text_far _PewterPokecenterBenchGuyLearnsetText1
-	text_end
+	text_far_end _PewterPokecenterBenchGuyLearnsetText1
 .yawn
-	text_far _PewterCityPokecenterGuyText
-	text_end
+	text_far_end _PewterPokecenterBenchGuyText
 
 BenchGuyName:
 	db "BENCH GUY@"
-	text_far _PewterCityPokecenterGuyText
-	text_end
+

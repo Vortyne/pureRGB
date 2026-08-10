@@ -1531,8 +1531,7 @@ SwitchEnemyMonCommon2:
 	ret
 
 AIBattleWithdrawText:
-	text_far _AIBattleWithdrawText
-	text_end
+	text_far_end _AIBattleWithdrawText
 
 AIUseFullHeal:
 	call AIPlayRestoringSFX
@@ -1703,8 +1702,7 @@ AIPrintItemUse_:
 	jp PrintText
 
 AIBattleUseItemText:
-	text_far _AIBattleUseItemText
-	text_end
+	text_far_end _AIBattleUseItemText
 
 ;;;;;;;;;; PureRGBnote: ADDED: these wram properties are used to make sure the 
 ;;;;;;;;;;                     AI doesn't instantly read the player's current pokemon type after a player switches.

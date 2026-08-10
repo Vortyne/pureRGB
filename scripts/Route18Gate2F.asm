@@ -3,9 +3,9 @@ Route18Gate2F_Script:
 
 Route18Gate2F_TextPointers:
 	def_text_pointers
-	dw_const Route18Gate2FYoungsterText,       TEXT_ROUTE18GATE2F_YOUNGSTER
-	dw_const Route18Gate2FLeftBinocularsText,  TEXT_ROUTE18GATE2F_LEFT_BINOCULARS
-	dw_const Route18Gate2FRightBinocularsText, TEXT_ROUTE18GATE2F_RIGHT_BINOCULARS
+	dba_const Route18Gate2FYoungsterText,       TEXT_ROUTE18GATE2F_YOUNGSTER
+	dba_const Route18Gate2FLeftBinocularsText,  TEXT_ROUTE18GATE2F_LEFT_BINOCULARS
+	dba_const Route18Gate2FRightBinocularsText, TEXT_ROUTE18GATE2F_RIGHT_BINOCULARS
 
 Route18Gate2FYoungsterText:
 	text_asm
@@ -21,8 +21,7 @@ Route18Gate2FLeftBinocularsText:
 
 .Text:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route18Gate2FLeftBinocularsText
-	text_end
+	text_far_end _Route18Gate2FLeftBinocularsText
 
 Route18Gate2FRightBinocularsText:
 	text_asm
@@ -31,5 +30,4 @@ Route18Gate2FRightBinocularsText:
 
 .Text:
 	text_far _GenericLookedIntoTheBinocularsText
-	text_far _Route18Gate2FRightBinocularsText
-	text_end
+	text_far_end _Route18Gate2FRightBinocularsText

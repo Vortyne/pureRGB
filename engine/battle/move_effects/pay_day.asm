@@ -42,5 +42,4 @@ PayDayEffect_:
 	ret
 
 CoinsScatteredText:
-	text_far _CoinsScatteredText
-	text_end
+	text_far_end _CoinsScatteredText

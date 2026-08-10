@@ -27,8 +27,8 @@ FuchsiaCity_Object:
 	warp_event 15, 27, FUCHSIA_TREE_DELETER_HOUSE, 1
 
 	def_bg_events
-	bg_event 15, 23, TEXT_FUCHSIACITY_SIGN1
-	bg_event 25, 15, TEXT_FUCHSIACITY_SIGN2
+	; bg_event 15, 23, TEXT_FUCHSIACITY_SIGN1 ; PureRGBnote: REMOVED: unused inaccessible sign
+	bg_event 25, 15, TEXT_FUCHSIACITY_SIGN
 	bg_event 17,  5, TEXT_FUCHSIACITY_SAFARI_GAME_SIGN
 	bg_event  6, 13, TEXT_FUCHSIACITY_MART_SIGN
 	bg_event 20, 27, TEXT_FUCHSIACITY_POKECENTER_SIGN

@@ -359,25 +359,19 @@ OptionsMenu2InfoTextJumpTable:
 	dw GBCFadeInfoText
 
 ColorsOptionInfoText:
-	text_far _ColorsOptionInfoText
-	text_end
+	text_far_end _ColorsOptionInfoText
 
 AltPkmnColorsInfoText:
-	text_far _AltPkmnColorsInfoText
-	text_end	
+	text_far_end _AltPkmnColorsInfoText	
 
 MusicInfoText:
-	text_far _MusicInfoText
-	text_end
+	text_far_end _MusicInfoText
 
 AudioPanInfoText:
-	text_far _AudioPanInfoText
-	text_end
+	text_far_end _AudioPanInfoText
 
 BikeSongInfoText:
-	text_far _BikeSongInfoText
-	text_end
+	text_far_end _BikeSongInfoText
 
 GBCFadeInfoText:
-	text_far _GBCFadeInfoText
-	text_end
+	text_far_end _GBCFadeInfoText

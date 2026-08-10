@@ -1,8 +1,7 @@
 ViridianCity_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, ViridianCity_ScriptPointers
-	ld a, [wViridianCityCurScript]
-	jp CallFunctionInTable
+	ld de, wViridianCityCurScript
+	jp CallMapScriptInTable
 
 ViridianCity_ScriptPointers:
 	def_script_pointers
@@ -111,25 +110,21 @@ ViridianCityMovePlayerDownScript:
 
 ViridianCity_TextPointers:
 	def_text_pointers
-	dw_const ViridianCityYoungster1Text,                     TEXT_VIRIDIANCITY_YOUNGSTER1
-	dw_const ViridianCityGambler1Text,                       TEXT_VIRIDIANCITY_GAMBLER1
-	dw_const ViridianCityYoungster2Text,                     TEXT_VIRIDIANCITY_YOUNGSTER2
-	dw_const ViridianCityGirlText,                           TEXT_VIRIDIANCITY_GIRL
-	dw_const ViridianCityOldManSleepyText,                   TEXT_VIRIDIANCITY_OLD_MAN_SLEEPY
-	dw_const ViridianCityFisherText,                         TEXT_VIRIDIANCITY_FISHER
-	dw_const ViridianCityOldManText,                         TEXT_VIRIDIANCITY_OLD_MAN
-	dw_const ViridianCitySignText,                           TEXT_VIRIDIANCITY_SIGN
-	dw_const ViridianCityTrainerTips1Text,                   TEXT_VIRIDIANCITY_TRAINER_TIPS1
-	dw_const ViridianCityTrainerTips2Text,                   TEXT_VIRIDIANCITY_TRAINER_TIPS2
-	dw_const MartSignText,                                   TEXT_VIRIDIANCITY_MART_SIGN
-	dw_const PokeCenterSignText,                             TEXT_VIRIDIANCITY_POKECENTER_SIGN
-	dw_const ViridianCityGymSignText,                        TEXT_VIRIDIANCITY_GYM_SIGN
-	dw_const ViridianCityGymLockedText,                      TEXT_VIRIDIANCITY_GYM_LOCKED
-	dw_const ViridianCityOldManYouNeedToWeakenTheTargetText, TEXT_VIRIDIANCITY_OLD_MAN_YOU_NEED_TO_WEAKEN_THE_TARGET
-
-ViridianCityYoungster1Text:
-	text_far _ViridianCityYoungster1Text
-	text_end
+	dba_const _ViridianCityYoungster1Text,                     TEXT_VIRIDIANCITY_YOUNGSTER1
+	dba_const ViridianCityGambler1Text,                       TEXT_VIRIDIANCITY_GAMBLER1
+	dba_const ViridianCityYoungster2Text,                     TEXT_VIRIDIANCITY_YOUNGSTER2
+	dba_const ViridianCityGirlText,                           TEXT_VIRIDIANCITY_GIRL
+	dba_const ViridianCityOldManSleepyText,                   TEXT_VIRIDIANCITY_OLD_MAN_SLEEPY
+	dba_const ViridianCityFisherText,                         TEXT_VIRIDIANCITY_FISHER
+	dba_const ViridianCityOldManText,                         TEXT_VIRIDIANCITY_OLD_MAN
+	dba_const _ViridianCitySignText,                           TEXT_VIRIDIANCITY_SIGN
+	dba_const _ViridianCityTrainerTips1Text,                   TEXT_VIRIDIANCITY_TRAINER_TIPS1
+	dba_const _ViridianCityTrainerTips2Text,                   TEXT_VIRIDIANCITY_TRAINER_TIPS2
+	dba_const MartSignText,                                   TEXT_VIRIDIANCITY_MART_SIGN
+	dba_const PokeCenterSignText,                             TEXT_VIRIDIANCITY_POKECENTER_SIGN
+	dba_const _ViridianCityGymSignText,                        TEXT_VIRIDIANCITY_GYM_SIGN
+	dba_const _ViridianCityGymLockedText,                      TEXT_VIRIDIANCITY_GYM_LOCKED
+	dba_const _ViridianCityOldManYouNeedToWeakenTheTargetText, TEXT_VIRIDIANCITY_OLD_MAN_YOU_NEED_TO_WEAKEN_THE_TARGET
 
 ViridianCityGambler1Text:
 	text_asm
@@ -145,12 +140,10 @@ ViridianCityGambler1Text:
 	rst TextScriptEnd
 
 .GymAlwaysClosedText:
-	text_far _ViridianCityGambler1GymAlwaysClosedText
-	text_end
+	text_far_end _ViridianCityGambler1GymAlwaysClosedText
 
 .GymLeaderReturnedText:
-	text_far _ViridianCityGambler1GymLeaderReturnedText
-	text_end
+	text_far_end _ViridianCityGambler1GymLeaderReturnedText
 
 ViridianCityYoungster2Text:
 	text_asm
@@ -165,16 +158,13 @@ ViridianCityYoungster2Text:
 	rst TextScriptEnd
 
 .YouWantToKnowAboutText:
-	text_far _ViridianCityYoungster2YouWantToKnowAboutText
-	text_end
+	text_far_end _ViridianCityYoungster2YouWantToKnowAboutText
 
 .OkThenText:
-	text_far ViridianCityYoungster2OkThenText
-	text_end
+	text_far_end ViridianCityYoungster2OkThenText
 
 .CaterpieAndWeedleDescriptionText:
-	text_far ViridianCityYoungster2CaterpieAndWeedleDescriptionText
-	text_end
+	text_far_end ViridianCityYoungster2CaterpieAndWeedleDescriptionText
 
 ViridianCityGirlText:
 	text_asm
@@ -187,12 +177,10 @@ ViridianCityGirlText:
 	rst TextScriptEnd
 
 .HasntHadHisCoffeeYetText:
-	text_far _ViridianCityGirlHasntHadHisCoffeeYetText
-	text_end
+	text_far_end _ViridianCityGirlHasntHadHisCoffeeYetText
 
 .WhenIGoShopText:
-	text_far _ViridianCityGirlWhenIGoShopText
-	text_end
+	text_far_end _ViridianCityGirlWhenIGoShopText
 
 ViridianCityOldManSleepyText:
 	text_asm
@@ -204,8 +192,7 @@ ViridianCityOldManSleepyText:
 	rst TextScriptEnd
 
 .PrivatePropertyText:
-	text_far _ViridianCityOldManSleepyPrivatePropertyText
-	text_end
+	text_far_end _ViridianCityOldManSleepyPrivatePropertyText
 
 ViridianCityFisherText:
 	text_asm
@@ -235,8 +222,7 @@ ViridianCityFisherText:
 	predef_jump LearnsetTrainerScriptMain
 
 .YouCanHaveThisText:
-	text_far ViridianCityFisherYouCanHaveThisText
-	text_end
+	text_far_end ViridianCityFisherYouCanHaveThisText
 
 .ReceivedTM42Text:
 	text_far _ViridianCityFisherReceivedTM42Text
@@ -244,12 +230,10 @@ ViridianCityFisherText:
 	text_end
 
 .TM42ExplanationText:
-	text_far _ViridianCityFisherTM42ExplanationText
-	text_end
+	text_far_end _ViridianCityFisherTM42ExplanationText
 
 .TM42NoRoomText:
-	text_far _ViridianCityFisherTM42NoRoomText
-	text_end
+	text_far_end _ViridianCityFisherTM42NoRoomText
 
 SleeperName:
 	db "SLEEPY GUY@"
@@ -259,7 +243,7 @@ ViridianCityOldManText:
 	ld hl, .HadMyCoffeeNowText
 	rst _PrintText
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	call YesNoChoice
 	ld hl, .TimeIsMoneyText
 	jr z, .printDone
@@ -271,37 +255,10 @@ ViridianCityOldManText:
 	rst TextScriptEnd
 
 .HadMyCoffeeNowText:
-	text_far _ViridianCityOldManHadMyCoffeeNowText
-	text_end
+	text_far_end _ViridianCityOldManHadMyCoffeeNowText
 
 .KnowHowToCatchPokemonText:
-	text_far _ViridianCityOldManKnowHowToCatchPokemonText
-	text_end
+	text_far_end _ViridianCityOldManKnowHowToCatchPokemonText
 
 .TimeIsMoneyText:
-	text_far _ViridianCityOldManTimeIsMoneyText
-	text_end
-
-ViridianCityOldManYouNeedToWeakenTheTargetText:
-	text_far _ViridianCityOldManYouNeedToWeakenTheTargetText
-	text_end
-
-ViridianCitySignText:
-	text_far _ViridianCitySignText
-	text_end
-
-ViridianCityTrainerTips1Text:
-	text_far _ViridianCityTrainerTips1Text
-	text_end
-
-ViridianCityTrainerTips2Text:
-	text_far _ViridianCityTrainerTips2Text
-	text_end
-
-ViridianCityGymSignText:
-	text_far _ViridianCityGymSignText
-	text_end
-
-ViridianCityGymLockedText:
-	text_far _ViridianCityGymLockedText
-	text_end
+	text_far_end _ViridianCityOldManTimeIsMoneyText

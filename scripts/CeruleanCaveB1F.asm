@@ -1,10 +1,9 @@
 CeruleanCaveB1F_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, wCurrentMapScriptFlags
 	res BIT_CUR_MAP_LOADED_1, [hl]
-	ld a, [wCeruleanCaveB1FCurScript]
 	ld hl, CeruleanCaveB1F_ScriptPointers
-	jp CallFunctionInTable
+	ld de, wCeruleanCaveB1FCurScript
+	jp CallMapScriptInTable
 
 CeruleanCaveB1F_ScriptPointers:
 	def_script_pointers
@@ -14,9 +13,9 @@ CeruleanCaveB1F_ScriptPointers:
 
 CeruleanCaveB1F_TextPointers:
 	def_text_pointers
-	dw_const MewtwoBattleText,          TEXT_CERULEANCAVEB1F_MEWTWO
-	dw_const PickUpItemText,            TEXT_CERULEANCAVEB1F_ITEM1
-	dw_const PickUpItemText,            TEXT_CERULEANCAVEB1F_ITEM2
+	dba_const MewtwoBattleText,          TEXT_CERULEANCAVEB1F_MEWTWO
+	dba_const PickUpItemText,            TEXT_CERULEANCAVEB1F_ITEM1
+	dba_const PickUpItemText,            TEXT_CERULEANCAVEB1F_ITEM2
 
 MewtwoBattleText:
 	text_far _MewtwoBattleText
@@ -89,7 +88,7 @@ MewtwoAnimation:
 	call ResumeMusic
 	callfar PlayTrainerMusic
 	ld c, 90
-	rst _DelayFrames
+	rst DelayFrames
 	ResetFlag FLAG_HIDE_PLAYER_SPRITE
 	ld a, SCRIPT_CERULEANCAVEB1F_MEWTWO_POST_BATTLE
 	ld [wCeruleanCaveB1FCurScript], a

@@ -199,7 +199,7 @@ InGameTrade_RestoreScreen::
 	call Delay3
 	call LoadGBPal
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	farjp LoadWildData
 
 InGameTrade_PrepareTradeData:
@@ -370,8 +370,7 @@ TradeTextPointers7:
 
 
 ConnectCableText:
-	text_far _ConnectCableText
-	text_end
+	text_far_end _ConnectCableText
 
 TradedForText:
 	text_far _TradedForText
@@ -386,8 +385,7 @@ TradedForText:
 	text_end
 
 WannaTrade1Text:
-	text_far _WannaTrade1Text
-	text_end
+	text_far_end _WannaTrade1Text
 
 WannaTrade1TextPrompt:
 	text_far _WannaTrade1Text
@@ -395,35 +393,30 @@ WannaTrade1TextPrompt:
 	text_end
 
 WannaTradeColorPaletteText:
-	text_far _TradeColorPaletteText
-	text_end
+	text_far_end _TradeColorPaletteText
 
 WannaTrade1ColorText:
 	text_asm
 	ld a, [wOptions2]
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
-	jr nz, .altPalettesOn
 	ld hl, WannaTrade1Text
-	jr .done
+	jr z, .done
 .altPalettesOn
-	ld hl, WannaTrade1TextPrompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, WannaTradeColorPaletteText
 .done
 	rst _PrintText
 	rst TextScriptEnd
 
 NoTrade1Text:
-	text_far _NoTrade1Text
-	text_end
+	text_far_end _NoTrade1Text
 
 WrongMon1Text:
-	text_far _WrongMon1Text
-	text_end
+	text_far_end _WrongMon1Text
 
 Thanks1Text:
-	text_far _Thanks1Text
-	text_end
+	text_far_end _Thanks1Text
 
 Thanks1TextPrompt:
 	text_far _Thanks1Text
@@ -431,85 +424,62 @@ Thanks1TextPrompt:
 	text_end
 
 AfterTrade1Text:
-	text_far _AfterTrade1Text
-	text_end
+	text_far_end _AfterTrade1Text
 
 WannaTrade2Text:
-	text_far _WannaTrade2Text
-	text_end
-
-WannaTrade2TextPrompt:
-	text_far _WannaTrade2Text
-	text_promptbutton
-	text_end
+	text_far_end _WannaTrade2Text
 
 WannaTrade2ColorText:
 	text_asm
 	ld a, [wOptions2]
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
-	jr nz, .altPalettesOn
 	ld hl, WannaTrade2Text
-	jr .done
+	jr z, .printDone
 .altPalettesOn
-	ld hl, WannaTrade2TextPrompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, WannaTradeColorPaletteText
-.done
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 
 NoTrade2Text:
-	text_far _NoTrade2Text
-	text_end
+	text_far_end _NoTrade2Text
 
 WrongMon2Text:
-	text_far _WrongMon2Text
-	text_end
+	text_far_end _WrongMon2Text
 
 Thanks2Text:
-	text_far _Thanks2Text
-	text_end
+	text_far_end _Thanks2Text
 
 AfterTrade2Text:
-	text_far _AfterTrade2Text
-	text_end
+	text_far_end _AfterTrade2Text
 
 WannaTrade3Text:
-	text_far _WannaTrade3Text
-	text_end
-
-WannaTrade3TextPrompt:
-	text_far _WannaTrade3Text
-	text_promptbutton
-	text_end
+	text_far_end _WannaTrade3Text
 
 WannaTrade3ColorText:
 	text_asm
 	ld a, [wOptions2]
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
-	jr nz, .altPalettesOn
 	ld hl, WannaTrade3Text
-	jr .done
+	jr z, .printDone
 .altPalettesOn
-	ld hl, WannaTrade3TextPrompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, WannaTradeColorPaletteText
-.done
+.printDone
 	rst _PrintText
 	rst TextScriptEnd
 
 NoTrade3Text:
-	text_far _NoTrade3Text
-	text_end
+	text_far_end _NoTrade3Text
 
 WrongMon3Text:
-	text_far _WrongMon3Text
-	text_end
+	text_far_end _WrongMon3Text
 
 Thanks3Text:
-	text_far _Thanks3Text
-	text_end
+	text_far_end _Thanks3Text
 
 AfterTrade3Text:
-	text_far _AfterTrade3Text
-	text_end
+	text_far_end _AfterTrade3Text

@@ -1,13 +1,10 @@
 ; PureRGBnote: ADDED: new trainers in this route.
 
 Route14_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, Route14TrainerHeaders
 	ld de, Route14_ScriptPointers
-	ld a, [wRoute14CurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wRoute14CurScript], a
-	ret
+	ld bc, wRoute14CurScript
+	jp ExecuteCustomMapScriptInTable
 
 Route14_ScriptPointers:
 	def_script_pointers
@@ -17,47 +14,47 @@ Route14_ScriptPointers:
 
 Route14_TextPointers:
 	def_text_pointers
-	dw_const Route14CooltrainerM1Text, TEXT_ROUTE14_COOLTRAINER_M1
-	dw_const Route14CooltrainerM2Text, TEXT_ROUTE14_COOLTRAINER_M2
-	dw_const Route14CooltrainerM3Text, TEXT_ROUTE14_COOLTRAINER_M3
-	dw_const Route14CooltrainerM4Text, TEXT_ROUTE14_COOLTRAINER_M4
-	dw_const Route14CooltrainerM5Text, TEXT_ROUTE14_COOLTRAINER_M5
-	dw_const Route14CooltrainerM6Text, TEXT_ROUTE14_COOLTRAINER_M6
-	dw_const Route14Biker1Text,        TEXT_ROUTE14_BIKER1
-	dw_const Route14Biker2Text,        TEXT_ROUTE14_BIKER2
-	dw_const Route14Biker3Text,        TEXT_ROUTE14_BIKER3
-	dw_const Route14Biker4Text,        TEXT_ROUTE14_BIKER4
-	dw_const Route14Text11,            TEXT_ROUTE14_COOLTRAINER_M7
-	dw_const Route14Text12,            TEXT_ROUTE14_BEAUTY
-	dw_const Route14SignText,          TEXT_ROUTE14_SIGN
-	dw_const Route14Text14,            TEXT_ROUTE14_TRAINER_TIPS ; PureRGBnote: ADDED: new trainer tips sign on this route.
+	dba_const Route14CooltrainerM1Text, TEXT_ROUTE14_COOLTRAINER_M1
+	dba_const Route14CooltrainerM2Text, TEXT_ROUTE14_COOLTRAINER_M2
+	dba_const Route14CooltrainerM3Text, TEXT_ROUTE14_COOLTRAINER_M3
+	dba_const Route14CooltrainerM4Text, TEXT_ROUTE14_COOLTRAINER_M4
+	dba_const Route14CooltrainerM5Text, TEXT_ROUTE14_COOLTRAINER_M5
+	dba_const Route14CooltrainerM6Text, TEXT_ROUTE14_COOLTRAINER_M6
+	dba_const Route14Biker1Text,        TEXT_ROUTE14_BIKER1
+	dba_const Route14Biker2Text,        TEXT_ROUTE14_BIKER2
+	dba_const Route14Biker3Text,        TEXT_ROUTE14_BIKER3
+	dba_const Route14Biker4Text,        TEXT_ROUTE14_BIKER4
+	dba_const Route14Text11,            TEXT_ROUTE14_COOLTRAINER_M7
+	dba_const Route14Text12,            TEXT_ROUTE14_BEAUTY
+	dba_const _Route14SignText,         TEXT_ROUTE14_SIGN
+	dba_const _Route14Text12,           TEXT_ROUTE14_TRAINER_TIPS ; PureRGBnote: ADDED: new trainer tips sign on this route.
 
 Route14TrainerHeaders:
 	def_trainers
 Route14TrainerHeader0:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_0, 2, Route14CooltrainerM1BattleText, Route14CooltrainerM1EndBattleText, Route14CooltrainerM1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_0, 2, _Route14CooltrainerM1BattleText, _Route14CooltrainerM1EndBattleText, _Route14CooltrainerM1AfterBattleText
 Route14TrainerHeader1:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_1, 2, Route14CooltrainerM2BattleText, Route14CooltrainerM2EndBattleText, Route14CooltrainerM2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_1, 2, _Route14CooltrainerM2BattleText, _Route14CooltrainerM2EndBattleText, _Route14CooltrainerM2AfterBattleText
 Route14TrainerHeader2:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_2, 4, Route14CooltrainerM3BattleText, Route14CooltrainerM3EndBattleText, Route14CooltrainerM3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_2, 4, _Route14CooltrainerM3BattleText, _Route14CooltrainerM3EndBattleText, _Route14CooltrainerM3AfterBattleText
 Route14TrainerHeader3:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_3, 3, Route14CooltrainerM4BattleText, Route14CooltrainerM4EndBattleText, Route14CooltrainerM4AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_3, 3, _Route14CooltrainerM4BattleText, _Route14CooltrainerM4EndBattleText, _Route14CooltrainerM4AfterBattleText
 Route14TrainerHeader4:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_4, 3, Route14CooltrainerM5BattleText, Route14CooltrainerM5EndBattleText, Route14CooltrainerM5AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_4, 3, _Route14CooltrainerM5BattleText, _Route14CooltrainerM5EndBattleText, Route14CooltrainerM5AfterBattleText
 Route14TrainerHeader5:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_5, 4, Route14CooltrainerM6BattleText, Route14CooltrainerM6EndBattleText, Route14CooltrainerM6AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_5, 4, _Route14CooltrainerM6BattleText, _Route14CooltrainerM6EndBattleText, _Route14CooltrainerM6AfterBattleText
 Route14TrainerHeader6:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_6, 4, Route14Biker1BattleText, Route14Biker1EndBattleText, Route14Biker1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_6, 4, _Route14Biker1BattleText, _Route14Biker1EndBattleText, _Route14Biker1AfterBattleText
 Route14TrainerHeader7:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_7, 4, Route14Biker2BattleText, Route14Biker2EndBattleText, Route14Biker2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_7, 4, _Route14Biker2BattleText, _Route14Biker2EndBattleText, _Route14Biker2AfterBattleText
 Route14TrainerHeader8:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_8, 3, Route14Biker3BattleText, Route14Biker3EndBattleText, Route14Biker3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_8, 3, _Route14Biker3BattleText, _Route14Biker3EndBattleText, _Route14Biker3AfterBattleText
 Route14TrainerHeader9:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_9, 4, Route14Biker4BattleText, Route14Biker4EndBattleText, Route14Biker4AfterBattleText
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_9, 4, _Route14Biker4BattleText, _Route14Biker4EndBattleText, _Route14Biker4AfterBattleText
 Route14TrainerHeader10:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_10, 3, Route14BattleText11, Route14EndBattleText11, Route14AfterBattleText11
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_10, 3, _Route14BattleText11, _Route14EndBattleText11, _Route14AfterBattleText11
 Route14TrainerHeader11:
-	trainer EVENT_BEAT_ROUTE_14_TRAINER_11, 4, Route14BattleText12, Route14EndBattleText12, Route14AfterBattleText12
+	trainer EVENT_BEAT_ROUTE_14_TRAINER_11, 4, _Route14BattleText12, _Route14EndBattleText12, _Route14AfterBattleText12
 	db -1 ; end
 
 Route14CooltrainerM1Text:
@@ -95,62 +92,6 @@ Route14Text11:
 
 Route14Text12:
 	script_trainer Route14TrainerHeader11
-
-Route14CooltrainerM1BattleText:
-	text_far _Route14CooltrainerM1BattleText
-	text_end
-
-Route14CooltrainerM1EndBattleText:
-	text_far _Route14CooltrainerM1EndBattleText
-	text_end
-
-Route14CooltrainerM1AfterBattleText:
-	text_far _Route14CooltrainerM1AfterBattleText
-	text_end
-
-Route14CooltrainerM2BattleText:
-	text_far _Route14CooltrainerM2BattleText
-	text_end
-
-Route14CooltrainerM2EndBattleText:
-	text_far _Route14CooltrainerM2EndBattleText
-	text_end
-
-Route14CooltrainerM2AfterBattleText:
-	text_far _Route14CooltrainerM2AfterBattleText
-	text_end
-
-Route14CooltrainerM3BattleText:
-	text_far _Route14CooltrainerM3BattleText
-	text_end
-
-Route14CooltrainerM3EndBattleText:
-	text_far _Route14CooltrainerM3EndBattleText
-	text_end
-
-Route14CooltrainerM3AfterBattleText:
-	text_far _Route14CooltrainerM3AfterBattleText
-	text_end
-
-Route14CooltrainerM4BattleText:
-	text_far _Route14CooltrainerM4BattleText
-	text_end
-
-Route14CooltrainerM4EndBattleText:
-	text_far _Route14CooltrainerM4EndBattleText
-	text_end
-
-Route14CooltrainerM4AfterBattleText:
-	text_far _Route14CooltrainerM4AfterBattleText
-	text_end
-
-Route14CooltrainerM5BattleText:
-	text_far _Route14CooltrainerM5BattleText
-	text_end
-
-Route14CooltrainerM5EndBattleText:
-	text_far _Route14CooltrainerM5EndBattleText
-	text_end
 
 DoesPlayerHaveLegendaryBird::
 	CheckEvent FLAG_ARTICUNO_LEARNSET
@@ -192,14 +133,11 @@ DoesPlayerHaveLegendaryBird::
 	scf
 	ret
 .whatYouHaveBirdA
-	text_far _LegendaryBirdLearnsetA
-	text_end
+	text_far_end _LegendaryBirdLearnsetA
 .whatYouHaveBirdAn
-	text_far _LegendaryBirdLearnsetAn
-	text_end
+	text_far_end _LegendaryBirdLearnsetAn
 .learnset2
-	text_far _LegendaryBirdLearnset
-	text_end
+	text_far_end _LegendaryBirdLearnset
 
 Route14CooltrainerM5AfterBattleText:
 	text_asm
@@ -216,97 +154,4 @@ Route14CooltrainerM5AfterBattleText:
 	ld bc, LearnsetFadeOutInDetails
 	predef_jump LearnsetTrainerScriptMain
 .defaultAfterText 
-	text_far _Route14CooltrainerM5AfterBattleText
-	text_end
-
-Route14CooltrainerM6BattleText:
-	text_far _Route14CooltrainerM6BattleText
-	text_end
-
-Route14CooltrainerM6EndBattleText:
-	text_far _Route14CooltrainerM6EndBattleText
-	text_end
-
-Route14CooltrainerM6AfterBattleText:
-	text_far _Route14CooltrainerM6AfterBattleText
-	text_end
-
-Route14Biker1BattleText:
-	text_far _Route14Biker1BattleText
-	text_end
-
-Route14Biker1EndBattleText:
-	text_far _Route14Biker1EndBattleText
-	text_end
-
-Route14Biker1AfterBattleText:
-	text_far _Route14Biker1AfterBattleText
-	text_end
-
-Route14Biker2BattleText:
-	text_far _Route14Biker2BattleText
-	text_end
-
-Route14Biker2EndBattleText:
-	text_far _Route14Biker2EndBattleText
-	text_end
-
-Route14Biker2AfterBattleText:
-	text_far _Route14Biker2AfterBattleText
-	text_end
-
-Route14Biker3BattleText:
-	text_far _Route14Biker3BattleText
-	text_end
-
-Route14Biker3EndBattleText:
-	text_far _Route14Biker3EndBattleText
-	text_end
-
-Route14Biker3AfterBattleText:
-	text_far _Route14Biker3AfterBattleText
-	text_end
-
-Route14Biker4BattleText:
-	text_far _Route14Biker4BattleText
-	text_end
-
-Route14Biker4EndBattleText:
-	text_far _Route14Biker4EndBattleText
-	text_end
-
-Route14Biker4AfterBattleText:
-	text_far _Route14Biker4AfterBattleText
-	text_end
-
-Route14BattleText11:
-	text_far _Route14BattleText11
-	text_end
-
-Route14EndBattleText11:
-	text_far _Route14EndBattleText11
-	text_end
-
-Route14AfterBattleText11:
-	text_far _Route14AfterBattleText11
-	text_end
-
-Route14BattleText12:
-	text_far _Route14BattleText12
-	text_end
-
-Route14EndBattleText12:
-	text_far _Route14EndBattleText12
-	text_end
-
-Route14AfterBattleText12:
-	text_far _Route14AfterBattleText12
-	text_end
-
-Route14SignText:
-	text_far _Route14SignText
-	text_end
-
-Route14Text14:
-	text_far _Route14Text12
-	text_end
+	text_far_end _Route14CooltrainerM5AfterBattleText

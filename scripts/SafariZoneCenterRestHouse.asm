@@ -4,9 +4,9 @@ SafariZoneCenterRestHouse_Script:
 
 SafariZoneCenterRestHouse_TextPointers:
 	def_text_pointers
-	dw_const SafariZoneCenterRestHouseSaraText,      TEXT_SAFARIZONECENTERRESTHOUSE_SARA
-	dw_const SafariZoneCenterRestHouseScientistText, TEXT_SAFARIZONECENTERRESTHOUSE_SCIENTIST
-	dw_const SafariZoneCenterRestHouseErikText,      TEXT_SAFARIZONECENTERRESTHOUSE_ERIK
+	dba_const SafariZoneCenterRestHouseSaraText,      TEXT_SAFARIZONECENTERRESTHOUSE_SARA
+	dba_const _SafariZoneCenterRestHouseScientistText, TEXT_SAFARIZONECENTERRESTHOUSE_SCIENTIST
+	dba_const SafariZoneCenterRestHouseErikText,      TEXT_SAFARIZONECENTERRESTHOUSE_ERIK
 
 SafariZoneCenterRestHouseSaraText:
 	text_asm
@@ -32,21 +32,13 @@ SafariZoneCenterRestHouseSaraText:
 	call ShowHouseSaraErik
 	rst TextScriptEnd
 .whereErik
-	text_far _SafariZoneCenterRestHouseGirlText
-	text_end
+	text_far_end _SafariZoneCenterRestHouseGirlText
 .goGetErik
-	text_far _SaraErikOutsideText
-	text_end
+	text_far_end _SaraErikOutsideText
 .reunitedText
-	text_far _SaraReunitedText
-	text_end
+	text_far_end _SaraReunitedText
 .okayRicky
-	text_far _SaraOkayRicky
-	text_end
-
-SafariZoneCenterRestHouseScientistText:
-	text_far _SafariZoneCenterRestHouseScientistText
-	text_end
+	text_far_end _SaraOkayRicky
 
 SafariZoneCenterRestHouseErikText:
 	text_far _ErikReunitedText
@@ -56,7 +48,6 @@ SafariZoneCenterRestHouseErikText:
 
 ShowHouseSaraErik:
 	ld c, TOGGLE_ERIK_HOUSE
-	call .show
+	call ShowExtraObject
 	ld c, TOGGLE_SARA_HOUSE
-.show
 	jp ShowExtraObject

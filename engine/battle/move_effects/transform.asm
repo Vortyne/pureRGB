@@ -167,10 +167,9 @@ TransformEffect_:
 
 .failed
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, PrintButItFailedText_
 	jp EffectCallBattleCore
 
 TransformedText:
-	text_far _TransformedText
-	text_end
+	text_far_end _TransformedText

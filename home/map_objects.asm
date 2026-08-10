@@ -1,6 +1,3 @@
-TextScript_PokemonCenterPC::
-	jpfar ActivatePC
-
 StartSimulatingJoypadStatesOnlyAOrBPress::
 	ld a, PAD_START | PAD_SELECT | PAD_CTRL_PAD
 	jr StartSimulatingJoypadStatesNoJoypad.load
@@ -33,7 +30,7 @@ DisplayPokedex::
 SetSpriteFacingDirectionAndDelay::
 	call SetSpriteFacingDirection
 	ld c, 6
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 
 SetSpriteFacingDirection::
@@ -201,3 +198,9 @@ TextScript_Trainer::
 	inc hl
 	hl_deref
 	jp TalkToTrainer
+
+; input hl = script pointers for the current map
+CallMapScriptInTable::
+	call EnableAutoTextBoxDrawing
+	ld a, [de]
+	jp CallFunctionInTable

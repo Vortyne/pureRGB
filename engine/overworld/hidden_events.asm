@@ -19,8 +19,6 @@ CheckForHiddenEvent::
 	ld hl, hItemAlreadyFound
 	xor a
 	ld [hli], a ; [hItemAlreadyFound]
-	ld [hli], a ; [hSavedMapTextPtr]
-	ld [hli], a ; [hSavedMapTextPtr + 1]
 	ld [hl], a  ; [hDidntFindAnyHiddenEvent]
 	ld de, $0
 	ld hl, HiddenEventMaps

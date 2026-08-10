@@ -1,3 +1,2 @@
 ElevatorText::
-	text_far _ElevatorText
-	text_end
+	text_far_end _ElevatorText

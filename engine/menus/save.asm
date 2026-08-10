@@ -15,7 +15,7 @@ TryLoadSaveFile:
 	ld hl, FileDataDestroyedText
 	rst _PrintText
 	ld c, 100
-	rst _DelayFrames
+	rst DelayFrames
 	pop hl
 	res BIT_NO_TEXT_DELAY, [hl]
 	ld a, $1 ; bad checksum
@@ -24,8 +24,7 @@ TryLoadSaveFile:
 	ret
 
 FileDataDestroyedText:
-	text_far _FileDataDestroyedText
-	text_end
+	text_far_end _FileDataDestroyedText
 
 LoadMainData:
 	ld a, RAMG_SRAM_ENABLE
@@ -183,16 +182,13 @@ SaveTheGame_YesOrNo:
 	ret
 
 WouldYouLikeToSaveText:
-	text_far _WouldYouLikeToSaveText
-	text_end
+	text_far_end _WouldYouLikeToSaveText
 
 GameSavedText:
-	text_far _GameSavedText
-	text_end
+	text_far_end _GameSavedText
 
 OlderFileWillBeErasedText:
-	text_far _OlderFileWillBeErasedText
-	text_end
+	text_far_end _OlderFileWillBeErasedText
 
 SaveMainData:
 	ld a, RAMG_SRAM_ENABLE
@@ -400,17 +396,7 @@ ChangeBox::
 	ld a, [wCurrentMenuItem]
 	ld d, a
 	call ChangeBoxData
-	ld hl, wCurMapTextPtr
-	ld de, wChangeBoxSavedMapTextPointer
-	ld a, [hli]
-	ld [de], a
-	inc de
-	ld a, [hl]
-	ld [de], a
-	call RestoreMapTextPointer
 	call SaveGameData
-	ld hl, wChangeBoxSavedMapTextPointer
-	call SetMapTextPointer
 	ld a, SFX_SAVE
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
@@ -438,12 +424,10 @@ ChangeBoxData::
 
 
 WhenYouChangeBoxText:
-	text_far _WhenYouChangeBoxText
-	text_end
+	text_far_end _WhenYouChangeBoxText
 
 SkippedForeverText:
-	text_far _SkippedForever
-	text_end
+	text_far_end _SkippedForever
 
 CopyBoxToOrFromSRAM:
 ; copy an entire box from hl to de with b as the SRAM bank

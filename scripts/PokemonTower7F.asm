@@ -1,11 +1,8 @@
 PokemonTower7F_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, PokemonTower7TrainerHeaders
 	ld de, PokemonTower7F_ScriptPointers
-	ld a, [wPokemonTower7FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wPokemonTower7FCurScript], a
-	ret
+	ld bc, wPokemonTower7FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 PokemonTower7F_ScriptPointers:
 	def_script_pointers
@@ -131,19 +128,19 @@ PokemonTower7FRocketLeaveMovementScript:
 
 PokemonTower7F_TextPointers:
 	def_text_pointers
-	dw_const PokemonTower7FRocket1Text, TEXT_POKEMONTOWER7F_ROCKET1
-	dw_const PokemonTower7FRocket2Text, TEXT_POKEMONTOWER7F_ROCKET2
-	dw_const PokemonTower7FRocket3Text, TEXT_POKEMONTOWER7F_ROCKET3
-	dw_const PokemonTower7FMrFujiText,  TEXT_POKEMONTOWER7F_MR_FUJI
+	dba_const PokemonTower7FRocket1Text, TEXT_POKEMONTOWER7F_ROCKET1
+	dba_const PokemonTower7FRocket2Text, TEXT_POKEMONTOWER7F_ROCKET2
+	dba_const PokemonTower7FRocket3Text, TEXT_POKEMONTOWER7F_ROCKET3
+	dba_const PokemonTower7FMrFujiText,  TEXT_POKEMONTOWER7F_MR_FUJI
 
 PokemonTower7TrainerHeaders:
 	def_trainers
 PokemonTower7TrainerHeader0:
-	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_0, 3, PokemonTower7FRocket1BattleText, PokemonTower7FRocket1EndBattleText, PokemonTower7FRocket1AfterBattleText
+	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_0, 3, _PokemonTower7FRocket1BattleText, _PokemonTower7FRocket1EndBattleText, _PokemonTower7FRocket1AfterBattleText
 PokemonTower7TrainerHeader1:
-	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_1, 3, PokemonTower7FRocket2BattleText, PokemonTower7FRocket2EndBattleText, PokemonTower7FRocket2AfterBattleText
+	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_1, 3, _PokemonTower7FRocket2BattleText, _PokemonTower7FRocket2EndBattleText, _PokemonTower7FRocket2AfterBattleText
 PokemonTower7TrainerHeader2:
-	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_2, 3, PokemonTower7FRocket3BattleText, PokemonTower7FRocket3EndBattleText, PokemonTower7FRocket3AfterBattleText
+	trainer EVENT_BEAT_POKEMONTOWER_7_TRAINER_2, 3, _PokemonTower7FRocket3BattleText, _PokemonTower7FRocket3EndBattleText, _PokemonTower7FRocket3AfterBattleText
 	db -1 ; end
 
 PokemonTower7FRocket1Text:
@@ -181,47 +178,9 @@ PokemonTower7FMrFujiText:
 .RescueDefaultText:
 	text_far _PokemonTower7FMrFujiRescueText
 	text_far _PokemonTower7FMrFujiAfterlifeText
-	text_far _PokemonTower7FMrFujiFollowMeText
-	text_end
+	text_far_end _PokemonTower7FMrFujiFollowMeText
 
 .RescueCaughtMarowakText:
 	text_far _PokemonTower7FMrFujiRescueText
 	text_far _PokemonTower7FMrFujiCaughtText
-	text_far _PokemonTower7FMrFujiFollowMeText
-	text_end
-
-PokemonTower7FRocket1BattleText:
-	text_far _PokemonTower7FRocket1BattleText
-	text_end
-
-PokemonTower7FRocket1EndBattleText:
-	text_far _PokemonTower7FRocket1EndBattleText
-	text_end
-
-PokemonTower7FRocket1AfterBattleText:
-	text_far _PokemonTower7FRocket1AfterBattleText
-	text_end
-
-PokemonTower7FRocket2BattleText:
-	text_far _PokemonTower7FRocket2BattleText
-	text_end
-
-PokemonTower7FRocket2EndBattleText:
-	text_far _PokemonTower7FRocket2EndBattleText
-	text_end
-
-PokemonTower7FRocket2AfterBattleText:
-	text_far _PokemonTower7FRocket2AfterBattleText
-	text_end
-
-PokemonTower7FRocket3BattleText:
-	text_far _PokemonTower7FRocket3BattleText
-	text_end
-
-PokemonTower7FRocket3EndBattleText:
-	text_far _PokemonTower7FRocket3EndBattleText
-	text_end
-
-PokemonTower7FRocket3AfterBattleText:
-	text_far _PokemonTower7FRocket3AfterBattleText
-	text_end
+	text_far_end _PokemonTower7FMrFujiFollowMeText

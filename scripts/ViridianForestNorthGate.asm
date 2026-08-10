@@ -3,13 +3,5 @@ ViridianForestNorthGate_Script:
 
 ViridianForestNorthGate_TextPointers:
 	def_text_pointers
-	dw_const ViridianForestNorthGateSuperNerdText, TEXT_VIRIDIANFORESTNORTHGATE_SUPER_NERD
-	dw_const ViridianForestNorthGateGrampsText,    TEXT_VIRIDIANFORESTNORTHGATE_GRAMPS
-
-ViridianForestNorthGateSuperNerdText:
-	text_far _ViridianForestNorthGateSuperNerdText
-	text_end
-
-ViridianForestNorthGateGrampsText:
-	text_far _ViridianForestNorthGateGrampsText
-	text_end
+	dba_const _ViridianForestNorthGateSuperNerdText, TEXT_VIRIDIANFORESTNORTHGATE_SUPER_NERD
+	dba_const _ViridianForestNorthGateGrampsText,    TEXT_VIRIDIANFORESTNORTHGATE_GRAMPS

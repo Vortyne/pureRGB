@@ -1,12 +1,9 @@
 BrunosRoom_Script:
 	call BrunoShowOrHideExitBlock
-	call EnableAutoTextBoxDrawing
 	ld hl, BrunosRoomTrainerHeaders
 	ld de, BrunosRoom_ScriptPointers
-	ld a, [wBrunosRoomCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wBrunosRoomCurScript], a
-	ret
+	ld bc, wBrunosRoomCurScript
+	jp ExecuteCustomMapScriptInTable
 
 BrunoShowOrHideExitBlock:
 	call WasMapJustLoaded
@@ -37,13 +34,13 @@ BrunosRoomBrunoEndBattleScript:
 
 BrunosRoom_TextPointers:
 	def_text_pointers
-	dw_const BrunosRoomBrunoText,            TEXT_BRUNOSROOM_BRUNO
-	dw_const EliteFourDontRunAwayText,       TEXT_BRUNOSROOM_BRUNO_DONT_RUN_AWAY
+	dba_const BrunosRoomBrunoText,            TEXT_BRUNOSROOM_BRUNO
+	dba_const _EliteFourDontRunAwayText,       TEXT_BRUNOSROOM_BRUNO_DONT_RUN_AWAY
 
 BrunosRoomTrainerHeaders:
 	def_trainers
 BrunosRoomTrainerHeader0:
-	trainer EVENT_BEAT_BRUNOS_ROOM_TRAINER_0, 0, BrunoBeforeBattleText, BrunoEndBattleText, BrunoAfterBattleText
+	trainer EVENT_BEAT_BRUNOS_ROOM_TRAINER_0, 0, _BrunoBeforeBattleText, _BrunoEndBattleText, _BrunoAfterBattleText
 	db -1 ; end
 
 BrunosRoomBrunoText:
@@ -53,15 +50,3 @@ BrunosRoomBrunoText:
 ;;;;;;;;;;
 	ld hl, BrunosRoomTrainerHeader0
 	jp EliteFourTalkToTrainer
-
-BrunoBeforeBattleText:
-	text_far _BrunoBeforeBattleText
-	text_end
-
-BrunoEndBattleText:
-	text_far _BrunoEndBattleText
-	text_end
-
-BrunoAfterBattleText:
-	text_far _BrunoAfterBattleText
-	text_end

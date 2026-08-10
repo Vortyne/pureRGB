@@ -1,9 +1,8 @@
 CinnabarGym_Script:
 	call CinnabarGymSetMapAndTiles
-	call EnableAutoTextBoxDrawing
 	ld hl, CinnabarGym_ScriptPointers
-	ld a, [wCinnabarGymCurScript]
-	jp CallFunctionInTable
+	ld de, wCinnabarGymCurScript
+	jp CallMapScriptInTable
 
 CinnabarGymSetMapAndTiles:
 	call WasMapJustLoaded
@@ -145,19 +144,19 @@ CinnabarGymReceiveTM38:
 
 CinnabarGym_TextPointers:
 	def_text_pointers
-	dw_const CinnabarGymBlaineText,                 TEXT_CINNABARGYM_BLAINE
-	dw_const CinnabarGymSuperNerd1,                 TEXT_CINNABARGYM_SUPER_NERD1
-	dw_const CinnabarGymBurglar1,                   TEXT_CINNABARGYM_BURGLAR1
-	dw_const CinnabarGymSuperNerd2,                 TEXT_CINNABARGYM_SUPER_NERD2
-	dw_const CinnabarGymBurglar2,                   TEXT_CINNABARGYM_BURGLAR2
-	dw_const CinnabarGymFirefighter1,               TEXT_CINNERBARGYM_FIREFIGHTER1
-	dw_const CinnabarGymBurglar3,                   TEXT_CINNABARGYM_BURGLAR3
-	dw_const CinnabarGymFirefighter2,               TEXT_CINNERBARGYM_FIREFIGHTER2
-	dw_const CinnabarGymGymGuideText,               TEXT_CINNABARGYM_GYM_GUIDE
-	dw_const CinnabarGymBlaineVolcanoBadgeInfoText, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
-	dw_const CinnabarGymBlaineReceivedTM38Text,     TEXT_CINNABARGYM_BLAINE_RECEIVED_TM38
-	dw_const CinnabarGymBlaineTM38NoRoomText,       TEXT_CINNABARGYM_BLAINE_TM38_NO_ROOM
-	dw_const CinnabarGymQuiz,                       TEXT_CINNABARGYM_QUIZ
+	dba_const CinnabarGymBlaineText,                 TEXT_CINNABARGYM_BLAINE
+	dba_const CinnabarGymSuperNerd1,                 TEXT_CINNABARGYM_SUPER_NERD1
+	dba_const CinnabarGymBurglar1,                   TEXT_CINNABARGYM_BURGLAR1
+	dba_const CinnabarGymSuperNerd2,                 TEXT_CINNABARGYM_SUPER_NERD2
+	dba_const CinnabarGymBurglar2,                   TEXT_CINNABARGYM_BURGLAR2
+	dba_const CinnabarGymFirefighter1,               TEXT_CINNERBARGYM_FIREFIGHTER1
+	dba_const CinnabarGymBurglar3,                   TEXT_CINNABARGYM_BURGLAR3
+	dba_const CinnabarGymFirefighter2,               TEXT_CINNERBARGYM_FIREFIGHTER2
+	dba_const CinnabarGymGymGuideText,               TEXT_CINNABARGYM_GYM_GUIDE
+	dba_const CinnabarGymBlaineVolcanoBadgeInfoText, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
+	dba_const CinnabarGymBlaineReceivedTM38Text,     TEXT_CINNABARGYM_BLAINE_RECEIVED_TM38
+	dba_const CinnabarGymBlaineTM38NoRoomText,       TEXT_CINNABARGYM_BLAINE_TM38_NO_ROOM
+	dba_const CinnabarGymQuiz,                       TEXT_CINNABARGYM_QUIZ
 
 CinnabarGymStartBattleScript:
 	ldh a, [hSpriteIndex]
@@ -211,37 +210,28 @@ CinnabarGymBlaineText:
 	jp CinnabarGymStartBattleScript
 
 .PreBattleText:
-	text_far _CinnabarGymBlainePreBattleText
-	text_end
+	text_far_end _CinnabarGymBlainePreBattleText
 
 .ReceivedVolcanoBadgeText:
-	text_far _CinnabarGymBlaineReceivedVolcanoBadgeText
-	sound_get_key_item ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
-	text_waitbutton
-	text_end
+	text_far_end _CinnabarGymBlaineReceivedVolcanoBadgeText
 
 .PostBattleAdviceText:
-	text_far _CinnabarGymBlainePostBattleAdviceText
-	text_end
+	text_far_end _CinnabarGymBlainePostBattleAdviceText
 
 .moltresText
-	text_far _CinnabarGymBlaineMoltres
-	text_end
+	text_far_end _CinnabarGymBlaineMoltres
 
 
 CinnabarGymBlaineVolcanoBadgeInfoText:
-	text_far _CinnabarGymBlaineVolcanoBadgeInfoText
-	text_end
+	text_far_end _CinnabarGymBlaineVolcanoBadgeInfoText
 
 CinnabarGymBlaineReceivedTM38Text:
 	text_far _CinnabarGymBlaineReceivedTM38Text
 	sound_get_item_1
-	text_far _CinnabarGymBlaineTM38ExplanationText
-	text_end
+	text_far_end _CinnabarGymBlaineTM38ExplanationText
 
 CinnabarGymBlaineTM38NoRoomText:
-	text_far _CinnabarGymBlaineTM38NoRoomText
-	text_end
+	text_far_end _CinnabarGymBlaineTM38NoRoomText
 
 CinnabarGymSuperNerd1:
 	text_asm
@@ -251,7 +241,7 @@ CinnabarGymSuperNerd1:
 CinnabarGymDefaultTrainerTextScript:
 	ldh a, [hTextID]
 	ld [wTrainerHeaderFlagBit], a
-	ld de, 5
+	ld de, 4
 	jr nz, .defeated
 	push hl
 	push de
@@ -308,80 +298,59 @@ CinnabarGymFirefighter2:
 
 CinnabarGymSuperNerd1TextPointers:
 .BattleText:
-	text_far _CinnabarGymSuperNerd1BattleText
-	text_end
+	text_far_end _CinnabarGymSuperNerd1BattleText
 .EndBattleText:
-	text_far _CinnabarGymSuperNerd1EndBattleText
-	text_end
+	text_far_end _CinnabarGymSuperNerd1EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymSuperNerd1AfterBattleText
-	text_end
+	text_far_end _CinnabarGymSuperNerd1AfterBattleText
 
 CinnabarGymBurglar1TextPointers:
 .BattleText:
-	text_far _CinnabarGymBurglar1BattleText
-	text_end
+	text_far_end _CinnabarGymBurglar1BattleText
 .EndBattleText:
-	text_far _CinnabarGymBurglar1EndBattleText
-	text_end
+	text_far_end _CinnabarGymBurglar1EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymBurglar1AfterBattleText
-	text_end
+	text_far_end _CinnabarGymBurglar1AfterBattleText
 
 CinnabarGymSuperNerd2TextPointers:
 .BattleText:
-	text_far _CinnabarGymSuperNerd2BattleText
-	text_end
+	text_far_end _CinnabarGymSuperNerd2BattleText
 .EndBattleText:
-	text_far _CinnabarGymSuperNerd2EndBattleText
-	text_end
+	text_far_end _CinnabarGymSuperNerd2EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymSuperNerd2AfterBattleText
-	text_end
+	text_far_end _CinnabarGymSuperNerd2AfterBattleText
 
 CinnabarGymBurglar2TextPointers:
 .BattleText:
-	text_far _CinnabarGymBurglar2BattleText
-	text_end
+	text_far_end _CinnabarGymBurglar2BattleText
 .EndBattleText:
-	text_far _CinnabarGymBurglar2EndBattleText
-	text_end
+	text_far_end _CinnabarGymBurglar2EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymBurglar2AfterBattleText
-	text_end
+	text_far_end _CinnabarGymBurglar2AfterBattleText
 
 CinnabarGymFirefighter1TextPointers:
 .BattleText:
-	text_far _CinnabarGymFirefighter1BattleText
-	text_end
+	text_far_end _CinnabarGymFirefighter1BattleText
 .EndBattleText:
-	text_far _CinnabarGymFirefighter1EndBattleText
-	text_end
+	text_far_end _CinnabarGymFirefighter1EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymFirefighter1AfterBattleText
-	text_end
+	text_far_end _CinnabarGymFirefighter1AfterBattleText
 
 CinnabarGymBurglar3TextPointers:
 .BattleText:
-	text_far _CinnabarGymBurglar3BattleText
-	text_end
+	text_far_end _CinnabarGymBurglar3BattleText
 .EndBattleText:
-	text_far _CinnabarGymBurglar3EndBattleText
-	text_end
+	text_far_end _CinnabarGymBurglar3EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymBurglar3AfterBattleText
-	text_end
+	text_far_end _CinnabarGymBurglar3AfterBattleText
 
 CinnabarGymFirefighter2TextPointers:
 .BattleText:
-	text_far _CinnabarGymFirefighter2BattleText
-	text_end
+	text_far_end _CinnabarGymFirefighter2BattleText
 .EndBattleText:
-	text_far _CinnabarGymFirefighter2EndBattleText
-	text_end
+	text_far_end _CinnabarGymFirefighter2EndBattleText
 .AfterBattleText:
-	text_far _CinnabarGymFirefighter2AfterBattleText
-	text_end
+	text_far_end _CinnabarGymFirefighter2AfterBattleText
 
 CinnabarGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
@@ -392,8 +361,8 @@ CinnabarGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips af
 	CheckEvent EVENT_GOT_PEWTER_APEX_CHIPS ; have to hear about apex chips to receive them after that
 	ld hl, CinnabarGymGuidePostBattleText
 	jr z, .printDone
-	ld hl, CinnabarGymGuidePostBattleTextPrompt
 	rst _PrintText
+	call DisplayTextPromptButton
 	CheckEvent EVENT_GOT_CINNABAR_APEX_CHIPS
 	jr nz, .alreadyApexChips
 .giveApexChips
@@ -415,39 +384,26 @@ CinnabarGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips af
 	rst TextScriptEnd
 
 ReceivedApexChipsText7:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText7:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText7:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 AlreadyReceivedApexChipsText7:
-	text_far _AlreadyReceivedApexChipsText
-	text_end
+	text_far_end _AlreadyReceivedApexChipsText
 
 CinnabarGymGuideApexChipFireText:
-	text_far _CinnabarGymGuideApexChipFireText
-	text_end
+	text_far_end _CinnabarGymGuideApexChipFireText
 
 ChampInMakingText:
 	text_far _GymGuideChampInMakingText
-	text_far _CinnabarGymGymGuideChampInMakingText
-	text_end
+	text_far_end _CinnabarGymGymGuideChampInMakingText
 
 CinnabarGymGuidePostBattleText:
-	text_far _CinnabarGymGymGuideBeatBlaineText
-	text_end
-
-CinnabarGymGuidePostBattleTextPrompt:
-	text_far _CinnabarGymGymGuideBeatBlaineText
-	text_promptbutton
-	text_end
+	text_far_end _CinnabarGymGymGuideBeatBlaineText
 
 PrintCinnabarQuiz::
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -483,7 +439,7 @@ CinnabarGymQuiz::
 	ldh a, [hGymGateIndex]
 	dec a
 	ld hl, CinnabarQuizQuestions
-	ld bc, 5
+	ld bc, 4
 	call AddNTimes
 	rst _PrintText
 	ld a, 1
@@ -492,32 +448,24 @@ CinnabarGymQuiz::
 	rst TextScriptEnd
 
 CinnabarGymQuizStartText:
-	text_far _CinnabarGymQuizStartText
-	text_end
+	text_far_end _CinnabarGymQuizStartText
 
 CinnabarGymQuizIntroText:
-	text_far _CinnabarGymQuizIntroText
-	text_end
+	text_far_end _CinnabarGymQuizIntroText
 
 CinnabarQuizQuestions:
 CinnabarQuizQuestionsText1:
-	text_far _CinnabarQuizQuestionsText1
-	text_end
+	text_far_end _CinnabarQuizQuestionsText1
 CinnabarQuizQuestionsText2:
-	text_far _CinnabarQuizQuestionsText2
-	text_end
+	text_far_end _CinnabarQuizQuestionsText2
 CinnabarQuizQuestionsText3:
-	text_far _CinnabarQuizQuestionsText3
-	text_end
+	text_far_end _CinnabarQuizQuestionsText3
 CinnabarQuizQuestionsText4:
-	text_far _CinnabarQuizQuestionsText4
-	text_end
+	text_far_end _CinnabarQuizQuestionsText4
 CinnabarQuizQuestionsText5:
-	text_far _CinnabarQuizQuestionsText5
-	text_end
+	text_far_end _CinnabarQuizQuestionsText5
 CinnabarQuizQuestionsText6:
-	text_far _CinnabarQuizQuestionsText6
-	text_end
+	text_far_end _CinnabarQuizQuestionsText6
 
 CinnabarGymGateFlagAction:
 	EventFlagAddress hl, EVENT_CINNABAR_GYM_GATE0_UNLOCKED
@@ -584,8 +532,7 @@ CinnabarGymQuizCorrectText:
 	rst TextScriptEnd
 
 CinnabarGymQuizIncorrectText:
-	text_far _CinnabarGymQuizIncorrectText
-	text_end
+	text_far_end _CinnabarGymQuizIncorrectText
 
 UpdateCinnabarGymGateTileBlocks::
 ; Update the overworld map with open floor blocks or locked gate blocks

@@ -3,13 +3,10 @@ ASSERT BANK(AgathasRoom_Script) == BANK(LoreleisRoom_Script)
 
 AgathasRoom_Script:
 	call AgathaShowOrHideExitBlock
-	call EnableAutoTextBoxDrawing
 	ld hl, AgathasRoomTrainerHeaders
 	ld de, AgathasRoom_ScriptPointers
-	ld a, [wAgathasRoomCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wAgathasRoomCurScript], a
-	ret
+	ld bc, wAgathasRoomCurScript
+	jp ExecuteCustomMapScriptInTable
 
 AgathaShowOrHideExitBlock:
 	call WasMapJustLoaded
@@ -145,13 +142,13 @@ EliteFourEndTrainerBattleScript:
 
 AgathasRoom_TextPointers:
 	def_text_pointers
-	dw_const AgathasRoomAgathaText,         TEXT_AGATHASROOM_AGATHA
-	dw_const EliteFourDontRunAwayText,		TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY
+	dba_const AgathasRoomAgathaText,         TEXT_AGATHASROOM_AGATHA
+	dba_const _EliteFourDontRunAwayText,	 TEXT_AGATHASROOM_AGATHA_DONT_RUN_AWAY
 
 AgathasRoomTrainerHeaders:
 	def_trainers
 AgathasRoomTrainerHeader0:
-	trainer EVENT_BEAT_AGATHAS_ROOM_TRAINER_0, 0, AgathaBeforeBattleText, AgathaEndBattleText, AgathaAfterBattleText
+	trainer EVENT_BEAT_AGATHAS_ROOM_TRAINER_0, 0, _AgathaBeforeBattleText, _AgathaEndBattleText, _AgathaAfterBattleText
 	db -1 ; end
 
 AgathasRoomAgathaText:
@@ -165,19 +162,3 @@ EliteFourTalkToTrainer:
 	ld [wGymLeaderNo], a
 	call TalkToTrainer
 	rst TextScriptEnd
-
-AgathaBeforeBattleText:
-	text_far _AgathaBeforeBattleText
-	text_end
-
-AgathaEndBattleText:
-	text_far _AgathaEndBattleText
-	text_end
-
-AgathaAfterBattleText:
-	text_far _AgathaAfterBattleText
-	text_end
-
-EliteFourDontRunAwayText:
-	text_far _EliteFourDontRunAwayText
-	text_end

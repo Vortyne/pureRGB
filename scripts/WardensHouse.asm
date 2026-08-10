@@ -3,12 +3,13 @@ WardensHouse_Script:
 
 WardensHouse_TextPointers:
 	def_text_pointers
-	dw_const WardensHouseWardenText,  TEXT_WARDENSHOUSE_WARDEN
-	dw_const PickUpItemText,          TEXT_WARDENSHOUSE_ITEM1
-	dw_const BoulderText,             TEXT_WARDENSHOUSE_BOULDER
-	dw_const WardensHouseDisplayLeftText, TEXT_WARDENSHOUSE_DISPLAY_LEFT
-	dw_const WardensHouseDisplayRightText, TEXT_WARDENSHOUSE_DISPLAY_RIGHT
-	dw_const WardensHouseDeskPapersText, TEXT_WARDENSHOUSE_DESK_PAPERS
+	dba_const WardensHouseWardenText,  TEXT_WARDENSHOUSE_WARDEN
+	dba_const PickUpItemText,          TEXT_WARDENSHOUSE_ITEM1
+	dba_const BoulderText,             TEXT_WARDENSHOUSE_BOULDER
+	dba_const _WardensHouseDisplayPhotosAndFossilsText, TEXT_WARDENSHOUSE_DISPLAY_LEFT
+	dba_const _WardensHouseDisplayMerchandiseText, TEXT_WARDENSHOUSE_DISPLAY_RIGHT
+; PureRGBnote: Text entry for the papers on the warden's desk
+	dba_const _WardensHouseDeskPapersText, TEXT_WARDENSHOUSE_DESK_PAPERS
 
 WardensHouseWardenText:
 	text_asm
@@ -56,26 +57,21 @@ WardensHouseWardenText:
 	rst TextScriptEnd
 
 .Gibberish1Text:
-	text_far _WardensHouseWardenGibberish1Text
-	text_end
+	text_far_end _WardensHouseWardenGibberish1Text
 
 .Gibberish2Text:
-	text_far _WardensHouseWardenGibberish2Text
-	text_end
+	text_far_end _WardensHouseWardenGibberish2Text
 
 .Gibberish3Text:
-	text_far _WardensHouseWardenGibberish3Text
-	text_end
+	text_far_end _WardensHouseWardenGibberish3Text
 
 .GaveTheGoldTeethText:
 	text_far _WardensHouseWardenGaveTheGoldTeethText
 	sound_get_item_1
-	text_far _WardensHouseWardenTeethPoppedInHisTeethText
-	text_end
+	text_far_end _WardensHouseWardenTeethPoppedInHisTeethText
 
 .ThanksText:
-	text_far _WardensHouseWardenThanksText
-	text_end
+	text_far_end _WardensHouseWardenThanksText
 
 .ReceivedHM04Text:
 	text_far _WardensHouseWardenReceivedHM04Text
@@ -83,31 +79,13 @@ WardensHouseWardenText:
 	text_end
 
 .HM04ExplanationText:
-	text_far _WardensHouseWardenHM04ExplanationText
-	text_end
+	text_far_end _WardensHouseWardenHM04ExplanationText
 
 .HM04NoRoomText:
-	text_far _WardensHouseWardenHM04NoRoomText
-	text_end
+	text_far_end _WardensHouseWardenHM04NoRoomText
 
 .HM03ExplanationText:
-	text_far _WardensHouseWardenHM03ExplanationText
-	text_end
+	text_far_end _WardensHouseWardenHM03ExplanationText
 
 .HM03AlreadyText:
-	text_far _WardensHouseWardenHM03AlreadyText
-	text_end
-
-WardensHouseDisplayLeftText:
-	text_far _WardensHouseDisplayPhotosAndFossilsText
-	text_end
-
-WardensHouseDisplayRightText:
-	text_far _WardensHouseDisplayMerchandiseText
-	text_end
-
-; PureRGBnote: Text entry for the papers on the warden's desk
-
-WardensHouseDeskPapersText:
-	text_far _WardensHouseDeskPapersText
-	text_end
+	text_far_end _WardensHouseWardenHM03AlreadyText

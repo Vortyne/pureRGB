@@ -5,13 +5,10 @@ SilphCo1F_Script:
 	call SilphCo1FOnMapLoad
 	call CheckForceTalkToEntranceRocket
 	call CheckFloatingWeezingAnimation
-	call EnableAutoTextBoxDrawing
 	ld hl, SilphCo1FTrainerHeaders
 	ld de, SilphCo1F_ScriptPointers
-	ld a, [wSilphCo1FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSilphCo1FCurScript], a
-	ret
+	ld bc, wSilphCo1FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SilphCo1FOnMapLoad:
 	call WasMapJustLoaded
@@ -78,29 +75,29 @@ SilphCo1F_ScriptPointers:
 
 SilphCo1F_TextPointers:
 	def_text_pointers
-	dw_const SilphCo1FTrainer1Text,         TEXT_SILPHCO1F_FIREFIGHTER1
-	dw_const SilphCo1FTrainer2Text,         TEXT_SILPHCO1F_SOLDIER1
-	dw_const SilphCo1FTrainer3Text,         TEXT_SILPHCO1F_SOLDIER2
-	dw_const SilphCo1FTrainer4Text,         TEXT_SILPHCO1F_FIREFIGHTER2
-	dw_const SilphCo1FLinkReceptionistText, TEXT_SILPHCO1F_LINK_RECEPTIONIST
-	dw_const SaffronAbandonedBuildingRocket1Text, TEXT_SILPHCO1F_ROCKET1
-	dw_const SaffronAbandonedBuildingRocket2Text, TEXT_SILPHCO1F_ROCKET2
-	dw_const SaffronAbandonedBuildingRocket3Text, TEXT_SILPHCO1F_ROCKET3
-	dw_const DoRet, TEXT_SILPHCO1F_WEEZING_PROXY
-	dw_const SaffronAbandonedBuildingBrokenStairs, TEXT_SILPHCO1F_BROKEN_STAIRS
-	dw_const SaffronAbandonedBuildingHeliumPipeText, TEXT_SILPHCO1F_HELIUM_PIPE
-	dw_const SaffronAbandonedBuildingWeezingText, TEXT_WEEZING_STARTED_FLOATING
+	dba_const SilphCo1FTrainer1Text,         TEXT_SILPHCO1F_FIREFIGHTER1
+	dba_const SilphCo1FTrainer2Text,         TEXT_SILPHCO1F_SOLDIER1
+	dba_const SilphCo1FTrainer3Text,         TEXT_SILPHCO1F_SOLDIER2
+	dba_const SilphCo1FTrainer4Text,         TEXT_SILPHCO1F_FIREFIGHTER2
+	dba_const _SilphCo1FLinkReceptionistText, TEXT_SILPHCO1F_LINK_RECEPTIONIST
+	dba_const SaffronAbandonedBuildingRocket1Text, TEXT_SILPHCO1F_ROCKET1
+	dba_const _SaffronAbandonedBuildingRocket2, TEXT_SILPHCO1F_ROCKET2
+	dba_const _SaffronAbandonedBuildingRocket3, TEXT_SILPHCO1F_ROCKET3
+	dba_const DoRet, TEXT_SILPHCO1F_WEEZING_PROXY
+	dba_const _SaffronAbandonedBuildingStairs, TEXT_SILPHCO1F_BROKEN_STAIRS
+	dba_const SaffronAbandonedBuildingHeliumPipeText, TEXT_SILPHCO1F_HELIUM_PIPE
+	dba_const SaffronAbandonedBuildingWeezingText, TEXT_WEEZING_STARTED_FLOATING
 
 SilphCo1FTrainerHeaders:
 	def_trainers 0
 SilphCo1FTrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_0, 0, SilphCo1FBattleText1, SilphCo1FEndBattleText1, SilphCo1FAfterBattleText1
+	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_0, 0, _SilphCo1FBattleText1, _SilphCo1FEndBattleText1, _SilphCo1FAfterBattleText1
 SilphCo1FTrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_1, 0, SilphCo1FBattleText2, SilphCo1FEndBattleText2, SilphCo1FAfterBattleText2
+	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_1, 0, _SilphCo1FBattleText2, _SilphCo1FEndBattleText2, _SilphCo1FAfterBattleText2
 SilphCo1FTrainerHeader2:
-	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_2, 0, SilphCo1FBattleText3, SilphCo1FEndBattleText3, SilphCo1FAfterBattleText3
+	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_2, 0, _SilphCo1FBattleText3, _SilphCo1FEndBattleText3, _SilphCo1FAfterBattleText3
 SilphCo1FTrainerHeader3:
-	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_3, 0, SilphCo1FBattleText4, SilphCo1FEndBattleText4, SilphCo1FAfterBattleText4
+	trainer EVENT_BEAT_SILPH_CO_1F_TRAINER_3, 0, _SilphCo1FBattleText4, _SilphCo1FEndBattleText4, _SilphCo1FAfterBattleText4
 	db -1 ;end
 
 SilphCo1FTrainer1Text:
@@ -114,58 +111,6 @@ SilphCo1FTrainer3Text:
 	
 SilphCo1FTrainer4Text:
 	script_trainer SilphCo1FTrainerHeader3
-
-SilphCo1FBattleText1:
-	text_far _SilphCo1FBattleText1
-	text_end
-
-SilphCo1FEndBattleText1:
-	text_far _SilphCo1FEndBattleText1
-	text_end
-
-SilphCo1FAfterBattleText1:
-	text_far _SilphCo1FAfterBattleText1
-	text_end
-
-SilphCo1FBattleText2:
-	text_far _SilphCo1FBattleText2
-	text_end
-
-SilphCo1FEndBattleText2:
-	text_far _SilphCo1FEndBattleText2
-	text_end
-
-SilphCo1FAfterBattleText2:
-	text_far _SilphCo1FAfterBattleText2
-	text_end
-
-SilphCo1FBattleText3:
-	text_far _SilphCo1FBattleText3
-	text_end
-
-SilphCo1FEndBattleText3:
-	text_far _SilphCo1FEndBattleText3
-	text_end
-
-SilphCo1FAfterBattleText3:
-	text_far _SilphCo1FAfterBattleText3
-	text_end
-
-SilphCo1FBattleText4:
-	text_far _SilphCo1FBattleText4
-	text_end
-
-SilphCo1FEndBattleText4:
-	text_far _SilphCo1FEndBattleText4
-	text_end
-
-SilphCo1FAfterBattleText4:
-	text_far _SilphCo1FAfterBattleText4
-	text_end
-
-SilphCo1FLinkReceptionistText:
-	text_far _SilphCo1FLinkReceptionistText
-	text_end
 
 SaffronAbandonedBuildingRocket1Text:
 	text_asm
@@ -212,39 +157,19 @@ SaffronAbandonedBuildingRocket1Text:
 	ld hl, .correct
 	jr .printDone
 .password
-	text_far _SaffronAbandonedBuildingRocket1
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1
 .getOut
-	text_far _SaffronAbandonedBuildingRocket1GetOut
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1GetOut
 .seriously
-	text_far _SaffronAbandonedBuildingRocket1Seriously
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1Seriously
 .evenMean
-	text_far _SaffronAbandonedBuildingRocket1Brocket
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1Brocket
 .dennis
-	text_far _SaffronAbandonedBuildingRocket1Dennis
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1Dennis
 .guess
-	text_far _SaffronAbandonedBuildingRocket1Guess
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1Guess
 .correct
-	text_far _SaffronAbandonedBuildingRocket1Sprocket
-	text_end
-
-
-SaffronAbandonedBuildingRocket2Text:
-	text_far _SaffronAbandonedBuildingRocket2
-	text_end
-
-SaffronAbandonedBuildingRocket3Text:
-	text_far _SaffronAbandonedBuildingRocket3 
-	text_end
-
-SaffronAbandonedBuildingBrokenStairs:
-	text_far _SaffronAbandonedBuildingStairs
-	text_end
+	text_far_end _SaffronAbandonedBuildingRocket1Sprocket
 
 SaffronAbandonedBuildingHeliumPipe::
 	ld a, [wSpritePlayerStateData1FacingDirection]
@@ -301,23 +226,17 @@ SaffronAbandonedBuildingHeliumPipeText:
 	ld hl, .weezingText
 	jr .printDone
 .pipeAir
-	text_far _SaffronAbandonedBuildingSteamPipe
-	text_end
+	text_far_end _SaffronAbandonedBuildingSteamPipe
 .forgetIt
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 .wrongMon
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 .koffing
-	text_far _SaffronAbandonedBuildingKoffing
-	text_end
+	text_far_end _SaffronAbandonedBuildingKoffing
 .already
-	text_far _SaffronAbandonedBuildingAlready
-	text_end
+	text_far_end _SaffronAbandonedBuildingAlready
 .weezingText
-	text_far _SaffronAbandonedBuildingWeezing
-	text_end
+	text_far_end _SaffronAbandonedBuildingWeezing
 
 CheckFloatingWeezingAnimation:
 	call IsPlayerAutoMoving
@@ -359,7 +278,7 @@ CheckFloatingWeezingAnimation:
 	call DisplayTextID
 	call ResumeMusic
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, vNPCSprites tile $3C
 	callfar DoBallPoofOnNPC
 	ld hl, wSprite09StateData2MapY
@@ -386,5 +305,4 @@ CheckFloatingWeezingAnimation:
 SaffronAbandonedBuildingWeezingText:
 	text_far _SaffronAbandonedBuildingWeezing2
 	sound_get_item_2
-	text_far _MagnetMagnetonText3
-	text_end
+	text_far_end _MagnetMagnetonText3

@@ -115,25 +115,19 @@ Options3InfoTextJumpTable:
 	dw UnitsInfoText
 
 PauseMusicInfoText:
-	text_far _PauseMusicInfoText
-	text_end
+	text_far_end _PauseMusicInfoText
 
 LearnsetsInfoText:
-	text_far _LearnsetsInfoText
-	text_end
+	text_far_end _LearnsetsInfoText
 
 TitleInfoText:
-	text_far _TitleInfoText
-	text_end
+	text_far_end _TitleInfoText
 
 IntroInfoText:
-	text_far _IntroInfoText
-	text_end
+	text_far_end _IntroInfoText
 
 FlashingInfoText:
-	text_far _FlashingInfoText
-	text_end
+	text_far_end _FlashingInfoText
 
 UnitsInfoText:
-	text_far _UnitsInfoText
-	text_end
+	text_far_end _UnitsInfoText

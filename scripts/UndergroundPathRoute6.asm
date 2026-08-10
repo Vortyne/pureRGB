@@ -5,8 +5,4 @@ UndergroundPathRoute6_Script:
 
 UndergroundPathRoute6_TextPointers:
 	def_text_pointers
-	dw_const UndergroundPathRoute6GirlText, TEXT_UNDERGROUNDPATHROUTE6_GIRL
-
-UndergroundPathRoute6GirlText:
-	text_far _UndergroundPathRoute6GirlText
-	text_end
+	dba_const _UndergroundPathRoute6GirlText, TEXT_UNDERGROUNDPATHROUTE6_GIRL

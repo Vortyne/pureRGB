@@ -4,25 +4,13 @@ MtMoonPokecenter_Script:
 
 MtMoonPokecenter_TextPointers:
 	def_text_pointers
-	dw_const MtMoonPokecenterNurseText,            TEXT_MTMOONPOKECENTER_NURSE
-	dw_const MtMoonPokecenterYoungsterText,        TEXT_MTMOONPOKECENTER_YOUNGSTER
-	dw_const MtMoonPokecenterGentlemanText,        TEXT_MTMOONPOKECENTER_GENTLEMAN
-	dw_const MtMoonPokecenterMagikarpSalesmanText, TEXT_MTMOONPOKECENTER_MAGIKARP_SALESMAN
-	dw_const MtMoonPokecenterClipboardText,        TEXT_MTMOONPOKECENTER_CLIPBOARD
-	dw_const MtMoonPokecenterLinkReceptionistText, TEXT_MTMOONPOKECENTER_LINK_RECEPTIONIST
-	dw_const MtMoonPokecenterBenchGuyText,         TEXT_MTMOONPOKECENTER_BENCH_GUY
-
-MtMoonPokecenterNurseText:
-	script_pokecenter_nurse
-
-MtMoonPokecenterYoungsterText:
-	text_far _MtMoonPokecenterYoungsterText
-	text_end
-
-MtMoonPokecenterClipboardText:
-MtMoonPokecenterGentlemanText:
-	text_far _MtMoonPokecenterGentlemanText
-	text_end
+	dba_const GenericPokecenterNurseText,            TEXT_MTMOONPOKECENTER_NURSE
+	dba_const _MtMoonPokecenterYoungsterText,        TEXT_MTMOONPOKECENTER_YOUNGSTER
+	dba_const _MtMoonPokecenterGentlemanText,        TEXT_MTMOONPOKECENTER_GENTLEMAN
+	dba_const MtMoonPokecenterMagikarpSalesmanText,  TEXT_MTMOONPOKECENTER_MAGIKARP_SALESMAN
+	dba_const _MtMoonPokecenterGentlemanText,        TEXT_MTMOONPOKECENTER_CLIPBOARD
+	dba_const GenericLinkReceptionistText,           TEXT_MTMOONPOKECENTER_LINK_RECEPTIONIST
+	dba_const _MtMoonPokecenterBenchGuyText,         TEXT_MTMOONPOKECENTER_BENCH_GUY
 
 MtMoonPokecenterMagikarpSalesmanText:
 	text_asm
@@ -84,28 +72,17 @@ MtMoonPokecenterMagikarpSalesmanText:
 	rst TextScriptEnd
 
 .IGotADealText
-	text_far _MtMoonPokecenterMagikarpSalesmanIGotADealText
-	text_end
+	text_far_end _MtMoonPokecenterMagikarpSalesmanIGotADealText
 
 .NoText
-	text_far _MtMoonPokecenterMagikarpSalesmanNoText
-	text_end
+	text_far_end _MtMoonPokecenterMagikarpSalesmanNoText
 
 .NoMoneyText
-	text_far _MtMoonPokecenterMagikarpSalesmanNoMoneyText
-	text_end
+	text_far_end _MtMoonPokecenterMagikarpSalesmanNoMoneyText
 
 .NoRefundsText
-	text_far _MtMoonPokecenterMagikarpSalesmanNoRefundsText
-	text_end
+	text_far_end _MtMoonPokecenterMagikarpSalesmanNoRefundsText
 
 
 SalesManName:
 	db "SALESMAN@"
-
-MtMoonPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
-
-MtMoonPokecenterBenchGuyText:
-	text_far _MtMoonPokecenterBenchGuyText
-	text_end

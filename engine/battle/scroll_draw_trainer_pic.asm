@@ -26,7 +26,7 @@ _ScrollTrainerPicAfterBattle:
 	dec c
 	jr nz, .drawTrainerPicLoop
 	ld c, 4
-	rst _DelayFrames
+	rst DelayFrames
 	pop hl
 	pop bc
 	dec hl

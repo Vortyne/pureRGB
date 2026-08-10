@@ -5,7 +5,7 @@ _DisplayPokedex::
 	call EnableTextDelay
 	call ReloadMapData
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	call IndexToPokedex
 	ld a, [wPokedexNum]
 	dec a

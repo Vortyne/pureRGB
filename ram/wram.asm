@@ -437,7 +437,7 @@ wNPCMovementDirections:: ds 180
 NEXTU
 wDexRatingNumMonsSeen:: db
 wDexRatingNumMonsOwned:: db
-wDexRatingText:: ; PureRGBnote: actually uses 5 bytes from here, not just 1
+wDexRatingText:: ; PureRGBnote: actually uses 4 bytes from here, not just 1
 wTrainerCardBadgeAttributes:: db
 ; shinpokerednote: gbcnote: modified to match yellow
 
@@ -917,9 +917,6 @@ wEmotionBubbleSpriteIndex:: db
 wWhichEmotionBubble:: db
 
 NEXTU
-wChangeBoxSavedMapTextPointer:: dw
-
-NEXTU
 wSavedY::
 wTempSCX::
 wDexMaxSeenMove::
@@ -1146,9 +1143,7 @@ wNPCNumScriptedSteps:: db
 ; wNPCMovementScriptPointerTableNum
 wNPCMovementScriptFunctionNum:: db
 
-; bit 0: set when printing a text predef so that DisplayTextID doesn't switch
-;        to the current map's bank
-wTextPredefFlag:: db
+wTextPredefID:: db
 
 ds 1 ; used to be wPredefParentBank but this wasn't needed
 

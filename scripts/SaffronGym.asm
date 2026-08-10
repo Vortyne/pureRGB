@@ -1,11 +1,8 @@
 SaffronGym_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, SaffronGymTrainerHeaders
 	ld de, SaffronGym_ScriptPointers
-	ld a, [wSaffronGymCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSaffronGymCurScript], a
-	ret
+	ld bc, wSaffronGymCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SaffronGym_ScriptPointers:
 	def_script_pointers
@@ -58,35 +55,35 @@ SaffronGymSabrinaReceiveTM46Script:
 
 SaffronGym_TextPointers:
 	def_text_pointers
-	dw_const SaffronGymSabrinaText,               TEXT_SAFFRONGYM_SABRINA
-	dw_const SaffronGymChanneler1Text,            TEXT_SAFFRONGYM_CHANNELER1
-	dw_const SaffronGymYoungster1Text,            TEXT_SAFFRONGYM_YOUNGSTER1
-	dw_const SaffronGymChanneler2Text,            TEXT_SAFFRONGYM_CHANNELER2
-	dw_const SaffronGymYoungster2Text,            TEXT_SAFFRONGYM_YOUNGSTER2
-	dw_const SaffronGymChanneler3Text,            TEXT_SAFFRONGYM_CHANNELER3
-	dw_const SaffronGymYoungster3Text,            TEXT_SAFFRONGYM_YOUNGSTER3
-	dw_const SaffronGymYoungster4Text,            TEXT_SAFFRONGYM_YOUNGSTER4
-	dw_const SaffronGymGymGuideText,              TEXT_SAFFRONGYM_GYM_GUIDE
-	dw_const SaffronGymSabrinaMarshBadgeInfoText, TEXT_SAFFRONGYM_SABRINA_MARSH_BADGE_INFO
-	dw_const SaffronGymSabrinaReceivedTM46Text,   TEXT_SAFFRONGYM_SABRINA_RECEIVED_TM46
-	dw_const SaffronGymSabrinaTM46NoRoomText,     TEXT_SAFFRONGYM_SABRINA_TM46_NO_ROOM
+	dba_const SaffronGymSabrinaText,               TEXT_SAFFRONGYM_SABRINA
+	dba_const SaffronGymChanneler1Text,            TEXT_SAFFRONGYM_CHANNELER1
+	dba_const SaffronGymYoungster1Text,            TEXT_SAFFRONGYM_YOUNGSTER1
+	dba_const SaffronGymChanneler2Text,            TEXT_SAFFRONGYM_CHANNELER2
+	dba_const SaffronGymYoungster2Text,            TEXT_SAFFRONGYM_YOUNGSTER2
+	dba_const SaffronGymChanneler3Text,            TEXT_SAFFRONGYM_CHANNELER3
+	dba_const SaffronGymYoungster3Text,            TEXT_SAFFRONGYM_YOUNGSTER3
+	dba_const SaffronGymYoungster4Text,            TEXT_SAFFRONGYM_YOUNGSTER4
+	dba_const SaffronGymGymGuideText,              TEXT_SAFFRONGYM_GYM_GUIDE
+	dba_const _SaffronGymSabrinaMarshBadgeInfoText, TEXT_SAFFRONGYM_SABRINA_MARSH_BADGE_INFO
+	dba_const SaffronGymSabrinaReceivedTM46Text,   TEXT_SAFFRONGYM_SABRINA_RECEIVED_TM46
+	dba_const _SaffronGymSabrinaTM46NoRoomText,     TEXT_SAFFRONGYM_SABRINA_TM46_NO_ROOM
 
 SaffronGymTrainerHeaders:
 	def_trainers 2
 SaffronGymTrainerHeader0:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_0, 3, SaffronGymChanneler1BattleText, SaffronGymChanneler1EndBattleText, SaffronGymChanneler1AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_0, 3, _SaffronGymChanneler1BattleText, _SaffronGymChanneler1EndBattleText, _SaffronGymChanneler1AfterBattleText
 SaffronGymTrainerHeader1:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_1, 3, SaffronGymYoungster1BattleText, SaffronGymYoungster1EndBattleText, SaffronGymYoungster1AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_1, 3, _SaffronGymYoungster1BattleText, _SaffronGymYoungster1EndBattleText, SaffronGymYoungster1AfterBattleText
 SaffronGymTrainerHeader2:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_2, 3, SaffronGymChanneler2BattleText, SaffronGymChanneler2EndBattleText, SaffronGymChanneler2AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_2, 3, _SaffronGymChanneler2BattleText, _SaffronGymChanneler2EndBattleText, _SaffronGymChanneler2AfterBattleText
 SaffronGymTrainerHeader3:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_3, 3, SaffronGymYoungster2BattleText, SaffronGymYoungster2EndBattleText, SaffronGymYoungster2AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_3, 3, _SaffronGymYoungster2BattleText, _SaffronGymYoungster2EndBattleText, _SaffronGymYoungster2AfterBattleText
 SaffronGymTrainerHeader4:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_4, 3, SaffronGymChanneler3BattleText, SaffronGymChanneler3EndBattleText, SaffronGymChanneler3AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_4, 3, _SaffronGymChanneler3BattleText, _SaffronGymChanneler3EndBattleText, _SaffronGymChanneler3AfterBattleText
 SaffronGymTrainerHeader5:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_5, 3, SaffronGymYoungster3BattleText, SaffronGymYoungster3EndBattleText, SaffronGymYoungster3AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_5, 3, _SaffronGymYoungster3BattleText, _SaffronGymYoungster3EndBattleText, _SaffronGymYoungster3AfterBattleText
 SaffronGymTrainerHeader6:
-	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_6, 3, SaffronGymYoungster4BattleText, SaffronGymYoungster4EndBattleText, SaffronGymYoungster4AfterBattleText
+	trainer EVENT_BEAT_SAFFRON_GYM_TRAINER_6, 3, _SaffronGymYoungster4BattleText, _SaffronGymYoungster4EndBattleText, _SaffronGymYoungster4AfterBattleText
 	db -1 ; end
 
 SaffronGymSabrinaText:
@@ -123,32 +120,18 @@ SaffronGymSabrinaText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _SaffronGymSabrinaText
-	text_end
+	text_far_end _SaffronGymSabrinaText
 
 .ReceivedMarshBadgeText:
-	text_far _SaffronGymSabrinaReceivedMarshBadgeText
-	sound_get_key_item ; actually plays the second channel of SFX_BALL_POOF due to the wrong music bank being loaded
-	text_promptbutton
-	text_end
+	text_far_end _SaffronGymSabrinaReceivedMarshBadgeText
 
 .PostBattleAdviceText:
-	text_far _SaffronGymSabrinaPostBattleAdviceText
-	text_end
-
-SaffronGymSabrinaMarshBadgeInfoText:
-	text_far _SaffronGymSabrinaMarshBadgeInfoText
-	text_end
+	text_far_end _SaffronGymSabrinaPostBattleAdviceText
 
 SaffronGymSabrinaReceivedTM46Text:
 	text_far _SaffronGymSabrinaReceivedTM46Text
 	sound_get_item_1
-	text_far _TM46ExplanationText
-	text_end
-
-SaffronGymSabrinaTM46NoRoomText:
-	text_far _SaffronGymSabrinaTM46NoRoomText
-	text_end
+	text_far_end _TM46ExplanationText
 
 SaffronGymChanneler1Text:
 	script_trainer SaffronGymTrainerHeader0
@@ -203,54 +186,26 @@ SaffronGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips aft
 	rst TextScriptEnd
 
 ReceivedApexChipsText6:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText6:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText6:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 AlreadyReceivedApexChipsText6:
-	text_far _AlreadyReceivedApexChipsText
-	text_end
+	text_far_end _AlreadyReceivedApexChipsText
 
 SaffronGymGuideApexChipPsychicText:
-	text_far _SaffronGymGuideApexChipPsychicText
-	text_end
+	text_far_end _SaffronGymGuideApexChipPsychicText
 
 SaffronGymGuideChampInMakingText:
 	text_far _GymGuideChampInMakingText
-	text_far _SaffronGymGuideChampInMakingText
-	text_end
+	text_far_end _SaffronGymGuideChampInMakingText
 
 SaffronGymGuideBeatSabrinaText:
-	text_far _SaffronGymGuideBeatSabrinaText
-	text_end
-
-SaffronGymChanneler1BattleText:
-	text_far _SaffronGymChanneler1BattleText
-	text_end
-
-SaffronGymChanneler1EndBattleText:
-	text_far _SaffronGymChanneler1EndBattleText
-	text_end
-
-SaffronGymChanneler1AfterBattleText:
-	text_far _SaffronGymChanneler1AfterBattleText
-	text_end
-
-SaffronGymYoungster1BattleText:
-	text_far _SaffronGymYoungster1BattleText
-	text_end
-
-SaffronGymYoungster1EndBattleText:
-	text_far _SaffronGymYoungster1EndBattleText
-	text_end
+	text_far_end _SaffronGymGuideBeatSabrinaText
 
 ; PureRGBnote: CHANGED: this trainer will change how they respond now based on your type matchup settings
 SaffronGymYoungster1AfterBattleText:
@@ -265,70 +220,8 @@ SaffronGymYoungster1AfterBattleText:
 	rst TextScriptEnd
 .onlyBugText
 	text_far _SaffronGymYoungster1AfterBattleText
-	text_far _ExclamationPointText
-	text_end
+	text_far_end _ExclamationPointText
 .bugAndGhostText
 	text_far _SaffronGymYoungster1AfterBattleText
 	text_promptbutton
-	text_far _SaffronGymYoungster1AfterBattleText3
-	text_end
-
-SaffronGymChanneler2BattleText:
-	text_far _SaffronGymChanneler2BattleText
-	text_end
-
-SaffronGymChanneler2EndBattleText:
-	text_far _SaffronGymChanneler2EndBattleText
-	text_end
-
-SaffronGymChanneler2AfterBattleText:
-	text_far _SaffronGymChanneler2AfterBattleText
-	text_end
-
-SaffronGymYoungster2BattleText:
-	text_far _SaffronGymYoungster2BattleText
-	text_end
-
-SaffronGymYoungster2EndBattleText:
-	text_far _SaffronGymYoungster2EndBattleText
-	text_end
-
-SaffronGymYoungster2AfterBattleText:
-	text_far _SaffronGymYoungster2AfterBattleText
-	text_end
-
-SaffronGymChanneler3BattleText:
-	text_far _SaffronGymChanneler3BattleText
-	text_end
-
-SaffronGymChanneler3EndBattleText:
-	text_far _SaffronGymChanneler3EndBattleText
-	text_end
-
-SaffronGymChanneler3AfterBattleText:
-	text_far _SaffronGymChanneler3AfterBattleText
-	text_end
-
-SaffronGymYoungster3BattleText:
-	text_far _SaffronGymYoungster3BattleText
-	text_end
-
-SaffronGymYoungster3EndBattleText:
-	text_far _SaffronGymYoungster3EndBattleText
-	text_end
-
-SaffronGymYoungster3AfterBattleText:
-	text_far _SaffronGymYoungster3AfterBattleText
-	text_end
-
-SaffronGymYoungster4BattleText:
-	text_far _SaffronGymYoungster4BattleText
-	text_end
-
-SaffronGymYoungster4EndBattleText:
-	text_far _SaffronGymYoungster4EndBattleText
-	text_end
-
-SaffronGymYoungster4AfterBattleText:
-	text_far _SaffronGymYoungster4AfterBattleText
-	text_end
+	text_far_end _SaffronGymYoungster1AfterBattleText3

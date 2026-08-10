@@ -165,6 +165,7 @@ CheckOpponentWalkIn:
 	SetEvent EVENT_SECRET_LAB_NPC_WALK_IN_HAPPENING
 	ret
 .playEncounterMusic
+	callfar BackupAudioWram
 	ld c, BANK(Music_MeetMaleTrainer)
 	ld a, MUSIC_MEET_MALE_TRAINER
 	jp PlayMusic
@@ -370,7 +371,7 @@ CheckNoteButtons:
 	ld a, SFX_TELEPORT_ENTER_2
 	rst _PlaySound
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	cp 7
 	jr z, .pointlessButton
@@ -417,7 +418,7 @@ CheckPasswordCorrect:
 	jr nz, .loop
 	; matching password
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	call StopAllMusic
 	ld a, SFX_SWITCH
 	rst _PlaySound
@@ -486,7 +487,7 @@ CheckWalkingToDoor:
 	call SecretLabShakeScreen
 	call OpenBarricadeDoor
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	jp PlayEnhancedSecretLabMusic
 
 SecretLabShakeScreen:
@@ -516,7 +517,7 @@ ShakeScreenBasic:
 	rst _PlaySound
 	pop bc
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .shakeLoop
 	pop af
@@ -586,29 +587,28 @@ SecretLabCheckDisplayTextID:
 	ldh [hTextID], a
 	jp DisplayTextID
 
-
 SecretLabTrainerHeaders:
 	def_trainers 5
 SecretLabTrainerHeader0:
-	trainer EVENT_BEAT_SECRET_LAB_SOLDIER_0, 0, SecretLabBattleText1, SecretLabEndBattleText1, SecretLabAfterBattleText1
+	trainer EVENT_BEAT_SECRET_LAB_SOLDIER_0, 0, _SecretLabBattleText1, _SecretLabEndBattleText1, _SecretLabAfterBattleText1
 SecretLabTrainerHeader1:
-	trainer EVENT_BEAT_SECRET_LAB_SOLDIER_1, 0, SecretLabBattleText2, SecretLabEndBattleText2, SecretLabAfterBattleText2
+	trainer EVENT_BEAT_SECRET_LAB_SOLDIER_1, 0, _SecretLabBattleText2, _SecretLabEndBattleText2, _SecretLabAfterBattleText2
 SecretLabTrainerHeader2:
-	trainer EVENT_BEAT_SECRET_LAB_CHIEF, 0, SecretLabBattleText3, SecretLabEndBattleText3, SecretLabAfterBattleText3
+	trainer EVENT_BEAT_SECRET_LAB_CHIEF, 0, _SecretLabBattleText3, _SecretLabEndBattleText3, _SecretLabAfterBattleText3
 	db -1 ; end
 
 SecretLab_TextPointers:
-	dw 0 ; can't speak to soldier 1 manually
-	dw 0 ; can't speak to soldier 2 manually
-	dw 0 ; can't speak to chief manually
+	dba DoRet ; can't speak to soldier 1 manually
+	dba DoRet ; can't speak to soldier 2 manually
+	dba DoRet ; can't speak to chief manually
 	const_def 4
-	dw_const SecretLabMewMachineText,        TEXT_SECRETLAB_MEW_MACHINE
-	dw_const SecretLab_EngageTrainerText,    TEXT_SECRETLAB_ENGAGE_TRAINER
-	dw_const SecretLab_AfterBattleText,      TEXT_SECRETLAB_AFTER_BATTLE
-	dw_const SecretLabFailedClonesText,      TEXT_SECRETLAB_FAILED_CLONES
-	dw_const SecretLabComputersText,         TEXT_SECRETLAB_COMPUTERS
-	dw_const SecretLabMewtwoMachineText,     TEXT_SECRETLAB_MEWTWO_MACHINE
-	dw_const SecretLabMewtwoTransformation,  TEXT_SECRETLAB_MEWTWO_TRANSFORMATION
+	dba_const SecretLabMewMachineText,        TEXT_SECRETLAB_MEW_MACHINE
+	dba_const SecretLab_EngageTrainerText,    TEXT_SECRETLAB_ENGAGE_TRAINER
+	dba_const SecretLab_AfterBattleText,      TEXT_SECRETLAB_AFTER_BATTLE
+	dba_const SecretLabFailedClonesText,      TEXT_SECRETLAB_FAILED_CLONES
+	dba_const SecretLabComputersText,         TEXT_SECRETLAB_COMPUTERS
+	dba_const SecretLabMewtwoMachineText,     TEXT_SECRETLAB_MEWTWO_MACHINE
+	dba_const SecretLabMewtwoTransformation,  TEXT_SECRETLAB_MEWTWO_TRANSFORMATION
 
 SecretLab_EngageTrainerText:
 	text_asm
@@ -635,97 +635,46 @@ SecretLab_EngageTrainerText:
 
 SecretLab_AfterBattleText:
 	text_asm
-	ld hl, SecretLabTrainerHeader0
+	ld hl, SecretLabTrainerHeader0 + TRAINER_AFTER_BANK_OFFSET
 	CheckEvent EVENT_BEAT_SECRET_LAB_SOLDIER_1
 	jr z, .printText
-	ld hl, SecretLabTrainerHeader1
+	ld hl, SecretLabTrainerHeader1 + TRAINER_AFTER_BANK_OFFSET
 	CheckEvent EVENT_BEAT_SECRET_LAB_CHIEF
 	jr z, .printText
-	ld hl, SecretLabTrainerHeader2 
+	ld hl, SecretLabTrainerHeader2 + TRAINER_AFTER_BANK_OFFSET
 .printText
-	ld a, 3
-	call GetAddressFromPointerArray
-	rst _PrintText
+	call PrintBankedTrainerText
 	rst TextScriptEnd
-
-SecretLabBattleText1:
-	text_far _SecretLabBattleText1
-	text_end
-
-SecretLabEndBattleText1:
-	text_far _SecretLabEndBattleText1
-	text_end
-
-SecretLabAfterBattleText1:
-	text_far _SecretLabAfterBattleText1
-	text_end
-
-SecretLabBattleText2:
-	text_far _SecretLabBattleText2
-	text_end
-
-SecretLabEndBattleText2:
-	text_far _SecretLabEndBattleText2
-	text_end
-
-SecretLabAfterBattleText2:
-	text_far _SecretLabAfterBattleText2
-	text_end
-
-SecretLabBattleText3:
-	text_far _SecretLabBattleText3
-	text_end
-
-SecretLabEndBattleText3:
-	text_far _SecretLabEndBattleText3
-	text_end
-
-SecretLabAfterBattleText3:
-	text_far _SecretLabAfterBattleText3
-	text_end
 
 SecretLabFailedClonesText:
 	text_asm
 	ld a, [wHiddenEventFunctionArgument]
 	ld hl, SecretLabFailedClonesTextPointers
-	call GetAddressFromPointerArray
+	ld d, 0
+	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
+	ld e, a
+	add hl, de
 	rst _PrintText
 	rst TextScriptEnd
 
 SecretLabFailedClonesTextPointers:
-	dw SecretLabFailedClone1Text
-	dw SecretLabFailedClone2Text
-	dw SecretLabFailedClone3Text
-	dw SecretLabFailedClone4Text
-	dw SecretLabFailedClone5Text
-	dw SecretLabFailedClone6Text
-	dw SecretLabFailedClone7Text
-	dw SecretLabFailedClone8Text
-
 SecretLabFailedClone1Text:
-	text_far _SecretLabFailedClone1Text
-	text_end
+	text_far_end _SecretLabFailedClone1Text
 SecretLabFailedClone2Text:
-	text_far _SecretLabFailedClone2Text
-	text_end
+	text_far_end _SecretLabFailedClone2Text
 SecretLabFailedClone3Text:
-	text_far _SecretLabFailedClone3Text
-	text_end
+	text_far_end _SecretLabFailedClone3Text
 SecretLabFailedClone4Text:
-	text_far _SecretLabFailedClone4Text
-	text_end
+	text_far_end _SecretLabFailedClone4Text
 SecretLabFailedClone5Text:
-	text_far _SecretLabFailedClone5Text
-	text_end
+	text_far_end _SecretLabFailedClone5Text
 SecretLabFailedClone6Text:
-	text_far _SecretLabFailedClone6Text
-	text_end
+	text_far_end _SecretLabFailedClone6Text
 SecretLabFailedClone7Text:
-	text_far _SecretLabFailedClone7Text
-	text_end
+	text_far_end _SecretLabFailedClone7Text
 SecretLabFailedClone8Text:
-	text_far _SecretLabFailedClone8Text
-	text_end
+	text_far_end _SecretLabFailedClone8Text
 
 SecretLabComputersText:
 	text_asm
@@ -744,11 +693,9 @@ SecretLabComputersTextPointers:
 	dw SecretLabComputer4Text
 
 SecretLabComputer1Text:
-	text_far _SecretLabComputer1Text
-	text_end
+	text_far_end _SecretLabComputer1Text
 SecretLabComputer2Text:
-	text_far _SecretLabComputer2Text
-	text_end
+	text_far_end _SecretLabComputer2Text
 SecretLabComputer3Text:
 	text_far _SecretLabComputer3Text
 	text_asm
@@ -769,11 +716,9 @@ SecretLabComputer3Text:
 .done
 	rst TextScriptEnd
 .moreInfo
-	text_far _SecretLabComputer3BText
-	text_end
+	text_far_end _SecretLabComputer3BText
 SecretLabComputer4Text:
-	text_far _SecretLabComputer4Text
-	text_end
+	text_far_end _SecretLabComputer4Text
 
 SecretLabMewtwoMachineText:
 	text_asm
@@ -849,28 +794,22 @@ PlayerMewtwoTransformMoveScript:: ; these happen in reverse order
 	db PAD_LEFT
 
 SecretLabMewtwoMachineText1:
-	text_far _SecretLabMewtwoMachineText
-	text_end
+	text_far_end _SecretLabMewtwoMachineText
 
 SecretLabMewtwoReactionText:
-	text_far _SecretLabMewtwoReactionText
-	text_end
+	text_far_end _SecretLabMewtwoReactionText
 
 SecretLabMewtwoReactionText3:
-	text_far _SecretLabMewtwoReactionText3
-	text_end
+	text_far_end _SecretLabMewtwoReactionText3
 
 SecretLabMewtwoReactionText4:
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 
 SecretLabMewtwoForgetItText:
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 
 SecretLabMewtwoHereWeGoText:
-	text_far _SecretLabMewtwoHereWeGoText
-	text_end
+	text_far_end _SecretLabMewtwoHereWeGoText
 
 SecretLabMewMachineText:
 	text_asm
@@ -893,12 +832,10 @@ SecretLabMewMachineText:
 	rst TextScriptEnd
 
 SecretLabMewMachineText1:
-	text_far _SecretLabMewMachineText
-	text_end
+	text_far_end _SecretLabMewMachineText
 
 SecretLabMewReactionText:
-	text_far _SecretLabMewReactionText
-	text_end
+	text_far_end _SecretLabMewReactionText
 
 SecretLabMewtwoTransformation:
 	text_asm
@@ -922,12 +859,12 @@ SecretLabMewtwoTransformation:
 	ld a, SFX_INTRO_RAISE
 	rst _PlaySound
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	call SecretLabMewtwoTransformRumble
 	ld a, SFX_INTRO_RAISE
 	rst _PlaySound
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	call .animationStart
 	ld hl, SecretLabMewtwoGotArmorText
 	rst _PrintText
@@ -941,12 +878,12 @@ SecretLabMewtwoTransformation:
 	rst _PlaySound
 	call SecretLabMewtwoTransformRumble
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_INTRO_RAISE
 	rst _PlaySound
 	call SecretLabMewtwoTransformRumble
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	call .animationStart
 	ld hl, SecretLabMewtwoRemovedArmorText
 	rst _PrintText
@@ -955,13 +892,13 @@ SecretLabMewtwoTransformation:
 	ld a, SFX_INTRO_WHOOSH
 	rst _PlaySound
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call ToggleMachineDoorQuick
 	ld a, SFX_GO_INSIDE
 	rst _PlaySound
 	call SaveScreenTilesToBuffer2
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_INTRO_LUNGE
 	rst _PlaySound
 	call GBFadeOutToWhite
@@ -981,7 +918,7 @@ SecretLabMewtwoTransformation:
 	jp PlayCry
 .done
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	callfar ChangePartyPokemonSpecies
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
@@ -994,36 +931,27 @@ SecretLabMewtwoTransformation:
 	ld a, SFX_TURN_OFF_PC
 	rst _PlaySound
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	call PlayEnhancedSecretLabMusic
 	rst TextScriptEnd
 
 SecretLabMewtwoTransformText:
-	text_far _SecretLabMewtwoTransformText
-	text_end
+	text_far_end _SecretLabMewtwoTransformText
 
 SecretLabMewtwoTransformArmorText:
-	text_far _SecretLabMewtwoTransformArmorText
-	text_end
+	text_far_end _SecretLabMewtwoTransformArmorText
 
 SecretLabMewtwoTransformNormalText:
-	text_far _SecretLabMewtwoTransformNormalText
-	text_end
+	text_far_end _SecretLabMewtwoTransformNormalText
 
 SecretLabMewtwoGotArmorText:
-	text_far _SecretLabMewtwoGotArmorText
-	sound_get_item_2
-	text_end
+	text_far_end _SecretLabMewtwoGotArmorText
 
 SecretLabMewtwoRemovedArmorText:
-	text_far _SecretLabMewtwoRemovedArmorText
-	sound_get_item_1
-	text_end
+	text_far_end _SecretLabMewtwoRemovedArmorText	
 
 SecretLabMewtwoTransformCompleteText:
-	text_far _SecretLabMewtwoTransformCompleteText
-	text_end
-
+	text_far_end _SecretLabMewtwoTransformCompleteText
 
 SecretLabMewtwoTransformRumble:
 	ld b, 20
@@ -1033,7 +961,7 @@ SecretLabMewtwoTransformRumble:
 	rst _PlaySound
 	pop bc
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .rumbleLoop
 	ret

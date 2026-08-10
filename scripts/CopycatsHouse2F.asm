@@ -3,13 +3,13 @@ CopycatsHouse2F_Script:
 
 CopycatsHouse2F_TextPointers:
 	def_text_pointers
-	dw_const CopycatsHouse2FCopycatText,      TEXT_COPYCATSHOUSE2F_COPYCAT
-	dw_const CopycatsHouse2FDoduoText,        TEXT_COPYCATSHOUSE2F_DODUO
-	dw_const CopycatsHouse2FRareDollText,     TEXT_COPYCATSHOUSE2F_MONSTER
-	dw_const CopycatsHouse2FRareDollText,     TEXT_COPYCATSHOUSE2F_BIRD
-	dw_const CopycatsHouse2FRareDollText,     TEXT_COPYCATSHOUSE2F_FAIRY
-	dw_const CopycatsHouse2FSNESText,         TEXT_COPYCATSHOUSE2F_SNES
-	dw_const CopycatsHouse2FPCText,           TEXT_COPYCATSHOUSE2F_PC
+	dba_const CopycatsHouse2FCopycatText,       TEXT_COPYCATSHOUSE2F_COPYCAT
+	dba_const CopycatsHouse2FDoduoText,         TEXT_COPYCATSHOUSE2F_DODUO
+	dba_const _CopycatsHouse2FRareDollText,     TEXT_COPYCATSHOUSE2F_MONSTER
+	dba_const _CopycatsHouse2FRareDollText,     TEXT_COPYCATSHOUSE2F_BIRD
+	dba_const _CopycatsHouse2FRareDollText,     TEXT_COPYCATSHOUSE2F_FAIRY
+	dba_const _CopycatsHouse2FSNESText,         TEXT_COPYCATSHOUSE2F_SNES
+	dba_const _CopycatsHouse2FPCMySecretsText,  TEXT_COPYCATSHOUSE2F_PC
 
 CopycatsHouse2FCopycatText:
 	text_asm
@@ -58,29 +58,21 @@ CopycatsHouse2FCopycatText:
 .done
 	rst TextScriptEnd
 .DoYouLikePokemonText:
-	text_far _CopycatsHouse2FCopycatDoYouLikePokemonText
-	text_end
+	text_far_end _CopycatsHouse2FCopycatDoYouLikePokemonText
 .gaveDoll:
-	text_far _CopycatsHouse2FCopycatGaveDollText
-	text_end
+	text_far_end _CopycatsHouse2FCopycatGaveDollText
 .mimicTeachAgain
-	text_far _CopycatsHouse2FCopycatAgainText
-	text_end
+	text_far_end _CopycatsHouse2FCopycatAgainText
 .ILikeYou
-	text_far _CopyCatsHouse2FCopycatILikeYouText
-	text_end
+	text_far_end _CopyCatsHouse2FCopycatILikeYouText
 .successLearning
-	text_far _CopycatsHouse2FCopycatSuccessText
-	text_end
+	text_far_end _CopycatsHouse2FCopycatSuccessText
 .cancelledLearning
-	text_far _CopycatsHouse2FCopycatCancelledFirstTimeText
-	text_end 
+	text_far_end _CopycatsHouse2FCopycatCancelledFirstTimeText
 .ditto
-	text_far _CopyCatsHouse2FCopycatDittoText
-	text_end
+	text_far_end _CopyCatsHouse2FCopycatDittoText
 .cancelledAgain
-	text_far _CopycatsHouse2FCopycatCancelledAgainText
-	text_end
+	text_far_end _CopycatsHouse2FCopycatCancelledAgainText
 
 
 CopycatsHouse2FDoduoText:
@@ -106,21 +98,7 @@ CopycatsHouse2FDoduoText:
 .done
 	rst TextScriptEnd
 .mirrorMirror
-	text_far _CopycatsHouse2FDoduoText2
-	text_end
+	text_far_end _CopycatsHouse2FDoduoText2
 
 CopycatName:
 	db "COPYCAT@"
-
-
-CopycatsHouse2FRareDollText:
-	text_far _CopycatsHouse2FRareDollText
-	text_end
-
-CopycatsHouse2FSNESText:
-	text_far _CopycatsHouse2FSNESText
-	text_end
-
-CopycatsHouse2FPCText:
-	text_far _CopycatsHouse2FPCMySecretsText
-	text_end

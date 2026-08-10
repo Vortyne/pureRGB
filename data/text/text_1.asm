@@ -79,6 +79,7 @@ _FoundItemText::
 	line "@"
 	text_ram_stringbuffer
 	text "!@"
+	sound_get_item_1
 	text_end
 
 _FoundMultipleItemText::
@@ -88,6 +89,7 @@ _FoundMultipleItemText::
 	text " ×@"
 	text_ram wTempStore1
 	text "!@"
+	sound_get_item_1
 	text_end
 
 _NoMoreRoomForItemText::
@@ -163,6 +165,7 @@ _OaksAideGotItemText::
 	line "@"
 	text_ram wOaksAideRewardItemName
 	text "!@"
+	sound_get_item_1
 	text_end
 
 _OaksAideNoRoomText::

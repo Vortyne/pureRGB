@@ -1,12 +1,9 @@
 LoreleisRoom_Script:
 	call LoreleiShowOrHideExitBlock
-	call EnableAutoTextBoxDrawing
 	ld hl, LoreleisRoomTrainerHeaders
 	ld de, LoreleisRoom_ScriptPointers
-	ld a, [wLoreleisRoomCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wLoreleisRoomCurScript], a
-	ret
+	ld bc, wLoreleisRoomCurScript
+	jp ExecuteCustomMapScriptInTable
 
 LoreleiShowOrHideExitBlock:
 	call WasMapJustLoaded
@@ -39,13 +36,13 @@ LoreleisRoomLoreleiEndBattleScript:
 
 LoreleisRoom_TextPointers:
 	def_text_pointers
-	dw_const LoreleisRoomLoreleiText,            TEXT_LORELEISROOM_LORELEI
-	dw_const EliteFourDontRunAwayText, 			 TEXT_LORELEISROOM_DONT_RUN_AWAY
+	dba_const LoreleisRoomLoreleiText,            TEXT_LORELEISROOM_LORELEI
+	dba_const _EliteFourDontRunAwayText, 		  TEXT_LORELEISROOM_DONT_RUN_AWAY
 
 LoreleisRoomTrainerHeaders:
 	def_trainers
 LoreleisRoomTrainerHeader0:
-	trainer EVENT_BEAT_LORELEIS_ROOM_TRAINER_0, 0, LoreleisRoomLoreleiBeforeBattleText, LoreleisRoomLoreleiEndBattleText, LoreleisRoomLoreleiAfterBattleText
+	trainer EVENT_BEAT_LORELEIS_ROOM_TRAINER_0, 0, _LoreleisRoomLoreleiBeforeBattleText, _LoreleisRoomLoreleiEndBattleText, _LoreleisRoomLoreleiAfterBattleText
 	db -1 ; end
 
 LoreleisRoomLoreleiText:
@@ -55,15 +52,3 @@ LoreleisRoomLoreleiText:
 ;;;;;;;;;;
 	ld hl, LoreleisRoomTrainerHeader0
 	jp EliteFourTalkToTrainer
-
-LoreleisRoomLoreleiBeforeBattleText:
-	text_far _LoreleisRoomLoreleiBeforeBattleText
-	text_end
-
-LoreleisRoomLoreleiEndBattleText:
-	text_far _LoreleisRoomLoreleiEndBattleText
-	text_end
-
-LoreleisRoomLoreleiAfterBattleText:
-	text_far _LoreleisRoomLoreleiAfterBattleText
-	text_end

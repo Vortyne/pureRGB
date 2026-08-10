@@ -6,8 +6,7 @@ RocketHideoutElevator_Script:
 	bit BIT_CUR_MAP_USED_ELEVATOR, [hl]
 	res BIT_CUR_MAP_USED_ELEVATOR, [hl]
 	call nz, RocketHideoutElevatorShakeScript
-	xor a
-	ld [wAutoTextBoxDrawingControl], a
+	call EnableAutoTextBoxDrawing
 	inc a
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ret
@@ -59,7 +58,7 @@ RocketHideoutElevatorShakeScript:
 
 RocketHideoutElevator_TextPointers:
 	def_text_pointers
-	dw_const RocketHideoutElevatorText, TEXT_ROCKETHIDEOUTELEVATOR
+	dba_const RocketHideoutElevatorText, TEXT_ROCKETHIDEOUTELEVATOR
 
 RocketHideoutElevatorText:
 	text_asm
@@ -94,10 +93,7 @@ RocketHideoutElevatorText:
 	rst TextScriptEnd
 
 .UnlockedElevatorText:
-	text_far _UnlockedElevatorText
-	text_end
+	text_far_end _UnlockedElevatorText
 
 .AppearsToNeedKeyText:
-	text_far _RocketHideoutElevatorAppearsToNeedKeyText
-	text_waitbutton
-	text_end
+	text_far_end _RocketHideoutElevatorAppearsToNeedKeyText

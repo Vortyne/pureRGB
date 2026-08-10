@@ -375,7 +375,7 @@ TwoOptionMenu_SaveScreenTiles:
 
 TwoOptionMenu_RestoreScreenTiles:
 	ld c, 15
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, wBuffer
 	lb bc, 5, 6
 .loop

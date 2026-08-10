@@ -57,6 +57,8 @@ _LabColorChangerColorChangeDone::
 	text "Das ist gut!"
 	para "Color swap ist"
 	line "complete!@"
+	sound_get_item_2
+	text_promptbutton
 	text_end
 
 _LabColorChangerNoChangesLeft::
@@ -78,6 +80,8 @@ _LabColorChangerVasIsDas::
 	para "Meine gute!"
 	para "You get 10 extra"
 	line "color changes!@"
+	sound_get_item_2
+	text_promptbutton
 	text_end
 
 _LabColorChangerResearchingColors::

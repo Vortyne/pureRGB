@@ -132,20 +132,15 @@ CheckPerTurnSpecialBattleEffect::
 	ldh [hWhoseTurn], a
 	ret
 .volcanoTooHot
-	text_far _VolcanoBattleBurnText
-	text_end
+	text_far_end _VolcanoBattleBurnText
 .autoPoisonedEnemy
-	text_far _PoisonedText
-	text_end
+	text_far_end _PoisonedText
 .autoPoisoned
-	text_far _BadlyPoisonedText
-	text_end
+	text_far_end _BadlyPoisonedText
 .radiationSpreadsText
-	text_far _IrradiatedBattleInitText
-	text_end
+	text_far_end _IrradiatedBattleInitText
 .growsLarger
-	text_far _IrradiatedGrowsLarger
-	text_end
+	text_far_end _IrradiatedGrowsLarger
 
 ; PureRGBnote: ADDED: when battle starts in special battles something can happen, for example moltres in the volcano gets powered up by magma.
 CheckInitSpecialBattleEffect::
@@ -210,14 +205,11 @@ CheckInitSpecialBattleEffect::
 	ld [wEnemyMoveEffect], a
 	jpfar StatModifierUpEffect
 .poweredUp
-	text_far _MagmarBattleInit
-	text_end
+	text_far_end _MagmarBattleInit
 .onFire
-	text_far _TorchedOnFire
-	text_end
+	text_far_end _TorchedOnFire
 .painlessText
-	text_far _PainlessBattleInitText
-	text_end
+	text_far_end _PainlessBattleInitText
 
 ; a = which animation
 SpecialBattleEffectDoAnimation:
@@ -361,11 +353,9 @@ CheckOnSendOutSpecialEffect::
 	ldh [hWhoseTurn], a
 	ret
 .cubonePowerUpText
-	text_far _CubonePoweredUp
-	text_end
+	text_far_end _CubonePoweredUp
 .ultimateProtection
-	text_far _CuboneGainedUltimateProtection
-	text_end
+	text_far_end _CuboneGainedUltimateProtection
 
 ;;;;; PureRGBnote: ADDED: in some cases, we don't want to display "Opponent fainted!" after defeating a wild pokemon.
 ;;;;; Such as when fighting static Snorlax, since it doesn't faint, it leaves once losing the fight.

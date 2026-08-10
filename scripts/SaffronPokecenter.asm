@@ -4,25 +4,11 @@ SaffronPokecenter_Script:
 
 SaffronPokecenter_TextPointers:
 	def_text_pointers
-	dw_const SaffronPokecenterNurseText,            TEXT_SAFFRONPOKECENTER_NURSE
-	dw_const SaffronPokecenterBeautyText,           TEXT_SAFFRONPOKECENTER_BEAUTY
-	dw_const SaffronPokecenterGentlemanText,        TEXT_SAFFRONPOKECENTER_GENTLEMAN
-	dw_const SaffronPokecenterLinkReceptionistText, TEXT_SAFFRONPOKECENTER_LINK_RECEPTIONIST
-	dw_const SaffronPokecenterBenchGuyText,         TEXT_SAFFRONPOKECENTER_BENCH_GUY
-
-SaffronPokecenterNurseText:
-	script_pokecenter_nurse
-
-SaffronPokecenterBeautyText:
-	text_far _SaffronPokecenterBeautyText
-	text_end
-
-SaffronPokecenterGentlemanText:
-	text_far _SaffronPokecenterGentlemanText
-	text_end
-
-SaffronPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
+	dba_const GenericPokecenterNurseText,            TEXT_SAFFRONPOKECENTER_NURSE
+	dba_const _SaffronPokecenterBeautyText,          TEXT_SAFFRONPOKECENTER_BEAUTY
+	dba_const _SaffronPokecenterGentlemanText,       TEXT_SAFFRONPOKECENTER_GENTLEMAN
+	dba_const GenericLinkReceptionistText,           TEXT_SAFFRONPOKECENTER_LINK_RECEPTIONIST
+	dba_const SaffronPokecenterBenchGuyText,         TEXT_SAFFRONPOKECENTER_BENCH_GUY
 
 SaffronPokecenterBenchGuyText:
 	text_asm
@@ -35,9 +21,7 @@ SaffronPokecenterBenchGuyText:
 	rst TextScriptEnd
 
 .beforeSilphGone
-	text_far _SaffronCityPokecenterGuyText1
-	text_end
+	text_far_end _SaffronCityPokecenterGuyText1
 
 .afterSilphGone:
-	text_far _SaffronCityPokecenterGuyText2
-	text_end
+	text_far_end _SaffronCityPokecenterGuyText2

@@ -4,26 +4,8 @@ CinnabarPokecenter_Script:
 
 CinnabarPokecenter_TextPointers:
 	def_text_pointers
-	dw_const CinnabarPokecenterNurseText,            TEXT_CINNABARPOKECENTER_NURSE
-	dw_const CinnabarPokecenterCooltrainerFText,     TEXT_CINNABARPOKECENTER_COOLTRAINER_F
-	dw_const CinnabarPokecenterGentlemanText,        TEXT_CINNABARPOKECENTER_GENTLEMAN
-	dw_const CinnabarPokecenterLinkReceptionistText, TEXT_CINNABARPOKECENTER_LINK_RECEPTIONIST
-	dw_const CinnabarPokecenterBenchGuyText,         TEXT_CINNABARPOKECENTER_BENCH_GUY
-
-CinnabarPokecenterNurseText:
-	script_pokecenter_nurse
-
-CinnabarPokecenterCooltrainerFText:
-	text_far _CinnabarPokecenterCooltrainerFText
-	text_end
-
-CinnabarPokecenterGentlemanText:
-	text_far _CinnabarPokecenterGentlemanText
-	text_end
-
-CinnabarPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
-
-CinnabarPokecenterBenchGuyText:
-	text_far _CinnabarPokecenterGuyText
-	text_end
+	dba_const GenericPokecenterNurseText,              TEXT_CINNABARPOKECENTER_NURSE
+	dba_const _CinnabarPokecenterCooltrainerFText,     TEXT_CINNABARPOKECENTER_COOLTRAINER_F
+	dba_const _CinnabarPokecenterGentlemanText,        TEXT_CINNABARPOKECENTER_GENTLEMAN
+	dba_const GenericLinkReceptionistText,             TEXT_CINNABARPOKECENTER_LINK_RECEPTIONIST
+	dba_const _CinnabarPokecenterBenchGuyText,         TEXT_CINNABARPOKECENTER_BENCH_GUY

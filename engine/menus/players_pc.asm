@@ -432,14 +432,11 @@ DepositItemFromItemMenu::
 	ld [wBagSavedMenuItem], a
 	ret
 .cantDeposit
-	text_far _CantDepositSSTicketText
-	text_end
+	text_far_end _CantDepositSSTicketText
 .depositBikeWhileRidingIt
-	text_far _CantDepositBikeText
-	text_end
+	text_far_end _CantDepositBikeText
 .cantGetOffHere
-	text_far _CannotGetOffHereText
-	text_end
+	text_far_end _CannotGetOffHereText
 
 WorldOptions:
 	call ClearScreen
@@ -460,66 +457,49 @@ PlayersPCMenuEntries:
 	next "LOG OFF@"
 
 TurnedOnPC2Text:
-	text_far _TurnedOnPC2Text
-	text_end
+	text_far_end _TurnedOnPC2Text
 
 WhatDoYouWantText:
-	text_far _WhatDoYouWantText
-	text_end
+	text_far_end _WhatDoYouWantText
 
 WhatToDepositText:
-	text_far _WhatToDepositText
-	text_end
+	text_far_end _WhatToDepositText
 
 WantToDepositText:
-	text_far _WantToDepositText
-	text_end
+	text_far_end _WantToDepositText
 
 DepositHowManyToPCText:
-	text_far _DepositHowManyToPCText
-	text_end
+	text_far_end _DepositHowManyToPCText
 
 DepositHowManyText:
-	text_far _DepositHowManyText
-	text_end
+	text_far_end _DepositHowManyText
 
 ItemWasStoredText:
-	text_far _ItemWasStoredText
-	text_end
+	text_far_end _ItemWasStoredText
 
 NothingToDepositText:
-	text_far _NothingToDepositText
-	text_end
+	text_far_end _NothingToDepositText
 
 NoRoomToStoreText:
-	text_far _NoRoomToStoreText
-	text_end
+	text_far_end _NoRoomToStoreText
 
 WhatToWithdrawText:
-	text_far _WhatToWithdrawText
-	text_end
+	text_far_end _WhatToWithdrawText
 
 WithdrawHowManyText:
-	text_far _WithdrawHowManyText
-	text_end
+	text_far_end _WithdrawHowManyText
 
 WithdrewItemText:
-	text_far _WithdrewItemText
-	text_end
+	text_far_end _WithdrewItemText
 
 NothingStoredText:
-	text_far _NothingStoredText
-	text_end
+	text_far_end _NothingStoredText
 
 CantCarryMoreText:
-	text_far _CantCarryMoreText
-	text_end
+	text_far_end _CantCarryMoreText
 
 WhatToTossText:
-	text_far _WhatToTossText
-	text_end
+	text_far_end _WhatToTossText
 
 TossHowManyText:
-	text_far _TossHowManyText
-	text_end
-
+	text_far_end _TossHowManyText

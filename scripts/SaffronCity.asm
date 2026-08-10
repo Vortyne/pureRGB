@@ -14,72 +14,33 @@ SaffronCity_Script:
 
 SaffronCity_TextPointers:
 	def_text_pointers
-	dw_const SaffronCityRocket1Text,                  TEXT_SAFFRONCITY_ROCKET1
-	dw_const SaffronCityRocket2Text,                  TEXT_SAFFRONCITY_ROCKET2
-	dw_const SaffronCityRocket3Text,                  TEXT_SAFFRONCITY_ROCKET3
-	dw_const SaffronCityRocket4Text,                  TEXT_SAFFRONCITY_ROCKET4
-	dw_const SaffronCityRocket5Text,                  TEXT_SAFFRONCITY_ROCKET5
-	dw_const SaffronCityRocket6Text,                  TEXT_SAFFRONCITY_ROCKET6
-	dw_const SaffronCityRocket7Text,                  TEXT_SAFFRONCITY_ROCKET7
-	dw_const SaffronCityScientistText,                TEXT_SAFFRONCITY_SCIENTIST
-	dw_const SaffronCitySilphWorkerMText,             TEXT_SAFFRONCITY_SILPH_WORKER_M
-	dw_const SaffronCitySilphWorkerFText,             TEXT_SAFFRONCITY_SILPH_WORKER_F
-	dw_const SaffronCityGentlemanText,                TEXT_SAFFRONCITY_GENTLEMAN
-	dw_const SaffronCityPidgeotText,                  TEXT_SAFFRONCITY_PIDGEOT
-	dw_const SaffronCityRockerText,                   TEXT_SAFFRONCITY_ROCKER
-	dw_const SaffronCityRocket8Text,                  TEXT_SAFFRONCITY_ROCKET8
-	dw_const SaffronCityRocket9Text,                  TEXT_SAFFRONCITY_ROCKET9
-	dw_const SaffronCitySignText,                     TEXT_SAFFRONCITY_SIGN
-	dw_const SaffronCityFightingDojoSignText,         TEXT_SAFFRONCITY_FIGHTING_DOJO_SIGN
-	dw_const SaffronCityGymSignText,                  TEXT_SAFFRONCITY_GYM_SIGN
-	dw_const MartSignText,                            TEXT_SAFFRONCITY_MART_SIGN
-	dw_const SaffronCityTrainerTips1Text,             TEXT_SAFFRONCITY_TRAINER_TIPS1
-	dw_const SaffronCityTrainerTips2Text,             TEXT_SAFFRONCITY_TRAINER_TIPS2
-	dw_const SaffronCitySilphCoSignText,              TEXT_SAFFRONCITY_SILPH_CO_SIGN
-	dw_const PokeCenterSignText,                      TEXT_SAFFRONCITY_POKECENTER_SIGN
-	dw_const SaffronCityMrPsychicsHouseSignText,      TEXT_SAFFRONCITY_MR_PSYCHICS_HOUSE_SIGN
-	dw_const SaffronCitySilphCoLatestProductSignText, TEXT_SAFFRONCITY_SILPH_CO_LATEST_PRODUCT_SIGN
-	dw_const SaffronCityBusinessSpaceForLease,        TEXT_SAFFRONCITY_BUSINESS_SPACE_FOR_LEASE
-
-SaffronCityRocket1Text:
-	text_far _SaffronCityRocket1Text
-	text_end
-
-SaffronCityRocket2Text:
-	text_far _SaffronCityRocket2Text
-	text_end
-
-SaffronCityRocket3Text:
-	text_far _SaffronCityRocket3Text
-	text_end
-
-SaffronCityRocket4Text:
-	text_far _SaffronCityRocket4Text
-	text_end
-
-SaffronCityRocket5Text:
-	text_far _SaffronCityRocket5Text
-	text_end
-
-SaffronCityRocket6Text:
-	text_far _SaffronCityRocket6Text
-	text_end
-
-SaffronCityRocket7Text:
-	text_far _SaffronCityRocket7Text
-	text_end
-
-SaffronCityScientistText:
-	text_far _SaffronCityScientistText
-	text_end
-
-SaffronCitySilphWorkerMText:
-	text_far _SaffronCitySilphWorkerMText
-	text_end
-
-SaffronCitySilphWorkerFText:
-	text_far _SaffronCitySilphWorkerFText
-	text_end
+	dba_const _SaffronCityRocket1Text,                  TEXT_SAFFRONCITY_ROCKET1
+	dba_const _SaffronCityRocket2Text,                  TEXT_SAFFRONCITY_ROCKET2
+	dba_const _SaffronCityRocket3Text,                  TEXT_SAFFRONCITY_ROCKET3
+	dba_const _SaffronCityRocket4Text,                  TEXT_SAFFRONCITY_ROCKET4
+	dba_const _SaffronCityRocket5Text,                  TEXT_SAFFRONCITY_ROCKET5
+	dba_const _SaffronCityRocket6Text,                  TEXT_SAFFRONCITY_ROCKET6
+	dba_const _SaffronCityRocket7Text,                  TEXT_SAFFRONCITY_ROCKET7
+	dba_const _SaffronCityScientistText,                TEXT_SAFFRONCITY_SCIENTIST
+	dba_const _SaffronCitySilphWorkerMText,             TEXT_SAFFRONCITY_SILPH_WORKER_M
+	dba_const _SaffronCitySilphWorkerFText,             TEXT_SAFFRONCITY_SILPH_WORKER_F
+	dba_const SaffronCityGentlemanText,                TEXT_SAFFRONCITY_GENTLEMAN
+	dba_const SaffronCityPidgeotText,                  TEXT_SAFFRONCITY_PIDGEOT
+	dba_const _SaffronCityRockerText,                   TEXT_SAFFRONCITY_ROCKER
+	dba_const _SaffronCityRocket8Text,                  TEXT_SAFFRONCITY_ROCKET8
+	dba_const _SaffronCityRocket9Text,                  TEXT_SAFFRONCITY_ROCKET9
+	dba_const _SaffronCitySignText,                     TEXT_SAFFRONCITY_SIGN
+	dba_const _SaffronCityFightingDojoSignText,         TEXT_SAFFRONCITY_FIGHTING_DOJO_SIGN
+	dba_const SaffronCityGymSignText,                  TEXT_SAFFRONCITY_GYM_SIGN
+	dba_const MartSignText,                            TEXT_SAFFRONCITY_MART_SIGN
+	dba_const _SaffronCityTrainerTips1Text,             TEXT_SAFFRONCITY_TRAINER_TIPS1
+	dba_const _SaffronCityTrainerTips2Text,             TEXT_SAFFRONCITY_TRAINER_TIPS2
+	dba_const _SaffronCitySilphCoSignText,              TEXT_SAFFRONCITY_SILPH_CO_SIGN
+	dba_const PokeCenterSignText,                      TEXT_SAFFRONCITY_POKECENTER_SIGN
+	dba_const _SaffronCityMrPsychicsHouseSignText,      TEXT_SAFFRONCITY_MR_PSYCHICS_HOUSE_SIGN
+	dba_const _SaffronCitySilphCoLatestProductSignText, TEXT_SAFFRONCITY_SILPH_CO_LATEST_PRODUCT_SIGN
+; PureRGBnote: ADDED: One of the buildings has its door barred, and will display this text when you interact with the door.
+	dba_const _SaffronCityBusinessSpaceForLease,        TEXT_SAFFRONCITY_BUSINESS_SPACE_FOR_LEASE
 
 SaffronCityGentlemanText:
 	text_far _SaffronCityGentlemanText
@@ -96,53 +57,8 @@ SaffronCityPidgeotText:
 	call PlayCry
 	jr SaffronCityGentlemanText.done
 
-SaffronCityRockerText:
-	text_far _SaffronCityRockerText
-	text_end
-
-SaffronCityRocket8Text:
-	text_far _SaffronCityRocket8Text
-	text_end
-
-SaffronCityRocket9Text:
-	text_far _SaffronCityRocket9Text
-	text_end
-
-SaffronCitySignText:
-	text_far _SaffronCitySignText
-	text_end
-
-SaffronCityFightingDojoSignText:
-	text_far _SaffronCityFightingDojoSignText
-	text_end
-
 SaffronCityGymSignText:
 	text_asm
 	ld c, SAFFRON_GYM
 	ld de, SaffronGymOutsideSign
 	jpfar GymOutsideSignTextScript
-
-SaffronCityTrainerTips1Text:
-	text_far _SaffronCityTrainerTips1Text
-	text_end
-
-SaffronCityTrainerTips2Text:
-	text_far _SaffronCityTrainerTips2Text
-	text_end
-
-SaffronCitySilphCoSignText:
-	text_far _SaffronCitySilphCoSignText
-	text_end
-
-SaffronCityMrPsychicsHouseSignText:
-	text_far _SaffronCityMrPsychicsHouseSignText
-	text_end
-
-SaffronCitySilphCoLatestProductSignText:
-	text_far _SaffronCitySilphCoLatestProductSignText
-	text_end
-
-; PureRGBnote: ADDED: One of the buildings has its door barred, and will display this text when you interact with the door.
-SaffronCityBusinessSpaceForLease:
-	text_far _SaffronCityBusinessSpaceForLease
-	text_end

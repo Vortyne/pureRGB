@@ -3,14 +3,14 @@ CeladonMansion1F_Script:
 
 CeladonMansion1F_TextPointers:
 	def_text_pointers
-	dw_const CeladonMansion1FMeowthText,            TEXT_CELADONMANSION1F_MEOWTH
-	dw_const CeladonMansion1FGrannyText,            TEXT_CELADONMANSION1F_GRANNY
-	dw_const CeladonMansion1FClefairyText,          TEXT_CELADONMANSION1F_CLEFAIRY
-	dw_const CeladonMansion1FNidoranFText,          TEXT_CELADONMANSION1F_NIDORANF
-	dw_const CeladonMansion1FManagersSuiteSignText, TEXT_CELADONMANSION1F_MANAGERS_SUITE_SIGN
-	dw_const CeladonMansion1FBookCaseLeftText,      TEXT_CELADONMANSION1F_BOOKCASE_LEFT
-	dw_const CeladonMansion1FDiglettSculptureText,  TEXT_CELADONMANSION1F_DIGLETT_SCULPTURE
-	dw_const CeladonMansion1FBookCaseRightText,     TEXT_CELADONMANSION1F_BOOKCASE_RIGHT
+	dba_const CeladonMansion1FMeowthText,             TEXT_CELADONMANSION1F_MEOWTH
+	dba_const CeladonMansion1FGrannyText,             TEXT_CELADONMANSION1F_GRANNY
+	dba_const CeladonMansion1FClefairyText,           TEXT_CELADONMANSION1F_CLEFAIRY
+	dba_const CeladonMansion1FNidoranFText,           TEXT_CELADONMANSION1F_NIDORANF
+	dba_const _CeladonMansion1FManagersSuiteSignText, TEXT_CELADONMANSION1F_MANAGERS_SUITE_SIGN
+	dba_const CeladonMansion1FBookCaseLeftText,       TEXT_CELADONMANSION1F_BOOKCASE_LEFT
+	dba_const _DiglettSculptureText,                  TEXT_CELADONMANSION1F_DIGLETT_SCULPTURE
+	dba_const CeladonMansion1FBookCaseRightText,      TEXT_CELADONMANSION1F_BOOKCASE_RIGHT
 
 CeladonMansion1_PlayCryScript:
 	push bc
@@ -45,11 +45,6 @@ CeladonMansion1FNidoranFText:
 	lb bc, NIDORAN_F, DEX_NIDORAN_F - 1
 	jr CeladonMansion1_PlayCryScript
 
-CeladonMansion1FManagersSuiteSignText:
-	text_far _CeladonMansion1FManagersSuiteSignText
-	text_end
-
-
 CeladonMansion1FBookCaseLeftText:
 	text_far _CeladonMansion1FBookCaseLeftText
 	text_far _FlippedToARandomPage
@@ -73,7 +68,3 @@ CeladonMansion1FBookCaseRightText:
 	jpfar KeepReadingBookLearnset
 .done
 	rst TextScriptEnd
-
-CeladonMansion1FDiglettSculptureText:
-	text_far _DiglettSculptureText
-	text_end

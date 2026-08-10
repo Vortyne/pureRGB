@@ -7,7 +7,7 @@ DiglettsCave_Script:
 
 DiglettsCave_TextPointers:
 	def_text_pointers
-	dw_const DiglettsCaveDiglettText, TEXT_DIGLETTS_CAVE_DIGLETTS
+	dba_const DiglettsCaveDiglettText, TEXT_DIGLETTS_CAVE_DIGLETTS
 
 CheckAutoHideDigletts:
 	; can happen if you change the option setting while they're visible

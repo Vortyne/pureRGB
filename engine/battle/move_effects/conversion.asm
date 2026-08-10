@@ -36,11 +36,9 @@ ShowConversionMenu::
 	and a
 	ret
 .chooseConversionMode
-	text_far _ConversionChooseModeText
-	text_end
+	text_far_end _ConversionChooseModeText
 .alreadyDefenseMode
-	text_far _ConversionAlreadyDefenseModeText
-	text_end
+	text_far_end _ConversionAlreadyDefenseModeText
 
 ConversionEffect_:
 	callfar PlayCurrentMoveAnimation
@@ -126,11 +124,9 @@ ConversionEffect_:
 	and a ; clear carry so we don't execute another move when returning from this
 	ret
 .enteredDefenseMode
-	text_far _ConversionEnteredDefenseModeText
-	text_end
+	text_far_end _ConversionEnteredDefenseModeText
 .enteredAttackMode
-	text_far _ConversionEnteredAttackModeText
-	text_end
+	text_far_end _ConversionEnteredAttackModeText
 .getBattleStatus3
 	ldh a, [hWhoseTurn]
 	and a

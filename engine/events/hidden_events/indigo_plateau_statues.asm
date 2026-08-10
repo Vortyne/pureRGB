@@ -12,13 +12,10 @@ IndigoPlateauStatues::
 	rst TextScriptEnd
 
 IndigoPlateauStatuesText1:
-	text_far _IndigoPlateauStatuesText1
-	text_end
+	text_far_end _IndigoPlateauStatuesText1
 
 IndigoPlateauStatuesText2:
-	text_far _IndigoPlateauStatuesText2
-	text_end
+	text_far_end _IndigoPlateauStatuesText2
 
 IndigoPlateauStatuesText3:
-	text_far _IndigoPlateauStatuesText3
-	text_end
+	text_far_end _IndigoPlateauStatuesText3

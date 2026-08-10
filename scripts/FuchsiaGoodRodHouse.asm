@@ -7,24 +7,24 @@ FuchsiaGoodRodHouse_Script:
 
 FuchsiaGoodRodHouse_TextPointers:
 	def_text_pointers
-	dw_const FuchsiaGoodRodHouseFishingGuruText, TEXT_FUCHSIAGOODRODHOUSE_FISHING_GURU
-	dw_const FuchsiaFishingGuide,                TEXT_FUCHSIAGOODRODHOUSE_FISHING_GUIDE
-	dw_const ErikSarasHouseSaraText,             TEXT_FUCHSIAGOODRODHOUSE_SARA
-	dw_const ErikSarasHouseErikText,             TEXT_FUCHSIAGOODRODHOUSE_ERIK
-	dw_const ErikSarasHouseNoteText,             TEXT_FUCHSIAGOODRODHOUSE_NOTE
-	dw_const ErikSarasHouseSecondNoteText,       TEXT_FUCHSIAGOODRODHOUSE_NOTE2
-	dw_const FuchsiaGoodRodHouseGarbageText,     TEXT_FUCHSIAGOODRODHOUSE_GARBAGE
-	dw_const ErikSarasHousePhoneText,            TEXT_ERIKSARASHOUSE_PHONE
-	dw_const ErikSarasHouseComputerText,         TEXT_ERIKSARASHOUSE_COMPUTER
-	dw_const ErikSarasHouseNorthGarbageText,     TEXT_ERIKSARASHOUSE_NORTH_GARBAGE
-	dw_const ErikSarasHouseLeftShelfText,        TEXT_ERIKSARASHOUSE_LEFT_SHELF
-	dw_const ErikSarasHouseMiddleShelfText,      TEXT_ERIKSARASHOUSE_MIDDLE_SHELF
-	dw_const ErikSarasHouseRightShelfText,       TEXT_ERIKSARASHOUSE_RIGHT_SHELF
-	dw_const ErikSarasHouseLeftPeriscopeText,    TEXT_ERIKSARASHOUSE_LEFT_PERISCOPE
-	dw_const ErikSarasHouseRightPeriscopeText,   TEXT_ERIKSARASHOUSE_RIGHT_PERISCOPE
-	dw_const ErikSarasHouseSouthGarbageText,     TEXT_ERIKSARASHOUSE_SOUTH_GARBAGE
-	dw_const ErikSarasHouseOpenBookText,         TEXT_ERIKSARASHOUSE_OPEN_BOOK
-	dw_const ErikSarasHouseAfterEventText,       TEXT_ERIKSARASHOUSE_AFTER_EVENT
+	dba_const FuchsiaGoodRodHouseFishingGuruText, TEXT_FUCHSIAGOODRODHOUSE_FISHING_GURU
+	dba_const FuchsiaFishingGuide,                TEXT_FUCHSIAGOODRODHOUSE_FISHING_GUIDE
+	dba_const ErikSarasHouseSaraText,             TEXT_FUCHSIAGOODRODHOUSE_SARA
+	dba_const ErikSarasHouseErikText,             TEXT_FUCHSIAGOODRODHOUSE_ERIK
+	dba_const ErikSarasHouseNoteText,             TEXT_FUCHSIAGOODRODHOUSE_NOTE
+	dba_const ErikSarasHouseSecondNoteText,       TEXT_FUCHSIAGOODRODHOUSE_NOTE2
+	dba_const _FuchsiaGoodRodHouseGarbageText,    TEXT_FUCHSIAGOODRODHOUSE_GARBAGE
+	dba_const _ErikSarasHousePhoneText,           TEXT_ERIKSARASHOUSE_PHONE
+	dba_const ErikSarasHouseComputerText,         TEXT_ERIKSARASHOUSE_COMPUTER
+	dba_const ErikSarasHouseNorthGarbageText,     TEXT_ERIKSARASHOUSE_NORTH_GARBAGE
+	dba_const ErikSarasHouseLeftShelfText,        TEXT_ERIKSARASHOUSE_LEFT_SHELF
+	dba_const ErikSarasHouseMiddleShelfText,      TEXT_ERIKSARASHOUSE_MIDDLE_SHELF
+	dba_const ErikSarasHouseRightShelfText,       TEXT_ERIKSARASHOUSE_RIGHT_SHELF
+	dba_const ErikSarasHouseLeftPeriscopeText,    TEXT_ERIKSARASHOUSE_LEFT_PERISCOPE
+	dba_const ErikSarasHouseRightPeriscopeText,   TEXT_ERIKSARASHOUSE_RIGHT_PERISCOPE
+	dba_const ErikSarasHouseSouthGarbageText,     TEXT_ERIKSARASHOUSE_SOUTH_GARBAGE
+	dba_const ErikSarasHouseOpenBookText,         TEXT_ERIKSARASHOUSE_OPEN_BOOK
+	dba_const _DragonairEventEnd,                 TEXT_ERIKSARASHOUSE_AFTER_EVENT
 
 FuchsiaGoodRodHouseOnMapLoad:
 	call WasMapJustLoaded
@@ -86,12 +86,10 @@ FuchsiaGoodRodHouseFishingGuruText:
 	rst TextScriptEnd
 
 FuchsiaGuruIntro:
-	text_far _FuchsiaGuruIntro
-	text_end
+	text_far_end _FuchsiaGuruIntro
 
 FuchsiaGuruEnd:
-	text_far _FuchsiaGuruEnd
-	text_end
+	text_far_end _FuchsiaGuruEnd
 
 FuchsiaFishingGuide:
 	text_asm
@@ -99,10 +97,6 @@ FuchsiaFishingGuide:
 	rst TextScriptEnd
 
 ; PureRGBnote: ADDED: text entry for the garbage can in this room
-
-FuchsiaGoodRodHouseGarbageText:
-	text_far _FuchsiaGoodRodHouseGarbageText
-	text_end
 
 ; nz if they're not at home
 AreErikAndSaraAtHome:
@@ -121,8 +115,7 @@ ErikSarasHouseNoteText:
 .done
 	rst TextScriptEnd
 .notHome
-	text_far _ErikSarasHouseNoteNotHomeText
-	text_end
+	text_far_end _ErikSarasHouseNoteNotHomeText
 .home
 	text_far _ErikSarasHouseNoteHomeText
 	text_asm
@@ -130,10 +123,6 @@ ErikSarasHouseNoteText:
 	jr nz, .done
 	ld d, DEX_DRATINI
 	jpfar KeepReadingBookLearnset
-
-ErikSarasHousePhoneText:
-	text_far _ErikSarasHousePhoneText
-	text_end
 
 ErikSarasHouseComputerText:
 	text_asm
@@ -148,15 +137,12 @@ ErikSarasHouseComputerText:
 	rst TextScriptEnd
 .email
 	text_far _EmailHereText
-	text_far _ErikSarasHouseDragonairEmailText
-	text_end
+	text_far_end _ErikSarasHouseDragonairEmailText
 .dragonairStats
-	text_far _ErikSarasHouseComputerAfterText
-	text_end
+	text_far_end _ErikSarasHouseComputerAfterText
 
 ErikSaraNoPokingAround:
-	text_far _ShouldntLookNoOneHome
-	text_end
+	text_far_end _ShouldntLookNoOneHome
 
 ErikSarasHouseNorthGarbageText:
 	text_asm
@@ -168,8 +154,7 @@ ErikSarasHouseNorthGarbageText:
 	rst TextScriptEnd
 .home
 	text_far _GarbageCrumpledUpPaper
-	text_far _ErikSarasHouseNorthGarbageText
-	text_end
+	text_far_end _ErikSarasHouseNorthGarbageText
 
 ErikSarasHouseSouthGarbageText:
 	text_asm
@@ -180,20 +165,17 @@ ErikSarasHouseSouthGarbageText:
 	rst _PrintText
 	rst TextScriptEnd
 .home
-	text_far _ErikSarasHouseSouthGarbageText
-	text_end
+	text_far_end _ErikSarasHouseSouthGarbageText
 
 ErikSarasHouseLeftShelfText:
 	text_far _ErikSarasHouseLeftBookText
 	text_far _FlippedToARandomPage
-	text_far _ErikSarasHouseLeftBookText2
-	text_end
+	text_far_end _ErikSarasHouseLeftBookText2
 
 ErikSarasHouseMiddleShelfText:
 	text_far _ErikSarasHouseCenterBookText
 	text_far _FlippedToARandomPage
-	text_far _ErikSarasHouseCenterBookText2
-	text_end
+	text_far_end _ErikSarasHouseCenterBookText2
 
 ErikSarasHouseRightShelfText:
 	text_far _ErikSarasHouseRightBookText
@@ -225,8 +207,7 @@ ErikSarasHouseOpenBookText:
 	rst _PrintText
 	rst TextScriptEnd
 .home
-	text_far _ErikSarasHouseBookText
-	text_end
+	text_far_end _ErikSarasHouseBookText
 
 ErikSarasHouseLeftPeriscopeText:
 	text_asm
@@ -265,28 +246,21 @@ ErikSarasHouseLeftPeriscopeText:
 	rst _PrintText
 	rst TextScriptEnd
 .periscopeIntro
-	text_far _ErikSarasHouseLeftPeriscopeIntro
-	text_end
+	text_far_end _ErikSarasHouseLeftPeriscopeIntro
 .staryu
-	text_far _CoralReefCameraStaryu
-	text_end
+	text_far_end _CoralReefCameraStaryu
 .horsea
-	text_far _CoralReefCameraHorsea
-	text_end
+	text_far_end _CoralReefCameraHorsea
 .krabby
-	text_far _CoralReefCameraKrabby
-	text_end
+	text_far_end _CoralReefCameraKrabby
 .goldeen
-	text_far _CoralReefCameraGoldeen
-	text_end
+	text_far_end _CoralReefCameraGoldeen
 
 ExplainPeriscopesText:
-	text_far _ErikSarasHousePeriscopeExplanation
-	text_end
+	text_far_end _ErikSarasHousePeriscopeExplanation
 
 PeriscopeInitialText:
-	text_far _PeriscopeInitialText
-	text_end
+	text_far_end _PeriscopeInitialText
 
 ErikSarasHouseRightPeriscopeText:
 	text_asm
@@ -318,20 +292,15 @@ ErikSarasHouseRightPeriscopeText:
 	rst _PrintText
 	rst TextScriptEnd
 .periscopeIntro
-	text_far _ErikSarasHouseRightPeriscopeIntro
-	text_end
+	text_far_end _ErikSarasHouseRightPeriscopeIntro
 .magikarp
-	text_far _DeepSeaCameraMagikarp
-	text_end
+	text_far_end _DeepSeaCameraMagikarp
 .tentacruel
-	text_far _DeepSeaCameraTentacruel
-	text_end
+	text_far_end _DeepSeaCameraTentacruel
 .gyarados
-	text_far _DeepSeaCameraGyarados
-	text_end
+	text_far_end _DeepSeaCameraGyarados
 .nothing
-	text_far _DeepSeaCameraBubbles
-	text_end
+	text_far_end _DeepSeaCameraBubbles
 
 ErikSarasHouseSaraText:
 	text_asm
@@ -413,41 +382,29 @@ ErikSarasHouseSaraText:
 .done
 	rst TextScriptEnd
 .welcomeSara
-	text_far _SaraHouseIntroText
-	text_end
+	text_far_end _SaraHouseIntroText
 .interested
-	text_far _SaraInterestedQuestion
-	text_end
+	text_far_end _SaraInterestedQuestion
 .researchExp
-	text_far _SaraHouseFirstStepText
-	text_end
+	text_far_end _SaraHouseFirstStepText
 .seafoamInfo
-	text_far _SaraSeafoamExplanationText
-	text_end
+	text_far_end _SaraSeafoamExplanationText
 .researchExp2
-	text_far _ErikDragonairResearch
-	text_end
+	text_far_end _ErikDragonairResearch
 .wantDragonair
-	text_far _ErikWantsDragonairText
-	text_end
+	text_far_end _ErikWantsDragonairText
 .lowLevel
-	text_far _ShowedDragonairLowLevelText
-	text_end
+	text_far_end _ShowedDragonairLowLevelText
 .perfectDragonair
-	text_far _ShowedDragonairText
-	text_end
+	text_far_end _ShowedDragonairText
 .suitYourself
-	text_far _FossilGuyDenied
-	text_end
+	text_far_end _FossilGuyDenied
 .letsDoThis
-	text_far _ShowedDragonairLetsDoThis
-	text_end
+	text_far_end _ShowedDragonairLetsDoThis
 .goBack
-	text_far _ErikSarasHouseGoBackSaraText
-	text_end
+	text_far_end _ErikSarasHouseGoBackSaraText
 .goBackQuestion
-	text_far _ErikSarasHouseGoBackQuestionText
-	text_end
+	text_far_end _ErikSarasHouseGoBackQuestionText
 
 ErikSarasHouseErikText:
 	text_asm
@@ -467,14 +424,11 @@ ErikSarasHouseErikText:
 	rst _PrintText
 	jp ErikSarasHouseSaraText.firstQuestionEntry
 .welcomeErik
-	text_far _ErikHouseIntroText
-	text_end
+	text_far_end _ErikHouseIntroText
 .interested
-	text_far _ErikInterestedQuestion
-	text_end
+	text_far_end _ErikInterestedQuestion
 .goBack
-	text_far _ErikSarasHouseGoBackErikText
-	text_end
+	text_far_end _ErikSarasHouseGoBackErikText
 
 DoErikSaraFacings:
 	; face erik and sara based on player's x position
@@ -536,18 +490,11 @@ ChooseDragonairForEvent::
 	rst _PrintText
 	ret
 .forgetIt
-	text_far _GenericForgetItText
-	text_end
+	text_far_end _GenericForgetItText
 .wrongMon
-	text_far _SecretLabMewtwoReactionText4
-	text_end
+	text_far_end _SecretLabMewtwoReactionText4
 .already
-	text_far _DragonairEventAlready
-	text_end
-
-ErikSarasHouseAfterEventText:
-	text_far _DragonairEventEnd
-	text_end
+	text_far_end _DragonairEventAlready
 
 ErikSarasHouseSecondNoteText:
 	text_far _ErikSarasHouseSecondNoteText

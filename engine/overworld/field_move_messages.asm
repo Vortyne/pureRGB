@@ -56,5 +56,4 @@ CurrentTooFastText:
 	text_end
 
 CyclingIsFunText:
-	text_far _CyclingIsFunText
-	text_end
+	text_far_end _CyclingIsFunText

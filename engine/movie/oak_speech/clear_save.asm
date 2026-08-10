@@ -19,5 +19,4 @@ DoClearSaveDialogue:
 	jp Init
 
 ClearSaveDataText:
-	text_far _ClearSaveDataText
-	text_end
+	text_far_end _ClearSaveDataText

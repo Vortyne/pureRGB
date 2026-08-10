@@ -3,12 +3,8 @@ CeruleanTradeHouse_Script:
 
 CeruleanTradeHouse_TextPointers:
 	def_text_pointers
-	dw_const CeruleanTradeHouseGrannyText,  TEXT_CERULEANTRADEHOUSE_GRANNY
-	dw_const CeruleanTradeHouseTraderText,  TEXT_CERULEANTRADEHOUSE_TRADER
-
-CeruleanTradeHouseGrannyText:
-	text_far _CeruleanTradeHouseGrannyText
-	text_end
+	dba_const _CeruleanTradeHouseGrannyText,  TEXT_CERULEANTRADEHOUSE_GRANNY
+	dba_const CeruleanTradeHouseTraderText,  TEXT_CERULEANTRADEHOUSE_TRADER
 
 CeruleanTradeHouseTraderText:
 	text_asm

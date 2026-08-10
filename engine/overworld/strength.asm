@@ -64,8 +64,7 @@ CheckStrengthUsage::
 	jp PrintText
 
 BoulderTextNoStrength::
-	text_far _BoulderText
-	text_end
+	text_far_end _BoulderText
 
 BoulderTextInit::
 	text_far _BoulderText
@@ -73,18 +72,13 @@ BoulderTextInit::
 	text_end
 
 BoulderTextActive::
-	text_far _StrengthActive
-	text_end
+	text_far_end _StrengthActive
 
 StrengthDecline::
-	text_far _PokemonMansion1FSwitchNotPressedText
-	text_end
+	text_far_end _PokemonMansion1FSwitchNotPressedText
 
 UsedStrengthText2:
-	text_far _UsedStrengthText
-	text_end
+	text_far_end _UsedStrengthText
 
 CanMoveBouldersText2:
-	text_far _CanMoveBouldersText
-	text_end
-
+	text_far_end _CanMoveBouldersText

@@ -5,9 +5,9 @@ RedsHouse1F_Script:
 
 RedsHouse1F_TextPointers:
 	def_text_pointers
-	dw_const RedsHouse1FMomText, TEXT_REDSHOUSE1F_MOM
-	dw_const RedsHouse1FDadText, TEXT_REDSHOUSE1F_DAD
-	dw_const RedsHouse1FTVText,  TEXT_REDSHOUSE1F_TV
+	dba_const RedsHouse1FMomText, TEXT_REDSHOUSE1F_MOM
+	dba_const RedsHouse1FDadText, TEXT_REDSHOUSE1F_DAD
+	dba_const RedsHouse1FTVText,  TEXT_REDSHOUSE1F_TV
 
 RedsHouse1FMomText:
 	text_asm
@@ -71,7 +71,7 @@ RedsHouse1FMomText:
 
 	call GBFadeOutToWhite
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call ClearScreen
 	ld hl, TextScriptEndingText
 	rst _PrintText ; seemingly the only way of preventing sprites from flickering on the screen during the next printText
@@ -147,28 +147,22 @@ RedsHouse1FMomText:
 	rst TextScriptEnd
 
 .WakeUpText:
-	text_far _RedsHouse1FMomWakeUpText
-	text_end
+	text_far_end _RedsHouse1FMomWakeUpText
 
 MomDadNotHereText:
-	text_far _MomDadNotHereText
-	text_end
+	text_far_end _MomDadNotHereText
 
 MomFoodReadyText:
-	text_far _MomFoodReadyText
-	text_end
+	text_far_end _MomFoodReadyText
 
 MomFoodBonAppetit:
-	text_far _MomFoodBonAppetit
-	text_end
+	text_far_end _MomFoodBonAppetit
 
 MomFoodRiceBallsText:
-	text_far _MomFoodRiceBallsText
-	text_end
+	text_far_end _MomFoodRiceBallsText
 
 MomFoodJellyDonutsText:
-	text_far _MomFoodJellyDonutsText
-	text_end
+	text_far_end _MomFoodJellyDonutsText
 
 MomFoodBrisketText:
 	text_asm
@@ -183,41 +177,31 @@ MomFoodBrisketText:
 	rst TextScriptEnd
 
 MomFoodBrisketText1:
-	text_far _MomFoodBrisketText
-	text_end
+	text_far_end _MomFoodBrisketText
 
 DadFoodBrisketText:
-	text_far _DadFoodBrisketText
-	text_end
+	text_far_end _DadFoodBrisketText
 
 MomFoodBrisketText2:
-	text_far _MomFoodBrisketText2
-	text_end	
+	text_far_end _MomFoodBrisketText2	
 
 MomFoodLasagnaText:
-	text_far _MomFoodLasagnaText
-	text_end
+	text_far_end _MomFoodLasagnaText
 
 DadChowedDownText:
-	text_far _DadChowedDownText
-	text_end
+	text_far_end _DadChowedDownText
 
 MomFoodPokemonJoinsText:
-	text_far _MomFoodPokemonJoinsText
-	text_end
+	text_far_end _MomFoodPokemonJoinsText
 
 MomFoodPokemonChowedDownText:
-	text_far _MomFoodPokemonChowedDownText
-	text_end
+	text_far_end _MomFoodPokemonChowedDownText
 
 MomFoodPokemonShowText:
-	text_far _MomFoodPokemonShowText
-	sound_get_item_1
-	text_end
+	text_far_end _MomFoodPokemonShowText
 
 MomFoodDone:
-	text_far _MomFoodDone
-	text_end
+	text_far_end _MomFoodDone
 
 MomHealPokemon:
 	ld hl, RedsHouse1FMomYouShouldRestText
@@ -289,11 +273,9 @@ FarHeal::
 	jp PlayDefaultMusic
 
 RedsHouse1FMomYouShouldRestText:
-	text_far _RedsHouse1FMomYouShouldRestText
-	text_end
+	text_far_end _RedsHouse1FMomYouShouldRestText
 RedsHouse1FMomLookingGreatText:
-	text_far _RedsHouse1FMomLookingGreatText
-	text_end
+	text_far_end _RedsHouse1FMomLookingGreatText
 
 RedsHouse1FTVText:
 	text_asm
@@ -307,12 +289,10 @@ RedsHouse1FTVText:
 	rst TextScriptEnd
 
 .StandByMeMovieText:
-	text_far _RedsHouse1FTVStandByMeMovieText
-	text_end
+	text_far_end _RedsHouse1FTVStandByMeMovieText
 
 .WrongSideText:
-	text_far _RedsHouse1FTVWrongSideText
-	text_end
+	text_far_end _RedsHouse1FTVWrongSideText
 
 RedsHouse1FDadText:
 	text_asm
@@ -324,12 +304,10 @@ RedsHouse1FDadText:
 	rst TextScriptEnd
 
 DadHealText1:
-	text_far _DadHealText1
-	text_end
+	text_far_end _DadHealText1
 
 DadHealText2:
-	text_far _DadHealText2
-	text_end
+	text_far_end _DadHealText2
 
 RandomPartyPokemon::
 	; store a party pokemon's nickname to use later in the text

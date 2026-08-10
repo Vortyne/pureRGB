@@ -1,12 +1,9 @@
 Route9_Script:
 	call Route9ReplaceCutTile
-	call EnableAutoTextBoxDrawing
 	ld hl, Route9TrainerHeaders
 	ld de, Route9_ScriptPointers
-	ld a, [wRoute9CurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wRoute9CurScript], a
-	ret
+	ld bc, wRoute9CurScript
+	jp ExecuteCustomMapScriptInTable
 
 ; PureRGBnote: ADDED: function that will remove the cut tree if we deleted it with the tree deleter
 Route9ReplaceCutTile:
@@ -44,38 +41,38 @@ Route9_ScriptPointers:
 
 Route9_TextPointers:
 	def_text_pointers
-	dw_const Route9CooltrainerF1Text, TEXT_ROUTE9_COOLTRAINER_F1
-	dw_const Route9CooltrainerM1Text, TEXT_ROUTE9_COOLTRAINER_M1
-	dw_const Route9CooltrainerM2Text, TEXT_ROUTE9_COOLTRAINER_M2
-	dw_const Route9CooltrainerF2Text, TEXT_ROUTE9_COOLTRAINER_F2
-	dw_const Route9Hiker1Text,        TEXT_ROUTE9_HIKER1
-	dw_const Route9Hiker2Text,        TEXT_ROUTE9_HIKER2
-	dw_const Route9Youngster1Text,    TEXT_ROUTE9_YOUNGSTER1
-	dw_const Route9Hiker3Text,        TEXT_ROUTE9_HIKER3
-	dw_const Route9Youngster2Text,    TEXT_ROUTE9_YOUNGSTER2
-	dw_const PickUpItemText,          TEXT_ROUTE9_ITEM1
-	dw_const Route9SignText,          TEXT_ROUTE9_SIGN
+	dba_const Route9CooltrainerF1Text, TEXT_ROUTE9_COOLTRAINER_F1
+	dba_const Route9CooltrainerM1Text, TEXT_ROUTE9_COOLTRAINER_M1
+	dba_const Route9CooltrainerM2Text, TEXT_ROUTE9_COOLTRAINER_M2
+	dba_const Route9CooltrainerF2Text, TEXT_ROUTE9_COOLTRAINER_F2
+	dba_const Route9Hiker1Text,        TEXT_ROUTE9_HIKER1
+	dba_const Route9Hiker2Text,        TEXT_ROUTE9_HIKER2
+	dba_const Route9Youngster1Text,    TEXT_ROUTE9_YOUNGSTER1
+	dba_const Route9Hiker3Text,        TEXT_ROUTE9_HIKER3
+	dba_const Route9Youngster2Text,    TEXT_ROUTE9_YOUNGSTER2
+	dba_const PickUpItemText,          TEXT_ROUTE9_ITEM1
+	dba_const _Route9SignText,          TEXT_ROUTE9_SIGN
 
 Route9TrainerHeaders:
 	def_trainers
 Route9TrainerHeader0:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_0, 3, Route9CooltrainerF1BattleText, Route9CooltrainerF1EndBattleText, Route9CooltrainerF1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_0, 3, _Route9CooltrainerF1BattleText, _Route9CooltrainerF1EndBattleText, Route9CooltrainerF1AfterBattleText
 Route9TrainerHeader1:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_1, 2, Route9CooltrainerM1BattleText, Route9CooltrainerM1EndBattleText, Route9CooltrainerM1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_1, 2, _Route9CooltrainerM1BattleText, _Route9CooltrainerM1EndBattleText, Route9CooltrainerM1AfterBattleText
 Route9TrainerHeader2:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_2, 4, Route9CooltrainerM2BattleText, Route9CooltrainerM2EndBattleText, Route9CooltrainerM2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_2, 4, _Route9CooltrainerM2BattleText, _Route9CooltrainerM2EndBattleText, _Route9CooltrainerM2AfterBattleText
 Route9TrainerHeader3:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_3, 2, Route9CooltrainerF2BattleText, Route9CooltrainerF2EndBattleText, Route9CooltrainerF2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_3, 2, _Route9CooltrainerF2BattleText, _Route9CooltrainerF2EndBattleText, _Route9CooltrainerF2AfterBattleText
 Route9TrainerHeader4:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_4, 2, Route9Hiker1BattleText, Route9Hiker1EndBattleText, Route9Hiker1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_4, 2, _Route9Hiker1BattleText, _Route9Hiker1EndBattleText, Route9Hiker1AfterBattleText
 Route9TrainerHeader5:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_5, 3, Route9Hiker2BattleText, Route9Hiker2EndBattleText, Route9Hiker2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_5, 3, _Route9Hiker2BattleText, _Route9Hiker2EndBattleText, Route9Hiker2AfterBattleText
 Route9TrainerHeader6:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_6, 4, Route9Youngster1BattleText, Route9Youngster1EndBattleText, Route9Youngster1AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_6, 4, _Route9Youngster1BattleText, _Route9Youngster1EndBattleText, _Route9Youngster1AfterBattleText
 Route9TrainerHeader7:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_7, 2, Route9Hiker3BattleText, Route9Hiker3EndBattleText, Route9Hiker3AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_7, 2, _Route9Hiker3BattleText, _Route9Hiker3EndBattleText, _Route9Hiker3AfterBattleText
 Route9TrainerHeader8:
-	trainer EVENT_BEAT_ROUTE_9_TRAINER_8, 2, Route9Youngster2BattleText, Route9Youngster2EndBattleText, Route9Youngster2AfterBattleText
+	trainer EVENT_BEAT_ROUTE_9_TRAINER_8, 2, _Route9Youngster2BattleText, _Route9Youngster2EndBattleText, Route9Youngster2AfterBattleText
 	db -1 ; end
 
 Route9CooltrainerF1Text:
@@ -104,14 +101,6 @@ Route9Hiker3Text:
 
 Route9Youngster2Text:
 	script_trainer Route9TrainerHeader8
-
-Route9CooltrainerF1BattleText:
-	text_far _Route9CooltrainerF1BattleText
-	text_end
-
-Route9CooltrainerF1EndBattleText:
-	text_far _Route9CooltrainerF1EndBattleText
-	text_end
 
 Route9CooltrainerF1AfterBattleText:
 	text_far _Route9CooltrainerF1AfterBattleText
@@ -148,87 +137,3 @@ Route9Youngster2AfterBattleText:
 	ld de, LearnsetBoring
 Route9LearnsetScript:
 	predef_jump LearnsetTrainerScript
-
-Route9CooltrainerM1BattleText:
-	text_far _Route9CooltrainerM1BattleText
-	text_end
-
-Route9CooltrainerM1EndBattleText:
-	text_far _Route9CooltrainerM1EndBattleText
-	text_end
-
-Route9CooltrainerM2BattleText:
-	text_far _Route9CooltrainerM2BattleText
-	text_end
-
-Route9CooltrainerM2EndBattleText:
-	text_far _Route9CooltrainerM2EndBattleText
-	text_end
-
-Route9CooltrainerM2AfterBattleText:
-	text_far _Route9CooltrainerM2AfterBattleText
-	text_end
-
-Route9CooltrainerF2BattleText:
-	text_far _Route9CooltrainerF2BattleText
-	text_end
-
-Route9CooltrainerF2EndBattleText:
-	text_far _Route9CooltrainerF2EndBattleText
-	text_end
-
-Route9CooltrainerF2AfterBattleText:
-	text_far _Route9CooltrainerF2AfterBattleText
-	text_end
-
-Route9Hiker1BattleText:
-	text_far _Route9Hiker1BattleText
-	text_end
-
-Route9Hiker1EndBattleText:
-	text_far _Route9Hiker1EndBattleText
-	text_end
-
-Route9Hiker2BattleText:
-	text_far _Route9Hiker2BattleText
-	text_end
-
-Route9Hiker2EndBattleText:
-	text_far _Route9Hiker2EndBattleText
-	text_end
-
-Route9Youngster1BattleText:
-	text_far _Route9Youngster1BattleText
-	text_end
-
-Route9Youngster1EndBattleText:
-	text_far _Route9Youngster1EndBattleText
-	text_end
-
-Route9Youngster1AfterBattleText:
-	text_far _Route9Youngster1AfterBattleText
-	text_end
-
-Route9Hiker3BattleText:
-	text_far _Route9Hiker3BattleText
-	text_end
-
-Route9Hiker3EndBattleText:
-	text_far _Route9Hiker3EndBattleText
-	text_end
-
-Route9Hiker3AfterBattleText:
-	text_far _Route9Hiker3AfterBattleText
-	text_end
-
-Route9Youngster2BattleText:
-	text_far _Route9Youngster2BattleText
-	text_end
-
-Route9Youngster2EndBattleText:
-	text_far _Route9Youngster2EndBattleText
-	text_end
-
-Route9SignText:
-	text_far _Route9SignText
-	text_end

@@ -36,17 +36,13 @@ CeladonPrizeMenu::
 	jp EnableTextDelay
 
 RequireCoinCaseText:
-	text_far _RequireCoinCaseText
-	text_waitbutton
-	text_end
+	text_far_end _RequireCoinCaseText
 
 ExchangeCoinsForPrizesText:
-	text_far _ExchangeCoinsForPrizesText
-	text_end
+	text_far_end _ExchangeCoinsForPrizesText
 
 WhichPrizeText:
-	text_far _WhichPrizeText
-	text_end
+	text_far_end _WhichPrizeText
 
 GetPrizeMenuId:
 ; determine which one among the three prize texts has been selected using the text ID (stored in [hTextID])
@@ -258,28 +254,19 @@ HereYouGoText:
 	text_end
 
 SoYouWantPrizeText:
-	text_far _SoYouWantPrizeText
-	text_end
+	text_far_end _SoYouWantPrizeText
 
 SorryNeedMoreCoinsText:
-	text_far _SorryNeedMoreCoinsText
-	text_waitbutton
-	text_end
+	text_far_end _SorryNeedMoreCoinsText
 
 PrizeRoomBagIsFullText:
-	text_far _OopsYouDontHaveEnoughRoomText
-	text_waitbutton
-	text_end
+	text_far_end _OopsYouDontHaveEnoughRoomText
 
 OhFineThenText:
-	text_far _OhFineThenText
-	text_waitbutton
-	text_end
+	text_far_end _OhFineThenText
 
 GoodChoiceText::
-	text_far _GoodChoice
-	text_waitbutton
-	text_end
+	text_far_end _GoodChoice
 
 IsMonAPrizePokemon::
 	ld a, [wCurPartySpecies]

@@ -1,8 +1,7 @@
 Route22_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, Route22_ScriptPointers
-	ld a, [wRoute22CurScript]
-	jp CallFunctionInTable
+	ld de, wRoute22CurScript
+	jp CallMapScriptInTable
 
 Route22_ScriptPointers:
 	def_script_pointers
@@ -342,12 +341,12 @@ Route22Rival2ExitScript:
 
 Route22_TextPointers:
 	def_text_pointers
-	dw_const Route22Rival1Text,            TEXT_ROUTE22_RIVAL1
-	dw_const Route22Rival2Text,            TEXT_ROUTE22_RIVAL2
-	dw_const PickUp3ItemText,              TEXT_ROUTE22_ITEM1 ; PureRGBnote: ADDED: new item on this route
-	dw_const PickUpItemText,               TEXT_ROUTE22_ITEM2 ; PureRGBnote: ADDED: new item on this route
-	dw_const Route22PokemonLeagueSignText, TEXT_ROUTE22_POKEMON_LEAGUE_SIGN
-	dw_const Route22TrainerTipsText,       TEXT_ROUTE22_TRAINER_TIPS_SIGN ; PureRGBnote: ADDED: new trainer tips sign on this route.
+	dba_const Route22Rival1Text,            TEXT_ROUTE22_RIVAL1
+	dba_const Route22Rival2Text,            TEXT_ROUTE22_RIVAL2
+	dba_const PickUp3ItemText,              TEXT_ROUTE22_ITEM1 ; PureRGBnote: ADDED: new item on this route
+	dba_const PickUpItemText,               TEXT_ROUTE22_ITEM2 ; PureRGBnote: ADDED: new item on this route
+	dba_const _Route22PokemonLeagueSignText, TEXT_ROUTE22_POKEMON_LEAGUE_SIGN
+	dba_const _Route22TrainerTipsText,       TEXT_ROUTE22_TRAINER_TIPS_SIGN ; PureRGBnote: ADDED: new trainer tips sign on this route.
 
 Route22Rival1Text:
 	text_asm
@@ -370,41 +369,25 @@ Route22Rival2Text:
 	rst TextScriptEnd
 
 Route22RivalBeforeBattleText1:
-	text_far _Route22RivalBeforeBattleText1
-	text_end
+	text_far_end _Route22RivalBeforeBattleText1
 
 Route22RivalAfterBattleText1:
-	text_far _Route22RivalAfterBattleText1
-	text_end
+	text_far_end _Route22RivalAfterBattleText1
 
 Route22Rival1DefeatedText:
-	text_far _Route22Rival1DefeatedText
-	text_end
+	text_far_end _Route22Rival1DefeatedText
 
 Route22Rival1VictoryText:
-	text_far _Route22Rival1VictoryText
-	text_end
+	text_far_end _Route22Rival1VictoryText
 
 Route22RivalBeforeBattleText2:
-	text_far _Route22RivalBeforeBattleText2
-	text_end
+	text_far_end _Route22RivalBeforeBattleText2
 
 Route22RivalAfterBattleText2:
-	text_far _Route22RivalAfterBattleText2
-	text_end
+	text_far_end _Route22RivalAfterBattleText2
 
 Route22Rival2DefeatedText:
-	text_far _Route22Rival2DefeatedText
-	text_end
+	text_far_end _Route22Rival2DefeatedText
 
 Route22Rival2VictoryText:
-	text_far _Route22Rival2VictoryText
-	text_end
-
-Route22PokemonLeagueSignText:
-	text_far _Route22PokemonLeagueSignText
-	text_end
-
-Route22TrainerTipsText:
-	text_far _Route22TrainerTipsText
-	text_end
+	text_far_end _Route22Rival2VictoryText

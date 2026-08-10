@@ -3,8 +3,8 @@ Route16FlyHouse_Script:
 
 Route16FlyHouse_TextPointers:
 	def_text_pointers
-	dw_const Route16FlyHouseBrunetteGirlText, TEXT_ROUTE16FLYHOUSE_BRUNETTE_GIRL
-	dw_const Route16FlyHouseFearowText,       TEXT_ROUTE16FLYHOUSE_FEAROW
+	dba_const Route16FlyHouseBrunetteGirlText, TEXT_ROUTE16FLYHOUSE_BRUNETTE_GIRL
+	dba_const Route16FlyHouseFearowText,       TEXT_ROUTE16FLYHOUSE_FEAROW
 
 Route16FlyHouseBrunetteGirlText:
 	text_asm
@@ -24,21 +24,16 @@ Route16FlyHouseBrunetteGirlText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _Route16FlyHouseBrunetteGirlText
-	text_end
+	text_far_end _Route16FlyHouseBrunetteGirlText
 
 .ReceivedHM02Text:
-	text_far _Route16FlyHouseBrunetteGirlReceivedHM02Text
-	sound_get_key_item
-	text_end
+	text_far_end _Route16FlyHouseBrunetteGirlReceivedHM02Text
 
 .HM02ExplanationText:
-	text_far _Route16FlyHouseBrunetteGirlHM02ExplanationText
-	text_end
+	text_far_end _Route16FlyHouseBrunetteGirlHM02ExplanationText
 
 .HM02NoRoomText:
-	text_far _Route16FlyHouseBrunetteGirlHM02NoRoomText
-	text_end
+	text_far_end _Route16FlyHouseBrunetteGirlHM02NoRoomText
 
 Route16FlyHouseFearowText:
 	text_far _Route16FlyHouseFearowText
@@ -60,7 +55,6 @@ Route16FlyHouseFearowText:
 	ld bc, LearnsetFadeOutInStory
 	predef_jump LearnsetTrainerScriptMain
 .polly:
-	text_far _Route16FlyHouseFearow2Text
-	text_end
+	text_far_end _Route16FlyHouseFearow2Text
 .famousGirlName
 	db "FAMOUS GIRL@"

@@ -1,12 +1,9 @@
 LancesRoom_Script:
 	call LanceShowOrHideEntranceBlocks
-	call EnableAutoTextBoxDrawing
 	ld hl, LancesRoomTrainerHeaders
 	ld de, LancesRoom_ScriptPointers
-	ld a, [wLancesRoomCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wLancesRoomCurScript], a
-	ret
+	ld bc, wLancesRoomCurScript
+	jp ExecuteCustomMapScriptInTable
 
 LanceShowOrHideEntranceBlocks:
 	call WasMapJustLoaded
@@ -122,12 +119,12 @@ LancesRoomPlayerIsMovingScript:
 
 LancesRoom_TextPointers:
 	def_text_pointers
-	dw_const LancesRoomLanceText, TEXT_LANCESROOM_LANCE
+	dba_const LancesRoomLanceText, TEXT_LANCESROOM_LANCE
 
 LancesRoomTrainerHeaders:
 	def_trainers
 LancesRoomTrainerHeader0:
-	trainer EVENT_BEAT_LANCES_ROOM_TRAINER_0, 0, LancesRoomLanceBeforeBattleText, LancesRoomLanceEndBattleText, LancesRoomLanceAfterBattleText
+	trainer EVENT_BEAT_LANCES_ROOM_TRAINER_0, 0, _LancesRoomLanceBeforeBattleText, _LancesRoomLanceEndBattleText, LancesRoomLanceAfterBattleText
 	db -1 ; end
 
 LancesRoomLanceText:
@@ -139,15 +136,7 @@ LancesRoomLanceText:
 	ld hl, LancesRoomTrainerHeader0
 	call TalkToTrainer
 	rst TextScriptEnd
-
-LancesRoomLanceBeforeBattleText:
-	text_far _LancesRoomLanceBeforeBattleText
-	text_end
-
-LancesRoomLanceEndBattleText:
-	text_far _LancesRoomLanceEndBattleText
-	text_end
-
+	
 LancesRoomLanceAfterBattleText:
 	text_far _LancesRoomLanceAfterBattleText
 	text_asm

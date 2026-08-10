@@ -381,7 +381,7 @@ BattleOccurred::
 	jr z, .allPokemonFainted
 .noFaintCheck
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	jp EnterMap
 .allPokemonFainted
 	ld a, $ff

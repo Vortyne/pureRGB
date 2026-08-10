@@ -2,13 +2,10 @@
 
 SilphCo3F_Script:
 	call SilphCo3FGateCallbackScript
-	call EnableAutoTextBoxDrawing
 	ld hl, SilphCo3TrainerHeaders
 	ld de, SilphCo3F_ScriptPointers
-	ld a, [wSilphCo3FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSilphCo3FCurScript], a
-	ret
+	ld bc, wSilphCo3FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SilphCo3FGateCallbackScript::
 	call WasMapJustLoaded
@@ -27,17 +24,17 @@ SilphCo3F_ScriptPointers:
 
 SilphCo3F_TextPointers:
 	def_text_pointers
-	dw_const SilphCo3FSilphWorkerMText, TEXT_SILPHCO3F_SILPH_WORKER_M
-	dw_const SilphCo3FRocketText,       TEXT_SILPHCO3F_ROCKET
-	dw_const SilphCo3FScientistText,    TEXT_SILPHCO3F_SCIENTIST
-	dw_const PickUp3ItemText,           TEXT_SILPHCO3F_ITEM1
+	dba_const SilphCo3FSilphWorkerMText, TEXT_SILPHCO3F_SILPH_WORKER_M
+	dba_const SilphCo3FRocketText,       TEXT_SILPHCO3F_ROCKET
+	dba_const SilphCo3FScientistText,    TEXT_SILPHCO3F_SCIENTIST
+	dba_const PickUp3ItemText,           TEXT_SILPHCO3F_ITEM1
 
 SilphCo3TrainerHeaders:
 	def_trainers 2
 SilphCo3TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_3F_TRAINER_0, 2, SilphCo3FRocketBattleText, SilphCo3FRocketEndBattleText, SilphCo3FRocketAfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_3F_TRAINER_0, 2, _SilphCo3FRocketBattleText, _SilphCo3FRocketEndBattleText, _SilphCo3FRocketAfterBattleText
 SilphCo3TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_3F_TRAINER_1, 3, SilphCo3FScientistBattleText, SilphCo3FScientistEndBattleText, SilphCo3FScientistAfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_3F_TRAINER_1, 3, _SilphCo3FScientistBattleText, _SilphCo3FScientistEndBattleText, _SilphCo3FScientistAfterBattleText
 	db -1 ; end
 
 SilphCo3FSilphWorkerMText:
@@ -51,39 +48,13 @@ SilphCo3FSilphWorkerMText:
 	rst TextScriptEnd
 
 .WhatShouldIDoText:
-	text_far _SilphCo3FSilphWorkerMWhatShouldIDoText
-	text_end
+	text_far_end _SilphCo3FSilphWorkerMWhatShouldIDoText
 
 .YouSavedUsText:
-	text_far _SilphCo3FSilphWorkerMYouSavedUsText
-	text_end
+	text_far_end _SilphCo3FSilphWorkerMYouSavedUsText
 
 SilphCo3FRocketText:
 	script_trainer SilphCo3TrainerHeader0
 
 SilphCo3FScientistText:
 	script_trainer SilphCo3TrainerHeader1
-
-SilphCo3FRocketBattleText:
-	text_far _SilphCo3FRocketBattleText
-	text_end
-
-SilphCo3FRocketEndBattleText:
-	text_far _SilphCo3FRocketEndBattleText
-	text_end
-
-SilphCo3FRocketAfterBattleText:
-	text_far _SilphCo3FRocketAfterBattleText
-	text_end
-
-SilphCo3FScientistBattleText:
-	text_far _SilphCo3FScientistBattleText
-	text_end
-
-SilphCo3FScientistEndBattleText:
-	text_far _SilphCo3FScientistEndBattleText
-	text_end
-
-SilphCo3FScientistAfterBattleText:
-	text_far _SilphCo3FScientistAfterBattleText
-	text_end

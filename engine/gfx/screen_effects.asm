@@ -33,7 +33,7 @@ PredefShakeScreenHorizontally:
 	ldh [hMutateWX], a
 	call .MutateWX
 	ld c, 1
-	rst _DelayFrames
+	rst DelayFrames
 	call .MutateWX
 	dec b
 	ld a, b

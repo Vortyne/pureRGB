@@ -584,13 +584,10 @@ OptionsMenu1InfoTextJumpTable:
 	dw BattleStyleInfoText
 
 TextSpeedInfoText:
-	text_far _TextSpeedInfoText
-	text_end
+	text_far_end _TextSpeedInfoText
 
 BattleAnimationInfoText:
-	text_far _BattleAnimationInfoText
-	text_end	
+	text_far_end _BattleAnimationInfoText	
 
 BattleStyleInfoText:
-	text_far _BattleStyleInfoText
-	text_end
+	text_far_end _BattleStyleInfoText

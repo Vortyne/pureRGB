@@ -49,6 +49,11 @@ MACRO? dw_const
 	const \2
 ENDM
 
+MACRO? dba_const
+	dba \1
+	const \2
+ENDM
+
 MACRO? rb_skip
 	IF _NARG == 1
 		rsset _RS + \1

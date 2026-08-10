@@ -12,7 +12,7 @@ _AccuracyDownEffect::
 	jpfar StatModifierDownEffect
 .noEffect
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	jpfar PrintDidntAffectText
 
 FarAccuracyDownEffectivenessCheck::

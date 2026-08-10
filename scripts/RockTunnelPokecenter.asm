@@ -4,26 +4,12 @@ RockTunnelPokecenter_Script:
 	
 RockTunnelPokecenter_TextPointers:
 	def_text_pointers
-	dw_const RockTunnelPokecenterNurseText,            TEXT_ROCKTUNNELPOKECENTER_NURSE
-	dw_const RockTunnelPokecenterGentlemanText,        TEXT_ROCKTUNNELPOKECENTER_GENTLEMAN
-	dw_const RockTunnelPokecenterFisherText,           TEXT_ROCKTUNNELPOKECENTER_FISHER
-	dw_const RockTunnelPokecenterLinkReceptionistText, TEXT_ROCKTUNNELPOKECENTER_LINK_RECEPTIONIST
-	dw_const RockTunnelCharityNurseText,               TEXT_ROCKTUNNELPOKECENTER_NURSE2
-	dw_const RockTunnelPokecenterBenchGuyText,         TEXT_ROCKTUNNELPOKECENTER_BENCH_GUY
-
-RockTunnelPokecenterNurseText:
-	script_pokecenter_nurse
-
-RockTunnelPokecenterGentlemanText:
-	text_far _RockTunnelPokecenterGentlemanText
-	text_end
-
-RockTunnelPokecenterFisherText:
-	text_far _RockTunnelPokecenterFisherText
-	text_end
-
-RockTunnelPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
+	dba_const GenericPokecenterNurseText,               TEXT_ROCKTUNNELPOKECENTER_NURSE
+	dba_const _RockTunnelPokecenterGentlemanText,       TEXT_ROCKTUNNELPOKECENTER_GENTLEMAN
+	dba_const _RockTunnelPokecenterFisherText,          TEXT_ROCKTUNNELPOKECENTER_FISHER
+	dba_const GenericLinkReceptionistText,              TEXT_ROCKTUNNELPOKECENTER_LINK_RECEPTIONIST
+	dba_const RockTunnelCharityNurseText,               TEXT_ROCKTUNNELPOKECENTER_NURSE2
+	dba_const _RockTunnelPokecenterBenchGuyText,        TEXT_ROCKTUNNELPOKECENTER_BENCH_GUY
 
 ; PureRGBnote: ADDED: by donating to this nurse you unlock the ability to speed up pokemon center healing by holding B before talking to the nurse
 RockTunnelCharityNurseText: 
@@ -64,21 +50,13 @@ RockTunnelCharityNurseText:
 	rst TextScriptEnd
 
 RockTunnelCharityNurseText1:
-	text_far _RockTunnelCharityNurseText1
-	text_end
+	text_far_end _RockTunnelCharityNurseText1
 
 RockTunnelCharityNurseText2:
-	text_far _RockTunnelCharityNurseText2
-	text_end
+	text_far_end _RockTunnelCharityNurseText2
 
 RockTunnelCharityNurseFarewellText:
-	text_far _PokemonCenterFarewellText
-	text_end
+	text_far_end _PokemonCenterFarewellText
 
 RockTunnelCharityNurseNotEnoughMoneyText:
-	text_far _GenericNotEnoughMoneyText
-	text_end
-
-RockTunnelPokecenterBenchGuyText:
-	text_far _RockTunnelPokecenterGuyText
-	text_end
+	text_far_end _GenericNotEnoughMoneyText

@@ -28,7 +28,7 @@ MakePokemonAppearInOverworld::
 	callfar FarLoadSmokeTileFourTimes
 	call UpdateSprites
 	ld c, 8
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	pop bc
 	callfar FarLoadPartyMonSpriteIntoVRAMScreenOn
@@ -49,7 +49,7 @@ MakePokemonDisappearInOverworld::
 	callfar FarLoadSmokeTileFourTimes
 	call UpdateSprites
 	ld c, 8
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	; c = which pokemon
 	pop de ; pop hl into de

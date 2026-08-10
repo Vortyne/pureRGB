@@ -157,13 +157,10 @@ SpriteInfoTextJumpTable:
 	dw FrontSpriteText
 
 BackSpriteText:
-	text_far _BackSpriteText
-	text_end
+	text_far_end _BackSpriteText
 
 IconsOptionText:
-	text_far _IconsOptionText
-	text_end
+	text_far_end _IconsOptionText
 
 FrontSpriteText:
-	text_far _FrontSpriteText
-	text_end
+	text_far_end _FrontSpriteText

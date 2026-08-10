@@ -3,13 +3,10 @@
 
 SilphCo11F_Script:
 	call SilphCo11FGateCallbackScript
-	call EnableAutoTextBoxDrawing
 	ld hl, SilphCo11TrainerHeaders
 	ld de, SilphCo11F_ScriptPointers
-	ld a, [wSilphCo11FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSilphCo11FCurScript], a
-	ret
+	ld bc, wSilphCo11FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SilphCo11FGateCallbackScript::
 	call WasMapJustLoaded
@@ -216,22 +213,25 @@ SilphCo11FGiovanniStartBattleScript:
 	ld a, SCRIPT_SILPHCO11F_GIOVANNI_AFTER_BATTLE
 	jp SilphCo11FSetCurScript
 
+SilphCo10FGiovanniILostAgainText:
+	text_far_end _SilphCo10FGiovanniILostAgainText
+
 SilphCo11F_TextPointers:
 	def_text_pointers
-	dw_const SilphCo11FSilphPresidentText,            TEXT_SILPHCO11F_SILPH_PRESIDENT
-	dw_const SilphCo11FBeautyText,                    TEXT_SILPHCO11F_BEAUTY
-	dw_const SilphCo11FGiovanniText,                  TEXT_SILPHCO11F_GIOVANNI
-	dw_const SilphCo11FRocket1Text,                   TEXT_SILPHCO11F_ROCKET1
-	dw_const SilphCo11FRocket2Text,                   TEXT_SILPHCO11F_ROCKET2
-	dw_const SilphCo11FPorygonText,                   TEXT_SILPHCO11F_COMPUTER_MONITOR
-	dw_const SilphCo11FGiovanniYouRuinedOurPlansText, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
+	dba_const SilphCo11FSilphPresidentText,            TEXT_SILPHCO11F_SILPH_PRESIDENT
+	dba_const _SilphCo11FBeautyText,                    TEXT_SILPHCO11F_BEAUTY
+	dba_const _SilphCo11FGiovanniText,                  TEXT_SILPHCO11F_GIOVANNI
+	dba_const SilphCo11FRocket1Text,                   TEXT_SILPHCO11F_ROCKET1
+	dba_const SilphCo11FRocket2Text,                   TEXT_SILPHCO11F_ROCKET2
+	dba_const SilphCo11FPorygonText,                   TEXT_SILPHCO11F_COMPUTER_MONITOR
+	dba_const _SilphCo11FGiovanniYouRuinedOurPlansText, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
 
 SilphCo11TrainerHeaders:
 	def_trainers 4
 SilphCo11TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_0, 4, SilphCo11FRocket1BattleText, SilphCo11FRocket1EndBattleText, SilphCo11FRocket1AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_0, 4, _SilphCo11FRocket1BattleText, _SilphCo11FRocket1EndBattleText, _SilphCo11FRocket1AfterBattleText
 SilphCo11TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_1, 3, SilphCo11FRocket2BattleText, SilphCo11FRocket2EndBattleText, SilphCo11FRocket2AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_1, 3, _SilphCo11FRocket2BattleText, _SilphCo11FRocket2EndBattleText, _SilphCo11FRocket2AfterBattleText
 	db -1 ; end
 
 SilphCo11FSilphPresidentText:
@@ -252,67 +252,22 @@ SilphCo11FSilphPresidentText:
 	rst TextScriptEnd
 
 .Text:
-	text_far _SilphCo11FSilphPresidentText
-	text_end
+	text_far_end _SilphCo11FSilphPresidentText
 
 .ReceivedMasterBallText:
-	text_far _SilphCo11FSilphPresidentReceivedMasterBallText
-	sound_get_key_item
-	text_end
+	text_far_end _SilphCo11FSilphPresidentReceivedMasterBallText
 
 .MasterBallDescriptionText:
-	text_far _SilphCo11FSilphPresidentMasterBallDescriptionText
-	text_end
+	text_far_end _SilphCo11FSilphPresidentMasterBallDescriptionText
 
 .NoRoomText:
-	text_far _SilphCo11FSilphPresidentNoRoomText
-	text_end
-
-SilphCo11FBeautyText:
-	text_far _SilphCo11FBeautyText
-	text_end
-
-SilphCo11FGiovanniText:
-	text_far _SilphCo11FGiovanniText
-	text_end
-
-SilphCo10FGiovanniILostAgainText:
-	text_far _SilphCo10FGiovanniILostAgainText
-	text_end
-
-SilphCo11FGiovanniYouRuinedOurPlansText:
-	text_far _SilphCo11FGiovanniYouRuinedOurPlansText
-	text_end
+	text_far_end _SilphCo11FSilphPresidentNoRoomText
 
 SilphCo11FRocket1Text:
 	script_trainer SilphCo11TrainerHeader0
 
 SilphCo11FRocket2Text:
 	script_trainer SilphCo11TrainerHeader1
-
-SilphCo11FRocket1BattleText:
-	text_far _SilphCo11FRocket1BattleText
-	text_end
-
-SilphCo11FRocket1EndBattleText:
-	text_far _SilphCo11FRocket1EndBattleText
-	text_end
-
-SilphCo11FRocket1AfterBattleText:
-	text_far _SilphCo11FRocket1AfterBattleText
-	text_end
-
-SilphCo11FRocket2BattleText:
-	text_far _SilphCo11FRocket2BattleText
-	text_end
-
-SilphCo11FRocket2EndBattleText:
-	text_far _SilphCo11FRocket2EndBattleText
-	text_end
-
-SilphCo11FRocket2AfterBattleText:
-	text_far _SilphCo11FRocket2AfterBattleText
-	text_end
 
 ; PureRGBnote: CHANGED: this text was unused, now it's used.
 SilphCo11FPorygonText:
@@ -343,11 +298,8 @@ SilphCo11FPorygonText:
 .done
 	rst TextScriptEnd
 .Text:
-	text_far _SilphCo11FPorygonText
-	text_end
+	text_far_end _SilphCo11FPorygonText
 .WrongSideText
-	text_far _RedsHouse1FTVWrongSideText
-	text_end
+	text_far_end _RedsHouse1FTVWrongSideText
 .infoOn
-	text_far _BillsHousePCInfo
-	text_end
+	text_far_end _BillsHousePCInfo

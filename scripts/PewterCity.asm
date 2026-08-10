@@ -1,8 +1,7 @@
 PewterCity_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, PewterCity_ScriptPointers
-	ld a, [wPewterCityCurScript]
-	jp CallFunctionInTable
+	ld de, wPewterCityCurScript
+	jp CallMapScriptInTable
 
 PewterCity_ScriptPointers:
 	def_script_pointers
@@ -182,29 +181,21 @@ PewterCityResetYoungsterScript:
 
 PewterCity_TextPointers:
 	def_text_pointers
-	dw_const PewterCityCooltrainerFText,           TEXT_PEWTERCITY_COOLTRAINER_F
-	dw_const PewterCityCooltrainerMText,           TEXT_PEWTERCITY_COOLTRAINER_M
-	dw_const PewterCitySuperNerd1Text,             TEXT_PEWTERCITY_SUPER_NERD1
-	dw_const PewterCitySuperNerd2Text,             TEXT_PEWTERCITY_SUPER_NERD2
-	dw_const PewterCityYoungsterText,              TEXT_PEWTERCITY_YOUNGSTER
-	dw_const PickUp2ItemText,                      TEXT_PEWTERCITY_ITEM1 ; PureRGBnote: ADDED: new item in this location
-	dw_const PewterCityTrainerTipsText,            TEXT_PEWTERCITY_TRAINER_TIPS
-	dw_const PewterCityPoliceNoticeSignText,       TEXT_PEWTERCITY_POLICE_NOTICE_SIGN
-	dw_const MartSignText,                         TEXT_PEWTERCITY_MART_SIGN
-	dw_const PokeCenterSignText,                   TEXT_PEWTERCITY_POKECENTER_SIGN
-	dw_const PewterCityMuseumSignText,             TEXT_PEWTERCITY_MUSEUM_SIGN
-	dw_const PewterCityGymSignText,                TEXT_PEWTERCITY_GYM_SIGN
-	dw_const PewterCitySignText,                   TEXT_PEWTERCITY_SIGN
-	dw_const PewterCitySuperNerd1ItsRightHereText, TEXT_PEWTERCITY_SUPER_NERD1_ITS_RIGHT_HERE
-	dw_const PewterCityYoungsterGoTakeOnBrockText, TEXT_PEWTERCITY_YOUNGSTER_GO_TAKE_ON_BROCK
-
-PewterCityCooltrainerFText:
-	text_far _PewterCityCooltrainerFText
-	text_end
-
-PewterCityCooltrainerMText:
-	text_far _PewterCityCooltrainerMText
-	text_end
+	dba_const _PewterCityCooltrainerFText,           TEXT_PEWTERCITY_COOLTRAINER_F
+	dba_const _PewterCityCooltrainerMText,           TEXT_PEWTERCITY_COOLTRAINER_M
+	dba_const PewterCitySuperNerd1Text,             TEXT_PEWTERCITY_SUPER_NERD1
+	dba_const PewterCitySuperNerd2Text,             TEXT_PEWTERCITY_SUPER_NERD2
+	dba_const PewterCityYoungsterText,              TEXT_PEWTERCITY_YOUNGSTER
+	dba_const PickUp2ItemText,                      TEXT_PEWTERCITY_ITEM1 ; PureRGBnote: ADDED: new item in this location
+	dba_const _PewterCityTrainerTipsText,            TEXT_PEWTERCITY_TRAINER_TIPS
+	dba_const _PewterCityPoliceNoticeSignText,       TEXT_PEWTERCITY_POLICE_NOTICE_SIGN
+	dba_const MartSignText,                         TEXT_PEWTERCITY_MART_SIGN
+	dba_const PokeCenterSignText,                   TEXT_PEWTERCITY_POKECENTER_SIGN
+	dba_const _PewterCityMuseumSignText,             TEXT_PEWTERCITY_MUSEUM_SIGN
+	dba_const PewterCityGymSignText,                TEXT_PEWTERCITY_GYM_SIGN
+	dba_const _PewterCitySignText,                   TEXT_PEWTERCITY_SIGN
+	dba_const _PewterCitySuperNerd1ItsRightHereText, TEXT_PEWTERCITY_SUPER_NERD1_ITS_RIGHT_HERE
+	dba_const _PewterCityYoungsterGoTakeOnBrockText, TEXT_PEWTERCITY_YOUNGSTER_GO_TAKE_ON_BROCK
 
 PewterCitySuperNerd1Text:
 	text_asm
@@ -225,16 +216,13 @@ PewterCitySuperNerd1Text:
 	jr PewterCityStartMovementFromTextScript
 
 .DidYouCheckOutMuseumText:
-	text_far _PewterCitySuperNerd1DidYouCheckOutMuseumText
-	text_end
+	text_far_end _PewterCitySuperNerd1DidYouCheckOutMuseumText
 
 .WerentThoseFossilsAmazingText:
-	text_far _PewterCitySuperNerd1WerentThoseFossilsAmazingText
-	text_end
+	text_far_end _PewterCitySuperNerd1WerentThoseFossilsAmazingText
 
 .YouHaveToGoText:
-	text_far _PewterCitySuperNerd1YouHaveToGoText
-	text_end
+	text_far_end _PewterCitySuperNerd1YouHaveToGoText
 
 PewterCityStartMovementFromTextScript:
 	xor a
@@ -260,12 +248,7 @@ PewterCityYoungsterText:
 	jr PewterCityStartMovementFromTextScript
 
 .YoureATrainerFollowMeText:
-	text_far _PewterCityYoungsterYoureATrainerFollowMeText
-	text_end
-
-PewterCitySuperNerd1ItsRightHereText:
-	text_far _PewterCitySuperNerd1ItsRightHereText
-	text_end
+	text_far_end _PewterCityYoungsterYoureATrainerFollowMeText
 
 PewterCitySuperNerd2Text:
 	text_asm
@@ -280,39 +263,16 @@ PewterCitySuperNerd2Text:
 	rst TextScriptEnd
 
 .DoYouKnowWhatImDoingText:
-	text_far _PewterCitySuperNerd2DoYouKnowWhatImDoingText
-	text_end
+	text_far_end _PewterCitySuperNerd2DoYouKnowWhatImDoingText
 
 .ThatsRightText:
-	text_far _PewterCitySuperNerd2ThatsRightText
-	text_end
+	text_far_end _PewterCitySuperNerd2ThatsRightText
 
 .ImSprayingRepelText:
-	text_far _PewterCitySuperNerd2ImSprayingRepelText
-	text_end
-
-PewterCityYoungsterGoTakeOnBrockText:
-	text_far _PewterCityYoungsterGoTakeOnBrockText
-	text_end
-
-PewterCityTrainerTipsText:
-	text_far _PewterCityTrainerTipsText
-	text_end
-
-PewterCityPoliceNoticeSignText:
-	text_far _PewterCityPoliceNoticeSignText
-	text_end
-
-PewterCityMuseumSignText:
-	text_far _PewterCityMuseumSignText
-	text_end
+	text_far_end _PewterCitySuperNerd2ImSprayingRepelText
 
 PewterCityGymSignText:
 	text_asm
 	ld c, PEWTER_GYM
 	ld de, PewterGymOutsideSign
 	jpfar GymOutsideSignTextScript
-
-PewterCitySignText:
-	text_far _PewterCitySignText
-	text_end

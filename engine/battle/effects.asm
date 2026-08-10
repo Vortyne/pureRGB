@@ -111,16 +111,14 @@ PoisonEffect:
 	ret nz
 .didntAffect
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	jp PrintDidntAffectText
 
 PoisonedText:
-	text_far _PoisonedText
-	text_end
+	text_far_end _PoisonedText
 
 BadlyPoisonedText:
-	text_far _BadlyPoisonedText
-	text_end
+	text_far_end _BadlyPoisonedText
 
 DrainHPEffect:
 	jpfar DrainHPEffect_
@@ -276,16 +274,13 @@ PrintMayNotAttackText:
 	jr PrintFrozenText.printDone
 
 FrozenText:
-	text_far _FrozenText
-	text_end
+	text_far_end _FrozenText
 
 BurnedText:
-	text_far _BurnedText
-	text_end
+	text_far_end _BurnedText
 
 ParalyzedMayNotAttackText:
-	text_far _ParalyzedMayNotAttackText
-	text_end
+	text_far_end _ParalyzedMayNotAttackText
 
 CheckDefrost:
 ; any fire-type move that has a chance inflict burn (all but Fire Spin) will defrost a frozen target
@@ -322,8 +317,7 @@ CheckDefrost:
 
 
 FireDefrostedText:
-	text_far _FireDefrostedText
-	text_end
+	text_far_end _FireDefrostedText
 
 ; PureRGBnote: ADDED: increases attack, special, and speed as a move effect. Used with Meditate.
 AttackSpecialSpeedUpEffect:
@@ -734,8 +728,7 @@ GreatlyRoseText:
 	text_far _GreatlyRoseText
 ; fallthrough
 RoseText:
-	text_far _RoseText
-	text_end
+	text_far_end _RoseText
 
 StatModifierDownEffect:
 	ld hl, wEnemyMonStatMods
@@ -968,8 +961,7 @@ GreatlyFellText:
 	text_far _GreatlyFellText
 ; fallthrough
 FellText:
-	text_far _FellText
-	text_end
+	text_far_end _FellText
 
 PrintStatText:
 	ld hl, StatModTextStrings
@@ -1237,12 +1229,10 @@ ChargeMoveEffectText:
 ;	text_end
 
 FlewUpHighText:
-	text_far _FlewUpHighText
-	text_end
+	text_far_end _FlewUpHighText
 
 DugAHoleText:
-	text_far _DugAHoleText
-	text_end
+	text_far_end _DugAHoleText
 
 TrappingEffect:
 ;;;;;;;;;; PureRGBnote: FIXED: trapping state won't be set if the pokemon is immune to the attack
@@ -1356,8 +1346,7 @@ ConfusionSideEffectSuccess:
 	ret
 
 BecameConfusedText:
-	text_far _BecameConfusedText
-	text_end
+	text_far_end _BecameConfusedText
 
 ConfusionEffectFailed:
 	cp CONFUSION_BIG_SIDE_EFFECT
@@ -1365,7 +1354,7 @@ ConfusionEffectFailed:
 	cp CONFUSION_SIDE_EFFECT
 	ret z
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	jp ConditionalPrintButItFailed
 
 FirewallEffect:
@@ -1417,7 +1406,7 @@ ConversionEffect:
 
 MimicEffect:
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	call MoveHitTest
 	ld a, [wMoveMissed]
 	and a
@@ -1538,16 +1527,14 @@ ExecuteReplacedMove::
 
 MimicMissed:
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	jp PrintButItFailedText_
 
 MimicNoPointText:
-	text_far _MimicNoPointText
-	text_end
+	text_far_end _MimicNoPointText
 
 MimicLearnedMoveText:
-	text_far _MimicLearnedMoveText
-	text_end
+	text_far_end _MimicLearnedMoveText
 
 LeechSeedEffect:
 	jpfar LeechSeedEffect_
@@ -1661,13 +1648,12 @@ DisableEffect:
 	pop hl
 .moveMissed
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	jp PrintButItFailedText_
 ;;;;;;;;;;
 
 MoveWasDisabledText:
-	text_far _MoveWasDisabledText
-	text_end
+	text_far_end _MoveWasDisabledText
 
 PayDayEffect:
 	jpfar PayDayEffect_
@@ -1747,8 +1733,7 @@ ReflectLightScreenEffect:
 	jpfar ReflectLightScreenEffect_
 
 NothingHappenedText:
-	text_far _NothingHappenedText
-	text_end
+	text_far_end _NothingHappenedText
 
 PrintNoEffectText:
 	ld hl, NoEffectText
@@ -1756,8 +1741,7 @@ PrintNoEffectText:
 	ret
 
 NoEffectText:
-	text_far _NoEffectText
-	text_end
+	text_far_end _NoEffectText
 
 ConditionalPrintButItFailed:
 	ld a, [wMoveDidntMiss]
@@ -1770,8 +1754,7 @@ PrintButItFailedText_::
 	ret
 
 ButItFailedText:
-	text_far _ButItFailedText
-	text_end
+	text_far_end _ButItFailedText
 
 PrintDidntAffectText::
 	ld hl, DidntAffectText
@@ -1779,12 +1762,10 @@ PrintDidntAffectText::
 	ret
 
 DidntAffectText:
-	text_far _DidntAffectText
-	text_end
+	text_far_end _DidntAffectText
 
 IsUnaffectedText:
-	text_far _IsUnaffectedText
-	text_end
+	text_far_end _IsUnaffectedText
 
 CheckTargetSubstitute:
 	push hl

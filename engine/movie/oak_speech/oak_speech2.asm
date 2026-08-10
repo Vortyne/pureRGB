@@ -28,8 +28,7 @@ ChoosePlayerName:
 	jp PrintText
 
 YourNameIsText:
-	text_far _YourNameIsText
-	text_end
+	text_far_end _YourNameIsText
 
 ChooseRivalName:
 	call OakSpeechSlidePicRight
@@ -61,8 +60,7 @@ ChooseRivalName:
 	jp PrintText
 
 HisNameIsText:
-	text_far _HisNameIsText
-	text_end
+	text_far_end _HisNameIsText
 
 OakSpeechSlidePicLeft:
 	push de
@@ -70,7 +68,7 @@ OakSpeechSlidePicLeft:
 	lb bc, 12, 11
 	call ClearScreenArea ; clear the name list text box
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	ld hl, wNameBuffer
 	ld bc, NAME_LENGTH

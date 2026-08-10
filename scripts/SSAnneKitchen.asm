@@ -26,7 +26,7 @@ SSAnneKitchen_Script:
 	callfar FarMoveSpriteOffScreen
 	call UpdateSprites
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld c, SSANNEKITCHEN_WAITER
 	lb de, 6, 0
 	callfar FarMoveSpriteInRelationToPlayer
@@ -53,7 +53,7 @@ SSAnneKitchen_Script:
 	ld a, SFX_59
 	call PlaySoundWaitForCurrent
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call EnableAllJoypad
 	ld a, TEXT_SSANNEKITCHEN_WAITER_RETURNS
 	ldh [hTextID], a
@@ -62,40 +62,16 @@ SSAnneKitchen_Script:
 
 SSAnneKitchen_TextPointers:
 	def_text_pointers
-	dw_const SSAnneKitchenCook1Text, TEXT_SSANNEKITCHEN_COOK1
-	dw_const SSAnneKitchenCook2Text, TEXT_SSANNEKITCHEN_COOK2
-	dw_const SSAnneKitchenCook3Text, TEXT_SSANNEKITCHEN_COOK3
-	dw_const SSAnneKitchenCook4Text, TEXT_SSANNEKITCHEN_COOK4
-	dw_const SSAnneKitchenCook5Text, TEXT_SSANNEKITCHEN_COOK5
-	dw_const SSAnneKitchenCook6Text, TEXT_SSANNEKITCHEN_COOK6
-	dw_const SSAnneKitchenCook7Text, TEXT_SSANNEKITCHEN_COOK7
-	dw_const SSAnneKitchenWaiterText, TEXT_SSANNEKITCHEN_WAITER
-	dw_const SSAnneKitchenOnlyTrashHereText, TEXT_SSANNEKITCHEN_ONLY_TRASH_HERE
-	dw_const SSAnneKitchenWaiterReturnsText, TEXT_SSANNEKITCHEN_WAITER_RETURNS
-
-SSAnneKitchenCook1Text:
-	text_far _SSAnneKitchenCook1Text
-	text_end
-
-SSAnneKitchenCook2Text:
-	text_far _SSAnneKitchenCook2Text
-	text_end
-
-SSAnneKitchenCook3Text:
-	text_far _SSAnneKitchenCook3Text
-	text_end
-
-SSAnneKitchenCook4Text:
-	text_far _SSAnneKitchenCook4Text
-	text_end
-
-SSAnneKitchenCook5Text:
-	text_far _SSAnneKitchenCook5Text
-	text_end
-
-SSAnneKitchenCook6Text:
-	text_far _SSAnneKitchenCook6Text
-	text_end
+	dba_const _SSAnneKitchenCook1Text, TEXT_SSANNEKITCHEN_COOK1
+	dba_const _SSAnneKitchenCook2Text, TEXT_SSANNEKITCHEN_COOK2
+	dba_const _SSAnneKitchenCook3Text, TEXT_SSANNEKITCHEN_COOK3
+	dba_const _SSAnneKitchenCook4Text, TEXT_SSANNEKITCHEN_COOK4
+	dba_const _SSAnneKitchenCook5Text, TEXT_SSANNEKITCHEN_COOK5
+	dba_const _SSAnneKitchenCook6Text, TEXT_SSANNEKITCHEN_COOK6
+	dba_const SSAnneKitchenCook7Text, TEXT_SSANNEKITCHEN_COOK7
+	dba_const SSAnneKitchenWaiterText, TEXT_SSANNEKITCHEN_WAITER
+	dba_const _VermilionGymTrashText, TEXT_SSANNEKITCHEN_ONLY_TRASH_HERE
+	dba_const SSAnneKitchenWaiterReturnsText, TEXT_SSANNEKITCHEN_WAITER_RETURNS
 
 SSAnneKitchenCook7Text:
 	text_asm
@@ -105,7 +81,7 @@ SSAnneKitchenCook7Text:
 	dec a
 	push af
 	ld hl, .SalmonDuSaladText
-	ld bc, 5
+	ld bc, 4
 	call AddNTimes
 	pop af
 	jr nz, .not0
@@ -116,19 +92,15 @@ SSAnneKitchenCook7Text:
 	rst TextScriptEnd
 
 .MainCourseIsText:
-	text_far _SSAnneKitchenCook7MainCourseIsText
-	text_end
+	text_far_end _SSAnneKitchenCook7MainCourseIsText
 
 ; keep these 3 text entries next to each other and in the same format
 .SalmonDuSaladText:
-	text_far SSAnneKitchenCook7SalmonDuSaladText
-	text_end
+	text_far_end SSAnneKitchenCook7SalmonDuSaladText
 .EelsAuBarbecueText:
-	text_far SSAnneKitchenCook7EelsAuBarbecueText
-	text_end
+	text_far_end SSAnneKitchenCook7EelsAuBarbecueText
 .PrimeBeefSteakText:
-	text_far SSAnneKitchenCook7PrimeBeefSteakText
-	text_end
+	text_far_end SSAnneKitchenCook7PrimeBeefSteakText
 
 SSAnneKitchenWaiterText:
 	text_far _SSAnneKitchenWaiter
@@ -173,17 +145,13 @@ SSAnneKitchenWaiterText:
 	rst _PrintText
 	rst TextScriptEnd
 .suitYourselfText
-	text_far _FossilGuyDenied
-	text_end
+	text_far_end _FossilGuyDenied
 .haveSeatText
-	text_far _SSAnneKitchenWaiterHaveSeat
-	text_end
+	text_far_end _SSAnneKitchenWaiterHaveSeat
 .whatWouldYouLike
-	text_far _WhatWouldYouLikeText
-	text_end
+	text_far_end _WhatWouldYouLikeText
 .comingRightUp
-	text_far _SSAnneKitchenWaiterComingRightUp
-	text_end
+	text_far_end _SSAnneKitchenWaiterComingRightUp
 
 SSAnneKitchenWaiterReturnsText:
 	text_far _MomFoodBonAppetit
@@ -199,8 +167,7 @@ SSAnneKitchenWaiterReturnsText:
 	rst _PrintText
 	rst TextScriptEnd
 .comeAgain
-	text_far _CableClubNPCPleaseComeAgainText
-	text_end
+	text_far_end _CableClubNPCPleaseComeAgainText
 
 KitchenReplaceFoodTileBlock:
 	lb bc, 7, 0
@@ -231,7 +198,3 @@ GetMapSpriteLocation::
 	sub 4
 	ld e, a
 	ret
-
-SSAnneKitchenOnlyTrashHereText:
-	text_far _VermilionGymTrashText
-	text_end

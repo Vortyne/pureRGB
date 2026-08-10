@@ -53,6 +53,7 @@ _OaksLabReceivedMonText::
 	line "a @"
 	text_ram_namebuffer
 	text "!@"
+	sound_get_key_item
 	text_end
 
 _OaksLabLastMonText::
@@ -245,6 +246,7 @@ _OaksLabRivalReceivedMonText::
 	line "a @"
 	text_ram_namebuffer
 	text "!@"
+	sound_get_key_item
 	text_end
 
 _OaksLabRivalIllTakeYouOnText::
@@ -315,6 +317,7 @@ _OaksLabOakGotPokedexText::
 
 	para "<PLAYER> got"
 	line "#DEX from OAK!@"
+	sound_get_key_item
 	text_end
 
 _OaksLabOakThatWasMyDreamText::

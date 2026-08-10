@@ -33,7 +33,7 @@ PrintBookshelfText::
 	push af
 	call EnableAutoTextBoxDrawing
 	pop af
-	call PrintPredefTextID
+	call PrintPredefText
 	xor a
 	ldh [hInteractedWithBookshelf], a
 	ret

@@ -5,8 +5,8 @@ Route12SuperRodHouse_Script:
 
 Route12SuperRodHouse_TextPointers:
 	def_text_pointers
-	dw_const Route12SuperRodHouseFishingGuruText, TEXT_ROUTE12SUPERRODHOUSE_FISHING_GURU
-	dw_const Route12FishingGuide,                 TEXT_ROUTE12SUPERRODHOUSE_FISHING_GUIDE
+	dba_const Route12SuperRodHouseFishingGuruText, TEXT_ROUTE12SUPERRODHOUSE_FISHING_GURU
+	dba_const Route12FishingGuide,                 TEXT_ROUTE12SUPERRODHOUSE_FISHING_GUIDE
 
 Route12SuperRodHouseFishingGuruText:
 	text_asm
@@ -21,29 +21,21 @@ Route12SuperRodHouseFishingGuruText:
 	bit BIT_ALT_PKMN_PALETTES, a ; do we have alt palettes enabled
 	ld hl, Route12GuruEnd
 	jr z, .printDone
-	ld hl, Route12GuruEndColor
 	rst _PrintText
+	call DisplayTextPromptButton
 	ld hl, Route12GuruColorInfo
 .printDone
 	rst _PrintText
 	rst TextScriptEnd
 
 Route12GuruIntro:
-	text_far _Route12GuruIntro
-	text_end
+	text_far_end _Route12GuruIntro
 
 Route12GuruEnd:
-	text_far _Route12GuruEnd
-	text_end
-
-Route12GuruEndColor:
-	text_far _Route12GuruEnd
-	text_promptbutton
-	text_end
+	text_far_end _Route12GuruEnd
 
 Route12GuruColorInfo:
-	text_far _Route12GuruColor
-	text_end
+	text_far_end _Route12GuruColor
 
 Route12FishingGuide:
 	text_asm

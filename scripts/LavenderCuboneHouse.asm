@@ -5,9 +5,9 @@ LavenderCuboneHouse_Script:
 
 LavenderCuboneHouse_TextPointers:
 	def_text_pointers
-	dw_const LavenderCuboneHouseCuboneText,       TEXT_LAVENDERCUBONEHOUSE_CUBONE
-	dw_const LavenderCuboneHouseBrunetteGirlText, TEXT_LAVENDERCUBONEHOUSE_BRUNETTE_GIRL
-	dw_const LightChannelerText,                  TEXT_LAVENDERCUBONEHOUSE_LIGHT_CHANNELER
+	dba_const LavenderCuboneHouseCuboneText,       TEXT_LAVENDERCUBONEHOUSE_CUBONE
+	dba_const LavenderCuboneHouseBrunetteGirlText, TEXT_LAVENDERCUBONEHOUSE_BRUNETTE_GIRL
+	dba_const LightChannelerText,                  TEXT_LAVENDERCUBONEHOUSE_LIGHT_CHANNELER
 
 LavenderCuboneHouseCuboneText:
 	text_far _LavenderCuboneHouseCuboneText
@@ -48,12 +48,10 @@ LavenderCuboneHouseBrunetteGirlText:
 	predef_jump LearnsetTrainerScriptMain
 
 .PoorCubonesMotherText:
-	text_far _LavenderCuboneHouseBrunetteGirlPoorCubonesMotherText
-	text_end
+	text_far_end _LavenderCuboneHouseBrunetteGirlPoorCubonesMotherText
 
 .TheGhostIsGoneText:
-	text_far _LavenderCuboneHouseBrunetteGirlGhostIsGoneText
-	text_end
+	text_far_end _LavenderCuboneHouseBrunetteGirlGhostIsGoneText
 
 LadyName:
 	db "KIND GIRL@"
@@ -132,25 +130,19 @@ LightChannelerText:
 	jpfar FindPokemonInParty
 
 LightChannelerGreeting:
-	text_far _LightChannelerGreeting
-	text_end
+	text_far_end _LightChannelerGreeting
 
 LightChannelerHaunter:
-	text_far _LightChannelerHaunter
-	text_end
+	text_far_end _LightChannelerHaunter
 
 LightChannelerHaunterNo:
-	text_far _LightChannelerHaunterNo
-	text_end
+	text_far_end _LightChannelerHaunterNo
 
 LightChannelerHaunterYes:
-	text_far _LightChannelerHaunterYes
-	text_end
+	text_far_end _LightChannelerHaunterYes
 
 LightChannelerPurificationTime:
-	text_far _LightChannelerPurificationTime
-	text_end
+	text_far_end _LightChannelerPurificationTime
 
 LightChannelerPurificationComplete:
-	text_far _LightChannelerPurificationComplete
-	text_end
+	text_far_end _LightChannelerPurificationComplete

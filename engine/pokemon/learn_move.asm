@@ -104,8 +104,7 @@ AbandonLearning:
 	rst _PrintText
 	jr .exit
 .alreadyKnowsText
-	text_far _AlreadyKnowsText
-	text_end
+	text_far_end _AlreadyKnowsText
 
 ; PureRGBnote: CHANGED: amount of text is reduced in some scenarios
 PrintLearnedMove:
@@ -286,24 +285,19 @@ LearnedMove1Text:
 	text_end
 
 WhichMoveToForgetText:
-	text_far _WhichMoveToForgetText
-	text_end
+	text_far_end _WhichMoveToForgetText
 
 AbandonLearningText:
-	text_far _AbandonLearningText
-	text_end
+	text_far_end _AbandonLearningText
 
 DidNotLearnText:
-	text_far _DidNotLearnText
-	text_end
+	text_far_end _DidNotLearnText
 
 TryingToLearnText:
-	text_far _TryingToLearnText
-	text_end
+	text_far_end _TryingToLearnText
 
 PressStartToLearnText:
-	text_far _PressStartToLearnText
-	text_end
+	text_far_end _PressStartToLearnText
 
 OneTwoAndText:
 	text_far _OneTwoAndText
@@ -327,19 +321,16 @@ PoofText:
 	text_far _PoofText
 	text_pause
 ForgotAndText:
-	text_far _ForgotAndText
-	text_end
+	text_far_end _ForgotAndText
 
 ButCantLearnMoreThanFourMoves:
 	text_far _ButCantLearnMoreThanFourMoves
 	; fall through
 CantLearnMoreThanFourMoves:
-	text_far _CantLearnMoreThanFourMoves
-	text_end
+	text_far_end _CantLearnMoreThanFourMoves
 
 SkippedForeverText2:
-	text_far _SkippedForever
-	text_end
+	text_far_end _SkippedForever
 
 ;HMCantDeleteText: ; PureRGBnote: FIXED: moves are never considered HMs and can always be deleted if desired
 ;	text_far _HMCantDeleteText

@@ -4,8 +4,8 @@ CeruleanOldRodHouse_Script:
 
 CeruleanOldRodHouse_TextPointers:
 	def_text_pointers
-	dw_const CeruleanOldRodHouse1Text1,  TEXT_CERULEANOLDRODHOUSE_FISHING_GURU
-	dw_const CeruleanOldRodHouseFoodText,  TEXT_CERULEANOLDRODHOUSE_FOOD
+	dba_const CeruleanOldRodHouse1Text1,  TEXT_CERULEANOLDRODHOUSE_FISHING_GURU
+	dba_const CeruleanOldRodHouseFoodText,  TEXT_CERULEANOLDRODHOUSE_FOOD
 
 CeruleanOldRodHouse1Text1:
 	text_asm
@@ -31,28 +31,23 @@ CeruleanOldRodHouse1Text1:
 
 .CeruleanOldRodHouseImTheFishingGuruText:
 	text_far _CeruleanOldRodHouseImTheFishingGuruText
-	text_far _VermilionOldRodHouseISimplyLoveFishing
-	text_end
+	text_far_end _VermilionOldRodHouseISimplyLoveFishing
 
 .CeruleanOldRodHouseGiveRod:
 	text_far _VermilionOldRodHouseFishingGuruTakeThisText
 	text_far _GenericReceivedItemA
 	sound_get_item_1
-	text_far _CeruleanOldRodHouseFishingIsAWayOfLifeText
-	text_end
+	text_far_end _CeruleanOldRodHouseFishingIsAWayOfLifeText
 
 .CeruleanOldRodHouseDisappointing:
-	text_far _LastTwoGurusTextNo
-	text_end
+	text_far_end _LastTwoGurusTextNo
 
 .CeruleanOldRodHouseHowAreFishBiting:
 	text_far _VermilionOldRodHouseFishingGuruHowAreTheFishBitingText
-	text_far _CeruleanOldRodHouseOldRodInfo
-	text_end
+	text_far_end _CeruleanOldRodHouseOldRodInfo
 
 .CeruleanOldRodHouseNoRoom:
-	text_far _LastTwoGurusTextBagFull
-	text_end
+	text_far_end _LastTwoGurusTextBagFull
 
 ; PureRGBnote: ADDED: some text where it seems like there should be an interaction.
 
@@ -66,8 +61,6 @@ CeruleanOldRodHouseFoodText:
 	rst _PrintText
 	rst TextScriptEnd
 .wowFish
-	text_far _CeruleanOldRodHouseFoodText
-	text_end
+	text_far_end _CeruleanOldRodHouseFoodText
 .whatCanISayLoveCooking
-	text_far _CeruleanOldRodHouseFoodText2
-	text_end
+	text_far_end _CeruleanOldRodHouseFoodText2

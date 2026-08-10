@@ -46,6 +46,22 @@ TextBoxBorder::
 	jr nz, .loop
 	ret
 
+ContText::
+	push de
+	ld b, h
+	ld c, l
+	ld hl, ContCharText
+	call TextCommandProcessor
+	ld h, b
+	ld l, c
+	pop de
+	inc de
+	jr PlaceNextChar
+
+ContCharText::
+	text "<_CONT>@"
+	text_end
+
 PlaceString::
 	push hl
 
@@ -61,97 +77,85 @@ PlaceNextChar::
 ; PureRGBnote: CHANGED: Check against a jump table instead of a dictionary.
 ; this actually speeds up text a lot because it doesn't make do a ton of cp commands for every single character
 	push hl
-	cp FIRST_TEXT_SHORCUT_ID
-	jr c, .no
+	cp FIRST_TEXT_SHORTCUT_ID
+	jr c, NotTextShortcut
 	cp LAST_TEXT_SHORTCUT_ID + 1
-	jr nc, .no
-	push de
-	sub FIRST_TEXT_SHORCUT_ID
+	jr nc, NotTextShortcut
+	sub FIRST_TEXT_SHORTCUT_ID
 	ld hl, TextShortcutCommandJumpTable
-	ld d, 0
-	ld e, a
-	add hl, de
-	add hl, de
+	ld b, 0
+	ld c, a
+	add hl, bc
+	add hl, bc
 	hl_deref
-	pop de
-.gotCommand
+	bit 7, h
+	jr z, .notCodeCommand
+	res 7, h
 	ld b, h
 	ld c, l
 	pop hl
 	jp_bc
-.no
+.notCodeCommand
+	pop bc
+	push de
+	ld d, h
+	ld e, l
+	ld h, b
+	ld l, c
+	; fall through
+PlaceCommandCharacter::
+	call PlaceString
+	ld h, b
+	ld l, c
+	pop de
+	inc de
+	jr PlaceNextChar
+
+NotTextShortcut:
 	pop hl
 	ld a, [de]
 	ld [hli], a
 	call PrintLetterDelay
-
+	; fall through
 NextChar::
 	inc de
-	jp PlaceNextChar
+	jr PlaceNextChar
 
-;NullChar::
-;	ld b, h
-;	ld c, l
-;	pop hl
-;	; A "<NULL>" character in a printed string
-;	; displays an error message with the current value
-;	; of hTextID in decimal format.
-;	; This is a debugging leftover.
-;	ld de, TextIDErrorText
-;	dec de
-;	ret	
+PrintPlayerName:: 
+	push de
+	ld de, wPlayerName
+	jr PlaceCommandCharacter
 
-; PureRGBnote: CHANGED: many shortcut commands were added here 
-; because it greatly reduces text data size if certain commonly used phrases are parameterized.
-; must match the order of the charmap shortcuts and no gaps are allowed
-TextShortcutCommandJumpTable:
-	dw OrChar
-	dw IngChar
-	dw TheChar
-	dw YouChar
-	dw OpponentChar
-	dw UserChar
-	dw PokemonChar
-	dw TrainerTipsChar
-	dw TeamChar
-	dw MultiButtonPageChar
-	dw PageChar
-	dw PlacePKMN
-	dw _ContText
-	dw _ContTextNoPause
-	dw IsChar
-	dw NextCharCmd
-	dw LineChar
-	dw DoRet ; string terminator
-	dw Paragraph
-	dw PrintPlayerName
-	dw PrintRivalName
-	dw PlacePOKe
-	dw ContText
-	dw ThreeDotsChar
-	dw DoneText
-	dw PromptText
-	dw PlaceMoveTargetsName
-	dw PlaceMoveUsersName
-	dw PCChar
-	dw TMChar
-	dw TrainerChar
-	dw RocketChar
-	dw PlaceDexEnd
+PrintRivalName::  
+	push de
+	ld de, wRivalName
+	jr PlaceCommandCharacter 
 
-	; " the "
-	; " to "
-	; "here"
-	; " a "
-	; "his"
-	; "that"
-	; "for"
+PlaceMoveTargetsName::
+	ldh a, [hWhoseTurn]
+	xor 1
+	jr PlaceMoveUsersName.place
+
+PlaceMoveUsersName::
+	ldh a, [hWhoseTurn]
+.place:
+	push de
+	and a
+	ld de, wBattleMonNick
+	jr z, PlaceCommandCharacter
+.enemy
+	ld de, EnemyText
+	call PlaceString
+	ld h, b
+	ld l, c
+	ld de, wEnemyMonNick
+	jr PlaceCommandCharacter
 
 LineChar::
 	pop hl
 	hlcoord 1, 16
 	push hl
-	jp NextChar
+	jr NextChar
 
 NextCharCmd::
 	ld bc, 2 * SCREEN_WIDTH
@@ -163,126 +167,7 @@ NextCharCmd::
 	pop hl
 	add hl, bc
 	push hl
-	jp NextChar
-
-MACRO print_name
-	push de
-	ld de, \1
-	jr PlaceCommandCharacter
-ENDM
-	
-
-PlaceMoveTargetsName::
-	ldh a, [hWhoseTurn]
-	xor 1
-	jr PlaceMoveUsersName.place
-
-PlaceMoveUsersName::
-	ldh a, [hWhoseTurn]
-
-.place:
-	push de
-	and a
-	jr nz, .enemy
-
-	ld de, wBattleMonNick
-	jr PlaceCommandCharacter
-
-.enemy
-	ld de, EnemyText
-	call PlaceString
-	ld h, b
-	ld l, c
-	ld de, wEnemyMonNick
-	; fallthrough
-
-PlaceCommandCharacter::
-	call PlaceString
-	ld h, b
-	ld l, c
-	pop de
-	inc de
-	jp PlaceNextChar
-
-PrintPlayerName:: print_name wPlayerName
-PrintRivalName::  print_name wRivalName
-
-TrainerChar:: print_name TrainerCharText
-TMChar::      print_name TMCharText
-PCChar::      print_name PCCharText
-RocketChar::  print_name RocketCharText
-PlacePOKe::   print_name PlacePOKeText
-PlacePKMN::   print_name PlacePKMNText
-TeamChar::    print_name TeamCharText
-ThreeDotsChar:: print_name ThreeDotsText
-TrainerTipsChar:: print_name TrainerTipsText
-PokemonChar:: print_name PlaceMonText
-OpponentChar:: print_name OpponentText
-UserChar:: print_name UserText
-TheChar:: print_name TheText
-YouChar:: print_name YouText
-IngChar:: print_name IngText
-OrChar:: print_name OrText
-IsChar:: print_name IsText
-
-
-TrainerCharText:: db "TRAINER@"
-TMCharText::      db "TM@"
-TeamCharText::    db "TEAM @"
-RocketCharText::  db "ROCKET@"
-EnemyText::       db "Enemy @"
-ThreeDotsText::   db "...@"
-TrainerTipsText:: db "<TRAINER> TIPS@"
-OpponentText::    db "opponent@"
-TheText::         db "t","he@" ; have to separate with a comma to avoid it entering the same macro again
-YouText::         db "y","ou@" ; have to separate with a comma to avoid it entering the same macro again
-IngText::         db "i","ng@" ; have to separate with a comma to avoid it entering the same macro again
-OrText::          db "o","r@" ; have to separate with a comma to avoid it entering the same macro again
-IsText::          db "i","s@" ; have to separate with a comma to avoid it entering the same macro again
-
-;TextIDErrorText:: ; "[hTextID] ERROR."
-;	text_far _TextIDErrorText
-;	text_end
-
-ContText::
-	push de
-	ld b, h
-	ld c, l
-	ld hl, ContCharText
-	call TextCommandProcessor
-	ld h, b
-	ld l, c
-	pop de
-	inc de
-	jp PlaceNextChar
-
-PlaceDexEnd::
-	ld [hl], '.'
-	pop hl
-	ret
-
-PromptText::
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jp z, .ok
-	ld a, '▼'
-	ldcoord_a 18, 16
-.ok
-	call ProtectedDelay3
-	call ManualTextScroll
-	ld a, ' '
-	ldcoord_a 18, 16
-
-DoneText::
-	pop hl
-	ld de, TextScriptEndingText
-	dec de
-	ret
-
-TextScriptPromptButton::
-	text_promptbutton
-TextScriptEndingText::
-	text_end
+	jr NextChar
 
 Paragraph::
 	push de
@@ -292,10 +177,10 @@ Paragraph::
 	call ManualTextScroll
 	call ClearTextBox
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	hlcoord 1, 14
-	jp NextChar
+	jr NextChar
 
 PageChar::
 	push de
@@ -307,12 +192,12 @@ PageChar::
 	lb bc, 7, 18
 	call ClearScreenArea
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	pop hl
 	hlcoord 1, 11
 	push hl
-	jp NextChar
+	jr NextChar
 
 ;;;;;;;;; PureRGBnote: ADDED: new text command that allows multiple buttons to be watched while waiting on a text prompt 
 MultiButtonPageChar::
@@ -329,9 +214,26 @@ MultiButtonPageChar::
 	jp NextChar
 .exit
 	pop de
-	jp DoneText
+	jr DoneText
 ;;;;;;;;;
 
+PromptText::
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jp z, .ok
+	ld a, '▼'
+	ldcoord_a 18, 16
+.ok
+	call ProtectedDelay3
+	call ManualTextScroll
+	ld a, ' '
+	ldcoord_a 18, 16
+	; fall through
+DoneText::
+	pop hl
+	ld de, TextScriptEndingText
+	dec de
+	ret
 
 _ContText::
 	ld a, '▼'
@@ -377,14 +279,166 @@ ScrollTextUpOneLine::
 	rst _DelayFrame
 	dec b
 	jr nz, .WaitFrame
-
 	ret
+
+PlaceDexEnd::
+	ld [hl], '.'
+	pop hl
+	ret
+
+TextScriptPromptButton::
+	text_promptbutton
+TextScriptEndingText::
+	text_end
 
 ProtectedDelay3::
 	push bc
 	call Delay3
 	pop bc
 	ret
+
+;NullChar::
+;	ld b, h
+;	ld c, l
+;	pop hl
+;	; A "<NULL>" character in a printed string
+;	; displays an error message with the current value
+;	; of hTextID in decimal format.
+;	; This is a debugging leftover.
+;	ld de, TextIDErrorText
+;	dec de
+;	ret	
+
+;TextIDErrorText:: ; "[hTextID] ERROR."
+;	text_far_end _TextIDErrorText
+
+; we can use the top bit of this jump table
+DEF TEXT_CODE_CMD_MARKER EQU $8000
+
+; PureRGBnote: CHANGED: many shortcut commands were added here 
+; because it greatly reduces text data size if certain commonly used phrases are parameterized.
+; must match the order of the charmap shortcuts and no gaps are allowed
+; since ROM space addresses never goes above $8000 address, 
+; we can use the highest bit of these words as an indicator of what function to run for each.
+TextShortcutCommandJumpTable:
+	dw LikeText
+	dw AnText
+	dw CapYouText
+	dw ErText
+	dw WithText
+	dw AtText
+	dw IghtText
+	dw HaveText
+	dw AText
+	dw HereText
+	dw ToSpaceText
+	dw SpaceToText
+	dw OrText
+	dw IngText
+	dw TheText
+	dw YouText
+	dw OpponentText
+	dw UserText
+	dw PlaceMonText
+	dw TrainerTipsText
+	dw TeamCharText
+	dw MultiButtonPageChar | TEXT_CODE_CMD_MARKER
+	dw PageChar | TEXT_CODE_CMD_MARKER
+	dw PlacePKMNText
+	dw _ContText | TEXT_CODE_CMD_MARKER
+	dw _ContTextNoPause | TEXT_CODE_CMD_MARKER
+	dw IsText
+	dw NextCharCmd | TEXT_CODE_CMD_MARKER
+	dw LineChar | TEXT_CODE_CMD_MARKER
+	dw DoRet ; string terminator, not used here
+	dw Paragraph | TEXT_CODE_CMD_MARKER
+	dw PrintPlayerName | TEXT_CODE_CMD_MARKER
+	dw PrintRivalName | TEXT_CODE_CMD_MARKER
+	dw PlacePOKeText
+	dw ContText | TEXT_CODE_CMD_MARKER
+	dw ThreeDotsText
+	dw DoneText | TEXT_CODE_CMD_MARKER
+	dw PromptText | TEXT_CODE_CMD_MARKER
+	dw PlaceMoveTargetsName | TEXT_CODE_CMD_MARKER
+	dw PlaceMoveUsersName | TEXT_CODE_CMD_MARKER
+	dw PCCharText
+	dw TMCharText
+	dw TrainerCharText
+	dw RocketCharText
+	dw PlaceDexEnd | TEXT_CODE_CMD_MARKER
+
+TrainerCharText:: db "TRAINER@"
+TeamCharText::    db "TEAM @"
+RocketCharText::  db "ROCKET@"
+ThreeDotsText::   db "...@"
+TrainerTipsText:: db "<TRAINER> TIPS@"
+OpponentText::    db "opponent@"
+UserText::        db "user@"
+PCCharText::      db "PC@"
+; these have to be separated by a comma in order to not re-trigger the charmap macro that sets them up to be used automatically
+TheText::         db "t","he@" 
+YouText::         db "y","ou@" 
+IngText::         db "i","ng@" 
+OrText::          db "o","r@" 
+IsText::          db "i","s@" 
+SpaceToText::     db " ", "to@"
+ToSpaceText::     db "t", "o @"
+AText::           db " ", "a @"
+AtText::          db "a", "t@"
+ErText::          db "e", "r@"
+CapYouText::      db "Y", "ou@"
+AnText::          db "a", "n@"
+HereText::        db "h", "ere@"
+
+TextCommand_LOW::
+; write text at (1,16)
+	pop hl
+	bccoord 1, 16 ; second line of dialogue text box
+	jr NextTextCommand
+
+TextCommand_PROMPT_BUTTON::
+; wait for button press; show arrow
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jp z, TextCommand_WAIT_BUTTON
+	ld a, '▼'
+	ldcoord_a 18, 16 ; place down arrow in lower right corner of dialogue text box
+	push bc
+	call ManualTextScroll ; blink arrow and wait for A or B to be pressed
+	pop bc
+	ld a, ' '
+	ldcoord_a 18, 16 ; overwrite down arrow with blank space
+	pop hl
+	jr NextTextCommand
+
+TextCommand_SCROLL::
+; pushes text up two lines and sets the BC cursor to the border tile
+; below the first character column of the text box.
+	ld a, ' '
+	ldcoord_a 18, 16 ; place blank space in lower right corner of dialogue text box
+	call ScrollTextUpOneLine
+	call ScrollTextUpOneLine
+	pop hl
+	bccoord 1, 16 ; second line of dialogue text box
+	jr NextTextCommand
+
+TextCommand_BOX::
+; draw a box (height, width)
+	pop hl
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	ld a, [hli]
+	ld b, a
+	ld a, [hli]
+	ld c, a
+	push hl
+	ld h, d
+	ld l, e
+	call TextBoxBorder
+	pop hl
+	jr NextTextCommand
 
 TextCommandProcessor::
 	ld a, [wLetterPrintingDelayFlags]
@@ -426,29 +480,6 @@ NextTextCommand::
 	ld l, a
 	jp hl
 
-TextCommand_BOX::
-; draw a box (height, width)
-	pop hl
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a
-	ld a, [hli]
-	ld b, a
-	ld a, [hli]
-	ld c, a
-	push hl
-	ld h, d
-	ld l, e
-	call TextBoxBorder
-	pop hl
-	jr NextTextCommand
-
-TextCommand_START_storeFlags:
-	ld a, [wLetterPrintingDelayFlags]
-	push af
-	jr TextCommand_START_noPop
-
 TextCommand_START::
 ; write text until "@"
 	pop hl
@@ -476,6 +507,29 @@ TextCommand_RAM::
 	call PlaceString
 	pop hl
 	jr NextTextCommand
+
+TextCommand_BCD::
+; write bcd from address, typically ram
+	pop hl
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	ld a, [hli]
+	push hl
+	ld h, b
+	ld l, c
+	ld c, a
+	call PrintBCDNumber
+	ld b, h
+	ld c, l
+	pop hl
+	jr NextTextCommand
+
+TextCommand_START_storeFlags:
+	ld a, [wLetterPrintingDelayFlags]
+	push af
+	jr TextCommand_START_noPop
 
 TextCommand_RAM_CHECK_CONT::
 	pop hl
@@ -508,24 +562,6 @@ TextCommand_RAM_CHECK_LINE::
 	bccoord 1, 16
 .fits
 	jr TextCommand_RAM
-
-TextCommand_BCD::
-; write bcd from address, typically ram
-	pop hl
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a
-	ld a, [hli]
-	push hl
-	ld h, b
-	ld l, c
-	ld c, a
-	call PrintBCDNumber
-	ld b, h
-	ld c, l
-	pop hl
-	jp NextTextCommand
 
 ; PureRGBnote: ADDED: jump to a different address in the same text bank so we can reuse text
 TextCommand_JUMP::
@@ -560,38 +596,6 @@ TextCommand_MOVE::
 	ld a, [hli]
 	ld [wTextDest + 1], a
 	ld b, a
-	jp NextTextCommand
-
-TextCommand_LOW::
-; write text at (1,16)
-	pop hl
-	bccoord 1, 16 ; second line of dialogue text box
-	jp NextTextCommand
-
-TextCommand_PROMPT_BUTTON::
-; wait for button press; show arrow
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jp z, TextCommand_WAIT_BUTTON
-	ld a, '▼'
-	ldcoord_a 18, 16 ; place down arrow in lower right corner of dialogue text box
-	push bc
-	call ManualTextScroll ; blink arrow and wait for A or B to be pressed
-	pop bc
-	ld a, ' '
-	ldcoord_a 18, 16 ; overwrite down arrow with blank space
-	pop hl
-	jp NextTextCommand
-
-TextCommand_SCROLL::
-; pushes text up two lines and sets the BC cursor to the border tile
-; below the first character column of the text box.
-	ld a, ' '
-	ldcoord_a 18, 16 ; place blank space in lower right corner of dialogue text box
-	call ScrollTextUpOneLine
-	call ScrollTextUpOneLine
-	pop hl
-	bccoord 1, 16 ; second line of dialogue text box
 	jp NextTextCommand
 
 TextCommand_START_ASM::
@@ -634,7 +638,7 @@ TextCommand_PAUSE::
 	and PAD_A | PAD_B
 	jr nz, .done
 	ld c, 30 ; half a second
-	rst _DelayFrames
+	rst DelayFrames
 .done
 	pop bc
 	pop hl
@@ -702,7 +706,7 @@ TextCommand_DOTS::
 	and PAD_A | PAD_B
 	jr nz, .next ; if so, skip the delay
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 .next
 	dec d
 	jr nz, .loop
@@ -723,6 +727,16 @@ TextCommand_WAIT_BUTTON::
 TextCommand_FAR::
 ; write text from a different bank (little endian)
 	pop hl
+	call TextCommand_FARCommon
+	jp NextTextCommand
+
+TextCommand_FAR_END::
+	pop hl
+	call TextCommand_FARCommon
+	ld hl, TextScriptEndingText
+	jp NextTextCommand
+
+TextCommand_FARCommon::
 	ldh a, [hLoadedROMBank]
 	push af
 
@@ -740,8 +754,8 @@ TextCommand_FAR::
 	pop hl
 
 	pop af
-	call SetCurBank
-	jp NextTextCommand
+	jp SetCurBank
+
 
 TextCommand_PLURALIZE::
 	pop hl
@@ -830,4 +844,5 @@ ENDC
 	dw TextCommand_PLURALIZE     ; TX_PLURALIZE
 	dw TextCommand_STRINGBUFFER  ; TX_RAM_STRINGBUFFER
 	dw TextCommand_NAMEBUFFER    ; TX_RAM_NAMEBUFFER
+	dw TextCommand_FAR_END       ; TX_FAR_END
 	; greater TX_* constants are handled directly by NextTextCommand

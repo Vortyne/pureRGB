@@ -1,3 +1,2 @@
 PokemonStuffText::
-	text_far _PokemonStuffText
-	text_end
+	text_far_end _PokemonStuffText

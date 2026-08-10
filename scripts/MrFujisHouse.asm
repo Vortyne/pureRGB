@@ -5,13 +5,13 @@ MrFujisHouse_Script:
 
 MrFujisHouse_TextPointers:
 	def_text_pointers
-	dw_const MrFujisHouseSuperNerdText,     TEXT_MRFUJISHOUSE_SUPER_NERD
-	dw_const MrFujisHouseLittleGirlText,    TEXT_MRFUJISHOUSE_LITTLE_GIRL
-	dw_const MrFujisHousePsyduckText,       TEXT_MRFUJISHOUSE_PSYDUCK
-	dw_const MrFujisHouseNidorinoText,      TEXT_MRFUJISHOUSE_NIDORINO
-	dw_const MrFujisHouseMrFujiText,        TEXT_MRFUJISHOUSE_MR_FUJI
-	dw_const MrFujisHouseMrFujiPokedexText, TEXT_MRFUJISHOUSE_POKEDEX
-	dw_const MagazinesText,                 TEXT_MRFUJISHOUSE_MAGAZINES
+	dba_const MrFujisHouseSuperNerdText,     TEXT_MRFUJISHOUSE_SUPER_NERD
+	dba_const MrFujisHouseLittleGirlText,    TEXT_MRFUJISHOUSE_LITTLE_GIRL
+	dba_const MrFujisHousePsyduckText,       TEXT_MRFUJISHOUSE_PSYDUCK
+	dba_const MrFujisHouseNidorinoText,      TEXT_MRFUJISHOUSE_NIDORINO
+	dba_const MrFujisHouseMrFujiText,        TEXT_MRFUJISHOUSE_MR_FUJI
+	dba_const _MrFujisHouseMrFujiPokedexText, TEXT_MRFUJISHOUSE_POKEDEX
+	dba_const _MagazinesText,                 TEXT_MRFUJISHOUSE_MAGAZINES
 
 ;;;;;;;;;; PureRGBnote: MOVED: moved this hiding routine here because it looks weird that mr fuji gets hidden before we warp to his house
 CheckHideMrFujiInPokemonTower:
@@ -34,12 +34,10 @@ MrFujisHouseSuperNerdText:
 	rst TextScriptEnd
 
 .MrFujiIsntHereText:
-	text_far _MrFujisHouseSuperNerdMrFujiIsntHereText
-	text_end
+	text_far_end _MrFujisHouseSuperNerdMrFujiIsntHereText
 
 .MrFujiHadBeenPrayingText:
-	text_far _MrFujisHouseSuperNerdMrFujiHadBeenPrayingText
-	text_end
+	text_far_end _MrFujisHouseSuperNerdMrFujiHadBeenPrayingText
 
 MrFujisHouseLittleGirlText:
 	text_asm
@@ -52,12 +50,10 @@ MrFujisHouseLittleGirlText:
 	rst TextScriptEnd
 
 .ThisIsMrFujisHouseText:
-	text_far _MrFujisHouseLittleGirlThisIsMrFujisHouseText
-	text_end
+	text_far_end _MrFujisHouseLittleGirlThisIsMrFujisHouseText
 
 .PokemonAreNiceToHugText:
-	text_far _MrFujisHouseLittleGirlPokemonAreNiceToHugText
-	text_end
+	text_far_end _MrFujisHouseLittleGirlPokemonAreNiceToHugText
 
 MrFujisHousePsyduckText:
 	text_far _MrFujisHousePsyduckText
@@ -76,8 +72,7 @@ MrFujisHousePsyduckText:
 	ld bc, LearnsetPlayedAroundWith
 	predef_jump LearnsetTrainerScriptMain
 .thatsDucket
-	text_far _MrFujisHousePsyduck2Text
-	text_end
+	text_far_end _MrFujisHousePsyduck2Text
 
 MrFujisHouseNidorinoText:
 	text_far _MrFujisHouseNidorinoText
@@ -102,8 +97,7 @@ MrFujisHouseNidorinoText:
 	ld bc, LearnsetShowedCoolMoves
 	predef_jump LearnsetTrainerScriptMain
 .thatsSpike
-	text_far _MrFujisHouseNidorino2Text
-	text_end
+	text_far_end _MrFujisHouseNidorino2Text
 
 RescuerName::
 	db "RESCUERs@"
@@ -126,27 +120,15 @@ MrFujisHouseMrFujiText:
 	rst TextScriptEnd
 
 .IThinkThisMayHelpYourQuestText:
-	text_far _MrFujisHouseMrFujiIThinkThisMayHelpYourQuestText
-	text_end
+	text_far_end _MrFujisHouseMrFujiIThinkThisMayHelpYourQuestText
 
 .ReceivedPokeFluteText:
 	text_far _MrFujisHouseMrFujiReceivedPokeFluteText
 	sound_get_key_item
-	text_far _MrFujisHouseMrFujiPokeFluteExplanationText
-	text_end
+	text_far_end _MrFujisHouseMrFujiPokeFluteExplanationText
 
 .PokeFluteNoRoomText:
-	text_far _MrFujisHouseMrFujiPokeFluteNoRoomText
-	text_end
+	text_far_end _MrFujisHouseMrFujiPokeFluteNoRoomText
 
 .HasMyFluteHelpedYouText:
-	text_far _MrFujisHouseMrFujiHasMyFluteHelpedYouText
-	text_end
-
-MrFujisHouseMrFujiPokedexText:
-	text_far _MrFujisHouseMrFujiPokedexText
-	text_end
-
-MagazinesText::
-	text_far _MagazinesText
-	text_end
+	text_far_end _MrFujisHouseMrFujiHasMyFluteHelpedYouText

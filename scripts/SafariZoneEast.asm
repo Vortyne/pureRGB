@@ -2,13 +2,10 @@
 
 SafariZoneEast_Script:
 	call CheckModifySafariWildRate
-	call EnableAutoTextBoxDrawing
 	ld hl, SafariZoneEastTrainerHeaders
 	ld de, SafariZoneEast_ScriptPointers
-	ld a, [wSafariZoneEastCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSafariZoneEastCurScript], a
-	ret
+	ld bc, wSafariZoneEastCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SafariZoneEast_ScriptPointers:
 	def_script_pointers
@@ -20,22 +17,18 @@ SafariZoneEast_ScriptPointers:
 
 SafariZoneEast_TextPointers:
 	def_text_pointers
-	dw_const SafariZoneEastRangerText0,       TEXT_SAFARIZONEEAST_RANGER_F
-	dw_const SafariZoneEastTrainerText0,      TEXT_SAFARIZONEEAST_PSYCHIC
-	dw_const SafariZoneEastTrainerText1,      TEXT_SAFARIZONEEAST_ROCKER
-	dw_const SafariZoneEastTrainerText2,      TEXT_SAFARIZONEEAST_COOLTRAINER_M
-	dw_const SafariZoneEastTrainerText3,      TEXT_SAFARIZONEEAST_ENGINEER
-	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM1
-	dw_const PickUp5ItemText,                 TEXT_SAFARIZONEEAST_ITEM2
-	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM3
-	dw_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM4
-	dw_const SafariZoneEastRestHouseSignText, TEXT_SAFARIZONEEAST_REST_HOUSE_SIGN
-	dw_const SafariZoneEastTrainerTipsText,   TEXT_SAFARIZONEEAST_TRAINER_TIPS
-	dw_const SafariZoneEastSignText,          TEXT_SAFARIZONEEAST_SIGN
-
-SafariZoneEastRestHouseSignText:
-	text_far _SafariZoneEastRestHouseSignText
-	text_end
+	dba_const SafariZoneEastRangerText0,       TEXT_SAFARIZONEEAST_RANGER_F
+	dba_const SafariZoneEastTrainerText0,      TEXT_SAFARIZONEEAST_PSYCHIC
+	dba_const SafariZoneEastTrainerText1,      TEXT_SAFARIZONEEAST_ROCKER
+	dba_const SafariZoneEastTrainerText2,      TEXT_SAFARIZONEEAST_COOLTRAINER_M
+	dba_const SafariZoneEastTrainerText3,      TEXT_SAFARIZONEEAST_ENGINEER
+	dba_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM1
+	dba_const PickUp5ItemText,                 TEXT_SAFARIZONEEAST_ITEM2
+	dba_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM3
+	dba_const PickUpItemText,                  TEXT_SAFARIZONEEAST_ITEM4
+	dba_const _SafariZoneEastRestHouseSignText, TEXT_SAFARIZONEEAST_REST_HOUSE_SIGN
+	dba_const _SafariZoneEastTrainerTipsText,   TEXT_SAFARIZONEEAST_TRAINER_TIPS
+	dba_const _SafariZoneEastSignText,          TEXT_SAFARIZONEEAST_SIGN
 
 SafariZoneEastTrainerTipsText:
 	text_asm
@@ -49,29 +42,23 @@ SafariZoneEastTrainerTipsText:
 	rst TextScriptEnd
 
 SafariZoneEastText6Default:
-	text_far _SafariZoneEastTrainerTipsText
-	text_end
+	text_far_end _SafariZoneEastTrainerTipsText
 
 SafariZoneEastText6NotClassic:
-	text_far _SafariZoneEastText6NotClassic
-	text_end
-	
-SafariZoneEastSignText:
-	text_far _SafariZoneEastSignText
-	text_end
+	text_far_end _SafariZoneEastText6NotClassic
 
 SafariZoneEastTrainerHeaders:
 	def_trainers
 SafariZoneEastRangerHeader:
-	trainer EVENT_BEAT_SAFARI_ZONE_EAST_RANGER_0, 0, SafariZoneEastRangerBattleText0, SafariZoneEastRangerEndBattleText0, SafariZoneEastRangerAfterBattleText0
+	trainer EVENT_BEAT_SAFARI_ZONE_EAST_RANGER_0, 0, _SafariZoneEastRangerText, _SafariZoneEastRangerEndBattleText, _SafariZoneEastRangerAfterBattleText
 SafariZoneEastTrainerHeader0:
-	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_0, 3, SafariZoneEastTrainerBattleText0, SafariZoneEastTrainerEndBattleText0, SafariZoneEastTrainerAfterBattleText0
+	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_0, 3, _SafariZoneEastPsychicText, _SafariZoneEastPsychicEndBattleText, _SafariZoneEastPsychicAfterBattleText
 SafariZoneEastTrainerHeader1:
-	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_1, 4, SafariZoneEastTrainerBattleText1, SafariZoneEastTrainerEndBattleText1, SafariZoneEastTrainerAfterBattleText1
+	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_1, 4, _SafariZoneEastRockerText, _SafariZoneEastRockerEndBattleText, _SafariZoneEastRockerAfterBattleText
 SafariZoneEastTrainerHeader2:
-	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_2, 2, SafariZoneEastTrainerBattleText2, SafariZoneEastTrainerEndBattleText2, SafariZoneEastTrainerAfterBattleText2
+	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_2, 2, _SafariZoneEastCooltrainerMText, _SafariZoneEastCooltrainerMEndBattleText, _SafariZoneEastCooltrainerMAfterBattleText
 SafariZoneEastTrainerHeader3:
-	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_3, 0, SafariZoneEastTrainerBattleText3, SafariZoneEastTrainerEndBattleText3, SafariZoneEastTrainerAfterBattleText3
+	trainer EVENT_BEAT_SAFARI_ZONE_EAST_TRAINER_3, 0, _SafariZoneEastEngineerText, _SafariZoneEastEngineerEndBattleText, _SafariZoneEastEngineerAfterBattleText
 	db -1 ; end
 
 SafariZoneEastRangerText0:
@@ -93,63 +80,3 @@ SafariZoneEastTrainerText2:
 
 SafariZoneEastTrainerText3:
 	script_trainer SafariZoneEastTrainerHeader3
-
-SafariZoneEastRangerBattleText0:
-	text_far _SafariZoneEastRangerText
-	text_end
-
-SafariZoneEastRangerEndBattleText0:
-	text_far _SafariZoneEastRangerEndBattleText
-	text_end
-
-SafariZoneEastRangerAfterBattleText0:
-	text_far _SafariZoneEastRangerAfterBattleText
-	text_end
-
-SafariZoneEastTrainerBattleText0:
-	text_far _SafariZoneEastPsychicText
-	text_end
-
-SafariZoneEastTrainerEndBattleText0:
-	text_far _SafariZoneEastPsychicEndBattleText
-	text_end
-
-SafariZoneEastTrainerAfterBattleText0:
-	text_far _SafariZoneEastPsychicAfterBattleText
-	text_end
-
-SafariZoneEastTrainerBattleText1:
-	text_far _SafariZoneEastRockerText
-	text_end
-
-SafariZoneEastTrainerEndBattleText1:
-	text_far _SafariZoneEastRockerEndBattleText
-	text_end
-
-SafariZoneEastTrainerAfterBattleText1:
-	text_far _SafariZoneEastRockerAfterBattleText
-	text_end
-
-SafariZoneEastTrainerBattleText2:
-	text_far _SafariZoneEastCooltrainerMText
-	text_end
-
-SafariZoneEastTrainerEndBattleText2:
-	text_far _SafariZoneEastCooltrainerMEndBattleText
-	text_end
-
-SafariZoneEastTrainerAfterBattleText2:
-	text_far _SafariZoneEastCooltrainerMAfterBattleText
-	text_end
-
-SafariZoneEastTrainerBattleText3:
-	text_far _SafariZoneEastEngineerText
-	text_end
-
-SafariZoneEastTrainerEndBattleText3:
-	text_far _SafariZoneEastEngineerEndBattleText
-	text_end
-
-SafariZoneEastTrainerAfterBattleText3:
-	text_far _SafariZoneEastEngineerAfterBattleText
-	text_end

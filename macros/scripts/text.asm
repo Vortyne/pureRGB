@@ -166,46 +166,52 @@ MACRO text_ram_namebuffer
 	db TX_RAM_NAMEBUFFER
 ENDM
 
-	const TX_SOUND_POKEDEX_RATING ; $15
+	const TX_FAR_END ; $15
+MACRO text_far_end
+	db TX_FAR_END
+	dab \1 ; address of text commands
+ENDM
+
+	const TX_SOUND_POKEDEX_RATING ; $16
 MACRO sound_pokedex_rating
 	db TX_SOUND_POKEDEX_RATING
+ENDM
+
+	const TX_SOUND_GET_ITEM_2 ; $17
+MACRO sound_get_item_2
+	db TX_SOUND_GET_ITEM_2
+ENDM
+
+	const TX_SOUND_GET_KEY_ITEM ; $18
+MACRO sound_get_key_item
+	db TX_SOUND_GET_KEY_ITEM
+ENDM
+
+	const TX_SOUND_CAUGHT_MON ; $19
+MACRO sound_caught_mon
+	db TX_SOUND_CAUGHT_MON
+ENDM
+
+	const TX_SOUND_DEX_PAGE_ADDED ; $1A
+MACRO sound_dex_page_added
+	db TX_SOUND_DEX_PAGE_ADDED
+ENDM
+
+	const TX_FAR ; $1B
+MACRO text_far
+	db TX_FAR
+	dab \1 ; address of text commands
 ENDM
 
 ;	const TX_SOUND_CRY_SNORLAX ; used to be $11
 ;MACRO sound_cry_snorlax
 ;	db TX_SOUND_CRY_SNORLAX
 ;ENDM
-
-	const TX_SOUND_GET_ITEM_2 ; $16
-MACRO sound_get_item_2
-	db TX_SOUND_GET_ITEM_2
-ENDM
-
-	const TX_SOUND_GET_KEY_ITEM ; $17
-MACRO sound_get_key_item
-	db TX_SOUND_GET_KEY_ITEM
-ENDM
-
-	const TX_SOUND_CAUGHT_MON ; $18
-MACRO sound_caught_mon
-	db TX_SOUND_CAUGHT_MON
-ENDM
-
-	const TX_SOUND_DEX_PAGE_ADDED ; $19
-MACRO sound_dex_page_added
-	db TX_SOUND_DEX_PAGE_ADDED
-ENDM
 	
 ;	const TX_SOUND_CRY_NIDORINA ; used to be $16
 ;MACRO sound_cry_nidorina
 ;	db TX_SOUND_CRY_NIDORINA
 ;ENDM
-
-	const TX_FAR ; $1A
-MACRO text_far
-	db TX_FAR
-	dab \1 ; address of text commands
-ENDM
 
 ;	const TX_SOUND_CRY_PIDGEOT ; used to be $18
 ;MACRO sound_cry_pidgeot
@@ -243,12 +249,7 @@ MACRO script_mart
 	db -1 ; end
 ENDM
 
-	const TX_SCRIPT_POKECENTER_PC ; $fd
-MACRO script_pokecenter_pc
-	db TX_SCRIPT_POKECENTER_PC
-ENDM
-
-	const TX_SCRIPT_CABLE_CLUB_RECEPTIONIST ; $fc
+	const TX_SCRIPT_CABLE_CLUB_RECEPTIONIST ; $fd
 MACRO script_cable_club_receptionist
 	db TX_SCRIPT_CABLE_CLUB_RECEPTIONIST
 ENDM
@@ -256,13 +257,15 @@ ENDM
 
 DEF FIRST_GENERIC_NPC_TEXT_SCRIPT EQU const_value
 
-	const TX_SCRIPT_TRAINER ; $fb
+	const TX_SCRIPT_TRAINER ; $fc
 MACRO script_trainer
 	db TX_SCRIPT_TRAINER
 	dw \1 ; trainer header
 ENDM
 
 ; removed the other ones since they were only used in one map. These can be used for other generic scripts if there are any determined to be worth it.
+
+	const_skip ; $fb
 
 	const_skip ; $fa
 

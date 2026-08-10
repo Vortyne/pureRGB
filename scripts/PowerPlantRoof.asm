@@ -81,14 +81,9 @@ PlayThunderRumbleSound::
 
 PowerPlantRoof_TextPointers:
 	def_text_pointers
-	dw_const PowerPlantRoofZapdosText,  TEXT_POWER_PLANT_ROOF_ZAPDOS
-	dw_const PowerPlantRoofSignText, TEXT_POWER_PLANT_ROOF_SIGN
-	dw_const PowerPlantRoofDarkCloudsText,  TEXT_POWER_PLANT_ROOF_DARK_CLOUDS
-
-
-PowerPlantRoofDarkCloudsText:
-	text_far _PowerPlantRoofDarkCloudsText
-	text_end
+	dba_const PowerPlantRoofZapdosText,  TEXT_POWER_PLANT_ROOF_ZAPDOS
+	dba_const _PowerPlantRoofSignText, TEXT_POWER_PLANT_ROOF_SIGN
+	dba_const _PowerPlantRoofDarkCloudsText,  TEXT_POWER_PLANT_ROOF_DARK_CLOUDS
 
 PowerPlantRoofZapdosText:
 	text_far _PowerPlantZapdosBattleText
@@ -176,7 +171,7 @@ CheckDoZapdosLightningAnimation:
 	ld a, $01
 	ldh [hAutoBGTransferEnabled], a ; enable continuous WRAM to VRAM transfer each V-blank
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	ld de, vNPCSprites tile $0C
 	callfar FarOpenBirdSpriteWings
 	call GBPalNormal
@@ -259,7 +254,7 @@ CheckDoZapdosLightningAnimation:
 	callfar PlayDefaultTrainerMusic ; TODO: adjust if making special rare pokemon encounter music
 	call ResumeMusic
 	ld c, 90
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, POWER_PLANT_ROOF_ZAPDOS
 	ldh [hSpriteIndex], a ; makes zapdos stay on screen during battle transition
 	SetEvent EVENT_FIGHTING_ZAPDOS
@@ -373,7 +368,3 @@ ZapdosEndBattleScript:
 	SetEvent EVENT_BEAT_ZAPDOS
 	ld c, TOGGLE_POWER_PLANT_ROOF_ZAPDOS
 	jp HideExtraObject
-	
-PowerPlantRoofSignText::
-	text_far _PowerPlantRoofSignText
-	text_end

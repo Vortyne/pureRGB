@@ -72,40 +72,20 @@ ResetFitnessBattleState:
 
 VermilionFitnessClub_TextPointers:
 	def_text_pointers
-	dw_const VermilionFitnessClubClerk, TEXT_VERMILIONFITNESSCLUB_CLERK
-	dw_const VermilionFitnessClubGirl1, TEXT_VERMILIONFITNESSCLUB_GIRL1
-	dw_const VermilionFitnessClubGirl2, TEXT_VERMILIONFITNESSCLUB_GIRL2
-	dw_const VermilionFitnessClubMuscular1, TEXT_VERMILIONFITNESSCLUB_MUSCLE1
-	dw_const VermilionFitnessClubMuscular2, TEXT_VERMILIONFITNESSCLUB_MUSCLE2
-	dw_const VermilionFitnessClubFitnessGirlOpponentText, TEXT_VERMILIONFITNESSCLUB_FITNESS_GIRL_OPPONENT
-	dw_const VermilionFitnessClubSprinterOpponentText, TEXT_VERMILIONFITNESSCLUB_SPRINTER_OPPONENT
-	dw_const VermilionFitnessClubSailorOpponentText, TEXT_VERMILIONFITNESSCLUB_SAILOR_OPPONENT
-	dw_const VermilionFitnessClubBeautyOpponentText, TEXT_VERMILIONFITNESSCLUB_BEAUTY_OPPONENT
-	dw_const VermilionFitnessClubJanitorText, TEXT_VERMILIONFITNESSCLUB_JANITOR
-	dw_const VermilionFitnessClubSign, TEXT_VERMILIONFITNESSCLUB_SIGN
-	dw_const VermilionFitnessClubAfterBattleText, TEXT_VERMILIONFITNESSCLUB_AFTER_BATTLE
-	dw_const VermilionFitnessClubExerciseBikes, TEXT_VERMILIONFITNESSCLUB_BIKES
-	dw_const VermilionFitnessClubDumbbells, TEXT_VERMILIONFITNESSCLUB_WEIGHTS
-
-VermilionFitnessClubGirl1:
-	text_far _VermilionFitnessClubGirl1
-	text_end
-
-VermilionFitnessClubGirl2:
-	text_far _VermilionFitnessClubGirl2
-	text_end
-
-VermilionFitnessClubMuscular1:
-	text_far _VermilionFitnessClubMuscular1
-	text_end
-
-VermilionFitnessClubMuscular2:
-	text_far _VermilionFitnessClubMuscular2
-	text_end
-
-VermilionFitnessClubSign:
-	text_far _VermilionFitnessClubSign
-	text_end
+	dba_const VermilionFitnessClubClerk, TEXT_VERMILIONFITNESSCLUB_CLERK
+	dba_const _VermilionFitnessClubGirl1, TEXT_VERMILIONFITNESSCLUB_GIRL1
+	dba_const _VermilionFitnessClubGirl2, TEXT_VERMILIONFITNESSCLUB_GIRL2
+	dba_const _VermilionFitnessClubMuscular1, TEXT_VERMILIONFITNESSCLUB_MUSCLE1
+	dba_const _VermilionFitnessClubMuscular2, TEXT_VERMILIONFITNESSCLUB_MUSCLE2
+	dba_const VermilionFitnessClubFitnessGirlOpponentText, TEXT_VERMILIONFITNESSCLUB_FITNESS_GIRL_OPPONENT
+	dba_const VermilionFitnessClubSprinterOpponentText, TEXT_VERMILIONFITNESSCLUB_SPRINTER_OPPONENT
+	dba_const VermilionFitnessClubSailorOpponentText, TEXT_VERMILIONFITNESSCLUB_SAILOR_OPPONENT
+	dba_const VermilionFitnessClubBeautyOpponentText, TEXT_VERMILIONFITNESSCLUB_BEAUTY_OPPONENT
+	dba_const VermilionFitnessClubJanitorText, TEXT_VERMILIONFITNESSCLUB_JANITOR
+	dba_const _VermilionFitnessClubSign, TEXT_VERMILIONFITNESSCLUB_SIGN
+	dba_const VermilionFitnessClubAfterBattleText, TEXT_VERMILIONFITNESSCLUB_AFTER_BATTLE
+	dba_const _VermilionFitnessClubExerciseBikes, TEXT_VERMILIONFITNESSCLUB_BIKES
+	dba_const _VermilionFitnessClubDumbbells, TEXT_VERMILIONFITNESSCLUB_WEIGHTS
 
 VermilionFitnessClubClerk:
 	text_far _VermilionFitnessClubClerkText
@@ -147,11 +127,9 @@ VermilionFitnessClubClerk:
 	rst TextScriptEnd
 
 .intro
-	text_far _VermilionFitnessClubClerkIntroText
-	text_end
+	text_far_end _VermilionFitnessClubClerkIntroText
 .start
-	text_far _VermilionFitnessClubClerkBattleText
-	text_end
+	text_far_end _VermilionFitnessClubClerkBattleText
 
 VermilionFitnessClubForceWalkDown:	
 	ld a, PAD_DOWN
@@ -215,20 +193,15 @@ FitnessClubIntroScript::
 	and a
 	ret
 .firstPartyBelowLimit
-	text_far _FitnessClubLevel
-	text_end
+	text_far_end _FitnessClubLevel
 .selectLevel
-	text_far _FitnessClubClerkSelectLevelText
-	text_end
+	text_far_end _FitnessClubClerkSelectLevelText
 .selectMonAmount
-	text_far _FitnessClubClerkSelectMonAmountText
-	text_end
+	text_far_end _FitnessClubClerkSelectMonAmountText
 .suitYourself
-	text_far _GenericSuitYourselfText
-	text_end
+	text_far_end _GenericSuitYourselfText
 .startBattle
-	text_far _VermilionFitnessClubClerkBattleStartText
-	text_end
+	text_far_end _VermilionFitnessClubClerkBattleStartText
 
 ; input d = level limit
 AnyPartyMonBelowLevelLimit:
@@ -261,7 +234,7 @@ StartVermilionFitnessClubBattle:
 	ld [wPlayerMovingDirection], a
 	call UpdateSprites
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	call VermilionFitnessClubHideOpponents ; hide previous opponents if applicable
 	ld hl, AvailableVermilionFitnessClubTrainers
 	lb de, -3, 0
@@ -299,7 +272,7 @@ StartFitnessClubBattle::
 	call UpdateSpritesAndDelay3
 	call GBPalNormal
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	pop af
 	ldh [hTextID], a
 	SetEvent EVENT_IN_FITNESS_BATTLE
@@ -321,68 +294,52 @@ VermilionFitnessClubFitnessGirlOpponentText:
 	ld hl, .intro1
 	jr GetRandomClubOpponentText
 .intro1
-	text_far _VermilionFitnessClubFitnessGirlOpponentIntro1
-	text_end
+	text_far_end _VermilionFitnessClubFitnessGirlOpponentIntro1
 .intro2
-	text_far _VermilionFitnessClubFitnessGirlOpponentIntro2
-	text_end
+	text_far_end _VermilionFitnessClubFitnessGirlOpponentIntro2
 .intro3
-	text_far _VermilionFitnessClubFitnessGirlOpponentIntro3
-	text_end
+	text_far_end _VermilionFitnessClubFitnessGirlOpponentIntro3
 .intro4
-	text_far _VermilionFitnessClubFitnessGirlOpponentIntro4
-	text_end
+	text_far_end _VermilionFitnessClubFitnessGirlOpponentIntro4
 
 VermilionFitnessClubSprinterOpponentText:
 	text_asm
 	ld hl, .intro1
 	jr GetRandomClubOpponentText
 .intro1
-	text_far _VermilionFitnessClubSprinterOpponentIntro1
-	text_end
+	text_far_end _VermilionFitnessClubSprinterOpponentIntro1
 .intro2
-	text_far _VermilionFitnessClubSprinterOpponentIntro2
-	text_end
+	text_far_end _VermilionFitnessClubSprinterOpponentIntro2
 .intro3
-	text_far _VermilionFitnessClubSprinterOpponentIntro3
-	text_end
+	text_far_end _VermilionFitnessClubSprinterOpponentIntro3
 .intro4
-	text_far _VermilionFitnessClubSprinterOpponentIntro4
-	text_end
+	text_far_end _VermilionFitnessClubSprinterOpponentIntro4
 
 VermilionFitnessClubSailorOpponentText:
 	text_asm
 	ld hl, .intro1
 	jr GetRandomClubOpponentText
 .intro1
-	text_far _VermilionFitnessClubSailorOpponentIntro1
-	text_end
+	text_far_end _VermilionFitnessClubSailorOpponentIntro1
 .intro2
-	text_far _VermilionFitnessClubSailorOpponentIntro2
-	text_end
+	text_far_end _VermilionFitnessClubSailorOpponentIntro2
 .intro3
-	text_far _VermilionFitnessClubSailorOpponentIntro3
-	text_end
+	text_far_end _VermilionFitnessClubSailorOpponentIntro3
 .intro4
-	text_far _VermilionFitnessClubSailorOpponentIntro4
-	text_end
+	text_far_end _VermilionFitnessClubSailorOpponentIntro4
 
 VermilionFitnessClubBeautyOpponentText:
 	text_asm
 	ld hl, .intro1
 	jr GetRandomClubOpponentText
 .intro1
-	text_far _VermilionFitnessClubBeautyOpponentIntro1
-	text_end
+	text_far_end _VermilionFitnessClubBeautyOpponentIntro1
 .intro2
-	text_far _VermilionFitnessClubBeautyOpponentIntro2
-	text_end
+	text_far_end _VermilionFitnessClubBeautyOpponentIntro2
 .intro3
-	text_far _VermilionFitnessClubBeautyOpponentIntro3
-	text_end
+	text_far_end _VermilionFitnessClubBeautyOpponentIntro3
 .intro4
-	text_far _VermilionFitnessClubBeautyOpponentIntro4
-	text_end
+	text_far_end _VermilionFitnessClubBeautyOpponentIntro4
 
 GetRandomClubOpponentText:
 	ld a, [wFitnessClubChallenger]
@@ -390,12 +347,10 @@ GetRandomClubOpponentText:
 	call Random
 	and %11
 	ld d, 0
-	ld e, a
+	add a
+	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
+	ld e, a 
 	add hl, de
-	add hl, de
-	add hl, de
-	add hl, de
-	add hl, de ; 5 bytes per text_far / text end combo
 	rst _PrintText
 	rst TextScriptEnd
 
@@ -509,25 +464,13 @@ FitnessClubAfterBattleText::
 	ret
 .allLevelLimit
 	text_far _FitnessClubAllLevelLimit
-	text_far _FitnessClubDone
-	text_end
+	text_far_end _FitnessClubDone
 .battleAgain
-	text_far _FitnessClubBattleAgain
-	text_end
+	text_far_end _FitnessClubBattleAgain
 .changeSettings
-	text_far _FitnessClubChangeSettings
-	text_end
+	text_far_end _FitnessClubChangeSettings
 .doneBattling
-	text_far _FitnessClubDone
-	text_end
-
-VermilionFitnessClubExerciseBikes:
-	text_far _VermilionFitnessClubExerciseBikes
-	text_end
-
-VermilionFitnessClubDumbbells:
-	text_far _VermilionFitnessClubDumbbells
-	text_end
+	text_far_end _FitnessClubDone
 
 VermilionFitnessClubJanitorText:
 	text_far _VermilionFitnessClubJanitorText

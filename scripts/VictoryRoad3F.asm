@@ -1,12 +1,9 @@
 VictoryRoad3F_Script:
 	call VictoryRoad3FCheckBoulderEventScript
-	call EnableAutoTextBoxDrawing
 	ld hl, VictoryRoad3TrainerHeaders
 	ld de, VictoryRoad3F_ScriptPointers
-	ld a, [wVictoryRoad3FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wVictoryRoad3FCurScript], a
-	ret
+	ld bc, wVictoryRoad3FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 VictoryRoad3FCheckBoulderEventScript::
 	call WasMapJustLoaded
@@ -79,27 +76,27 @@ VictoryRoad3FHoleAndSwitchCoords:
 
 VictoryRoad3F_TextPointers:
 	def_text_pointers
-	dw_const VictoryRoad3FCooltrainerM1Text, TEXT_VICTORYROAD3F_COOLTRAINER_M1
-	dw_const VictoryRoad3FCooltrainerF1Text, TEXT_VICTORYROAD3F_COOLTRAINER_F1
-	dw_const VictoryRoad3FCooltrainerM2Text, TEXT_VICTORYROAD3F_COOLTRAINER_M2
-	dw_const VictoryRoad3FCooltrainerF2Text, TEXT_VICTORYROAD3F_COOLTRAINER_F2
-	dw_const PickUpItemText,                 TEXT_VICTORYROAD3F_ITEM1
-	dw_const PickUpItemText,                 TEXT_VICTORYROAD3F_ITEM2
-	dw_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER1
-	dw_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER2
-	dw_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER3
-	dw_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER4
+	dba_const VictoryRoad3FCooltrainerM1Text, TEXT_VICTORYROAD3F_COOLTRAINER_M1
+	dba_const VictoryRoad3FCooltrainerF1Text, TEXT_VICTORYROAD3F_COOLTRAINER_F1
+	dba_const VictoryRoad3FCooltrainerM2Text, TEXT_VICTORYROAD3F_COOLTRAINER_M2
+	dba_const VictoryRoad3FCooltrainerF2Text, TEXT_VICTORYROAD3F_COOLTRAINER_F2
+	dba_const PickUpItemText,                 TEXT_VICTORYROAD3F_ITEM1
+	dba_const PickUpItemText,                 TEXT_VICTORYROAD3F_ITEM2
+	dba_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER1
+	dba_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER2
+	dba_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER3
+	dba_const BoulderText,                    TEXT_VICTORYROAD3F_BOULDER4
 
 VictoryRoad3TrainerHeaders:
 	def_trainers
 VictoryRoad3TrainerHeader0:
-	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_0, 1, VictoryRoad3FCooltrainerM1BattleText, VictoryRoad3FCooltrainerM1EndBattleText, VictoryRoad3FCooltrainerM1AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_0, 1, _VictoryRoad3FCooltrainerM1BattleText, _VictoryRoad3FCooltrainerM1EndBattleText, _VictoryRoad3FCooltrainerM1AfterBattleText
 VictoryRoad3TrainerHeader1:
-	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_1, 4, VictoryRoad3FCooltrainerF1BattleText, VictoryRoad3FCooltrainerF1EndBattleText, VictoryRoad3FCooltrainerF1AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_1, 4, _VictoryRoad3FCooltrainerF1BattleText, _VictoryRoad3FCooltrainerF1EndBattleText, _VictoryRoad3FCooltrainerF1AfterBattleText
 VictoryRoad3TrainerHeader2:
-	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_2, 4, VictoryRoad3FCooltrainerM2BattleText, VictoryRoad3FCooltrainerM2EndBattleText, VictoryRoad3FCooltrainerM2AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_2, 4, _VictoryRoad3FCooltrainerM2BattleText, _VictoryRoad3FCooltrainerM2EndBattleText, _VictoryRoad3FCooltrainerM2AfterBattleText
 VictoryRoad3TrainerHeader3:
-	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_3, 4, VictoryRoad3FCooltrainerF2BattleText, VictoryRoad3FCooltrainerF2EndBattleText, VictoryRoad3FCooltrainerF2AfterBattleText
+	trainer EVENT_BEAT_VICTORY_ROAD_3_TRAINER_3, 4, _VictoryRoad3FCooltrainerF2BattleText, _VictoryRoad3FCooltrainerF2EndBattleText, _VictoryRoad3FCooltrainerF2AfterBattleText
 	db -1 ; end
 
 VictoryRoad3FCooltrainerM1Text:
@@ -113,51 +110,3 @@ VictoryRoad3FCooltrainerM2Text:
 
 VictoryRoad3FCooltrainerF2Text:
 	script_trainer VictoryRoad3TrainerHeader3
-
-VictoryRoad3FCooltrainerM1BattleText:
-	text_far _VictoryRoad3FCooltrainerM1BattleText
-	text_end
-
-VictoryRoad3FCooltrainerM1EndBattleText:
-	text_far _VictoryRoad3FCooltrainerM1EndBattleText
-	text_end
-
-VictoryRoad3FCooltrainerM1AfterBattleText:
-	text_far _VictoryRoad3FCooltrainerM1AfterBattleText
-	text_end
-
-VictoryRoad3FCooltrainerF1BattleText:
-	text_far _VictoryRoad3FCooltrainerF1BattleText
-	text_end
-
-VictoryRoad3FCooltrainerF1EndBattleText:
-	text_far _VictoryRoad3FCooltrainerF1EndBattleText
-	text_end
-
-VictoryRoad3FCooltrainerF1AfterBattleText:
-	text_far _VictoryRoad3FCooltrainerF1AfterBattleText
-	text_end
-
-VictoryRoad3FCooltrainerM2BattleText:
-	text_far _VictoryRoad3FCooltrainerM2BattleText
-	text_end
-
-VictoryRoad3FCooltrainerM2EndBattleText:
-	text_far _VictoryRoad3FCooltrainerM2EndBattleText
-	text_end
-
-VictoryRoad3FCooltrainerM2AfterBattleText:
-	text_far _VictoryRoad3FCooltrainerM2AfterBattleText
-	text_end
-
-VictoryRoad3FCooltrainerF2BattleText:
-	text_far _VictoryRoad3FCooltrainerF2BattleText
-	text_end
-
-VictoryRoad3FCooltrainerF2EndBattleText:
-	text_far _VictoryRoad3FCooltrainerF2EndBattleText
-	text_end
-
-VictoryRoad3FCooltrainerF2AfterBattleText:
-	text_far _VictoryRoad3FCooltrainerF2AfterBattleText
-	text_end

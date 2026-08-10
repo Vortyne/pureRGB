@@ -4,26 +4,8 @@ CeruleanPokecenter_Script:
 
 CeruleanPokecenter_TextPointers:
 	def_text_pointers
-	dw_const CeruleanPokecenterNurseText,            TEXT_CERULEANPOKECENTER_NURSE
-	dw_const CeruleanPokecenterSuperNerdText,        TEXT_CERULEANPOKECENTER_SUPER_NERD
-	dw_const CeruleanPokecenterGentlemanText,        TEXT_CERULEANPOKECENTER_GENTLEMAN
-	dw_const CeruleanPokecenterLinkReceptionistText, TEXT_CERULEANPOKECENTER_LINK_RECEPTIONIST
-	dw_const CeruleanPokecenterBenchGuyText,         TEXT_CERULEANPOKECENTER_BENCH_GUY
-
-CeruleanPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
-
-CeruleanPokecenterNurseText:
-	script_pokecenter_nurse
-
-CeruleanPokecenterSuperNerdText:
-	text_far _CeruleanPokecenterSuperNerdText
-	text_end
-
-CeruleanPokecenterGentlemanText:
-	text_far _CeruleanPokecenterGentlemanText
-	text_end
-
-CeruleanPokecenterBenchGuyText:
-	text_far _CeruleanPokecenterGuyText
-	text_end
+	dba_const GenericPokecenterNurseText,             TEXT_CERULEANPOKECENTER_NURSE
+	dba_const _CeruleanPokecenterSuperNerdText,        TEXT_CERULEANPOKECENTER_SUPER_NERD
+	dba_const _CeruleanPokecenterGentlemanText,        TEXT_CERULEANPOKECENTER_GENTLEMAN
+	dba_const GenericLinkReceptionistText,             TEXT_CERULEANPOKECENTER_LINK_RECEPTIONIST
+	dba_const _CeruleanPokecenterBenchGuyText,         TEXT_CERULEANPOKECENTER_BENCH_GUY

@@ -276,13 +276,15 @@ _SecretLabMewtwoTransformNormalText::
 
 _SecretLabMewtwoGotArmorText::
 	text "The machine put"
-	line "armor on MEWTWO!"
-	done
+	line "armor on MEWTWO!@"
+	sound_get_item_2
+	text_end
 
 _SecretLabMewtwoRemovedArmorText::
 	text "MEWTWO's armor was"
-	line "taken off!"
-	done
+	line "taken off!@"
+	sound_get_item_1
+	text_end
 
 _SecretLabMewtwoTransformCompleteText::
 	text "ARMING PROCESS"

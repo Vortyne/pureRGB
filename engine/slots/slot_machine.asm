@@ -50,8 +50,7 @@ PromptUserToPlaySlots::
 	jp CloseTextDisplay
 
 PlaySlotMachineText:
-	text_far _PlaySlotMachineText
-	text_end
+	text_far_end _PlaySlotMachineText
 
 MainSlotMachineLoop:
 	call SlotMachine_PrintCreditCoins
@@ -146,24 +145,19 @@ CoinMultiplierSlotMachineText:
 	next "×1@"
 
 OutOfCoinsSlotMachineText:
-	text_far _OutOfCoinsSlotMachineText
-	text_end
+	text_far_end _OutOfCoinsSlotMachineText
 
 BetHowManySlotMachineText:
-	text_far _BetHowManySlotMachineText
-	text_end
+	text_far_end _BetHowManySlotMachineText
 
 StartSlotMachineText:
-	text_far _StartSlotMachineText
-	text_end
+	text_far_end _StartSlotMachineText
 
 NotEnoughCoinsSlotMachineText:
-	text_far _NotEnoughCoinsSlotMachineText
-	text_end
+	text_far_end _NotEnoughCoinsSlotMachineText
 
 OneMoreGoSlotMachineText:
-	text_far _OneMoreGoSlotMachineText
-	text_end
+	text_far_end _OneMoreGoSlotMachineText
 
 SlotMachine_SetFlags:
 	ld hl, wSlotMachineFlags
@@ -203,7 +197,7 @@ SlotMachine_SpinWheels:
 	call SlotMachine_AnimWheel2
 	call SlotMachine_AnimWheel3
 	ld c, 2
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec c
 	jr nz, .loop1
@@ -219,7 +213,7 @@ SlotMachine_SpinWheels:
 	xor $1
 	inc a
 	ld c, a
-	rst _DelayFrames
+	rst DelayFrames
 	jr .loop2
 
 ; Note that the wheels can only stop when a symbol is centred in the wheel
@@ -448,7 +442,7 @@ SlotMachine_CheckForMatches:
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color code from yellow 
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	dec b
 	jr nz, .flashScreenLoop
 	ld hl, wPayoutCoins
@@ -479,8 +473,7 @@ SymbolLinedUpSlotMachineText:
 	ret
 
 LinedUpText:
-	text_far _LinedUpText
-	text_end
+	text_far_end _LinedUpText
 
 SlotRewardPointers:
 	dw SlotReward300Func
@@ -513,8 +506,7 @@ SlotReward15Text:
 ;;;;;;;;;;
 
 NotThisTimeText:
-	text_far _NotThisTimeText
-	text_end
+	text_far_end _NotThisTimeText
 
 ; compares the slot machine tiles at bc, de, and hl
 SlotMachine_CheckForMatch:
@@ -720,7 +712,7 @@ SlotMachine_PayCoinsToPlayer:
 	jr z, .skip2
 	srl c ; c = 4 (make the the coins transfer faster if the symbol wasn't cherries)
 .skip2
-	rst _DelayFrames
+	rst DelayFrames
 	jr .loop
 
 SlotMachine_PutOutLitBalls:

@@ -3,8 +3,8 @@ Route2Gate_Script:
 
 Route2Gate_TextPointers:
 	def_text_pointers
-	dw_const Route2GateOaksAideText,  TEXT_ROUTE2GATE_OAKS_AIDE
-	dw_const Route2GateYoungsterText, TEXT_ROUTE2GATE_YOUNGSTER
+	dba_const Route2GateOaksAideText,  TEXT_ROUTE2GATE_OAKS_AIDE
+	dba_const _Route2GateYoungsterText, TEXT_ROUTE2GATE_YOUNGSTER
 
 Route2GateOaksAideText:
 	text_asm
@@ -33,9 +33,4 @@ Route2GateOaksAideText:
 	rst TextScriptEnd
 
 .FlashExplanationText:
-	text_far _Route2GateOaksAideFlashExplanationText
-	text_end
-
-Route2GateYoungsterText:
-	text_far _Route2GateYoungsterText
-	text_end
+	text_far_end _Route2GateOaksAideFlashExplanationText

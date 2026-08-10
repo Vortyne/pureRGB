@@ -20,9 +20,7 @@ DisplayEffectiveness:
 	jp PrintText
 
 SuperEffectiveText:
-	text_far _SuperEffectiveText
-	text_end
+	text_far_end _SuperEffectiveText
 
 NotVeryEffectiveText:
-	text_far _NotVeryEffectiveText
-	text_end
+	text_far_end _NotVeryEffectiveText

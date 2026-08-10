@@ -1,3 +1,2 @@
 BookcaseText::
-	text_far _PokemonBooksText
-	text_end
+	text_far_end _PokemonBooksText

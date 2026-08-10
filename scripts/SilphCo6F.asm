@@ -2,13 +2,10 @@
 
 SilphCo6F_Script:
 	call SilphCo6FGateCallbackScript
-	call EnableAutoTextBoxDrawing
 	ld hl, SilphCo6TrainerHeaders
 	ld de, SilphCo6F_ScriptPointers
-	ld a, [wSilphCo6FCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wSilphCo6FCurScript], a
-	ret
+	ld bc, wSilphCo6FCurScript
+	jp ExecuteCustomMapScriptInTable
 
 SilphCo6FGateCallbackScript::
 	call WasMapJustLoaded
@@ -23,26 +20,35 @@ SilphCo6F_ScriptPointers:
 
 SilphCo6F_TextPointers:
 	def_text_pointers
-	dw_const SilphCo6FSilphWorkerM1Text, TEXT_SILPHCO6F_SILPH_WORKER_M1
-	dw_const SilphCo6FSilphWorkerM2Text, TEXT_SILPHCO6F_SILPH_WORKER_M2
-	dw_const SilphCo6FSilphWorkerF1Text, TEXT_SILPHCO6F_SILPH_WORKER_F1
-	dw_const SilphCo6FSilphWorkerF2Text, TEXT_SILPHCO6F_SILPH_WORKER_F2
-	dw_const SilphCo6FSilphWorkerM3Text, TEXT_SILPHCO6F_SILPH_WORKER_M3
-	dw_const SilphCo6FRocket1Text,       TEXT_SILPHCO6F_ROCKET1
-	dw_const SilphCo6FScientistText,     TEXT_SILPHCO6F_SCIENTIST
-	dw_const SilphCo6FRocket2Text,       TEXT_SILPHCO6F_ROCKET2
-	dw_const PickUpItemText,             TEXT_SILPHCO6F_ITEM1
-	dw_const PickUp3ItemText,            TEXT_SILPHCO6F_ITEM2
+	dba_const SilphCo6FSilphWorkerM1Text, TEXT_SILPHCO6F_SILPH_WORKER_M1
+	dba_const SilphCo6FSilphWorkerM2Text, TEXT_SILPHCO6F_SILPH_WORKER_M2
+	dba_const SilphCo6FSilphWorkerF1Text, TEXT_SILPHCO6F_SILPH_WORKER_F1
+	dba_const SilphCo6FSilphWorkerF2Text, TEXT_SILPHCO6F_SILPH_WORKER_F2
+	dba_const SilphCo6FSilphWorkerM3Text, TEXT_SILPHCO6F_SILPH_WORKER_M3
+	dba_const SilphCo6FRocket1Text,       TEXT_SILPHCO6F_ROCKET1
+	dba_const SilphCo6FScientistText,     TEXT_SILPHCO6F_SCIENTIST
+	dba_const SilphCo6FRocket2Text,       TEXT_SILPHCO6F_ROCKET2
+	dba_const PickUpItemText,             TEXT_SILPHCO6F_ITEM1
+	dba_const PickUp3ItemText,            TEXT_SILPHCO6F_ITEM2
 
 SilphCo6TrainerHeaders:
 	def_trainers 6
 SilphCo6TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_6F_TRAINER_0, 2, SilphCo6FRocket1BattleText, SilphCo6FRocket1EndBattleText, SilphCo6FRocket1AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_6F_TRAINER_0, 2, _SilphCo6FRocket1BattleText, _SilphCo6FRocket1EndBattleText, _SilphCo6FRocket1AfterBattleText
 SilphCo6TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_6F_TRAINER_1, 3, SilphCo6FScientistBattleText, SilphCo6FScientistEndBattleText, SilphCo6FScientistAfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_6F_TRAINER_1, 3, _SilphCo6FScientistBattleText, _SilphCo6FScientistEndBattleText, _SilphCo6FScientistAfterBattleText
 SilphCo6TrainerHeader2:
-	trainer EVENT_BEAT_SILPH_CO_6F_TRAINER_2, 2, SilphCo6FRocket2BattleText, SilphCo6FRocket2EndBattleText, SilphCo6FRocket2AfterBattleText
+	trainer EVENT_BEAT_SILPH_CO_6F_TRAINER_2, 2, _SilphCo6FRocket2BattleText, _SilphCo6FRocket2EndBattleText, _SilphCo6FRocket2AfterBattleText
 	db -1 ; end
+
+SilphCo6FRocket1Text:
+	script_trainer SilphCo6TrainerHeader0
+
+SilphCo6FScientistText:
+	script_trainer SilphCo6TrainerHeader1
+
+SilphCo6FRocket2Text:
+	script_trainer SilphCo6TrainerHeader2
 
 SilphCo6FBeatGiovanniPrintDEOrPrintHLScript:
 	CheckEvent EVENT_BEAT_SILPH_CO_GIOVANNI
@@ -60,12 +66,10 @@ SilphCo6FSilphWorkerM1Text:
 	rst TextScriptEnd
 
 .TookOverTheBuildingText:
-	text_far _SilphCo6FSilphWorkerM1TookOverTheBuildingText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerM1TookOverTheBuildingText
 
 .BackToWorkText:
-	text_far _SilphCo6FSilphWorkerM1BackToWorkText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerM1BackToWorkText
 
 SilphCo6FSilphWorkerM2Text:
 	text_asm
@@ -75,12 +79,10 @@ SilphCo6FSilphWorkerM2Text:
 	rst TextScriptEnd
 
 .HelpMePleaseText:
-	text_far _SilphCo6FSilphWorkerMHelpMePleaseText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerMHelpMePleaseText
 
 .WeGotEngagedText:
-	text_far _SilphCo6FSilphWorkerMWeGotEngagedText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerMWeGotEngagedText
 
 SilphCo6FSilphWorkerF1Text:
 	text_asm
@@ -90,12 +92,10 @@ SilphCo6FSilphWorkerF1Text:
 	rst TextScriptEnd
 
 .SuchACowardText:
-	text_far _SilphCo6FSilphWorkerF1SuchACowardText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerF1SuchACowardText
 
 .HaveToMarryHimText:
-	text_far _SilphCo6FSilphWorkerF1HaveToMarryHimText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerF1HaveToMarryHimText
 
 SilphCo6FSilphWorkerF2Text:
 	text_asm
@@ -105,12 +105,10 @@ SilphCo6FSilphWorkerF2Text:
 	rst TextScriptEnd
 
 .TeamRocketConquerWorldText:
-	text_far _SilphCo6FSilphWorkerF2TeamRocketConquerWorldText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerF2TeamRocketConquerWorldText
 
 .TeamRocketRanText:
-	text_far _SilphCo6FSilphWorkerF2TeamRocketRanText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerF2TeamRocketRanText
 
 SilphCo6FSilphWorkerM3Text:
 	text_asm
@@ -120,54 +118,7 @@ SilphCo6FSilphWorkerM3Text:
 	rst TextScriptEnd
 
 .TargetedSilphText:
-	text_far _SilphCo6FSilphWorkerM3TargetedSilphText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerM3TargetedSilphText
 
 .WorkForSilphText:
-	text_far _SilphCo6FSilphWorkerM3WorkForSilphText
-	text_end
-
-SilphCo6FRocket1Text:
-	script_trainer SilphCo6TrainerHeader0
-
-SilphCo6FScientistText:
-	script_trainer SilphCo6TrainerHeader1
-
-SilphCo6FRocket2Text:
-	script_trainer SilphCo6TrainerHeader2
-
-SilphCo6FRocket1BattleText:
-	text_far _SilphCo6FRocket1BattleText
-	text_end
-
-SilphCo6FRocket1EndBattleText:
-	text_far _SilphCo6FRocket1EndBattleText
-	text_end
-
-SilphCo6FRocket1AfterBattleText:
-	text_far _SilphCo6FRocket1AfterBattleText
-	text_end
-
-SilphCo6FScientistBattleText:
-	text_far _SilphCo6FScientistBattleText
-	text_end
-
-SilphCo6FScientistEndBattleText:
-	text_far _SilphCo6FScientistEndBattleText
-	text_end
-
-SilphCo6FScientistAfterBattleText:
-	text_far _SilphCo6FScientistAfterBattleText
-	text_end
-
-SilphCo6FRocket2BattleText:
-	text_far _SilphCo6FRocket2BattleText
-	text_end
-
-SilphCo6FRocket2EndBattleText:
-	text_far _SilphCo6FRocket2EndBattleText
-	text_end
-
-SilphCo6FRocket2AfterBattleText:
-	text_far _SilphCo6FRocket2AfterBattleText
-	text_end
+	text_far_end _SilphCo6FSilphWorkerM3WorkForSilphText

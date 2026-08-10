@@ -1,11 +1,8 @@
 CeruleanGym_Script:
-	call EnableAutoTextBoxDrawing
 	ld hl, CeruleanGymTrainerHeaders
 	ld de, CeruleanGym_ScriptPointers
-	ld a, [wCeruleanGymCurScript]
-	call ExecuteCurMapScriptInTable
-	ld [wCeruleanGymCurScript], a
-	ret
+	ld bc, wCeruleanGymCurScript
+	jp ExecuteCustomMapScriptInTable
 
 CeruleanGym_ScriptPointers:
 	def_script_pointers
@@ -58,20 +55,20 @@ CeruleanGymReceiveTM11:
 
 CeruleanGym_TextPointers:
 	def_text_pointers
-	dw_const CeruleanGymMistyText,                 TEXT_CERULEANGYM_MISTY
-	dw_const CeruleanGymCooltrainerFText,          TEXT_CERULEANGYM_COOLTRAINER_F
-	dw_const CeruleanGymSwimmerText,               TEXT_CERULEANGYM_SWIMMER
-	dw_const CeruleanGymGymGuideText,              TEXT_CERULEANGYM_GYM_GUIDE
-	dw_const CeruleanGymMistyCascadeBadgeInfoText, TEXT_CERULEANGYM_MISTY_CASCADE_BADGE_INFO
-	dw_const CeruleanGymMistyReceivedTM11Text,     TEXT_CERULEANGYM_MISTY_RECEIVED_TM11
-	dw_const CeruleanGymMistyTM11NoRoomText,       TEXT_CERULEANGYM_MISTY_TM11_NO_ROOM
+	dba_const CeruleanGymMistyText,                 TEXT_CERULEANGYM_MISTY
+	dba_const CeruleanGymCooltrainerFText,          TEXT_CERULEANGYM_COOLTRAINER_F
+	dba_const CeruleanGymSwimmerText,               TEXT_CERULEANGYM_SWIMMER
+	dba_const CeruleanGymGymGuideText,              TEXT_CERULEANGYM_GYM_GUIDE
+	dba_const _CeruleanGymMistyCascadeBadgeInfoText, TEXT_CERULEANGYM_MISTY_CASCADE_BADGE_INFO
+	dba_const CeruleanGymMistyReceivedTM11Text,     TEXT_CERULEANGYM_MISTY_RECEIVED_TM11
+	dba_const _CeruleanGymMistyTM11NoRoomText,       TEXT_CERULEANGYM_MISTY_TM11_NO_ROOM
 
 CeruleanGymTrainerHeaders:
 	def_trainers 2
 CeruleanGymTrainerHeader0:
-	trainer EVENT_BEAT_CERULEAN_GYM_TRAINER_0, 3, CeruleanGymBattleText1, CeruleanGymEndBattleText1, CeruleanGymAfterBattleText1
+	trainer EVENT_BEAT_CERULEAN_GYM_TRAINER_0, 3, _CeruleanGymBattleText1, _CeruleanGymEndBattleText1, _CeruleanGymAfterBattleText1
 CeruleanGymTrainerHeader1:
-	trainer EVENT_BEAT_CERULEAN_GYM_TRAINER_1, 3, CeruleanGymBattleText2, CeruleanGymEndBattleText2, CeruleanGymAfterBattleText2
+	trainer EVENT_BEAT_CERULEAN_GYM_TRAINER_1, 3, _CeruleanGymBattleText2, _CeruleanGymEndBattleText2, _CeruleanGymAfterBattleText2
 	db -1 ; end
 
 CeruleanGymMistyText:
@@ -109,24 +106,14 @@ CeruleanGymMistyText:
 	rst TextScriptEnd
 
 .PreBattleText:
-	text_far _CeruleanGymMistyPreBattleText
-	text_end
+	text_far_end _CeruleanGymMistyPreBattleText
 
 .TM11ExplanationText:
-	text_far _CeruleanGymMistyTM11ExplanationText
-	text_end
+	text_far_end _CeruleanGymMistyTM11ExplanationText
 
-CeruleanGymMistyCascadeBadgeInfoText:
-	text_far _CeruleanGymMistyCascadeBadgeInfoText
-	text_end
-
-CeruleanGymMistyReceivedTM11Text:
+CeruleanGymMistyReceivedTM11Text: ; TODO: blahahah
 	text_far _CeruleanGymMistyReceivedTM11Text
 	sound_get_item_1
-	text_end
-
-CeruleanGymMistyTM11NoRoomText:
-	text_far _CeruleanGymMistyTM11NoRoomText
 	text_end
 
 CeruleanGymMistyReceivedCascadeBadgeText:
@@ -140,30 +127,6 @@ CeruleanGymCooltrainerFText:
 
 CeruleanGymSwimmerText:
 	script_trainer CeruleanGymTrainerHeader1
-
-CeruleanGymBattleText1:
-	text_far _CeruleanGymBattleText1
-	text_end
-
-CeruleanGymEndBattleText1:
-	text_far _CeruleanGymEndBattleText1
-	text_end
-
-CeruleanGymAfterBattleText1:
-	text_far _CeruleanGymAfterBattleText1
-	text_end
-
-CeruleanGymBattleText2:
-	text_far _CeruleanGymBattleText2
-	text_end
-
-CeruleanGymEndBattleText2:
-	text_far _CeruleanGymEndBattleText2
-	text_end
-
-CeruleanGymAfterBattleText2:
-	text_far _CeruleanGymAfterBattleText2
-	text_end
 
 CeruleanGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips after beating the leader
 	text_asm
@@ -185,7 +148,7 @@ CeruleanGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips af
 	call GiveItem
 	ld hl, ApexNoRoomText2
 	jr nc, .printDone
-	ld hl, ReceivedApexChipsText2
+	ld hl, ReceivedApexChipsText
 	rst _PrintText
 	ld hl, CeruleanGymGuideApexChipWaterText
 	rst _PrintText
@@ -196,37 +159,24 @@ CeruleanGymGymGuideText: ; PureRGBnote: ADDED: gym guide gives you apex chips af
 	rst _PrintText
 	rst TextScriptEnd
 
-ReceivedApexChipsText2:
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+ReceivedApexChipsText:
+	text_far_end _ReceivedApexChipsText
 
 ApexNoRoomText2:
-	text_far _PewterGymTM34NoRoomText
-	text_end
+	text_far_end _PewterGymTM34NoRoomText
 
 GymGuideMoreApexChipText2:
-	text_far _GymGuideMoreApexChipText
-	text_end
+	text_far_end _GymGuideMoreApexChipText
 
 AlreadyReceivedApexChipsText2:
-	text_far _AlreadyReceivedApexChipsText
-	text_end
+	text_far_end _AlreadyReceivedApexChipsText
 
 CeruleanGymChampInMakingText:
 	text_far _GymGuideChampInMakingText
-	text_far _CeruleanGymGymGuideChampInMakingText
-	text_end
+	text_far_end _CeruleanGymGymGuideChampInMakingText
 
 CeruleanGymBeatMistyText:
-	text_far _CeruleanGymGymGuideBeatMistyText
-	text_end
-
-ReceivedApexChipsText::
-	text_far _ReceivedApexChipsText
-	sound_get_item_1
-	text_end
+	text_far_end _CeruleanGymGymGuideBeatMistyText
 
 CeruleanGymGuideApexChipWaterText:
-	text_far _CeruleanGymGuideApexChipWaterText
-	text_end
+	text_far_end _CeruleanGymGuideApexChipWaterText

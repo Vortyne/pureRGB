@@ -118,5 +118,4 @@ AutoWakeupSleepScreechOnSendOut:
 	jpfar DrawHUDsAndHPBars
 
 ScreechesEchoed:
-	text_far _ScreechesEchoedText
-	text_end
+	text_far_end _ScreechesEchoedText

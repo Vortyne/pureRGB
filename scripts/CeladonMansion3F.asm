@@ -3,26 +3,14 @@ CeladonMansion3F_Script:
 
 CeladonMansion3F_TextPointers:
 	def_text_pointers
-	dw_const CeladonMansion3FProgrammerText,     TEXT_CELADONMANSION3F_PROGRAMMER
-	dw_const CeladonMansion3FGraphicArtistText,  TEXT_CELADONMANSION3F_GRAPHIC_ARTIST
-	dw_const CeladonMansion3FWriterText,         TEXT_CELADONMANSION3F_WRITER
-	dw_const CeladonMansion3FGameDesignerText,   TEXT_CELADONMANSION3F_GAME_DESIGNER
-	dw_const CeladonMansion3FGameProgramPCText,  TEXT_CELADONMANSION3F_GAME_PROGRAM_PC
-	dw_const CeladonMansion3FPlayingGamePCText,  TEXT_CELADONMANSION3F_PLAYING_GAME_PC
-	dw_const CeladonMansion3FGameScriptPCText,   TEXT_CELADONMANSION3F_GAME_SCRIPT_PC
-	dw_const CeladonMansion3FDevRoomSignText,    TEXT_CELADONMANSION3F_DEV_ROOM_SIGN
-
-CeladonMansion3FProgrammerText:
-	text_far _CeladonMansion3FProgrammerText
-	text_end
-
-CeladonMansion3FGraphicArtistText:
-	text_far _CeladonMansion3FGraphicArtistText
-	text_end
-
-CeladonMansion3FWriterText:
-	text_far _CeladonMansion3FWriterText
-	text_end
+	dba_const _CeladonMansion3FProgrammerText,     TEXT_CELADONMANSION3F_PROGRAMMER
+	dba_const _CeladonMansion3FGraphicArtistText,  TEXT_CELADONMANSION3F_GRAPHIC_ARTIST
+	dba_const _CeladonMansion3FWriterText,         TEXT_CELADONMANSION3F_WRITER
+	dba_const CeladonMansion3FGameDesignerText,   TEXT_CELADONMANSION3F_GAME_DESIGNER
+	dba_const _CeladonMansion3FGameProgramPCText,  TEXT_CELADONMANSION3F_GAME_PROGRAM_PC
+	dba_const _CeladonMansion3FPlayingGamePCText,  TEXT_CELADONMANSION3F_PLAYING_GAME_PC
+	dba_const _CeladonMansion3FGameScriptPCText,   TEXT_CELADONMANSION3F_GAME_SCRIPT_PC
+	dba_const _CeladonMansion3FDevRoomSignText,    TEXT_CELADONMANSION3F_DEV_ROOM_SIGN
 
 CeladonMansion3FGameDesignerText:
 	text_asm
@@ -48,25 +36,7 @@ CeladonMansion3FGameDesignerText:
 	jr .printDone
 
 .DefaultText:
-	text_far _CeladonMansion3FGameDesignerText
-	text_end
+	text_far_end _CeladonMansion3FGameDesignerText
 
 .congrats
-	text_far _CeladonMansion3FGameDesignerCongratsText
-	text_end
-
-CeladonMansion3FGameProgramPCText:
-	text_far _CeladonMansion3FGameProgramPCText
-	text_end
-
-CeladonMansion3FPlayingGamePCText:
-	text_far _CeladonMansion3FPlayingGamePCText
-	text_end
-
-CeladonMansion3FGameScriptPCText:
-	text_far _CeladonMansion3FGameScriptPCText
-	text_end
-
-CeladonMansion3FDevRoomSignText:
-	text_far _CeladonMansion3FDevRoomSignText
-	text_end
+	text_far_end _CeladonMansion3FGameDesignerCongratsText

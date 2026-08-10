@@ -4,26 +4,8 @@ ViridianPokecenter_Script:
 
 ViridianPokecenter_TextPointers:
 	def_text_pointers
-	dw_const ViridianPokecenterNurseText,            TEXT_VIRIDIANPOKECENTER_NURSE
-	dw_const ViridianPokecenterGentlemanText,        TEXT_VIRIDIANPOKECENTER_GENTLEMAN
-	dw_const ViridianPokecenterCooltrainerMText,     TEXT_VIRIDIANPOKECENTER_COOLTRAINER_M
-	dw_const ViridianPokecenterLinkReceptionistText, TEXT_VIRIDIANPOKECENTER_LINK_RECEPTIONIST
-	dw_const ViridianPokecenterBenchGuyText,         TEXT_VIRIDIANPOKECENTER_BENCH_GUY
-
-ViridianPokecenterNurseText:
-	script_pokecenter_nurse
-
-ViridianPokecenterGentlemanText:
-	text_far _ViridianPokecenterGentlemanText
-	text_end
-
-ViridianPokecenterCooltrainerMText:
-	text_far _ViridianPokecenterCooltrainerMText
-	text_end
-
-ViridianPokecenterLinkReceptionistText:
-	script_cable_club_receptionist
-
-ViridianPokecenterBenchGuyText:
-	text_far _ViridianCityPokecenterGuyText
-	text_end
+	dba_const GenericPokecenterNurseText,              TEXT_VIRIDIANPOKECENTER_NURSE
+	dba_const _ViridianPokecenterGentlemanText,        TEXT_VIRIDIANPOKECENTER_GENTLEMAN
+	dba_const _ViridianPokecenterCooltrainerMText,     TEXT_VIRIDIANPOKECENTER_COOLTRAINER_M
+	dba_const GenericLinkReceptionistText,             TEXT_VIRIDIANPOKECENTER_LINK_RECEPTIONIST
+	dba_const _ViridianPokecenterBenchGuyText,         TEXT_VIRIDIANPOKECENTER_BENCH_GUY

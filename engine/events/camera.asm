@@ -53,26 +53,19 @@ UseCameraItem::
 	rst _PrintText
 	ret
 .perfect
-	text_far _PerfectPhotoText
-	text_end
+	text_far_end _PerfectPhotoText
 .perfectBallDesigner
-	text_far _PerfectPhotoBallDesignerText
-	text_end
+	text_far_end _PerfectPhotoBallDesignerText
 .nothingToPhoto
-	text_far _NoPhotosText
-	text_end
+	text_far_end _NoPhotosText
 .photoOpText
-	text_far _PhotoOpText
-	text_end
+	text_far_end _PhotoOpText
 .photoWhileSurfing
-	text_far _UseCameraSurfing
-	text_end
+	text_far_end _UseCameraSurfing
 .photosToTurnIn
-	text_far _PhotosToTurnIn
-	text_end
+	text_far_end _PhotosToTurnIn
 .cantUseItem
-	text_far _CameraDisabled
-	text_end
+	text_far_end _CameraDisabled
 
 CameraEventMaps:
 	dbw ROUTE_2, UseCameraRoute2
@@ -124,14 +117,11 @@ UseCameraRoute2:
 	pop af
 	ret
 .defaultJigText
-	text_far _Route2JigglypuffText
-	text_end
+	text_far_end _Route2JigglypuffText
 .useCameraRoute2
-	text_far _Route2JigglypuffCameraText
-	text_end
+	text_far_end _Route2JigglypuffCameraText
 .jigglypuffPeaceful
-	text_far _Route2JigglypuffPeacefulText
-	text_end
+	text_far_end _Route2JigglypuffPeacefulText
 
 UseCameraRoute5:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_FOREST_BALL
@@ -166,11 +156,9 @@ UseCameraRoute5:
 	pop af
 	ret
 .useCameraRoute5
-	text_far _Route5BugCatcherCameraText
-	text_end
+	text_far_end _Route5BugCatcherCameraText
 .bulbasaurCurious
-	text_far _Route5BugCatcherBulbasaurText
-	text_end
+	text_far_end _Route5BugCatcherBulbasaurText
 
 UseCameraRoute6:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_DRENCH_BALL
@@ -192,7 +180,7 @@ UseCameraRoute6:
 	ld hl, .useCameraRoute6
 	rst _PrintText
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call DisableSpriteUpdates
 	; move the shadow sprite to the bank of the pond
 	ld hl, wShadowOAMSprite04YCoord
@@ -232,11 +220,11 @@ UseCameraRoute6:
 	dec c
 	jr nz, .loopMoveSprite2
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	; make it face down
 	call .faceDown
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, PSYDUCK
 	call PlayCry
 	ld hl, .psyduckAppeared
@@ -247,21 +235,21 @@ UseCameraRoute6:
 	push bc
 	call .faceUp
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	call .faceDown
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	pop bc
 	dec c
 	jr nz, .loopUpDown
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	; make it look to the right
 	call .faceSide
 	ld de, wShadowOAMSprite04
 	callfar FlipSpriteOAM
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	; put an exclamation mark above player's head
 	call ExclamationDuringCameraEvent
 	ld c, DEX_PSYDUCK - 1
@@ -276,14 +264,11 @@ UseCameraRoute6:
 	pop af
 	ret
 .useCameraRoute6
-	text_far _Route6CameraText
-	text_end
+	text_far_end _Route6CameraText
 .psyduckAppeared
-	text_far _Route6PsyduckText
-	text_end
+	text_far_end _Route6PsyduckText
 .psyduckLooking
-	text_far _Route6Psyduck2Text
-	text_end
+	text_far_end _Route6Psyduck2Text
 .faceSide
 	ld a, [wSpriteOptions2]
 	bit BIT_MENU_ICON_SPRITES, a
@@ -344,7 +329,7 @@ UseCameraRoute8:
 	rst _PrintText
 	call CatSpriteFrame2
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	; make jolteon "absorb electricity"
 	; darken color palette	
 	ld a, 3
@@ -381,11 +366,9 @@ UseCameraRoute8:
 	pop af
 	ret
 .useCameraRoute8
-	text_far _Route8JolteonCameraText
-	text_end
+	text_far_end _Route8JolteonCameraText
 .joltronAbsorbing
-	text_far _Route8JolteonCameraAbsorbingText
-	text_end
+	text_far_end _Route8JolteonCameraAbsorbingText
 .checkLassEvent
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_ANGEL_BALL
 	scf
@@ -419,11 +402,9 @@ UseCameraRoute8:
 	pop af
 	ret
 .useCameraLass
-	text_far _LassCameraText
-	text_end
+	text_far_end _LassCameraText
 .lovely
-	text_far _LassCuteText
-	text_end
+	text_far_end _LassCuteText
 
 
 UseCameraRoute10:
@@ -444,7 +425,7 @@ UseCameraRoute10:
 	rst _PrintText
 	call CatSpriteFrame2
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	call ExclamationDuringCameraEvent
 	ld hl, .flareonGreatPose
 	rst _PrintText
@@ -460,14 +441,11 @@ UseCameraRoute10:
 	pop af
 	ret
 .useCameraRoute10
-	text_far _Route10FlareonCameraText
-	text_end
+	text_far_end _Route10FlareonCameraText
 .flareonMajestic
-	text_far _Route10FlareonMajesticText
-	text_end
+	text_far_end _Route10FlareonMajesticText
 .flareonGreatPose
-	text_far _Route10FlareonPoseText
-	text_end
+	text_far_end _Route10FlareonPoseText
 
 CatSpriteFrame2:
 	ld a, [wSpriteOptions2]
@@ -512,7 +490,7 @@ UseCameraRoute24:
 	ld hl, .fakeNothing
 	rst _PrintText
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_TELEPORT_EXIT_1
 	rst _PlaySound
 	lb de, 0, -2
@@ -534,7 +512,7 @@ UseCameraRoute24:
 	ld e, l
 	call TeleportInSprite
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, MakePlayerHoldCamera
 	rst _PrintText
 	; abra guaranteed to be seen by this event
@@ -548,14 +526,11 @@ UseCameraRoute24:
 	pop af
 	ret
 .fakeNothing
-	text_far _AbraCameraEventFakeNothing
-	text_end
+	text_far_end _AbraCameraEventFakeNothing
 .useCameraAbra
-	text_far _AbraCameraEventSleep
-	text_end
+	text_far_end _AbraCameraEventSleep
 .snoozing
-	text_far _AbraCameraEventSnoozing
-	text_end
+	text_far_end _AbraCameraEventSnoozing
 
 
 UseCameraCeladonMansion2F:
@@ -601,11 +576,9 @@ PorygonCameraEvent:
 	scf
 	ret
 .useCameraPorygon
-	text_far _PorygonCameraText
-	text_end
+	text_far_end _PorygonCameraText
 .porygonVirtualWorld
-	text_far _PorygonVirtualWorldText
-	text_end
+	text_far_end _PorygonVirtualWorldText
 
 UseCameraMuseum1F:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_BOULDER_BALL
@@ -635,11 +608,9 @@ UseCameraMuseum1F:
 	pop af
 	ret
 .useCameraFossil
-	text_far _FossilCameraText
-	text_end
+	text_far_end _FossilCameraText
 .mysteriousFossils
-	text_far _MysteriousFossilsText
-	text_end
+	text_far_end _MysteriousFossilsText
 
 UseCameraSeafoamIslandsB4F:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_SUBZERO_BALL
@@ -684,11 +655,9 @@ UseCameraSeafoamIslandsB4F:
 	pop af
 	ret
 .useCameraArticunoDragonair
-	text_far _UseCameraArticunoDragonair
-	text_end
+	text_far_end _UseCameraArticunoDragonair
 .articunoDragonairAurora
-	text_far _UseCameraArticunoDragonairAurora
-	text_end
+	text_far_end _UseCameraArticunoDragonairAurora
 
 UseCameraRoute13:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_TORNADO_BALL
@@ -707,7 +676,7 @@ UseCameraRoute13:
 	ld hl, .useCameraPidgeot
 	rst _PrintText
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, SFX_FLY
 	rst _PlaySound
 	; show pidgeot taking off
@@ -747,7 +716,7 @@ UseCameraRoute13:
 	dec c
 	jr nz, .loopMoveUp
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	ld b, BANK(SFX_Battle_13)
 	call ResetModifiersMuteAudioAndChangeAudioBank
 	ld a, SFX_BATTLE_13
@@ -803,11 +772,9 @@ UseCameraRoute13:
 	pop af
 	ret
 .useCameraPidgeot
-	text_far _UseCameraPidgeotText
-	text_end
+	text_far_end _UseCameraPidgeotText
 .magnificent
-	text_far _PidgeotPlumageText
-	text_end
+	text_far_end _PidgeotPlumageText
 .loadPidgeotLeft
 	ld de, BirdSprite tile 8
 	jr .loadPidgeotNext
@@ -860,10 +827,10 @@ UseCameraUndergroundPathWestEast:
 	; hl = tilemap coord of sewer grate
 	call .copyGrimerSewerGrateTiles
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	call .copyNoGrimerSewerGrateTiles
 	ld c, 10
-	rst _DelayFrames
+	rst DelayFrames
 	call .copyGrimerSewerGrateTiles
 	ld bc, SCREEN_WIDTH
 	add hl, bc
@@ -874,14 +841,14 @@ UseCameraUndergroundPathWestEast:
 .loopBlink
 	ld [hl], $54
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	ld [hl], $53
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	dec d
 	jr nz, .loopBlink
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, GRIMER
 	call PlayCry
 	ld hl, MakePlayerHoldCamera
@@ -901,14 +868,11 @@ UseCameraUndergroundPathWestEast:
 	pop af
 	ret
 .standingOnSewerGrateText
-	text_far _GrimerCameraStandingOnSewerGrate
-	text_end
+	text_far_end _GrimerCameraStandingOnSewerGrate
 .useCameraGrimer
-	text_far _GrimerCameraText
-	text_end
+	text_far_end _GrimerCameraText
 .sewerGrate
-	text_far _GrimerCrazyText
-	text_end
+	text_far_end _GrimerCrazyText
 .copyNoGrimerSewerGrateTiles
 	lb de, $0E, $19
 	jr .copySewerGrateTiles
@@ -957,11 +921,9 @@ UseCameraLavenderTown:
 	pop af
 	ret
 .useCameraGastly
-	text_far _GastlyCameraText
-	text_end
+	text_far_end _GastlyCameraText
 .yikes
-	text_far _GastlyYikesText
-	text_end
+	text_far_end _GastlyYikesText
 
 UseCameraRoute11:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_CLEAVE_BALL
@@ -1066,11 +1028,9 @@ UseCameraRoute11:
 	or 1
 	ret
 .useCameraScyther
-	text_far _ScytherCameraText
-	text_end
+	text_far_end _ScytherCameraText
 .cool
-	text_far _ScytherCoolText
-	text_end
+	text_far_end _ScytherCoolText
 .loadLeafOAM4Times
 	ld b, 4
 .loopLoadOAM2
@@ -1136,11 +1096,9 @@ UseCameraRoute16:
 	pop af
 	ret
 .mankeyCameraPic
-	text_far _MankeyCameraText
-	text_end
+	text_far_end _MankeyCameraText
 .angry
-	text_far _MankeyScowlText
-	text_end
+	text_far_end _MankeyScowlText
 
 UseCameraRoute12:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_PRISM_BALL
@@ -1169,7 +1127,7 @@ UseCameraRoute12:
 	ld a, SFX_59
 	call PlaySoundWaitForCurrent
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld a, [wYCoord]
 	cp 27
 	jr nz, .notUpward
@@ -1182,11 +1140,9 @@ UseCameraRoute12:
 	pop af
 	ret
 .gamblerCameraPic
-	text_far _GamblerCameraText
-	text_end
+	text_far_end _GamblerCameraText
 .art
-	text_far _GamblerArtText
-	text_end
+	text_far_end _GamblerArtText
 
 MakePlayerHoldCamera::
 	text_asm
@@ -1310,7 +1266,7 @@ PlayerSnapsPicThenDisplayPicture::
 .gotSprite2	
 .noFaceUp
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	ld b, BANK(SFX_Faint_Thud)
 	call ResetModifiersMuteAudioAndChangeAudioBank
 	ld a, SFX_FAINT_THUD
@@ -1320,7 +1276,7 @@ PlayerSnapsPicThenDisplayPicture::
 	call RemapSoundChannel
 	call GBFadeInFromWhite
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	call UnmuteAudioAndRestoreAudioBank
 	SetEvent FLAG_SLIDING_CAMERA_PIC
 	pop de

@@ -72,15 +72,10 @@ PickUpItemCommon:
 	ret
 
 FoundMultipleItemText:
-	text_far _FoundMultipleItemText
-	sound_get_item_1
-	text_end
+	text_far_end _FoundMultipleItemText
 
 FoundItemText:
-	text_far _FoundItemText
-	sound_get_item_1
-	text_end
+	text_far_end _FoundItemText
 
 NoMoreRoomForItemText:
-	text_far _NoMoreRoomForItemText
-	text_end
+	text_far_end _NoMoreRoomForItemText

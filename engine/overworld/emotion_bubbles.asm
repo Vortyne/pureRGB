@@ -4,7 +4,7 @@ EmotionBubble::
 	call EmotionBubbleCommon
 EmotionBubbleAfter::
 	ld c, 60
-	rst _DelayFrames
+	rst DelayFrames
 	jr EmotionBubbleCommon2
 
 FishingEmotionBubble::
@@ -16,13 +16,13 @@ FishingEmotionBubble::
 EmotionBubbleQuick::
 	call EmotionBubbleCommon
 	ld c, 30
-	rst _DelayFrames
+	rst DelayFrames
 	jr EmotionBubbleCommon2
 
 EmotionBubbleVeryFast::
 	call EmotionBubbleCommon
 	ld c, 20
-	rst _DelayFrames
+	rst DelayFrames
 	; fall through
 EmotionBubbleCommon2:
 	ld a, d

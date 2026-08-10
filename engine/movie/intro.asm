@@ -157,7 +157,7 @@ AnimateIntroNidorino:
 	ld c, 6 * 6
 	call UpdateIntroNidorinoOAM
 	ld c, 5
-	rst _DelayFrames
+	rst DelayFrames
 	pop de
 	inc de
 	jr AnimateIntroNidorino
@@ -315,7 +315,7 @@ PlayShootingStar:
 	ldh [rBGP], a
 	call UpdateGBCPal_BGP ; shinpokerednote: gbcnote: gbc color code from yellow 
 	ld c, 180
-	rst _DelayFrames
+	rst DelayFrames
 	call ClearScreen
 	call DisableLCD
 	xor a
@@ -327,14 +327,14 @@ PlayShootingStar:
 	res B_LCDC_WINDOW, [hl]
 	set B_LCDC_BG_MAP, [hl]
 	ld c, 64
-	rst _DelayFrames
+	rst DelayFrames
 	farcall AnimateShootingStar
 	push af
 	; A `call LoadPresentsGraphic` here was removed in localization
 	pop af
 	jr c, .next ; skip the delay if the user interrupted the animation
 	ld c, 40
-	rst _DelayFrames
+	rst DelayFrames
 .next
 	ld a, BANK(Music_IntroBattle)
 	ld [wAudioROMBank], a

@@ -1,4 +1,4 @@
-DEF DEX_ENTRY_SIZE EQU 9 ; 9 bytes per dex entry
+DEF DEX_ENTRY_SIZE EQU 8 ; 8 bytes per dex entry
 
 ; PureRGBnote: CHANGED: separated out the pokemon categories, which means the dex entries become a fixed size. 
 ; This means there is no need for a jump table, saving a lot of space.
@@ -23,8 +23,7 @@ GetDexEntryData:
 MACRO dex_entry
 	db \1, \2
 	dw \3
-	text_far \4
-	text_end
+	text_far_end \4
 ENDM
 
 DexEntryData:

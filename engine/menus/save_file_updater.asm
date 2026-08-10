@@ -4,28 +4,22 @@ DEF COIN_CASE EQU $45 ; constant was changed
 DEF TOWN_MAP EQU $05 ; constant was changed
 
 SaveFileUpdateText:
-	text_far _SaveFileUpdateText
-	text_end
+	text_far_end _SaveFileUpdateText
 
 SaveFileUpdateText2:
-	text_far _SaveFileUpdateText2
-	text_end
+	text_far_end _SaveFileUpdateText2
 
 PressStartToContinueText:
-	text_far _SaveFileUpdateTextConfirm
-	text_end
+	text_far_end _SaveFileUpdateTextConfirm
 
 SaveFileUpdateCompleteText:
-	text_far _SaveFileUpdateCompleteText
-	text_end
+	text_far_end _SaveFileUpdateCompleteText
 
 SaveFileUpdateWarpText:
-	text_far _SaveFileUpdateWarpText
-	text_end
+	text_far_end _SaveFileUpdateWarpText
 
 SaveFileUpdating:
-	text_far _SaveFileUpdating
-	text_end
+	text_far_end _SaveFileUpdating
 
 BeforeVersion2_7_0SaveFileUpdateScript::
 	call BeforeVersion2_7_0SaveFileUpdate

@@ -101,10 +101,7 @@ ResetStats:
 	ret
 
 StatusChangesEliminatedText:
-	text_far _StatusChangesEliminatedText
-	text_end
+	text_far_end _StatusChangesEliminatedText
 
 ImmuneToPsychicText:
-	text_far _ImmuneToPsychicText
-	text_end
-
+	text_far_end _ImmuneToPsychicText

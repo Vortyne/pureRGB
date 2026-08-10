@@ -35,7 +35,7 @@ ReflectLightScreenEffect_:
 	ret
 .moveFailed
 	ld c, 50
-	rst _DelayFrames
+	rst DelayFrames
 	ld hl, PrintButItFailedText_
 	jp EffectCallBattleCore
 .acid_armor
@@ -55,20 +55,16 @@ ReflectLightScreenEffect_:
 	jr .playAnim
 
 LightScreenProtectedText:
-	text_far _LightScreenProtectedText
-	text_end
+	text_far_end _LightScreenProtectedText
 
 ReflectGainedArmorText:
-	text_far _ReflectGainedArmorText
-	text_end
+	text_far_end _ReflectGainedArmorText
 
 AcidArmorShieldText:
-	text_far _AcidArmorLiquifiedText
-	text_end
+	text_far_end _AcidArmorLiquifiedText
 
 AllDamageHalvedText:
-	text_far _AllDamageHalvedText
-	text_end
+	text_far_end _AllDamageHalvedText
 
 EffectCallBattleCore:
 	ld b, BANK(BattleCore)

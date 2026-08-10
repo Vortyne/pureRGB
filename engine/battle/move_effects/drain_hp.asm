@@ -97,9 +97,7 @@ DrainHPEffect_:
 	ret
 
 SuckedHealthText:
-	text_far _SuckedHealthText
-	text_end
+	text_far_end _SuckedHealthText
 
 DreamWasEatenText:
-	text_far _DreamWasEatenText
-	text_end
+	text_far_end _DreamWasEatenText

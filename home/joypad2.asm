@@ -92,6 +92,6 @@ ManualTextScroll::
 	ret
 .inLinkBattle
 	ld c, 65
-	rst _DelayFrames
+	rst DelayFrames
 	ret
 	

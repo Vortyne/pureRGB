@@ -13,5 +13,5 @@ SeafoamIslandsB1F_Script:
 
 SeafoamIslandsB1F_TextPointers:
 	def_text_pointers
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB1F_BOULDER1
-	dw_const BoulderText, TEXT_SEAFOAMISLANDSB1F_BOULDER2
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB1F_BOULDER1
+	dba_const BoulderText, TEXT_SEAFOAMISLANDSB1F_BOULDER2

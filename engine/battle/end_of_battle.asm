@@ -22,7 +22,7 @@ EndOfBattle:
 	hlcoord 6, 8
 	call PlaceString
 	ld c, 200
-	rst _DelayFrames
+	rst DelayFrames
 	jr .evolution
 .notLinkBattle
 	ld a, [wBattleResult]
@@ -84,5 +84,4 @@ DrawText:
 	db "  DRAW@"
 
 PickUpPayDayMoneyText:
-	text_far _PickUpPayDayMoneyText
-	text_end
+	text_far_end _PickUpPayDayMoneyText

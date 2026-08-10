@@ -23,4 +23,5 @@ _Route22GateGuardGoRightAheadText::
 	text_ram_namebuffer
 	text "!"
 	cont "Go right ahead!@"
+	sound_get_item_1
 	text_end

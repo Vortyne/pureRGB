@@ -468,13 +468,10 @@ BoostedText:
 	text_far _BoostedText
 
 ExpPointsText:
-	text_far _ExpPointsText
-	text_end
+	text_far_end _ExpPointsText
 
 GrewLevelText:
-	text_far _GrewLevelText
-	sound_level_up
-	text_end
+	text_far_end _GrewLevelText
 
 HasExpBar:
 	ld a, [wOptions3]
