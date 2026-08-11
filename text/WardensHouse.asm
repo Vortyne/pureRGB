@@ -72,7 +72,9 @@ _WardensHouseWardenHM03AlreadyText::
 	line "SECRET HOUSE in"
 	cont "the SAFARI ZONE?"
 
-	para "Congratulations!"
+	para "@"
+	text_far _GenericCongratulationsText
+	text_start
 	
 	para "Have fun with"
 	line "that SURF HM too!"

@@ -1,11 +1,8 @@
-_MtMoonB2FDomeFossilYouWantText::
+_MtMoonB2FFossilYouWantText::
 	text "You want the"
-	line "DOME FOSSIL?"
-	done
-
-_MtMoonB2FHelixFossilYouWantText::
-	text "You want the"
-	line "HELIX FOSSIL?"
+	line "@"
+	text_ram_namebuffer
+	text "?"
 	done
 
 _MtMoonB2FReceivedFossilText::

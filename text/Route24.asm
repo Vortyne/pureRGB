@@ -1,5 +1,7 @@
 _Route24CooltrainerM1YouBeatOurContestText::
-	text "Congratulations!"
+	text "@"
+	text_far _GenericCongratulationsText
+	text_start
 	line "You beat our 5"
 	cont "contest trainers!@"
 	text_end

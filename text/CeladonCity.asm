@@ -96,27 +96,21 @@ _CeladonPoolGrampsAfterTeachText::
 	para "Use it well!"
 	done
 
-; TODO: make sound playing variants?
+
+
+_GenericPlayerReceivedTextSFX1::
+	text_call _GenericPlayerReceivedTextBody
+	text "@"
+	sound_get_item_1
+	text_end
+
+_VermilionGymLTSurgeReceivedTM24Text:: ;; key
+_FuchsiaGymKogaReceivedTM06Text:: ;; key
+_ViridianCityFisherReceivedTM42Text:: ;; item 2
 _GenericPlayerReceivedText::
-_PewterGymReceivedTM34Text::
-_CeruleanGymMistyReceivedTM11Text::
-_VermilionGymLTSurgeReceivedTM24Text::
-_CeladonGymReceivedTM21Text::
-_CeladonMart3FClerkReceivedTM18Text::
-_CeladonMartRoofLittleGirlReceivedTM13Text::
-_CeladonMartRoofLittleGirlReceivedTM48Text::
-_CopycatsHouse2FCopycatReceivedTM31Text::
-_MrPsychicsHouseMrPsychicReceivedTM29Text::
-_SaffronGymSabrinaReceivedTM46Text::
-_FuchsiaGymKogaReceivedTM06Text::
-_WardensHouseWardenReceivedHM04Text::
-_SafariZoneSecretHouseFishingGuruReceivedHM03Text::
-_CinnabarGymBlaineReceivedTM38Text::
-_CinnabarLabMetronomeRoomScientist1ReceivedTM35Text::
-_ViridianCityFisherReceivedTM42Text::
-_ViridianGymGiovanniReceivedTM27Text::
-_Route12Gate2FBrunetteGirlReceivedTM39Text::
-	text "<PLAYER> received"
+	text
+_GenericPlayerReceivedTextBody:: 
+	db "<PLAYER> received"
 	line "@"
 	text_ram_stringbuffer
 	text "!@"

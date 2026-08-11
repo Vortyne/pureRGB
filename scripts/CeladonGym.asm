@@ -175,8 +175,7 @@ CeladonGymRainbowBadgeInfoText:
 	text_far_end _CeladonGymRainbowBadgeInfoText
 
 CeladonGymReceivedTM21Text:
-	text_far _CeladonGymReceivedTM21Text
-	sound_get_item_1
+	text_far _GenericPlayerReceivedTextSFX1
 	text_far_end _TM21ExplanationText
 
 CeladonGymTM21NoRoomText:

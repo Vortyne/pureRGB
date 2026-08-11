@@ -229,70 +229,61 @@ MtMoonB2FRocket3Text:
 MtMoonB2FRocket4Text:
 	script_trainer MtMoon3TrainerHeader3
 
-; TODO: optimize these two
-
 MtMoonB2FDomeFossilText:
 	text_asm
-	ld a, $1
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, .YouWantText
-	rst _PrintText
-	call YesNoChoice
+	lb bc, DOME_FOSSIL, TOGGLE_MT_MOON_B2F_FOSSIL_1
+	call FossilYouWantCommonText
 	jr nz, .done
-	lb bc, DOME_FOSSIL, 1
-	call GiveItem
-	jp nc, MtMoonB2FYouHaveNoRoomText
-	call MtMoonB2FReceivedFossilText
-	ld c, TOGGLE_MT_MOON_B2F_FOSSIL_1
-	call HideObject
 	SetEvent EVENT_GOT_DOME_FOSSIL
-	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
-	ld [wMtMoonB2FCurScript], a
-	ld [wCurMapScript], a
 .done
 	rst TextScriptEnd
-
-.YouWantText:
-	text_far_end _MtMoonB2FDomeFossilYouWantText
 
 MtMoonB2FHelixFossilText:
 	text_asm
-	ld a, $1
-	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
-	ld hl, .YouWantText
-	rst _PrintText
-	call YesNoChoice
+	lb bc, HELIX_FOSSIL, TOGGLE_MT_MOON_B2F_FOSSIL_2
+	call FossilYouWantCommonText
 	jr nz, .done
-	lb bc, HELIX_FOSSIL, 1
-	call GiveItem
-	jp nc, MtMoonB2FYouHaveNoRoomText
-	call MtMoonB2FReceivedFossilText
-	ld c, TOGGLE_MT_MOON_B2F_FOSSIL_2
-	call HideObject
 	SetEvent EVENT_GOT_HELIX_FOSSIL
-	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
-	ld [wMtMoonB2FCurScript], a
-	ld [wCurMapScript], a
 .done
 	rst TextScriptEnd
 
-.YouWantText:
-	text_far_end _MtMoonB2FHelixFossilYouWantText
-
-MtMoonB2FReceivedFossilText:
-	ld hl, .Text
-	jp PrintText
-
-.Text:
-	text_far_end _MtMoonB2FReceivedFossilText
-
-MtMoonB2FYouHaveNoRoomText:
-	ld hl, .Text
+FossilYouWantCommonText:
+	ld a, $1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	ld a, b
+	ld [wNamedObjectIndex], a
+	call GetItemName
+	ld hl, .YouWantText
+	push bc
 	rst _PrintText
-	rst TextScriptEnd
-
-.Text:
+	call YesNoChoice
+	pop bc
+	ret nz
+	push bc
+	ld c, 1
+	call GiveItem
+	pop bc
+	jr nc, .full
+	push bc
+	ld hl, .receivedText
+	rst _PrintText
+	pop bc
+	call HideObject
+	ld a, SCRIPT_MTMOONB2F_MOVE_SUPER_NERD
+	ld [wMtMoonB2FCurScript], a
+	ld [wCurMapScript], a
+	ret
+.full
+	ld hl, .fullText
+	rst _PrintText
+	or 1
+	ret
+.YouWantText:
+	text_far_end _MtMoonB2FFossilYouWantText
+.fullText:
 	text_far_end _MtMoonB2FYouHaveNoRoomText
+.receivedText:
+	text_far_end _MtMoonB2FReceivedFossilText
 
 MtMoonB2FSuperNerdTheyreBothMineText:
 	text_far_end _MtMoonB2FSuperNerdTheyreBothMineText

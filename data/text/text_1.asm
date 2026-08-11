@@ -155,8 +155,9 @@ _OaksAideHereYouGoText::
 	text_decimal hOaksAideNumMonsOwned, 1, 3
 	text " kinds"
 	cont "of #MON!"
-	cont "Congratulations!"
-
+	cont "@"
+	text_far _GenericCongratulationsText
+	text_start
 	para "Here you go!"
 	prompt
 

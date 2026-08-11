@@ -118,7 +118,7 @@ DEF ITEM_SILPH_CO_10F_BOXES_BOTTOM          EQU RARE_CANDY
 DEF ITEM_SILPH_CO_10F_BOXES_RIGHT           EQU CARBOS
 
 ; Cinnabar Volcano
-DEF ITEM_VOLCANO_LEDGES_NEW                 EQU PP_UP ; TODO: 
+DEF ITEM_VOLCANO_LEDGES_NEW                 EQU PP_UP ; TODO: maybe a better item?
 
 ; Pokemon Mansion
 DEF ITEM_MANSION_1F_NORTH                   EQU CALCIUM

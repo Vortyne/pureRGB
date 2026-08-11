@@ -74,9 +74,7 @@ WardensHouseWardenText:
 	text_far_end _WardensHouseWardenThanksText
 
 .ReceivedHM04Text:
-	text_far _WardensHouseWardenReceivedHM04Text
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .HM04ExplanationText:
 	text_far_end _WardensHouseWardenHM04ExplanationText

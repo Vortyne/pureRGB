@@ -129,8 +129,7 @@ SaffronGymSabrinaText:
 	text_far_end _SaffronGymSabrinaPostBattleAdviceText
 
 SaffronGymSabrinaReceivedTM46Text:
-	text_far _SaffronGymSabrinaReceivedTM46Text
-	sound_get_item_1
+	text_far _GenericPlayerReceivedTextSFX1
 	text_far_end _TM46ExplanationText
 
 SaffronGymChanneler1Text:

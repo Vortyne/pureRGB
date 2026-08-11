@@ -226,8 +226,7 @@ CinnabarGymBlaineVolcanoBadgeInfoText:
 	text_far_end _CinnabarGymBlaineVolcanoBadgeInfoText
 
 CinnabarGymBlaineReceivedTM38Text:
-	text_far _CinnabarGymBlaineReceivedTM38Text
-	sound_get_item_1
+	text_far _GenericPlayerReceivedTextSFX1
 	text_far_end _CinnabarGymBlaineTM38ExplanationText
 
 CinnabarGymBlaineTM38NoRoomText:

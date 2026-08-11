@@ -40,9 +40,7 @@ Route12Gate2FBrunetteGirlText:
 	text_far_end _Route12Gate2FBrunetteGirlYouCanHaveThisText
 
 .ReceivedTM39Text:
-	text_far _Route12Gate2FBrunetteGirlReceivedTM39Text
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .TM39ExplanationText:
 	text_far_end _Route12Gate2FBrunetteGirlTM39ExplanationText

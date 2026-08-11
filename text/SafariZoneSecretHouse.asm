@@ -10,7 +10,9 @@ _SafariZoneSecretHouseFishingGuruYouHaveWonText::
 	cont "one would win our"
 	cont "campaign prize."
 
-	para "Congratulations!"
+	para "@"
+	text_far _GenericCongratulationsText
+	text_start
 	line "You have won!"
 	prompt
 

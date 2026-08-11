@@ -312,8 +312,8 @@ _RangerHuntSuccessText::
 	text "PA: <PLAYER>"
 	line "has defeated all"
 	cont "5 RANGERs!!"
-
-	para "Congratulations!@"
+	para "@"
+	text_far _GenericCongratulationsText
 	sound_get_item_2
 	text_end
 

@@ -112,7 +112,9 @@ _DexRatingText_Own140To149::
 	done
 
 _DexRatingText_Own150To151::
-	text "Congratulations!"
+	text "@"
+	text_far _GenericCongratulationsText
+	text_start
 	para "Your #DEX is"
 	line "entirely complete!"
 	done

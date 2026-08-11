@@ -40,9 +40,10 @@ _CeladonMansion3FGameDesignerCompletedDexText::
 	cont "your #DEX!"
 	cont "<...>@"
 	text_end
-
+	
+_GenericCongratulationsText:
 _CeladonMansion3FGameDesignerCongratsText::
-	text "Congratulations!" ; TODO: parameterize?
+	text "Congratulations!"
 	done
 
 _CeladonMansion3FGameProgramPCText::

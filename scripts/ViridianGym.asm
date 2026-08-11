@@ -74,19 +74,19 @@ ViridianGymReceiveTM27:
 
 ViridianGym_TextPointers:
 	def_text_pointers
-	dba_const ViridianGymGiovanniText,               TEXT_VIRIDIANGYM_GIOVANNI
-	dba_const ViridianGymCooltrainerM1Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M1
-	dba_const ViridianGymHiker1Text,                 TEXT_VIRIDIANGYM_HIKER1
-	dba_const ViridianGymRocker1Text,                TEXT_VIRIDIANGYM_ROCKER1
-	dba_const ViridianGymHiker2Text,                 TEXT_VIRIDIANGYM_HIKER2
-	dba_const ViridianGymCooltrainerM2Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M2
-	dba_const ViridianGymHiker3Text,                 TEXT_VIRIDIANGYM_HIKER3
-	dba_const ViridianGymRocker2Text,                TEXT_VIRIDIANGYM_ROCKER2
-	dba_const ViridianGymCooltrainerM3Text,          TEXT_VIRIDIANGYM_COOLTRAINER_M3
-	dba_const ViridianGymGymGuideText,               TEXT_VIRIDIANGYM_GYM_GUIDE
-	dba_const PickUpItemText,                        TEXT_VIRIDIANGYM_ITEM1
+	dba_const ViridianGymGiovanniText,                TEXT_VIRIDIANGYM_GIOVANNI
+	dba_const ViridianGymCooltrainerM1Text,           TEXT_VIRIDIANGYM_COOLTRAINER_M1
+	dba_const ViridianGymHiker1Text,                  TEXT_VIRIDIANGYM_HIKER1
+	dba_const ViridianGymRocker1Text,                 TEXT_VIRIDIANGYM_ROCKER1
+	dba_const ViridianGymHiker2Text,                  TEXT_VIRIDIANGYM_HIKER2
+	dba_const ViridianGymCooltrainerM2Text,           TEXT_VIRIDIANGYM_COOLTRAINER_M2
+	dba_const ViridianGymHiker3Text,                  TEXT_VIRIDIANGYM_HIKER3
+	dba_const ViridianGymRocker2Text,                 TEXT_VIRIDIANGYM_ROCKER2
+	dba_const ViridianGymCooltrainerM3Text,           TEXT_VIRIDIANGYM_COOLTRAINER_M3
+	dba_const ViridianGymGymGuideText,                TEXT_VIRIDIANGYM_GYM_GUIDE
+	dba_const PickUpItemText,                         TEXT_VIRIDIANGYM_ITEM1
 	dba_const _ViridianGymGiovanniEarthBadgeInfoText, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
-	dba_const ViridianGymGiovanniReceivedTM27Text,   TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
+	dba_const _GenericPlayerReceivedTextSFX1,         TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
 	dba_const _ViridianGymGiovanniTM27NoRoomText,     TEXT_VIRIDIANGYM_GIOVANNI_TM27_NO_ROOM
 
 ViridianGymTrainerHeaders:
@@ -190,11 +190,6 @@ ViridianGymGiovanniText:
 .GhostMarowakText:
 	text_far _GhostMarowakAfterGiovanniText
 	text_waitbutton
-	text_end
-
-ViridianGymGiovanniReceivedTM27Text:
-	text_far _ViridianGymGiovanniReceivedTM27Text
-	sound_get_item_1
 	text_end
 
 ViridianGymGiovanniTM27ExplanationText:

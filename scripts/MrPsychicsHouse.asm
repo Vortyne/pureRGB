@@ -51,9 +51,7 @@ MrPsychicsHouseMrPsychicText:
 	text_far_end _MrPsychicsHouseMrPsychicYouWantedThisText
 
 .ReceivedTM29Text:
-	text_far _MrPsychicsHouseMrPsychicReceivedTM29Text
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .TM29ExplanationText:
 	text_far_end _MrPsychicsHouseMrPsychicTM29ExplanationText

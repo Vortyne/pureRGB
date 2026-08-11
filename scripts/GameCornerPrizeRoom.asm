@@ -25,8 +25,7 @@ GameCornerPrizeRoomPrizeKingText:
 	rst _PrintText
 .choice
 	call YesNoChoice
-	ld hl, .suitYourself
-	jr nz, .printDone
+	jr nz, .doneNoPress
 	ld hl, .woohoo
 	rst _PrintText
 	call ClearTextBox
@@ -41,8 +40,7 @@ GameCornerPrizeRoomPrizeKingText:
 	call RestoreScreenTilesAndReloadTilePatterns
 	call LoadGBPal
 	pop af
-	ld hl, .suitYourself
-	jr c, .printDone
+	jr c, .doneNoPress
 	callfar IsMonAPrizePokemon
 	ld hl, .wrongMon
 	jr nc, .printDone
@@ -50,11 +48,15 @@ GameCornerPrizeRoomPrizeKingText:
 	ld [wPokedexNum], a
 	call GetMonName
 	ld a, [wPokedexNum]
-	ld hl, PrizeKingTextPointers
-	ld de, 3
-	call IsInArray
-	inc hl
-	hl_deref
+	ld hl, PrizeKingTextOrder
+	call IsInSingleByteArray
+	ld c, b
+	ld b, 0
+	ld hl, PrizeKingTextList
+	add hl, bc
+	add hl, bc
+	add hl, bc
+	add hl, bc
 	rst _PrintText
 	call IndexToPokedex
 	ld a, [wPokedexNum]
@@ -70,6 +72,8 @@ GameCornerPrizeRoomPrizeKingText:
 .printDone
 	rst _PrintText
 	rst TextScriptEnd
+.doneNoPress
+	jp TextScriptEndNoButtonPress
 
 .firstMeeting
 	text_far_end _GameCornerPrizeRoomPrizeMasterText
@@ -89,30 +93,25 @@ GameCornerPrizeRoomPrizeKingText:
 PrizeKingName:
 	db "PRIZE PRO@"
 
-; TODO: extra pointer not needed
-PrizeKingTextPointers:
-	dbw JYNX, JynxPrizeKingText
-	dbw ELECTABUZZ, ElectabuzzPrizeKingText
-	dbw TANGELA, TangelaPrizeKingText
-	dbw DRATINI, DratiniPrizeKingText
-	dbw DITTO, DittoPrizeKingText
-	dbw PORYGON, PorygonPrizeKingText
+PrizeKingTextOrder:
+	db JYNX
+	db ELECTABUZZ
+	db TANGELA
+	db DRATINI
+	db DITTO
+	db PORYGON
 
+PrizeKingTextList:
 JynxPrizeKingText:
 	text_far_end _JynxPrizeKingText
-
 ElectabuzzPrizeKingText:
 	text_far_end _ElectabuzzPrizeKingText
-
 TangelaPrizeKingText:
 	text_far_end _TangelaPrizeKingText
-
 DratiniPrizeKingText:
 	text_far_end _DratiniPrizeKingText
-
 DittoPrizeKingText:
 	text_far_end _DittoPrizeKingText
-
 PorygonPrizeKingText:
 	text_far_end _PorygonPrizeKingText
 

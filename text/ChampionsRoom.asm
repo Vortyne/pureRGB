@@ -87,7 +87,9 @@ _ChampionsRoomOakText::
 
 _ChampionsRoomOakCongratulatesPlayerText::
 	text "OAK: So, you won!"
-	line "Congratulations!"
+	line "@"
+	text_far _GenericCongratulationsText
+	text_start
 	cont "You're the new"
 	cont "#MON LEAGUE"
 	cont "champion!"

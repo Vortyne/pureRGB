@@ -26,9 +26,7 @@ SafariZoneSecretHouseFishingGuruText:
 	text_far_end _SafariZoneSecretHouseFishingGuruYouHaveWonText
 
 .ReceivedHM03Text:
-	text_far _SafariZoneSecretHouseFishingGuruReceivedHM03Text
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .HM03ExplanationText:
 	text_far_end _SafariZoneSecretHouseFishingGuruHM03ExplanationText

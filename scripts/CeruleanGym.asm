@@ -55,12 +55,12 @@ CeruleanGymReceiveTM11:
 
 CeruleanGym_TextPointers:
 	def_text_pointers
-	dba_const CeruleanGymMistyText,                 TEXT_CERULEANGYM_MISTY
-	dba_const CeruleanGymCooltrainerFText,          TEXT_CERULEANGYM_COOLTRAINER_F
-	dba_const CeruleanGymSwimmerText,               TEXT_CERULEANGYM_SWIMMER
-	dba_const CeruleanGymGymGuideText,              TEXT_CERULEANGYM_GYM_GUIDE
+	dba_const CeruleanGymMistyText,                  TEXT_CERULEANGYM_MISTY
+	dba_const CeruleanGymCooltrainerFText,           TEXT_CERULEANGYM_COOLTRAINER_F
+	dba_const CeruleanGymSwimmerText,                TEXT_CERULEANGYM_SWIMMER
+	dba_const CeruleanGymGymGuideText,               TEXT_CERULEANGYM_GYM_GUIDE
 	dba_const _CeruleanGymMistyCascadeBadgeInfoText, TEXT_CERULEANGYM_MISTY_CASCADE_BADGE_INFO
-	dba_const CeruleanGymMistyReceivedTM11Text,     TEXT_CERULEANGYM_MISTY_RECEIVED_TM11
+	dba_const _GenericPlayerReceivedTextSFX1,        TEXT_CERULEANGYM_MISTY_RECEIVED_TM11
 	dba_const _CeruleanGymMistyTM11NoRoomText,       TEXT_CERULEANGYM_MISTY_TM11_NO_ROOM
 
 CeruleanGymTrainerHeaders:
@@ -110,11 +110,6 @@ CeruleanGymMistyText:
 
 .TM11ExplanationText:
 	text_far_end _CeruleanGymMistyTM11ExplanationText
-
-CeruleanGymMistyReceivedTM11Text: ; TODO: blahahah
-	text_far _CeruleanGymMistyReceivedTM11Text
-	sound_get_item_1
-	text_end
 
 CeruleanGymMistyReceivedCascadeBadgeText:
 	text_far _CeruleanGymMistyReceivedCascadeBadgeText

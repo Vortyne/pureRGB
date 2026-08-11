@@ -46,10 +46,7 @@ CeladonMart3FClerkText:
 	text_far_end _CeladonMart3FClerkTM18PreReceiveText
 
 .ReceivedTM18Text:
-	; TODO: put sound with far text?
-	text_far _CeladonMart3FClerkReceivedTM18Text
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .TM18ExplanationText:
 	text_far_end _CeladonMart3FClerkTM18ExplanationText

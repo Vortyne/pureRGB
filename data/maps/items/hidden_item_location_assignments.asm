@@ -131,7 +131,7 @@ DEF HIDDEN_ITEM_SEAFOAM_B3F_LONE_ROCK                   EQU CALCIUM
 DEF HIDDEN_ITEM_SEAFOAM_B4F_SURF_ALCOVE                 EQU PP_UP		; 2 of them
 
 ; Cinnabar Volcano
-DEF HIDDEN_ITEM_VOLCANO_LAVA_SEA_NEW                    EQU PP_UP ; TODO: 
+DEF HIDDEN_ITEM_VOLCANO_LAVA_SEA_NEW                    EQU PP_UP ; TODO: can be an actual item now due to fixes, also maybe a better item?
 
 ; Pokemon Mansion
 DEF HIDDEN_ITEM_MANSION_ENTRANCE_5TH_RIGHT_BOX          EQU PP_UP

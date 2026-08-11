@@ -132,8 +132,7 @@ PewterGymBrockText:
 	text_far_end _PewterGymBrockPostBattleAdviceText
 
 PewterGymReceivedTM34Text:
-	text_far _PewterGymReceivedTM34Text
-	sound_get_item_1
+	text_far _GenericPlayerReceivedTextSFX1
 	text_far_end _TM34ExplanationText
 
 PewterGymTM34NoRoomText:

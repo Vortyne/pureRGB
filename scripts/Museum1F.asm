@@ -201,9 +201,7 @@ Museum1FScientist2Text:
 	text_far_end _Museum1FScientist2TakeThisToAPokemonLabText
 
 .ReceivedOldAmberText:
-	text_far _GenericPlayerReceivedText
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .GetTheOldAmberCheckText:
 	text_far_end _Museum1FScientist2GetTheOldAmberCheckText

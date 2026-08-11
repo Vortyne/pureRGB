@@ -39,9 +39,7 @@ CinnabarLabMetronomeRoomScientist1Text:
 	text_far_end _CinnabarLabMetronomeRoomScientist1Text
 
 .ReceivedTM35Text:
-	text_far _CinnabarLabMetronomeRoomScientist1ReceivedTM35Text
-	sound_get_item_1
-	text_end
+	text_far_end _GenericPlayerReceivedTextSFX1
 
 .TM35ExplanationText:
 	text_far_end _CinnabarLabMetronomeRoomScientist1TM35ExplanationText

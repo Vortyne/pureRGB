@@ -86,7 +86,7 @@ JigglypuffCameraPicMainPalette:
 JigglypuffCameraPicSecondaryPalette:
 	RGB 31,31,31, 31,08,13, 02,21,07, 10,02,06
 JigglypuffCameraPicTertiaryPalette:
-	RGB 31,31,31, 31,08,13, 02,21,07, 10,02,06 ; TODO: unused palette
+	RGB 31,31,31, 31,08,13, 02,21,07, 10,02,06 ; unused palette
 
 JigglypuffCameraPicSecondaryPaletteBitmap:
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -96,7 +96,7 @@ JigglypuffCameraPicSecondaryPaletteBitmap:
 	dbits 0, 0, 0, 0, 1, 1, 0, 0
 	dbits 1, 1, 1, 0, 0, 0, 0, 0
 
-JigglypuffCameraPicTertiaryPaletteBitmap: ; TODO: unused palette
+JigglypuffCameraPicTertiaryPaletteBitmap: ; unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -186,7 +186,7 @@ ArticunoCameraPicMainPalette:
 ArticunoCameraPicSecondaryPalette:
 	RGB 27,31,31, 31,00,00, 04,13,22, 00,04,04
 ArticunoCameraPicTertiaryPalette:
-	RGB 27,31,31, 13,22,31, 04,13,22, 00,04,04 ; TODO: unused palette
+	RGB 27,31,31, 13,22,31, 04,13,22, 00,04,04 ; unused palette
 
 ArticunoCameraPicCameraPicSecondaryPaletteBitmap:
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -196,7 +196,7 @@ ArticunoCameraPicCameraPicSecondaryPaletteBitmap:
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 
-ArticunoCameraPicCameraPicTertiaryPaletteBitmap: ; TODO: unused palette
+ArticunoCameraPicCameraPicTertiaryPaletteBitmap: ; unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -284,11 +284,11 @@ GrimerCameraPicCameraPicTertiaryPaletteBitmap:
 GastlyCameraPicMainPalette:
 	RGB 31,31,31, 25,10,29, 12,07,16, 00,00,00
 GastlyCameraPicSecondaryPalette:
-	RGB 31,31,31, 25,10,29, 12,07,16, 00,00,00 ; TODO: unused palette
+	RGB 31,31,31, 25,10,29, 12,07,16, 00,00,00 ; unused palette
 GastlyCameraPicTertiaryPalette:
-	RGB 31,31,31, 25,10,29, 12,07,16, 00,00,00 ; TODO: unused palette
+	RGB 31,31,31, 25,10,29, 12,07,16, 00,00,00 ; unused palette
 
-GastlyCameraPicCameraPicSecondaryPaletteBitmap: ; TODO: unused palette
+GastlyCameraPicCameraPicSecondaryPaletteBitmap: ; unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -296,7 +296,7 @@ GastlyCameraPicCameraPicSecondaryPaletteBitmap: ; TODO: unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 
-GastlyCameraPicCameraPicTertiaryPaletteBitmap: ; TODO: unused palette
+GastlyCameraPicCameraPicTertiaryPaletteBitmap: ; unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -361,7 +361,7 @@ MankeyCameraPicMainPalette:
 MankeyCameraPicSecondaryPalette:
 	RGB 31,31,22, 19,20,00, 01,17,00, 04,00,00
 MankeyCameraPicTertiaryPalette:
-	RGB 31,31,22, 19,20,00, 01,17,00, 04,00,00 ; TODO: unused palette
+	RGB 31,31,22, 19,20,00, 01,17,00, 04,00,00 ; unused palette
 
 MankeyCameraPicSecondaryPaletteBitmap:
 	dbits 1, 1, 1, 1, 1, 1, 1, 1
@@ -371,7 +371,7 @@ MankeyCameraPicSecondaryPaletteBitmap:
 	dbits 1, 1, 1, 0, 0, 1, 1, 1
 	dbits 1, 1, 1, 1, 1, 1, 1, 1
 
-MankeyCameraPicTertiaryPaletteBitmap: ; TODO: unused palette
+MankeyCameraPicTertiaryPaletteBitmap: ; unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
@@ -411,7 +411,7 @@ DragonairCameraPicMainPalette:
 DragonairCameraPicSecondaryPalette:
 	RGB 31,23,16, 21,06,15, 04,09,18, 00,00,04
 DragonairCameraPicTertiaryPalette:
-	RGB 31,23,16, 21,06,15, 04,09,18, 00,00,04 ; TODO: unused palette
+	RGB 31,23,16, 21,06,15, 04,09,18, 00,00,04 ; unused palette
 
 DragonairCameraPicCameraPicSecondaryPaletteBitmap:
 	dbits 1, 1, 0, 1, 1, 0, 0, 0
@@ -421,7 +421,7 @@ DragonairCameraPicCameraPicSecondaryPaletteBitmap:
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 1, 0, 0, 1, 0, 0, 0, 0
 
-DragonairCameraPicCameraPicTertiaryPaletteBitmap: ; TODO: unused palette
+DragonairCameraPicCameraPicTertiaryPaletteBitmap: ; unused palette
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
 	dbits 0, 0, 0, 0, 0, 0, 0, 0
