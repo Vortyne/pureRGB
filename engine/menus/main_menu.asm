@@ -103,8 +103,15 @@ MainMenu:
 	ld [wOptionsCancelCursorX], a
 	ld [wTopMenuItemY], a
 	callfar DisplayOptionMenu
-	ld a, TRUE
-	ld [wOptionsInitialized], a
+	callfar CheckForPlayerNameInSRAM
+	jr nc, .partialOptionsSave
+	; if player has created save data, we will save all data (prevents checksum issues)
+	callfar SaveGameData
+	jr .doneSavingOptions
+.partialOptionsSave
+	; if player hasn't created save data yet, we will only save options data
+	callfar CopyOptionsToSRAM
+.doneSavingOptions
 	pop af
 	ld [wCurrentMenuItem], a
 	jp .mainMenuLoop

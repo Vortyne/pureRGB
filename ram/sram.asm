@@ -56,6 +56,9 @@ sOptions4::db
 NEXTU
 ds wSpriteOptions5 - wMainDataStart
 sSpriteOptions5::db
+NEXTU
+ds wOptionsInitialized - wMainDataStart
+sOptionsInitialized::db
 ENDU
 
 sSpriteData::  ds wSpriteDataEnd - wSpriteDataStart

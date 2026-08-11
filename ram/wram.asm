@@ -1622,7 +1622,6 @@ wFlashScreenLongCounter::
 wNumShootingBalls::
 ; $01 if mon is moving from left gameboy to right gameboy; $00 if vice versa
 wTradedMonMovingRight::
-wOptionsInitialized::
 wNewSlotMachineBallTile::
 ; how much to add to the X/Y coord
 wCoordAdjustmentAmount::
@@ -2107,7 +2106,7 @@ wYBlockCoord:: db
 wXBlockCoord:: db
 
 wLastMap:: db
-wUnusedLastMapWidth:: db ; unused save file byte
+wOptionsInitialized:: db
 
 wCurMapHeader::
 wCurMapTileset:: db

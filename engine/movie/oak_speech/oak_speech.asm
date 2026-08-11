@@ -1,6 +1,8 @@
 PrepareOakSpeech:
 	ld a, [wLetterPrintingDelayFlags]
 	push af
+	ld a, [wStatusFlags6]
+	push af
 ;;;;;;;;;; PureRGBnote: ADDED: Preserve all options settings when starting a new game
 	call BackupOptionsSettings
 	ld hl, wPlayerName
@@ -13,6 +15,8 @@ PrepareOakSpeech:
 	call FillMemory
 	call RestoreOptionsSettings
 ;;;;;;;;;
+	pop af
+	ld [wStatusFlags6], a
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ld a, [wOptionsInitialized]
@@ -315,19 +319,38 @@ BackupList:
 	dw wWorldOptions
 	dw wSpriteOptions5
 	dw wOptions4
-	dw wStatusFlags6
+	dw wOptionsInitialized
 
-CopyOptionsFromSRAM::
+CopyOptionsToSRAM::
 	ld a, RAMG_SRAM_ENABLE
 	ld [rRAMG], a
 	ld a, 1
 	ld [rBMODE], a
 	ld [rRAMB], a
-	; by checking if a name has been saved we can know if a save file was created
-	callfar CheckSaveFileExists
-	jr nc, .doneLoad
+	ld a, [wOptionsInitialized]
+	ld [sOptionsInitialized], a
+	ld hl, BackupList
+	ld de, SRAMCopyList+1
+	jr SRAMCopyCommon
+
+CopyOptionsFromSRAM::
 	ld hl, SRAMCopyList
 	ld de, BackupList+1
+	ld a, RAMG_SRAM_ENABLE
+	ld [rRAMG], a
+	ld a, 1
+	ld [rBMODE], a
+	ld [rRAMB], a
+SRAMCopyCommon:
+	push hl
+	; by checking if a name has been saved we can know if a save file was created
+	callfar CheckSaveFileExists
+	pop hl
+	jr c, .continue
+	ld a, [sOptionsInitialized]
+	cp OPTIONS_INITIALIZED_VALUE
+	jr nz, .doneLoad
+.continue
 	ld b, [hl]
 	inc hl
 .loop
@@ -358,7 +381,7 @@ CopyOptionsFromSRAM::
 	ret
 
 SRAMCopyList:
-	db 10
+	db 11
 	dw sOptions2
 	dw sSpriteOptions
 	dw sSpriteOptions2
@@ -369,6 +392,7 @@ SRAMCopyList:
 	dw sWorldOptions
 	dw sSpriteOptions5
 	dw sOptions4
+	dw sOptionsInitialized
 
 DebugNewGamePlayerName:
 	db "NINTEN@"

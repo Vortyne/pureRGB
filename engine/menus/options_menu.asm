@@ -5,6 +5,7 @@ DEF HOW_MANY_MAIN_OPTIONS_PAGES EQU 5 ; must be 1 digit
 DEF NEXT_BUTTON_X_COORD EQU 1
 DEF BACK_BUTTON_X_COORD EQU 7
 DEF PAGE_CONTROLS_Y_COORD EQU 17
+DEF OPTIONS_INITIALIZED_VALUE EQU 88
 
 ; first byte = y coord
 ; second byte = which option on the page it is (cancel always = max option value)
@@ -301,6 +302,8 @@ OptionsMenuLoop:
 .exitMenu
 	ld a, SFX_PRESS_AB
 	rst _PlaySound
+	ld a, OPTIONS_INITIALIZED_VALUE
+	ld [wOptionsInitialized], a
 	pop hl
 	ret
 .checkDirectionKeys
