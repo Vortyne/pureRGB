@@ -86,5 +86,7 @@ LJSTAR - Most of the work creating the type icons used in the movedex
 
 Mord - Most of the work creating LT.Surge and Erika overworld sprites
 
+NarishmaGB - Info on how to trim SGB border data to save 900 bytes
+
 pret discord and pret in general for their original disassembly work on Red / Blue
 
