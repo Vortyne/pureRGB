@@ -163,13 +163,13 @@ _Route6UndergroundPathSignText::
 
 _Route6TrainerTipsText::
 	text "<TIPS>"
-	para "In the PC, scroll"
-	line "to WITHDRAW, then"
-	cont "press SELECT."
-	para "You can view info"
-	line "of #MON in the"
-	cont "current box."
-	para "This can be done"
-	line "even with a full"
-	cont "party!"
+	para "Press SELECT"
+	line "when viewing a"
+	cont "#MON's STATS"
+	cont "to view STAT EXP!"
+	para "STAT EXP is raised"
+	line "by battling and"
+	cont "using vitamins!"
+	para "More EXP means"
+	line "a higher STAT!"
 	done

@@ -21,7 +21,6 @@ Route18_TextPointers:
 	dba_const Route18Text5,                TEXT_ROUTE18_ROCKER
 	dba_const _Route18SignText,            TEXT_ROUTE18_SIGN
 	dba_const _Route18CyclingRoadSignText, TEXT_ROUTE18_CYCLING_ROAD_SIGN
-	dba_const _Route18TipsSign,            TEXT_ROUTE18_TRAINER_TIPS_SIGN
 
 Route18TrainerHeaders:
 	def_trainers
