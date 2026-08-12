@@ -1,15 +1,17 @@
 BorderPalettes:
+;;;;;;;;;;; NarishmaGBnote: CHANGED: adjusted the SGB tilemap to not include the center gameboy window saving 900 bytes.
 IF DEF(_RED)
-	INCBIN "gfx/sgb/red_border.tilemap"
+	INCBIN "gfx/sgb/red_border.sgb.tilemap"
 ENDC
 IF DEF(_BLUE)
-	INCBIN "gfx/sgb/blue_border.tilemap"
+	INCBIN "gfx/sgb/blue_border.sgb.tilemap"
 ENDC
 IF DEF(_GREEN) ; PureRGBnote: GREENBUILD: added the graphics for pokemon green's SGB border.
-	INCBIN "gfx/sgb/green_border.tilemap"
+	INCBIN "gfx/sgb/green_border.sgb.tilemap"
 ENDC
 
-	ds $100
+; ds $100
+;;;;;;;;;;;
 
 IF DEF(_RED)
 	RGB 30,29,29 ; PAL_SGB1

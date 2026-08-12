@@ -63,7 +63,8 @@ RGBGFXFLAGS  ?= -Weverything
 	clean \
 	tidy \
 	compare \
-	tools
+	tools \
+	release
 
 all: $(roms)
 red:        pokered.gbc
@@ -77,7 +78,8 @@ clean: tidy
 	find gfx \
 	     \( -iname '*.1bpp' \
 	        -o -iname '*.2bpp' \
-	        -o -iname '*.pic' \) \
+	        -o -iname '*.pic' \
+            -o -iname '*.sgb.tilemap' \) \
 	     -delete
 
 tidy:
@@ -104,6 +106,8 @@ compare: $(roms) $(patches)
 tools:
 	$(MAKE) -C tools/
 
+release:
+	bash tools/build_release.sh
 
 RGBASMFLAGS += -Q8 -P includes.asm
 # Create a sym/map for debug purposes if `make` run with `DEBUG=1`
@@ -193,6 +197,10 @@ gfx/tilesets/%.2bpp: tools/gfx += --trim-whitespace
 gfx/tilesets/reds_house.2bpp: tools/gfx += --preserve=0x48
 
 gfx/trade/game_boy.2bpp: tools/gfx += --remove-duplicates
+
+gfx/sgb/blue_border.sgb.tilemap: gfx/sgb/blue_border.tilemap ; tr < $< -d '\000' > $@
+gfx/sgb/red_border.sgb.tilemap: gfx/sgb/red_border.tilemap ; tr < $< -d '\000' > $@
+gfx/sgb/green_border.sgb.tilemap: gfx/sgb/green_border.tilemap ; tr < $< -d '\000' > $@
 
 
 ### Catch-all graphics rules
