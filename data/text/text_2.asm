@@ -1578,15 +1578,11 @@ _WhatText::
 	text "What?"
 	done
 
-_ViewModeText::
-	text "BOX viewer"
-	line "mode active."
-	done
-
-_DepositWhichMonText::
-	text "Deposit which"
-	line "#MON?"
-	done
+; PureRGBnote: unused text
+;_DepositWhichMonText::
+;	text "Deposit which?"
+;	line "#MON?"
+;	done
 
 _MonWasStoredText::
 	text_ram_stringbuffer
@@ -1628,10 +1624,11 @@ _CantTakeMonText::
 	line "first."
 	prompt
 
-_ReleaseWhichMonText::
-	text "Release which"
-	line "#MON?"
-	done
+; PureRGBnote: CHANGED: now unused text
+;_ReleaseWhichMonText::
+;	text "Release which"
+;	line "#MON?"
+;	done
 
 _OnceReleasedText::
 	text "Once released,"

@@ -1,7 +1,14 @@
 ; PureRGBnote: CHANGED: this function was modified in order to facilitate remapping types of pokemon to their original ones.
 ; [wCurSpecies] = pokemon ID
 ; de = dest addr
+PrintMonTypeSingleSpaced::
+	ld bc, SCREEN_WIDTH
+	jr PrintMonTypeCommon
+	
 PrintMonType::
+	ld bc, SCREEN_WIDTH * 2
+PrintMonTypeCommon::
+	push bc
 	ld h, d
 	ld l, e
 	push hl
@@ -20,8 +27,8 @@ PrintMonType::
 	pop hl
 	ld a, e
 	cp d
+	pop bc
 	jr z, EraseType2Text
-	ld bc, SCREEN_WIDTH * 2
 	add hl, bc
 
 ; a = type

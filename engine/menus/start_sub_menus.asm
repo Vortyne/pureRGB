@@ -304,7 +304,7 @@ ItemMenuLoop:
 	call RunDefaultPaletteCommand
 
 StartMenu_Item::
-	ld a, 1
+	ld a, TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; PureRGBnote: ADDED: we want TM names to get printed in this list menu
 	ld a, [wLinkState]
 	dec a ; is the player in the Colosseum or Trade Centre?

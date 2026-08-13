@@ -549,7 +549,7 @@ BallTileCustomizationMenu:
 	hlcoord 8, 4
 	ld [hl], '→'
 .loopMenu
-	ld a, 3
+	ld a, BALL_TILE_HOVER_DATA
 	ld [wListMenuHoverTextType], a
 	call InitChildMenuInput
 	callfar HandleMenuInputFromBank1
@@ -709,7 +709,7 @@ BallColorCustomizationMenu:
 	hlcoord 8, 5
 	ld [hl], '→'
 .loopMenu
-	ld a, 4
+	ld a, BALL_COLOR_HOVER_DATA
 	ld [wListMenuHoverTextType], a
 	call InitChildMenuInput
 	callfar HandleMenuInputFromBank1

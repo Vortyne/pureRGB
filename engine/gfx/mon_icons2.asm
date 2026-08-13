@@ -54,7 +54,7 @@ FarLoadPartyMonSpriteIntoVRAMScreenOn::
 	push de
 	pop hl
 	pop de ; swap de and hl
-	call CopyVideoData
+	call CopyVideoDataHBlankBackUp
 	push bc
 	ld bc, 4 tiles
 	push hl
@@ -67,7 +67,7 @@ FarLoadPartyMonSpriteIntoVRAMScreenOn::
 	ld bc, 2 tiles
 	add hl, bc
 	pop bc
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 PreparePartyMonSpriteCopy:
 	push de

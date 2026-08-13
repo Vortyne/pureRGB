@@ -93,6 +93,7 @@ LogOffPCText:     db "LOG OFF@"
 
 BillsPC_::
 	call DisableTextDelay
+	call DisableSpriteUpdates
 	xor a
 	ld [wParentMenuItem], a
 	callfar LoadBillsPCExtraTiles
@@ -141,11 +142,12 @@ BillsPCMenu:
 	decoord 13, 13
 	callfar DrawCurrentBoxPrompt
 	callfar GetBillsPCMenuPrompt
+	call ClearSprites
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
 .handleMenuInput
-	ld a, 8
+	ld a, BILLS_PC_HOVER_TEXT
 	ld [wListMenuHoverTextType], a
 	callfar HandleMenuInputFromBank1
 	xor a
@@ -196,6 +198,7 @@ ExitBillsPC:
 	call LoadScreenTilesFromBuffer2
 	pop af
 	ld [wListScrollOffset], a
+	call EnableSpriteUpdates
 	jp EnableTextDelay
 
 BillsPCDeposit:
@@ -247,7 +250,7 @@ BillsPCDeposit:
 	ld [hli], a
 	ld [hl], '@'
 	ld hl, MonWasStoredText
-	rst _PrintText
+	call BillsPCPrintText
 	;jp BillsPCMenu
 .doneDepositDialogBox
 	call BillsPCRestoreListIndex
@@ -283,8 +286,8 @@ BillsPCWithdraw:
 	rst _PrintText
 	jp BillsPCMenu
 .viewStart
-	ld hl, ViewMode
-	call .redrawTextBoxAndCurrentBox
+	ld de, ViewPCText
+	call DisplayPCTopTitleWindow
 .partyNotFull
 	ld hl, wBoxCount
 	call DisplayMonListMenu
@@ -308,7 +311,7 @@ BillsPCWithdraw:
 	call RemovePokemon
 	call WaitForSoundToFinish
 	ld hl, MonIsTakenOutText
-	rst _PrintText
+	call BillsPCPrintText
 	;jp BillsPCMenu
 .doneWithdrawDialogBox
 	call BillsPCRestoreListIndex
@@ -329,8 +332,6 @@ BillsPCWithdraw:
 	jp RedrawCurrentBoxPrompt
 .viewPkmn
 	call DisplayDepositWithdrawMenu.viewStats
-	ld hl, ViewMode
-	call .redrawTextBoxAndCurrentBox
 	jp BillsPCWithdraw
 
 	
@@ -344,16 +345,16 @@ BillsPCRelease:
 	rst _PrintText
 	jp BillsPCMenu
 .loop
+	ld de, ReleaseWhichText
+	call DisplayPCTopTitleWindow
 	call EnableTextDelay
-	ld hl, ReleaseWhichMonText
-	rst _PrintText
 	ld hl, wBoxCount
 	call DisplayMonListMenu
 	jp c, BillsPCMenu
 	call BillsPCBackupListIndex
 	call EnableTextDelay
 	ld hl, OnceReleasedText
-	rst _PrintText
+	call BillsPCPrintText
 	xor a
 	ld [wCurrentMenuItem], a
 	ld a, PAD_A | PAD_B
@@ -396,6 +397,7 @@ BillsPCRelease:
 	ld a, [wBoxCount]
 	and a
 	jp z, BillsPCMenu ; if no pokemon left to release, exit the menu automatically
+	call RedrawCurrentBoxPrompt
 	jp .loop ; otherwise go back to the menu
 
 BillsPCChangeBox:
@@ -412,7 +414,11 @@ DisplayMonListMenu:
 	ld [wListMenuID], a
 	ld a, [wPartyAndBillsPCSavedMenuItem]
 	ld [wCurrentMenuItem], a
+	ld a, POKEMON_HOVER_TEXT
+	ld [wListMenuHoverTextType], a
 	call DisplayListMenuID
+	ld a, 0
+	ld [wListMenuHoverTextType], a
 	ld a, [wCurrentMenuItem]
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ret
@@ -513,21 +519,30 @@ DisplayDepositWithdrawMenu:
 .next2
 	ld [wMonDataLocation], a
 	callfar StatusScreenOriginal
+	xor a
+	ldh [hAutoBGTransferEnabled], a
 	call LoadScreenTilesFromBuffer1
+	call ClearSprites
 	call ReloadTilesetTilePatterns
 	callfar LoadBillsPCExtraTiles ; in the case of displaying pokemon status menu, this needs to be reloaded
 	call LoadTextBoxTilePatterns
 	call RunDefaultPaletteCommand
 	call LoadGBPal
+	callfar LoadPCMonMenuSprite
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
 	CheckFlag FLAG_VIEW_PC_PKMN
 	jr nz, .exit
 	jr .loop
 
 DepositPCText:  db "DEPOSIT@"
 WithdrawPCText: db "WITHDRAW@"
+ViewPCText: db " VIEW BOX@"
 StatsCancelPCText:
 	db   "STATS"
 	next "CANCEL@"
+
+ReleaseWhichText: db "Release which?@"
 
 SwitchOnText:
 	text_far_end _SwitchOnText
@@ -535,11 +550,8 @@ SwitchOnText:
 WhatText:
 	text_far_end _WhatText
 
-ViewMode:
-	text_far_end _ViewModeText
-
-DepositWhichMonText:
-	text_far_end _DepositWhichMonText
+;DepositWhichMonText: ; PureRGBnote: unused text
+;	text_far_end _DepositWhichMonText
 
 MonWasStoredText:
 	text_far_end _MonWasStoredText
@@ -559,8 +571,9 @@ NoMonText:
 CantTakeMonText:
 	text_far_end _CantTakeMonText
 
-ReleaseWhichMonText:
-	text_far_end _ReleaseWhichMonText
+; PureRGBnote: CHANGED: now unused text
+;ReleaseWhichMonText:
+;	text_far_end _ReleaseWhichMonText
 
 OnceReleasedText:
 	text_far_end _OnceReleasedText
@@ -636,3 +649,20 @@ OpenPokemonCenterPC::
 	ret nz
 	call DisableAutoTextBoxDrawing
 	tx_pre_jump PokemonCenterPCText
+
+DisplayPCTopTitleWindow:
+	push de
+	hlcoord 4, 0
+	lb bc, 1, 14
+	call TextBoxBorder
+	hlcoord 5, 1
+	pop de
+	jp PlaceString
+
+; need to hide the new "currently selected pokemon" icon when printing text
+BillsPCPrintText:
+	push hl
+	call ClearSprites
+	pop hl
+	rst _PrintText
+	ret

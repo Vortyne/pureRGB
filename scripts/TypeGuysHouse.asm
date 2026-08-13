@@ -200,7 +200,7 @@ TypeGuysHouseTypeGuyText:
 	ld [wPrintItemPrices], a
 	ld [wMenuItemToSwap], a
 	ld [wListMenuCustomType], a
-	ld a, 2
+	ld a, TYPE_HOVER_TEXT
 	ld [wListMenuHoverTextType], a
 	ld a, CUSTOMLISTMENU
 	ld [wListMenuID], a

@@ -107,7 +107,7 @@ PlayerPCDeposit:
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a
-	inc a
+	inc a ; TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; PureRGBnote: ADDED: this list menu can have TMs so turn on that flag so it checks each item scrolled over
 	ld a, [wNumBagItems]
 	and a
@@ -169,7 +169,7 @@ PlayerPCWithdraw:
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a
-	inc a
+	inc a ; TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; PureRGBnote: ADDED: this list menu can have TMs so turn on that flag so it checks each item scrolled over
 	ld a, [wNumBoxItems]
 	and a
@@ -231,7 +231,7 @@ PlayerPCToss:
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wListScrollOffset], a
-	inc a
+	inc a ; TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; PureRGBnote: ADDED: this list menu can have TMs so turn on that flag so it checks each item scrolled over
 	ld a, [wNumBoxItems]
 	and a
@@ -397,7 +397,7 @@ DepositItemFromItemMenu::
 	ld hl, WantToDepositText
 	rst _PrintText
 	call YesNoChoice
-	ld a, 1
+	ld a, TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; enable displaying TM names again.
 	jr nz, .done
 .next

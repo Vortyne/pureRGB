@@ -53,7 +53,7 @@ DisplayPokemartDialogue_::
 	rst _PrintText
 	call SaveScreenTilesToBuffer1 ; save screen
 .sellMenuLoop
-	ld a, 1
+	ld a, TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; we're in a list that might have TMs to read out
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
 	ld a, MONEY_BOX
@@ -136,7 +136,7 @@ DisplayPokemartDialogue_::
 	rst _PrintText
 	call SaveScreenTilesToBuffer1
 .buyMenuLoop
-	ld a, 1
+	ld a, TM_HOVER_TEXT
 	ld [wListMenuHoverTextType], a ; we're in a list that might have TMs to read out
 	call LoadScreenTilesFromBuffer1
 	ld a, MONEY_BOX

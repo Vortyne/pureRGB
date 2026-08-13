@@ -257,3 +257,58 @@ ClearScreenArbitrary::
 	dec b
 	jr nz, .loop
 	jp Delay3
+
+CopyVideoDataHBlankBackUp::
+	push bc
+	push de
+	push hl
+	call CopyVideoDataHBlank
+	pop hl
+	pop de
+	pop bc
+	ret
+
+; TODO: use more
+CopyVideoDataHBlank::
+; Copy c 2bpp tiles from b:de to hl during HBlank or VBlank.
+; LCD can stay on. Faster than CopyVideoData (which does 8 tiles/frame). ~18 tiles per frame.
+	ld a, c
+	and a
+	ret z
+	ldh a, [hLoadedROMBank]
+	push af
+	ld a, b
+	call SetCurBank
+	ld a, c ; tile count (kept in a while bc is used to swap dest/source)
+	di
+	ld [hSPTemp], sp
+	ld b, h
+	ld c, l ; bc = dest
+	ld h, d
+	ld l, e
+	ld sp, hl ; SP = source
+	ld h, b
+	ld l, c ; hl = dest
+	ld b, a
+.tileLoop
+	ld c, TILE_SIZE / 2 ; 8 word writes per tile
+.pairLoop
+	pop de ; fetch next 2 bytes (safe in any PPU mode)
+.waitVRAM
+	ldh a, [rSTAT]
+	and %10 ; wait while Mode 2 or 3 (VRAM locked in Mode 3)
+	jr nz, .waitVRAM
+	ld a, e
+	ld [hli], a
+	ld a, d
+	ld [hli], a
+	dec c
+	jr nz, .pairLoop
+	dec b
+	jr nz, .tileLoop
+	ld sp, hSPTemp
+	pop hl
+	ld sp, hl
+	ei
+	pop af
+	jp SetCurBank

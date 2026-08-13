@@ -15,7 +15,7 @@ CeladonMart1FReceptionistText:
 	text_asm
 	call YesNoChoice
 	jr nz, .done
-	ld b, 6
+	ld b, DEPT_STORE_CLERK_HOVER_TEXT
 	ld de, CeladonDirectoryClerkText
 	ld hl, CeladonMart1FCurrentFloorClerkText
 	call CeladonMartDirectoryMenu
@@ -30,7 +30,7 @@ CeladonMart1FReceptionistText:
 ; PureRGBnote: CHANGED: this was made into a menu because it's just nicer that way
 CeladonMart1FDirectorySignText:
 	text_asm
-	ld b, 5
+	ld b, DEPT_STORE_DIRECTORY_HOVER_TEXT
 	ld de, CeladonDirectoryText
 	ld hl, CeladonMart1FCurrentFloorSignText
 	call CeladonMartDirectoryMenu

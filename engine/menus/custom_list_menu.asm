@@ -53,6 +53,7 @@ CheckLoadHoverText::
 CustomListMenuHoverTextMethods:
 	dw CheckLoadTmName
 	dw CheckLoadTypes
+	dw GetWithdrawPCMenuPrompt
 	dw _ChangeCustomBallTile
 	dw _ChangeCustomBallColor
 	dw _ShowDeptStoreFloorInfo
@@ -147,6 +148,7 @@ CustomListMenuHoverTextSaveScreenTileMethods:
 	dw CheckSaveTMTextScreenTiles
 	dw CheckSaveTypeTextScreenTiles
 	dw DoRet
+	; the hover text after this aren't list menus so they never call this function
 
 CheckSaveHoverTextScreenTiles::
 	; wListMenuHoverTextType still loaded
@@ -187,7 +189,7 @@ CheckBadOffset::
 	ret
 
 HandleInputForStartMenu::
-	ld a, 7
+	ld a, START_MENU_HOVER_TEXT
 	ld [wListMenuHoverTextType], a
 	ld a, 1
 	ld [wMenuWrappingEnabled], a
@@ -301,3 +303,45 @@ BillsPCBoxNamePrompt:
 
 BillsPCBoxViewPrompt:
 	db $60, $69, $6A, $D2, $D3, $D4, '@'
+
+GetWithdrawPCMenuPrompt:
+	hlcoord 0, 13
+	lb bc, 3, 11
+	call TextBoxBorder
+	call GetListEntryID
+	jp c, ClearSprites
+	; print species name (useful if mon has been nicknamed)
+	ld [wNamedObjectIndex], a
+	ld [wCurSpecies], a ; needed to make PrintMonType work
+	ld c, a
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	push bc
+	call GetMonName
+	pop bc
+	ld de, vChars1 tile $5C
+	callfar FarLoadPartyMonSpriteIntoVRAMScreenOn
+	hlcoord 1, 14
+	ld de, wNameBuffer
+	call PlaceString
+	; we have some extra space, so print its types
+	decoord 4, 15
+	callfar PrintMonTypeSingleSpaced
+	call LoadPCMonMenuSprite
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	ret
+
+LoadPCMonMenuSprite::
+	ld hl, PCPokemonSpriteOAM
+	ld de, wShadowOAMSprite36
+	ld bc, OBJ_SIZE * 4
+	rst _CopyData
+	ret
+
+PCPokemonSpriteOAM:
+; x tile, y tile, x pixel, y pixel, vtile offset, attributes
+	dbsprite 2, 17, 0, 0, $DC, 0
+	dbsprite 3, 17, 0, 0, $DD, 0
+	dbsprite 2, 18, 0, 0, $DE, 0
+	dbsprite 3, 18, 0, 0, $DF, 0
