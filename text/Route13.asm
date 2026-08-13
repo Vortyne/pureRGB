@@ -180,18 +180,15 @@ _Route13TrainerTips1Text::
 
 _Route13TrainerTips2Text::
 	text "<TIPS>"
-
-	para "Use SELECT to"
-	line "switch items in"
-	cont "the ITEM window!"
-
-	para "This also works"
-	line "in battle with"
-	cont "#MON attacks!"
-
-	para "It even works"
-	line "with <PK><MN> order"
-	cont "swapping, try it!"
+	para "Press SELECT"
+	line "when viewing a"
+	cont "#MON's STATS"
+	cont "to view STAT EXP!"
+	para "STAT EXP is raised"
+	line "by battling and"
+	cont "using vitamins!"
+	para "More EXP means"
+	line "a higher STAT!"
 	done
 
 _Route13SignText::

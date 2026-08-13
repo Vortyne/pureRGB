@@ -161,15 +161,19 @@ _Route6UndergroundPathSignText::
 	cont "VERMILION CITY"
 	done
 
+; PureRGBnote: CHANGED: this trainer tips text to be on route 13, but it's pretty useful info, so moved it earlier in the game.
 _Route6TrainerTipsText::
 	text "<TIPS>"
-	para "Press SELECT"
-	line "when viewing a"
-	cont "#MON's STATS"
-	cont "to view STAT EXP!"
-	para "STAT EXP is raised"
-	line "by battling and"
-	cont "using vitamins!"
-	para "More EXP means"
-	line "a higher STAT!"
+
+	para "Use SELECT to"
+	line "switch items in"
+	cont "the ITEM window!"
+
+	para "This also works"
+	line "in battle with"
+	cont "#MON attacks!"
+
+	para "It even works"
+	line "with <PK><MN> order"
+	cont "swapping, try it!"
 	done
