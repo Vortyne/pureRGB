@@ -205,8 +205,8 @@ _ItemfinderFoundNothingText::
 	prompt
 
 _RaisePPWhichTechniqueText::
-	text "Raise PP of which"
-	line "technique?"
+	text "Raise max PP of"
+	line "which technique?"
 	done
 
 _RestorePPWhichTechniqueText::
@@ -217,8 +217,7 @@ _RestorePPWhichTechniqueText::
 _PPMaxedOutText::
 	text_ram_stringbuffer
 	text "'s PP"
-	line "has already been"
-	cont "maxed out."
+	line "is already maxed."
 	prompt
 
 _PPIncreasedText::

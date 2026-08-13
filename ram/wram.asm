@@ -922,7 +922,6 @@ wTempSCX::
 wDexMaxSeenMove::
 wDexMaxSeenMon::
 wDexLearnsetListCount::
-wPPRestoreItem::
 wWereAnyMonsAsleep::
 wNumShakes::
 wWhichBadge::
@@ -1198,7 +1197,6 @@ wPalPacket::
 ; This union spans 49 bytes.
 UNION
 wPartyMenuBlkPacket::
-; $30 bytes
 	ds 9
 ;shinpokerednote: gbcnote: modified to match yellow
 wPartyHPBarAttributes::	
@@ -1943,11 +1941,13 @@ wStepCounter:: db
 ; after a battle, you have at least 3 steps before a random battle can occur
 wNumberOfNoRandomBattleStepsLeft:: db
 
+wPartyWhichItemIndex::
 wWhichCustomBallSelected::
 wLearnsetIndex::
 wPrize1:: db
 wLearnsetPage::
 wPrize2:: db
+wPartyItemID::
 wPrize3:: db
 
 	ds 1 ; unused lone byte

@@ -1365,8 +1365,17 @@ _PartyMenuNormalText::
 	done
 
 _PartyMenuItemUseText::
-	text "Use item on which"
-	line "#MON?"
+	text "Use @"
+	text_ram_namebuffer
+	text_start
+	line "on which <PK><MN>?"
+	done
+
+_PartyMenuItemUseBattleText::
+	text "Use @"
+	text_ram_namebuffer
+	text_start
+	line "on which #MON?"
 	done
 
 _PartyMenuBattleText::

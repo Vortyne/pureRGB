@@ -178,6 +178,18 @@ RedrawPartyMenu_::
 	ld a, [wPartyMenuTypeOrMessageID] ; message ID
 	cp FIRST_PARTY_MENU_TEXT_ID
 	jr nc, .printItemUseMessage
+	cp USE_ITEM_PARTY_MENU
+	jr z, .itemNameNeeded
+	cp USE_ITEM_PARTY_MENU_BATTLE
+	jr z, .itemNameNeeded
+	jr .noItemNameNeeded
+.itemNameNeeded
+	push af
+	ld a, [wPartyItemID]
+	ld [wNamedObjectIndex], a
+	call GetItemName
+	pop af
+.noItemNameNeeded
 	add a
 	add a ; multiply by TEXT_FAR_TABLE_ENTRY_SIZE
 	ld hl, PartyMenuMessagePointers
@@ -185,6 +197,23 @@ RedrawPartyMenu_::
 	ld c, a
 	add hl, bc
 	rst _PrintText
+	ld a, [wPartyMenuTypeOrMessageID]
+	cp USE_ITEM_PARTY_MENU
+	jr nz, .done
+	hlcoord 15, 15
+	lb bc, 1, 3
+	call TextBoxBorder
+	hlcoord 16, 16
+	ld [hl], '×'
+	ld a, [wPartyItemID]
+	ld b, a
+	predef GetQuantityOfItemInBag
+	ld a, b
+	ld de, w2CharStringBuffer
+	ld [de], a
+	hlcoord 17, 16
+	lb bc, 1 | LEADING_ZEROES, 2
+	call PrintNumber
 .done
 	pop hl
 	pop af
@@ -244,6 +273,8 @@ PartyMenuItemUseText2:
 	text_far_end _PartyMenuItemUseText
 PartyMenuEmptyText:
 	text_far_end _PartyMenuEmptyText
+PartyMenuItemUseBattleText:
+	text_far_end _PartyMenuItemUseBattleText
 
 
 SetPartyMenuHPBarColor:

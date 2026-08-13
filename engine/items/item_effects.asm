@@ -979,15 +979,23 @@ ItemUseMedicine:
 	and a
 	jp z, .emptyParty
 	ld a, [wWhichPokemon]
+	ld [wPartyWhichItemIndex], a
 	push af
 	ld a, [wCurItem]
 	push af
+	ld [wPartyItemID], a
+	ld a, [wIsInBattle]
+	and a
 	ld a, USE_ITEM_PARTY_MENU
+	jr z, .battleCheck1
+	ld a, USE_ITEM_PARTY_MENU_BATTLE
+.battleCheck1
 	ld [wPartyMenuTypeOrMessageID], a
 	call DisableSpriteUpdates
 	ld a, [wPseudoItemID]
 	and a ; using Softboiled?
 	jr z, .notUsingSoftboiled
+.restart
 ; if using softboiled
 	call GoBackToPartyMenu
 	jr .getPartyMonDataAddress
@@ -1348,7 +1356,7 @@ ItemUseMedicine:
 	jr .doneHealing
 .healingItemNoEffect
 	call ItemUseNoEffect
-	jp .done
+	jp .checkForRestart
 .doneHealing
 	ld a, [wPseudoItemID]
 	and a ; using Softboiled?
@@ -1395,10 +1403,32 @@ ItemUseMedicine:
 	call RedrawPartyMenu ; redraws the party menu and displays the message
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
-	ld c, 50
-	rst DelayFrames
-	call WaitForTextScrollButtonPress
-	jr .done
+	call WaitForSoundToFinish
+	call DisplayTextPromptButton
+.checkForRestart
+	ld a, [wPseudoItemID]
+	and a
+	jr nz, .done
+	ld a, [wPartyItemID]
+	ld [wCurItem], a
+	ld b, a
+	predef GetQuantityOfItemInBag
+	ld a, b
+	and a
+	jr z, .done
+	ld a, [wIsInBattle]
+	and a
+	jr nz, .done
+	call CheckIfUsingHealingItemAgainWouldBeUseless
+	jr nc, .done
+	ld a, [wPartyWhichItemIndex]
+	ld [wWhichPokemon], a
+	push af
+	ld a, [wCurItem]
+	push af
+	ld a, USE_ITEM_PARTY_MENU
+	ld [wPartyMenuTypeOrMessageID], a
+	jp .restart
 .canceledItemUse
 	xor a
 	ld [wActionResultOrTookBattleTurn], a ; item use failed
@@ -1479,7 +1509,10 @@ ItemUseMedicine:
 	rst _PlaySound
 	ld hl, VitaminStatRoseText
 	rst _PrintText
-	jp RemoveUsedItem
+	ld a, [wCurItem]
+	ld b, a
+	jp .checkItemCountThenReloadAfterUsage
+	;;jp RemoveUsedItem
 ;;;;;;;;;; PureRGBnote: CHANGED: text for rare candy and vitamin "had no effect" differ now, with the vitamin one indicating it can't be raised further via items specifically.
 .rareCandyNoEffect
 	pop hl
@@ -1491,7 +1524,11 @@ ItemUseMedicine:
 .printNoEffect
 ;;;;;;;;;;
 	rst _PrintText
-	jp GBPalWhiteOut
+	ld a, [wWhichPokemon]
+	push af
+	ld a, [wCurItem]
+	push af
+	jp .reloadMenuAfterNoItemUsage
 .recalculateStats
 	ld bc, MON_STATS
 	add hl, bc
@@ -1581,12 +1618,48 @@ ItemUseMedicine:
 	xor a
 	ld [wForceEvolution], a
 	callfar TryEvolvingMon ; evolve pokemon, if appropriate
+	pop af
+	ld [wCurItem], a
+	ld b, a
+	pop af
+	ld [wWhichPokemon], a
+	push af
+	push bc
+	ld b, RARE_CANDY
+	predef GetQuantityOfItemInBag
+	ld a, b
+	cp 2
+	jp c, .exitRareCandy
+.reloadMenuAfterUsageRemoveItem
+	call RemoveUsedItem
+.reloadMenuAfterNoItemUsage
+	call ClearScreenNoDelay
+	ld a, USE_ITEM_PARTY_MENU
+	ld [wPartyMenuTypeOrMessageID], a
+	call DisableSpriteUpdates
+	jp .restart
+.exitRareCandy
 	call EnableSpriteUpdates
 	pop af
 	ld [wCurItem], a
 	pop af
 	ld [wWhichPokemon], a
 	jp RemoveUsedItem
+.checkItemCountThenReloadAfterUsage
+	predef GetQuantityOfItemInBag
+	ld a, b
+	cp 2
+	jp c, RemoveUsedItem
+.ifNotInBattleCheckForReload
+	ld a, [wIsInBattle]
+	and a
+	jp nz, RemoveUsedItem
+.reloadMenuAfterUsage
+	ld a, [wWhichPokemon]
+	push af
+	ld a, [wCurItem]
+	push af
+	jr .reloadMenuAfterUsageRemoveItem
 ;;;;;;;;;; PureRGBnote: ADDED: code for maximizing DVs after using an apex chip and displaying the usage text.
 .useApexChip	
 	push hl
@@ -1625,12 +1698,31 @@ ItemUseMedicine:
 	rst _PrintText
 	ld hl, ApexChipDVsMaxedText
 	rst _PrintText
-	jp RemoveUsedItem
+	ld b, APEX_CHIP
+	jr .checkItemCountThenReloadAfterUsage
 .alreadyUsedApex
 	pop hl
 	ld hl, ApexChipAlreadyUsedText
 	rst _PrintText
-	jp GBPalWhiteOut
+	ld a, [wWhichPokemon]
+	push af
+	ld a, [wCurItem]
+	push af
+	jp .reloadMenuAfterNoItemUsage
+
+
+ClearScreenNoDelay:
+	ld bc, SCREEN_AREA
+	inc b
+	hlcoord 0, 0
+	ld a, ' '
+.loop
+	ld [hli], a
+	dec c
+	jr nz, .loop
+	dec b
+	jr nz, .loop
+	ret
 
 ApexChipPutOnPokeballText:
 	text_far_end _ApexChipPutOnPokeballText
@@ -2327,33 +2419,40 @@ ItemUsePPRestore:
 	ld a, [wWhichPokemon]
 	push af
 	ld a, [wCurItem]
-	ld [wPPRestoreItem], a
+	ld [wPartyItemID], a
 .chooseMon
 	xor a
 	ld [wUpdateSpritesEnabled], a
+	ld a, [wIsInBattle]
+	and a
 	ld a, USE_ITEM_PARTY_MENU
+	jr z, .gotMessageType
+	ld a, USE_ITEM_PARTY_MENU_BATTLE
+.gotMessageType
 	ld [wPartyMenuTypeOrMessageID], a
 	call DisplayPartyMenu
+.restart
 	jp c, .itemNotUsed
 .chooseMove
-	ld a, [wPPRestoreItem]
+	ld a, [wPartyItemID]
 	cp ELIXER
 	jp nc, .useElixir ; if Elixir or Max Elixir
 	ld a, $02
 	ld [wMoveMenuType], a
 	ld hl, RaisePPWhichTechniqueText
-	ld a, [wPPRestoreItem]
+	ld a, [wPartyItemID]
 	cp ETHER ; is it a PP Up?
 	jr c, .printWhichTechniqueMessage ; if so, print the raise PP message
 	ld hl, RestorePPWhichTechniqueText ; otherwise, print the restore PP message
 .printWhichTechniqueMessage
 	rst _PrintText
+	call EnableTextDelay
 	xor a
 	ld [wPlayerMoveListIndex], a
 	callfar MoveSelectionMenu ; move selection menu
 	ld a, 0
 	ld [wPlayerMoveListIndex], a
-	jr nz, .chooseMon
+	jr nz, .restartTriggered
 	ld hl, wPartyMon1Moves
 	ld bc, PARTYMON_STRUCT_LENGTH
 	call GetSelectedMoveOffset
@@ -2363,7 +2462,7 @@ ItemUsePPRestore:
 	call GetMoveName
 	call CopyToStringBuffer
 	pop hl
-	ld a, [wPPRestoreItem]
+	ld a, [wPartyItemID]
 	cp ETHER
 	jr nc, .useEther ; if Ether or Max Ether
 ; use PP Up
@@ -2374,6 +2473,7 @@ ItemUsePPRestore:
 	jr c, .PPNotMaxedOut
 	ld hl, PPMaxedOutText
 	rst _PrintText
+	call DisableTextDelay
 	jr .chooseMove
 .PPNotMaxedOut
 	ld a, [hl]
@@ -2387,6 +2487,19 @@ ItemUsePPRestore:
 	ld hl, PPIncreasedText
 	rst _PrintText
 .done
+	call .checkShouldRestart
+	jr c, .noRestart
+	pop af
+	push af
+	ld [wWhichPokemon], a
+	call RemoveUsedItem
+.restartTriggered
+	call ClearScreenNoDelay
+	call GoBackToPartyMenu
+	ld a, [wPartyItemID]
+	ld [wCurItem], a
+	jp .restart
+.noRestart
 	pop af
 	ld [wWhichPokemon], a
 	call GBPalWhiteOut
@@ -2427,7 +2540,7 @@ ItemUsePPRestore:
 	add hl, bc ; hl now points to move's PP
 	ld a, [wMaxPP]
 	ld b, a
-	ld a, [wPPRestoreItem]
+	ld a, [wPartyItemID]
 	cp MAX_ETHER
 	jr z, .fullyRestorePP
 	ld a, [hl] ; move PP
@@ -2459,7 +2572,7 @@ ItemUsePPRestore:
 	jr .storeNewAmount
 .useElixir
 ; decrement the item ID so that ELIXER becomes ETHER and MAX_ELIXER becomes MAX_ETHER
-	ld hl, wPPRestoreItem
+	ld hl, wPartyItemID
 	dec [hl]
 	dec [hl]
 	xor a
@@ -2487,17 +2600,37 @@ ItemUsePPRestore:
 	pop bc
 	dec b
 	jr nz, .elixirLoop
+	; set item ID back to ELIXER or MAX ELIXER properly
+	ld hl, wPartyItemID
+	inc [hl]
+	inc [hl]
 	ld a, [wTileBehindCursor]
 	and a ; did any moves have their PP restored?
 	jp nz, .afterRestoringPP
 .noEffect
 	call ItemUseNoEffect
+	call .checkShouldRestartItemNotUsed
+	jp nc, .restartTriggered
 .itemNotUsed
 	call GBPalWhiteOut
 	call RunDefaultPaletteCommand
 	pop af
 	xor a
 	ld [wActionResultOrTookBattleTurn], a ; item use failed
+	ret
+.checkShouldRestart
+	ld a, [wPartyItemID]
+	ld [wCurItem], a
+	ld b, a
+	predef GetQuantityOfItemInBag
+	ld a, b
+	cp 2
+	ret c
+.checkShouldRestartItemNotUsed
+	ld a, [wIsInBattle]
+	and a
+	ret z
+	scf
 	ret
 
 RaisePPWhichTechniqueText:
@@ -3512,3 +3645,101 @@ UseCamera:
 	jp nz, ItemUseCameraInBattle
 	call ItemUseReloadOverworldData
 	jpfar UseCameraItem
+
+
+; When using a healing item out of battle, we will allow
+; the player to repeatedly use them from the party menu
+; as long as they have some.
+; But if they still have some, and no pokemon could have the item used on them,
+; it would be pointless to keep the party menu open, so we will check for those cases here
+; (no pokemon can be healed by your SUPER POTION, or no pokemon poisoned while using ANTIDOTE, for example)
+CheckIfUsingHealingItemAgainWouldBeUseless:
+	ld a, [wPartyItemID]
+	cp ANTIDOTE
+	ld b, 1 << PSN
+	jr z, .status
+	cp BURN_HEAL
+	ld b, 1 << BRN
+	jr z, .status
+	cp ICE_HEAL
+	ld b, 1 << FRZ
+	jr z, .status
+	cp AWAKENING
+	ld b, SLP_MASK
+	jr z, .status
+	cp PARLYZ_HEAL
+	ld b, 1 << PAR
+	jr z, .status
+	cp FULL_HEAL
+	ld b, $FF
+	jr z, .status
+	cp REVIVE
+	jr z, .anyFainted
+	cp MAX_REVIVE
+	jr z, .anyFainted
+	; otherwise it's just a normal healing item.
+	ld hl, wPartyMon1HP
+	ld a, [wPartyCount]
+	ld c, a
+.loopHealingCheck
+	push hl
+	ld a, [hli]
+	ld d, a
+	ld a, [hld]
+	ld e, a
+	push de
+	ld de, wPartyMon1MaxHP - wPartyMon1HP
+	add hl, de
+	pop de
+	ld a, [hli]
+	cp d
+	jr nz, .foundNotMaxHP
+	ld a, [hl]
+	cp e
+	jr nz, .foundNotMaxHP
+	pop hl
+	ld de, wPartyMon2 - wPartyMon1
+	add hl, de
+	dec c
+	jr nz, .loopHealingCheck
+	jr .notFound
+.foundNotMaxHP
+	pop hl
+	jr .found
+.status
+	ld hl, wPartyMon1Status
+	ld de, wPartyMon2Status - wPartyMon1Status
+	ld a, [wPartyCount]
+	ld c, a
+.loopStatuses
+	ld a, [hl]
+	and b
+	jr nz, .found
+	add hl, de
+	dec c
+	jr nz, .loopStatuses
+	jr .notFound
+.anyFainted
+	ld hl, wPartyMon1HP
+	ld de, wPartyMon2HP - wPartyMon1HP
+	ld a, [wPartyCount]
+	ld c, a
+.loopFainted
+	ld a, [hl]
+	and a
+	jr nz, .continue2
+	inc hl
+	ld a, [hld]
+	and a
+	jr z, .found
+.continue2
+	add hl, de
+	dec c
+	jr nz, .loopFainted
+	jr .notFound
+.notFound
+	and a
+	ret
+.found
+	scf
+	ret
