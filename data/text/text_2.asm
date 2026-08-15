@@ -792,6 +792,7 @@ _FoundHiddenCoinsText::
 
 _DroppedHiddenCoinsText::
 	text_start
+
 	para "Oops! Dropped"
 	line "some coins!"
 	done

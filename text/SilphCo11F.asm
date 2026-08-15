@@ -76,7 +76,7 @@ _SilphCo11FGiovanniText::
 	line "world of pain!"
 	done
 
-_SilphCo10FGiovanniILostAgainText::
+_SilphCo11FGiovanniILostAgainText::
 	text "Arrgh!!"
 	line "I lost again!?"
 	prompt

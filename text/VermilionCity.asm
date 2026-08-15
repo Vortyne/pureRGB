@@ -80,6 +80,7 @@ _VermilionCityMachopText::
 
 _VermilionCityMachopStompingTheLandFlatText::
 	text_start
+
 	para "A MACHOP is"
 	line "stomping the land"
 	cont "flat."

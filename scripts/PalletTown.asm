@@ -93,7 +93,7 @@ PalletTownOakWalksToPlayerScript:
 PalletTownOakNotSafeComeWithMeScript:
 	call IsNPCAutoMoving
 	ret nz
-	xor a ; ld a, SPRITE_FACING_DOWN
+	xor a ; SPRITE_FACING_DOWN
 	ld [wSpritePlayerStateData1FacingDirection], a
 	ld a, TRUE
 	ld [wOakWalkedToPlayer], a

@@ -152,6 +152,7 @@ _PoofText::
 
 _ForgotAndText::
 	text_start
+
 	para "@"
 	text_ram wLearnMoveMonName
 	text " forgot"

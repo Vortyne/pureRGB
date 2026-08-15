@@ -202,8 +202,8 @@ SilphCo11FGiovanniStartBattleScript:
 	ld hl, wStatusFlags3
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
-	ld hl, SilphCo10FGiovanniILostAgainText
-	ld de, SilphCo10FGiovanniILostAgainText
+	ld hl, SilphCo11FGiovanniILostAgainText
+	ld de, SilphCo11FGiovanniILostAgainText
 	call SaveEndBattleTextPointers
 	ldh a, [hSpriteIndex]
 	ld [wSpriteIndex], a
@@ -213,8 +213,8 @@ SilphCo11FGiovanniStartBattleScript:
 	ld a, SCRIPT_SILPHCO11F_GIOVANNI_AFTER_BATTLE
 	jp SilphCo11FSetCurScript
 
-SilphCo10FGiovanniILostAgainText:
-	text_far_end _SilphCo10FGiovanniILostAgainText
+SilphCo11FGiovanniILostAgainText:
+	text_far_end _SilphCo11FGiovanniILostAgainText
 
 SilphCo11F_TextPointers:
 	def_text_pointers

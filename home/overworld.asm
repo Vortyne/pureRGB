@@ -911,7 +911,7 @@ LoadTileBlockMap::
 .noCarry
 	dec b
 	jr nz, .rowLoop
-.northConnection
+; north connection
 	ld a, [wNorthConnectedMap]
 	cp $ff
 	jr z, .southConnection
@@ -1082,7 +1082,7 @@ IsSpriteInFrontOfPlayer::
 IsSpriteInFrontOfPlayer2::
 	lb bc, $3c, $40 ; Y and X position of player sprite
 	ld a, [wSpritePlayerStateData1FacingDirection]
-.checkIfPlayerFacingUp
+; check if player facing up
 	cp SPRITE_FACING_UP
 	jr nz, .checkIfPlayerFacingDown
 ; facing up
@@ -1381,7 +1381,7 @@ ENDR
 	jr nz, .rowLoop
 	ld hl, wSurroundingTiles
 	ld bc, 0
-.adjustForYCoordWithinTileBlock
+; adjust for Y coord within tile block
 	ld a, [wYBlockCoord]
 	and a
 	jr z, .adjustForXCoordWithinTileBlock
@@ -1862,12 +1862,11 @@ CollisionCheckOnWater::
 	call LoadPlayerSpriteGraphics
 	jr .noCollision
 
-; function to run the current map's script
 RunMapScript::
 	homecall BoulderMapScript
 	call RunNPCMovementScript
-	ld a, [wCurMap] ; current map number
-	call SwitchToMapRomBank ; change to the ROM bank the map's data is in
+	ld a, [wCurMap]
+	call SwitchToMapRomBank
 	ld hl, wCurMapScriptPtr
 	ld a, [hli]
 	ld h, [hl]

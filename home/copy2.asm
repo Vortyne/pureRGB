@@ -125,7 +125,7 @@ CopyVideoData::
 	cp 8
 	jr nc, .keepgoing
 
-.done
+; done
 	ldh [hVBlankCopySize], a
 	rst _DelayFrame
 	ldh a, [hROMBankTemp]
@@ -173,7 +173,7 @@ CopyVideoData::
 ;	cp 8
 ;	jr nc, .keepgoing
 ;
-;.done
+;;done
 ;	ldh [hVBlankCopyDoubleSize], a
 ;	rst _DelayFrame
 ;	ldh a, [hROMBankTemp]

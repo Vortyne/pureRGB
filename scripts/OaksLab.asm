@@ -476,7 +476,7 @@ OaksLabPlayerWatchRivalExitScript:
 .turnPlayerDown
 	cp $4
 	ret nz
-	xor a ; ld a, SPRITE_FACING_DOWN
+	xor a ; SPRITE_FACING_DOWN
 	ld [wSpritePlayerStateData1FacingDirection], a
 	ret
 

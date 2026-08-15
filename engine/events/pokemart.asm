@@ -71,7 +71,7 @@ DisplayPokemartDialogue_::
 	call DisplayListMenuID
 	jp c, .returnToMainPokemartMenu ; if the player closed the menu
 	call BackupItemListIndex
-.confirmItemSale ; if the player is trying to sell a specific item
+; if the player is trying to sell a specific item, confirm the sale
 	call IsKeyItem
 	ld a, [wIsKeyItem]
 	and a
