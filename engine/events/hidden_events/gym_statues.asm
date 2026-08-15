@@ -92,7 +92,9 @@ GymOutsideSignTextScript::
 	rst _PrintText
 	rst TextScriptEnd
 .genericGymSignText
-	text_far_end _GymSignGenericText
+	text_far _GymSignGenericText
+	text_promptbutton
+	text_end
 
 PewterGymOutsideSign::
 	text_far_end _PewterCityGymSignText

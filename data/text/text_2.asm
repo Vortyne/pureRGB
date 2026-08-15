@@ -138,7 +138,6 @@ _GymSignGenericText::
 	line "#MON GYM"
 	cont "LEADER: @"
 	text_ram_namebuffer
-	text_promptbutton
 	text_end
 
 _GymStatueText::
