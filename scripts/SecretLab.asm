@@ -635,13 +635,13 @@ SecretLab_EngageTrainerText:
 
 SecretLab_AfterBattleText:
 	text_asm
-	ld hl, SecretLabTrainerHeader0 + TRAINER_AFTER_BANK_OFFSET
+	ld hl, SecretLabTrainerHeader0 + TRAINER_AFTER_BATTLE_TEXT_BANK
 	CheckEvent EVENT_BEAT_SECRET_LAB_SOLDIER_1
 	jr z, .printText
-	ld hl, SecretLabTrainerHeader1 + TRAINER_AFTER_BANK_OFFSET
+	ld hl, SecretLabTrainerHeader1 + TRAINER_AFTER_BATTLE_TEXT_BANK
 	CheckEvent EVENT_BEAT_SECRET_LAB_CHIEF
 	jr z, .printText
-	ld hl, SecretLabTrainerHeader2 + TRAINER_AFTER_BANK_OFFSET
+	ld hl, SecretLabTrainerHeader2 + TRAINER_AFTER_BATTLE_TEXT_BANK
 .printText
 	call PrintBankedTrainerText
 	rst TextScriptEnd
