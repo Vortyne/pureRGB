@@ -10,6 +10,8 @@ PlayerPC::
 	bit BIT_USING_GENERIC_PC, a
 	jr nz, PlayerPCMenu
 ; accessing it directly
+	xor a
+	ld [wLetterPrintingDelayFlags], a
 	ld a, SFX_TURN_ON_PC
 	rst _PlaySound
 	ld hl, TurnedOnPC2Text
