@@ -2,7 +2,7 @@
 
 ![covers](/box_art/PureRGB_Covers.png?raw=true)
 
-The only version differences between PureRed / PureBlue / PureGreen are visual. Play whatever color you like the most.
+The only version differences between PureRed / PureBlue / PureGreen are visual. Play whatever color you like the most. All 151 Pokemon are obtainable without trading.
 
 ## New Options in the Options Menu
 Many options have been added to the game's options menu. To be clear, there are **5 pages of options** now. **Use the Next button on the options page** to cycle through the pages when in-game.
@@ -89,6 +89,7 @@ The fourth page contains Sprite-related options.
 The fifth page contains some additional options.
 
 ![Options Fifth Page](/screenshots/options_page_5.png?raw=true)
+- Turn on or off song pause/resume between battles. If you want the route or cave song to not restart after every wild battle you run from, you can turn this OFF and it will pause/resume the area music instead.
 - Turn on or off the learnset feature in the game. On by default. You can unlock learnsets for pokemon in various ways (discussed in the "New Features" section if this is turned on)
 - Turn on a new title screen created for PureRGB. By default, it displays the original game's title screen for the version you are playing.
   
@@ -189,6 +190,7 @@ The fifth page contains some additional options.
 - Added a "Currently selected pokemon" info box to the PC withdraw/deposit/release menus. Includes species name, party icon, and pokemon's types. Now you can nickname your pokemon without forgetting which pokemon it is.
 - Enhanced the speed of the tile loading function of the game so many views load 2x as fast as they did before. Like the start menu, talking to an NPC, opening the party menu, etc.
 - When using items on your party, the menu will stay open if you have more of that item you can still use. Like if you have many rare candies, you don't have to keep opening up the party menu to use them over and over.
+- Small prompts in the start menu/pc menu will indicate special select button actions you can do (change box from start menu, sort items from start menu, view PC box from pc menu, sort items from player's pc menu)
 
 ## New Gameplay Features
 - Mew is under the truck!!! Use strength on it from the right side. If the SS Anne has left, it returns after obtaining the Soul Badge.
