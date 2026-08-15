@@ -19,4 +19,3 @@ https://github.com/Vortyne/pureRGB/wiki
 
 Leave a Review if you enjoyed PureRGB:
 https://github.com/Vortyne/pureRGB/issues/new?assignees=&labels=review&projects=&template=review.yml&title=%5BReview%5D%3A+Summarize+your+review+here
-
