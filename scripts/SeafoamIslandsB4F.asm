@@ -139,7 +139,7 @@ SeafoamIslandsB4FArticunoIntroAnimation:
 	ld de, IceCrystalSprite
 	lb bc, BANK(IceCrystalSprite), 4
 	ld hl, vNPCSprites tile $18
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call DisableSpriteUpdates
 	call .copyCrystalTileIDs
 	rst _DelayFrame

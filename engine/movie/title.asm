@@ -362,7 +362,7 @@ ENDC
 	ld hl, vChars2 tile $4F
 	ld de, PureTitlePlayerSpritePointing
 	lb bc, BANK(PureTitlePlayerSpritePointing), 7 * 6
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call DrawPlayerPointingSpriteBGTiles
 	call ClearSprites
 	ld a, SFX_INTRO_HOP
@@ -613,7 +613,7 @@ LoadCopyrightTiles:
 	ld de, NintendoCopyrightLogoGraphics
 	ld hl, vChars2 tile $60
 	lb bc, BANK(NintendoCopyrightLogoGraphics), (GameFreakLogoGraphicsEnd - NintendoCopyrightLogoGraphics) / TILE_SIZE
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	hlcoord 2, 7
 	ld de, CopyrightTextString
 	jp PlaceString

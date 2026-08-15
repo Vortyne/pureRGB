@@ -222,7 +222,7 @@ BluesHouseTeaEvent:
 	ld hl, vChars2 tile $36
 	ld de, House_GFX tile $36
 	lb bc, BANK(House_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call GBPalWhiteOut
 	call LoadScreenTilesFromBuffer2
 	ld a, [wXCoord]

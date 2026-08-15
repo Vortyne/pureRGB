@@ -81,29 +81,29 @@ StatusScreen:
 	ld de, BattleHudTiles1  ; source
 	ld hl, vChars2 tile $6d ; dest
 	lb bc, BANK(BattleHudTiles1), 3
-	call CopyVideoDataDouble ; ·│ :L and halfarrow line end
+	call CopyVideoDataHBlankDouble ; ·│ :L and halfarrow line end
 	ld de, BattleHudTiles2
 	ld hl, vChars2 tile $78
 	lb bc, BANK(BattleHudTiles2), 1
-	call CopyVideoDataDouble ; │
+	call CopyVideoDataHBlankDouble ; │
 	ld de, BattleHudTiles3
 	ld hl, vChars2 tile $76
 	lb bc, BANK(BattleHudTiles3), 2
-	call CopyVideoDataDouble ; ─ ┘
+	call CopyVideoDataHBlankDouble ; ─ ┘
 	ld de, PTile
 	ld hl, vChars2 tile $72
 	lb bc, BANK(PTile), 1
-	call CopyVideoDataDouble ; bold P (for PP)
+	call CopyVideoDataHBlankDouble ; bold P (for PP)
 	; copy the apex prompt and the stat exp prompt, which is next to it in memory
 	ld hl, vFont tile 73
 	ld de, ApexPrompt
 	lb bc, BANK(ApexPrompt), 7
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	ASSERT BANK(StatExpPrompt) == BANK(ApexPrompt)
 	ld hl, vFont tile 80
 	ld de, PokeBallSprite
 	lb bc, BANK(PokeBallSprite), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ldh a, [hTileAnimations]
 	push af
 	ld a, [wUpdateSpritesEnabled]
@@ -131,7 +131,7 @@ StatusScreen:
 	ld hl, wStatusScreenHPBarColor
 	call GetHealthBarColor
 	ld d, SET_PAL_STATUS_SCREEN
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	hlcoord 16, 6
 	ld de, wLoadedMonStatus
 	call PrintStatusCondition

@@ -125,7 +125,7 @@ CeladonCityLittleGirlText:
 	ld hl, vNPCSprites tile $78
 	ld de, PokeBallSprite
 	lb bc, BANK(PokeBallSprite), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	rst TextScriptEnd
 .no
 	ld hl, CeladonSuitYourself

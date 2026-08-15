@@ -58,7 +58,7 @@ DisplayDiploma::
 	farcall LoadTrainerInfoTextBoxTiles
 	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
-	call Delay3
+	call Delay3IfNotGBC
 	call GBPalNormal
 	ld a, $90
 	ldh [rOBP0], a
@@ -68,7 +68,6 @@ DisplayDiploma::
 ReloadEverything::
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
-	call Delay3
 	jp GBPalNormal
 
 ;UnusedPlayerNameLengthFunc:

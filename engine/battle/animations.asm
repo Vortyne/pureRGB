@@ -413,7 +413,8 @@ LoadMoveAnimationTiles:
 	ld a, 64 ; we load less tiles in the trade center
 .load
 	ld c, a ; number of tiles
-	jp CopyVideoData ; load tileset
+	; load tileset
+	jp CopyVideoData
 
 MACRO anim_tileset
 	db \1
@@ -2385,7 +2386,7 @@ CopyTempPicToMonPic:
 .next
 	ld de, wTempPic
 	ld bc, PIC_SIZE
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 AnimationWavyScreen::
 ; used in Psywave/Psychic etc.
@@ -3043,7 +3044,7 @@ AnimationShakeEnemyHUD:
 	ld de, vBackPic
 	ld hl, vSprites
 	ld bc, PIC_SIZE
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 	xor a
 	ldh [hSCX], a
@@ -3494,11 +3495,11 @@ AnimationLoadPokeDoll:
 	ld hl, vSprites tile $3B
 	ld de, FairySprite
 	lb bc, BANK(FairySprite), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vSprites tile $4B
 	ld de, FairySprite tile 2
 	lb bc, BANK(FairySprite), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld a, SFX_BALL_TOSS
 	rst _PlaySound
 	ret

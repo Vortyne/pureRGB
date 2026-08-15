@@ -6,10 +6,8 @@ MainMenu:
 	inc a
 	ld [wSaveFileStatus], a
 	call ClearScreen
-	call DisableLCD
 	call LoadFontTilePatterns
 	call LoadTextBoxTilePatterns
-	call EnableLCD
 	call CheckForPlayerNameInSRAM
 	jr nc, .mainMenuLoop
 

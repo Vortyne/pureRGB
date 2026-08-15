@@ -29,11 +29,11 @@ DisplayWorldOptions::
 	ld de, PokedexPromptGraphics
 	ld hl, vChars1 tile $43
 	lb bc, BANK(PokedexPromptGraphics), 3
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, InfoPromptGraphics
 	ld hl, vChars1 tile $46
 	lb bc, BANK(InfoPromptGraphics), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, WorldOptionsHeader
 	ld bc, WorldOptionsData
 	jp DisplayOptionMenuCommon

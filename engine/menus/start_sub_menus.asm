@@ -528,6 +528,7 @@ StartMenu_TrainerInfo::
 	jp RedisplayStartMenu
 
 ; loads tile patterns and draws everything except for gym leader faces / badges
+; TODO: move into another bank?
 DrawTrainerInfo:
 	callfar DisplayPicCenteredOrUpperRight
 	call DisableLCD

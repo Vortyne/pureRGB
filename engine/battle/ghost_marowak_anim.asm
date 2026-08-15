@@ -56,7 +56,7 @@ CopyMonPicFromBGToSpriteVRAM:
 	ld de, vFrontPic
 	ld hl, vSprites
 	ld bc, PIC_SIZE
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld a, $10
 	ld [wBaseCoordY], a
 	ld a, $70

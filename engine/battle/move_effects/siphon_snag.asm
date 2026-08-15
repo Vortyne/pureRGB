@@ -96,11 +96,11 @@ _AnimationSiphonSnagAttack::
 	ld hl, vSprites tile $31
 	ld de, SiphonSnagTiles
 	lb bc, BANK(SiphonSnagTiles), 3
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vSprites tile $34
 	ld de, MoveAnimationTiles0 tile 73
 	lb bc, BANK(MoveAnimationTiles0), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call ClearSprites
 	ld hl, wShadowOAMSprite08TileID
 	ld [hl], $33
@@ -325,7 +325,7 @@ AnimationSiphonSnagHealParty:
 	ld hl, vSprites tile $31
 	ld de, MoveAnimationTiles0 tile 67
 	lb bc, BANK(MoveAnimationTiles0), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call ClearSprites
 	ld hl, wShadowOAMSprite36TileID
 	ld [hl], $31

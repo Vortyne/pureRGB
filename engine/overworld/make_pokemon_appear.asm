@@ -31,7 +31,7 @@ MakePokemonAppearInOverworld::
 	rst DelayFrames
 	pop de
 	pop bc
-	callfar FarLoadPartyMonSpriteIntoVRAMScreenOn
+	callfar FarLoadSinglePartyMonSpriteIntoVRAM
 	jp UpdateSprites
 
 ; Makes a sprite disappear in a poof and moves it to the provided coordinates

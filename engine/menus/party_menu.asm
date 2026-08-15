@@ -86,7 +86,7 @@ RedrawPartyMenu_::
 	jr .printLevel
 .teachMoveMenu
 	push hl
-	callfar CanLearnTM ; check if the pokemon can learn the move
+	call CanLearnTM ; check if the pokemon can learn the move
 	pop hl
 	ld de, .ableToLearnMoveOrEvolveText
 	jr nz, .placeMoveLearnabilityString
@@ -168,7 +168,7 @@ RedrawPartyMenu_::
 	jr .printLevel
 .afterDrawingMonEntries
 	ld d, SET_PAL_PARTY_MENU
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 .printMessage
 	ld hl, wStatusFlags5
 	ld a, [hl]
@@ -181,8 +181,7 @@ RedrawPartyMenu_::
 	cp USE_ITEM_PARTY_MENU
 	jr z, .itemNameNeeded
 	cp USE_ITEM_PARTY_MENU_BATTLE
-	jr z, .itemNameNeeded
-	jr .noItemNameNeeded
+	jr nz, .noItemNameNeeded
 .itemNameNeeded
 	push af
 	ld a, [wPartyItemID]

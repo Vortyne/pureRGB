@@ -7,7 +7,6 @@ LoadLearnsetTiles:
 	ld [wCurSpecies], a
 	push af
 	call GetMonHeader
-	call DisableLCD
 	ld de, vChars1 tile $57
 	ld a, [wPokedexNum]
 	ld c, a
@@ -16,18 +15,17 @@ LoadLearnsetTiles:
 	ld de, wShadowOAM
 	ld bc, 32
 	rst _CopyData
-	call EnableLCD
 	pop af
 	ld [wPokedexNum], a
 	; load menu graphics
 	ld de, LearnsetMenuUI2BPP
 	ld hl, vChars1 tile $40
 	lb bc, BANK(LearnsetMenuUI2BPP), 23
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, LearnsetMenuUI1BPP
 	ld hl, vChars2 tile $75
 	lb bc, BANK(LearnsetMenuUI1BPP), 6
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	; draw basic border tiles that will stay the same regardless of page
 	hlcoord 0, 4
 	lb bc, $CC, 7 
@@ -192,7 +190,7 @@ ShowLevelUpLearnset:
 	ld [wGenericPaletteOverride], a
 	ld d, SET_PAL_GENERIC
 	call RunPaletteCommand
-	call Delay3
+	call Delay3IfNotGBC
 .loop
 	call PrepLearnsetList
 .printMoveEntryLoop

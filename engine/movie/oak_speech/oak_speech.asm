@@ -131,7 +131,7 @@ ENDC
 	ld de, RedSprite
 	ld hl, vSprites
 	lb bc, BANK(RedSprite), $0C
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, ShrinkPic1
 	lb bc, BANK(ShrinkPic1), $00
 	call IntroDisplayPicCenteredOrUpperRight

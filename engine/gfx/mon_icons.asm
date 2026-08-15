@@ -143,7 +143,7 @@ LoadAnimSpriteGfx:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop hl
 	pop bc
 	ld a, $6

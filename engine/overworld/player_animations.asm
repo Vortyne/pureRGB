@@ -73,7 +73,7 @@ EnterMapAnim::
 	ld de, BirdSprite
 	ld hl, vNPCSprites
 	lb bc, BANK(BirdSprite), $0c
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call LoadBirdSpriteGraphics
 	ld a, SFX_FLY
 	rst _PlaySound
@@ -224,11 +224,11 @@ LoadBirdSpriteGraphics:
 	ld de, BirdSprite
 	ld hl, vNPCSprites
 	lb bc, BANK(BirdSprite), 12
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, BirdSprite tile 12 ; moving animation sprite
 	ld hl, vNPCSprites2
 	lb bc, BANK(BirdSprite), 12
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 InitFacingDirectionList:
 	ld a, [wSpritePlayerStateData1ImageIndex] ; (image index is locked to standing images)
@@ -356,7 +356,7 @@ FishingAnim:
 	ld de, RedSprite
 	ld hl, vNPCSprites tile $00
 	lb bc, BANK(RedSprite), 12
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld a, $4
 	ld hl, RedFishingTiles
 	call LoadAnimSpriteGfx

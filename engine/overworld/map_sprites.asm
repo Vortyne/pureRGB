@@ -194,7 +194,7 @@ LoadMapSpriteTilePatterns:
 	call FarCopyData4 ; load tile pattern data for sprite when walking
 	jr .skipSecondLoad
 ; When reloading the upper half of tile patterns after displaying text, the LCD
-; will be on, so CopyVideoData (which writes to VRAM only during V-blank) must
+; will be on, so CopyVideoDataHBlank (which writes to VRAM only during V-blank and Hblank) must
 ; be used instead of FarCopyData4.
 .loadWhileLCDOn
 	pop af
@@ -202,7 +202,7 @@ LoadMapSpriteTilePatterns:
 	set 3, h ; add $800 ($80 tiles) to hl (1 << 3 == $8)
 	ld b, a
 	swap c
-	call CopyVideoData ; load tile pattern data for sprite when walking
+	call CopyVideoDataHBlank ; load tile pattern data for sprite when walking
 .skipSecondLoad
 	pop hl
 	pop bc

@@ -206,7 +206,7 @@ ShowBeforeAfterImages:
 	ld d, SET_PAL_BEFORE_AFTER
 	call RunPaletteCommand
 	
-	call Delay3
+	call Delay3IfNotGBC
 	call GBPalNormal
 	ld a, [wCurPartySpecies]
 	ld [wCurSpecies], a ; getmonheader input pokemon

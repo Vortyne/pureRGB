@@ -62,25 +62,25 @@ DiglettsCaveLoadDiglettSprites::
 	ld hl, vNPCSprites tile $0C
 	ld de, PartyMonSprites2 tile 50
 	lb bc, BANK(PartyMonSprites2), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vNPCSprites tile $0E
 	ld de, PartyMonSprites2 tile 54
 	lb bc, BANK(PartyMonSprites2), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; half visible sprite
 	ld de, DiglettDiggingSprite tile 4
 	ld hl, vNPCSprites tile $10
 	lb bc, BANK(DiglettDiggingSprite), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; gone sprite
 	ld de, DiglettDiggingSprite tile 14
 	ld hl, vNPCSprites tile $16
 	lb bc, BANK(DiglettDiggingSprite), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, NothingSprite
 	ld hl, vNPCSprites tile $14
 	lb bc, BANK(NothingSprite), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 HideDigletts:
 	ResetEvent EVENT_DIGLETTS_VISIBLE

@@ -312,7 +312,7 @@ LavaFloodResetAlways::
 	ld de, Volcano_GFX tile $2A
 .copy
 	lb bc, BANK(Volcano_GFX), 1
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 CheckReassignFloodLavaWarp:
 	CheckEvent EVENT_IN_LAVA_FLOOD_ROOM
@@ -671,7 +671,7 @@ ReloadOldAmberSprite:
 	ld hl, vChars0 tile 120 ; start of vram tiles for the old amber sprite
 	ld de, OldAmberSprite
 	lb bc, BANK(OldAmberSprite), 4
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 ShowRubies:
 	ld c, TOGGLE_VOLCANO_RUBY_1
@@ -705,7 +705,7 @@ VolcanoBombableRockCommon:
 	ld hl, vChars0 tile 120 ; start of vram tiles for the old amber sprite
 	ld de, BurningAnimation
 	lb bc, BANK(BurningAnimation), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call ShowAnimationSprite
 	ld de, SFX_Melt_Rocks
 	call PlayNewSoundChannel8
@@ -732,7 +732,7 @@ VolcanoBombableRockCommon:
 .rockShatterAnimationLoad
 	ld de, RockShatterAnimation tile 8
 	lb bc, BANK(RockShatterAnimation), 2
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 .shatter
 	; shatter rock
 	ld hl, vChars0 tile 120 ; start of vram tiles for the old amber sprite
@@ -752,7 +752,7 @@ VolcanoBombableRockCommon:
 	ld hl, vChars0 tile 120 ; start of vram tiles for the old amber sprite
 	ld de, ExplosionAnimation
 	lb bc, BANK(ExplosionAnimation), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call ShowAnimationSprite
 	ld de, SFX_Explode_Rocks
 	call PlayNewSoundChannel8
@@ -1753,7 +1753,7 @@ MoltresBattleAnimation:
 	ld hl, vNPCSprites tile $78 ; start of vram tiles for the old amber sprite
 	ld de, BurningAnimation
 	lb bc, BANK(BurningAnimation), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld c, TOGGLE_VOLCANO_ANIMATION_PROXY ; we will use an extra sprite as a proxy for showing an animation
 	call ShowExtraObject
 	ld de, SFX_Melt_Rocks
@@ -2343,7 +2343,7 @@ MakeNPCWearLavaSuit:
 	ld l, e
 	ld de, LavaSuitSprite
 	lb bc, BANK(LavaSuitSprite), 12
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 MakeBlaineAndProspectorWearLavaSuit:
 	ld de, vNPCSprites tile 12
@@ -2365,7 +2365,7 @@ MakeBlaineAndProspectorWearLavaSuit:
 	ld de, PartyMonSprites1 tile 76
 .copy
 	lb bc, BANK(PartyMonSprites1), 2
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 CinnabarVolcanoClearedAllBlockagesText::
 	text_far _VolcanoBlockagesGone

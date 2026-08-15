@@ -102,7 +102,7 @@ DisplayPartyMenu::
 	push af
 	xor a
 	ldh [hTileAnimations], a
-	call GBPalWhiteOutWithDelay3
+	call GBPalWhiteOut
 	call ClearSprites
 	call PartyMenuInit
 	call DrawPartyMenu

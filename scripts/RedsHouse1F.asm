@@ -129,15 +129,15 @@ RedsHouse1FMomText:
 	ld hl, vChars2 tile 5
 	ld de, RedsHouse1_GFX tile 5
 	lb bc, BANK(RedsHouse1_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vChars2 tile $28
 	ld de, RedsHouse1_GFX tile $28
 	lb bc, BANK(RedsHouse1_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vChars2 tile $37
 	ld de, RedsHouse1_GFX tile $37
 	lb bc, BANK(RedsHouse1_GFX), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 	call UpdateSprites
 	call GBFadeInFromWhite

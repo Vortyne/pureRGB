@@ -5,6 +5,14 @@ RestoreScreenTilesAndReloadTilePatterns::
 	call LoadScreenTilesFromBuffer2
 	call LoadTextBoxTilePatterns
 	call RunDefaultPaletteCommand
+	; fall through
+
+; on GBC we have to Delay3 to load colors in. Sometimes this results in an extra Delay3, 
+; so in some cases we will skip Delay3s in case GBC is about to or has already Delay3'd
+Delay3IfNotGBC::
+	ldh a, [hGBC]
+	and a
+	ret nz
 	jr Delay3
 
 GBPalWhiteOutWithDelay3::
@@ -37,6 +45,10 @@ UpdatePal:: ; shinpokerednote: gbcnote: gbc color code from pokeyellow
 	call UpdateGBCPal_OBP0
 	jp UpdateGBCPal_OBP1
 
+
+RunPaletteCommandWithoutGBCDelay::
+	SetEvent FLAG_SKIP_DELAY_IN_GBC_PALETTE_FUNC
+	jr RunPaletteCommand
 
 RunDefaultPaletteCommand::
 	ld d, SET_PAL_DEFAULT

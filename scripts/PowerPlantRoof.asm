@@ -34,11 +34,11 @@ CheckLoadPowerPlantRoofTiles::
 	ld de, PowerPlantRoofTiles
 	ld hl, vTileset tile $44
 	lb bc, BANK(PowerPlantRoofTiles), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, PowerPlantRoofTiles tile 4
 	ld hl, vTileset tile $16
 	lb bc, BANK(PowerPlantRoofTiles), 2
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 CheckShowDarkClouds::
 	CheckEvent EVENT_BEAT_ZAPDOS
@@ -99,12 +99,12 @@ CheckDoZapdosLightningAnimation:
 	ret z
 	ld a, POWER_PLANT_ROOF_ZAPDOS
 	call SetSpriteFacingDown
-	call UpdateSprites
+	call UpdateSpritesAndDelay3
 	; load storm tiles for this animation
 	ld hl, vNPCSprites2 tile $40
 	ld de, PowerPlantStormTiles
 	lb bc, BANK(PowerPlantStormTiles), 5
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; zapdos lightning animation
 	; disable sprite update routine so we can manipulate some rain sprites directly without map sprite code running
 	call DisableSpriteUpdates

@@ -1,14 +1,12 @@
 ; mechanicalpennote: ADDED: new code for increasing the number of icons possible to display on the party menu.
 
 LoadNicknameMonSprite:
-	call DisableLCD
 	xor a
 	ldh [hDownArrowBlinkCount1], a
 	ld a, [wMonPartySpriteSpecies]
 	ld de, vNPCSprites
 	call LoadPartyMonSpriteIntoVRAM
 	call FillPartyMonOAM
-	call EnableLCD
 	ldh a, [hSpriteIndex]
 	push af
 	xor a
@@ -23,7 +21,6 @@ LoadTradeMonSprite:
 	jp AdjustForTradeScreen	
 
 LoadPartyMonSprites:
-	call DisableLCD
 	ld de, vNPCSprites
 	ld hl, wPartySpecies
 .loop
@@ -31,29 +28,29 @@ LoadPartyMonSprites:
 	cp $ff
 	jr z, .done
 	push hl
+	push de
 	call LoadPartyMonSpriteIntoVRAM
+	pop de
+	ld hl, 8 tiles
+	add hl, de
+	ld d, h
+	ld e, l
 	pop hl
 	jr .loop
 .done
-	call FillPartyMonOAM
-	jp EnableLCD
-
+	jp FillPartyMonOAM
 
 FarLoadPartyMonSpriteIntoVRAM::
 	ld a, c
 LoadPartyMonSpriteIntoVRAM:
 	call PreparePartyMonSpriteCopy
-	jp FarCopyData
+	ld c, 8
+	jp CopyVideoDataHBlank
 
-FarLoadPartyMonSpriteIntoVRAMScreenOn::
+FarLoadSinglePartyMonSpriteIntoVRAM::
 	ld a, c
 	call PreparePartyMonSpriteCopy
-	ld b, a
 	ld c, 2
-	push hl
-	push de
-	pop hl
-	pop de ; swap de and hl
 	call CopyVideoDataHBlankBackUp
 	push bc
 	ld bc, 4 tiles
@@ -82,15 +79,14 @@ PreparePartyMonSpriteCopy:
 	ldh [hMultiplier], a
 	call Multiply
 	ldh a, [hProduct + 2]
-	ld h, a
+	ld d, a
 	ldh a, [hProduct + 3]
-	ld l, a	
-	ld a, h
+	ld e, a	
+	ld a, d
 	add $40
-	ld h, a
-	ld a, BANK(PartyMonSprites1)
-	pop de
-	ld bc, $0080
+	ld d, a
+	pop hl
+	ld b, BANK(PartyMonSprites1)
 	ret
 
 GetPartyMonSpriteID:

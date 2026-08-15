@@ -168,12 +168,12 @@ DisplayWildLocations:
 	ld de, MapAreasUI
 	ld hl, vChars1 tile $40
 	lb bc, BANK(MapAreasUI), (MapAreasUIEnd - MapAreasUI) / $10
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 	ld de, FishingWaterIcons
 	ld hl, vSprites tile $05
 	lb bc, BANK(FishingWaterIcons), 2
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	
 	call GetAreaDisplayTypes
 	ld a, [wTownMapAreaTypeFlags]

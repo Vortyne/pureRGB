@@ -77,10 +77,10 @@ CeruleanRocketHouseMissingnoScript:
 	call Random
 	ld e, a
 	call Random
-	and %1111 ; only use first 16 banks
+	and %1111 ; only use first 16 banks which are mostly full
 	ld b, a
 	ld c, 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; fill the screen with garbage tiles to make things look like they glitched out
 	call FillScreenWithRandomTilesFromC0
 	xor a

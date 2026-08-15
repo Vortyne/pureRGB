@@ -285,7 +285,7 @@ SeafoamIslands1FLoadCustomTiles:
 	ld hl, vNPCSprites tile $78
 	ld de, FossilSprite
 	lb bc, BANK(FossilSprite), 4
-	call CopyVideoData 
+	call CopyVideoDataHBlank
 	jr .doneLoad
 .shellSprite
 	call DragonairEventLoadCloysterSprite
@@ -294,17 +294,17 @@ SeafoamIslands1FLoadCustomTiles:
 	ld hl, vTileset tile $14
 	ld de, Cavern_GFX tile $05
 	lb bc, BANK(Cavern_GFX), 1
-	call CopyVideoData 
+	call CopyVideoDataHBlank
 	; load custom "ice crystal" tiles
 	ld hl, vTileset tile $3D
 	ld de, IceCrystalLarge
 	lb bc, BANK(IceCrystalLarge), 4
-	call CopyVideoData 
+	call CopyVideoDataHBlank
 	; load custom "seaweed" tiles
 	ld hl, vTileset tile $23
 	ld de, SeaweedTiles
 	lb bc, BANK(SeaweedTiles), 1
-	jp CopyVideoData 
+	jp CopyVideoDataHBlank
 
 Seafoam1FAnimatedTiles2::
 	ld a, [wXCoord]
@@ -607,7 +607,7 @@ DragonairEventTransformText:
 	ld de, MoveAnimationTiles0 tile 28
 	ld hl, vNPCSprites tile $C4
 	lb bc, BANK(MoveAnimationTiles0), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, wShadowOAMSprite39TileID
 	ld de, SparkleSpriteStartingCoords
 	jr TilePowerUpLoop

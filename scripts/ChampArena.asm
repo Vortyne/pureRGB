@@ -545,7 +545,7 @@ ReloadChallengerSprite:
 	push de
 	push bc
 	ld hl, vChars0 tile 24 ; replace 2nd sprite's standing tiles
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop bc
 	pop de
 	ld hl, TILE_SIZE * 12 ; 12 tiles
@@ -553,7 +553,7 @@ ReloadChallengerSprite:
 	ld d, h
 	ld e, l
 	ld hl, vChars1 tile 24 ; replace 2nd sprite's walking tiles
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop hl
 	ld a, [hl]
 	ld [wSprite02StateData1PictureID], a
@@ -1393,24 +1393,24 @@ LoadAssistantNormalSprites:
 	ld b, BANK(ArenaAssistantSprite)
 	ld de, ArenaAssistantSprite tile 4
 	ld c, 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vChars0 tile 44
 	ld b, BANK(ArenaAssistantSprite)
 	ld de, ArenaAssistantSprite tile 8
 	ld c, 4
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 LoadAssistantCutsceneSprites:
 	ld hl, vChars0 tile 40 ; replace 3rd sprite's back standing tiles with the bowing tiles
 	ld b, BANK(ArenaAssistantSprite)
 	ld de, ArenaAssistantSprite tile 12
 	ld c, 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vChars0 tile 44 ; replace 3rd sprite's sideways standing tiles with the holding hand up tiles
 	ld b, BANK(ArenaAssistantSprite)
 	ld de, ArenaAssistantSprite tile 20
 	ld c, 4
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 AssistantPrintIntroText:
 	rst _PrintText
@@ -1689,7 +1689,7 @@ ReloadVariableCrowd:
 	ld [wSprite10StateData1PictureID], a
 	ld [wMapSpriteOriginalPictureIDs+9], a
 	ld hl, vChars0 tile 108
-	call CopyVideoData
+	call CopyVideoDataHBlank
 .checkCrowd1and2
 	; then decide who will replace CHAMP_ARENA_VARIABLE_CROWD1 and CHAMP_ARENA_VARIABLE_CROWD2
 	call Random
@@ -1748,12 +1748,12 @@ ReloadVariableCrowd:
 	ld [wSprite07StateData1PictureID], a
 	ld [wMapSpriteOriginalPictureIDs+6], a
 	ld hl, vChars0 tile 84
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 .loadCrowd2
 	ld [wSprite08StateData1PictureID], a
 	ld [wMapSpriteOriginalPictureIDs+7], a
 	ld hl, vChars0 tile 96
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 .default1
 	ld a, SPRITE_MIDDLE_AGED_MAN_SITTING
 	lb bc, BANK(MiddleAgedManSittingSprite), 12

@@ -6900,11 +6900,11 @@ LoadHudTilePatterns:
 	ld de, BattleHudTiles1
 	ld hl, vChars2 tile $6d
 	lb bc, BANK(BattleHudTiles1), (BattleHudTiles1End - BattleHudTiles1) / TILE_1BPP_SIZE
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	ld de, BattleHudTiles2
 	ld hl, vChars2 tile $73
 	lb bc, BANK(BattleHudTiles2), (BattleHudTiles3End - BattleHudTiles2) / TILE_1BPP_SIZE
-	jp CopyVideoDataDouble
+	jp CopyVideoDataHBlankDouble
 
 PrintEmptyString:
 	ld hl, .emptyString
@@ -7309,7 +7309,7 @@ LoadMonBackPicCommon:
 	ld c, (2 * SPRITEBUFFERSIZE) / TILE_SIZE ; count of 16-byte chunks to be copied
 	ldh a, [hLoadedROMBank]
 	ld b, a
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 ;;;;;;;;;; PureRGBnote: ADDED: code to switch between original and larger back sprites
 LoadBackSpriteZoomed:

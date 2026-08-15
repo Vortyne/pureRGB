@@ -338,4 +338,4 @@ LoadReplacedRocketFightingBrosHouse::
 	ld hl, vNPCSprites tile $24
 	ld de, CooltrainerMSprite
 	lb bc, BANK(CooltrainerMSprite), 12
-	jp CopyVideoData
+	jp CopyVideoDataHBlank

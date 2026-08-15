@@ -47,31 +47,31 @@ ShowMapWildEncounters::
 	ld hl, vSprites tile $D0
 	ld de, WildDataArrows
 	lb bc, BANK(WildDataArrows), 2
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	ld hl, vSprites tile $D2
 	ld de, BattleHudTiles1 tile1bpp 1
 	lb bc, BANK(BattleHudTiles1), 1
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	; grass tile
 	ld hl, vSprites tile $D3
 	ld de, Overworld_GFX tile $52
 	lb bc, BANK(Overworld_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; lava tile
 	ld hl, vSprites tile $D4
 	ld de, Volcano_GFX tile 20
 	lb bc, BANK(Volcano_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; foot tile
 	ld hl, vSprites tile $D5
 	ld de, WildDataShoe
 	lb bc, BANK(WildDataShoe), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; hook tile
 	ld hl, vSprites tile $D6
 	ld de, FishingWaterIcons
 	lb bc, BANK(FishingWaterIcons), 1
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	; ball tile
 	callfar LoadPokeballTileGraphics
 	pop de

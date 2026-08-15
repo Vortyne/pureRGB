@@ -253,7 +253,7 @@ LoadPlayerBackPic::
 	ldh a, [hLoadedROMBank]
 	ld b, a
 	ld c, 7 * 7
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	xor a
 	ld [rRAMG], a
 	ld a, $31

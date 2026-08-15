@@ -8,15 +8,15 @@ LoadShootingStarGraphics:
 	ld de, MoveAnimationTiles1 tile 3 ; star tile (top left quadrant)
 	ld hl, vChars1 tile $20
 	lb bc, BANK(MoveAnimationTiles1), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, MoveAnimationTiles1 tile 19 ; star tile (bottom left quadrant)
 	ld hl, vChars1 tile $21
 	lb bc, BANK(MoveAnimationTiles1), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, FallingStar
 	ld hl, vChars1 tile $22
 	lb bc, BANK(FallingStar), (FallingStarEnd - FallingStar) / TILE_SIZE
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, GameFreakLogoOAMData
 	ld de, wShadowOAMSprite24
 	ld bc, GameFreakLogoOAMDataEnd - GameFreakLogoOAMData

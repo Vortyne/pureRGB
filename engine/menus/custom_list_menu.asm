@@ -162,7 +162,7 @@ CheckSaveTypeTextScreenTiles:
 	ld hl, vChars1 tile $40
 	ld de, OldNewTypes
 	lb bc, BANK(OldNewTypes), 4
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	; we need to save some tiles for later in case we display a TM text box above these tiles
 	hlcoord 4, 13
 	lb bc, 16, 5
@@ -320,7 +320,7 @@ GetWithdrawPCMenuPrompt:
 	call GetMonName
 	pop bc
 	ld de, vChars1 tile $5C
-	callfar FarLoadPartyMonSpriteIntoVRAMScreenOn
+	callfar FarLoadSinglePartyMonSpriteIntoVRAM
 	hlcoord 1, 14
 	ld de, wNameBuffer
 	call PlaceString

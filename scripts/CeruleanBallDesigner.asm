@@ -7,11 +7,11 @@ CeruleanBallDesignerLoadExtraTiles::
 	ld hl, vTileset tile $2C
 	ld de, HouseBetaTiles
 	lb bc, BANK(HouseBetaTiles), 8
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vTileset tile $3C
 	ld de, SmallPCPic
 	lb bc, BANK(SmallPCPic), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; fall through
 CeruleanBallDesignerLoadExtraSprites::
 	ld a, [wXCoord]
@@ -24,7 +24,7 @@ CeruleanBallDesignerLoadExtraSprites::
 	ld hl, vNPCSprites tile $7C
 	ld de, CameraSprite
 	lb bc, BANK(CameraSprite), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld b, 3
 .skip
 	ld a, [wOnSGB]

@@ -133,7 +133,7 @@ LoadPokeballTilesAndOAM::
 	ld hl, vSprites tile $31
 	ld de, MoveAnimationTiles0
 	lb bc, BANK(MoveAnimationTiles0), 24
-	call CopyVideoData
+	call CopyVideoDataHBlank
 LoadPokeballOAM:
 	ld hl, wShadowOAMSprite36TileID
 	ld de, PokeballOAMList
@@ -198,7 +198,7 @@ LoadBallPoofTile:
 .skip
 	ld c, 1
 	ld hl, vSprites tile $35
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 .blankTile
 	ld de, NothingSprite
 	ld b, BANK(NothingSprite)
@@ -1099,7 +1099,7 @@ HyperBallDropAnim:
 	ld hl, vSprites tile $36
 	ld de, MoveAnimationTiles0 tile 67
 	lb bc, BANK(MoveAnimationTiles0), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call DropAnimationPhase1
 	call HideAnimationOAMEntries
 	lb de, 90, 36
@@ -1526,7 +1526,7 @@ EmotionBallTossAnim:
 	jr z, .loadEmote
 	ld de, SleepingEmote
 .loadEmote
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, wShadowOAMSprite32TileID
 	ld de, EmoteOAMData
 	call LoadPokeballOAMLoop
@@ -1702,7 +1702,7 @@ DescendBallTossAnim:
 	ld hl, vSprites tile $49
 	ld de, BallAnimTiles tile 10
 	lb bc, BANK(BallAnimTiles), 3
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	lb de, 50, 36
 	call LoadDefaultBallOAMCoords
 	ld hl, wShadowOAMSprite35YCoord
@@ -1803,11 +1803,11 @@ OriginalPoofAnimCommon:
 	ld hl, vSprites tile $4D
 	ld de, MoveAnimationTiles0 tile 32
 	lb bc, BANK(MoveAnimationTiles0), 6
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vSprites tile $53
 	ld de, MoveAnimationTiles0 tile 48
 	lb bc, BANK(MoveAnimationTiles0), 6
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 	ld de, FirstFrameTileIDOrder
 	call InitFourTimesFourPoofAnim
@@ -1967,15 +1967,15 @@ ExplodePoofAnim:
 	ld hl, vSprites tile $4D
 	ld de, MoveAnimationTiles1 tile 34
 	lb bc, BANK(MoveAnimationTiles1), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vSprites tile $51
 	ld de, MoveAnimationTiles1 tile 50
 	lb bc, BANK(MoveAnimationTiles1), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vSprites tile $55
 	ld de, MoveAnimationTiles1 tile 67
 	lb bc, BANK(MoveAnimationTiles1), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld b, 2
 .loop
 	push bc

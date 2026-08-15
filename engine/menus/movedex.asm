@@ -31,13 +31,13 @@ ShowMovedexMenu:
 	ldh [hJoy7], a
 .setUpGraphics
 	ld d, SET_PAL_TOWN_MAP
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	callfar LoadPokedexTilePatterns
 
 	ld de, MovedexPromptGraphics
 	ld hl, vChars1 tile $40
 	lb bc, BANK(MovedexPromptGraphics), (MovedexPromptGraphicsEnd - MovedexPromptGraphics) / $10
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 .stayOnMenu
 	ld hl, wTopMenuItemY
@@ -340,7 +340,7 @@ ShowMoveDataExternal:
 	ld de, MovedexUI
 	lb bc, BANK(MovedexUI), 21
 	ld hl, vChars1 tile $44
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 
 	call DrawDataBorder
 
@@ -381,7 +381,7 @@ ShowNextMoveData:
 	ld a, [wPlayerMoveType]
 	ld [wCurPartySpecies], a
 	ld d, SET_PAL_MOVEDEX
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	pop af
 	ld [wMovedexMoveID], a
 

@@ -489,7 +489,7 @@ LoadHaunterTiles:
 	ld de, HaunterFace
 	lb bc, BANK(HaunterFace), 12
 	ld hl, vChars1 tile $40
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 ; draw a haunter face on the screen with top left tile at hlcoord
 DrawHaunterFace:

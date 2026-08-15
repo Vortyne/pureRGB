@@ -167,7 +167,7 @@ LoadBattleTransitionTile:
 	ld hl, vChars1 tile $7f
 	ld de, BattleTransitionTile
 	lb bc, BANK(BattleTransitionTile), 1
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 BattleTransitionTile: INCBIN "gfx/overworld/battle_transition.2bpp"
 

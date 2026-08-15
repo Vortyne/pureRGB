@@ -49,7 +49,7 @@ MewtwoAnimation:
 	ld hl, vNPCSprites2 tile $40
 	ld de, PsychicEyeSprite
 	lb bc, BANK(PsychicEyeSprite), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld d, $C0
 	callfar FillScreenWithTile
 	xor a

@@ -16,14 +16,14 @@ ShowPokedexMenu:
 	ldh [hJoy7], a
 .setUpGraphics
 	ld d, SET_PAL_GENERIC
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	callfar LoadPokedexTilePatterns
 ;;;;;;;;;;; PureRGBnote: ADDED: load these new button prompt graphics into VRAM
 	call CheckLoadMetricGraphics
 	ld de, PokedexPromptGraphics
 	ld hl, vChars1 tile $40
 	lb bc, BANK(PokedexPromptGraphics), (PokedexPromptGraphicsEnd - PokedexPromptGraphics) / $10
-	call CopyVideoData
+	call CopyVideoDataHBlank
 ;;;;;;;;;;
 .doPokemonListMenu
 	ld hl, wTopMenuItemY
@@ -565,7 +565,7 @@ ShowPokedexDataInternal:
 	ld de, PokedexDataUI
 	lb bc, BANK(PokedexDataUI), 2
 	ld hl, vChars1 tile $4D
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 
 	ld a, PAD_B
 	ld [wMenuWatchedKeys], a ; buttons this menu will track when displaying text (A Button used to proceed the text)
@@ -649,7 +649,7 @@ ShowNextPokemonData:
 	ld [wBattleMonSpecies2], a
 	push af
 	ld d, SET_PAL_POKEDEX
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	pop af
 	ld [wPokedexNum], a
 
@@ -757,7 +757,7 @@ ShowNextPokemonData:
 	push de
 	push hl
 
-	call Delay3
+	call Delay3IfNotGBC
 	call GBPalNormal
 	call GetMonHeader ; load pokemon picture location
 	hlcoord 1, 1
@@ -1181,7 +1181,7 @@ CheckLoadMetricGraphics:
 	ld de, MetricGraphics
 	ld hl, vChars2 tile $60
 	lb bc, BANK(MetricGraphics), 2
-	jp CopyVideoDataDouble ; load pokeball tile for marking caught mons
+	jp CopyVideoDataHBlankDouble ; load pokeball tile for marking caught mons
 
 INCLUDE "data/pokemon/dex_order.asm"
 

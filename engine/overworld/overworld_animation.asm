@@ -57,7 +57,6 @@ CheckOverworldAnimation::
 	jr nz, .checkForWarpOrRumble
 	; on the first run of this function with the counter past 100 lava will flood the "ash" tiles
 	call ReplaceLavaFloodTiles
-	call CopyVideoData
 	ld de, SFX_Lava_Flows
 	call PlayNewSoundChannel8
 	jp .rumble
@@ -114,8 +113,8 @@ ReplaceLavaFloodTiles:
 	ld hl, vChars2 tile $2A
 	ld de, Volcano_GFX tile $14
 	lb bc, BANK(Volcano_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vChars2 tile $27
 	ld de, Volcano_GFX tile $21
 	lb bc, BANK(Volcano_GFX), 1
-	jp CopyVideoData
+	jp CopyVideoDataHBlank

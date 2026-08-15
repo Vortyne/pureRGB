@@ -14,7 +14,7 @@ LoadPartyPokeballGfx:
 	ld de, PokeballTileGraphics
 	ld hl, vSprites tile $31
 	lb bc, BANK(PokeballTileGraphics), (PokeballTileGraphicsEnd - PokeballTileGraphics) / TILE_SIZE
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 SetupOwnPartyPokeballs:
 	call PlacePlayerHUDTiles

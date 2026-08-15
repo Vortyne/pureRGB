@@ -106,7 +106,7 @@ ReplaceVisitors:
 	ld c, 12 ; 12 tiles to be copied
 	push hl
 	ld hl, vChars0 tile 12
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop hl
 	inc hl
 	ld a, [hli] ; a = first sprite's picture ID
@@ -120,7 +120,7 @@ ReplaceVisitors:
 	ld c, 12 ; 12 tiles to be copied
 	push hl
 	ld hl, vChars0 tile 24
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop hl
 	inc hl
 	ld a, [hl] ; a = second sprite's picture ID
@@ -138,7 +138,7 @@ ReplaceVisitors:
 	lb bc, BANK(BrunetteGirlSprite), 12
 	ld de, BrunetteGirlSprite
 	ld hl, vChars0 tile 24
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 
 BillsGarden_NPCSets:

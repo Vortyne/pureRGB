@@ -141,15 +141,15 @@ OptionsLoadExtraTiles:
 	ld de, EditPrompt
 	ld hl, vChars1 tile $40
 	lb bc, BANK(EditPrompt), 3
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	ld de, PokedexPromptGraphics
 	ld hl, vChars1 tile $43
 	lb bc, BANK(PokedexPromptGraphics), 3
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, InfoPromptGraphics
 	ld hl, vChars1 tile $46
 	lb bc, BANK(InfoPromptGraphics), 2
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 OptionMenu1Header:
 	dw DrawOptionMenu

@@ -431,19 +431,19 @@ FightingDojoLoadBetaDojoTiles::
 	ld hl, vTileset tile $2C
 	lb bc, BANK(DojoBetaTiles), 4
 	ld de, DojoBetaTiles
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vTileset tile $55
 	lb bc, BANK(DojoBetaTiles), 11
 	ld de, DojoBetaTiles tile 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vTileset tile $30
 	lb bc, BANK(House_GFX), 1
 	ld de, House_GFX tile 5
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vTileset tile $31
 	lb bc, BANK(House_GFX), 1
 	ld de, House_GFX tile $15
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	and a
 	ret
 

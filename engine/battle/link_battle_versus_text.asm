@@ -13,7 +13,7 @@ DisplayLinkBattleVersusTextBox:
 	ld hl, vChars2 tile $69
 	ld de, LinkBattleVSText
 	lb bc, BANK(LinkBattleVSText), 2
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 ; place bold "VS" tiles between the names
 	hlcoord 9, 8
 	ld_hli_a_string "<BOLD_V><BOLD_S>"

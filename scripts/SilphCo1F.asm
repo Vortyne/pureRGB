@@ -25,11 +25,11 @@ SilphCo1FReplaceTilesCheck::
 	ld hl, vTileset tile 1
 	ld de, Facility_GFX tile $32
 	lb bc, BANK(Facility_GFX), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vTileset tile 5
 	ld de, VerticalPipeTiles
 	lb bc, BANK(VerticalPipeTiles), 6
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 SilphCo1FCheckHideRockets:
 	; don't want to make new hide/show variables so I'm just moving them off screen conditionally
@@ -291,16 +291,16 @@ CheckFloatingWeezingAnimation:
 	ld hl, vNPCSprites tile $3C
 	ld de, SeelSprite
 	lb bc, BANK(SeelSprite), 4
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 .loadWeezingSprite
 	ld hl, vNPCSprites tile $3C
 	ld de, PartyMonSprites1 tile 136
 	lb bc, BANK(PartyMonSprites1), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vNPCSprites tile $3E
 	ld de, PartyMonSprites1 tile 140
 	lb bc, BANK(PartyMonSprites1), 2
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 SaffronAbandonedBuildingWeezingText:
 	text_far _SaffronAbandonedBuildingWeezing2

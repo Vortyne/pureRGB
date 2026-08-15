@@ -196,7 +196,7 @@ InGameTrade_RestoreScreen::
 	call RestoreScreenTilesAndReloadTilePatterns
 	call ReloadTilesetTilePatterns
 	call LoadScreenTilesFromBuffer2
-	call Delay3
+	call Delay3IfNotGBC
 	call LoadGBPal
 	ld c, 10
 	rst DelayFrames

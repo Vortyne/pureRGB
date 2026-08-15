@@ -92,6 +92,8 @@ FarCopyDataDouble::
 	pop af
 	jp SetCurBank
 
+; PureRGBnote: this function is slower than CopyVideoDataHBlank, 
+; but may be required to keep the timing in some animations or events accurate to the original game.
 CopyVideoData::
 ; Wait for the next VBlank, then copy c 2bpp
 ; tiles from b:de to hl, 8 tiles at a time.
@@ -141,52 +143,53 @@ CopyVideoData::
 	ld c, a
 	jr .loop
 
-CopyVideoDataDouble::
-; Wait for the next VBlank, then copy c 1bpp
-; tiles from b:de to hl, 8 tiles at a time.
-; This takes c/8 frames.
-	ldh a, [hAutoBGTransferEnabled]
-	push af
-	xor a ; disable auto-transfer while copying
-	ldh [hAutoBGTransferEnabled], a
-	ldh a, [hLoadedROMBank]
-	ldh [hROMBankTemp], a
-
-	ld a, b
-	call SetCurBank
-
-	ld a, e
-	ldh [hVBlankCopyDoubleSource], a
-	ld a, d
-	ldh [hVBlankCopyDoubleSource + 1], a
-
-	ld a, l
-	ldh [hVBlankCopyDoubleDest], a
-	ld a, h
-	ldh [hVBlankCopyDoubleDest + 1], a
-
-.loop
-	ld a, c
-	cp 8
-	jr nc, .keepgoing
-
-.done
-	ldh [hVBlankCopyDoubleSize], a
-	rst _DelayFrame
-	ldh a, [hROMBankTemp]
-	call SetCurBank
-	pop af
-	ldh [hAutoBGTransferEnabled], a
-	ret
-
-.keepgoing
-	ld a, 8
-	ldh [hVBlankCopyDoubleSize], a
-	rst _DelayFrame
-	ld a, c
-	sub 8
-	ld c, a
-	jr .loop
+; PureRGBNote: CHANGED: Commented out because everything is using CopyVideoDataHBlankDouble currently, which is faster.
+;CopyVideoDataDouble::
+;; Wait for the next VBlank, then copy c 1bpp
+;; tiles from b:de to hl, 8 tiles at a time.
+;; This takes c/8 frames.
+;	ldh a, [hAutoBGTransferEnabled]
+;	push af
+;	xor a ; disable auto-transfer while copying
+;	ldh [hAutoBGTransferEnabled], a
+;	ldh a, [hLoadedROMBank]
+;	ldh [hROMBankTemp], a
+;
+;	ld a, b
+;	call SetCurBank
+;
+;	ld a, e
+;	ldh [hVBlankCopyDoubleSource], a
+;	ld a, d
+;	ldh [hVBlankCopyDoubleSource + 1], a
+;
+;	ld a, l
+;	ldh [hVBlankCopyDoubleDest], a
+;	ld a, h
+;	ldh [hVBlankCopyDoubleDest + 1], a
+;
+;.loop
+;	ld a, c
+;	cp 8
+;	jr nc, .keepgoing
+;
+;.done
+;	ldh [hVBlankCopyDoubleSize], a
+;	rst _DelayFrame
+;	ldh a, [hROMBankTemp]
+;	call SetCurBank
+;	pop af
+;	ldh [hAutoBGTransferEnabled], a
+;	ret
+;
+;.keepgoing
+;	ld a, 8
+;	ldh [hVBlankCopyDoubleSize], a
+;	rst _DelayFrame
+;	ld a, c
+;	sub 8
+;	ld c, a
+;	jr .loop
 
 ClearScreenArea::
 ; Clear tilemap area cxb at hl.
@@ -301,6 +304,63 @@ CopyVideoDataHBlank::
 	ld a, e
 	ld [hli], a
 	ld a, d
+	ld [hli], a
+	dec c
+	jr nz, .pairLoop
+	dec b
+	jr nz, .tileLoop
+	ld sp, hSPTemp
+	pop hl
+	ld sp, hl
+	ei
+	pop af
+	jp SetCurBank
+
+; not needed anywhere yet
+;CopyVideoDataHBlankDoubleBackUp::
+;	push bc
+;	push de
+;	push hl
+;	call CopyVideoDataHBlankDouble
+;	pop hl
+;	pop de
+;	pop bc
+;	ret
+	
+CopyVideoDataHBlankDouble::
+; Copy c 1bpp tiles from b:de to hl during HBlank or VBlank, expanding to 2bpp.
+; LCD can stay on. Faster than CopyVideoDataDouble (which does 8 tiles/frame). ~36 tiles per frame.
+	ld a, c
+	and a
+	ret z
+	ldh a, [hLoadedROMBank]
+	push af
+	ld a, b
+	call SetCurBank
+	ld a, c ; tile count (kept in a while bc is used to swap dest/source)
+	di
+	ld [hSPTemp], sp
+	ld b, h
+	ld c, l ; bc = dest
+	ld h, d
+	ld l, e
+	ld sp, hl ; SP = source
+	ld h, b
+	ld l, c ; hl = dest
+	ld b, a
+.tileLoop
+	ld c, TILE_SIZE / 4 ; 4 word pops per 1bpp tile (8 source bytes -> 16 dest bytes)
+.pairLoop
+	pop de ; fetch next 2 source bytes (safe in any PPU mode)
+.waitVRAM
+	ldh a, [rSTAT]
+	and %10 ; wait while Mode 2 or 3 (VRAM locked in Mode 3)
+	jr nz, .waitVRAM
+	ld a, e
+	ld [hli], a
+	ld [hli], a
+	ld a, d
+	ld [hli], a
 	ld [hli], a
 	dec c
 	jr nz, .pairLoop

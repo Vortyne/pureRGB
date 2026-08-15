@@ -43,7 +43,7 @@ LoadLightSwitchOnGraphic:
 	; fall through
 LoadLightSwitchGraphicCommon:
 	ld hl, vChars2 tile $46
-	jp CopyVideoDataDouble
+	jp CopyVideoDataHBlankDouble
 
 TypeGuysHouseLightSwitch::
 	ld a, SFX_TELEPORT_ENTER_2

@@ -165,4 +165,4 @@ InterlaceMergeSpriteBuffers::
 	ld c, PIC_SIZE ; tiles
 	ldh a, [hLoadedROMBank]
 	ld b, a
-	jp CopyVideoData
+	jp CopyVideoDataHBlank

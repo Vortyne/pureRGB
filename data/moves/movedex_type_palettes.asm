@@ -58,7 +58,7 @@ LoadTypeIcon:
 	ld d, a
 	lb bc, BANK(NormalTypeIcon), 4
 	ld hl, vChars1 + $400
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 TypeGraphicMapping:
 	dw NormalTypeIcon

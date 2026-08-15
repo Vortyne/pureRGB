@@ -12,7 +12,7 @@ _LoadFontTilePatterns::
 	ld de, FontGraphics
 	ld hl, vFont
 	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / TILE_1BPP_SIZE
-	jp CopyVideoDataDouble ; if LCD is on, transfer during V-blank
+	jp CopyVideoDataHBlankDouble ; if LCD is on, transfer during V-blank / hblank
 
 _LoadTextBoxTilePatterns::
 	ldh a, [rLCDC]
@@ -28,7 +28,7 @@ _LoadTextBoxTilePatterns::
 	ld de, TextBoxGraphics
 	ld hl, vChars2 tile $60
 	lb bc, BANK(TextBoxGraphics), (TextBoxGraphicsEnd - TextBoxGraphics) / TILE_SIZE
-	jp CopyVideoData ; if LCD is on, transfer during V-blank
+	jp CopyVideoDataHBlank ; if LCD is on, transfer during V-blank / hblank
 
 _LoadHpBarAndStatusTilePatterns::
 	ldh a, [rLCDC]
@@ -51,8 +51,8 @@ _LoadHpBarAndStatusTilePatterns::
 	ld hl, vChars2 tile $62
 	lb bc, BANK(HpBarAndStatusGraphics), (HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics) / TILE_SIZE
 ;shinpokerednote: ADDED: load exp bar
-	call CopyVideoData ; if LCD is on, transfer during V-blank
+	call CopyVideoDataHBlank ; if LCD is on, transfer during V-blank / hblank
 	ld de,EXPBarGraphics
 	ld hl, vChars1 tile $40
 	lb bc, BANK(EXPBarGraphics), (EXPBarGraphicsEnd - EXPBarGraphics) / TILE_SIZE
-	jp CopyVideoData
+	jp CopyVideoDataHBlank

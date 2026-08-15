@@ -1057,7 +1057,7 @@ VizualizeBallAnimation:
 	ld hl, vSprites
 	lb bc, BANK(NothingSprite), 1
 	ld de, NothingSprite
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld a, [wAudioROMBank]
 	push af
 	ld a, BANK("Audio Engine 2")

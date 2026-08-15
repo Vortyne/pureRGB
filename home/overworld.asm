@@ -614,7 +614,7 @@ CheckMapConnections::
 	call LoadMapHeader
 	call PlayDefaultMusicFadeOutCurrent
 	ld d, SET_PAL_OVERWORLD
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 ; Since the sprite set shouldn't change, this will just update VRAM slots at
 ; x#SPRITESTATEDATA2_IMAGEBASEOFFSET without loading any tile patterns.
 	farcall InitMapSprites
@@ -1919,7 +1919,7 @@ LoadPlayerSpriteGraphicsArbitrary::
 	ld hl, vNPCSprites
 	push de
 	push hl
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop hl
 	pop de
 	ld a, $c0
@@ -1930,7 +1930,7 @@ LoadPlayerSpriteGraphicsArbitrary::
 .noCarry
 	set 3, h
 	pop bc
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 ; function to load data from the map header
 LoadMapHeader::
@@ -2276,7 +2276,7 @@ LoadMapData::
 	ld hl, hFlagsFFFA
 	res 3, [hl]
 	ld d, SET_PAL_OVERWORLD
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	call LoadPlayerSpriteGraphics
 	ld a, [wStatusFlags6]
 	and (1 << BIT_FLY_WARP) | (1 << BIT_DUNGEON_WARP)

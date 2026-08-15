@@ -386,8 +386,7 @@ ZapdosAbsorbAnimation:
 	ld [wAudioROMBank], a
 	ld a, POWERPLANT_ZAPDOS
 	call SetSpriteFacingDown
-	call UpdateSprites
-	rst _DelayFrame
+	call UpdateSpritesAndDelay3
 	ld de, vNPCSprites tile $0C
 	callfar FarOpenBirdSpriteWings
 	ld a, SFX_BATTLE_25
@@ -396,12 +395,12 @@ ZapdosAbsorbAnimation:
 	ld hl, vNPCSprites tile $79
 	ld de, NothingSprite
 	lb bc, BANK(NothingSprite), 3
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; replace first tile of pokeball2 sprite with "absorb" ball
 	ld hl, vNPCSprites tile $78
 	ld de, MoveAnimationTiles0 tile 73
 	lb bc, BANK(MoveAnimationTiles0), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; show two voltorb sprites that have to be hidden at this point and move them into view visually
 	ld c, TOGGLE_ELECTRODE_1
 	call ShowObject
@@ -505,7 +504,7 @@ ZapdosAbsorbAnimation:
 	ld hl, vNPCSprites tile $78
 	ld de, PokeBallSprite
 	lb bc, BANK(PokeBallSprite), 4
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	; reset to original script
 	call ResumeMusic
 	ld a, TEXT_ZAPDOS_FLEW_AWAY
@@ -677,16 +676,16 @@ MagnetonSuperchargeAnimation:
 	ld hl, vNPCSprites tile $78
 	ld de, PokeBallSprite
 	lb bc, BANK(PokeBallSprite), 4
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 .loadMagnetonSprite
 	ld hl, vNPCSprites tile $78
 	ld de, PartyMonSprites1 tile 128
 	lb bc, BANK(PartyMonSprites1), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vNPCSprites tile $7A
 	ld de, PartyMonSprites1 tile 132
 	lb bc, BANK(PartyMonSprites1), 2
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 PowerPlantCheckPowersBack:
 	ld hl, wCurrentMapScriptFlags

@@ -340,7 +340,7 @@ LoadEDTile:
 	ld de, ED_Tile
 	ld hl, vFont tile $70
 	lb bc, BANK(ED_Tile), (ED_TileEnd - ED_Tile) / TILE_1BPP_SIZE
-	jp CopyVideoDataDouble
+	jp CopyVideoDataHBlankDouble
 
 ED_Tile:
 	INCBIN "gfx/font/ED.1bpp"

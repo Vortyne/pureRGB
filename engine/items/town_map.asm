@@ -26,7 +26,7 @@ DisplayTownMap:
 	ld hl, vSprites tile BIRD_BASE_TILE
 	ld de, TownMapCursor
 	lb bc, BANK(TownMapCursor), (TownMapCursorEnd - TownMapCursor) / TILE_1BPP_SIZE
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	ResetEvent FLAG_INTERACTED_WITH_TOWN_MAP
 	ld a, [wCurMap]
 	call GetWildDataTownMapID
@@ -198,20 +198,20 @@ LoadTownMap_Fly_Common:
 	pop bc
 	pop de
 	ld hl, vSprites tile BIRD_BASE_TILE
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	pop af
 	and a
 	jr z, .notDiglett
 	ld de, PartyMonSprites2 tile 54 ; diglett sprite
 	lb bc, BANK(PartyMonSprites2), 2
 	ld hl, vSprites tile 6
-	call CopyVideoData
+	call CopyVideoDataHBlank
 .notDiglett
 ;;;;;;;;;;
 	ld de, TownMapUpArrow
 	ld hl, vChars1 tile $6d
 	lb bc, BANK(TownMapUpArrow), (TownMapUpArrowEnd - TownMapUpArrow) / TILE_1BPP_SIZE
-	call CopyVideoDataDouble
+	call CopyVideoDataHBlankDouble
 	call BuildFlyLocationsList
 	ld hl, wUpdateSpritesEnabled
 	ld a, [hl]
@@ -339,6 +339,7 @@ TownMapUpArrow:
 	INCBIN "gfx/town_map/up_arrow.1bpp"
 TownMapUpArrowEnd:
 
+; PureRGBnote: CHANGED: no need to disable LCD during loading of tiles here, it's ~16 tiles, which CopyVideoDataHBlank can do in 1 frame
 LoadTownMap:
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
@@ -346,17 +347,14 @@ LoadTownMap:
 	hlcoord 0, 0
 	lb bc, $12, $12
 	call TextBoxBorder
-	call DisableLCD
-	ld hl, WorldMapTileGraphics
-	ld de, vChars2 tile $60
-	ld bc, WorldMapTileGraphicsEnd - WorldMapTileGraphics
-	ld a, BANK(WorldMapTileGraphics)
-	call FarCopyData2
-	ld hl, MonNestIcon
-	ld de, vSprites tile $04
-	ld bc, MonNestIconEnd - MonNestIcon
-	ld a, BANK(MonNestIcon)
-	call FarCopyDataDouble
+	ld de, WorldMapTileGraphics
+	ld hl, vChars2 tile $60
+	lb bc, BANK(WorldMapTileGraphics), (WorldMapTileGraphicsEnd - WorldMapTileGraphics) / TILE_SIZE
+	call CopyVideoDataHBlank
+	ld de, MonNestIcon
+	ld hl, vSprites tile $04
+	lb bc, BANK(MonNestIcon), (MonNestIconEnd - MonNestIcon) / TILE_1BPP_SIZE
+	call CopyVideoDataHBlankDouble
 	hlcoord 0, 0
 	ld de, CompressedMap
 .nextTile
@@ -382,10 +380,9 @@ LoadTownMap:
 	hlcoord 3, 14
 	ld [hl], $6C
 .noVolcanoMarker
-	call EnableLCD
 	ld d, SET_PAL_TOWN_MAP
 	call RunPaletteCommand
-	call Delay3
+	call Delay3IfNotGBC
 	call GBPalNormal
 ;	ld hl, wViewingTownMap
 ;	set VIEWING_TOWN_MAP, [hl]

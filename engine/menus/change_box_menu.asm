@@ -3,15 +3,15 @@ LoadBillsPCExtraTiles::
 	ld hl, vChars1 tile $55
 	ld de, PokeballTileGraphics ; pokeball tile
 	lb bc, BANK(PokeballTileGraphics), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, vChars1 tile $56
 	ld de, PokeballTileGraphics tile 2 ; pokeball with x tile
 	lb bc, BANK(PokeballTileGraphics), 1
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld de, ExtraMenuBorderConnectors
 	ld hl, vChars1 tile $40
 	lb bc, BANK(ExtraMenuBorderConnectors), 21
-	jp CopyVideoDataDouble
+	jp CopyVideoDataHBlankDouble
 
 ; PureRGBnote: MOVED: moved from save.asm to here since it didn't rely on much from the other file
 ; this function was updated a bunch to display extra information about boxes and reformat the layout

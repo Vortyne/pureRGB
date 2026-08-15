@@ -218,7 +218,7 @@ VermilionDock_EraseSSAnne:
 	hlbgcoord 0, 10
 	ld de, wVermilionDockTileMapBuffer
 	lb bc, BANK(wVermilionDockTileMapBuffer), 12
-	call CopyVideoData
+	call CopyVideoDataHBlank
 
 ; Replace the blocks of the lower half of the ship with water blocks. This
 ; leaves the upper half alone, but that doesn't matter because replacing any of
@@ -471,7 +471,7 @@ TruckCheck:
 	ld bc, (Bank(TruckSpriteGFX) << 8) | 8
 	ld hl, vChars1 + $400
 	ld de, TruckSpriteGFX
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	ld hl, TruckOAMTable
 	ld bc, $20
 	ld de, wShadowOAM + $20

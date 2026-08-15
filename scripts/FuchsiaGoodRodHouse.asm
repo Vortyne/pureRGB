@@ -46,7 +46,7 @@ FuchsiaGoodRodHouseOnMapLoad:
 	ld hl, vTileset tile $40
 	ld de, FoodTiles
 	lb bc, BANK(FoodTiles), 2
-	call CopyVideoData
+	call CopyVideoDataHBlank
 	call DoErikSaraFacings
 	ld a, TEXT_ERIKSARASHOUSE_AFTER_EVENT
 	ldh [hTextID], a

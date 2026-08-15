@@ -91,7 +91,7 @@ LoadSmokeTileFourTimesCommon::
 LoadSmokeTile:
 	ld de, SSAnneSmokePuffTile
 	lb bc, BANK(SSAnneSmokePuffTile), (SSAnneSmokePuffTileEnd - SSAnneSmokePuffTile) / TILE_SIZE
-	jp CopyVideoData
+	jp CopyVideoDataHBlank
 
 SSAnneSmokePuffTile:
 	INCBIN "gfx/overworld/smoke.2bpp"

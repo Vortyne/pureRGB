@@ -1,4 +1,5 @@
 DrawBadges::
+	call ClearSprites
 ; Draw 4x2 gym leader faces, with the faces replaced by
 ; badges if they are owned. Used in the player status screen.
 
