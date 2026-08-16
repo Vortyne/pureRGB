@@ -58,3 +58,13 @@ magick front/starmie.png front_alt/starmie.png front/scyther.png front_alt/scyth
 
 magick row1.png row2.png row3.png row4.png -append gallery/front_sprite_options.png
 del row1.png row2.png row3.png row4.png
+
+cd ../../screenshots
+magick og_title/red_title_gb_no_color.png og_title/green_title_gb_no_color.png og_title/blue_title_gb_no_color.png new_title/red_new_title_dmg.png new_title/green_new_title_dmg.png new_title/blue_new_title_dmg.png +append title_row1.png
+magick og_title/red_title_default_gbc_color.png og_title/green_title_default_gbc_color.png og_title/blue_title_default_gbc_color.png new_title/red_new_title_OG_GBC.png new_title/green_new_title_OG_GBC.png new_title/blue_new_title_OG_GBC.png +append title_row2.png
+magick og_title/red_title_sgb_colors_on_gbc.png og_title/green_title_sgb_colors_on_gbc.png og_title/blue_title_sgb_colors_on_gbc.png new_title/red_new_title_sgb1.png new_title/green_new_title_sgb1.png new_title/blue_new_title_sgb1.png +append title_row3.png
+magick og_title/red_title_sgb2_colors_on_gbc.png og_title/green_title_sgb2_colors_on_gbc.png og_title/blue_title_sgb2_colors_on_gbc.png new_title/red_new_title_sgb2.png new_title/green_new_title_sgb2.png new_title/blue_new_title_sgb2.png +append title_row4.png
+magick og_title/red_title_gbc_colors_on_gbc.png og_title/green_title_gbc_colors_on_gbc.png og_title/blue_title_gbc_colors_on_gbc.png new_title/red_new_title_y1.png new_title/green_new_title_y1.png new_title/blue_new_title_y1.png +append title_row5.png
+magick og_title/red_title_y2_colors_on_gbc.png og_title/green_title_y2_colors_on_gbc.png og_title/blue_title_y2_colors_on_gbc.png new_title/red_new_title_y2.png new_title/green_new_title_y2.png new_title/blue_new_title_y2.png +append title_row6.png
+magick title_row1.png title_row2.png title_row3.png title_row4.png title_row5.png title_row6.png -append +repage title_screens.png
+del title_row1.png title_row2.png title_row3.png title_row4.png title_row5.png title_row6.png
