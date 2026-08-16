@@ -113,6 +113,7 @@ LoopGenericSetOptionsFromCursorPositions:
 .loopOptions
 	push bc
 	ld c, [hl]
+	ld a, c
 	cp -1
 	jr z, .skip
 	inc hl
