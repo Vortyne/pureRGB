@@ -58,7 +58,7 @@ This is a purist's enhancement of Pokemon Red/Blue/Green. The goal is to enhance
   
 ![titles](/screenshots/title_screens.png?raw=true)
 
-Pictured: GB Monochrome, Original GBC color, SGB Colors, Alternate SGB Colors, GBC Colors (can choose between the 4 color options on GBC in-game)
+Rows from top to bottom: GB Monochrome, Original GBC color, SGB Colors, Alternate SGB Colors, Raw GBC Colors, On-screen GBC Colors (can choose between these color options on GBC in-game)
 
 ## Contact the creator
 
