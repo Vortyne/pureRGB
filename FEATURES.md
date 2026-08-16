@@ -19,24 +19,24 @@ The second page contains new big features related to general gameplay.
   - The first option, `COLORS` will cycle between color palette options of the game. These only apply if you're playing on a system that supports color, like GBC, GBA, Super Gameboy, etc. Important to note: On Super Gameboy after changing this setting you will need to save and restart the game to apply the change. On GBC and GBA it's instant.
     - `OG`: Default color setting. The game will use whatever colors it originally would have had on the system you're playing on. In the case of GBC or GBA, this is a hardcoded limited dual-color palette. On SGB, this is the default SGB color palettes.
     
-    ![Blue Title GBC Default](/screenshots/blue_title_default_gbc_color.png?raw=true) ![Red Title GBC Default](/screenshots/red_title_default_gbc_color.png?raw=true) ![Green Title GBC Default](/screenshots/green_title_default_gbc_color.png?raw=true)
+    ![Blue Title GBC Default](/screenshots/og_title/blue_title_default_gbc_color.png?raw=true) ![Red Title GBC Default](/screenshots/og_title/red_title_default_gbc_color.png?raw=true) ![Green Title GBC Default](/screenshots/og_title/green_title_default_gbc_color.png?raw=true)
     - `SGB1`: Force SGB color palettes. This is no different than the "OG" setting if playing on SGB. On GBC or GBA, this changes the game to use the same color palettes as on SGB, and enables full color mode. Attack animations will have color in this mode when on GBC or GBA, along with some other color enhancements.
   
-    ![Blue Title SGB](/screenshots/blue_title_sgb_colors_on_gbc.png?raw=true) ![Red Title SGB](/screenshots/red_title_sgb_colors_on_gbc.png?raw=true) ![Green Title SGB](/screenshots/green_title_sgb_colors_on_gbc.png?raw=true)
+    ![Blue Title SGB](/screenshots/og_title/blue_title_sgb_colors_on_gbc.png?raw=true) ![Red Title SGB](/screenshots/og_title/red_title_sgb_colors_on_gbc.png?raw=true) ![Green Title SGB](/screenshots/og_title/green_title_sgb_colors_on_gbc.png?raw=true)
     
     ![Attack Color Fire Blast SGB](/screenshots/attack_color_fire_blast.png?raw=true) ![Attack Color Ice Beam SGB](/screenshots/attack_color_ice_beam.png?raw=true) ![Attack Color Solar Beam SGB](/screenshots/attack_color_solarbeam.png?raw=true) ![Attack Color Surf SGB](/screenshots/attack_color_surf.png?raw=true)
     - `SGB2`: Force alternate SGB color palettes. Access this option by pressing A on SGB1 in this options menu. This is the same as SGB1 with a couple minor differences in colors based on japanese pokemon green. A more greenish white color for all the palettes. Other minor color differences include: Pallet Town is purplish instead of light green. Pewter City, Lavender Town, Celadon City, Saffron City, and Indigo Plateau have slightly different main colors in comparison to SGB1. Other than these slight color differences it is the same as SGB1 in features. 
 
-    ![Blue Title SGB2](/screenshots/blue_title_sgb2_colors_on_gbc.png?raw=true) ![Red Title SGB2](/screenshots/red_title_sgb2_colors_on_gbc.png?raw=true) ![Green Title SGB2](/screenshots/green_title_sgb2_colors_on_gbc.png?raw=true)
+    ![Blue Title SGB2](/screenshots/og_title/blue_title_sgb2_colors_on_gbc.png?raw=true) ![Red Title SGB2](/screenshots/og_title/red_title_sgb2_colors_on_gbc.png?raw=true) ![Green Title SGB2](/screenshots/og_title/green_title_sgb2_colors_on_gbc.png?raw=true)
 
     Pictured Below: Left = SGB1, Right = SGB2
 
     ![sgb1 sgb2 comparison 1](/screenshots/sgb1_sgb2_comparison_pallet.png?raw=true) ![sgb1 sgb2 comparison 2](/screenshots/sgb1_sgb2_comparison_pewter.png?raw=true) ![sgb1 sgb2 comparison 3](/screenshots/sgb1_sgb2_comparison_lavender.png?raw=true) ![sgb1 sgb2 comparison 4](/screenshots/sgb1_sgb2_comparison_saffron.png?raw=true)  ![sgb1 sgb2 comparison 5](/screenshots/sgb1_sgb2_comparison_indigo.png?raw=true)
     - `Y1 or Y2`: Force GBC color palettes. On Super Gameboy, it'll now have Pokemon Yellow's GBC more intense color palettes. Same with GBC and GBA. On GBC and GBA, enables full color mode. Attack animations will have color in this mode when on GBC or GBA, along with some other color enhancements. Y1 are the original palettes for pokemon yellow. Y2 are the same colors as Y1 with reduced intensity, to look like you are playing on an original GBC's screen when you are emulating the game.
     
-    ![Blue Title GBC](/screenshots/blue_title_gbc_colors_on_gbc.png?raw=true) ![Red Title GBC](/screenshots/red_title_gbc_colors_on_gbc.png?raw=true) ![Green Title GBC](/screenshots/green_title_gbc_colors_on_gbc.png?raw=true)
+    ![Blue Title GBC](/screenshots/og_title/blue_title_gbc_colors_on_gbc.png?raw=true) ![Red Title GBC](/screenshots/og_title/red_title_gbc_colors_on_gbc.png?raw=true) ![Green Title GBC](/screenshots/green_title_gbc_colors_on_gbc.png?raw=true)
 
-    ![Blue Title GBC2](/screenshots/blue_title_y2_colors_on_gbc.png?raw=true) ![Red Title GBC2](/screenshots/red_title_y2_colors_on_gbc.png?raw=true) ![Green Title GBC2](/screenshots/green_title_y2_colors_on_gbc.png?raw=true)
+    ![Blue Title GBC2](/screenshots/og_title/blue_title_y2_colors_on_gbc.png?raw=true) ![Red Title GBC2](/screenshots/og_title/red_title_y2_colors_on_gbc.png?raw=true) ![Green Title GBC2](/screenshots/og_title/green_title_y2_colors_on_gbc.png?raw=true)
   - The second option, `ALT PKMN COLORS` will enable or disable pokemon from being able to have special color palettes (Default: OFF). When turned on, features related to alternate color pokemon are enabled. In certain regions, you will find differently colored pokemon, like blue nidorinos and purple nidorinas. Think of them as regional color variants. This is just an amusing feature to allow for additional enjoyment in finding unique pokemon by exploring different places.
 
 ![Alt Colors Off](/screenshots/alt_pokemon_colors_off.png?raw=true) ![Alt Colors On](/screenshots/alt_pokemon_colors_on.png?raw=true)
