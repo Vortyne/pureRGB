@@ -930,7 +930,7 @@ ItemUseEvoStone:
 	ld a, [wWhichPokemon]
 	push af
 	ld a, [wCurItem]
-	ld [wEvoStoneItemID], a
+	ld [wPartyItemID], a
 	push af
 	ld a, EVO_STONE_PARTY_MENU
 	ld [wPartyMenuTypeOrMessageID], a

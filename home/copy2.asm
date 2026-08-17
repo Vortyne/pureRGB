@@ -271,10 +271,10 @@ CopyVideoDataHBlankBackUp::
 	pop bc
 	ret
 
-; TODO: use more
 CopyVideoDataHBlank::
 ; Copy c 2bpp tiles from b:de to hl during HBlank or VBlank.
 ; LCD can stay on. Faster than CopyVideoData (which does 8 tiles/frame). ~18 tiles per frame.
+; Do not use to copy from VRAM to VRAM, it can cause issues on GB/SGB.
 	ld a, c
 	and a
 	ret z
@@ -330,6 +330,7 @@ CopyVideoDataHBlank::
 CopyVideoDataHBlankDouble::
 ; Copy c 1bpp tiles from b:de to hl during HBlank or VBlank, expanding to 2bpp.
 ; LCD can stay on. Faster than CopyVideoDataDouble (which does 8 tiles/frame). ~36 tiles per frame.
+; Do not use to copy from VRAM to VRAM, it can cause issues on GB/SGB.
 	ld a, c
 	and a
 	ret z
@@ -361,6 +362,51 @@ CopyVideoDataHBlankDouble::
 	ld [hli], a
 	ld a, d
 	ld [hli], a
+	ld [hli], a
+	dec c
+	jr nz, .pairLoop
+	dec b
+	jr nz, .tileLoop
+	ld sp, hSPTemp
+	pop hl
+	ld sp, hl
+	ei
+	pop af
+	jp SetCurBank
+
+CopyVideoDataHBlankAnySource::
+; Copy c 2bpp tiles from b:de to hl during HBlank or VBlank.
+; LCD can stay on. Source may be ROM, WRAM, or VRAM.
+; This one is slower than CopyVideoDataHBlank, but you can copy from VRAM to VRAM safely.
+	ld a, c
+	and a
+	ret z
+	ldh a, [hLoadedROMBank]
+	push af
+	ld a, b
+	call SetCurBank
+	ld a, c ; tile count
+	di
+	ld [hSPTemp], sp
+	ld b, h
+	ld c, l ; bc = dest
+	ld h, d
+	ld l, e
+	ld sp, hl ; SP = source
+	ld h, b
+	ld l, c ; hl = dest
+	ld b, a
+.tileLoop
+	ld c, TILE_SIZE / 2 ; 8 word copies per tile
+.pairLoop
+.waitVRAM
+	ldh a, [rSTAT]
+	and %10 ; wait while Mode 2 or 3 (VRAM locked in Mode 3)
+	jr nz, .waitVRAM
+	pop de ; read 2 bytes (now safe even if source is VRAM)
+	ld a, e
+	ld [hli], a
+	ld a, d
 	ld [hli], a
 	dec c
 	jr nz, .pairLoop

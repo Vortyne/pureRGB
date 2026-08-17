@@ -150,7 +150,7 @@ RedrawPartyMenu_::
 	dec hl
 	dec hl
 	ld b, [hl]
-	ld a, [wEvoStoneItemID] ; the stone the player used
+	ld a, [wPartyItemID] ; the stone the player used
 	inc hl
 	inc hl
 	inc hl
@@ -178,10 +178,8 @@ RedrawPartyMenu_::
 	ld a, [wPartyMenuTypeOrMessageID] ; message ID
 	cp FIRST_PARTY_MENU_TEXT_ID
 	jr nc, .printItemUseMessage
-	cp USE_ITEM_PARTY_MENU
-	jr z, .itemNameNeeded
-	cp USE_ITEM_PARTY_MENU_BATTLE
-	jr nz, .noItemNameNeeded
+	cp FIRST_ITEM_NAME_NEEDING_PARTY_MENU_ID
+	jr c, .noItemNameNeeded
 .itemNameNeeded
 	push af
 	ld a, [wPartyItemID]
@@ -260,20 +258,20 @@ RareCandyText:
 PartyMenuMessagePointers:
 PartyMenuNormalText:
 	text_far_end _PartyMenuNormalText
-PartyMenuItemUseText:
-	text_far_end _PartyMenuItemUseText
 PartyMenuBattleText:
 	text_far_end _PartyMenuBattleText
 PartyMenuUseTMText:
 	text_far_end _PartyMenuUseTMText
 PartyMenuSwapMonText:
 	text_far_end _PartyMenuSwapMonText
-PartyMenuItemUseText2:
-	text_far_end _PartyMenuItemUseText
 PartyMenuEmptyText:
 	text_far_end _PartyMenuEmptyText
+PartyMenuItemUseText:
+	text_far_end _PartyMenuItemUseText
+PartyMenuItemUseText2:
+	text_far_end _PartyMenuItemUseFullText
 PartyMenuItemUseBattleText:
-	text_far_end _PartyMenuItemUseBattleText
+	text_far_end _PartyMenuItemUseFullText
 
 
 SetPartyMenuHPBarColor:

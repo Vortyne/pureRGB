@@ -3044,7 +3044,7 @@ AnimationShakeEnemyHUD:
 	ld de, vBackPic
 	ld hl, vSprites
 	ld bc, PIC_SIZE
-	call CopyVideoDataHBlank
+	call CopyVideoDataHBlankAnySource
 
 	xor a
 	ldh [hSCX], a

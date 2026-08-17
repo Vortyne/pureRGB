@@ -66,12 +66,13 @@ DEF CHOSE_SECOND_ITEM EQU 2
 ; PartyMenuMessagePointers indexes (see engine/menus/party_menu.asm)
 	const_def
 	const NORMAL_PARTY_MENU          ; $00
-	const USE_ITEM_PARTY_MENU        ; $01
-	const BATTLE_PARTY_MENU          ; $02
-	const TMHM_PARTY_MENU            ; $03
-	const SWAP_MONS_PARTY_MENU       ; $04
-	const EVO_STONE_PARTY_MENU       ; $05
-	const EMPTY_PARTY_MENU           ; $06
+	const BATTLE_PARTY_MENU          ; $01
+	const TMHM_PARTY_MENU            ; $02
+	const SWAP_MONS_PARTY_MENU       ; $03
+	const EMPTY_PARTY_MENU           ; $04
+DEF FIRST_ITEM_NAME_NEEDING_PARTY_MENU_ID EQU const_value
+	const USE_ITEM_PARTY_MENU        ; $05
+	const EVO_STONE_PARTY_MENU       ; $06
 	const USE_ITEM_PARTY_MENU_BATTLE ; $07
 	
 ; party menu message IDs

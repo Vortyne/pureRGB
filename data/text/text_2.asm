@@ -1371,7 +1371,7 @@ _PartyMenuItemUseText::
 	line "on which <PK><MN>?"
 	done
 
-_PartyMenuItemUseBattleText::
+_PartyMenuItemUseFullText::
 	text "Use @"
 	text_ram_namebuffer
 	text_start

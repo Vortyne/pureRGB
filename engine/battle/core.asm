@@ -7309,7 +7309,7 @@ LoadMonBackPicCommon:
 	ld c, (2 * SPRITEBUFFERSIZE) / TILE_SIZE ; count of 16-byte chunks to be copied
 	ldh a, [hLoadedROMBank]
 	ld b, a
-	jp CopyVideoDataHBlank
+	jp CopyVideoDataHBlankAnySource
 
 ;;;;;;;;;; PureRGBnote: ADDED: code to switch between original and larger back sprites
 LoadBackSpriteZoomed:

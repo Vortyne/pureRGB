@@ -1980,7 +1980,9 @@ wUnusedAlreadyOwnedFlag:: db
 
 	ds 2 ; unused 2 bytes
 
-wEvoStoneItemID:: db
+; not needed?
+;wEvoStoneItemID:: db
+	ds 1 ; unused byte
 
 wSavedNPCMovementDirections2Index:: db
 
