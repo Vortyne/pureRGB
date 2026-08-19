@@ -480,6 +480,7 @@ HandleMidJump::
 	ld [wSpritePlayerStateData1YPixels], a
 	ret
 .finishedJump
+	call DisableAllJoypad
 	ld a, [wWalkCounter]
 	and a
 	ret nz
