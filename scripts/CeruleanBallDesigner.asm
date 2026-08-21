@@ -258,7 +258,7 @@ CeruleanBallDesignerDesignerText:
 .brainstorming
 	text_far_end _CeruleanBallDesignerDesignerSecondTime
 .becameAssistant
-	text_far_end _CeruleanBallDesignerDesignerBecameAssistant
+	text_far _CeruleanBallDesignerDesignerBecameAssistant
 .goGetCamera
 	text_far_end _CeruleanBallDesignerGoGetCamera
 .gotCamera
