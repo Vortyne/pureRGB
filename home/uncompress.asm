@@ -5,17 +5,29 @@
 
 ; bankswitches and runs _UncompressSpriteData
 ; bank is given in a, sprite input stream is pointed to in wSpriteInputPtr
+; PureRGBNote: CHANGED: In battle on GBC we will set 2x CPU mode during uncompress as it speeds it up quite a bit. 
+; Otherwise battle runs at 1x CPU speed to keep animations correct.
 UncompressSpriteData::
 	ld b, a
 	ldh a, [hLoadedROMBank]
 	push af
 	ld a, b
 	call SetCurBank
+	ld a, [wIsInBattle]
+	and a
+	jr z, .notBattle
+	callfar GBCSetCPU2xSpeed
+.notBattle
 	ld a, RAMG_SRAM_ENABLE
 	ld [rRAMG], a
 	xor a
 	ld [rRAMB], a
 	call _UncompressSpriteData
+	ld a, [wIsInBattle]
+	and a
+	jr z, .notBattle2
+	callfar GBCSetCPU1xSpeed
+.notBattle2
 	pop af
 	jp SetCurBank
 
