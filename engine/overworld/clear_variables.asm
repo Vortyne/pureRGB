@@ -24,10 +24,11 @@ ClearVariablesOnEnterMap::
 	jr nz, .clear
 	ld a, [wCurMapConnections]
 	bit BIT_EXTRA_MUSIC_MAP, a ; bit that indicates the map has extra music
-	ret nz ; when going between maps that have extra music, we need to see the current music in case multiple maps have extra music and are connected
+	jr nz, .skip ; when going between maps that have extra music, we need to see the current music in case multiple maps have extra music and are connected
 .clear
 	xor a
 	ld [wReplacedMapMusic], a ; clear this variable in places where we don't have replaced map music
+.skip
 ;;;;;;;;;;
 	ld hl, wStatusFlags2
 	bit BIT_WILD_ENCOUNTER_COOLDOWN, [hl]
