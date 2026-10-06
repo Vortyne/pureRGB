@@ -183,8 +183,10 @@ CheckInitSpecialBattleEffect::
 	push af
 	ld a, FIRE_PILLAR_ANIM
 	call SpecialBattleEffectDoAnimation
-	ld a, 3 ; make it really hard to catch so you can't just catch the pokemon to proceed
+	ld a, 17 ; make magmar/moltres quite hard to catch so you can't just catch the pokemon easily to proceed
+	; makes sense because this way of catching moltres is earlier
 	ld [wEnemyMonActualCatchRate], a
+.skipHardCatch
 	; max out its special and defense
 	call .maxSpecial
 	ld a, MAX_STAT_LEVEL - 2
