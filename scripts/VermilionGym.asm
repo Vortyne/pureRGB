@@ -39,9 +39,10 @@ VermilionGymResetScripts:
 
 VermilionGymLTSurgeAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff ; did we lose?
+	cp LOST_BATTLE ; did we lose?
 	jr z, VermilionGymResetScripts
 	call DisableDpad
+	; fall through
 
 VermilionGymLTSurgeReceiveTM24Script:
 	ld d, VERMILIONGYM_LT_SURGE

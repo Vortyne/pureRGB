@@ -34,7 +34,7 @@ PewterGymResetScripts:
 
 PewterGymBrockPostBattle:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, PewterGymResetScripts
 	call DisableDpad
 ; fallthrough

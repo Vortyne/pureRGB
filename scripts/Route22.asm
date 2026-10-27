@@ -131,7 +131,7 @@ Route22SetDefaultScript:
 
 Route22Rival1AfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, Route22SetDefaultScript
 	ld d, ROUTE22_RIVAL1
 	callfar MakeSpriteFacePlayer
@@ -276,7 +276,7 @@ Route22Rival2StartBattleScript:
 
 Route22Rival2AfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, Route22SetDefaultScript
 	ld a, [wSavedCoordIndex]
 	cp 1 ; index of second, lower entry in Route22DefaultScript.Route22RivalBattleCoords

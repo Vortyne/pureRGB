@@ -120,7 +120,7 @@ SilphCo7FSetCurScript:
 
 SilphCo7FRivalAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, SilphCo7FSetDefaultScript
 	call DisableDpad
 	SetEvent EVENT_BEAT_SILPH_CO_RIVAL

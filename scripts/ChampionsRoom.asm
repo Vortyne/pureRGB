@@ -74,7 +74,7 @@ ResetRivalScript:
 
 ChampionsRoomRivalDefeatedScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, ResetRivalScript
 	call UpdateSprites
 	SetEvent EVENT_BEAT_CHAMPION_RIVAL

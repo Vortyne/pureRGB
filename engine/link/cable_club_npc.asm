@@ -71,7 +71,7 @@ CableClubNPC::
 	call PlaySoundWaitForCurrent
 	ld hl, CableClubNPCPleaseWaitText
 	rst _PrintText
-	ld hl, wUnknownSerialCounter
+	ld hl, wLinkTimeoutFrames
 	ld a, $3
 	ld [hli], a
 	xor a
@@ -81,7 +81,7 @@ CableClubNPC::
 	ld [wSerialExchangeNybbleSendData], a
 	call Serial_SyncAndExchangeNybble
 	vc_hook Wireless_net_recheck
-	ld hl, wUnknownSerialCounter
+	ld hl, wLinkTimeoutFrames
 	ld a, [hli]
 	inc a
 	jr nz, .connected
@@ -108,7 +108,7 @@ CableClubNPC::
 	rst _PrintText
 .didNotConnect
 	xor a
-	ld hl, wUnknownSerialCounter
+	ld hl, wLinkTimeoutFrames
 	ld [hli], a
 	ld [hl], a
 	ld hl, wStatusFlags4

@@ -126,7 +126,7 @@ PokemonTower2FLoadMapScript::
 
 PokemonTower2FDefeatedRivalScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, PokemonTower2FResetScripts
 	call DisableDpad
 	SetEvent EVENT_BEAT_POKEMON_TOWER_RIVAL

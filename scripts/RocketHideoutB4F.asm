@@ -73,7 +73,7 @@ RocketHideoutB4FSetDefaultScript:
 
 RocketHideoutB4FBeatGiovanniScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, RocketHideoutB4FSetDefaultScript
 	call PlayGiovanniMusic
 	call UpdateSprites

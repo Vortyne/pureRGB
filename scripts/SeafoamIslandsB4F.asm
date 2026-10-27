@@ -54,7 +54,7 @@ SeafoamIslandsB4FResetScript:
 
 SeafoamIslandsB4FEndArticunoBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff ; do nothing if you lost the battle
+	cp LOST_BATTLE ; do nothing if you lost the battle
 	jr z, SeafoamIslandsB4FResetScript
 	SetEvent EVENT_BEAT_ARTICUNO
 	ld c, TOGGLE_ARTICUNO

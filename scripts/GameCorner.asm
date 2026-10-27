@@ -49,7 +49,7 @@ GameCornerReenterMapAfterPlayerLoss:
 
 GameCornerRocketBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, GameCornerReenterMapAfterPlayerLoss
 	call DisableDpad
 	ld d, GAMECORNER_ROCKET

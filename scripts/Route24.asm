@@ -62,7 +62,7 @@ Route24SetDefaultScript:
 
 Route24AfterRocketBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, Route24SetDefaultScript
 	call UpdateSprites
 	call DisableDpad

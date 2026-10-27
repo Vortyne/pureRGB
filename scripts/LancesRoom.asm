@@ -78,7 +78,7 @@ LancesRoomDefaultScript:
 LancesRoomLanceEndBattleScript:
 	call EndTrainerBattle
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jp z, ResetLanceScript
 	call MakeLanceFacePlayer
 	ld a, TEXT_LANCESROOM_LANCE

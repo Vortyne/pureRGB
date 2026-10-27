@@ -118,7 +118,7 @@ EliteFourEndTrainerBattleScript:
 	pop hl
 	pop de
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr nz, .continue
 	xor a ; default script
 	ld [hl], a

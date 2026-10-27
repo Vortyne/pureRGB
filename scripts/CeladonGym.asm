@@ -61,9 +61,10 @@ CeladonGymErikaPostBattleScript:
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	call GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, CeladonGymResetScripts
 	call DisableDpad
+	; fall through
 
 CeladonGymReceiveTM21:
 	ld d, CELADONGYM_ERIKA

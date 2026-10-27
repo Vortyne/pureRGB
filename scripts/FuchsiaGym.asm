@@ -19,7 +19,7 @@ FuchsiaGymResetScripts:
 
 FuchsiaGymKogaPostBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, FuchsiaGymResetScripts
 	call DisableDpad
 ; fallthrough

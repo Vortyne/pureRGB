@@ -67,7 +67,7 @@ CinnabarGymResetScripts:
 
 CinnabarGymOpenGateScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, CinnabarGymResetScripts
 	ld a, [wTrainerHeaderFlagBit]
 	ldh [hGymGateIndex], a
@@ -107,7 +107,7 @@ CinnabarGymBlainePostBattleScript:
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl]
 	call GBFadeInFromWhite ; PureRGBnote: ADDED: since trainer instantly talks to us after battle we need to fade back in here after battle
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, CinnabarGymResetScripts
 	call DisableDpad
 ; fallthrough

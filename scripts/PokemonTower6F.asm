@@ -41,7 +41,7 @@ PokemonTower6FSetDefaultScript:
 
 PokemonTower6FMarowakBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, PokemonTower6FSetDefaultScript
 	call DisableAllJoypad
 	ld a, [wStatusFlags3]

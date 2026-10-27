@@ -150,7 +150,7 @@ SilphCo11FSetCurScript:
 
 SilphCo11FGiovanniAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, SilphCo11FResetCurScript
 	ld a, [wSavedCoordIndex]
 	cp 1 ; index of second, upper-right entry in SilphCo11FDefaultScript.PlayerCoordsArray

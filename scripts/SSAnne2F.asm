@@ -104,7 +104,7 @@ SSAnne2FResetScripts:
 
 SSAnne2FRivalAfterBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, SSAnne2FResetScripts
 	call SSAnne2FSetFacingDirectionScript
 	call DisableDpad

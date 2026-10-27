@@ -61,7 +61,7 @@ Route16DefaultScript:
 Route16SnorlaxPostBattleScript:
 	ResetEvent EVENT_FIGHT_ROUTE16_SNORLAX
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, .done
 	ld hl, wCurrentMapScriptFlags
 	res BIT_MAP_LOADED_AFTER_BATTLE, [hl] ; indicates we loaded the map after battle, since we went to a script need to reset here to prevent a double fade

@@ -1025,7 +1025,7 @@ Audio1_ApplyWavePatternAndFrequency:
 	ld a, [hli]
 	ld e, a
 	ld d, [hl]
-	ld hl, _AUD3WAVERAM
+	ld hl, AUD3WAVERAM
 	ld b, AUD3WAVE_SIZE - 1
 	xor a ; stop hardware channel 3
 	ldh [rAUD3ENA], a

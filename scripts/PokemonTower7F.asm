@@ -23,7 +23,7 @@ PokemonTower7FEndBattleScript:
 	ld hl, wMiscFlags
 	res BIT_SEEN_BY_TRAINER, [hl]
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, PokemonTower7FSetDefaultScript
 	call EndTrainerBattle
 	call DisableDpad

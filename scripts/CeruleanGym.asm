@@ -18,9 +18,10 @@ CeruleanGymResetScripts:
 
 CeruleanGymMistyPostBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, CeruleanGymResetScripts
 	call DisableDpad
+	; fall through
 
 CeruleanGymReceiveTM11:
 	ld d, CERULEANGYM_MISTY

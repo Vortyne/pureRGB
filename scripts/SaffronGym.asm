@@ -18,9 +18,10 @@ SaffronGymResetScripts:
 
 SaffronGymSabrinaPostBattle:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, SaffronGymResetScripts
 	call DisableDpad
+	; fall through
 
 SaffronGymSabrinaReceiveTM46Script:
 	ld d, SAFFRONGYM_SABRINA
