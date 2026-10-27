@@ -662,7 +662,8 @@ DoesLoadedMonHaveMaxDVs:
 	ld hl, wLoadedMonDVs
 	ld a, [hli]
 	ld b, [hl]
-	xor b
+	and b
+	inc a ; if a and b are $FF this will = 0
 	jr nz, .no
 	scf
 	ret
