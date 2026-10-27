@@ -1,3 +1,5 @@
+; TODO: make chief walk out slowly instead of run like the others.
+
 SecretLab_Script:
 	call ReplaceDoor
 	call CheckOpponentLeaves
