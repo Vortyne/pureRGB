@@ -172,12 +172,17 @@ EndTrainerBattle::
 	jr nc, .skipRemoveSprite    ; test if trainer was fought (in that case skip removing the corresponding sprite)
 	; code that removes overworld pokemon like articuno, mewtwo, snorlax, etc. when defeated
 	; TODO: hide extra object if in extra map???
-	ld hl, wToggleableObjectList
-	ld de, 2
+;;;;;;;;;; PureRGBnote: CHANGED: toggleable object index is looked up directly by sprite ID instead of searching a list
+	ld hl, wSpriteToggleableObjectIndices
 	ld a, [wSpriteIndex]
-	call IsInArray ; search for sprite ID
-	inc hl
-	ld c, [hl]
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld a, [hl]
+	cp $ff
+	jr z, .skipRemoveSprite ; sprite isn't toggleable
+	ld c, a
+;;;;;;;;;;
 	call HideObject
 .skipRemoveSprite
 	; PureRGBnote: REMOVED: was this needed??? 
@@ -356,8 +361,12 @@ TrainerEndBattleText::
 	rst TextScriptEnd
 
 TrainerFlagActionTest::
-	ld b, FLAG_TEST
-	; fall through
+	ld a, TRAINER_EVENT_FLAG_POINTER
+	call ReadTrainerHeaderInfo     ; read flag's byte ptr
+	ld a, [wTrainerHeaderFlagBit]
+	ld c, a
+	jp TestFlag ; PureRGBnote: OPTIMIZED: read-only flag test is faster than FlagAction (runs every frame per trainer)
+
 TrainerFlagAction::
 	ld a, TRAINER_EVENT_FLAG_POINTER
 	call ReadTrainerHeaderInfo     ; read flag's byte ptr (does not change b register)

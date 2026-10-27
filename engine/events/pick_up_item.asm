@@ -9,20 +9,16 @@ PickUpItemCommon:
 	push bc
 	call EnableAutoTextBoxDrawing
 
+;;;;;;;;;; PureRGBnote: CHANGED: toggleable object index is looked up directly by sprite ID instead of searching a list
 	ldh a, [hSpriteIndex]
-	ld b, a
-	ld hl, wToggleableObjectList
-.toggleableObjectsListLoop
-	ld a, [hli]
+	ld e, a
+	ld d, 0
+	ld hl, wSpriteToggleableObjectIndices
+	add hl, de
+	ld a, [hl]
 	cp $ff
 	jr z, .noObject
-	cp b
-	jr z, .isToggleable
-	inc hl
-	jr .toggleableObjectsListLoop
-
-.isToggleable
-	ld a, [hl]
+;;;;;;;;;;
 	pop bc ; obtain c which is either set to 1 if we called PickUpItem, or an arbitrary quantity otherwise
 	ld b, a
 

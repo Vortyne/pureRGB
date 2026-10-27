@@ -56,31 +56,43 @@ MarkTownVisitedAndLoadToggleableObjects::
 	ldh [hDivisor], a
 	ld b, $2
 	call Divide
+;;;;;;;;;; PureRGBnote: CHANGED: instead of a list of (sprite ID, toggleable object index) pairs that had to be searched,
+;;;;;;;;;; we store the toggleable object index directly at wSpriteToggleableObjectIndices + sprite ID ($ff = not toggleable)
+	ASSERT NUM_TOGGLEABLE_OBJECTS < $ff && NUM_EXTRA_TOGGLEABLE_OBJECTS < $ff ; $ff means "not toggleable"
+	ld hl, wSpriteToggleableObjectIndices
+	ld bc, NUM_SPRITESTATEDATA_STRUCTS
+	ld a, -1
+	call FillMemory
 	ld a, [wCurMap]
 	ld b, a
 	ldh a, [hDividend+3]
 	ld c, a                    ; store global offset in c
-	ld de, wToggleableObjectList
 	pop hl
-.writeToggleableObjectsListLoop
+.writeToggleableObjectsLoop
 	ld a, [hli]
 	cp -1
-	jr z, .done     ; end of list
+	ret z           ; end of list
 	cp b
-	jr nz, .done    ; not for current map anymore
-	ld a, [hli]
+	ret nz          ; not for current map anymore
+	ld a, [hli]                ; (map-local) sprite ID
 	inc hl
-	ld [de], a                 ; write (map-local) sprite ID
-	inc de
-	ld a, c
+	cp NUM_SPRITESTATEDATA_STRUCTS
+	jr nc, .next               ; not a valid sprite ID
+	push hl
+	ld e, a
+	ld d, 0
+	ld hl, wSpriteToggleableObjectIndices
+	add hl, de
+	ld a, [hl]
+	inc a
+	jr nz, .alreadyStored      ; keep the first match, like the original list search did
+	ld [hl], c                 ; write (global) toggleable object index
+.alreadyStored
+	pop hl
+.next
 	inc c
-	ld [de], a                 ; write (global) toggleable object index
-	inc de
-	jr .writeToggleableObjectsListLoop
-.done
-	ld a, -1
-	ld [de], a                 ; write sentinel
-	ret
+	jr .writeToggleableObjectsLoop
+;;;;;;;;;;
 
 ; PureRGBnote: ADDED: when in the safari zone we use a different set of flags for hiding/showing objects.
 ; this function initializes these flags.

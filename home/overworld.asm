@@ -316,7 +316,8 @@ OverworldLoopLessDelay::
 	call AdvancePlayerSprite
 	ld a, [wWalkCounter]
 	and a
-	jp nz, CheckMapConnections ; it seems like this check will never succeed (the other place where CheckMapConnections is run works)
+	;jp nz, CheckMapConnections ; it seems like this check will never succeed (the other place where CheckMapConnections is run works)
+	jp nz, OverworldLoop ; PureRGBnote: CHANGED: above map connections never succeeds so don't waste time running it (takes quite a few cycles)
 ; walking animation finished
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_MOVEMENT_STATE, a
@@ -1312,51 +1313,46 @@ LoadCurrentMapView::
 .rowInnerLoop ; loop to draw each tile block of the current row
 	push bc
 	push de
-	push hl
-	ld a, [de]
-	ld c, a ; tile block number
 ;;;; this function was only called once so move it to where it was called for better performance
+;;;; PureRGBnote: OPTIMIZED: the tile block is drawn fully unrolled, without saving hl or bc on the stack for each block/row
 ; function to write the tiles that make up a tile block to memory
-; Input: c = tile block ID, hl = destination address
+; Input: [de] = tile block ID, hl = destination address
 ;;;; DrawTileBlock::
-	push hl
-	hl_deref wTilesetBlocksPtr ; pointer to tiles
-	ld a, c
+	ld a, [de] ; tile block number
 	swap a
 	ld b, a
 	and $f0
 	ld c, a
-	ld a, b
-	and $0f
+	xor b
 	ld b, a ; bc = tile block ID * 0x10
-	add hl, bc
-	ld d, h
-	ld e, l ; de = address of the tile block's tiles
-	pop hl
-	ld c, BLOCK_HEIGHT ; 4 loop iterations
-.drawTileBlockLoop ; each loop iteration, write 4 tile numbers
-	push bc
+	ld a, [wTilesetBlocksPtr] ; pointer to tiles
+	add c
+	ld e, a
+	ld a, [wTilesetBlocksPtr + 1]
+	adc b
+	ld d, a ; de = address of the tile block's tiles
+	ld bc, SURROUNDING_WIDTH - (BLOCK_WIDTH - 1)
+REPT BLOCK_HEIGHT - 1 ; write 4 tile numbers per row, then move to the next row
 REPT BLOCK_WIDTH - 1
 	ld a, [de]
-	ld [hli], a
 	inc de
+	ld [hli], a
 ENDR
 	ld a, [de]
-	ld [hl], a
 	inc de
-	ld bc, SURROUNDING_WIDTH - (BLOCK_WIDTH - 1)
+	ld [hl], a
 	add hl, bc
-	pop bc
-	dec c
-	jr nz, .drawTileBlockLoop
+ENDR
+REPT BLOCK_WIDTH ; last row
+	ld a, [de]
+	inc de
+	ld [hli], a
+ENDR
+	ld bc, -(BLOCK_HEIGHT - 1) * SURROUNDING_WIDTH
+	add hl, bc ; hl = destination of the next tile block in this row
 ;;;;
-	pop hl
 	pop de
 	pop bc
-	inc hl
-	inc hl
-	inc hl
-	inc hl
 	inc de
 	dec c
 	jr nz, .rowInnerLoop
@@ -1397,13 +1393,11 @@ ENDR
 	decoord 0, 0 ; base address for the tiles that are directly transferred to VRAM during V-blank
 	ld b, SCREEN_HEIGHT
 .rowLoop2
-	ld c, SCREEN_WIDTH
-.rowInnerLoop2
+REPT SCREEN_WIDTH ; PureRGBnote: OPTIMIZED: unrolled
 	ld a, [hli]
 	ld [de], a
 	inc de
-	dec c
-	jr nz, .rowInnerLoop2
+ENDR
 	ld a, SURROUNDING_WIDTH - SCREEN_WIDTH
 	add l
 	ld l, a

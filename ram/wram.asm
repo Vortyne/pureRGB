@@ -2278,13 +2278,14 @@ wToggleableObjectFlagsEnd::
 ; saved copy of SPRITESTATEDATA1_IMAGEINDEX (used for sprite facing/anim)
 wSavedSpriteImageIndex:: db
 
-; each entry consists of 2 bytes
-; * the sprite ID (depending on the current map)
-; * the toggleable object index (global, used for wToggleableObjectFlags)
-; terminated with $FF
-wToggleableObjectList:: ds 16 * 2 + 1
+; PureRGBnote: CHANGED: used to be wToggleableObjectList, a $ff-terminated list of 2-byte entries
+; (sprite ID, global toggleable object index) that had to be searched.
+; Now indexed directly by sprite ID: holds the toggleable object index (global, used for wToggleableObjectFlags)
+; of each sprite on the current map, or $ff if the sprite isn't toggleable. Rebuilt every time a map loads.
+wSpriteToggleableObjectIndices:: ds NUM_SPRITESTATEDATA_STRUCTS
 
-	ds 1 ; unused save file byte
+	ds 18 ; unused save file bytes (first 17 used to be used by wToggleAbleObjectFlags, save file updater necessary to use)
+
 ; PureRGBnote: ADDED: additional new script variables replaced previously empty space for maps that now need script tracking
 wGameProgressFlags::
 wOaksLabCurScript:: db

@@ -24,11 +24,12 @@ UpdatePlayerSprite:
 	ld [wSpritePlayerStateData1ImageIndex], a
 	ret
 .lowerLeftTileIsMapTile
-	call DetectCollisionBetweenSprites
 	ld h, HIGH(wSpriteStateData1)
 	ld a, [wWalkCounter]
 	and a
-	jr nz, .moving
+	jr nz, .moving ; PureRGBnote: OPTIMIZED: player collision data is only read at the start of a step, so skip detecting it mid-step
+	call DetectCollisionBetweenSprites
+	ld h, HIGH(wSpriteStateData1)
 	ld a, [wPlayerMovingDirection]
 ; check if down
 	bit PLAYER_DIR_BIT_DOWN, a
@@ -564,19 +565,18 @@ InitializeSpriteScreenPosition:
 ; tests if sprite is off screen or otherwise unable to do anything
 CheckSpriteAvailability:
 ;;;; IsObjectHidden: ; tests if current object is toggled off/has been hidden ; was moved here because it was only used once anyway
+;;;;;;;;;; PureRGBnote: OPTIMIZED: read the sprite's toggleable object index from a table built on map load instead of searching a list
 	ldh a, [hCurrentSpriteOffset]
 	swap a
-	ld b, a
-	ld hl, wToggleableObjectList
-.loop
-	ld a, [hli]
+	ld c, a
+	ld b, 0
+	ld hl, wSpriteToggleableObjectIndices
+	add hl, bc
+	ld a, [hl]
 	cp -1
 	jr z, .notHidden ; not toggleable -> not hidden
-	cp b
-	ld a, [hli]
-	jr nz, .loop
 	ld c, a
-	ld b, FLAG_TEST
+;;;;;;;;;;
 ;;;;;;;;;; PureRGBnote: ADDED: when in certain maps we use a different set of flags for hiding/showing objects.
 	CheckEvent EVENT_IN_EXTRA_TOGGLEABLE_OBJECTS_MAP
 	ld hl, wToggleableObjectFlags
@@ -585,7 +585,7 @@ CheckSpriteAvailability:
 	ld hl, wExtraToggleableObjectFlags
 .doAction
 ;;;;;;;;;;
-	call FlagAction
+	call TestFlag ; PureRGBnote: OPTIMIZED: read-only flag test is faster than FlagAction (runs every frame per sprite)
 	and a
 	jr nz, .hidden
 .notHidden

@@ -41,15 +41,14 @@ PokemonTower7FSetMapScript:
 PokemonTower7FHideNPCScript:
 	call IsNPCAutoMoving
 	ret nz
-	ld hl, wToggleableObjectList
+;;;;;;;;;; PureRGBnote: CHANGED: toggleable object index is looked up directly by sprite ID instead of searching a list
+	ld hl, wSpriteToggleableObjectIndices
 	ld a, [wSpriteIndex]
-	ld b, a
-.toggleableObjectsListLoop
-	ld a, [hli]
-	cp b            ; search for sprite ID in toggleable objects list
-	ld a, [hli]
-	jr nz, .toggleableObjectsListLoop
-	ld c, a
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld c, [hl]
+;;;;;;;;;;
 	call HideObject
 ;;;;;; PureRGBnote: ADDED: play a sound effect when the rockets leave
 	ld a, SFX_GO_OUTSIDE

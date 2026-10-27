@@ -10,7 +10,7 @@ ENDM
 ; The constants marked with an X are never used, because those object_events
 ; are not toggled on/off in any map's script.
 ; (The X-ed ones are either items or static Pokemon encounters that deactivate
-; after battle and are detected in wToggleableObjectList.)
+; after battle and are detected in wSpriteToggleableObjectIndices.)
 
 	const_def
 
