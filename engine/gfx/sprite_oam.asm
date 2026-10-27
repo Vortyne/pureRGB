@@ -29,142 +29,132 @@ PrepareOAMData::
 	inc e
 	inc e
 	ld a, [de] ; [x#SPRITESTATEDATA1_IMAGEINDEX]
-	ld [wSavedSpriteImageIndex], a
 	cp $ff ; off-screen (don't draw)
-	jr nz, .visible
+	jp z, .nextSprite ; PureRGBnote: OPTIMIZED: no need to call GetSpriteScreenXY here, the adjusted coords it wrote were never read
 
-	call GetSpriteScreenXY
-	jp .nextSprite
+;;;;;;;;;; PureRGBnote: OPTIMIZED: everything that is the same for all 4 tiles of a sprite is now calculated once per sprite
+;;;;;;;;;; instead of once per tile, and the tile loop is unrolled (every overworld sprite is always 4 tiles)
+	ld c, a ; c = image index
 
-.visible
+; get sprite priority
+	inc d
+	ld a, e
+	add SPRITESTATEDATA2_GRASSPRIORITY - SPRITESTATEDATA1_IMAGEINDEX
+	ld e, a
+	ld a, [de] ; [x#SPRITESTATEDATA2_GRASSPRIORITY]
+	dec d
+	and OAM_PRIO
+	ld b, a ; b = priority of the bottom tiles (the ones that can be covered by grass)
+	ld a, [wCurMap]
+	cp CELADON_BACK_ALLEY ; in this map the whole sprite is covered when standing in "grass"
+	ld a, b
+	jr z, .topPriority
+	xor a
+.topPriority
+	ldh [hSpritePriority], a ; priority of the top tiles
+
+; get sprite screen position (with the OAM offsets already added)
+	ldh a, [hSpriteOffset2]
+	add SPRITESTATEDATA1_YPIXELS
+	ld e, a
+	ld a, [de] ; [x#SPRITESTATEDATA1_YPIXELS]
+	add OAM_Y_OFS ; Y=16 is top of screen (Y=0 is invisible)
+	ldh [hSpriteScreenY], a
+	inc e
+	inc e
+	ld a, [de] ; [x#SPRITESTATEDATA1_XPIXELS]
+	add OAM_X_OFS ; X=8 is left of screen (X=0 is invisible)
+	ldh [hSpriteScreenX], a
+
+; read the entry from the table
+	ld a, c
 	cp $a0 ; is the sprite unchanging like an item ball or boulder?
 	jr c, .usefacing
-
 ; unchanging
 	and $f
 	add $10 ; skip to the second half of the table which doesn't account for facing direction
 	jr .next
-
 .usefacing
 	and $f
-
 .next
 	ld l, a
-
-; get sprite priority
-	push de
-	inc d
-	ld a, e
-	add $5
-	ld e, a
-	ld a, [de] ; [x#SPRITESTATEDATA2_GRASSPRIORITY]
-	and $80
-	ldh [hSpritePriority], a ; temp store sprite priority
-	pop de
-
-; read the entry from the table
 	ld h, 0
-	ld bc, SpriteFacingAndAnimationTable
+	ld de, SpriteFacingAndAnimationTable
 	add hl, hl
 	add hl, hl
-	add hl, bc
+	add hl, de
 	ld a, [hli]
-	ld c, a
+	ld e, a
 	ld a, [hli]
-	ld b, a
+	ld d, a ; de = list of the sprite's 4 tile ids
 	ld a, [hli]
 	ld h, [hl]
-	ld l, a
+	ld l, a ; hl = OAM y, x, attributes of the sprite's 4 tiles
+	ld a, [de]
+	ld e, a ; e = first tile id (the other 3 always follow it in order)
 
-	call GetSpriteScreenXY
+; get the sprite's tile offset in VRAM
+	ld a, c
+	swap a ; high nybble determines sprite used (0 is always player sprite, next are some npcs)
+	and $f
+; Sprites $a and $b have one face (and therefore 4 tiles instead of 12).
+; As a result, sprite $b's tile offset is less than normal.
+	cp $b
+	jr nz, .notFourTileSprite
+	ld a, $a * 12 + 4
+	jr .next2
+.notFourTileSprite
+	; a *= 12
+	add a
+	add a
+	ld d, a
+	add a
+	add d
+.next2
+	add e
+	ld c, a ; c = tile id of the first tile
 
 	ldh a, [hOAMBufferOffset]
 	ld e, a
 	ld d, HIGH(wShadowOAM)
 
-.tileLoop
-	ldh a, [hSpriteScreenY]   ; temp for sprite Y position
-	add $10                  ; Y=16 is top of screen (Y=0 is invisible)
-	add [hl]                 ; add Y offset from table
-	ld [de], a               ; write new sprite OAM Y position
+FOR n, 4
+	ldh a, [hSpriteScreenY]
+	add [hl] ; add Y offset from table
+	ld [de], a ; write new sprite OAM Y position
 	inc hl
-	ldh a, [hSpriteScreenX]   ; temp for sprite X position
-	add $8                   ; X=8 is left of screen (X=0 is invisible)
-	add [hl]                 ; add X offset from table
 	inc e
-	ld [de], a               ; write new sprite OAM X position
+	ldh a, [hSpriteScreenX]
+	add [hl] ; add X offset from table
+	ld [de], a ; write new sprite OAM X position
+	inc hl
 	inc e
-	ld a, [bc]               ; read pattern number offset (accommodates orientation (offset 0,4 or 8) and animation (offset 0 or $80))
-	inc bc
-	push bc
-	ld b, a
-
-	ld a, [wSavedSpriteImageIndex]
-	swap a                   ; high nybble determines sprite used (0 is always player sprite, next are some npcs)
-	and $f
-
-	; Sprites $a and $b have one face (and therefore 4 tiles instead of 12).
-	; As a result, sprite $b's tile offset is less than normal.
-	cp $b
-	jr nz, .notFourTileSprite
-	ld a, $a * 12 + 4
-	jr .next2
-
-.notFourTileSprite
-	; a *= 12
-; PureRGBnote: OPTIMIZED
-	add a
-	add a
-	;sla a
-	;sla a
-	ld c, a
-	add a
-	;sla a
-	add c
-
-.next2
-	add b ; add the tile offset from the table (based on frame and facing direction)
-	pop bc
+	ld a, c
+	IF n < 3
+		inc c
+	ENDC
 	ld [de], a ; tile id
-	inc hl
 	inc e
-	ld a, [wCurMap]
-	cp CELADON_BACK_ALLEY
-	jr z, .dontSkipPriority
-	ld a, [hl]
-	bit BIT_SPRITE_UNDER_GRASS, a
-	jr z, .skipPriority
-.dontSkipPriority
-	ldh a, [hSpritePriority]
+	IF n < 2
+		ldh a, [hSpritePriority] ; top tiles
+	ELSE
+		ld a, b ; bottom tiles
+	ENDC
 	or [hl]
-.skipPriority
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;shinpokerednote: gbcnote: handling GBC bits for object table attributes
-
-	;Let's do this bit check now instead of later.
-	;Then we'll push AF to preserve the flag register
-	bit 0, a ; OAMFLAG_ENDOFDATA
-	push af
-	
-	res 3, a ;0=vram0 & 1=vram1
-	and %11111100	;if on GBC, default to OBJ pal 0 or 4
-	res 2, a; default of OBP0 uses palette 0
-	bit 4, a ; 0=OBP0 or 1=OBP1
-	jr z, .spriteusesOBP0
-	set 2, a ; palette 4 is OBP1
-.spriteusesOBP0
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	inc hl
-	ld [de], a
+	; gbcnote: clear the table-only flags (BIT_END_OF_OAM_DATA, BIT_SPRITE_UNDER_GRASS) and the GBC VRAM bank/palette bits
+	; so the sprite uses VRAM bank 0 and GBC OBJ palette 0. NormalSpriteOAM/FlippedSpriteOAM never use DMG palette OBP1,
+	; which the old per-tile code would have mapped to GBC OBJ palette 4.
+	and %11110000
+	ld [de], a ; attributes
 	inc e
-	;bit BIT_END_OF_OAM_DATA, a ; OAMFLAG_ENDOFDATA
-	;shinpokerednote: gbcnote: We already did this earlier, and we are also done with A's current value.
-	;So all that's needed is to pop AF to get the flags back
-	pop af
-	jr z, .tileLoop
+	IF n < 3
+		inc hl
+	ENDC
+ENDR
 
 	ld a, e
 	ldh [hOAMBufferOffset], a
+;;;;;;;;;;
 
 .nextSprite
 	ldh a, [hSpriteOffset2]
@@ -193,25 +183,3 @@ PrepareOAMData::
 	ld [hl], b
 	add hl, de
 	jr .clear
-
-GetSpriteScreenXY:
-	inc e
-	inc e
-	ld a, [de] ; [x#SPRITESTATEDATA1_YPIXELS]
-	ldh [hSpriteScreenY], a
-	inc e
-	inc e
-	ld a, [de] ; [x#SPRITESTATEDATA1_XPIXELS]
-	ldh [hSpriteScreenX], a
-	ld a, 4
-	add e
-	ld e, a
-	ldh a, [hSpriteScreenY]
-	add 4
-	and $f0
-	ld [de], a ; [x#SPRITESTATEDATA1_YADJUSTED]
-	inc e
-	ldh a, [hSpriteScreenX]
-	and $f0
-	ld [de], a  ; [x#SPRITESTATEDATA1_XADJUSTED]
-	ret

@@ -91,7 +91,6 @@ INCLUDE "engine/items/tms.asm"
 ; INCLUDE "engine/battle/end_of_battle.asm" ; moved to newCode2
 INCLUDE "engine/battle/wild_encounters.asm"
 ; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9
-INCLUDE "engine/math/random.asm"
 INCLUDE "engine/pokemon/read_tm_learnsets.asm"
 
 
