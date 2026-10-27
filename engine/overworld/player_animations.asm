@@ -101,6 +101,9 @@ PlayerSpinWhileMovingDown:
 
 _LeaveMapAnim::
 	call InitFacingDirectionList
+	ld a, [wStatusFlags6]
+	bit BIT_ESCAPE_WARP, a
+	jr nz, .playerNotStandingOnWarpPadOrHole
 	call IsPlayerStandingOnWarpPadOrHole
 	ld a, b
 	and a
