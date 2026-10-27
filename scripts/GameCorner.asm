@@ -80,22 +80,22 @@ GameCornerRocketBattleScript:
 	ret
 
 GameCornerMovement_Rocket_WalkAroundPlayer:
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_UP
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
+	db NPC_RUN_DOWN
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_UP
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
 	db -1 ; end
 
 GameCornerMovement_Rocket_WalkDirect:
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
 	db -1 ; end
 
 GameCornerRocketExitScript:

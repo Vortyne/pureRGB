@@ -198,14 +198,14 @@ WaitForWalkFinish:
 	ret
 
 SoldierLeaveMovementDefault:
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
+	db NPC_RUN_RIGHT
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
 SoldierWalkInMovement:
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
 	db -1
 
 CheckOpponentLeaves:
@@ -257,11 +257,41 @@ CheckOpponentLeaves:
 .walkAway
 	pop af
 	ldh [hSpriteIndex], a
+	cp SECRETLAB_CHIEF
+	jr nz, .moveSprite
+	; the chief walks away slowly instead of running like the soldiers
+	ld a, [wXCoord]
+	cp 7
+	ld de, ChiefLeaveMovementDefault
+	jr nz, .moveSprite
+	ld de, ChiefLeaveMovementAlternative
+.moveSprite
 	call MoveSprite
 	SetEvent EVENT_SECRET_LAB_NPC_WALK_OUT_HAPPENING
 	ret
 
 SoldierLeaveMovementAlternative:
+	db NPC_RUN_LEFT
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db -1
+
+; same paths as SoldierLeaveMovementDefault/SoldierLeaveMovementAlternative, but walking
+ChiefLeaveMovementDefault:
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_DOWN
+	db -1
+
+ChiefLeaveMovementAlternative:
 	db NPC_MOVEMENT_LEFT
 	db NPC_MOVEMENT_DOWN
 	db NPC_MOVEMENT_DOWN
