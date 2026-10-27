@@ -86,6 +86,15 @@ PlayCry::
 	callfar RemapArmoredMewtwoCry
 .wait
 	jp WaitForSoundToFinish
+
+PlayCryNoWait::
+	push af
+	call GetCryData
+	call PlaySoundOverrideCurrent
+	pop af
+	cp ARMORED_MEWTWO
+	ret nz
+	jpfar RemapArmoredMewtwoCry
 ;;;;;;;;;;
 
 GetCryData::

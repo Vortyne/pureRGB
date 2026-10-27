@@ -1,3 +1,18 @@
+MusicWildBattle_Short::
+	channel_count 3
+	channel 1, MusicWildBattle_Short_Ch1
+	channel 2, MusicWildBattle_Short_Ch2
+	channel 3, Music_WildBattle_Ch3_Short
+
+MusicWildBattle_Short_Ch1::
+	tempo 104
+	volume 7, 7
+	duty_cycle 3
+	vibrato 6, 3, 4
+	toggle_perfect_pitch
+	note_type 12, 11, 3
+	sound_loop 0, Music_WildBattle_Ch1.shortIn
+
 Music_WildBattle_Ch1::
 	tempo 104
 	volume 7, 7
@@ -32,6 +47,7 @@ Music_WildBattle_Ch1::
 	note C_, 1
 	octave 2
 	note B_, 1
+.shortIn
 	octave 3
 	note C_, 1
 	octave 2
@@ -298,6 +314,13 @@ Music_WildBattle_Ch1::
 	note C#, 8
 	sound_loop 0, .mainloop
 
+
+MusicWildBattle_Short_Ch2::
+	duty_cycle 3
+	vibrato 8, 2, 5
+	note_type 12, 12, 3
+	sound_loop 0, Music_WildBattle_Ch2.shortIn
+
 Music_WildBattle_Ch2::
 	duty_cycle 3
 	vibrato 8, 2, 5
@@ -338,6 +361,7 @@ Music_WildBattle_Ch2::
 	note F_, 1
 	octave 5
 	note G_, 1
+.shortIn
 	octave 4
 	note G_, 1
 	note F#, 1
@@ -458,6 +482,12 @@ Music_WildBattle_Ch2::
 	note F_, 8
 	sound_loop 0, .mainloop
 
+Music_WildBattle_Ch3_Short::
+	vibrato 0, 2, 0
+	note_type 12, 1, 1
+	octave 4
+	sound_loop 0, Music_WildBattle_Ch3.shortIn
+
 Music_WildBattle_Ch3::
 	vibrato 0, 2, 0
 	note_type 12, 1, 1
@@ -486,6 +516,7 @@ Music_WildBattle_Ch3::
 	rest 1
 	note F#, 1
 	note C_, 1
+.shortIn
 	note G_, 1
 	rest 1
 	note G_, 1

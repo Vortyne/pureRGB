@@ -57,4 +57,13 @@ InitBattleVariables:
 	ld a, BATTLE_TYPE_SAFARI
 	ld [wBattleType], a
 .notSafariBattle
-	jpfar PlayBattleMusic
+	callfar PlayBattleMusic
+	ld a, [wCurOpponent]
+	cp OPP_ID_OFFSET
+	ret nc
+	callfar IsFastEncounter
+	ret nc
+	ld a, BANK(MusicWildBattle_Short)
+	ld hl, MusicWildBattle_Short
+	ld b, 3
+	jp RemapCurrentMusic

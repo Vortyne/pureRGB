@@ -242,3 +242,9 @@ _PauseMusicInfoText::
 	cont "battle instead"
 	cont "of restarting it."
 	prompt
+
+_FastEncounterInfoText::
+	text "If ON, transition"
+	line "to a wild #MON"
+	cont "battle is faster."
+	prompt

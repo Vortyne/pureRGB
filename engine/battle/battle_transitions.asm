@@ -332,8 +332,13 @@ BattleTransition_OutwardSpiral_:
 	ld [wOutwardSpiralCurrentDirection], a
 	jr .done
 
-FlashScreen:
 BattleTransition_FlashScreen_:
+	push bc
+	callfar IsWildBattleAndFastEncounter
+	pop bc
+	ret c
+	; fall through
+FlashScreen:
 	CheckEvent FLAG_FLASHING_REDUCED
 	jr nz, .flashScreenLessFlashing
 .start
@@ -531,7 +536,13 @@ BattleTransition_VerticalStripes:
 	call BattleTransition_VerticalStripes_
 	pop hl
 	call BattleTransition_VerticalStripes_
+	call BattleTransitionIsWildBattleAndFastEncounter
+	jr nc, .normalDelay
+	call BattleTransition_TransferDelay1
+	jr .next
+.normalDelay
 	call BattleTransition_TransferDelay3
+.next
 	pop hl
 	ld bc, -SCREEN_WIDTH
 	add hl, bc
@@ -570,7 +581,13 @@ BattleTransition_HorizontalStripes:
 	call BattleTransition_HorizontalStripes_
 	pop hl
 	call BattleTransition_HorizontalStripes_
+	call BattleTransitionIsWildBattleAndFastEncounter
+	jr nc, .normalDelay
+	call BattleTransition_TransferDelay1
+	jr .next
+.normalDelay
 	call BattleTransition_TransferDelay3
+.next
 	pop de
 	pop hl
 	pop bc
@@ -615,19 +632,38 @@ BattleTransition_Circle_Sub1:
 	push hl
 	ld a, b
 	call BattleTransition_Circle_Sub2
+	call BattleTransitionIsWildBattleAndFastEncounter
+	jr nc, .normalDelay
+.shortDelay
+	call BattleTransition_TransferDelay2
+	jr .next
+.normalDelay
+	call BattleTransition_TransferDelay3
+.next
 	pop hl
 	ld bc, 5
 	add hl, bc
-	call BattleTransition_TransferDelay3
 	pop bc
 	dec c
 	jr nz, BattleTransition_Circle_Sub1
 	ret
 
+BattleTransition_TransferDelay1:
+	ld c, 1
+	jr BattleTransition_TransferDelay
+
+; TODO: use for circle anim on fast
+BattleTransition_TransferDelay2:
+	ld c, 2
+	jr BattleTransition_TransferDelay
+
 BattleTransition_TransferDelay3:
+	ld c, 3
+	; fall through
+BattleTransition_TransferDelay:
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
-	call Delay3
+	rst DelayFrames
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	ret
@@ -762,3 +798,6 @@ BattleTransition_CircleData2: db 1, 1, 2, 2, 4, 2, 4, 2, 3, -1
 BattleTransition_CircleData3: db 2, 1, 3, 1, 4, 1, 4, 1, 4, 1, 3, 1, 2, 1, 1, 1, 1, -1
 BattleTransition_CircleData4: db 4, 1, 4, 0, 3, 1, 3, 0, 2, 1, 2, 0, 1, -1
 BattleTransition_CircleData5: db 4, 0, 3, 0, 3, 0, 2, 0, 2, 0, 1, 0, 1, 0, 1, -1
+
+BattleTransitionIsWildBattleAndFastEncounter:
+	jpfar IsWildBattleAndFastEncounter

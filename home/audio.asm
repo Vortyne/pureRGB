@@ -309,6 +309,11 @@ PlaySpecialFieldMusic::
 	ld [wLastMusicSoundID], a
 	ret
 
+
+RemapCurrentMusic::
+	push af
+	jr RemapCommandPointerLoop.entry
+
 	; input hl = audio header
 	; c = bank the music is in
 PlaySpecialBattleMusic::
@@ -330,6 +335,7 @@ RemapCommandPointerLoop:
 	push af
 	ld a, c
 	ld [wSpecialMusicBank], a
+.entry
 	call BankswitchCommon
 	ld de, wChannelCommandPointers + CHAN1 * 2
 .loop

@@ -9,7 +9,8 @@ PrintBeginningBattleText:
 	jr c, .pokemonTower
 .notPokemonTower
 	ld a, [wEnemyMonSpecies2]
-	call PlayCry
+	ld d, a
+	callfar PlayCryMaybeSkipWait
 	call CheckSpecialWildBattleIntroText
 	jr c, .wildBattle
 	ld a, [wMoveMissed]

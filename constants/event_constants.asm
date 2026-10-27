@@ -98,8 +98,9 @@ DEF EVENT_OPTIONS_START1 EQU const_value
 	const FLAG_FLASHING_REDUCED
 	const FLAG_IMPERIAL_METRIC
 	const FLAG_RESUME_MUSIC
+	const FLAG_FAST_WILD_ENCOUNTERS
 
-	; pureRGBnote: ~12 bits of unused event space
+	; pureRGBnote: ~11 bits of unused event space
 
 ; Cerulean City events
 	const_next $98
@@ -1265,8 +1266,9 @@ DEF FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN EQU const_value
 DEF FLAG_LEECH_SEED_DAMAGE_PROC EQU const_value
 	const FLAG_SKIP_NPC_STAT_DOWN_DEBUFF
 	const FLAG_SKIP_DELAY_IN_GBC_PALETTE_FUNC
+	const FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 	
-	; pureRGBnote: 4 flag spaces remain
+	; pureRGBnote: 3 flag spaces remain
 
 ; Indigo Plateau events
 	const_next $8E0

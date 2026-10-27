@@ -1,5 +1,5 @@
 ; PureRGBnote: ADDED: Accessed from your PC. This options page changes what areas are in the world. Currently only Volcano can be turned off/on.
-DEF OPTIONS_PAGE_5_COUNT EQU 6 ; number of options on this page
+DEF OPTIONS_PAGE_5_COUNT EQU 7 ; number of options on this page
 DEF OPTIONS_PAGE_5_NUMBER EQU 5 ; must be 1 digit.
 
 ; format: "bit set" x position, "bit not set" x position, which bit it is, pointer to wram variable
@@ -16,6 +16,8 @@ Options3XPosBitData:
 	dw wEventFlags + (FLAG_FLASHING_REDUCED / 8)
 	db 15, 11, FLAG_IMPERIAL_METRIC % 8
 	dw wEventFlags + (FLAG_IMPERIAL_METRIC / 8)
+	db 16, 12, FLAG_FAST_WILD_ENCOUNTERS % 8
+	dw wEventFlags + (FLAG_FAST_WILD_ENCOUNTERS / 8)
 
 OptionsMenu3Header:
 	dw DrawOptionsMenu3
@@ -41,6 +43,7 @@ Options3CoordOffsetList:
 	db 9, 3
 	db 11, 4
 	db 13, 5
+	db 15, 6
 	db PAGE_CONTROLS_Y_COORD, MAX_OPTIONS_PER_PAGE
 
 OptionsMenu3Data:
@@ -56,6 +59,7 @@ Options3SetCursorPositionActions:
 	dw SetCursorPositionFromOptions3
 	dw SetCursorPositionFromOptions3
 	dw SetCursorPositionFromOptions3
+	dw SetCursorPositionFromOptions3
 
 OptionsMenu3Text:
 	db   "OPTIONS 3"
@@ -64,7 +68,8 @@ OptionsMenu3Text:
 	next " TITLE:    OG Pure"
 	next " INTRO:    ON SKIP"
 	next " FLASHING: OG LESS"
-	next " UNITS:    IMP MET@"
+	next " UNITS:    IMP MET"
+	next " FAST WILD: OFF ON@"
 
 DrawOptionsMenu3:
 	hlcoord 0, 0
@@ -81,6 +86,7 @@ Options3LeftRightFuncs:
 	dw Options3CursorToggleFunc14
 	dw Options3CursorToggleFunc14
 	dw Options3CursorToggleFunc15b
+	dw Options3CursorToggleFunc16
 	dw CursorCancelRow
 
 Options3CursorToggleFunc14:
@@ -93,6 +99,10 @@ Options3CursorToggleFunc15:
 
 Options3CursorToggleFunc15b:
 	ld b, %100
+	jp GenericOptionsCursorToggleFunc
+
+Options3CursorToggleFunc16:
+	ld b, %11100
 	jp GenericOptionsCursorToggleFunc
 
 SetOptions3FromCursorPositions:
@@ -113,6 +123,7 @@ Options3InfoTextJumpTable:
 	dw IntroInfoText
 	dw FlashingInfoText
 	dw UnitsInfoText
+	dw FastEncounterInfoText
 
 PauseMusicInfoText:
 	text_far_end _PauseMusicInfoText
@@ -131,3 +142,6 @@ FlashingInfoText:
 
 UnitsInfoText:
 	text_far_end _UnitsInfoText
+
+FastEncounterInfoText:
+	text_far_end _FastEncounterInfoText

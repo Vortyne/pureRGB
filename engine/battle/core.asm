@@ -84,6 +84,11 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ld h, b
 	ld l, $40
 	call SetScrollXForSlidingPlayerBodyLeft ; begin background scrolling on line $40
+	call IsWildBattleAndFastEncounter
+	jr nc, .skip1
+	inc b
+	inc b
+.skip1
 	inc b
 	inc b
 	lb hl, 0, $60
@@ -91,8 +96,13 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 
 ;;;;;;;;;; shinpokerednote: gbcnote: update BGP here so screen isn't revealed when scrolling is out of place
 	push af
+	call IsWildBattleAndFastEncounter
+	ld d, $72
+	jr nc, .skip2
+	ld d, $74
+.skip2
 	ld a, b
-	cp $72
+	cp d
 	call z, UpdateGBCPal_BGP
 	pop af
 ;;;;;;;;;;
@@ -100,6 +110,11 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	call SlidePlayerHeadLeft
 	ld a, c
 	ldh [hSCX], a
+	call IsWildBattleAndFastEncounter
+	jr nc, .skip3
+	dec c
+	dec c
+.skip3
 	dec c
 	dec c
 	jr nz, .slideSilhouettesLoop
@@ -145,6 +160,11 @@ SlidePlayerHeadLeft:
 .loop
 	dec [hl] ; decrement X
 	dec [hl] ; decrement X
+	call IsWildBattleAndFastEncounter
+	jr nc, .skip
+	dec [hl] ; decrement X
+	dec [hl] ; decrement X
+.skip
 	add hl, de ; next OAM entry
 	dec c
 	jr nz, .loop
@@ -183,8 +203,8 @@ StartBattle:
 	ld a, [wIsInBattle]
 	dec a ; is it a trainer battle?
 	call nz, EnemySendOutFirstMon ; if it is a trainer battle, send out enemy mon
-	ld c, 40
-	rst DelayFrames
+	;ld c, 40
+	;rst DelayFrames ; TODO: kind of pointless delay?
 	call SaveScreenTilesToBuffer1
 .checkAnyPartyAlive
 	call AnyPartyAlive
@@ -1068,7 +1088,7 @@ TrainerBattleVictory:
 	ret z
 	call ScrollTrainerPicAfterBattle
 	ld c, 40
-	rst DelayFrames
+	rst DelayFrames ; TODO: kind of pointless delay?
 	call PrintEndBattleText
 	CheckEvent EVENT_IN_FITNESS_BATTLE
 	ret nz ; no money earnings in fitness battles
@@ -1320,7 +1340,7 @@ HandlePlayerBlackOut:
 	call ClearScreenArea
 	call ScrollTrainerPicAfterBattle
 	ld c, 40
-	rst DelayFrames
+	rst DelayFrames ; TODO: kind of pointless delay?
 	call PrintEndBattleText ; in this case the end battle text is the "loss" text
 	ld a, [wCurMap]
 	cp OAKS_LAB
@@ -1790,8 +1810,14 @@ TryRunningFromBattle:
 	ld [wBattleResult], a
 	ld hl, wBattleFunctionalFlags
 	set 1, [hl] ; indicates we ran from battle rather than caught the pokemon
+	call IsWildBattleAndFastEncounter
 	ld a, SFX_RUN
+	jr nc, .normalSfx
+	call PlaySoundOverrideCurrent
+	jr .doneSfx
+.normalSfx
 	call PlaySoundWaitForCurrent
+.doneSfx
 	ld hl, GotAwayText
 	rst _PrintText
 	call WaitForSoundToFinish
@@ -1958,7 +1984,8 @@ SendOutMon:
 	hlcoord 4, 11
 	call AnimateSendingOutMon
 	ld a, [wCurPartySpecies]
-	call PlayCry
+	ld d, a
+	call PlayCryMaybeSkipWait
 	call PrintEmptyString
 	call SaveScreenTilesToBuffer1
 	jpfar CheckOnSendOutSpecialEffect
@@ -2369,6 +2396,7 @@ DisplayBattleMenu::
 .handleMenuSelection
 	and a
 	jr nz, .upperLeftMenuItemWasNotSelected
+	SetEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 ; the upper left menu item was selected
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
@@ -2385,6 +2413,7 @@ DisplayBattleMenu::
 .upperLeftMenuItemWasNotSelected ; a menu item other than the upper left item was selected
 	cp $2
 	jp nz, PartyMenuOrRockOrRun
+	SetEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 
 ; either the bag (normal battle) or bait (safari battle) was selected
 	ld a, [wLinkState]
@@ -2525,6 +2554,7 @@ NoPartyMenuAllowed:
 PartyMenuOrRockOrRun:
 	dec a ; was Run selected?
 	jp nz, BattleMenu_RunWasSelected
+	SetEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 ; party menu or rock was selected
 	call SaveScreenTilesToBuffer2
 	ld a, [wBattleType]
@@ -2643,7 +2673,7 @@ SwitchPlayerMon:
 	call ResetDisableAndPlayerMovedFlag
 	;;;;;;;;;
 	ld c, 50
-	rst DelayFrames
+	rst DelayFrames ; TODO: kind of pointless delay?
 	call AnimateRetreatingPlayerMon
 	ld a, [wWhichPokemon]
 	ld [wPlayerMonNumber], a
@@ -7059,6 +7089,8 @@ InitBattleCommon:
 	ld [wTrainerClass], a
 	callfar GetTrainerInformation ; PureRGBnote: MOVED: this function was moved out of home bank
 	callfar ReadTrainer
+	ld a, $2
+	ld [wIsInBattle], a
 	call DoBattleTransitionAndInitBattleVariables
 	call _LoadTrainerPic
 	xor a
@@ -7070,8 +7102,6 @@ InitBattleCommon:
 	call CopyUncompressedPicToTilemap
 	ld a, $ff
 	ld [wEnemyMonPartyPos], a
-	ld a, $2
-	ld [wIsInBattle], a
 	jr _InitBattleCommon
 
 ;;;;;;;;;; PureRGBnote: ADDED: this missingno code does the item duplication glitch if it's enabled when encountering missingno
@@ -7111,7 +7141,7 @@ InitWildBattle:
 _InitBattleCommon:
 	callfar GBCSetCPU1xSpeed	; shinpokerednote: ADDED: deactivate gbc 2x cpu speed during battle as it causes visual bugs
 	ld d, SET_PAL_BATTLE_BLACK
-	call RunPaletteCommand
+	call RunPaletteCommandWithoutGBCDelay
 	call SlidePlayerAndEnemySilhouettesOnScreen
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -7195,23 +7225,36 @@ AnimateSendingOutMon:
 	jr z, .notInBattle
 	add b
 	ld [hl], a
-	call Delay3
+	rst _DelayFrame
+	call IsWildBattleAndFastEncounter
+	jr c, .skipDelay1
+	ld c, 2
+	rst DelayFrames
+.skipDelay1
 	ld bc, -(SCREEN_WIDTH * 2 + 1)
 	add hl, bc
 	ld a, 1
 	ld [wDownscaledMonSize], a
 	lb bc, 3, 3
 	predef CopyDownscaledMonTiles
-	ld c, 4
+	rst _DelayFrame
+	call IsWildBattleAndFastEncounter
+	jr c, .skipDelay2
+	ld c, 3
 	rst DelayFrames
+.skipDelay2
 	ld bc, -(SCREEN_WIDTH * 2 + 1)
 	add hl, bc
 	xor a
 	ld [wDownscaledMonSize], a
 	lb bc, 5, 5
 	predef CopyDownscaledMonTiles
-	ld c, 5
+	rst _DelayFrame
+	call IsWildBattleAndFastEncounter
+	jr c, .skipDelay3
+	ld c, 4
 	rst DelayFrames
+.skipDelay3
 	ld bc, -(SCREEN_WIDTH * 2 + 1)
 	jr .next
 .notInBattle
@@ -7219,7 +7262,7 @@ AnimateSendingOutMon:
 .next
 	add hl, bc
 	ldh a, [hBaseTileID]
-	add $31
+	add $31 
 	jr CopyUncompressedPicToHL
 
 FarCopyUncompressedPicToTilemap::
@@ -7440,3 +7483,25 @@ ResetDisableAndPlayerMovedFlag:
 	ld [wPlayerLastSelectedMoveDisable], a
 	ld [wPlayerTurnCount], a
 	ret
+
+IsWildBattleAndFastEncounter::
+	ld a, [wIsInBattle]
+	cp 1 ; wild battle
+	jr nz, IsFastEncounter.no
+IsFastEncounter::
+	CheckEvent FLAG_FAST_WILD_ENCOUNTERS
+	jr z, .no
+	CheckEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
+	jr nz, .no
+.yes
+	scf
+	ret
+.no
+	and a
+	ret	
+
+PlayCryMaybeSkipWait::
+	call IsWildBattleAndFastEncounter
+	ld a, d
+	jp nc, PlayCry
+	jp PlayCryNoWait

@@ -170,6 +170,7 @@ EndTrainerBattle::
 	ld a, [wEnemyMonOrTrainerClass]
 	cp OPP_ID_OFFSET
 	jr nc, .skipRemoveSprite    ; test if trainer was fought (in that case skip removing the corresponding sprite)
+	SetEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 	; code that removes overworld pokemon like articuno, mewtwo, snorlax, etc. when defeated
 	; TODO: hide extra object if in extra map???
 	ld hl, wToggleableObjectList
@@ -210,6 +211,8 @@ InitBattleEnemyParameters::
 	ret
 .noTrainer
 	ld [wCurEnemyLevel], a
+	; PureRGBnote: ADDED: scripted wild mon encounters should not use the fast encounter setting, as they should be considered "too important" for that
+	SetEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 	ret
 
 GetSpritePosition1::

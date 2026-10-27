@@ -70,6 +70,7 @@ EndOfBattle:
 	set BIT_WILD_ENCOUNTER_COOLDOWN, [hl]
 	call WaitForSoundToFinish
 	call GBPalWhiteOut
+	ResetEvent FLAG_OVERRIDE_FAST_WILD_ENCOUNTERS
 	ld a, $ff
 	ld [wDestinationWarpID], a
 	ret

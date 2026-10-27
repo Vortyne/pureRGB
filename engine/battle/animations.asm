@@ -447,6 +447,11 @@ MoveAnimation:
 	push af
 	xor a
 	push af
+	callfar IsWildBattleAndFastEncounter
+	jr nc, .normal
+	call StopSFXChannels
+	jr MoveAnimationContent
+.normal
 	call WaitForSoundToFinish
 MoveAnimationContent:
 ;;;;;;;;;; PureRGBnote: ADDED: code for setting moves as seen for the movedex
