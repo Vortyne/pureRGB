@@ -66,7 +66,7 @@ ResetFitnessBattleState:
 	ld [wLevelLimit], a
 	ResetEvent EVENT_IN_FITNESS_BATTLE
 	ld a, [wIsInBattle]
-	cp -1
+	cp LOST_BATTLE
 	ret
 
 

@@ -65,7 +65,7 @@ ResetScripts:
 
 WalletKidPostBattle:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, ResetScripts
 GiveWallet:
 	ld d, MUSEUM2F_WALLET_KID

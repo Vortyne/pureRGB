@@ -38,7 +38,8 @@ DEF MOVE_PP     rb
 DEF MOVE_LENGTH EQU _RS
 
 ; battle classes (wIsInBattle values)
-	const_def 1
+	const_def
+	const NO_BATTLE
 	const WILD_BATTLE
 	const TRAINER_BATTLE
 DEF LOST_BATTLE EQU $FF

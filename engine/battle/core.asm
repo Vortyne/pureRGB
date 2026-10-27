@@ -181,7 +181,7 @@ StartBattle:
 	ld a, d
 	ld [wSerialExchangeNybbleReceiveData], a
 	ld a, [wIsInBattle]
-	dec a ; is it a trainer battle?
+	dec a ; is it a trainer battle? (not NO_BATTLE)
 	call nz, EnemySendOutFirstMon ; if it is a trainer battle, send out enemy mon
 	ld c, 40
 	rst DelayFrames
@@ -802,7 +802,7 @@ HandleEnemyMonFainted:
 	or [hl] ; is battle mon HP zero?
 	call nz, DrawPlayerHUDAndHPBar ; if battle mon HP is not zero, draw player HD and HP bar
 	ld a, [wIsInBattle]
-	dec a
+	dec a ; not NO_BATTLE
 	ret z ; return if it's a wild battle
 	call AnyEnemyPokemonAliveCheck
 	jp z, TrainerBattleVictory

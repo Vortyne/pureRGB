@@ -93,7 +93,7 @@ CheckOpponentWalkIn:
 	CheckEvent EVENT_BEAT_SECRET_LAB_CHIEF
 	ret nz
 	ld a, [wIsInBattle]
-	cp $FF
+	cp LOST_BATTLE
 	ret z
 	CheckEvent EVENT_SECRET_LAB_NPC_WALK_IN_HAPPENING
 	jp nz, WaitForWalkFinish
@@ -215,7 +215,7 @@ CheckOpponentLeaves:
 	ret z
 	ResetEvent EVENT_SECRET_LAB_BATTLE_COMPLETED
 	ld a, [wIsInBattle]
-	cp $FF
+	cp LOST_BATTLE
 	ret z
 	ld hl, wStatusFlags3
 	res BIT_PRINT_END_BATTLE_TEXT, [hl]

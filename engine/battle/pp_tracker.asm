@@ -82,7 +82,7 @@ ChooseMovePPTrack:
 ;while also taking into account unusable moves
 IsTrainerBattlePPCheck:
 	ld a, [wIsInBattle]
-	cp 2
+	cp TRAINER_BATTLE
 	ret nz
 ;first, adjust the scores in the backup buffer so that unusable moves are maxed out (based on flags in d)
 	push hl
@@ -168,7 +168,7 @@ IsTrainerBattlePPCheck:
 ;if trainer uses transform, then write transform PP to party struct
 transformPPtasks:
 	ld a, [wIsInBattle]
-	cp 2
+	cp TRAINER_BATTLE
 	ret nz
 
 	ld c, b
@@ -204,7 +204,7 @@ transformPPtasks:
 
 advancedLoadPP:
 	ld a, [wIsInBattle]
-	cp 2
+	cp TRAINER_BATTLE
 	jr nz, .doRegular ; don't do anything special for wild battles, and gift pokemon (outside battle)
 	;else see if the mon has been sent out before
 	callfar CheckAISentOut

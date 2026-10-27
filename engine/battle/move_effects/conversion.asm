@@ -67,7 +67,7 @@ ConversionEffect_:
 .noForcedModeEnemy
 	; NPC enemy using conversion
 	ld a, [wIsInBattle]
-	cp 1 ; is it a wild battle?
+	cp WILD_BATTLE
 	jr nz, .trainerBattle
 	call Random
 	rrca

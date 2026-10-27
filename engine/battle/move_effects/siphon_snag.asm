@@ -28,7 +28,7 @@ _SiphonSnagEffect::
 	and a
 	jr z, .continue
 	ld a, [wIsInBattle]
-	cp 1
+	cp WILD_BATTLE
 	ret z ; wild battle enemy turn, can't heal party
 .continue
 	ld a, b

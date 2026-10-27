@@ -66,7 +66,7 @@ PokemonTowerB1FOnMapLoad:
 	ret z
 	; BELOW: code that only runs when you return from a battle in the catacombs
 	ld a, [wIsInBattle]
-	cp $ff ; do nothing if you lost the battle
+	cp LOST_BATTLE ; do nothing if you lost the battle
 	jr z, .hideGhost
 	ld a, [wBattleFunctionalFlags]
 	bit 1, a

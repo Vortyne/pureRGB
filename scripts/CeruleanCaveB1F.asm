@@ -134,7 +134,7 @@ MewtwoAnimation:
 	
 MewtwoPostBattle:
 	ld a, [wIsInBattle]
-	cp $ff ; do nothing if you lost the battle
+	cp LOST_BATTLE ; do nothing if you lost the battle
 	jr z, CeruleanCaveB1FResetScript
 	SetEvent EVENT_BEAT_MEWTWO
 	ld c, TOGGLE_MEWTWO

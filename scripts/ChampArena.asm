@@ -233,7 +233,7 @@ ChampArenaCheckBattleComplete:
 	ret z
 	ResetEvent EVENT_ARENA_BATTLE_INITIATED
 	ld a, [wIsInBattle]
-	cp -1 ; lost battle
+	cp LOST_BATTLE ; lost battle
 	jr z, ChampArenaHideNPCs
 	ld a, LEFT
 	ld [wMapSpriteData], a ; first sprite's movement 2 byte

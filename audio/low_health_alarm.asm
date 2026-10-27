@@ -19,7 +19,7 @@ Music_DoLowHealthAlarm::
 	jr .do_alarm_tone_check_dec
 .no_alarm_check_battle
 	ld a, [wIsInBattle]
-	and a
+	and a ; NO_BATTLE
 	jr z, .no_alarm_no_battle
 	cp $FF
 	jr z, .no_alarm_no_battle

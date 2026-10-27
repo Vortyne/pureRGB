@@ -12,7 +12,7 @@ CeruleanCave2F_ScriptPointers:
 
 CeruleanCave2FAfterOakBattleScript:
 	ld a, [wIsInBattle]
-	cp $ff
+	cp LOST_BATTLE
 	jr z, .done
 	SetEvent EVENT_BEAT_PROF_OAK
 	CheckEvent EVENT_BEAT_PROF_OAK_ONCE

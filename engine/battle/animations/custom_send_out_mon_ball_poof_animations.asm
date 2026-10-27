@@ -48,7 +48,7 @@ AnimationSpecificCustomBallPoof::
 	callfar AnimationResetScreenPalette
 	call BallAnimResetColor
 	ld a, [wIsInBattle]
-	and a
+	and a ; NO_BATTLE
 	ret z
 	jpfar GBCSetCPU1xSpeed
 .doCustomBallAnim

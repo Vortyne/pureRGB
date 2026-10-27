@@ -39,7 +39,7 @@ CheckModifySafariWildRate:
 RangerPostBattle::
 	call EndTrainerBattle
 	ld a, [wIsInBattle] 
-	cp $ff ; if you lost the battle don't decrement and return
+	cp LOST_BATTLE ; if you lost the battle don't decrement and return
 	ret z
 	ld hl, wNumRangersLeft
 	dec [hl]
