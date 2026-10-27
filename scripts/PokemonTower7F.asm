@@ -78,15 +78,15 @@ PokemonTower7FWarpToMrFujiHouseScript:
 PokemonTower7FRocketLeaveMovementScript:
 	ld a, [wSpriteIndex]
 	cp POKEMONTOWER7F_ROCKET2
-	lb de, NPC_MOVEMENT_RIGHT, 10
+	lb de, NPC_RUN_RIGHT, 10
 	jr nz, .continue
-	lb de, NPC_MOVEMENT_LEFT, 11
+	lb de, NPC_RUN_LEFT, 11
 .continue
 	ld hl, wNPCMovementDirections2
 	push hl
 	ld a, [wYCoord]
 	bit 0, a ; if player's y coord is odd, the rocket starts by walking down then right or left
-	ld b, NPC_MOVEMENT_DOWN
+	ld b, NPC_RUN_DOWN
 	ld c, d
 	jr nz, .gotFirstMovement
 	; if even, the rocket starts by walking left or right, then down
@@ -106,7 +106,7 @@ PokemonTower7FRocketLeaveMovementScript:
 	inc hl
 .skip ; we always need 5 downwards movements regardless of the other actions
 	ld b, 5
-	ld a, NPC_MOVEMENT_DOWN
+	ld a, NPC_RUN_DOWN
 .loop
 	ld [hli], a
 	dec b
@@ -116,7 +116,7 @@ PokemonTower7FRocketLeaveMovementScript:
 	cp 12
 	jr nz, .done
 	dec hl
-	ld [hl], NPC_MOVEMENT_LEFT
+	ld [hl], NPC_RUN_LEFT
 	inc hl
 .done
 	ld [hl], -1

@@ -1,3 +1,5 @@
+; TODO: make chief walk out slowly instead of run like the others.
+
 SecretLab_Script:
 	call ReplaceDoor
 	call CheckOpponentLeaves
@@ -198,14 +200,14 @@ WaitForWalkFinish:
 	ret
 
 SoldierLeaveMovementDefault:
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
+	db NPC_RUN_RIGHT
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
 SoldierWalkInMovement:
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
 	db -1
 
 CheckOpponentLeaves:
@@ -262,13 +264,13 @@ CheckOpponentLeaves:
 	ret
 
 SoldierLeaveMovementAlternative:
-	db NPC_MOVEMENT_LEFT
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
+	db NPC_RUN_LEFT
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
 	db -1
 
 CheckRestartMusic:

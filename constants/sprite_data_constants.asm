@@ -13,6 +13,17 @@
 
 DEF NPC_CHANGE_FACING EQU $E0
 
+; PureRGBnote: ADDED: OR this with an NPC_MOVEMENT_* direction in scripted movement data (MoveSprite)
+; to make the NPC run that step (4x as fast as an NPC walking, the same speed as the player running).
+; bit 4 keeps the value inside the same direction range, and below NPC_CHANGE_FACING.
+DEF BIT_NPC_RUN EQU 4
+DEF NPC_RUN EQU 1 << BIT_NPC_RUN
+DEF NPC_RUN_DOWN  EQU NPC_MOVEMENT_DOWN  | NPC_RUN ; $10
+DEF NPC_RUN_UP    EQU NPC_MOVEMENT_UP    | NPC_RUN ; $50
+DEF NPC_RUN_LEFT  EQU NPC_MOVEMENT_LEFT  | NPC_RUN ; $90
+DEF NPC_RUN_RIGHT EQU NPC_MOVEMENT_RIGHT | NPC_RUN ; $D0
+ASSERT NPC_RUN_RIGHT < NPC_CHANGE_FACING
+
 ; player direction constants
 	const_def
 	const PLAYER_DIR_BIT_RIGHT ; 0
