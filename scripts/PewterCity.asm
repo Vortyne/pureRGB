@@ -123,19 +123,24 @@ PewterGuideScript:
 	ret
 
 MovementData_PewterMuseumGuyExit:
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_DOWN
+	db NPC_RUN_DOWN
 	db -1 ; end
 
 MovementData_PewterGymGuyExit:
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
-	db NPC_MOVEMENT_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
+	db NPC_RUN_RIGHT
 	db -1 ; end
 
 PewterCityHideSuperNerd1Script:
@@ -171,6 +176,8 @@ ResetPewterScripts:
 	ret
 
 PewterCityResetYoungsterScript:
+	ld a, SFX_LEDGE
+	rst _PlaySound
 	lb bc, PEWTERCITY_YOUNGSTER, TOGGLE_GYM_GUY
 	call PewterCityResetNPCScript
 ;;;;; PureRGBnote: FIXED: After the youngster shows you to the gym, they need to have their movement data reset so they face DOWN instead of NONE.
