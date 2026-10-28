@@ -602,6 +602,7 @@ InitializeSpriteScreenPosition:
 	ld a, [hl]      ; x#SPRITESTATEDATA2_MAPY
 	sub b           ; relative to player position
 	swap a          ; * 16
+	and $f0         ; PureRGBnote: FIXED: without this, swap a isn't * 16 for negative values (scripted NPCs 1 tile above the screen would appear on screen)
 	sub $4          ; - 4
 	dec h
 	ld [hli], a     ; [x#SPRITESTATEDATA1_YPIXELS]
@@ -611,6 +612,7 @@ InitializeSpriteScreenPosition:
 	ld a, [hli]     ; x#SPRITESTATEDATA2_MAPX
 	sub b           ; relative to player position
 	swap a          ; * 16
+	and $f0         ; PureRGBnote: FIXED: same as above (scripted NPCs 1 tile left of the screen would appear on screen)
 	dec h
 	ld [hl], a      ; [x#SPRITESTATEDATA1_XPIXELS]
 	ret

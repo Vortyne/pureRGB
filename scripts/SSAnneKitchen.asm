@@ -175,7 +175,7 @@ KitchenReplaceFoodTileBlock:
 	jp ReplaceTileBlock
 
 MovementWaiterWalksRight:
-	db NPC_MOVEMENT_RIGHT, 5
+	db NPC_RUN_RIGHT, 5
 	db -1
 
 MovementWaiterWalksLeft:

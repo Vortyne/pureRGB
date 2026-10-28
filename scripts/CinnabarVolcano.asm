@@ -2267,11 +2267,11 @@ VolcanoHelpMenu:
 	next "Blockages@"
 
 BlaineWalksOut:
-	db NPC_MOVEMENT_DOWN
-	db NPC_MOVEMENT_LEFT
-	db NPC_MOVEMENT_LEFT
-	db NPC_MOVEMENT_LEFT
-	db NPC_MOVEMENT_LEFT
+	db NPC_RUN_DOWN
+	db NPC_RUN_LEFT
+	db NPC_RUN_LEFT
+	db NPC_RUN_LEFT
+	db NPC_RUN_LEFT
 	db -1
 
 BlaineLeavesVolcano:

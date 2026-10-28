@@ -169,16 +169,16 @@ FuchsiaCityErikText:
 ErikLeavesNoTreeLeft:
 	db NPC_MOVEMENT_DOWN, 1
 	db NPC_MOVEMENT_LEFT, 4
-	db NPC_MOVEMENT_UP, 5
+	db NPC_MOVEMENT_UP, 6
 	db -1
 
 ErikLeavesNoTreeDown:
 	db NPC_MOVEMENT_LEFT, 4
-	db NPC_MOVEMENT_UP, 3
+	db NPC_MOVEMENT_UP, 4
 	db -1
 
 ErikLeavesNoTreeRight:
-	db NPC_MOVEMENT_LEFT, 3
+	db NPC_MOVEMENT_LEFT, 4
 	db -1
 
 ErikLeavesTreeLeft:
@@ -187,13 +187,13 @@ ErikLeavesTreeLeft:
 
 ErikLeavesTreeDown:
 	db NPC_MOVEMENT_RIGHT, 5
-	db NPC_MOVEMENT_UP, 3
+	db NPC_MOVEMENT_UP, 4
 	db -1
 
 ErikLeavesTreeRight:
 	db NPC_MOVEMENT_DOWN, 1
 	db NPC_MOVEMENT_RIGHT, 5
-	db NPC_MOVEMENT_UP, 5
+	db NPC_MOVEMENT_UP, 6
 	db -1
 
 FuchsiaCityYoungster2Text:

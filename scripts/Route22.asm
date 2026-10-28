@@ -325,6 +325,7 @@ Route22Rival2ExitMovementData2:
 	db NPC_MOVEMENT_LEFT
 	db NPC_MOVEMENT_LEFT
 	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_LEFT
 	db -1 ; end
 
 Route22Rival2ExitScript:
