@@ -63,14 +63,13 @@ _GivePokemon::
 	ld [wIsAltPalettePkmnData], a
 	ret
 
+; only use this for gift pokemon that appear in the pokedex.
 SetPokedexOwnedFlag:
 	ld a, [wCurPartySpecies]
 	push af
 	ld [wPokedexNum], a
 	call IndexToPokedex
 	ld a, [wPokedexNum]
-	and a
-	ret z ; PureRGBnote: ADDED: do nothing for missingno to avoid glitchy results (missingno isn't part of the dex	)
 	dec a
 	ld c, a
 	ld hl, wPokedexOwned

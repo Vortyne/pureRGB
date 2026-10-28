@@ -623,7 +623,7 @@ UpdateStatDone:
 .playerTurn
 ;;;;;;;;;; PureRGBnote: ADDED: certain stat modifiers don't need to do the animation here
 	CheckFlag FLAG_SKIP_STAT_ANIMATION
-	jr nz, .skipAnimation
+	jr nz, .applyBadgeBoostsAndStatusPenalties
 ;;;;;;;;;;
 	ld a, [de]
 	cp MINIMIZE
@@ -640,7 +640,6 @@ UpdateStatDone:
 	pop de
 .notMinimize
 	call PlayCurrentMoveAnimation
-.skipAnimation
 	ld a, [de]
 	cp MINIMIZE
 	jr nz, .applyBadgeBoostsAndStatusPenalties

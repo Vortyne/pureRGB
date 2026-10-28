@@ -320,13 +320,6 @@ MewBattleText:
 	call .loopMoveMewAndBubble
 	ld c, 10
 	rst DelayFrames
-	; change player OAM to be the up facing sprite if it isn't already
-	ld a, [wYCoord]
-	cp 20
-	jr nz, .noFlip
-	ld de, wShadowOAMSprite00
-	call UnflipSpriteOAM
-.noFlip
 	ld e, 4
 	ld d, 4
 	ld bc, 4

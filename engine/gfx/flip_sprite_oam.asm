@@ -1,6 +1,6 @@
 UnflipSpriteOAM::
 	ld hl, NormalSpriteOAM
-	jr z, SpriteOAMEditCommon
+	jr SpriteOAMEditCommon
 
 ; de = which sprite
 FlipSpriteOAM::

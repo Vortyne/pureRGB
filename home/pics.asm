@@ -165,4 +165,10 @@ InterlaceMergeSpriteBuffers::
 	ld c, PIC_SIZE ; tiles
 	ldh a, [hLoadedROMBank]
 	ld b, a
-	jp CopyVideoDataHBlank
+	call CopyVideoDataHBlank
+	; PureRGBnote: FIXED: SRAM was enabled by UncompressSpriteData and never disabled after the sprite buffers were used.
+	; The picture is in VRAM now, so disable SRAM to protect the save file.
+	ASSERT RAMG_SRAM_DISABLE == 0
+	xor a
+	ld [rRAMG], a
+	ret

@@ -349,7 +349,7 @@ CheckOnSendOutSpecialEffect::
 	SetFlag FLAG_SKIP_STAT_ANIMATION
 	ld a, ATTACK_UP2_EFFECT
 	ld [wPlayerMoveEffect], a
-	jpfar StatModifierUpEffect
+	callfar StatModifierUpEffect
 	ResetFlag FLAG_SKIP_STAT_ANIMATION
 	pop af
 	ldh [hWhoseTurn], a
