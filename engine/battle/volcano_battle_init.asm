@@ -167,6 +167,10 @@ CheckInitSpecialBattleEffect::
 .torched
 	ld hl, .onFire
 	rst _PrintText
+	; the burn text and attack penalty apply to whoever's turn it ISN'T, so make it the player's turn
+	; (otherwise hWhoseTurn could still be the enemy's from the last battle, and the text would use the player's mon's name)
+	xor a
+	ldh [hWhoseTurn], a
 	ld de, wEnemyMonStatus
 	callfar AutoBurnEffect ; burn torched
 	ld a, 1
