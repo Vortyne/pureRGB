@@ -234,15 +234,59 @@ InitMusicVariables::
 	pop hl
 	ret
 
+;;;;;;;;;; PureRGBnote: OPTIMIZED: this used to bankswitch to Audio2_InitSFXVariables, which recalculated the address
+;;;;;;;;;; of every per-channel array separately. It only clears RAM, so it can live here, and since those arrays
+;;;;;;;;;; are next to each other in WRAM, one loop with a stride of NUM_CHANNELS covers them. Runs on every sfx and drum hit.
+; resets the variables of channel de before a sound effect starts playing on it
 InitSFXVariables::
 	push hl
 	push de
 	push bc
-	homecall Audio2_InitSFXVariables
+	ld a, e
+	add a
+	ld c, a
+	ld b, 0
+	xor a
+	ld hl, wChannelReturnAddresses
+	add hl, bc
+	ld [hli], a
+	ld [hl], a
+	ld hl, wChannelCommandPointers
+	add hl, bc
+	ld [hli], a
+	ld [hl], a
+	; zero this channel's entry in every array from wChannelSoundIDs to wChannelPitchSlideTargetFrequencyLowBytes
+	ASSERT wChannelPitchSlideTargetFrequencyLowBytes == wChannelSoundIDs + 17 * NUM_CHANNELS
+	ld hl, wChannelSoundIDs
+	add hl, de
+	ld bc, NUM_CHANNELS
+	ld d, 18
+.clearLoop
+	ld [hl], a
+	add hl, bc
+	dec d
+	jr nz, .clearLoop
+	; then set its note delay counter, loop counter, and note speed to 1
+	ASSERT wChannelNoteDelayCounters == wChannelSoundIDs + 18 * NUM_CHANNELS
+	ASSERT wChannelLoopCounters == wChannelSoundIDs + 19 * NUM_CHANNELS
+	ASSERT wChannelNoteSpeeds == wChannelSoundIDs + 20 * NUM_CHANNELS
+	inc a
+	ld [hl], a
+	add hl, bc
+	ld [hl], a
+	add hl, bc
+	ld [hl], a
+	ld a, e
+	cp CHAN5
+	jr nz, .done
+	ld a, AUD1SWEEP_DOWN
+	ldh [rAUD1SWEEP], a
+.done
 	pop bc
 	pop de
 	pop hl
 	ret
+;;;;;;;;;;
 
 StopAllAudio::
 	push hl

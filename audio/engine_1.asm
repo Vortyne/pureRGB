@@ -57,21 +57,18 @@ Audio1_ApplyMusicAffects:
 .startChecks
 	ld hl, wChannelFlags1
 	add hl, bc
-	bit BIT_ROTATE_DUTY_CYCLE, [hl]
+	ld e, [hl] ; PureRGBnote: OPTIMIZED: read the flags once (Audio1_ApplyDutyCyclePattern doesn't change them or e)
+	bit BIT_ROTATE_DUTY_CYCLE, e
 	call nz, Audio1_ApplyDutyCyclePattern
 	ld b, 0
 	ld hl, wChannelFlags2
 	add hl, bc
 	bit BIT_EXECUTE_MUSIC, [hl]
 	jr nz, .checkForPitchSlide
-	ld hl, wChannelFlags1
-	add hl, bc
-	bit BIT_NOISE_OR_SFX, [hl]
+	bit BIT_NOISE_OR_SFX, e
 	ret nz
 .checkForPitchSlide
-	ld hl, wChannelFlags1
-	add hl, bc
-	bit BIT_PITCH_SLIDE_ON, [hl]
+	bit BIT_PITCH_SLIDE_ON, e
 	jp nz, Audio1_ApplyPitchSlide
 	ld hl, wChannelVibratoDelayCounters
 	add hl, bc
@@ -166,8 +163,29 @@ Audio1_PlayNextNote:
 Audio1_sound_ret:
 	call Audio1_GetNextMusicByte
 	ld d, a
-	cp sound_ret_cmd
-	jp nz, Audio1_sound_call
+;;;;;;;;;; PureRGBnote: OPTIMIZED: jump straight to the command's handler using a table indexed by the command byte's
+;;;;;;;;;; high nybble (and the low nybble for $ex/$fx), instead of comparing against every command in turn.
+;;;;;;;;;; Each table entry is the handler that the old compare chain would have reached first for that byte,
+;;;;;;;;;; Handlers only check things that don't depend on the byte value alone (like which channel is playing).
+	ld hl, Audio1_CommandTable
+	swap a
+	; fall through
+Audio1_JumpToCommandHandler:
+; a = table index in the low nybble, hl = table, d = command byte
+	and $f
+	add a
+	add l
+	ld l, a
+	jr nc, .noCarry
+	inc h
+.noCarry
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	jp hl
+;;;;;;;;;;
+
+Audio1_SoundRetCommand: ; PureRGBnote: ADDED: label for the sound_ret command ($ff) handler
 	ld b, 0
 	ld hl, wChannelFlags1
 	add hl, bc
@@ -245,9 +263,79 @@ Audio1_sound_ret:
 	ld [hl], b
 	ret
 
+;;;;;;;;;; PureRGBnote: ADDED: command dispatch tables (see Audio1_sound_ret)
+Audio1_CommandsEx:
+	ld a, d
+	ld hl, Audio1_CommandTableEx
+	jp Audio1_JumpToCommandHandler
+
+Audio1_CommandsFx:
+	ld a, d
+	ld hl, Audio1_CommandTableFx
+	jp Audio1_JumpToCommandHandler
+
+; indexed by the high nybble of the command byte
+Audio1_CommandTable:
+	dw Audio1_note                ; $0x
+	dw Audio1_pitch_sweep         ; $1x ($10 on sfx channels is pitch_sweep, otherwise a note)
+	dw Audio1_sfx_note            ; $2x (square_note/noise_note on sfx and noise channels, otherwise a note)
+	dw Audio1_note                ; $3x
+	dw Audio1_note                ; $4x
+	dw Audio1_note                ; $5x
+	dw Audio1_note                ; $6x
+	dw Audio1_note                ; $7x
+	dw Audio1_note                ; $8x
+	dw Audio1_note                ; $9x
+	dw Audio1_note                ; $ax
+	dw Audio1_note                ; $bx (drum_note on the noise channel, otherwise a note)
+	dw Audio1_note                ; $cx (rest)
+	dw Audio1_note_type           ; $dx
+	dw Audio1_CommandsEx          ; $ex
+	dw Audio1_CommandsFx          ; $fx
+	ASSERT @ - Audio1_CommandTable == 16 * 2
+
+; indexed by the low nybble of a $ex command byte
+Audio1_CommandTableEx:
+	dw Audio1_octave              ; $e0
+	dw Audio1_octave              ; $e1
+	dw Audio1_octave              ; $e2
+	dw Audio1_octave              ; $e3
+	dw Audio1_octave              ; $e4
+	dw Audio1_octave              ; $e5
+	dw Audio1_octave              ; $e6
+	dw Audio1_octave              ; $e7
+	dw Audio1_toggle_perfect_pitch ; $e8
+	dw Audio1_octave              ; $e9 (not a command, but the old chain treated it as octave)
+	dw Audio1_vibrato             ; $ea
+	dw Audio1_pitch_slide         ; $eb
+	dw Audio1_duty_cycle          ; $ec
+	dw Audio1_tempo               ; $ed
+	dw Audio1_stereo_panning      ; $ee
+	dw Audio1_unknownmusic0xef    ; $ef
+	ASSERT @ - Audio1_CommandTableEx == 16 * 2
+
+; indexed by the low nybble of a $fx command byte
+Audio1_CommandTableFx:
+	dw Audio1_volume              ; $f0
+	dw VolumeEnvelope             ; $f1
+	dw IncOctave                  ; $f2
+	dw DecOctave                  ; $f3
+	dw MusicSpeed                 ; $f4
+	dw ChannelVolumeCmd           ; $f5
+	dw FadeWave                   ; $f6
+	dw DrumKit                    ; $f7
+	dw Audio1_execute_music       ; $f8
+	dw Transpose                  ; $f9
+	dw Audio1_note                ; $fa (unused, the old chain fell through to a note)
+	dw Audio1_note                ; $fb (unused, the old chain fell through to a note)
+	dw Audio1_duty_cycle_pattern  ; $fc
+	dw Audio1_sound_call          ; $fd
+	dw Audio1_sound_loop          ; $fe
+	dw Audio1_SoundRetCommand     ; $ff
+	ASSERT @ - Audio1_CommandTableFx == 16 * 2
+;;;;;;;;;;
+
 Audio1_sound_call:
-	cp sound_call_cmd
-	jp nz, Audio1_sound_loop
 	call Audio1_GetNextMusicByte
 	push af
 	call Audio1_GetNextMusicByte
@@ -283,8 +371,6 @@ Audio1_sound_call:
 	jp Audio1_sound_ret
 
 Audio1_sound_loop:
-	cp sound_loop_cmd
-	jp nz, Audio1_note_type
 	call Audio1_GetNextMusicByte
 	ld e, a
 	and a
@@ -320,9 +406,6 @@ Audio1_sound_loop:
 	jp Audio1_sound_ret
 
 Audio1_note_type:
-	and $f0
-	cp note_type_cmd
-	jp nz, VolumeEnvelope
 	ld a, d
 	and $f
 	ld b, $0
@@ -364,9 +447,6 @@ Audio1_note_type:
 	jp Audio1_sound_ret
 
 Audio1_toggle_perfect_pitch:
-	ld a, d
-	cp toggle_perfect_pitch_cmd
-	jr nz, Audio1_vibrato
 	ld b, 0
 	ld hl, wChannelFlags1
 	add hl, bc
@@ -376,8 +456,6 @@ Audio1_toggle_perfect_pitch:
 	jp Audio1_sound_ret
 
 Audio1_vibrato:
-	cp vibrato_cmd
-	jr nz, Audio1_pitch_slide
 	call Audio1_GetNextMusicByte
 	ld b, 0
 	ld hl, wChannelVibratoDelayCounters
@@ -424,8 +502,6 @@ Audio1_vibrato:
 	jp Audio1_sound_ret
 
 Audio1_pitch_slide:
-	cp pitch_slide_cmd
-	jr nz, Audio1_duty_cycle
 	call Audio1_GetNextMusicByte
 	ld b, 0
 	ld hl, wChannelPitchSlideLengthModifiers
@@ -455,8 +531,6 @@ Audio1_pitch_slide:
 	jp Audio1_note_length
 
 Audio1_duty_cycle:
-	cp duty_cycle_cmd
-	jr nz, Audio1_tempo
 	call Audio1_GetNextMusicByte
 	rrca
 	rrca
@@ -468,8 +542,6 @@ Audio1_duty_cycle:
 	jp Audio1_sound_ret
 
 Audio1_tempo:
-	cp tempo_cmd
-	jr nz, Audio1_stereo_panning
 	ld a, c
 	cp CHAN5
 	jr nc, .sfxChannel
@@ -497,16 +569,12 @@ Audio1_tempo:
 	jp Audio1_sound_ret
 
 Audio1_stereo_panning:
-	cp stereo_panning_cmd
-	jr nz, Audio1_unknownmusic0xef
 	call Audio1_GetNextMusicByte
 	ld [wStereoPanning], a ; store panning
 	jp Audio1_sound_ret
 
 ; this appears to never be used
 Audio1_unknownmusic0xef:
-	cp unknownmusic0xef_cmd
-	jr nz, Audio1_duty_cycle_pattern
 	call Audio1_GetNextMusicByte
 	push bc
 	ld b, a
@@ -523,8 +591,6 @@ Audio1_unknownmusic0xef:
 	jp Audio1_sound_ret
 
 Audio1_duty_cycle_pattern:
-	cp duty_cycle_pattern_cmd
-	jr nz, Audio1_volume
 	call Audio1_GetNextMusicByte
 	ld b, 0
 	ld hl, wChannelDutyCyclePatterns
@@ -540,15 +606,11 @@ Audio1_duty_cycle_pattern:
 	jp Audio1_sound_ret
 
 Audio1_volume:
-	cp volume_cmd
-	jr nz, Audio1_execute_music
 	call Audio1_GetNextMusicByte
 	ldh [rAUDVOL], a ; store volume
 	jp Audio1_sound_ret
 
 Audio1_execute_music:
-	cp execute_music_cmd
-	jr nz, Audio1_octave
 	ld b, $0
 	ld hl, wChannelFlags2
 	add hl, bc
@@ -556,9 +618,6 @@ Audio1_execute_music:
 	jp Audio1_sound_ret
 
 Audio1_octave:
-	and $f0
-	cp octave_cmd
-	jr nz, Audio1_sfx_note
 	ld hl, wChannelOctaves
 	ld b, 0
 	add hl, bc
@@ -569,8 +628,6 @@ Audio1_octave:
 
 ; sfx_note is either square_note or noise_note depending on the channel
 Audio1_sfx_note:
-	cp sfx_note_cmd
-	jr nz, Audio1_pitch_sweep
 	ld a, c
 	cp CHAN4 ; is this a noise or sfx channel?
 	jr c, Audio1_pitch_sweep ; no
@@ -637,10 +694,7 @@ Audio1_pitch_sweep:
 
 ;;;;;;;;;; PureRGBnote: ADDED: new audio commands that can be used in songs, needed for tcg/tcg2/pinball songs to work properly
 VolumeEnvelope:
-	ld a, d
 ;volume_envelope
-	cp volume_envelope_cmd
-	jr nz, IncOctave
 	call Audio1_GetNextMusicByte
 	ld hl, wChannelVolumes
 	ld b, 0
@@ -650,8 +704,6 @@ VolumeEnvelope:
 
 IncOctave:
 ;inc_octave
-	cp inc_octave_cmd
-	jr nz, DecOctave
 	ld hl, wChannelOctaves
 	ld b, 0
 	add hl, bc
@@ -663,8 +715,6 @@ IncOctave:
 
 DecOctave:
 ;dec_octave
-	cp dec_octave_cmd
-	jr nz, MusicSpeed
 	ld hl, wChannelOctaves
 	ld b, 0
 	add hl, bc
@@ -676,8 +726,6 @@ DecOctave:
 
 MusicSpeed:
 ;speed
-	cp speed_cmd
-	jr nz, ChannelVolumeCmd
 	call Audio1_GetNextMusicByte
 	ld hl, wChannelNoteSpeeds
 	ld b, 0
@@ -687,8 +735,6 @@ MusicSpeed:
 
 ChannelVolumeCmd:
 ;channel_volume
-	cp channel_volume_cmd
-	jr nz, FadeWave
 	call Audio1_GetNextMusicByte
 	ld hl, wChannelVolumes
 	ld b, 0
@@ -709,8 +755,6 @@ ChannelVolumeCmd:
 
 FadeWave:
 ;fade_wave
-	cp fade_wave_cmd
-	jr nz, DrumKit
 	call Audio1_GetNextMusicByte
 	ld hl, wMusicWaveInstrument
 	ld [hl], a
@@ -718,17 +762,13 @@ FadeWave:
 
 DrumKit:
 ;drum_kit
-	cp drum_kit_cmd
-	jr nz, Transpose
 	call Audio1_GetNextMusicByte
 	ld hl, wMusicDrumKit
 	ld [hl], a
 	jp Audio1_sound_ret
 
 Transpose:
-	cp transpose_cmd
-	;jr nz, Cutoff
-	jp nz, Audio1_toggle_perfect_pitch
+;transpose
 	call Audio1_GetNextMusicByte
 	ld hl, wChannelTranspositions
 	ld b, 0
