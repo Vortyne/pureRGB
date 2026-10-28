@@ -375,6 +375,7 @@ TrainerTipsText:: db "<TRAINER> TIPS@"
 OpponentText::    db "opponent@"
 UserText::        db "user@"
 PCCharText::      db "PC@"
+EnemyText::       db "Enemy @"
 ; these have to be separated by a comma in order to not re-trigger the charmap macro that sets them up to be used automatically
 TheText::         db "t","he@" 
 YouText::         db "y","ou@" 

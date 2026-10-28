@@ -1,3 +1,32 @@
+; PureRGBnote: ADDED: used between tiles in the CopyVideoDataHBlank functions.
+; Interrupts have to be off while SP points at the source data, but long copies take more than a frame,
+; so a V-blank could get lost (music/timers skip a frame). If a V-blank is waiting, this switches back to the
+; real stack and briefly enables interrupts so it can run, then goes back to copying.
+; Checking rIF first keeps the cost to a few cycles per tile when no V-blank is waiting, so copy speed is unaffected.
+; Expects hl = dest, SP = source, and to be followed by a jump to .tileLoop. Trashes a and de.
+MACRO allow_vblank_between_hblank_copy_tiles
+	ldh a, [rIF]
+	bit B_IF_VBLANK, a
+	jr z, .tileLoop ; no V-blank waiting: keep copying
+	ld d, h
+	ld e, l ; de = dest
+	ld [wHBlankCopySourceTemp], sp
+	ld sp, hSPTemp
+	pop hl
+	ld sp, hl ; back on the real stack
+	ei
+	nop ; a pending V-blank interrupt runs here (it may use hSPTemp, so it's saved again below)
+	di
+	ld [hSPTemp], sp
+	ld hl, wHBlankCopySourceTemp
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld sp, hl ; SP = source again
+	ld h, d
+	ld l, e ; hl = dest
+ENDM
+
 FarCopyData2::
 ; Identical to FarCopyData, but uses hROMBankTemp
 ; as temp space instead of wBuffer.
@@ -53,22 +82,49 @@ CheckSpecialCopyData:
 	; fall through
 
 SpecialCopyData:
+; Copy bc bytes from hl to de while the LCD is on.
+;;;;;;;;;; PureRGBnote: OPTIMIZED: copies 2 bytes per wait for VRAM access instead of 1.
+;;;;;;;;;; Once STAT says VRAM is accessible (mode 0 or 1), there are always at least the 80 dots of mode 2
+;;;;;;;;;; (20 M-cycles at single speed) before mode 3 locks VRAM again. The second write below lands
+;;;;;;;;;; about 12 M-cycles after the STAT read, so it's safe even if the read happened at the very end of H-blank.
+	bit 0, c
+	jr z, .evenCount
+; odd number of bytes: copy one by itself first
 	di	;prevent vblank functions from running
-.waitVRAM
-	ldh a, [rSTAT]		;2 cycles - read from stat register to get the mode
-	and %10				;4 cycles
-	jr nz, .waitVRAM	;6 cycles to pass or 10 to loop
-; Copy bc bytes from hl to de.
-	ld a, [hli]			;4 cycles
-	ld [de], a			;2 cycles
-;this should result in 9 cycles of wiggle-room in the worst case
+.waitVRAMSingle
+	ldh a, [rSTAT]
+	and %10
+	jr nz, .waitVRAMSingle
+	ld a, [hli]
+	ld [de], a
+	ei
 	inc de
 	dec bc
+.evenCount
+	srl b
+	rr c ; bc = number of byte pairs
+	ld a, b
+	or c
+	ret z
+.loop
+	di	;prevent vblank functions from running
+.waitVRAM
+	ldh a, [rSTAT]
+	and %10 ; wait while mode 2 or 3
+	jr nz, .waitVRAM
+	ld a, [hli]
+	ld [de], a
+	inc de
+	ld a, [hli]
+	ld [de], a
 	ei	;re-enable vblank functions
+	inc de
+	dec bc
 	ld a, c
 	or b
-	jr nz, SpecialCopyData
+	jr nz, .loop
 	ret
+;;;;;;;;;;
 ;;;;;;;;;;
 
 FarCopyDataDouble::
@@ -308,7 +364,10 @@ CopyVideoDataHBlank::
 	dec c
 	jr nz, .pairLoop
 	dec b
-	jr nz, .tileLoop
+	jr z, .done
+	allow_vblank_between_hblank_copy_tiles
+	jr .tileLoop
+.done
 	ld sp, hSPTemp
 	pop hl
 	ld sp, hl
@@ -366,7 +425,10 @@ CopyVideoDataHBlankDouble::
 	dec c
 	jr nz, .pairLoop
 	dec b
-	jr nz, .tileLoop
+	jr z, .done
+	allow_vblank_between_hblank_copy_tiles
+	jr .tileLoop
+.done
 	ld sp, hSPTemp
 	pop hl
 	ld sp, hl
@@ -411,7 +473,10 @@ CopyVideoDataHBlankAnySource::
 	dec c
 	jr nz, .pairLoop
 	dec b
-	jr nz, .tileLoop
+	jr z, .done
+	allow_vblank_between_hblank_copy_tiles
+	jr .tileLoop
+.done
 	ld sp, hSPTemp
 	pop hl
 	ld sp, hl

@@ -9,7 +9,8 @@ HandleLedges::
 	jr z, .volcano
 	ret
 .overworld
-	call GetTileAndCoordsInFrontOfPlayer
+	; PureRGBnote: OPTIMIZED: no need to call GetTileAndCoordsInFrontOfPlayer, the only caller
+	; (CheckForJumpingAndTilePairCollisions) just did, so wTileInFrontOfPlayer is up to date
 	ld hl, LedgeTiles
 	ld a, [wSpritePlayerStateData1FacingDirection]
 	ld b, a

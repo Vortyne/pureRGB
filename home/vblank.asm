@@ -65,8 +65,30 @@ VBlank::
 
 .skipDec
 ;;;;;;;;;; shinpokerednote: audionote: these funcs were duplicated in home/audio.asm in yellow so just call them
+;;;;;;;;;; PureRGBnote: OPTIMIZED: handle the usual case of FadeOutAudio here instead of bankswitching every frame
+	ld a, [wAudioFadeOutControl]
+	and a
+	jr nz, .fadeOutAudio
+	ld a, [wStatusFlags2]
+	bit BIT_NO_AUDIO_FADE_OUT, a
+	jr nz, .doneFadeOutAudio
+	ld a, $77
+	ldh [rNR50], a
+	jr .doneFadeOutAudio
+.fadeOutAudio
 	farcall FadeOutAudio
+.doneFadeOutAudio
+;;;;;;;;;; PureRGBnote: OPTIMIZED: Music_DoLowHealthAlarm does nothing when the alarm is off outside of battle
+	ld a, [wLowHealthAlarm]
+	and a
+	jr nz, .lowHealthAlarm
+	ld a, [wIsInBattle]
+	and a
+	jr z, .doneLowHealthAlarm
+.lowHealthAlarm
 	callbs Music_DoLowHealthAlarm
+.doneLowHealthAlarm
+;;;;;;;;;;
 	callbs Audio1_UpdateMusic
 ;;;;;;;;;;
 

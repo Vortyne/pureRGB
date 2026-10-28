@@ -14,8 +14,6 @@ INCLUDE "home/copy.asm"
 INCLUDE "home/array.asm"
 INCLUDE "home/math.asm"
 INCLUDE "home/copy_string.asm"
-; have 7 bytes left in high home so may as well use it for something
-EnemyText::       db "Enemy @"
 
 
 SECTION "Home", ROM0

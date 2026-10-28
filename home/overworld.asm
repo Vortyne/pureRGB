@@ -48,10 +48,19 @@ OverworldLoopLessDelay::
 	and a
 	jp nz, .moveAhead ; if the player sprite has not yet completed the walking animation
 	call JoypadOverworld ; get joypad state (which is possibly simulated)
+;;;;;;;;;; PureRGBnote: OPTIMIZED: only bankswitch to check the safari game when in the safari zone
+	CheckEvent EVENT_IN_SAFARI_ZONE
+	jr nz, .inSafariZone
+	xor a
+	ld [wSafariZoneGameOver], a ; same thing SafariZoneCheck does outside the safari zone
+	jr .doneSafariZoneCheck
+.inSafariZone
 	farcall SafariZoneCheck
 	ld a, [wSafariZoneGameOver]
 	and a
 	jp nz, WarpFound2
+.doneSafariZoneCheck
+;;;;;;;;;;
 	ld hl, wStatusFlags3
 	bit BIT_WARP_FROM_CUR_SCRIPT, [hl]
 	res BIT_WARP_FROM_CUR_SCRIPT, [hl]
@@ -1028,11 +1037,11 @@ LoadEastWestConnectionsTileMap::
 IsSpriteOrSignInFrontOfPlayer::
 	xor a
 	ldh [hTextID], a
+	call GetTileAndCoordsInFrontOfPlayer ; get the coordinates in front of the player in de ; PureRGBnote: CHANGED: only called once here now
 	ld a, [wNumSigns]
 	and a
 	jr z, .extendRangeOverCounter
 ; if there are signs
-	call GetTileAndCoordsInFrontOfPlayer ; get the coordinates in front of the player in de
 	ld hl, wSignCoords
 	ld a, [wNumSigns]
 	ld b, a
@@ -1065,7 +1074,8 @@ IsSpriteOrSignInFrontOfPlayer::
 	jr nz, .signLoop
 ; check if the player is front of a counter in a pokemon center, pokemart, etc. and if so, extend the range at which he can talk to the NPC
 .extendRangeOverCounter
-	call GetTileAndCoordsInFrontOfPlayer ; get the tile in front of the player in c
+	ld a, [wTileInFrontOfPlayer] ; PureRGBnote: OPTIMIZED: loaded at the start of this function
+	ld c, a ; tile in front of the player
 	ld hl, wTilesetTalkingOverTiles ; list of tiles that extend talking range (counter tiles)
 	ld b, 3
 	ld d, $20 ; talking range in pixels (long range)
@@ -1190,7 +1200,7 @@ CollisionCheckOnLand::
 	ld hl, TilePairCollisionsLand
 	call CheckForJumpingAndTilePairCollisions
 	jr c, .collision
-	call CheckTilePassable
+	call CheckTilePassable.tileInFrontAlreadyLoaded ; PureRGBnote: OPTIMIZED: tile was just loaded by CheckForJumpingAndTilePairCollisions
 	jr nc, .noCollision
 	callfar CheckForAutoSurf ; PureRGBnote: ADDED: "collision check" that will automatically start up surfing if surf was previously activated.
 	jr nc, .noCollision
@@ -1211,6 +1221,7 @@ CollisionCheckOnLand::
 ; clears carry if it is, sets carry if not
 CheckTilePassable::
 	call GetTileAndCoordsInFrontOfPlayer ; get tile in front of player
+.tileInFrontAlreadyLoaded ; PureRGBnote: ADDED: entry point for when wTileInFrontOfPlayer is already up to date
 	ld a, [wTileInFrontOfPlayer] ; tile in front of player
 ;;;;;;;;;; PureRGBnote: CHANGED: unified code for checking if a tile is passable
 	ld d, a
@@ -1820,8 +1831,9 @@ CollisionCheckOnWater::
 	ld hl, TilePairCollisionsWater
 	call CheckForJumpingAndTilePairCollisions
 	jr c, .collision
-	call GetTileAndCoordsInFrontOfPlayer ; get tile in front of player (puts it in c and [wTileInFrontOfPlayer])
-	ld d, c ; put the tile in front of the player into d so the callfar after this doesn't affect the register
+	; PureRGBnote: OPTIMIZED: CheckForJumpingAndTilePairCollisions already loaded the tile in front of the player
+	ld a, [wTileInFrontOfPlayer]
+	ld d, a ; put the tile in front of the player into d so the callfar after this doesn't affect the register
 	callfar WaterTileSetIsNextTileShoreOrWater
 	jr nc, .noCollision
 ; check if the [land] tile in front of the player is passable
@@ -1857,10 +1869,21 @@ CollisionCheckOnWater::
 	jr .noCollision
 
 RunMapScript::
+;;;;;;;;;; PureRGBnote: OPTIMIZED: only bankswitch to the boulder script when it has something to do
+;;;;;;;;;; (it does nothing unless strength is active or the boulder dust animation is pending)
+	ld a, [wStatusFlags1]
+	bit BIT_STRENGTH_ACTIVE, a
+	jr nz, .boulderMapScript
+	ld a, [wMiscFlags]
+	bit BIT_BOULDER_DUST, a
+	jr z, .noBoulderMapScript
+.boulderMapScript
 	homecall BoulderMapScript
+.noBoulderMapScript
+;;;;;;;;;;
 	call RunNPCMovementScript
-	ld a, [wCurMap]
-	call SwitchToMapRomBank
+	ld a, [wCurMapROMBank] ; PureRGBnote: OPTIMIZED: bank stored by LoadMapHeader instead of looking it up every frame
+	call SetCurBank
 	ld hl, wCurMapScriptPtr
 	ld a, [hli]
 	ld h, [hl]
@@ -1930,6 +1953,8 @@ LoadMapHeader::
 	farcall MarkTownVisitedAndLoadToggleableObjects
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
+	ldh a, [hMapROMBank]
+	ld [wCurMapROMBank], a ; PureRGBnote: ADDED: so RunMapScript doesn't need to look up the map's bank every frame
 	ld a, [wCurMapTileset]
 	ld b, a
 	res BIT_NO_PREVIOUS_MAP, a

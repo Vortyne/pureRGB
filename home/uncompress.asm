@@ -37,8 +37,8 @@ _UncompressSpriteData::
 	lb bc, HIGH(2 * SPRITEBUFFERSIZE), LOW(2 * SPRITEBUFFERSIZE)
 	xor a
 	call FillMemory           ; clear sprite buffer 1 and 2
-	ld a, $1
-	ld [wSpriteInputBitCounter], a
+	ld a, %10000000 ; PureRGBnote: CHANGED: only the marker bit, so the first ReadNextInputBit loads a byte
+	ld [wSpriteInputCurByte], a
 	ld a, $3
 	ld [wSpriteOutputBitOffset], a
 	xor a
@@ -251,20 +251,27 @@ WriteSpriteBitsToBuffer::
 	ret
 
 ; reads next bit from input stream and returns it in a
+; returns the next input bit in a (0 or 1), with the z flag set if it's 0
+;;;;;;;;;; PureRGBnote: OPTIMIZED: wSpriteInputCurByte holds the bits that haven't been read yet, followed by a single
+;;;;;;;;;; marker bit. So no separate bit counter is needed: when shifting out a bit leaves 0, only the marker was left
+;;;;;;;;;; and the next input byte is loaded.
 ReadNextInputBit::
-	ld a, [wSpriteInputBitCounter]
-	dec a
-	jr nz, .curByteHasMoreBitsToRead
-	call ReadNextInputByte
-	ld [wSpriteInputCurByte], a
-	ld a, $8
-.curByteHasMoreBitsToRead
-	ld [wSpriteInputBitCounter], a
 	ld a, [wSpriteInputCurByte]
-	rlca
+	add a ; carry = next bit
+	jr z, .nextByte
 	ld [wSpriteInputCurByte], a
-	and $1
+	sbc a ; a = $ff if the bit is 1, 0 otherwise
+	and 1
 	ret
+.nextByte
+	call ReadNextInputByte
+	scf
+	adc a ; carry = top bit of the new byte, marker bit shifted in at the bottom
+	ld [wSpriteInputCurByte], a
+	sbc a
+	and 1
+	ret
+;;;;;;;;;;
 
 ; reads next byte from input stream and returns it in a
 ReadNextInputByte::

@@ -1663,7 +1663,8 @@ NEXTU
 wSlotMachineAllowMatchesCounter:: db
 ENDU
 
-	ds 2 ; unused 2 bytes
+; PureRGBnote: ADDED: engine state that isn't saved (after wBoxDataEnd, so not part of the saved box data)
+wHBlankCopySourceTemp:: ds 2
 
 wOutwardSpiralTileMapPointer:: db
 
@@ -1950,7 +1951,7 @@ wPrize2:: db
 wPartyItemID::
 wPrize3:: db
 
-	ds 1 ; unused lone byte
+wCurMapROMBank:: db
 
 ; This union spans 17 bytes.
 UNION
@@ -2792,7 +2793,7 @@ wBoxMonNicksEnd::
 
 wBoxDataEnd::
 
-; ds 11 ; used to be exp bar space here, could use this many bytes without issue possibly
+ds 11 ; used to be exp bar space here, could use this many bytes without issue possibly
 
 SECTION "Stack", WRAMX
 

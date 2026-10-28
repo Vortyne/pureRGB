@@ -29,17 +29,20 @@ DrawTileLineIncrement::
 
 FillMemory::
 ; Fill bc bytes at hl with a.
-	push de
-	ld d, a
+;;;;;;;;;; PureRGBnote: OPTIMIZED: same counting trick as CopyData (bc = 0 now fills nothing)
+	inc b
+	inc c
+	jr .start
 .loop
-	ld a, d
 	ld [hli], a
-	dec bc
-	ld a, b
-	or c
+.start
+	dec c
 	jr nz, .loop
-	pop de
+	dec b
+	jr nz, .loop
+	xor a ; returns a = 0 and z flag like before
 	ret
+;;;;;;;;;;
 
 UncompressSpriteFromDE::
 ; Decompress pic at a:de.

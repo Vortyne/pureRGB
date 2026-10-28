@@ -390,6 +390,7 @@ hDisableJoypadPolling:: db
 ; shinpokerednote: ADDED: new flag to prevent something while sprites are updating
 ;bit 0 - PrepareOAMData and DMARoutine will not run in Vblank while this bit is set
 ;bit 1 - BGmap update functions will not run in Vblank while this bit is set
+;bit 3 - map loading copies to VRAM without turning the LCD off (see FarCopyData4)
 hFlagsFFFA::db 
 hRGB:: ds 3 ; FFFB=Red, FFFC=Green, FFFD=BLUE ; shinpokerednote: ADDED: used to store color RGB color values
 hGBC:: db ; shinpokerednote: gbcnote: hram indicator from pokeyellow for where we're playing on GBC

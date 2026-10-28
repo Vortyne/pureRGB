@@ -252,6 +252,34 @@ CheckForEngagingTrainers::
 	ld a, c
 	and a ; has the trainer already been defeated?
 	jr nz, .continue
+;;;;;;;;;; PureRGBnote: OPTIMIZED: skip the far call to TrainerEngage for trainers it would ignore anyway:
+;;;;;;;;;; ones that are off screen, or not lined up with the player's screen position on either axis
+	ld a, [wSpriteIndex]
+	swap a
+	add SPRITESTATEDATA1_IMAGEINDEX
+	ld l, a
+	ld h, HIGH(wSpriteStateData1)
+	ld a, [hl]
+	inc a
+	jr z, .notEngaging ; image index $ff = off screen
+	ASSERT SPRITESTATEDATA1_YPIXELS == SPRITESTATEDATA1_IMAGEINDEX + 2
+	inc l
+	inc l
+	ld a, [hl] ; x#SPRITESTATEDATA1_YPIXELS
+	cp $3c ; player's screen Y
+	jr z, .mayEngage
+	ASSERT SPRITESTATEDATA1_XPIXELS == SPRITESTATEDATA1_YPIXELS + 2
+	inc l
+	inc l
+	ld a, [hl] ; x#SPRITESTATEDATA1_XPIXELS
+	cp $40 ; player's screen X
+	jr z, .mayEngage
+.notEngaging
+	xor a
+	ld [wTrainerSpriteOffset], a ; same result as TrainerEngage deciding not to engage
+	jr .continue
+.mayEngage
+;;;;;;;;;;
 	push hl
 	push de
 	push hl
