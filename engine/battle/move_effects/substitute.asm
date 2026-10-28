@@ -57,6 +57,7 @@ SubstituteEffect_:
 	ld hl, PlayCurrentMoveAnimation
 	ld b, BANK(PlayCurrentMoveAnimation)
 	jr z, .animationEnabled
+	callfar MarkCurrentMoveSeenInMovedex ; PureRGBnote: ADDED: the animation below doesn't mark the move as seen in the movedex
 	ld hl, AnimationSubstitute
 	ld b, BANK(AnimationSubstitute)
 .animationEnabled

@@ -3244,7 +3244,21 @@ PlayApplyingAttackSound:
 	jp PlaySound
 
 ;;;;;;;;;; PureRGBnote: ADDED: code for setting moves as seen for the movedex
+; for moves that skip MoveAnimation entirely when battle animations are turned off (transform, substitute)
+MarkCurrentMoveSeenInMovedex::
+	ldh a, [hWhoseTurn]
+	and a
+	ld a, [wPlayerMoveNum]
+	jr z, .gotMove
+	ld a, [wEnemyMoveNum]
+.gotMove
+	ld [wAnimationID], a
+	; fall through
 SetMoveDexSeen:
+	; the flag only applies to this animation, so always clear it.
+	; otherwise a non-move animation would leave it set and a later move animation (like pound when hurting itself in confusion) would get logged.
+	ld hl, wBattleFunctionalFlags
+	res 0, [hl]
 	ld a, [wAnimationID]
 	and a
 	ret z ; NO_MOVE doesn't count
@@ -3254,10 +3268,7 @@ SetMoveDexSeen:
 	ld c, a
 	ld b, FLAG_SET
 	ld hl, wMovedexSeen
-	call FlagAction ; mark this move as seen in the movedex
-	ld hl, wBattleFunctionalFlags
-	res 0, [hl]
-	ret
+	jp FlagAction ; mark this move as seen in the movedex
 ;;;;;;;;;;
 
 ;;;;;; PureRGBnote: ADDED: new animation for Conversion's Attack mode using new graphics.
