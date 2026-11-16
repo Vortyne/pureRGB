@@ -297,7 +297,8 @@ UseCameraRoute6:
 	ld de, MonsterSprite
 	lb bc, BANK(MonsterSprite), 4
 .copy
-	ld hl, vNPCSprites tile $7C
+	ld a, SPRITE_SHADOW
+	call GetSpriteVRAMAddress
 	jp CopyVideoData
 .getPsyduckMapX
 	ld a, ROUTE6_PSYDUCK_SHADOW
@@ -452,12 +453,14 @@ CatSpriteFrame2:
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, CatSprite tile 12
 	lb bc, BANK(CatSprite), 4
-	ld hl, vNPCSprites tile $48
+	ld a, SPRITE_CAT2
 	jr nz, .copy
 	ld de, QuadrupedSprite tile 4
 	lb bc, BANK(QuadrupedSprite), 4
-	ld hl, vNPCSprites tile $7C
+	ld a, SPRITE_QUADRUPED
 .copy
+	call GetSpriteVRAMAddress
+	ret c
 	jp CopyVideoData
 
 CatSpriteNormal:
@@ -465,13 +468,12 @@ CatSpriteNormal:
 	bit BIT_MENU_ICON_SPRITES, a
 	ld de, CatSprite
 	lb bc, BANK(CatSprite), 4
-	ld hl, vNPCSprites tile $48
-	jr nz, .copy2
-	ld de, QuadrupedSprite 
+	ld a, SPRITE_CAT2
+	jr nz, CatSpriteFrame2.copy
+	ld de, QuadrupedSprite
 	lb bc, BANK(QuadrupedSprite), 4
-	ld hl, vNPCSprites tile $7C
-.copy2
-	jp CopyVideoData
+	ld a, SPRITE_QUADRUPED
+	jr CatSpriteFrame2.copy
 
 UseCameraRoute24:
 	CheckEvent EVENT_SNAPPED_CAMERA_PIC_MIND_BALL
@@ -782,7 +784,15 @@ UseCameraRoute13:
 	ld de, BirdSprite tile 20
 .loadPidgeotNext
 	lb bc, BANK(BirdSprite), 4
-	ld hl, vNPCSprites tile $74
+	ld a, SPRITE_BIRD
+	call GetSpriteVRAMAddress
+	; skip to the facing left frame
+	ld a, l
+	add LOW(8 tiles)
+	ld l, a
+	adc h
+	sub l
+	ld h, a
 	jp CopyVideoData
 
 UseCameraUndergroundPathWestEast:

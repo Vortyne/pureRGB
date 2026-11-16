@@ -10,7 +10,6 @@ ENDM
 ; - MapHeaderPointers (see data/maps/map_header_pointers.asm)
 ; - MapSongBanks (see data/maps/songs.asm)
 ; - ToggleableObjectMapPointers (see data/maps/toggleable_objects.asm)
-; - MapSpriteSets (see data/maps/sprite_sets.asm)
 ; - ExternalMapEntries (see data/maps/town_map_entries.asm)
 ; - WildDataPointers (see data/wild/grass_water.asm)
 ; Each map also has associated data in maps.asm.

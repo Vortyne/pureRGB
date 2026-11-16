@@ -250,95 +250,72 @@ ReadSpriteSheetData:
 	ld a, [hli]
 	ret
 
-; Loads sprite set for outside maps (cities and routes) and sets VRAM slots.
+; Loads sprites for outside maps (cities and routes) and sets VRAM slots.
+;;;;;;;;;; PureRGBnote: CHANGED: outside maps no longer use fixed sprite sets that had to be shared between connected maps.
+;;;;;;;;;; Instead, wSpriteSet keeps track of which sprite picture IDs are loaded in VRAM (entries 0-8 are VRAM slots 2-10
+;;;;;;;;;; for 12-tile sprites, entries 9-10 are VRAM slots 11-12 for 4-tile sprites). Sprites that are already loaded stay in
+;;;;;;;;;; their VRAM slot, and only the sprites the map uses that aren't loaded yet get loaded (LCD can stay on), replacing
+;;;;;;;;;; sprites the map doesn't use. So walking between connected outside maps only loads the sprites that differ.
+;;;;;;;;;; Use GetSpriteVRAMAddress to find where a sprite's tile patterns are instead of assuming a VRAM slot.
 ; sets carry if the map is a city or route, unsets carry if not
-InitOutsideMapSprites:	
+InitOutsideMapSprites:
+	ASSERT HIGH(wSpriteSet) == HIGH(wSpriteSet + SPRITE_SET_LENGTH)
 	ld a, [wCurMap]
 	cp FIRST_INDOOR_MAP ; is the map a city or a route?
-	ret nc ; if not, return
-	ld hl, MapSpriteSets
-	add l
-	ld l, a
-	jr nc, .noCarry
-	inc h
-.noCarry
-	ld a, [hl] ; a = spriteSetID
-	cp FIRST_SPLIT_SET - 1 ; does the map have 2 sprite sets?
-	call nc, GetSplitMapSpriteSetID ; if so, choose the appropriate one
-	ld b, a ; b = spriteSetID
+	jr c, .outsideMap
+; inside maps load their sprites in their own order, so forget which sprites are loaded
+	ld hl, hFlagsFFFA
+	res 2, [hl] ; carry is still unset
+	ret
+.outsideMap
+	ld hl, hFlagsFFFA
+	bit 2, [hl] ; does wSpriteSet match what is loaded in VRAM?
+	jr nz, .spriteSetLoaded
+	set 2, [hl]
+; nothing is known to be loaded in the sprite VRAM slots yet
+	ld hl, wSpriteSet
+	ld b, SPRITE_SET_LENGTH
+	xor a
+.clearSpriteSetLoop
+	ld [hli], a
+	dec b
+	jr nz, .clearSpriteSetLoop
+.spriteSetLoaded
 	ld a, [wFontLoaded]
 	bit BIT_FONT_LOADED, a ; reloading upper half of tile patterns after displaying text?
-	jr nz, .loadSpriteSet ; if so, forcibly reload the sprite set
-	ld a, [wSpriteSetID]
-	cp b ; has the sprite set ID changed?
-	jr z, .skipLoadingSpriteSet ; if not, don't load it again
-.loadSpriteSet
-	ld a, b
-	ld [wSpriteSetID], a
-	dec a
-	ld b, a
-	add a
-	ld c, a
-	add a
-	add a
-	add c
-	add b ; a = (spriteSetID - 1) * SPRITE_SET_LENGTH
-	ld de, SpriteSets
-; add a to de to get offset of sprite set
-	add e
-	ld e, a
-	jr nc, .noCarry2
-	inc d
-.noCarry2
-	ld hl, wSpritePlayerStateData2PictureID
-	ld [hl], SPRITE_RED
-	ld bc, wSpriteSet
-; Load the sprite set into RAM.
-; This loop also fills [x#SPRITESTATEDATA2_PICTUREID] where X is from $0 to $A
-; with picture IDs. This is done so that LoadMapSpriteTilePatterns will
-; load tile patterns for all sprite pictures in the sprite set.
-.loadSpriteSetLoop
-	ld a, SPRITESTATEDATA2_LENGTH
-	add l
-	ld l, a
-	ld a, [de] ; sprite picture ID from sprite set
-	ld [hl], a ; [x#SPRITESTATEDATA2_PICTUREID]
-	ld [bc], a
-	inc de
-	inc bc
+	jr z, .loadNewSprites
+; the text tile patterns overwrote the walking frames of the 12-tile sprites,
+; so reload them for the sprites the map uses, and forget the other ones
+	ld hl, wSpriteSet
+.reloadWalkingFramesLoop
+	ld a, [hl]
+	and a
+	jr z, .nextWalkingFrames
+	call IsPictureIDUsedByMap
+	jr z, .reloadWalkingFrames
+	ld [hl], 0
+	jr .nextWalkingFrames
+.reloadWalkingFrames
+	push hl
+	call GetSpriteSetEntryGraphics
+	call LoadSpriteWalkingFrames
+	pop hl
+.nextWalkingFrames
+	inc l
 	ld a, l
-	cp 11 * SPRITESTATEDATA2_LENGTH + SPRITESTATEDATA2_PICTUREID ; reached 11th sprite slot?
-	jr nz, .loadSpriteSetLoop
-	ld b, 4 ; 4 remaining sprite slots
-.zeroRemainingSlotsLoop ; loop to zero the picture ID's of the remaining sprite slots
-	ld a, SPRITESTATEDATA2_LENGTH
-	add l
+	cp LOW(wSpriteSet + SPRITE_SET_LENGTH - 2) ; end of the 12-tile sprite entries
+	jr nz, .reloadWalkingFramesLoop
+.loadNewSprites
+	ld hl, wSprite01StateData1PictureID
+.loadNewSpritesLoop
+	ld a, [hl] ; [x#SPRITESTATEDATA1_PICTUREID] (zero if sprite slot is not used)
+	and a
+	call nz, LoadSpritePictureIfNotLoaded
+	ld a, l
+	add SPRITESTATEDATA1_LENGTH
 	ld l, a
-	xor a
-	ld [hl], a ; [x#SPRITESTATEDATA2_PICTUREID]
-	dec b
-	jr nz, .zeroRemainingSlotsLoop
-	ld a, [wNumSprites]
-	push af ; save number of sprites
-	ld a, SPRITE_SET_LENGTH ; 11 sprites in sprite set
-	ld [wNumSprites], a
-	call LoadMapSpriteTilePatterns
-	pop af
-	ld [wNumSprites], a ; restore number of sprites
-	ld hl, wSprite01StateData2ImageBaseOffset
-	ld b, NUM_SPRITESTATEDATA_STRUCTS - 1
-; The VRAM tile pattern slots that LoadMapSpriteTilePatterns set are in the
-; order of the map's sprite set, not the order of the actual sprites loaded
-; for the current map. So, they are not needed and are zeroed by this loop.
-.zeroVRAMSlotsLoop
-	xor a
-	ld [hl], a ; [x#SPRITESTATEDATA2_IMAGEBASEOFFSET]
-	ld a, SPRITESTATEDATA2_LENGTH
-	add l
-	ld l, a
-	dec b
-	jr nz, .zeroVRAMSlotsLoop
-.skipLoadingSpriteSet
+	jr nz, .loadNewSpritesLoop
+;;;;;;;;;;
 	ld hl, wSprite01StateData1
 ; This loop stores the correct VRAM tile pattern slots according the sprite
 ; data from the map's header. Since the VRAM tile pattern slots are filled in
@@ -379,66 +356,106 @@ InitOutsideMapSprites:
 	scf
 	ret
 
-; Chooses the correct sprite set ID depending on the player's position within
-; the map for maps with two sprite sets.
-GetSplitMapSpriteSetID:
-	cp SPLITSET_ROUTE_20
-	jr z, .route20
-	ld hl, SplitMapSpriteSets
-	and $0f
-	dec a
-	add a
-	add a
-	add l
-	ld l, a
-	jr nc, .noCarry
-	inc h
-.noCarry
-	ld a, [hli] ; whether the map is split EAST_WEST or NORTH_SOUTH
-	cp EAST_WEST
-	ld a, [hli] ; position of dividing line
-	ld b, a
-	ld a, [wXCoord]
-	jr z, .compareCoord
-	ld a, [wYCoord]
-.compareCoord
-	cp b
-	jr c, .loadSpriteSetID
-; if in the east side or south side
-	inc hl
-.loadSpriteSetID
-	ld a, [hl]
-	ret
-; Uses sprite set SPRITESET_PALLET_VIRIDIAN for west side and SPRITESET_FUCHSIA for east side.
-; Route 20 is a special case because the two map sections have a more complex
-; shape instead of the map simply being split horizontally or vertically.
-.route20
-	ld hl, wXCoord
-	; Use SPRITESET_PALLET_VIRIDIAN if X < 43
-	ld a, [hl]
-	cp 43
-	ld a, SPRITESET_PALLET_VIRIDIAN
-	ret c
-	; Use SPRITESET_FUCHSIA if X >= 62.
-	ld a, [hl]
-	cp 62
-	ld a, SPRITESET_FUCHSIA
-	ret nc
-	; If 55 <= X < 62, split Y at 8; else 43 <= X < 55, so split Y at 13
-	ld a, [hl]
-	cp 55
-	ld b, 8
-	jr nc, .next
-	ld b, 13
-.next
-	; Use SPRITESET_FUCHSIA if Y < split; else use SPRITESET_PALLET_VIRIDIAN
-	ld a, [wYCoord]
-	cp b
-	ld a, SPRITESET_FUCHSIA
-	ret c
-	ld a, SPRITESET_PALLET_VIRIDIAN
+;;;;;;;;;; PureRGBnote: ADDED: functions for loading outside map sprites into VRAM slots
+
+; input: hl = pointer to a (non-zero) sprite picture ID
+; output: z if a non-player sprite in the current map uses that picture ID, nz if not
+IsPictureIDUsedByMap:
+	ld de, wSprite01StateData1PictureID
+.loop
+	ld a, [de]
+	cp [hl]
+	ret z
+	ld a, e
+	add SPRITESTATEDATA1_LENGTH
+	ld e, a
+	jr nz, .loop
+	inc a ; unset z
 	ret
 
-INCLUDE "data/maps/sprite_sets.asm"
+; loads a sprite picture ID into a VRAM slot if it isn't loaded already
+; input: a = sprite picture ID
+; preserves hl
+LoadSpritePictureIfNotLoaded:
+	push hl
+	ld b, a
+	ld hl, wSpriteSet
+	ld c, SPRITE_SET_LENGTH
+.checkLoadedLoop
+	ld a, [hli]
+	cp b
+	jr z, .done
+	dec c
+	jr nz, .checkLoadedLoop
+; find a VRAM slot of the right size that has nothing loaded, or a sprite the current map doesn't use
+	ld hl, wSpriteSet
+	ld c, LOW(wSpriteSet + SPRITE_SET_LENGTH - 2) ; end of the 12-tile sprite entries
+	ld a, b
+	cp FIRST_STILL_SPRITE
+	jr c, .findSlotLoop
+	ld l, c ; start of the 4-tile sprite entries
+	ld c, LOW(wSpriteSet + SPRITE_SET_LENGTH)
+.findSlotLoop
+	ld a, [hl]
+	and a
+	jr z, .foundSlot
+	call IsPictureIDUsedByMap
+	jr nz, .foundSlot
+	inc l
+	ld a, l
+	cp c
+	jr nz, .findSlotLoop
+	jr .done ; no VRAM slot available (the map uses too many different sprites)
+.foundSlot
+	ld [hl], b
+	call GetSpriteSetEntryGraphics
+	push bc
+	push de
+	push hl
+	call CopyVideoDataHBlank ; load tile patterns for the sprite when standing still
+	pop hl
+	pop de
+	pop bc
+	ld a, c
+	cp 12 ; does the sprite have walking frames?
+	call z, LoadSpriteWalkingFrames
+.done
+	pop hl
+	ret
+
+; input: hl = pointer to a wSpriteSet entry
+; output: hl = VRAM address of the entry's VRAM slot, de = address of the sprite's tile patterns, b = their bank,
+;         c = number of tiles (not including the walking frames)
+GetSpriteSetEntryGraphics:
+	ld a, l
+	sub LOW(wSpriteSet)
+	add 2 ; VRAM slot = entry index + 2 (VRAM slot 1 is the player)
+	push af
+	ld a, [hl] ; picture ID
+	dec a
+	ld l, a
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	ld de, SpriteSheetPointerTable
+	add hl, de
+	call ReadSpriteSheetData ; de = tile patterns, c = size in bytes, a = bank
+	ld b, a
+	swap c ; c = number of tiles
+	pop af
+	jp GetSpriteVRAMSlotAddress
+
+; input: hl = VRAM address, de = tile patterns, b = bank of the standing still frames of a 12-tile sprite
+LoadSpriteWalkingFrames:
+	set 3, h ; the walking frames are $80 tiles after the standing still frames in VRAM
+	ld a, e
+	add LOW(12 tiles) ; and right after them in ROM
+	ld e, a
+	jr nc, .noCarry
+	inc d
+.noCarry
+	ld c, 12
+	jp CopyVideoDataHBlank
+;;;;;;;;;;
 
 INCLUDE "data/sprites/sprites.asm"

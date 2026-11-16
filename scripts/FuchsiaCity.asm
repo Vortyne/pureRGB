@@ -1,5 +1,3 @@
-DEF FUCHSIA_OMANYTE_KABUTO_FOSSIL_TILE EQU $7C
-
 
 FuchsiaCity_Script:
 	call FuchsiaCityDefaultScript
@@ -56,7 +54,8 @@ CheckLoadKabutoShell::
 	; fall through
 
 LoadKabutoShellSprite:
-	ld hl, vSprites tile FUCHSIA_OMANYTE_KABUTO_FOSSIL_TILE
+	ld a, SPRITE_FOSSIL
+	call GetSpriteVRAMAddress
 	ld de, PartyMonSprites2 tile 66
 	lb bc, BANK(PartyMonSprites2), 4
 	predef_jump CopyMenuSpritesVideoDataFar
@@ -435,7 +434,8 @@ GetFossilSpriteData:
 	ld de, PartyMonSprites2 tile 64
 	lb bc, BANK(PartyMonSprites2), 4
 .showSprite
-	ld hl, vSprites tile FUCHSIA_OMANYTE_KABUTO_FOSSIL_TILE
+	ld a, SPRITE_FOSSIL
+	call GetSpriteVRAMAddress
 	ret
 
 ShowFossilPokemon:
@@ -445,7 +445,8 @@ ShowFossilPokemon:
 GetOmanyteSpriteDataFrame2:
 	ld de, PartyMonSprites1 tile 18
 	lb bc, BANK(PartyMonSprites1), 4
-	ld hl, vSprites tile FUCHSIA_OMANYTE_KABUTO_FOSSIL_TILE
+	ld a, SPRITE_FOSSIL
+	call GetSpriteVRAMAddress
 	ret
 
 MoveFossilPokemon:
@@ -470,7 +471,8 @@ MoveFossilPokemon:
 .hideOmanyte
 	ld de, FossilSprite
 	lb bc, BANK(FossilSprite), 4
-	ld hl, vSprites tile FUCHSIA_OMANYTE_KABUTO_FOSSIL_TILE
+	ld a, SPRITE_FOSSIL
+	call GetSpriteVRAMAddress
 	jp CopyVideoData
 .hideKabuto:
 	ld c, 20

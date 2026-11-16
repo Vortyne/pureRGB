@@ -599,7 +599,7 @@ WarpFound2::
 	ld hl, wMovementFlags
 	set BIT_STANDING_ON_DOOR, [hl] ; have the player's sprite step out from the door (if there is one)
 ;;;; IgnoreInputForHalfSecond ; didn't need to be a call since it's only ever used once
-	ld a, 30
+	ld a, 10 ; PureRGBnote: CHANGED: was 30 frames, which made the player unable to move for a moment after entering small maps that load quickly
 	ld [wIgnoreInputCounter], a
 	ld hl, wStatusFlags5
 	ld a, [hl]
@@ -2258,7 +2258,8 @@ LoadMapData::
 	ldh [hSCY], a
 	ldh [hSCX], a
 	ld [wWalkCounter], a
-	ld [wSpriteSetID], a
+	ld hl, hFlagsFFFA
+	res 2, [hl] ; PureRGBnote: CHANGED: outside map sprites need to be fully reloaded
 	call LoadTextBoxTilePatterns
 	call LoadMapHeader
 

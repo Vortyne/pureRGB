@@ -116,13 +116,17 @@ CeladonCityLittleGirlText:
 	call WaitForSoundToFinish
 	ld c, 20
 	rst DelayFrames
+	ld a, SPRITE_POKE_BALL
+	call GetSpriteVRAMAddress
+	push hl
+	ld d, h
+	ld e, l
 	lb hl, 55, 34
-	ld de, vNPCSprites tile $78
 	ld c, CELADONCITY_ANIMATION_PROXY
 	predef MakePokemonDisappearInOverworld
 	call UpdateSprites
 	; reload the pokeball sprite we replaced with koffing
-	ld hl, vNPCSprites tile $78
+	pop hl
 	ld de, PokeBallSprite
 	lb bc, BANK(PokeBallSprite), 4
 	call CopyVideoDataHBlank
@@ -218,22 +222,28 @@ CeladonCityFisherText:
 PoliwrathAnimation::
 	ld a, POLIWRATH
 	call PlayCry
+	ld a, SPRITE_FIGHTING
+	call GetSpriteVRAMAddress
+	jr c, .done ; with the original sprites, poliwrath uses a different sprite
 	ld b, 6
 .loop
 	push bc
-	ld hl, vNPCSprites tile $18
+	ld a, SPRITE_FIGHTING
+	call GetSpriteVRAMAddress
 	ld de, FightingSprite tile 12
 	lb bc, BANK(FightingSprite), 12
 	call CopyVideoData
 	ld c, 3
 	rst DelayFrames
-	ld hl, vNPCSprites tile $18
+	ld a, SPRITE_FIGHTING
+	call GetSpriteVRAMAddress
 	ld de, FightingSprite
 	lb bc, BANK(FightingSprite), 12
 	call CopyVideoData
 	pop bc
 	dec b
 	jr nz, .loop
+.done
 	rst TextScriptEnd
 
 CeladonCityPoliwrathText:

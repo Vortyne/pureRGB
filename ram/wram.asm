@@ -2126,10 +2126,10 @@ wSouthConnectionHeader:: map_connection_struct wSouth
 wWestConnectionHeader::  map_connection_struct wWest
 wEastConnectionHeader::  map_connection_struct wEast
 
-; sprite set for the current map (11 sprite picture ID's)
+; PureRGBnote: CHANGED: for outside maps, which sprite picture IDs are loaded in each NPC VRAM slot (11 sprite picture ID's)
+; (see InitOutsideMapSprites)
 wSpriteSet:: ds SPRITE_SET_LENGTH
-; sprite set ID for the current map
-wSpriteSetID:: db
+	ds 1 ; wSpriteSetID:: db ; PureRGBnote: CHANGED: unused save file byte (was the sprite set ID, now bit 2 of hFlagsFFFA)
 
 	ds 2 ; wObjectDataPointerTemp:: dw ; unused save file 2 bytes (needs save file update to use)
 

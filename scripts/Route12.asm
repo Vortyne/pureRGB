@@ -82,7 +82,8 @@ SnorlaxWakesUpAnimation::
 	ld de, SnorlaxSprite
 	lb bc, BANK(SnorlaxSprite), 2
 .replaceSprite
-	ld hl, vNPCSprites tile $7C
+	ld a, SPRITE_SNORLAX
+	call GetSpriteVRAMAddress
 	call CopyVideoData
 	pop bc
 	rst _DelayFrame
@@ -172,7 +173,8 @@ ReplaceSnorlaxSprite:
 .load
 	ld d, h
 	ld e, l
-	ld hl, vNPCSprites tile $7C
+	ld a, SPRITE_SNORLAX
+	call GetSpriteVRAMAddress
 	call CopyVideoData
 	pop af
 	ret
