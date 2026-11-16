@@ -590,9 +590,9 @@ DEF ANY_FACING EQU $d0
 
 	hidden_events_for VIRIDIAN_SCHOOL_HOUSE_B1F
 	hidden_event   0,  1, ViridianSchoolHouseB1FBookCases, 0
-	hidden_event   1,  1, ViridianSchoolHouseB1FBookCases, 13
-	hidden_event  16,  1, ViridianSchoolHouseB1FBookCases, 26
-	hidden_event  17,  1, ViridianSchoolHouseB1FBookCases, 39
+	hidden_event   1,  1, ViridianSchoolHouseB1FBookCases, 12
+	hidden_event  16,  1, ViridianSchoolHouseB1FBookCases, 24
+	hidden_event  17,  1, ViridianSchoolHouseB1FBookCases, 36
 	db -1 ; end
 
 	hidden_events_for SECRET_LAB
